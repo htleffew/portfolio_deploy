@@ -48,22 +48,9 @@ function renderDashboard() {
         row.style.opacity = '0';
         row.style.transform = 'translateY(10px)';
 
-        // Default geometric placeholder if no visual
-        let thumbContent = '';
-        if (p.visual && p.visual.trim() !== '') {
-            thumbContent = p.visual;
-        } else {
-            // Generate a sleek default SVG based on category
-            const hue = p.cat === 'Spokeo' ? '220' : (p.cat === 'TikTok USDS' ? '0' : '200');
-            thumbContent = `<svg viewBox="0 0 100 100" style="width:100%; height:100%;"><rect width="100%" height="100%" fill="hsl(${hue}, 20%, 10%)" /><circle cx="50" cy="50" r="20" fill="none" stroke="hsl(${hue}, 40%, 50%)" stroke-width="2" opacity="0.5" /><line x1="0" y1="50" x2="100" y2="50" stroke="hsl(${hue}, 40%, 50%)" stroke-width="1" opacity="0.3"/></svg>`;
-        }
-
         const tagMarkup = p.tags ? p.tags.slice(0, 3).map(t => `<span class="db-tag">${t}</span>`).join('') : '';
 
         row.innerHTML = `
-            <div class="db-thumb">
-                <div class="thumb-inner">${thumbContent}</div>
-            </div>
             <div class="db-info">
                 <div class="db-cat">${p.cat} <span style="opacity:0.4; margin:0 8px;">/</span> ${p.subtype}</div>
                 <div class="db-title">${p.title}</div>
