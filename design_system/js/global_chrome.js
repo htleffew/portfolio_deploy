@@ -173,4 +173,49 @@
             }
         });
     }
+
+    // 6. Populate Related Works and Next Publication
+    const recGrid = document.getElementById('recommendation-grid');
+    const nextChapLink = document.getElementById('next-chap-link');
+    const nextChapTitle = document.getElementById('next-chap-title');
+
+    if (recGrid || nextChapLink) {
+        fetch(pathPrefix + 'projects_index.json')
+            .then(res => res.json())
+            .then(data => {
+                // Determine current project id from URL
+                const currentPath = window.location.pathname;
+                const otherProjects = data.filter(p => !currentPath.includes(p.url.split('/').pop()));
+                
+                if (recGrid) {
+                    recGrid.innerHTML = '';
+                    // Pick 3 random or top projects
+                    const shuffled = otherProjects.sort(() => 0.5 - Math.random());
+                    const selected = shuffled.slice(0, 3);
+                    
+                    selected.forEach(p => {
+                        recGrid.innerHTML += `
+                            <a class="r-card" href="${pathPrefix}${p.url}">
+                                <div class="eb">${p.cat || 'Research'}</div>
+                                <div class="ti">${p.title}</div>
+                                <div class="ds">${p.desc.substring(0, 80)}...</div>
+                            </a>
+                        `;
+                    });
+                }
+
+                if (nextChapLink && nextChapTitle) {
+                    // Just pick the first from the other projects (or could be next in index)
+                    const nextP = otherProjects[0] || data[0];
+                    if (nextP) {
+                        nextChapLink.href = pathPrefix + nextP.url;
+                        nextChapTitle.innerText = nextP.title;
+                        const eb = nextChapLink.querySelector('.eb');
+                        if (eb) eb.innerText = 'Next Publication / ' + (nextP.cat || 'Research');
+                    }
+                }
+            })
+            .catch(err => console.error("Failed to load related works", err));
+    }
+
 })();
