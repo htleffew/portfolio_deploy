@@ -766,6 +766,42 @@ ul.bullets li::before { content:'\25B8'; position:absolute; left:0; top:1px; fon
 }
 .db-row:hover .db-action { color: var(--sapphire); transform: translateX(4px); }
 
+/* ============================================================
+   LIGHT MODE OVERRIDES FOR DASHBOARD (band--paper)
+   ============================================================ */
+.band--paper .dashboard-sidebar { border-right-color: var(--paper-3); }
+@media (max-width: 900px) { .band--paper .dashboard-sidebar { border-bottom-color: var(--paper-3); } }
+.band--paper .db-header { color: var(--ink-3); border-bottom-color: var(--paper-3); }
+.band--paper .sb-group { border-bottom-color: var(--paper-3); }
+.band--paper .sb-header, .band--paper .sb-item { color: var(--ink); }
+.band--paper .sb-header:hover, .band--paper .sb-item:hover { color: var(--ink-blue); }
+.band--paper .sb-header span, .band--paper .sb-item span { color: var(--ink-3); }
+.band--paper .sb-item.active, .band--paper .sb-item.active span { color: var(--ink-blue); }
+.band--paper .sb-link { color: var(--ink-3); border-left-color: var(--paper-3); }
+.band--paper .sb-link:hover { color: var(--ink); border-left-color: var(--ink-blue); }
+
+.band--paper #searchInput { border-bottom-color: var(--paper-3); color: var(--ink); }
+.band--paper #searchInput:focus { border-bottom-color: var(--ink-blue); }
+.band--paper #searchInput::placeholder { color: rgba(0,0,0,0.3); }
+.band--paper #sortDropdown { border-color: var(--paper-3); color: var(--ink-3); }
+.band--paper #sortDropdown:focus { border-color: var(--ink-blue); }
+.band--paper #sortDropdown option { background: var(--paper); color: var(--ink); }
+
+.band--paper .tag { color: var(--ink-3); border-color: var(--paper-3); }
+.band--paper .tag:hover { border-color: var(--ink); color: var(--ink); }
+.band--paper .tag.active { color: var(--ink-blue); border-color: var(--ink-blue); background: rgba(26,58,107,0.06); }
+
+.band--paper .db-row { border-bottom-color: var(--paper-3); }
+.band--paper .db-row:hover { background: rgba(0,0,0,0.02); }
+.band--paper .db-thumb { border-color: var(--paper-3); background: var(--paper-2); }
+
+.band--paper .db-cat { color: var(--ink-blue); }
+.band--paper .db-title { color: var(--ink); }
+.band--paper .db-desc { color: var(--ink-3); }
+.band--paper .db-tag { color: var(--ink-3); background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.08); }
+.band--paper .db-action { color: rgba(0,0,0,0.15); }
+.band--paper .db-row:hover .db-action { color: var(--ink-blue); }
+
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
@@ -815,7 +851,7 @@ ul.bullets li::before { content:'\25B8'; position:absolute; left:0; top:1px; fon
   </div>
 </section>
 
-<section class="band band--dark" style="padding-top:40px;">
+<section class="band band--paper library-band" style="padding-top:40px;">
   <div class="dashboard-layout">
     <aside class="dashboard-sidebar">
       <div class="db-header">TAXONOMY</div>
