@@ -596,7 +596,8 @@ ul.bullets li::before { content:'\25B8'; position:absolute; left:0; top:1px; fon
   section.band:not(.front) > .col-wide, 
   section.band:not(.front) > .stat-grid, 
   section.band:not(.front) > .figure, 
-  section.band:not(.front) > .report-prose {
+  section.band:not(.front) > .report-prose,
+  section.band:not(.front) > .dashboard-layout {
     grid-column: 2 / 4;
     width: 100%; 
     max-width: none;
@@ -627,7 +628,7 @@ ul.bullets li::before { content:'\25B8'; position:absolute; left:0; top:1px; fon
   display: grid;
   grid-template-columns: 260px 1fr;
   gap: 80px;
-  max-width: var(--col-wide);
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 48px 120px;
   align-items: start;
