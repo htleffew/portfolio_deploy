@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Equity Framework | Dr. Heather Leffew</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* ============================================================
+           TOKENS, dual mode, no radii, sharp editorial
+           ============================================================ */
+        :root {
+          --obsidian:#030303;
+          --charcoal:#161616;
+          --graphite:#222222;
+          --brushed:#333333;
+          --tungsten:#A1A1A6;
+          --platinum:#F5F5F7;
+          --flare:#FFFFFF;
+
+          --paper:#F5F5F7;          
+          --paper-2:#E9E9E9;        
+          --paper-3:#DDDDDD;        
+          --ink:#030303;            
+          --ink-2:#222222;           
+          --ink-3:#5E5E5A;          
+
+          --sapphire-deep:#0F52BA;
+          --sapphire:#4D8CFF;
+          --ink-blue:#1A3A6B;       
+
+          --display:'Playfair Display','Times New Roman',serif;
+          --body:'Lora',Georgia,serif;
+          --mono:'JetBrains Mono','SF Mono',Menlo,monospace;
+
+          --ease-out:cubic-bezier(0.16,1,0.3,1);
+          --ease-std:cubic-bezier(0.4,0,0.2,1);
+
+          --col:720px;
+          --col-wide:1080px;
+        }
+
+        *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; border-radius:0 !important; }
+        ::selection { background:rgba(77,140,255,0.35); color:#fff; }
+        html { scroll-behavior:smooth; }
+        body {
+          font-family:var(--body); background:var(--obsidian); color:var(--platinum);
+          font-size:18px; line-height:1.78; overflow-x:hidden; -webkit-font-smoothing:antialiased;
+        }
+
+        /* ============================================================
+           MODE BANDS
+           ============================================================ */
+        .band { position:relative; padding:140px 0; transition:background 0.9s var(--ease-std), color 0.9s var(--ease-std); }
+        .band--dark  { background:var(--obsidian); color:var(--platinum); }
+        .band--paper { background:var(--platinum); color:var(--obsidian); }
+        .band--ink   { background:var(--obsidian); color:var(--platinum); }   
+
+        .band--dark + .band--paper, .band--paper + .band--dark, .band--ink + .band--paper, .band--paper + .band--ink {
+          border-top:1px solid rgba(0,0,0,0.0);
+        }
+
+        .col      { max-width:var(--col);      margin:0 auto; padding:0 32px; }
+        .col-wide { max-width:var(--col-wide); margin:0 auto; padding:0 48px; }
+
+        /* ============================================================
+           GLOBAL CHROME
+           ============================================================ */
+        #progress {
+          position:fixed; top:0; left:0; right:0; height:2px; z-index:200; pointer-events:none; background:transparent;
+        }
+        #progress::after {
+          content:''; position:absolute; left:0; top:0; bottom:0; width:var(--p,0%);
+          background:linear-gradient(90deg, var(--sapphire) 0%, var(--sapphire-deep) 100%);
+        }
+
+        #topnav {
+          position:fixed; top:0; left:0; right:0; height:60px; display:flex; align-items:center; justify-content:space-between;
+          padding:0 32px; z-index:150; font-family:var(--mono); font-size:11px; letter-spacing:0.18em; text-transform:uppercase;
+          color:var(--platinum); background:rgba(3,3,3,0.55); backdrop-filter:blur(14px) saturate(140%);
+          -webkit-backdrop-filter:blur(14px) saturate(140%); border-bottom:1px solid rgba(255,255,255,0.06);
+          transition:background 0.6s var(--ease-std), color 0.6s var(--ease-std), border-color 0.6s var(--ease-std);
+        }
+        #topnav.is-paper { background:rgba(245,245,247,0.82); border-bottom-color:rgba(0,0,0,0.08); color:var(--ink); }
+        #topnav .brand { font-family:var(--display); font-size:15px; font-weight:600; letter-spacing:0.04em; text-transform:none; color:inherit; text-decoration:none; }
+        #topnav .crumbs { display:flex; gap:18px; align-items:center; }
+        #topnav .crumbs a { color:inherit; text-decoration:none; opacity:0.7; transition:opacity .25s; }
+        #topnav .sep { opacity:0.35; }
+
+        #spine {
+          position:fixed; left:18px; top:50%; transform:translateY(-50%); z-index:130; pointer-events:auto;
+          display:flex; flex-direction:column; gap:14px; padding:18px 14px; background:rgba(3,3,3,0.45);
+          color:var(--platinum); backdrop-filter:blur(14px) saturate(140%); -webkit-backdrop-filter:blur(14px) saturate(140%);
+          border:1px solid rgba(255,255,255,0.08); transition:none;
+        }
+        #spine.is-paper { background:rgba(245,245,247,0.78); border-color:rgba(0,0,0,0.10); color:var(--ink); }
+        #spine .row { display:flex; align-items:center; gap:10px; cursor:pointer; }
+        #spine .tick { width:16px; height:1px; background:currentColor; opacity:0.35; transition:width .35s var(--ease-out), opacity .35s var(--ease-out); }
+        #spine .row.is-active .tick { width:28px; opacity:1; background:var(--sapphire); }
+        #spine .row.is-paper-active .tick { background:var(--ink-blue); }
+        #spine .label { font-family:var(--mono); font-size:9.5px; letter-spacing:0.18em; text-transform:uppercase; opacity:0.55; transition:opacity .35s; white-space:nowrap; }
+        #spine .row:hover .label, #spine .row.is-active .label { opacity:1; }
+        #spine .num { font-family:var(--mono); font-size:9px; opacity:0.4; width:14px; }
+        @media (max-width:1180px) { #spine { display:none; } }
+
+        /* ============================================================
+           FRONT MATTER & SECTIONS
+           ============================================================ */
+        .front { min-height:100vh; padding:160px 0 100px; display:flex; flex-direction:column; justify-content:center; position:relative; overflow:hidden; }
+        .front .meta-row { font-family:var(--mono); font-size:11px; letter-spacing:0.30em; text-transform:uppercase; color:var(--tungsten); margin-bottom:40px; display:flex; gap:18px; align-items:center; flex-wrap:wrap; }
+        .front .meta-row .sep { opacity:0.4; }
+        .front h1 { font-family:var(--display); font-weight:600; font-size:clamp(44px, 5.0vw, 72px); letter-spacing:-0.018em; line-height:1.06; color:var(--flare); margin-bottom:36px; max-width:18ch; }
+        .front .abstract { font-family:var(--body); font-style:italic; font-size:22px; line-height:1.62; color:var(--platinum); max-width:60ch; margin-bottom:48px; }
+
+        .byline-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:2rem; max-width:800px; margin-top:2rem; border-top:1px solid rgba(255,255,255,0.1); padding-top:2rem; }
+        .by-cell .by-lab { font-family:var(--mono); font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:var(--tungsten); margin-bottom:0.5rem; }
+        .by-cell .by-val { font-family:var(--body); font-style:italic; font-size:1.1rem; color:var(--platinum); }
+
+        .band--paper h2, .band--dark h2 { font-family:var(--display); font-weight:600; font-size:clamp(34px, 3.6vw, 48px); letter-spacing:-0.012em; line-height:1.12; margin:0 auto 28px; max-width:var(--col); padding:0 32px; }
+        .band--paper h2 { color:var(--ink); } .band--dark h2 { color:var(--flare); }
+        
+        .band--paper .eyebrow, .band--dark .eyebrow { font-family:var(--mono); font-size:10.5px; letter-spacing:0.30em; text-transform:uppercase; margin:0 auto 18px; max-width:var(--col); padding:0 32px; }
+        .band--paper .eyebrow { color:var(--ink-blue); } .band--dark .eyebrow { color:var(--sapphire); }
+        
+        .band--paper p, .band--dark p { margin:0 auto 22px; max-width:var(--col); padding:0 32px; font-size:18px; line-height:1.78; }
+        .band--paper p { color:var(--ink); } .band--dark p { color:var(--platinum); }
+
+        .dropcap::first-letter { font-family: var(--display); font-weight: 600; font-size: 5rem; line-height: 0.8; float: left; margin: 0.05em 0.1em -0.1em 0; color: var(--sapphire); }
+        .band--paper .dropcap::first-letter { color: var(--ink-blue); }
+
+
+        .method { margin: 3rem auto; max-width: var(--col); padding: 0 32px; }
+        .method .inner { border-left: 3px solid var(--sapphire); padding-left: 1.5rem; }
+        .band--paper .method .inner { border-left-color: var(--ink-blue); }
+        .method .lab { font-family: var(--mono); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sapphire); margin-bottom: 0.5rem; }
+        .band--paper .method .lab { color: var(--ink-blue); }
+
+        .gloss { position: relative; border-bottom: 1px dotted var(--sapphire); cursor: help; }
+        .band--paper .gloss { border-bottom-color: var(--ink-blue); }
+        .gloss-tip { display: none; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); width: 250px; padding: 1rem; background: var(--obsidian); border: 1px solid var(--graphite); color: var(--platinum); font-family: var(--body); font-style: italic; font-size: 13.5px; z-index: 100; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 10px; }
+        .gloss:hover .gloss-tip { display: block; }
+        .band--paper .gloss-tip { background: #fff; border-color: var(--paper-3); color: var(--ink); }
+
+        /* ============================================================
+           INTERACTIVE SIMULATOR (THRESHOLD CALIBRATOR)
+           ============================================================ */
+        .simulator-layout {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 2rem;
+            margin: 4rem auto;
+            max-width: var(--col-wide);
+            min-height: 400px;
+            padding: 0 48px;
+        }
+        @media(max-width:900px) { .simulator-layout { grid-template-columns: 1fr; padding: 0 32px;} }
+
+        .sim-controls {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--graphite);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .band--paper .sim-controls { background: #fff; border-color: var(--paper-3); }
+
+        .panel-title {
+            font-family: var(--mono);
+            color: var(--platinum);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--graphite);
+            padding-bottom: 0.5rem;
+            letter-spacing: 0.1em;
+        }
+        .band--paper .panel-title { color: var(--ink); border-color: var(--paper-3); }
+
+        .slider-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            color: var(--tungsten);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .band--paper .slider-label { color: var(--ink-3); }
+        .slider-val { color: var(--sapphire); font-weight: 600; }
+        .band--paper .slider-val { color: var(--ink-blue); }
+
+        input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 12px; width: 12px; background: var(--sapphire); cursor: pointer; margin-top: -5px; }
+        .band--paper input[type=range]::-webkit-slider-thumb { background: var(--ink-blue); }
+        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 2px; cursor: pointer; background: var(--brushed); }
+        .band--paper input[type=range]::-webkit-slider-runnable-track { background: var(--paper-3); }
+
+        /* SVG Graph Styling */
+        .stroke-ref { stroke: var(--tungsten); opacity: 0.4; }
+        .band--paper .stroke-ref { stroke: var(--ink-3); opacity: 0.3; }
+
+        .stroke-target { stroke: var(--flare); opacity: 1.0; }
+        .band--paper .stroke-target { stroke: var(--sapphire); opacity: 1.0; }
+
+        .stroke-axis { stroke: rgba(255,255,255,0.2); }
+        .band--paper .stroke-axis { stroke: rgba(0,0,0,0.1); }
+
+        .sim-readout {
+            background-color: var(--obsidian);
+            border: 1px solid var(--brushed);
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        .band--paper .sim-readout { background-color: #fff; border-color: var(--paper-3); }
+
+        .readout-metric {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            color: var(--platinum);
+        }
+        .band--paper .readout-metric { color: var(--ink); }
+
+        .readout-metric.alarm-active { color: var(--flare); font-weight: bold; background: rgba(244, 63, 94, 0.2); border: 1px solid rgba(244, 63, 94, 0.4); padding: 0.5rem; margin-top: 1rem; }
+        .band--paper .readout-metric.alarm-active { color: #f43f5e; background: rgba(244, 63, 94, 0.1); }
+        
+        .readout-metric.alarm-safe { color: var(--tungsten); padding: 0.5rem; margin-top: 1rem; border: 1px solid transparent; }
+        .band--paper .readout-metric.alarm-safe { color: var(--ink-3); }
+
+        .sim-viz {
+            background-color: var(--charcoal);
+            border: 1px solid var(--graphite);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+        }
+        .band--paper .sim-viz { background-color: var(--paper-2); border-color: var(--paper-3); }
+        .sim-viz svg { width: 100%; height: 100%; min-height: 250px; }
+
+    
+/* ============================================================
+   SIDENOTES: Adaptive Tufte-Style (Institutional Standard)
+   ============================================================ */
+.sn { position:relative; }
+.sn-num { font-family:var(--mono); font-size:9px; color:var(--sapphire); vertical-align:super; cursor:pointer; padding:0 2px; }
+.band--paper .sn-num { color:var(--ink-blue); }
+.sn-num:hover { color:var(--hansa); }
+.sn-body { display:none; }
+
+@media (min-width: 1240px) {
+  p.col-with-sidenotes { position:relative; }
+  .sn { position:absolute; left:calc(100% + 40px); width:240px; font-family:var(--body); font-size:12.5px; line-height:1.5; color:var(--tungsten); }
+  .band--paper .sn { color:var(--ink-3); }
+  .sn-num { position:absolute; left:-24px; top:2px; }
+  .sn-body { display:block; padding-bottom:8px; border-bottom:1px solid rgba(255,255,255,0.06); }
+  .band--paper .sn-body { border-bottom-color:rgba(0,0,0,0.06); }
+}
+
+@media (max-width: 1239px) {
+  p.col-with-sidenotes { position:relative; }
+  .sn { display:inline; }
+  .sn-body { display:block; margin:12px 0; padding:12px 16px; font-family:var(--body); font-size:14px; line-height:1.6; color:var(--platinum); background:rgba(255,255,255,0.04); border-left:2px solid var(--sapphire); }
+  .band--paper .sn-body { color:var(--ink); background:rgba(0,0,0,0.04); border-left-color:var(--ink-blue); }
+  .sn-num { display:inline; position:static; font-size:11px; margin-right:6px; }
+}
+
+
+/* ============================================================
+   MASTER GRID & PORTRAIT MODE POLISH
+   ============================================================ */
+:root { --grid-left: max(32px, calc(50vw - 540px)); }
+@media (min-width: 1360px) { :root { --grid-left: max(260px, calc(50vw - 540px)); } }
+
+@media (min-width: 1240px) {
+  section.band:not(.front) {
+    display: grid;
+    grid-template-columns: var(--grid-left) 680px 400px minmax(16px, 1fr);
+    align-items: start;
+  }
+  section.band:not(.front) > * {
+    grid-column: 2 / 3;
+    margin-left: 0 !important; 
+    margin-right: 0 !important;
+  }
+  section.band:not(.front) > .col-wide, 
+  section.band:not(.front) > .stat-grid, 
+  section.band:not(.front) > .figure, 
+  section.band:not(.front) > .report-prose {
+    grid-column: 2 / 4;
+    width: 100%; 
+    max-width: none;
+  }
+  .stat-grid { justify-content: start !important; }
+}
+
+@media (min-width: 1180px) and (max-width: 1359px) {
+  #spine {
+    width: 44px; overflow: hidden; white-space: nowrap;
+    transition: width 0.4s cubic-bezier(0.16,1,0.3,1), background 0.6s cubic-bezier(0.4,0,0.2,1);
+  }
+  #spine:hover { width: 250px; }
+}
+@media (min-width: 1360px) {
+  #spine { width: auto; overflow: visible; }
+}
+
+/* Portrait Mode Space Fix */
+.front { min-height: clamp(400px, 80vh, 850px) !important; justify-content: center !important; }
+
+</style>
+</head>
+<body>
+
+    <div id="progress"></div>
+
+    <header id="topnav">
+        <a href="../index.html" class="brand">Dr. Heather Leffew</a>
+        <div class="crumbs">
+            <a href="../index.html">&larr; Writing</a>
+            <span class="sep">/</span>
+            <a href="#">Systems Architecture</a>
+            <span class="sep">/</span>
+            <span>AI Equity</span>
+        </div>
+    </header>
+
+    <aside id="spine"></aside>
+
+    <main>
+        <!-- FRONT MATTER -->
+        <section class="band band--dark front" data-spine="Architecture" data-section="Front matter">
+            <div class="col-wide">
+                <div class="meta-row">
+                    <span>Enterprise Systems Architecture</span>
+                    <span class="sep">/</span>
+                    <span>Synthetic Data</span>
+                </div>
+                <h1>A dual-mode fairness platform that calibrates the threshold before launch, and enforces it after.</h1>
+                <p class="abstract">
+                    A walk through the architecture of an enterprise AI equity framework. The system links a pre-launch simulation lab—where synthetic user populations are calibrated against historical telemetry—with an automated post-launch monitoring pipeline. The architecture ensures that the threshold used to trigger production alerts is derived from statistical reality, not from regulatory guesswork.
+                </p>
+                <div class="byline-grid">
+                    <div class="by-cell">
+                        <div class="by-lab">INPUT DATA</div>
+                        <div class="by-val">Calibrated synthetic profiles</div>
+                    </div>
+                    <div class="by-cell">
+                        <div class="by-lab">ARCHITECTURE</div>
+                        <div class="by-val">Dual-mode drift analysis</div>
+                    </div>
+                    <div class="by-cell">
+                        <div class="by-lab">OUTPUT</div>
+                        <div class="by-val">Validated alert thresholds</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 01 -->
+        <section class="band band--paper" data-spine="The Gap" data-section="The Launch Window Gap">
+            <div class="eyebrow">01 / The Launch Window Gap</div>
+            <h2>The Launch Window Gap</h2>
+            <div class="col-main">
+                <p class="dropcap col-with-sidenotes">In enterprise AI, there is a fundamental tension between engineering velocity and ethical safety. <span class="sn"><span class="sn-num">1</span><span class="sn-body">This methodology borrows heavily from clinical trial design. When a human population is ethically too vulnerable to expose to an untested hypothesis, calibrated synthetic cohorts become the absolute moral and scientific standard.</span></span>Engineers demand production data to tune models; ethicists and domain experts demand fairness before a single user is exposed to risk. This creates the "Launch Window Gap": a terrifying period where no reliable fairness signal exists, yet the consequences of algorithmic harm can permanently damage vulnerable populations (Barocas & Selbst, 2016). Intuition-driven review is fast but mathematically empty. Data-driven review is reliable, but waiting for production data means waiting for real human harm to occur.</p> 
+                
+                <p>As an interdisciplinary researcher bridging these teams, I had to architect a compromise: a framework that forces a massive data pipeline to respect human vulnerability. The framework closes the gap by generating digital twin synthetic users that behave with the exact statistical properties of the real user base. This allows us to mathematically simulate harm and calibrate our ethical thresholds before the product ever launches. Calibration is the load-bearing piece of the architecture; without it, the engineers are simply tuning alarms to a fictional population.</p>
+                
+                <div class="method">
+                    <div class="inner">
+                        <div class="lab">Why A/B testing is insufficient</div>
+                        An A/B test in production exposes the harm hypothesis to real users to learn whether it materializes. For fairness questions, the A/B test is the harm. The simulation ensures the hypothesis gets tested on synthetic users before any real user is exposed.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 02 -->
+        <section class="band band--dark" data-spine="Mode 1" data-section="Pre-Launch Simulation">
+            <div class="eyebrow">02 / Mode 1: Pre-Launch Simulation</div>
+            <h2>Pre-Launch Simulation Lab</h2>
+            <div class="col-main">
+                <p>The Simulation Lab is the proactive instrument. The interface is a GUI with four control surfaces: User Segments, Success Metric, Target Group, and Penalty Slider. The four-surface design encodes a specific theory of fairness review: the team must define the harm hypothesis explicitly before running the simulation. This protects against the trap where a fairness audit becomes a fishing expedition that produces a finding because the protocol kept slicing the data until something crossed the threshold.</p>
+
+                <p>The calibration step takes a file of historical data from an analogous, non-AI feature. The system runs a profiling script against the historical data to extract the exact proportion of user segments, fitted probability distributions on behavioral metrics, and the real-world standard deviation of the chosen success metric. The synthetic population is generated using <span class="gloss">Faker<span class="gloss-tip"><b>Faker</b>, A Python package that generates synthetic data for categorical and identity-level fields.</span></span> for identity fields and <code>numpy</code> for the continuous distributions. As long as the calibration data is recent and representative, the simulation's digital twins behave like real users on every dimension that matters.</p>
+
+                <p>The bias injection step is where the hypothesis becomes data. The system applies the user-defined penalty to the baseline success scores of the target group. I elected to use a <code>RandomForestClassifier</code> on the synthetic data, with protected attributes explicitly excluded from the training set, to test whether the bias signal propagates through proxy variables. This is the realistic threat model: production AI features rarely have the protected attribute as a feature. The analysis stack then runs a drift analysis and a SHAP explainer to generate the audit verdict.</p>
+            </div>
+        </section>
+
+        <!-- SECTION 03 (INTERACTIVE) -->
+        <section class="band band--paper" data-spine="Calibration" data-section="Setting the Threshold">
+            <div class="eyebrow">03 / Setting the Threshold</div>
+            <h2>Simulating the Threshold</h2>
+            <div class="col-main">
+                <p>The alarm threshold comes out of the simulation rather than going in. The team runs the simulation with hypothesized penalty levels, observes which penalty levels produce statistically significant disparities, and selects the threshold that corresponds to the smallest disparity the team would treat as actionable (Hardt et al., 2016). The interactive simulator below demonstrates the mathematics of this calibration: as the disparity penalty increases, the statistical power to detect it depends entirely on the variance and cohort size.</p>
+            </div>
+
+            <div class="simulator-layout">
+                <div class="sim-controls">
+                    <div class="panel-title">Threshold Parameters</div>
+                    <div class="slider-group">
+                        <div class="slider-label">
+                            <span>Disparity Penalty</span>
+                            <span class="slider-val" id="val-penalty">15%</span>
+                        </div>
+                        <input type="range" id="slider-penalty" min="0" max="50" step="1" value="15">
+                    </div>
+                    
+                    <div class="slider-group" style="margin-top:1rem;">
+                        <div class="slider-label">
+                            <span>Synthetic Cohort Size (n)</span>
+                            <span class="slider-val" id="val-nsize">1200</span>
+                        </div>
+                        <input type="range" id="slider-nsize" min="100" max="5000" step="100" value="1200">
+                    </div>
+
+                    <div class="sim-readout">
+                        <div class="readout-metric">
+                            <span>Cohen's d (Effect Size)</span>
+                            <span id="out-cohens">0.00</span>
+                        </div>
+                        <div class="readout-metric">
+                            <span>p-value (Significance)</span>
+                            <span id="out-pvalue">1.000</span>
+                        </div>
+                        <div class="readout-metric" id="alarm-status">
+                            <span>ALARM TRIGGERED</span>
+                            <span>NO</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sim-viz">
+                    <svg id="sim-svg" viewBox="0 0 400 300" preserveAspectRatio="none"></svg>
+                </div>
+            </div>
+
+            <div class="col-main">
+                <p>The threshold is calibrated to the team's tolerance and to the statistical power of the available sample, rather than picked from a regulatory document. If the team agrees that a Cohen's <em>d</em> >= 0.20 is operationally meaningful, the simulation establishes exactly what disparity magnitude the post-launch monitor must be tuned to catch.</p>
+            </div>
+        </section>
+
+        <!-- SECTION 04 -->
+        <section class="band band--dark" data-spine="Schema" data-section="The Intersectional Schema">
+            <div class="eyebrow">04 / The Intersectional Schema</div>
+            <h2>The Intersectional Schema</h2>
+            <div class="col-main">
+                <p>The framework executes its analysis across an intersectional schema of forty variables. Engineering schemas often treat users as flat, single-attribute data points. But human reality is fiercely intersectional. Sociological harm rarely happens because of a single demographic trait; it occurs at the collision of variables. The richness of this schema allows the system to ask whether a disparity is concentrated specifically in the intersection of "new-user" and "likely-assistive-tech-user."</p>
+
+                <p>The inclusion of the <code>accessibility_likelihood_score</code> requires specific attention. Accessibility is the dimension that technical audits most often miss, simply because the protected attribute isn't neatly collected in a drop-down menu. As a researcher, I know that failing to measure a vulnerable population is functionally equivalent to ignoring them. We built a logistic regression to infer accessibility needs purely from navigation patterns. We rigidly quarantine this inferred attribute so it can never be used for product targeting—it exists solely inside the fairness pipeline. The alternative was unacceptable: leaving the most structurally vulnerable user population with no fairness signal at all.</p>
+            </div>
+        </section>
+
+        <!-- SECTION 05 -->
+        <section class="band band--paper" data-spine="Mode 2" data-section="Post-Launch Monitoring">
+            <div class="eyebrow">05 / Mode 2: Post-Launch Monitoring</div>
+            <h2>Automated Post-Launch Monitoring</h2>
+            <div class="col-main">
+                <p>The Post-Launch Monitoring System is the continuous assurance instrument. It runs hands-off on a scheduled cadence. The input is a continuous stream of real user interaction data from the live AI feature, accessed via a scheduled query against the production data warehouse.</p>
+
+                <p>The architectural choice that makes the monitoring trustworthy is that it uses the exact <code>analyze_drift()</code> function from the pre-launch simulation. A common failure mode in fairness pipelines is that the pre-launch and post-launch logic drift apart over time. The framework forces them to share the function, which means a methodology change propagates to both modes by editing a single piece of code. If the disparity crosses the pre-validated alarm threshold, the alerting layer uses webhooks to post a detailed alert to the engineering team's incident channels, including the affected segment, the failing metric, the disparity magnitude, and a preliminary SHAP analysis to seed the investigation.</p>
+            </div>
+        </section>
+
+        <!-- SECTION 06 -->
+        <section class="band band--dark" data-spine="Limits" data-section="Limits">
+            <div class="eyebrow">06 / Limits and what this is not</div>
+            <h2>Limits and what this is not</h2>
+            <div class="col-main">
+                <p>The architecture commits to three things: a simulation engine that calibrates against historical telemetry, a schema that supports intersectional disparity analysis, and a strict coupling between the pre-launch threshold and the post-launch monitor. The architecture does not commit to catching harms the team failed to hypothesize, replacing human qualitative research, or substituting for legal compliance review. What the framework offers is a structural guarantee: an alarm threshold calibrated against historical reality before launch, and enforced mechanically after launch.</p>
+            </div>
+        </section>
+
+        <!-- SECTION 07 -->
+        <section class="band band--paper" data-spine="References" data-section="References">
+            <div class="eyebrow">07 / Bibliography</div>
+            <h2>References</h2>
+            <div class="col-main">
+                <ul style="list-style-type:none; padding:0; margin-top:24px; font-family:var(--body); font-size:16px;">
+                    <li style="margin-bottom:16px; padding-left:36px; text-indent:-36px;">
+                        Barocas, S., & Selbst, A. D. (2016). Big data's disparate impact. <em>California Law Review</em>, 104, 671-732.
+                    </li>
+                    <li style="margin-bottom:16px; padding-left:36px; text-indent:-36px;">
+                        Hardt, M., Price, E., & Srebro, N. (2016). Equality of opportunity in supervised learning. <em>Advances in neural information processing systems</em>, 29.
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+
+
+
+
+
+    </main>
+
+    <script>
+        // Spine navigation setup
+        const spine = document.getElementById('spine');
+        const sections = Array.from(document.querySelectorAll('section[data-spine]'));
+        sections.forEach((sec, i) => {
+            const row = document.createElement('div');
+            row.className = 'row';
+            row.innerHTML = `<div class="num">0${i+1}</div><div class="tick"></div><div class="label">${sec.getAttribute('data-spine')}</div>`;
+            row.addEventListener('click', () => { sec.scrollIntoView({ behavior:'smooth' }); });
+            spine.appendChild(row);
+        });
+        
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if(e.isIntersecting) {
+                    const idx = sections.indexOf(e.target);
+                    Array.from(spine.children).forEach((child, i) => {
+                        child.classList.remove('is-active', 'is-paper-active');
+                        if(i === idx) {
+                            const isPaper = e.target.classList.contains('band--paper');
+                            child.classList.add(isPaper ? 'is-paper-active' : 'is-active');
+                            if(isPaper) {
+                                document.getElementById('topnav').classList.add('is-paper');
+                                document.getElementById('spine').classList.add('is-paper');
+                            } else {
+                                document.getElementById('topnav').classList.remove('is-paper');
+                                document.getElementById('spine').classList.remove('is-paper');
+                            }
+                        }
+                    });
+                }
+            });
+        }, { rootMargin: "-45% 0px -45% 0px" });
+        sections.forEach(s => obs.observe(s));
+
+        window.addEventListener('scroll', () => {
+            const p = document.documentElement.scrollTop / (document.documentElement.scrollHeight - document.documentElement.clientHeight);
+            document.body.style.setProperty('--p', (p*100)+'%');
+        });
+
+        // Threshold Calibrator Simulator Setup
+        document.addEventListener("DOMContentLoaded", () => {
+            const sliderPenalty = document.getElementById('slider-penalty');
+            const sliderNSize = document.getElementById('slider-nsize');
+            const valPenalty = document.getElementById('val-penalty');
+            const valNSize = document.getElementById('val-nsize');
+            
+            const outCohens = document.getElementById('out-cohens');
+            const outPvalue = document.getElementById('out-pvalue');
+            const alarmStatus = document.getElementById('alarm-status');
+            const svg = document.getElementById('sim-svg');
+
+            function normalPDF(x, mean, std) {
+                return (1 / (std * Math.sqrt(2 * Math.PI))) * Math.exp(-0.5 * Math.pow((x - mean) / std, 2));
+            }
+
+            function erf(x) {
+                const sign = (x >= 0) ? 1 : -1;
+                x = Math.abs(x);
+                const a1 =  0.254829592;
+                const a2 = -0.284496736;
+                const a3 =  1.421413741;
+                const a4 = -1.453152027;
+                const a5 =  1.061405429;
+                const p  =  0.3275911;
+                const t = 1.0 / (1.0 + p * x);
+                const y = 1.0 - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * Math.exp(-x * x);
+                return sign * y;
+            }
+
+            function cdf(x) {
+                return 0.5 * (1 + erf(x / Math.sqrt(2)));
+            }
+
+            function updateSimulation() {
+                const penaltyPct = parseInt(sliderPenalty.value, 10);
+                const nSize = parseInt(sliderNSize.value, 10);
+                
+                valPenalty.textContent = penaltyPct + '%';
+                valNSize.textContent = nSize;
+
+                const baselineMean = 4.1;
+                const stdDev = 0.8;
+                const targetMean = baselineMean * (1 - (penaltyPct / 100));
+                
+                const d = Math.abs(baselineMean - targetMean) / stdDev;
+                
+                const se = stdDev * Math.sqrt(2 / (nSize/2)); 
+                const tStat = Math.abs(baselineMean - targetMean) / se;
+                let pVal = 2 * (1 - cdf(tStat));
+                if (pVal < 0.0001) pVal = 0.0001; 
+
+                outCohens.textContent = d.toFixed(2);
+                outPvalue.textContent = pVal < 0.001 ? '< 0.001' : pVal.toFixed(3);
+
+                const alarmTriggered = (d >= 0.20 && pVal < 0.05);
+                if(alarmTriggered) {
+                    alarmStatus.className = 'readout-metric alarm-active';
+                    alarmStatus.innerHTML = `<span>ALARM TRIGGERED</span><span>YES</span>`;
+                } else {
+                    alarmStatus.className = 'readout-metric alarm-safe';
+                    alarmStatus.innerHTML = `<span>ALARM TRIGGERED</span><span>NO</span>`;
+                }
+
+                drawCurves(baselineMean, targetMean, stdDev);
+            }
+
+            function drawCurves(meanRef, meanTarget, std) {
+                svg.innerHTML = '';
+                const width = 400;
+                const height = 300;
+                const padding = 20;
+                
+                const xMin = 1.0;
+                const xMax = 5.5;
+                const yMin = 0;
+                const yMax = normalPDF(meanRef, meanRef, std) * 1.2;
+
+                function mapX(val) { return padding + ((val - xMin) / (xMax - xMin)) * (width - 2*padding); }
+                function mapY(val) { return height - padding - ((val - yMin) / (yMax - yMin)) * (height - 2*padding); }
+
+                function buildPath(mean, isRef) {
+                    let path = '';
+                    for(let i=0; i<=100; i++) {
+                        const xVal = xMin + (i/100) * (xMax - xMin);
+                        const yVal = normalPDF(xVal, mean, std);
+                        const xPx = mapX(xVal);
+                        const yPx = mapY(yVal);
+                        if(i===0) path += `M ${xPx} ${yPx} `;
+                        else path += `L ${xPx} ${yPx} `;
+                    }
+                    const strokeWidth = isRef ? '2' : '3';
+                    const strokeClass = isRef ? 'stroke-ref' : 'stroke-target';
+                    
+                    return `<path class="${strokeClass}" d="${path}" fill="none" stroke-width="${strokeWidth}" />`;
+                }
+
+                svg.innerHTML += `<line class="stroke-axis" x1="${padding}" y1="${height-padding}" x2="${width-padding}" y2="${height-padding}" stroke-width="1" />`;
+                svg.innerHTML += buildPath(meanRef, true);
+                svg.innerHTML += buildPath(meanTarget, false);
+            }
+
+            sliderPenalty.addEventListener('input', updateSimulation);
+            sliderNSize.addEventListener('input', updateSimulation);
+            updateSimulation();
+        });
+    </script>
+
+<script>
+/* ============================================================
+   DYNAMIC SIDENOTE CLEARANCE (Global Portfolio Mandate)
+   ============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+    const sidenoteParagraphs = document.querySelectorAll('.col-with-sidenotes');
+    sidenoteParagraphs.forEach(p => {
+        const sn = p.querySelector('.sn');
+        if (sn) {
+            const updateHeight = () => {
+                if (window.innerWidth >= 1240) {
+                    // Calculate exact clearance needed based on the sidenote's absolute top position
+                    const neededHeight = sn.offsetTop + sn.offsetHeight + 40;
+                    p.style.minHeight = neededHeight + 'px';
+                } else {
+                    p.style.minHeight = 'auto';
+                }
+            };
+            updateHeight();
+            setTimeout(updateHeight, 250);
+            window.addEventListener('resize', updateHeight);
+        }
+    });
+});
+</script>
+
+
+<!-- ============================================================
+     GLOBAL APP SHELL (BACK MATTER)
+     ============================================================ -->
+<section class="band band--dark back-matter" data-spine="Research Graph" data-section="Research Graph">
+  
+  
+
+  <div class="back-matter" style="padding-top:0;">
+    <h3 style="margin-bottom:22px;">Related Works</h3>
+    <div class="related">
+      <div class="related-grid" id="recommendation-grid">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </div>
+
+  <a class="next-chap" id="next-chap-link" href="#">
+    <div class="lf">
+      <div class="eb">Next Publication</div>
+      <div class="ti" id="next-chap-title">Loading...</div>
+    </div>
+    <div class="rt">&rarr;</div>
+  </a>
+
+</section>
+
+<footer class="site-foot">
+  <div class="lf">Dr. Heather Leffew &copy; 2026</div>
+  <div style="display:flex;gap:24px;" class="rt">
+    <a href="../projects-repository.html">Research Library</a>
+    <a href="https://linkedin.com/in/heathertleffew" target="_blank">LinkedIn</a>
+  </div>
+</footer>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        const pathPrefix = window.location.pathname.includes('projects-repository.html') ? './' : '../';
+        const response = await fetch(pathPrefix + 'projects_index.json');
+        if (!response.ok) return;
+        const projects = await response.json();
+        
+        const currentPath = window.location.pathname;
+        let me = projects.find(p => currentPath.includes(p.id));
+        if (!me) me = projects[0]; // fallback
+        
+        // 1. Populate Recommendations
+        if (document.getElementById('recommendation-grid')) {
+            let scored = projects.map(p => {
+                if (p.id === me.id) return { ...p, score: -1 }; 
+                let score = 0;
+                if(p.tags && me.tags) {
+                    p.tags.forEach(t => { if (me.tags.includes(t)) score++; });
+                }
+                if (p.cat === me.cat) score += 0.5;
+                return { ...p, score };
+            });
+            scored.sort((a, b) => b.score - a.score);
+            const top3 = scored.slice(0, 3);
+
+            const grid = document.getElementById('recommendation-grid');
+            grid.innerHTML = '';
+            top3.forEach(p => {
+                const card = document.createElement('a');
+                card.href = pathPrefix + p.url;
+                card.className = 'r-card';
+                card.innerHTML = `
+                    <div class="eb">${p.cat}</div>
+                    <div class="ti">${p.title}</div>
+                    <div class="ds">${p.desc.substring(0, 100)}...</div>
+                    <div class="ar">Read More &rarr;</div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+        
+        // 2. Populate Next Chapter
+        const nextChapLink = document.getElementById('next-chap-link');
+        const nextChapTitle = document.getElementById('next-chap-title');
+        if (nextChapLink && nextChapTitle) {
+            let currentIndex = projects.findIndex(p => p.id === me.id);
+            if (currentIndex === -1) currentIndex = 0;
+            let nextIndex = (currentIndex + 1) % projects.length;
+            let nextProj = projects[nextIndex];
+            
+            nextChapLink.href = pathPrefix + nextProj.url;
+            nextChapTitle.textContent = nextProj.title;
+        }
+
+    } catch(e) {
+        console.log("Global Frame JS resting.");
+    }
+});
+</script>
+
+
+</body>
+</html>

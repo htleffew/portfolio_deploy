@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dr. Heather Leffew | Executive Profile</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+:root {
+  --obsidian:#030303;--charcoal:#161616;--graphite:#222222;--brushed:#333333;
+  --tungsten:#A1A1A6;--platinum:#F5F5F7;--flare:#FFFFFF;
+  --paper:#F5F5F7;--paper-2:#E9E9E9;--paper-3:#DDDDDD;
+  --ink:#030303;--ink-2:#222222;--ink-3:#5E5E5A;
+  --sapphire-deep:#0F52BA;--sapphire:#4D8CFF;--ink-blue:#1A3A6B;
+  --display:'Playfair Display','Times New Roman',serif;
+  --body:'Lora',Georgia,serif;
+  --mono:'JetBrains Mono','SF Mono',Menlo,monospace;
+  --ease-out:cubic-bezier(0.16,1,0.3,1);
+  --ease-std:cubic-bezier(0.4,0,0.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;border-radius:0 !important}
+::selection{background:rgba(77,140,255,0.35);color:#fff}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--obsidian);color:var(--platinum);font-size:16px;line-height:1.78;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* Cinematic Film Grain Overlay */
+
+/* Breathing Deep Space Gradients */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -20;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, rgba(77, 140, 255, 0.05) 0%, transparent 60%);
+  animation: pulse-slow 50s ease-in-out infinite alternate;
+  will-change: transform, opacity;
+}
+.ambient-gradient-b {
+  position: fixed;
+  inset: 0;
+  z-index: -15;
+  pointer-events: none;
+  background: radial-gradient(circle at 80% 20%, rgba(15, 82, 186, 0.08) 0%, transparent 50%);
+  animation: pulse-slow 80s ease-in-out infinite alternate-reverse;
+  will-change: transform, opacity;
+}
+@keyframes pulse-slow {
+  0% { transform: scale(1) translate(0, 0); opacity: 0.5; }
+  100% { transform: scale(1.5) translate(-10%, 10%); opacity: 1; }
+}
+
+.band{position:relative;padding:120px 0;transition:background 0.9s var(--ease-std),color 0.9s var(--ease-std)}
+.band--dark{background:rgba(3,3,3,0.95);color:var(--platinum)}
+.band--paper{background:var(--paper);color:var(--ink)}
+
+#progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:200;pointer-events:none;background:transparent}
+#progress::after{content:'';position:absolute;left:0;top:0;bottom:0;width:var(--p,0%);background:linear-gradient(90deg,var(--sapphire) 0%,var(--sapphire-deep) 100%);transition:width 0.05s linear}
+#glCanvas{position:fixed;inset:0;z-index:-30;pointer-events:none;border:none;outline:none;background:var(--obsidian)}
+
+#topnav{position:fixed;top:0;left:0;right:0;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;z-index:150;font-family:var(--mono);font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--platinum);background:rgba(3,3,3,0.55);backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);border-bottom:1px solid rgba(255,255,255,0.06);transform:translateY(-100%);animation:navIn 0.8s 0.4s forwards var(--ease-out);transition:background 0.6s var(--ease-std),color 0.6s var(--ease-std),border-color 0.6s var(--ease-std)}
+#topnav.is-paper{background:rgba(245,245,247,0.82);border-bottom-color:rgba(0,0,0,0.08);color:var(--ink)}
+@keyframes navIn{to{transform:translateY(0)}}
+#topnav .brand{font-family:var(--display);font-size:15px;font-weight:600;letter-spacing:0.04em;text-transform:none;color:inherit;text-decoration:none}
+#topnav .brand:hover{opacity:0.85}
+#topnav .nav-links{display:flex;gap:28px;align-items:center}
+#topnav .nav-links a{color:inherit;text-decoration:none;opacity:0.7;transition:opacity 0.25s}
+#topnav .nav-links a:hover{opacity:1}
+#topnav .nav-btn{color:var(--flare);border:1px solid rgba(255,255,255,0.2);padding:8px 16px;transition:all 0.3s}
+#topnav .nav-btn:hover{background:var(--flare);color:var(--obsidian)}
+#topnav.is-paper .nav-btn{color:var(--ink);border-color:rgba(0,0,0,0.2)}
+#topnav.is-paper .nav-btn:hover{background:var(--ink);color:var(--paper)}
+
+.col-wide{max-width:1400px;margin:0 auto;padding:0 48px}
+@media(max-width:768px){.col-wide{padding:0 24px}#topnav{padding:0 24px}}
+
+.hero{min-height:clamp(500px, 80vh, 850px);padding:140px 0 100px;display:flex;align-items:center;position:relative;overflow:hidden;background:transparent;color:var(--platinum)}
+.hero .col-wide{position:relative;z-index:2}
+.split-grid{display:grid;grid-template-columns:1fr 360px;gap:80px;align-items:start}
+.hero .meta-row{font-family:var(--mono);font-size:11px;letter-spacing:0.30em;text-transform:uppercase;color:var(--tungsten);margin-bottom:40px;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.hero .meta-row .sep{opacity:0.4}
+.hero h1{font-family:var(--display);font-weight:600;font-size:clamp(40px,5.0vw,72px);letter-spacing:-0.018em;line-height:1.06;color:var(--flare);margin-bottom:28px}
+.hero .abstract{font-family:var(--body);font-style:italic;font-size:20px;line-height:1.62;color:var(--platinum);max-width:60ch;margin-bottom:48px}
+.hero-rule{width:64px;height:1px;background:var(--sapphire);margin-bottom:32px}
+.hero .contact-row{display:flex;gap:32px;font-family:var(--mono);font-size:11px;letter-spacing:0.10em;text-transform:uppercase}
+.hero .contact-row a{color:var(--sapphire-deep);text-decoration:none;border-bottom:1px solid transparent;transition:all 0.3s}
+.hero .contact-row a:hover{color:var(--flare);border-bottom-color:var(--flare)}
+.hero .contact-row a.primary{color:var(--flare);border-bottom-color:rgba(255,255,255,0.3)}
+.headshot-frame{position:relative;width:100%;aspect-ratio:3/4;overflow:hidden;border:none}
+.headshot-frame img{width:100%;height:100%;object-fit:cover;filter:grayscale(100%) contrast(1.1);transition:filter 0.6s ease}
+.headshot-frame:hover img{filter:grayscale(0%) contrast(1.05)}
+.ambient{position:absolute;right:-10%;top:50%;transform:translateY(-50%);width:60%;max-width:780px;aspect-ratio:1;pointer-events:none;z-index:1;opacity:0;animation:ambientFade 1.6s 0.6s var(--ease-out) forwards}
+@keyframes ambientFade{to{opacity:0.25}}
+.ambient svg{width:100%;height:100%;display:block}
+.bracket{font-family:var(--mono);font-size:10px;letter-spacing:0.30em;text-transform:uppercase;color:inherit}
+.bracket::before,.bracket::after{content:'';display:inline-block;width:14px;height:1px;background:currentColor;vertical-align:middle;opacity:0.5}
+.bracket::before{margin-right:10px}
+.bracket::after{margin-left:10px}
+@media(max-width:1024px){.split-grid{grid-template-columns:1fr;gap:40px}.headshot-frame{max-width:300px;margin:0 auto;order:-1}}
+
+.section-eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:0.30em;text-transform:uppercase;color:var(--sapphire);margin-bottom:18px}
+.band--paper .section-eyebrow{color:var(--ink-blue)}
+.section-heading{font-family:var(--display);font-size:clamp(34px,3.6vw,48px);font-weight:600;letter-spacing:-0.012em;line-height:1.12;color:var(--flare);margin-bottom:48px}
+.band--paper .section-heading{color:var(--ink)}
+
+.bio-wrap{max-width:1400px;margin:0 auto;padding:0 48px}
+.bio-card{background:#fff;border:1px solid var(--paper-3);padding:48px;position:relative;overflow:hidden}
+.bio-card p{font-family:var(--body);font-size:16px;line-height:1.85;color:var(--ink);margin-bottom:24px;max-width:1100px}
+.bio-card p:last-of-type{margin-bottom:0}
+.bio-expand-btn{background:transparent;border:1px solid rgba(0,0,0,0.2);color:var(--ink-blue);font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:0.10em;padding:12px 24px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:all 0.3s;margin-top:16px;outline:none}
+.bio-expand-btn:hover{border-color:var(--ink-blue);background:rgba(26,58,107,0.06)}
+@media(max-width:768px){.bio-wrap{padding:0 24px}.bio-card{padding:32px 24px}}
+
+.project-carousel{position:relative;width:100%;overflow:hidden;padding-bottom:24px;mask-image:linear-gradient(to right,transparent,black 5%,black 95%,transparent);-webkit-mask-image:linear-gradient(to right,transparent,black 5%,black 95%,transparent)}
+.carousel-track{display:flex;gap:24px;min-width:max-content;animation:scrollMarquee 90s linear infinite;will-change:transform}
+.carousel-track:hover{animation-play-state:paused}
+@keyframes scrollMarquee{0%{transform:translateX(0)}100%{transform:translateX(calc(-50% - 12px))}}
+.carousel-group{display:flex;gap:24px}
+.p-card{width:420px;min-height:280px;position:relative;background:rgba(22,22,22,0.65);border:1px solid var(--graphite);text-decoration:none;overflow:hidden;transition:border-color 0.6s,transform 0.4s,background 0.35s;display:flex;flex-direction:column;cursor:pointer}
+.p-card:hover{transform:translateY(-4px);border-color:rgba(77,140,255,0.4);background:rgba(15,82,186,0.15)}
+.p-content{padding:36px;display:flex;flex-direction:column;height:100%}
+.p-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:0.35em;text-transform:uppercase;color:var(--tungsten);margin-bottom:18px}
+.p-title{font-family:var(--display);font-size:24px;color:var(--flare);margin-bottom:14px;font-weight:600;line-height:1.25}
+.p-desc{font-family:var(--body);font-size:14.5px;color:var(--tungsten);line-height:1.7;flex-grow:1}
+.p-link{font-family:var(--mono);font-size:10px;color:var(--sapphire);text-transform:uppercase;letter-spacing:0.18em;margin-top:20px;display:inline-block;opacity:0.7;transition:opacity 0.3s}
+.p-card:hover .p-link{opacity:1}
+@media(max-width:768px){.p-card{width:320px}.p-content{padding:24px}}
+.view-all-link{font-family:var(--mono);font-size:12px;text-decoration:none;text-transform:uppercase;letter-spacing:0.18em;border-bottom:1px solid currentColor;padding-bottom:4px;display:inline-block;margin-top:32px;margin-bottom:60px;transition:color 0.3s}
+.band--dark .view-all-link{color:var(--sapphire)}
+.band--dark .view-all-link:hover{color:var(--flare)}
+
+.resume-stack{display:flex;flex-direction:column;gap:0;margin-bottom:60px}
+.r-card{position:relative;overflow:hidden;transition:border-color 0.7s}
+.band--dark .r-card{background:rgba(22,22,22,0.65);border:1px solid var(--graphite);border-bottom:0}
+.band--dark .r-card:last-child{border-bottom:1px solid var(--graphite)}
+.band--dark .r-card:hover{border-color:var(--tungsten)}
+.band--paper .r-card{background:#fff;border:1px solid var(--paper-3);border-bottom:0}
+.band--paper .r-card:last-child{border-bottom:1px solid var(--paper-3)}
+.band--paper .r-card:hover{border-color:rgba(0,0,0,0.2)}
+.r-bg{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(0,0,0,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,0.02) 1px,transparent 1px);background-size:40px 40px;z-index:0}
+.band--dark .r-bg{background-image:linear-gradient(rgba(245,245,247,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(245,245,247,0.02) 1px,transparent 1px)}
+.r-content{position:relative;z-index:1;padding:48px}
+.r-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;padding-bottom:24px}
+.band--dark .r-header{border-bottom:1px solid var(--graphite)}
+.band--paper .r-header{border-bottom:1px solid var(--paper-3)}
+.r-title{font-family:var(--display);font-size:28px;font-weight:600;margin-bottom:8px;line-height:1.2}
+.band--dark .r-title{color:var(--flare)}
+.band--paper .r-title{color:var(--ink)}
+.r-company{font-family:var(--body);font-size:16px;font-style:italic}
+.band--dark .r-company{color:var(--sapphire)}
+.band--paper .r-company{color:var(--ink-blue)}
+.r-dates{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:0.10em;padding:6px 16px;white-space:nowrap}
+.band--dark .r-dates{color:var(--tungsten);border:1px solid var(--graphite)}
+.band--paper .r-dates{color:var(--ink-3);border:1px solid var(--paper-3)}
+.r-intro{font-family:var(--body);font-size:15px;line-height:1.8;margin-bottom:24px;max-width:900px}
+.band--dark .r-intro{color:var(--platinum)}
+.band--paper .r-intro{color:var(--ink-2)}
+.r-bullets{list-style:none;padding-left:0;margin:0}
+.r-bullets li{position:relative;font-family:var(--body);font-size:14.5px;line-height:1.7;margin-bottom:14px;padding-left:20px;max-width:900px}
+.band--dark .r-bullets li{color:var(--tungsten)}
+.band--paper .r-bullets li{color:var(--ink-3)}
+.r-bullets li::before{content:'\25B8';position:absolute;left:0;top:2px;font-family:var(--mono);font-size:11px}
+.band--dark .r-bullets li::before{color:var(--sapphire)}
+.band--paper .r-bullets li::before{color:var(--ink-blue)}
+@media(max-width:768px){.r-header{flex-direction:column;gap:16px}.r-content{padding:32px 24px}}
+
+.edu-card{padding:48px}
+.band--dark .edu-card{background:rgba(22,22,22,0.65);border:1px solid var(--graphite);border-bottom:0}
+.band--dark .edu-card:last-child{border-bottom:1px solid var(--graphite)}
+.band--paper .edu-card{background:#fff;border:1px solid var(--paper-3);border-bottom:0}
+.band--paper .edu-card:last-child{border-bottom:1px solid var(--paper-3)}
+.edu-title{font-family:var(--display);font-size:24px;font-weight:600;margin-bottom:8px;line-height:1.2}
+.band--dark .edu-title{color:var(--flare)}
+.band--paper .edu-title{color:var(--ink)}
+.edu-school{font-family:var(--body);font-size:15px;font-style:italic;margin-bottom:24px}
+.band--dark .edu-school{color:var(--sapphire)}
+.band--paper .edu-school{color:var(--ink-blue)}
+.edu-row{margin-bottom:16px}
+.edu-row:last-child{margin-bottom:0}
+.edu-label{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.30em;margin-bottom:6px}
+.band--dark .edu-label{color:var(--sapphire)}
+.band--paper .edu-label{color:var(--ink-blue)}
+.edu-value{font-family:var(--body);font-size:15px;line-height:1.6}
+.band--dark .edu-value{color:var(--platinum)}
+.band--paper .edu-value{color:var(--ink-2)}
+
+.tech-block{padding:40px 48px}
+.band--dark .tech-block{background:rgba(22,22,22,0.65);border:1px solid var(--graphite);border-bottom:0}
+.band--dark .tech-block:last-child{border-bottom:1px solid var(--graphite)}
+.band--paper .tech-block{background:#fff;border:1px solid var(--paper-3);border-bottom:0}
+.band--paper .tech-block:last-child{border-bottom:1px solid var(--paper-3)}
+.tech-title{font-family:var(--display);font-size:20px;font-weight:600;margin-bottom:20px}
+.band--dark .tech-title{color:var(--flare)}
+.band--paper .tech-title{color:var(--ink)}
+.tagrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.tag{font-family:var(--mono);font-size:10px;letter-spacing:0.20em;text-transform:uppercase;padding:6px 12px;background:transparent;transition:border-color 0.3s,color 0.3s}
+.band--dark .tag{color:var(--tungsten);border:1px solid var(--graphite)}
+.band--dark .tag:hover{border-color:rgba(77,140,255,0.5);color:var(--platinum)}
+.band--paper .tag{color:var(--ink-3);border:1px solid var(--paper-3)}
+.band--paper .tag:hover{border-color:var(--ink-blue);color:var(--ink)}
+
+footer.site-foot{background:var(--obsidian);color:var(--tungsten);padding:60px 48px;border-top:1px solid var(--graphite);font-family:var(--mono);font-size:10px;letter-spacing:0.16em;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;position:relative;z-index:10}
+footer.site-foot a{color:inherit;text-decoration:none;opacity:0.8;transition:opacity 0.3s}
+footer.site-foot a:hover{opacity:1;color:var(--platinum)}
+@media(max-width:768px){footer.site-foot{flex-direction:column;gap:24px;text-align:center;padding:40px 24px}}
+
+.reveal{opacity:0;transform:translateY(18px);transition:opacity 0.9s var(--ease-out),transform 0.9s var(--ease-out)}
+.reveal.is-on{opacity:1;transform:none}
+
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div class="ambient-gradient-b"></div>
+<canvas id="glCanvas"></canvas>
+
+<header id="topnav">
+  <a href="#" class="brand">Dr. Heather Leffew</a>
+  <div class="nav-links"><a href="projects-repository.html" class="nav-btn">Projects -></a></div>
+</header>
+
+<section class="hero" data-mode="dark">
+  <div class="ambient" aria-hidden="true">
+    <svg viewBox="0 0 600 600" fill="none">
+      <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#4D8CFF" stop-opacity="0.55"/><stop offset="100%" stop-color="#0F52BA" stop-opacity="0.0"/></linearGradient></defs>
+      <g stroke="url(#g1)" stroke-width="1" fill="none"><circle cx="300" cy="300" r="80"/><circle cx="300" cy="300" r="140"/><circle cx="300" cy="300" r="200"/><circle cx="300" cy="300" r="260"/></g>
+      <line x1="60" y1="540" x2="540" y2="60" stroke="#4D8CFF" stroke-width="1" stroke-dasharray="2 6" opacity="0.6"/>
+      <g fill="#4D8CFF" opacity="0.5"><circle cx="120" cy="490" r="2"/><circle cx="180" cy="430" r="2"/><circle cx="240" cy="380" r="2"/><circle cx="300" cy="310" r="2"/><circle cx="360" cy="260" r="2"/><circle cx="420" cy="210" r="2"/><circle cx="480" cy="140" r="2"/></g>
+    </svg>
+  </div>
+  <div class="col-wide">
+    <div class="hero-text">
+      <div class="meta-row"><span class="bracket">Executive Profile</span><span class="sep">/</span><span>Data Science &amp; Systems Architecture</span></div>
+      <h1>Machine Learning Leadership &amp; Strategy</h1>
+      <div class="hero-rule"></div>
+      <p class="abstract">Modeling Human Complexity Through Applied AI</p>
+      <div class="contact-row">
+        <a href="resume.pdf" target="_blank" class="primary">Resume PDF</a>
+        <a href="https://linkedin.com/in/heathertleffew" target="_blank">LinkedIn</a>
+        <a href="projects-repository.html">Research Index</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BIO (paper) -->
+<section class="band band--paper" id="executive-bio" data-mode="paper">
+  <div class="bio-wrap">
+    <div class="section-eyebrow">Background</div>
+    <h2 class="section-heading">Executive Biography</h2>
+    <div class="bio-card">
+      <div class="split-grid">
+        <div class="bio-text-col">
+          <div class="bio-preview">
+            <p><strong>Dr. Heather Leffew</strong> is an executive data science leader and behavioral systems modeler with over twenty years of experience in AI strategy, digital transformation, and quantitative research. With a PhD in Psychology focusing on quantitative predictive linguistics, her career has been defined by a single objective: building mathematically rigorous, scalable systems capable of mapping complex human behavior.</p>
+            <button id="expandBioBtn" class="bio-expand-btn">Read Full Biography <span>+</span></button>
+          </div>
+          <div class="bio-full" id="bioFullContent" style="display:none;opacity:0;outline:none;" tabindex="-1">
+          <p>Her trajectory from clinical neurotherapy into enterprise data architecture is uncommon but entirely deliberate. Early in her career, she conducted forensic and diagnostic psychiatric evaluations, responding to critical incidents and modeling the neurobiology of severe trauma. Her doctoral research investigated the linguistics of mass violence, utilizing computer-mediated psychometrics to map how implicit power drives within written manifestos reliably escalate into physical threat trajectories. That clinical foundation forced a realization: technology is not neutral, it is a behavioral intervention executed at scale, and to address systemic harm, Dr. Leffew needed to master the engineering pipelines that dictate those interventions across massive populations.</p>
+          <p>At TikTok, as a Principal Data Scientist and Applied Researcher, Dr. Leffew took ownership of the measurement and detection capabilities protecting platform integrity. She developed analytics suites processing over one billion records and architected the statistical safety frameworks necessary to detect semantic coercion and algorithmic harm. Her team mapped cross-modal escalations, deployed automated detection systems at 95% accuracy, and established an industry-first external IRB methodology prioritizing ethical review of global research.</p>
+          <p>As Director of Data Science at Spokeo, Dr. Leffew built and scaled the AI function to completely transform how identity is codified. She led the development of a proprietary 15-step distributed machine learning pipeline powering a 49-terabyte knowledge graph. This infrastructure replaced subjective record linkage with a systematic entity resolution engine relying on graph machine learning and weak supervision. By defining strict accountability and ablation frameworks, her organization reduced core processing time from 150 hours to under 36 hours and deployed NLP-driven semantic clustering engines capable of organizing thousands of raw vendor schemas into a strict canonical taxonomy, fundamentally shifting the corporate data procurement strategy.</p>
+          <p>Before focusing exclusively on massive consumer technology, Dr. Leffew directed evaluations, analytics, and accreditation for national public safety organizations. She led digital transformations that migrated legacy psychological assessments into scalable cloud architectures, improving operational throughput five-fold across a thousand client agencies. Applying rigorous evidence-based measurement, she developed predictive analytics for mental health service forecasting, securing massive grant funding for behavioral science innovation and establishing stringent compliance protocols alongside national regulatory bodies.</p>
+          <p>Today, her technical stack relies heavily on PySpark, AWS SageMaker, graph ML, and deep reinforcement learning, though the absolute tooling is always secondary to the architectural requirement that models must generate interpretable, fairness-aware outcomes under intense ambiguity. Dr. Leffew builds scalable intelligence infrastructures that embed safety, psychometric validity, and ethical boundaries directly into production environments. Having psychologists design the systems that govern human beings makes perfect sense.</p>
+            <button id="collapseBioBtn" class="bio-expand-btn">Show Less <span>-</span></button>
+          </div>
+        </div>
+        <div class="headshot-frame"><img src="design_system/assets/Heather_headshot.jpg" alt="Dr. Heather Leffew"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS (dark) -->
+<section class="band band--dark" id="featured-projects" data-mode="dark">
+  <div class="col-wide">
+    <div class="section-eyebrow">Featured Work</div>
+    <h2 class="section-heading">Interactive Simulators &amp; Projects</h2>
+    <div class="project-carousel">
+      <div class="carousel-track" id="dynamic-carousel-track">
+        <!-- JavaScript will dynamically inject 2 sets of identical random cards here for infinite scroll -->
+        <div class="carousel-group" id="carousel-group-1"></div>
+        <div class="carousel-group" id="carousel-group-2" aria-hidden="true"></div>
+      </div>
+    </div>
+    <a href="projects-repository.html" class="view-all-link">View All Projects -></a>
+  </div>
+</section>
+
+<!-- EDUCATION (paper) -->
+<section class="band band--paper" id="education" data-mode="paper">
+  <div class="col-wide">
+    <div class="section-eyebrow">Academic Background</div>
+    <h2 class="section-heading">Education &amp; Research</h2>
+    <div class="resume-stack">
+      <div class="edu-card gs-reveal"><h3 class="edu-title">Doctor of Philosophy (PhD), Psychology</h3><p class="edu-school">Fielding Graduate University / APA Accredited</p><div class="edu-row"><div class="edu-label">Specialization</div><div class="edu-value">Quantitative Predictive Linguistics</div></div><div class="edu-row"><div class="edu-label">Dissertation</div><div class="edu-value">Instrumental and Affective Mass Murder: Establishing a Predictive Typology with Computer-Mediated Linguistic Analysis.</div></div><div class="edu-row"><div class="edu-label">Conference Presentation</div><div class="edu-value">Implicit Power Drives in the Manifestos Preceding Autogenic Massacres.</div></div></div>
+      <div class="edu-card gs-reveal"><h3 class="edu-title">Master of Arts (MA), Psychology</h3><p class="edu-school">Fielding Graduate University / WSCUC Accredited / 4.14 GPA</p><div class="edu-row"><div class="edu-label">Specialization</div><div class="edu-value">Advanced Psychometrics</div></div></div>
+      <div class="edu-card gs-reveal"><h3 class="edu-title">Bachelor of Science (BS), Psychology</h3><p class="edu-school">Liberty University / SACSOC Accredited / Summa Cum Laude (4.00 GPA)</p><div class="edu-row"><div class="edu-label">Specialization</div><div class="edu-value">Emergency Management &amp; Public Safety</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE (paper) -->
+<section class="band band--paper" id="experience" data-mode="paper">
+  <div class="col-wide">
+    <div class="section-eyebrow">Organizational Outcomes</div>
+    <h2 class="section-heading">Professional Experience</h2>
+    <div class="resume-stack">
+      <div class="r-card gs-reveal"><div class="r-bg"></div><div class="r-content"><div class="r-header"><div><h3 class="r-title">Director of Data Science</h3><p class="r-company">Spokeo</p></div><div class="r-dates">Sep 2025 - Present</div></div><p class="r-intro">Founding technical leader who built and scaled Spokeo's Data Science and AI function, delivering production ML and NLP systems across search relevance, fraud detection, customer intelligence, and data procurement in partnership with ~80 engineers and product leaders across 8+ cross-functional squads.</p><ul class="r-bullets"><li>Owned the AI operating model with executive leadership, defining an OKR taxonomy and delivery mechanisms to translate strategy into measurable execution.</li><li>Led end-to-end delivery of a proprietary 15-step ML intelligence pipeline combining knowledge graphs, graph ML, and weak supervision for entity resolution and data fusion across ~49TB of multi-vendor data.</li><li>Set production standards for scale and iteration in partnership with engineering, reducing core processing time from 150+ hours to 24-36 hours and establishing A/B testing and model evaluation practices to support reliable, repeatable releases.</li><li>Improved data procurement decisions by implementing source independence and ablation frameworks to quantify vendor redundancy and ROI.</li><li>Delivered NLP-driven schema discovery via a semantic clustering engine that mapped thousands of vendor columns to 75 canonical attribute types, raising schema discovery coverage to 72%.</li><li>Embedded Responsible AI and a 4-tier regulatory compliance system into the ML lifecycle for compliance-ready deployment.</li><li>Developed recruitment strategy and nurtured a high-performing data science team, reinforcing technical rigor and strong cross-functional partnership.</li></ul></div></div>
+      <div class="r-card gs-reveal"><div class="r-bg"></div><div class="r-content"><div class="r-header"><div><h3 class="r-title">Full-Stack Principal Data Scientist &amp; Applied Researcher</h3><p class="r-company">TikTok USDS | ByteDance</p></div><div class="r-dates">Jul 2022 - Jul 2025</div></div><p class="r-intro">Owned the roadmap for ML measurement and detection capabilities and led cross-functional teams up to 25 (data science, engineering, policy), setting evaluation standards for accuracy, safety, and operational readiness.</p><ul class="r-bullets"><li>Launched an analytics product suite (text analysis pipeline + multi-signal detection frameworks) processing 1B+ records, improving brand-safety assurance and enabling data-driven content strategy optimization.</li><li>Delivered measurement products identifying 400K+ violative accounts, enabling enforcement on 15K+ accounts without increasing appeals, and reducing manual review effort by 40%.</li><li>Secured dedicated compute capacity and senior stakeholder alignment enabling scalable processing and improving reliability by reducing query failures.</li><li>Leader for analytics as product initiatives, including resourcing for large initiatives, team allocation, hardware upgrades, and procurement of third-party software through enterprise compliance processes.</li><li>Led collaborative research partnerships with educational institutions and research organizations, leading the creation of an industry first external IRB methodology for ethical review and legal approval of research initiatives.</li><li>Deployed organization-wide automated detection systems with 95% accuracy, addressing highest-harm platform issues and protect brand safety and platform integrity.</li><li>Strengthened technical rigor and enforcement of consistent practices via mentorship and coaching on statistics, measurement, methodology, and research design.</li></ul></div></div>
+      <div class="r-card gs-reveal"><div class="r-bg"></div><div class="r-content"><div class="r-header"><div><h3 class="r-title">Head of Accreditation</h3><p class="r-company">National Emergency Responder and Public Safety Center</p></div><div class="r-dates">Nov 2020 - Jul 2022</div></div><p class="r-intro">Led a team of 8 with end-to-end ownership of product development, market analysis, and accreditation compliance for programs serving 1,000+ agencies, with full P&amp;L responsibility.</p><ul class="r-bullets"><li>Drove B2B client acquisition by authoring winning RFPs, translating agency requirements into clear product scope and partnership strategy.</li><li>Owned vision and roadmap for analytics products, enabling data-driven operational decision workflows targeting retention and expansion.</li><li>Built strategic partnerships with industry-leading organizations to expand reach, strengthen credibility, and scale offerings.</li><li>Presented to government officials and oversight bodies, communicating risk and compliance considerations to guide leadership decisions in regulated environments.</li></ul></div></div>
+      <div class="r-card gs-reveal"><div class="r-bg"></div><div class="r-content"><div class="r-header"><div><h3 class="r-title">Director of Evaluations and Analytics</h3><p class="r-company">Brower Psychological Police and Public Safety Services</p></div><div class="r-dates">Jul 2019 - Jul 2022</div></div><p class="r-intro">Directed three product teams (18 total members), owning delivery of digital psychological assessment products, people analytics platforms, and wellness programs in regulated public safety environments.</p><ul class="r-bullets"><li>Increased operational throughput 5x by leading a digital transformation via cloud-based assessment products, while digitizing end-to-end workflows, improving speed, efficiency, and objectivity.</li><li>Secured $500K+ in grant funding by building data-driven roadmaps and demonstrating measurable DEI outcomes through proposals grounded in behavioral science and digital innovation.</li><li>Built partnerships with the national regulatory bodies, aligned offerings with regulatory expectations to achieve compliance, accreditation, and endorsements.</li><li>Won RFPs to expand a multi-state client portfolio, translating operational requirements into deliverable scope and driving revenue growth and market expansion.</li><li>Developed predictive analytics for mental health service forecasting, applying evidence-based measurement to guide operational improvements to identify and serve the employees of all client agencies fairly and equitably.</li></ul></div></div>
+      <div class="r-card gs-reveal"><div class="r-bg"></div><div class="r-content"><div class="r-header"><div><h3 class="r-title">Doctoral Researcher &amp; Supervisor</h3><p class="r-company">Fielding Graduate University</p></div><div class="r-dates">May 2015 - Jul 2019</div></div><p class="r-intro">Led supervision and training for 12 master's-level clinicians and practicum students across clinical and public safety settings, while conducting research in predictive behavioral analytics and clinically grounded measurement.</p><ul class="r-bullets"><li>Diagnostic Psychological Evaluations: Cedar Springs Psychiatric Hospital.</li><li>Forensic, Occupational, and Clinical Neuropsychological Assessment: Rocky Mountain Behavioral Health.</li><li>Critical Incident Response, Fitness for Duty Evaluations, Psychotherapy: Brower Psychological Police and Public Safety Psychology.</li><li>Assistant Disaster Coordinator: Comprehensive Clinical Services (Aurora Mental Health Center).</li><li>Teaching Assistant: Theories of Psychotherapy.</li><li>Research Assistant: Clinically Predictive Linguistic Analysis of Thematic Apperception Test Narratives.</li></ul></div></div>
+      <div class="r-card gs-reveal"><div class="r-bg"></div><div class="r-content"><div class="r-header"><div><h3 class="r-title">Staff Data Scientist</h3><p class="r-company">QMS Infotech, Inc.</p></div><div class="r-dates">Mar 2008 - Oct 2019</div></div><p class="r-intro">Developed advanced analytics products to audit private-sector hiring practices, identifying systemic bias and establishing psychometric and statistical standards grounded in regulatory compliance for B2B clients.</p><ul class="r-bullets"><li>Delivered defensible analytics and audit frameworks enabling HR partners to implement bias-mitigating policies at scale while maintaining psychometric validity and legal compliance.</li><li>Established repeatable statistical modeling practices for audit workflows, producing auditable analyses and actionable recommendations that improved client hiring strategies and diversity outcomes.</li></ul></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CAPABILITIES (dark) -->
+<section class="band band--dark" id="capabilities" data-mode="dark">
+  <div class="col-wide">
+    <div class="section-eyebrow">Core Competencies</div>
+    <h2 class="section-heading">Technical &amp; Leadership Capabilities</h2>
+    <div class="resume-stack">
+      <div class="tech-block reveal"><div class="tech-title">Leadership &amp; AI Strategy</div><div class="tagrow"><span class="tag">Technical Leadership</span><span class="tag">AI Strategy</span><span class="tag">ML Leadership</span><span class="tag">Product Strategy</span><span class="tag">Cross-Functional Leadership</span><span class="tag">Mentoring &amp; Coaching</span><span class="tag">OKR Taxonomy</span><span class="tag">AI Governance</span><span class="tag">Responsible AI</span><span class="tag">Regulatory Compliance</span><span class="tag">Bias Mitigation</span><span class="tag">Ethical AI</span></div></div>
+      <div class="tech-block reveal"><div class="tech-title">Machine Learning &amp; Modeling</div><div class="tagrow"><span class="tag">Neuro-Symbolic AI</span><span class="tag">Graph ML</span><span class="tag">Knowledge Graphs</span><span class="tag">Entity Resolution</span><span class="tag">Weak Supervision</span><span class="tag">Reinforcement Learning</span><span class="tag">Agentic Systems</span><span class="tag">LLMs</span><span class="tag">NLP</span><span class="tag">Semantic Clustering</span><span class="tag">Predictive Modeling</span><span class="tag">XGBoost</span><span class="tag">Causal Inference</span><span class="tag">Ablation Studies</span></div></div>
+      <div class="tech-block reveal"><div class="tech-title">MLOps &amp; Infrastructure</div><div class="tagrow"><span class="tag">End-to-End Pipeline Architecture</span><span class="tag">Model Lifecycle Mgmt</span><span class="tag">Distributed Computing</span><span class="tag">AWS SageMaker / EMR / EC2 / Glue</span><span class="tag">Databricks</span><span class="tag">Delta Lake</span><span class="tag">Apache Spark</span><span class="tag">Airflow</span><span class="tag">Docker &amp; Kubernetes</span><span class="tag">CI/CD</span></div></div>
+      <div class="tech-block reveal"><div class="tech-title">Research &amp; Measurement</div><div class="tagrow"><span class="tag">Experimental Design</span><span class="tag">A/B Testing</span><span class="tag">Psychometrics</span><span class="tag">Source Independence Analysis</span><span class="tag">Behavioral Typologies</span><span class="tag">Incrementality Testing</span><span class="tag">Media Mix Modeling</span><span class="tag">Lift Studies</span></div></div>
+      <div class="tech-block reveal"><div class="tech-title">Technical Stack &amp; Tools</div><div class="tagrow"><span class="tag">Python</span><span class="tag">Pandas / NumPy</span><span class="tag">Scikit-learn</span><span class="tag">PyTorch</span><span class="tag">TensorFlow</span><span class="tag">Hugging Face</span><span class="tag">PySpark</span><span class="tag">SQL / Hive / Scala</span><span class="tag">Kafka</span><span class="tag">Tableau / Power BI</span></div></div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-foot">
+  <div>(c) 2026 Dr. Heather Leffew. All Rights Reserved.</div>
+  <div style="display:flex;gap:24px"><a href="https://linkedin.com/in/heathertleffew" target="_blank">LinkedIn</a></div>
+</footer>
+
+<script>
+try {
+  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+  }
+} catch(e) { console.warn("GSAP load failed", e); }
+
+let cachedScrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+window.addEventListener('resize', () => {
+  cachedScrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+});
+window.addEventListener('scroll', () => {
+  const p = cachedScrollHeight > 0 ? (window.scrollY / cachedScrollHeight) * 100 : 0;
+  const progEl = document.getElementById('progress');
+  if(progEl) progEl.style.setProperty('--p', p + '%');
+}, { passive: true });
+
+(function initNavMode() {
+  try {
+    const nav = document.getElementById('topnav');
+    const bands = document.querySelectorAll('[data-mode]');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          nav.classList.toggle('is-paper', entry.target.dataset.mode === 'paper');
+        }
+      });
+    }, { rootMargin: "-15% 0px -84% 0px" });
+    
+    bands.forEach(b => observer.observe(b));
+    
+    // Initial paint check
+    const center = window.innerHeight * 0.15;
+    bands.forEach(b => {
+      const r = b.getBoundingClientRect();
+      if (r.top <= center && r.bottom > center) nav.classList.toggle('is-paper', b.dataset.mode === 'paper');
+    });
+  } catch(e) { console.warn(e); }
+})();
+</script>
+
+<script>
+(function initWebGL() {
+  try {
+    if (typeof THREE === 'undefined') throw new Error("THREE.js not loaded");
+    const canvas = document.getElementById('glCanvas');
+    if (!canvas) return;
+    
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: "high-performance" });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    
+    const scene = new THREE.Scene();
+
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 200);
+    camera.position.set(0, 0, 16);
+    
+    function createGlowTexture() {
+      const canvas = document.createElement('canvas');
+      canvas.width = 64; canvas.height = 64;
+      const ctx = canvas.getContext('2d');
+      const gradient = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+      gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
+      gradient.addColorStop(0.2, 'rgba(77, 140, 255, 0.8)');
+      gradient.addColorStop(0.5, 'rgba(77, 140, 255, 0.2)');
+      gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, 64, 64);
+      return new THREE.CanvasTexture(canvas);
+    }
+
+    const particleCount = 80;
+    const particles = new THREE.BufferGeometry();
+    const positions = new Float32Array(particleCount * 3);
+    const velocities = new Float32Array(particleCount * 3);
+    
+    for(let i = 0; i < particleCount; i++) {
+      positions[i * 3] = (Math.random() - 0.5) * 40;
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 20;
+      positions[i * 3 + 2] = (Math.random() - 0.5) * 30 - 5;
+      
+      velocities[i * 3] = (Math.random() - 0.5) * 0.006;
+      velocities[i * 3 + 1] = (Math.random() - 0.5) * 0.006;
+      velocities[i * 3 + 2] = (Math.random() - 0.5) * 0.006;
+    }
+    
+    particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    
+    const pMaterial = new THREE.PointsMaterial({
+      size: 1.5,
+      map: createGlowTexture(),
+      transparent: true,
+      opacity: 0.8,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
+    });
+    
+    const pointCloud = new THREE.Points(particles, pMaterial);
+    scene.add(pointCloud);
+    
+    const maxLines = 1500; 
+    const linePositions = new Float32Array(maxLines * 6);
+    const lineColors = new Float32Array(maxLines * 6);
+    
+    const linesGeometry = new THREE.BufferGeometry();
+    linesGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3).setUsage(THREE.DynamicDrawUsage));
+    linesGeometry.setAttribute('color', new THREE.BufferAttribute(lineColors, 3).setUsage(THREE.DynamicDrawUsage));
+    
+    const linesMaterial = new THREE.LineBasicMaterial({
+      vertexColors: true,
+      blending: THREE.AdditiveBlending,
+      transparent: true,
+      opacity: 0.15,
+      depthWrite: false
+    });
+    const linesMesh = new THREE.LineSegments(linesGeometry, linesMaterial);
+    scene.add(linesMesh);
+
+    // Keep it slightly biased to the right for layout balance
+    pointCloud.position.x = 2;
+    linesMesh.position.x = 2;
+
+    const mouse = new THREE.Vector2(-9999, -9999);
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+    });
+    window.addEventListener('mouseout', () => { mouse.x = -9999; });
+
+    let scrollProgress = 0;
+    let webglScrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+    window.addEventListener('resize', () => {
+      webglScrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+    });
+    window.addEventListener('scroll', () => {
+      scrollProgress = webglScrollHeight > 0 ? window.scrollY / webglScrollHeight : 0;
+    }, { passive: true });
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    const baseColor = new THREE.Color(0x0F52BA);
+    const highlightColor = new THREE.Color(0x4D8CFF);
+    
+    let frameCount = 0;
+    function animate() {
+      requestAnimationFrame(animate);
+
+      camera.position.z = 25;
+      camera.position.y = 2 + (scrollProgress * 5);
+      camera.lookAt(0, 0, 0);
+
+      const posAttr = particles.attributes.position;
+
+      let vertexpos = 0;
+      let colorpos = 0;
+      let lineCount = 0;
+
+      const vector = new THREE.Vector3(mouse.x, mouse.y, 0.5);
+      vector.unproject(camera);
+      const dir = vector.sub(camera.position).normalize();
+      const distance = -camera.position.z / dir.z;
+      const mouseWorld = camera.position.clone().add(dir.multiplyScalar(distance));
+
+      mouseWorld.x -= pointCloud.position.x;
+
+      for(let i = 0; i < particleCount; i++) {
+        let x = posAttr.getX(i);
+        let y = posAttr.getY(i);
+        let z = posAttr.getZ(i);
+
+        let vx = velocities[i * 3];
+        let vy = velocities[i * 3 + 1];
+        let vz = velocities[i * 3 + 2];
+
+        x += vx;
+        y += vy;
+        z += vz;
+
+        // Gentle bounds bounce
+        if (x > 20 || x < -20) velocities[i * 3] *= -1;
+        if (y > 10 || y < -10) velocities[i * 3 + 1] *= -1;
+        if (z > 15 || z < -25) velocities[i * 3 + 2] *= -1;
+
+        // Gentle mouse repulsion
+        if (mouse.x !== -9999) {
+          const dx = x - mouseWorld.x;
+          const dy = y - mouseWorld.y;
+          const distSq = dx*dx + dy*dy;
+
+          if (distSq < 25) {
+            const force = (25 - distSq) / 25;
+            x += dx * force * 0.05;
+            y += dy * force * 0.05;
+          }
+        }
+
+        posAttr.setXYZ(i, x, y, z);
+
+        // Only calculate lines every other frame to reduce computation
+        if ((frameCount & 1) === 0 && lineCount < maxLines) {
+          for(let j = i + 1; j < particleCount; j++) {
+            if (lineCount >= maxLines) break;
+
+            const dx = x - posAttr.getX(j);
+            const dy = y - posAttr.getY(j);
+            const dz = z - posAttr.getZ(j);
+            const distSq = dx*dx + dy*dy + dz*dz;
+
+            if (distSq < 45) {
+              linePositions[vertexpos++] = x; linePositions[vertexpos++] = y; linePositions[vertexpos++] = z;
+              linePositions[vertexpos++] = posAttr.getX(j); linePositions[vertexpos++] = posAttr.getY(j); linePositions[vertexpos++] = posAttr.getZ(j);
+
+              const alpha = 1.0 - (distSq / 45);
+              const c = baseColor.clone().lerp(highlightColor, alpha);
+
+              lineColors[colorpos++] = c.r; lineColors[colorpos++] = c.g; lineColors[colorpos++] = c.b;
+              lineColors[colorpos++] = c.r; lineColors[colorpos++] = c.g; lineColors[colorpos++] = c.b;
+
+              lineCount++;
+            }
+          }
+        }
+      }
+
+      frameCount++;
+
+      posAttr.needsUpdate = true;
+      if ((frameCount & 1) === 1) {
+        linesGeometry.setDrawRange(0, lineCount * 2);
+        linesGeometry.attributes.position.needsUpdate = true;
+        linesGeometry.attributes.color.needsUpdate = true;
+      }
+
+      let opacityTarget = 1.0 - (scrollProgress * 2.5);
+      if (opacityTarget < 0.05) opacityTarget = 0.05;
+      pMaterial.opacity = 0.8 * opacityTarget;
+      linesMaterial.opacity = 0.15 * opacityTarget;
+
+      renderer.render(scene, camera);
+    }
+    
+    animate();
+  } catch (err) {
+    console.error("WebGL Engine failed to initialize:", err);
+  }
+})();
+</script>
+
+<script>
+try {
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(e.isIntersecting) {
+        e.target.classList.add('is-on');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+} catch(e) {
+  document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-on'));
+}
+
+window.addEventListener('load', () => {
+  try {
+    if (typeof gsap !== 'undefined') {
+      // Lenis smooth scrolling disabled for performance
+      // The interpolation adds too much overhead with complex WebGL animations
+
+      gsap.fromTo('.meta-row', { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 1.0, ease: 'power2.out', delay: 0.4 });
+      gsap.fromTo('h1', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1.4, ease: 'power3.out', delay: 0.9 });
+      gsap.fromTo('.hero-text > p, .hero-rule', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 1.2, stagger: 0.2, ease: 'power2.out', delay: 1.3 });
+      gsap.fromTo('.contact-row', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', delay: 1.8 });
+
+      if (typeof ScrollTrigger !== 'undefined') {
+        gsap.fromTo('.bio-card',
+          { y: 40, opacity: 0 },
+          { y: 0, opacity: 1, duration: 1, ease: 'power2.out', scrollTrigger: { trigger: '#executive-bio', start: 'top 80%' } }
+        );
+        gsap.utils.toArray('.r-card').forEach(card => {
+          gsap.fromTo(card,
+            { y: 30, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.8, ease: 'power2.out', scrollTrigger: { trigger: card, start: 'top 85%' } }
+          );
+        });
+        gsap.utils.toArray('.edu-card').forEach(card => {
+          gsap.fromTo(card,
+            { y: 20, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.8, ease: 'power2.out', scrollTrigger: { trigger: card, start: 'top 90%' } }
+          );
+        });
+      }
+    } else {
+      document.querySelectorAll('.hero-text > *, .headshot-frame, .gs-reveal').forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
+    }
+  } catch(e) {}
+});
+
+const expandBtn=document.getElementById('expandBioBtn');
+const collapseBtn=document.getElementById('collapseBioBtn');
+const fullContent=document.getElementById('bioFullContent');
+if(expandBtn&&fullContent&&collapseBtn){
+  expandBtn.addEventListener('click',()=>{fullContent.style.display='block';expandBtn.style.display='none';gsap.to(fullContent,{opacity:1,duration:0.6,ease:'power2.out',onComplete:()=>{fullContent.focus();ScrollTrigger.refresh()}})});
+  collapseBtn.addEventListener('click',()=>{gsap.to(fullContent,{opacity:0,duration:0.4,ease:'power2.in',onComplete:()=>{fullContent.style.display='none';expandBtn.style.display='inline-flex';ScrollTrigger.refresh()}});document.getElementById('executive-bio').scrollIntoView({behavior:'smooth',block:'start'})});
+}
+</script>
+
+<!-- Static API Dynamic Carousel Injection -->
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+  const g1 = document.getElementById('carousel-group-1');
+  const g2 = document.getElementById('carousel-group-2');
+  
+  if (!g1 || !g2) return;
+  
+  try {
+    const response = await fetch('projects_index.json');
+    if (!response.ok) throw new Error('Failed to load project database');
+    const projects = await response.json();
+    
+    // Fisher-Yates Shuffle
+    for (let i = projects.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [projects[i], projects[j]] = [projects[j], projects[i]];
+    }
+    
+    // Select 10 random projects to populate the carousel
+    const featured = projects.slice(0, 10);
+    
+    let htmlContent = '';
+    
+    featured.forEach(proj => {
+      const url = proj.url || "#";
+      const cat = proj.cat || 'RESEARCH';
+      const title = proj.title;
+      let desc = proj.desc || '';
+      if(desc.length > 115) desc = desc.substring(0, 112) + '...';
+      
+      htmlContent += `
+        <a href="${url}" class="p-card">
+          <div class="p-content">
+            <div class="p-eyebrow">${cat}</div>
+            <h3 class="p-title">${title}</h3>
+            <p class="p-desc">${desc}</p>
+            <span class="p-link">Read Case Study -></span>
+          </div>
+        </a>
+      `;
+    });
+    
+    // Inject the identical content into both groups to create the seamless infinite scroll illusion
+    g1.innerHTML = htmlContent;
+    g2.innerHTML = htmlContent;
+    
+  } catch(e) {
+    console.error('Dynamic Engine Error:', e);
+    const errorMsg = '<div style="padding: 36px; color: var(--tungsten); font-family: var(--mono); font-size: 11px; text-transform: uppercase;">Engine initialization failed. Loading static fallback...</div>';
+    g1.innerHTML = errorMsg;
+  }
+});
+</script>
+
+</body>
+</html>
