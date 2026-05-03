@@ -40,20 +40,5 @@
         "url": "AI_Equity_Framework/ai-equity-framework.html",
         "time": "5 min read",
         "visual": "<svg id=\"sim-svg\" preserveaspectratio=\"none\" viewbox=\"0 0 400 300\"></svg>"
-    },
-    {
-        "id": "Multimodal_Autism_AI",
-        "title": "Building an Ultra-Realistic Multimodal AI for Autism Assessment",
-        "desc": "An ADOS-2-aligned clinical AI pipeline featuring an interactive Bayesian uncertainty simulator.",
-        "cat": "Research & Architecture",
-        "subtype": "CLINICAL AI",
-        "tags": [
-            "CLINICAL AI",
-            "Data Science",
-            "Machine Learning"
-        ],
-        "url": "Multimodal_Autism_AI/multimodal-autism-ai.html",
-        "time": "10 min read",
-        "visual": "<svg fill=\"none\" viewbox=\"0 0 600 600\"><path d=\"M 100 300 Q 300 100 500 300 T 900 300\" fill=\"none\" stroke=\"#4D8CFF\" stroke-width=\"2\" opacity=\"0.8\"></path><circle cx=\"300\" cy=\"200\" r=\"4\" fill=\"#7A1626\"></circle><circle cx=\"500\" cy=\"300\" r=\"4\" fill=\"#4D8CFF\"></circle></svg>"
     }
 ]
