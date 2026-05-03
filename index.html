@@ -291,11 +291,21 @@ footer.site-foot a:hover{opacity:1;color:var(--platinum)}
 <section class="band band--paper" id="education" data-mode="paper">
   <div class="col-wide">
     <div class="section-eyebrow">Academic Background</div>
-    <h2 class="section-heading">Education &amp; Research</h2>
+    <h2 class="section-heading">Education</h2>
     <div class="resume-stack">
       <div class="edu-card gs-reveal"><h3 class="edu-title">Doctor of Philosophy (PhD), Psychology</h3><p class="edu-school">Fielding Graduate University / APA Accredited</p><div class="edu-row"><div class="edu-label">Specialization</div><div class="edu-value">Quantitative Predictive Linguistics</div></div><div class="edu-row"><div class="edu-label">Dissertation</div><div class="edu-value">Instrumental and Affective Mass Murder: Establishing a Predictive Typology with Computer-Mediated Linguistic Analysis.</div></div><div class="edu-row"><div class="edu-label">Conference Presentation</div><div class="edu-value">Implicit Power Drives in the Manifestos Preceding Autogenic Massacres.</div></div></div>
-      <div class="edu-card gs-reveal"><h3 class="edu-title">Master of Arts (MA), Psychology</h3><p class="edu-school">Fielding Graduate University / WSCUC Accredited / 4.14 GPA</p><div class="edu-row"><div class="edu-label">Specialization</div><div class="edu-value">Advanced Psychometrics</div></div></div>
-      <div class="edu-card gs-reveal"><h3 class="edu-title">Bachelor of Science (BS), Psychology</h3><p class="edu-school">Liberty University / SACSOC Accredited / Summa Cum Laude (4.00 GPA)</p><div class="edu-row"><div class="edu-label">Specialization</div><div class="edu-value">Emergency Management &amp; Public Safety</div></div></div>
+      
+      <div style="text-align: left; padding: 16px 48px;">
+        <button id="expandEduBtn" class="bio-expand-btn">View Full Academic History <span>+</span></button>
+      </div>
+      
+      <div id="eduFullContent" style="display:none;opacity:0;">
+        <div class="edu-card gs-reveal"><h3 class="edu-title">Master of Arts (MA), Psychology</h3><p class="edu-school">Fielding Graduate University / WSCUC Accredited / 4.14 GPA</p><div class="edu-row"><div class="edu-label">Specialization</div><div class="edu-value">Advanced Psychometrics</div></div></div>
+        <div class="edu-card gs-reveal"><h3 class="edu-title">Bachelor of Science (BS), Psychology</h3><p class="edu-school">Liberty University / SACSOC Accredited / Summa Cum Laude (4.00 GPA)</p><div class="edu-row"><div class="edu-label">Specialization</div><div class="edu-value">Emergency Management &amp; Public Safety</div></div></div>
+        <div style="text-align: left; padding: 16px 48px;">
+          <button id="collapseEduBtn" class="bio-expand-btn">Show Less <span>-</span></button>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -642,6 +652,55 @@ if(expandBtn&&fullContent&&collapseBtn){
   expandBtn.addEventListener('click',()=>{fullContent.style.display='block';expandBtn.style.display='none';gsap.to(fullContent,{opacity:1,duration:0.6,ease:'power2.out',onComplete:()=>{fullContent.focus();ScrollTrigger.refresh()}})});
   collapseBtn.addEventListener('click',()=>{gsap.to(fullContent,{opacity:0,duration:0.4,ease:'power2.in',onComplete:()=>{fullContent.style.display='none';expandBtn.style.display='inline-flex';ScrollTrigger.refresh()}});document.getElementById('executive-bio').scrollIntoView({behavior:'smooth',block:'start'})});
 }
+
+// Expandable Education Section
+const expandEdu=document.getElementById('expandEduBtn');
+const collapseEdu=document.getElementById('collapseEduBtn');
+const eduContent=document.getElementById('eduFullContent');
+if(expandEdu&&eduContent&&collapseEdu){
+  expandEdu.addEventListener('click',()=>{eduContent.style.display='block';expandEdu.style.display='none';gsap.to(eduContent,{opacity:1,duration:0.6,ease:'power2.out',onComplete:()=>{ScrollTrigger.refresh()}})});
+  collapseEdu.addEventListener('click',()=>{gsap.to(eduContent,{opacity:0,duration:0.4,ease:'power2.in',onComplete:()=>{eduContent.style.display='none';expandEdu.style.display='inline-flex';ScrollTrigger.refresh();document.getElementById('education').scrollIntoView({behavior:'smooth',block:'start'})}})});
+}
+
+// Expandable Experience Bullets
+document.querySelectorAll('.r-card').forEach(card => {
+  const intro = card.querySelector('.r-intro');
+  const bullets = card.querySelector('.r-bullets');
+  if (intro && bullets) {
+    // Hide bullets initially
+    bullets.style.display = 'none';
+    bullets.style.opacity = '0';
+    
+    // Create button wrapper
+    const btnWrap = document.createElement('div');
+    btnWrap.style.marginTop = '16px';
+    btnWrap.style.marginBottom = '8px';
+    
+    const toggleBtn = document.createElement('button');
+    toggleBtn.className = 'bio-expand-btn';
+    toggleBtn.innerHTML = 'View Details <span>+</span>';
+    
+    let isOpen = false;
+    toggleBtn.addEventListener('click', () => {
+      if (!isOpen) {
+        bullets.style.display = 'block';
+        toggleBtn.innerHTML = 'Hide Details <span>-</span>';
+        gsap.to(bullets, {opacity: 1, duration: 0.6, ease: 'power2.out', onComplete: () => ScrollTrigger.refresh()});
+      } else {
+        gsap.to(bullets, {opacity: 0, duration: 0.4, ease: 'power2.in', onComplete: () => {
+          bullets.style.display = 'none';
+          toggleBtn.innerHTML = 'View Details <span>+</span>';
+          ScrollTrigger.refresh();
+        }});
+      }
+      isOpen = !isOpen;
+    });
+    
+    btnWrap.appendChild(toggleBtn);
+    // Insert button after intro
+    intro.parentNode.insertBefore(btnWrap, intro.nextSibling);
+  }
+});
 </script>
 
 <!-- Static API Dynamic Carousel Injection -->
