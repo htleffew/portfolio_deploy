@@ -172,6 +172,11 @@
             min-height: 400px;
             padding: 0 48px;
         }
+        .col-main {
+            max-width: var(--col);
+            margin: 0 auto;
+            padding: 0;
+        }
         @media(max-width:900px) { .simulator-layout { grid-template-columns: 1fr; padding: 0 32px;} }
 
         .sim-controls {
@@ -519,8 +524,9 @@ section.band:not(.front) > .sandbox-layout {
                         child.classList.remove('is-active', 'is-paper-active');
                         if(i === idx) {
                             const isPaper = e.target.classList.contains('band--paper');
-                            child.classList.add(isPaper ? 'is-paper-active' : 'is-active');
-                            if(isPaper) {
+                            const invertContrast = !isPaper;
+                            child.classList.add(invertContrast ? 'is-paper-active' : 'is-active');
+                            if(invertContrast) {
                                 document.getElementById('topnav').classList.add('is-paper');
                                 document.getElementById('spine').classList.add('is-paper');
                             } else {

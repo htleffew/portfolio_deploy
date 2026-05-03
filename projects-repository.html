@@ -722,22 +722,11 @@ ul.bullets li::before { content:'\25B8'; position:absolute; left:0; top:1px; fon
 .db-row:hover { background: rgba(255,255,255,0.02); }
 @media (max-width: 650px) {
   .db-row { flex-direction: column; align-items: flex-start; gap: 24px; }
-  .db-thumb { display: none; }
+  .db-action { display: none; }
   .db-action { display: none; }
 }
 
-.db-thumb {
-  width: 220px; height: 130px; flex-shrink: 0;
-  border: 1px solid var(--graphite); background: #0A0A0A;
-  overflow: hidden; position: relative;
-}
-.db-thumb .thumb-inner {
-  width: 200%; height: 200%; transform: scale(0.5); transform-origin: top left;
-  pointer-events: none;
-}
-.db-thumb svg { width: 100%; height: 100%; display: block; }
-.db-thumb img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); }
-.db-row:hover .db-thumb img { filter: grayscale(0%); }
+
 
 .db-info { flex: 1; display: flex; flex-direction: column; justify-content: center; }
 .db-cat {
@@ -793,7 +782,7 @@ ul.bullets li::before { content:'\25B8'; position:absolute; left:0; top:1px; fon
 
 .band--paper .db-row { border-bottom-color: var(--paper-3); }
 .band--paper .db-row:hover { background: rgba(0,0,0,0.02); }
-.band--paper .db-thumb { border-color: var(--paper-3); background: var(--paper-2); }
+
 
 .band--paper .db-cat { color: var(--ink-blue); }
 .band--paper .db-title { color: var(--ink); }
@@ -843,9 +832,9 @@ ul.bullets li::before { content:'\25B8'; position:absolute; left:0; top:1px; fon
   <div class="col-wide">
     <div class="grid">
       <div>
-        <div class="meta-row"><span>Directory</span><span class="sep">/</span><span>Index</span></div>
+        <div class="meta-row"><span>Directory</span><span class="sep">/</span><span>Library</span></div>
         <h1 style="max-width:24ch">Research & Engineering Library</h1>
-        <div class="abstract">A stateful, living index of technical case studies, ML simulations, and behavioral research spanning the portfolio.</div>
+        <div class="abstract">A collection of architectural walkthroughs, behavioral simulations, and ML system designs spanning the portfolio.</div>
       </div>
     </div>
   </div>
@@ -907,3 +896,4 @@ gsap.ticker.lagSmoothing(0);
 <script src="design_system/js/global_chrome.js"></script>
 </body>
 </html>
+
