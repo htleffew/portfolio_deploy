@@ -55,7 +55,7 @@ body {
   font-family:var(--body);
   background:var(--obsidian);
   color:var(--platinum);
-  font-size:15px;
+  font-size:17px;
   line-height:1.78;
   overflow-x:hidden;
   -webkit-font-smoothing:antialiased;
@@ -163,13 +163,13 @@ body {
 .front .meta-row .sep { opacity:0.4; }
 .front h1 {
   font-family:var(--display); font-weight:600;
-  font-size:clamp(32px, 4.0vw, 54px);
+  font-size:clamp(28px, 3.5vw, 46px);
   letter-spacing:-0.018em; line-height:1.06;
   color:var(--flare); margin-bottom:36px; max-width:18ch;
 }
 .front .abstract {
   font-family:var(--body); font-style:italic;
-  font-size:17px; line-height:1.62; color:var(--platinum);
+  font-size:20px; line-height:1.62; color:var(--platinum);
   max-width:60ch; margin-bottom:48px;
 }
 .front .byline { display:flex; gap:36px; flex-wrap:wrap; font-family:var(--mono); font-size:10.5px; letter-spacing:0.20em; text-transform:uppercase; color:var(--tungsten); }
@@ -187,7 +187,7 @@ body {
 
 .band--paper h2 {
   font-family:var(--display); font-weight:600; color:var(--ink);
-  font-size:clamp(26px, 2.8vw, 36px); letter-spacing:-0.012em; line-height:1.12;
+  font-size:clamp(22px, 2.5vw, 30px); letter-spacing:-0.012em; line-height:1.12;
   margin:0 auto 28px; max-width:var(--col); padding:0 32px;
 }
 .band--paper .eyebrow {
@@ -196,7 +196,7 @@ body {
 }
 .band--paper p {
   margin:0 auto 22px; max-width:var(--col); padding:0 32px;
-  font-size:15px; line-height:1.78; color:var(--ink);
+  font-size:17px; line-height:1.78; color:var(--ink);
 }
 
 .has-dropcap::first-letter {
@@ -207,11 +207,11 @@ body {
 
 .band--dark p, .band--ink p {
   margin:0 auto 22px; max-width:var(--col); padding:0 32px;
-  font-size:15px; line-height:1.78; color:var(--platinum);
+  font-size:17px; line-height:1.78; color:var(--platinum);
 }
 .band--dark h2, .band--ink h2 {
   font-family:var(--display); font-weight:600; color:var(--flare);
-  font-size:clamp(26px, 2.8vw, 36px); letter-spacing:-0.012em; line-height:1.12;
+  font-size:clamp(22px, 2.5vw, 30px); letter-spacing:-0.012em; line-height:1.12;
   margin:0 auto 28px; max-width:var(--col); padding:0 32px;
 }
 .band--dark .eyebrow, .band--ink .eyebrow {
@@ -219,7 +219,7 @@ body {
   color:var(--sapphire); margin:0 auto 18px; max-width:var(--col); padding:0 32px;
 }
 
-ul.bullets { margin:0 auto 32px; max-width:var(--col); padding:0 32px 0 54px; font-size:15px; line-height:1.78; color:var(--ink); }
+ul.bullets { margin:0 auto 32px; max-width:var(--col); padding:0 32px 0 54px; font-size:17px; line-height:1.78; color:var(--ink); }
 .band--dark ul.bullets, .band--ink ul.bullets { color:var(--platinum); }
 ul.bullets li { margin-bottom:12px; }
 ul.bullets strong { font-weight:600; color:var(--ink); }
@@ -323,7 +323,7 @@ input[type=range]::-webkit-slider-runnable-track {
 .method .inner {
   border-left:4px solid var(--ink-blue); padding:18px 24px 18px 28px;
   background:rgba(26,58,107,0.04);
-  font-size:14px; line-height:1.65; color:var(--ink-2);
+  font-size:16px; line-height:1.65; color:var(--ink-2);
 }
 .band--dark .method .inner, .band--ink .method .inner {
   border-left-color:var(--sapphire); background:rgba(77,140,255,0.04); color:var(--platinum);
