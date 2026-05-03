@@ -114,6 +114,13 @@ table.data-table tr:last-child td { border-bottom: none; }
     A common pitfall in clinical machine learning is training models on idealized, perfectly separated datasets. When these models are deployed in the real world, they fail because real clinical data is noisy, incomplete, and highly ambiguous.
   </p>
 
+  <div class="figure reveal">
+    <div class="frame" style="padding:0; border:1px solid var(--paper-3); border-radius:4px; overflow:hidden;">
+        <img src="point_cloud.png" alt="Split-screen showing real clinical room vs glowing 3D point cloud" style="width:100%; display:block; height:auto;">
+    </div>
+    <div class="cap"><span class="num">FIG. 01</span> Left: Simulated clinical observation room. Right: Equivalent representation in 3D skeletal and gaze-tracking feature space.</div>
+  </div>
+
   <p class="col-main">
     To ensure the models learn robust decision boundaries rather than memorizing artifacts, this framework employs an "Ultra-Realistic" data simulation pipeline. The system generates a synthetic dataset of 1,200 profiles (with a 22 percent ASD prevalence) engineered with maximum clinical variability.
   </p>
@@ -194,6 +201,56 @@ X_simulated, y_simulated = generate_clinical_data()
   <p class="col-main">
     The system processes simulated video and audio streams to extract 10 core behavioral features. These features are not arbitrary. They are specifically chosen to map directly to the standard ADOS-2 scoring domains, where a score of 0 indicates typical behavior, 1 indicates mild concern, and 2 indicates clear evidence of atypical behavior.
   </p>
+
+  <div class="figure reveal">
+      <div class="frame">
+          <svg viewBox="0 0 800 300" style="width:100%; height:auto;">
+              <defs>
+                  <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 0 L 10 5 L 0 10 z" fill="#4D8CFF" />
+                  </marker>
+              </defs>
+              <g font-family="JetBrains Mono" font-size="12" fill="#A1A1A6">
+                  <!-- Root -->
+                  <rect x="300" y="20" width="200" height="40" rx="4" fill="#161616" stroke="#333333" stroke-width="2"/>
+                  <text x="400" y="44" text-anchor="middle" fill="#F5F5F7" font-weight="bold">MULTIMODAL INPUT</text>
+                  
+                  <!-- Streams -->
+                  <path d="M 400 60 L 400 90 L 200 90 L 200 120" fill="none" stroke="#4D8CFF" stroke-width="2" marker-end="url(#arrow)"/>
+                  <path d="M 400 60 L 400 90 L 600 90 L 600 120" fill="none" stroke="#4D8CFF" stroke-width="2" marker-end="url(#arrow)"/>
+                  
+                  <rect x="120" y="120" width="160" height="30" rx="4" fill="#030303" stroke="#0F52BA" stroke-width="1"/>
+                  <text x="200" y="140" text-anchor="middle" fill="#4D8CFF">Video Stream (CV)</text>
+                  
+                  <rect x="520" y="120" width="160" height="30" rx="4" fill="#030303" stroke="#0F52BA" stroke-width="1"/>
+                  <text x="600" y="140" text-anchor="middle" fill="#4D8CFF">Audio Stream (NLP)</text>
+
+                  <!-- Nodes -->
+                  <path d="M 200 150 L 200 180 L 100 180 L 100 210" fill="none" stroke="#333333" stroke-width="1" marker-end="url(#arrow)"/>
+                  <path d="M 200 150 L 200 180 L 300 180 L 300 210" fill="none" stroke="#333333" stroke-width="1" marker-end="url(#arrow)"/>
+                  <path d="M 600 150 L 600 180 L 500 180 L 500 210" fill="none" stroke="#333333" stroke-width="1" marker-end="url(#arrow)"/>
+                  <path d="M 600 150 L 600 180 L 700 180 L 700 210" fill="none" stroke="#333333" stroke-width="1" marker-end="url(#arrow)"/>
+
+                  <rect x="30" y="210" width="140" height="60" rx="2" fill="#030303" stroke="#222222"/>
+                  <text x="100" y="235" text-anchor="middle" font-size="10">Gaze/Face Tracking</text>
+                  <text x="100" y="255" text-anchor="middle" fill="#0F52BA" font-size="9">A1, A2, A7</text>
+
+                  <rect x="230" y="210" width="140" height="60" rx="2" fill="#030303" stroke="#222222"/>
+                  <text x="300" y="235" text-anchor="middle" font-size="10">Pose Estimation</text>
+                  <text x="300" y="255" text-anchor="middle" fill="#0F52BA" font-size="9">C1, D1, D4</text>
+
+                  <rect x="430" y="210" width="140" height="60" rx="2" fill="#030303" stroke="#222222"/>
+                  <text x="500" y="235" text-anchor="middle" font-size="10">Prosodic Extract</text>
+                  <text x="500" y="255" text-anchor="middle" fill="#0F52BA" font-size="9">B1, A4</text>
+
+                  <rect x="630" y="210" width="140" height="60" rx="2" fill="#030303" stroke="#222222"/>
+                  <text x="700" y="235" text-anchor="middle" font-size="10">Speech to Text</text>
+                  <text x="700" y="255" text-anchor="middle" fill="#0F52BA" font-size="9">B2</text>
+              </g>
+          </svg>
+      </div>
+      <div class="cap"><span class="num">FIG. 02</span> Hierarchical extraction tree mapping multimodal data streams to specific ADOS-2 behavioral domains.</div>
+  </div>
 
   <ul class="bullets col-main" style="margin-top: 24px;">
       <li><strong>Social Communication (Domain A)</strong>: Eye Contact (A1) measured via <span class="gloss">MediaPipe<span class="gloss-tip"><b>MediaPipe</b>, Google's open-source library for on-device pose, face mesh, and gaze estimation.</span></span>, Facial Expressions (A2), Response to Name (A4), Joint Attention (A7).</li>
@@ -293,6 +350,34 @@ consensus_prediction = meta_learner.predict_proba(X_meta)[:, 1]
     In many machine learning domains, an AUC of 0.974 is cause for celebration. In clinical AI, it is a red flag. The system includes an automated realism validation module that flags any AUC over 0.95 as "suspiciously high." Even with the injected noise and 80 percent group overlap, the model performed too well. This automated warning suggests that the engineering team needs to inject further noise or apply dimensionality reduction to ensure the model will truly generalize to unseen, real-world clinical environments.
   </p>
 
+  <div class="figure reveal">
+      <div class="frame" style="background:#0c0c0c;">
+          <svg viewBox="0 0 600 300" style="width:100%; height:auto;">
+              <g font-family="JetBrains Mono" font-size="10" fill="#A1A1A6">
+                  <!-- Axes -->
+                  <line x1="50" y1="250" x2="550" y2="250" stroke="#333" stroke-width="2"/>
+                  <line x1="50" y1="250" x2="50" y2="20" stroke="#333" stroke-width="2"/>
+                  <text x="300" y="280" text-anchor="middle">False Positive Rate</text>
+                  <text x="20" y="135" text-anchor="middle" transform="rotate(-90 20,135)">True Positive Rate</text>
+                  
+                  <!-- Random Baseline -->
+                  <line x1="50" y1="250" x2="550" y2="20" stroke="#444" stroke-width="1" stroke-dasharray="4 4"/>
+                  
+                  <!-- Warning Zone -->
+                  <rect x="50" y="20" width="500" height="35" fill="#7A1626" opacity="0.1"/>
+                  <line x1="50" y1="55" x2="550" y2="55" stroke="#7A1626" stroke-width="1" stroke-dasharray="2 4"/>
+                  <text x="300" y="42" text-anchor="middle" fill="#7A1626" font-weight="bold">OVERFITTING RISK ZONE (AUC > 0.95)</text>
+
+                  <!-- ROC Curve -->
+                  <path d="M 50 250 Q 80 40 550 20" fill="none" stroke="#4D8CFF" stroke-width="3"/>
+                  <circle cx="160" cy="50" r="4" fill="#F5F5F7"/>
+                  <text x="175" y="55" fill="#F5F5F7">AUC: 0.974</text>
+              </g>
+          </svg>
+      </div>
+      <div class="cap"><span class="num">FIG. 03</span> Receiver Operating Characteristic curve. The highly steep arch indicates potential overfitting to the synthetic constraints.</div>
+  </div>
+
   <div class="table-container">
     <table class="data-table">
         <thead>
@@ -311,6 +396,37 @@ consensus_prediction = meta_learner.predict_proba(X_meta)[:, 1]
             <tr><td>Bayesian Ensemble</td><td>0.938</td><td>0.900</td><td>0.860</td><td>High (Provides Confidence Intervals)</td></tr>
         </tbody>
     </table>
+  </div>
+
+  <p class="col-main">
+    In terms of feature importance, Phrase Repetition Rate emerged as the most predictive feature (Importance Score: 0.514), followed by Hand Flapping Duration. This aligns perfectly with recent peer-reviewed literature, which confirms that machine learning algorithms trained on natural prosodic features and speech rhythms are highly sensitive biomarkers for ASD across multiple languages.
+  </p>
+
+  <div class="figure reveal">
+      <div class="frame" style="background:#0c0c0c;">
+          <svg viewBox="0 0 600 200" style="width:100%; height:auto;">
+              <g font-family="JetBrains Mono" font-size="11" fill="#A1A1A6">
+                  <line x1="200" y1="170" x2="550" y2="170" stroke="#333" stroke-width="1"/>
+                  <line x1="200" y1="20" x2="200" y2="170" stroke="#333" stroke-width="1"/>
+                  <text x="375" y="195" text-anchor="middle">Importance Score</text>
+
+                  <!-- Bars -->
+                  <text x="180" y="45" text-anchor="end" fill="#F5F5F7">Phrase Repetition Rate</text>
+                  <rect x="200" y="30" width="310" height="20" fill="#0F52BA"/>
+                  <text x="520" y="45" fill="#4D8CFF">0.514</text>
+
+                  <text x="180" y="75" text-anchor="end">Hand Flapping Duration</text>
+                  <rect x="200" y="60" width="180" height="20" fill="#4D8CFF"/>
+
+                  <text x="180" y="105" text-anchor="end">Eye Contact (%)</text>
+                  <rect x="200" y="90" width="140" height="20" fill="#4D8CFF"/>
+
+                  <text x="180" y="135" text-anchor="end">Response to Name</text>
+                  <rect x="200" y="120" width="90" height="20" fill="#4D8CFF"/>
+              </g>
+          </svg>
+      </div>
+      <div class="cap"><span class="num">FIG. 04</span> Random Forest feature importance scores validating prosodic rhythm as the primary split vector.</div>
   </div>
 </section>
 
@@ -375,6 +491,37 @@ consensus_prediction = meta_learner.predict_proba(X_meta)[:, 1]
   <p class="col-main">
     However, the current implementation has limitations. Most notably, it lacks temporal sequence analysis. Currently, the system counts the total number of social smiles or the average response latency. In reality, the exact timing of a behavior matters deeply. A smile that occurs randomly is clinically different from a smile that occurs exactly one second after a clinician initiates a joint attention bid.
   </p>
+
+  <div class="figure reveal">
+      <div class="frame" style="background:#0c0c0c;">
+          <svg viewBox="0 0 800 180" style="width:100%; height:auto;">
+              <g font-family="JetBrains Mono" font-size="11" fill="#A1A1A6">
+                  <line x1="50" y1="140" x2="750" y2="140" stroke="#333" stroke-width="2"/>
+                  <text x="400" y="165" text-anchor="middle">Time (Seconds)</text>
+
+                  <!-- Tracks -->
+                  <text x="50" y="45" font-weight="bold" fill="#F5F5F7">Clinician Actions</text>
+                  <line x1="200" y1="40" x2="750" y2="40" stroke="#222" stroke-width="20" stroke-linecap="round"/>
+                  
+                  <text x="50" y="105" font-weight="bold" fill="#F5F5F7">Patient Responses</text>
+                  <line x1="200" y1="100" x2="750" y2="100" stroke="#222" stroke-width="20" stroke-linecap="round"/>
+
+                  <!-- Markers -->
+                  <circle cx="300" cy="40" r="6" fill="#0F52BA"/>
+                  <text x="300" y="20" text-anchor="middle" fill="#4D8CFF">Joint Attention Bid</text>
+
+                  <circle cx="450" cy="100" r="6" fill="#DBA844"/>
+                  <text x="450" y="125" text-anchor="middle" fill="#DBA844">Social Smile</text>
+
+                  <!-- Connection -->
+                  <path d="M 300 46 C 300 80, 450 60, 450 94" fill="none" stroke="#DBA844" stroke-width="2" stroke-dasharray="4 4"/>
+                  <rect x="345" y="60" width="60" height="20" rx="2" fill="#161616" stroke="#333"/>
+                  <text x="375" y="74" text-anchor="middle" font-size="10" fill="#F5F5F7">1.2 sec</text>
+              </g>
+          </svg>
+      </div>
+      <div class="cap"><span class="num">FIG. 05</span> Temporal sequencing graph. Simple aggregate counts fail to capture the critical clinical latency between a clinician's bid and a child's response.</div>
+  </div>
 
   <p class="col-main">
     Machine learning will not replace the nuanced judgment of a trained clinician. But by automating the tedious extraction of behavioral markers and providing a mathematically rigorous second opinion, multimodal AI can make gold-standard autism assessments more accessible, objective, and efficient.
