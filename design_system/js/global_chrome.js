@@ -53,6 +53,32 @@
         document.body.insertBefore(grain, document.body.firstChild);
     }
 
+    // 2.8 Inject Custom Cursor
+    if (!document.getElementById('custom-cursor')) {
+        const cursor = document.createElement('div');
+        cursor.id = 'custom-cursor';
+        document.body.appendChild(cursor);
+
+        // Track mouse
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%, -50%)`;
+        });
+
+        // Hover effects for links, buttons, and interactive cards
+        const interactiveElements = 'a, button, .p-card, .r-card, .db-row';
+        
+        document.body.addEventListener('mouseover', (e) => {
+            if (e.target.closest(interactiveElements)) {
+                cursor.classList.add('hovering');
+            }
+        });
+        document.body.addEventListener('mouseout', (e) => {
+            if (e.target.closest(interactiveElements)) {
+                cursor.classList.remove('hovering');
+            }
+        });
+    }
+
     // 3. Construct and Inject Top Navigation
     if (!document.getElementById('topnav')) {
         const header = document.createElement('header');
