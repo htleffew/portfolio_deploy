@@ -44,35 +44,53 @@
 html{scroll-behavior:smooth}
 
 
-/* ─── Preloader ─────────────────────────────────────────────────── */
+/* ─── Preloader (Curtain Reveal) ────────────────────────────────── */
 #preloader {
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background: var(--obsidian);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   pointer-events: none;
-  transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1);
+  overflow: hidden;
 }
-#preloader.fade-out { opacity: 0; }
-#preloader-dot {
-  width: 4px;
-  height: 4px;
-  background: var(--sapphire);
-  border-radius: 50% !important;
-  animation: pre-pulse 1.2s ease-in-out infinite;
+#preloader-left, #preloader-right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50.5%;
+  background: var(--obsidian);
+  will-change: transform;
 }
-@keyframes pre-pulse {
-  0%, 100% { transform: scale(1); opacity: 0.4; }
-  50% { transform: scale(2.5); opacity: 1; }
+#preloader-left { left: 0; }
+#preloader-right { right: 0; }
+#preloader-line {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1px;
+  height: 0;
+  background: linear-gradient(180deg, transparent 0%, var(--sapphire) 30%, var(--sapphire) 70%, transparent 100%);
+  transform: translate(-50%, -50%);
+  will-change: height, opacity;
 }
 
 /* ─── Hero elements start invisible so GSAP is the sole reveal ── */
-.meta-row span, h1, .hero-rule, .abstract, .contact-row a, .ambient, #glCanvas {
+.meta-row span, h1, .hero-rule, .abstract, .contact-row a, .ambient, #glCanvas, #deep-space {
   opacity: 0;
 }
+/* ─── Scroll-revealed elements start hidden for cinematic entrance ─ */
+.band .section-eyebrow,
+.band .section-heading,
+.bio-card,
+.project-carousel,
+.view-all-link,
+.r-card,
+.edu-card,
+.tech-block {
+  opacity: 0;
+}
+/* ─── Lenis smooth scroll ─────────────────────────────────────── */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
 
 /* Cinematic Film Grain Overlay */
 
@@ -94,9 +112,8 @@ html{scroll-behavior:smooth}
 #progress::after{content:'';position:absolute;left:0;top:0;bottom:0;width:var(--p,0%);background:linear-gradient(90deg,var(--sapphire) 0%,var(--sapphire-deep) 100%);transition:width 0.05s linear}
 #glCanvas{position:fixed;inset:0;z-index:-30;pointer-events:none;border:none;outline:none;background:transparent;opacity:0}
 
-#topnav{position:fixed;top:0;left:0;right:0;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;z-index:150;font-family:var(--mono);font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--platinum);background:rgba(3,3,3,0.55);backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);border-bottom:1px solid rgba(255,255,255,0.06);transform:translateY(-100%);animation:navIn 0.8s 0.4s forwards var(--ease-out);transition:background 0.6s var(--ease-std),color 0.6s var(--ease-std),border-color 0.6s var(--ease-std)}
+#topnav{position:fixed;top:0;left:0;right:0;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;z-index:150;font-family:var(--mono);font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--platinum);background:rgba(3,3,3,0.55);backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);border-bottom:1px solid rgba(255,255,255,0.06);transform:translateY(-100%);transition:background 0.6s var(--ease-std),color 0.6s var(--ease-std),border-color 0.6s var(--ease-std)}
 #topnav.is-paper{background:rgba(245,245,247,0.82);border-bottom-color:rgba(0,0,0,0.08);color:var(--ink)}
-@keyframes navIn{to{transform:translateY(0)}}
 #topnav .brand{font-family:var(--display);font-size:15px;font-weight:600;letter-spacing:0.04em;text-transform:none;color:inherit;text-decoration:none}
 #topnav .brand:hover{opacity:0.85}
 #topnav .nav-links{display:flex;gap:28px;align-items:center}
@@ -110,7 +127,12 @@ html{scroll-behavior:smooth}
 .col-wide{max-width:1400px;margin:0 auto;padding:0 48px}
 @media(max-width:768px){.col-wide{padding:0 24px}#topnav{padding:0 24px}}
 
-.hero{min-height:clamp(500px, 80vh, 850px);padding:120px 0 80px;display:flex;align-items:center;position:relative;overflow:hidden;background:transparent;color:var(--platinum)}
+.hero{min-height:100vh;padding:120px 0 80px;display:flex;align-items:center;position:relative;overflow:hidden;background:transparent;color:var(--platinum)}
+.scroll-cue{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:12px;opacity:0;z-index:5}
+.scroll-cue span{font-family:var(--mono);font-size:9px;letter-spacing:0.35em;text-transform:uppercase;color:var(--tungsten)}
+.scroll-cue-line{width:1px;height:48px;position:relative;overflow:hidden}
+.scroll-cue-line::after{content:'';position:absolute;top:-100%;left:0;width:100%;height:100%;background:linear-gradient(to bottom,transparent,var(--sapphire));animation:scrollDrip 2s ease-in-out infinite}
+@keyframes scrollDrip{0%{top:-100%;opacity:0}30%{opacity:1}100%{top:100%;opacity:0}}
 .hero .col-wide{position:relative;z-index:2}
 .split-grid{display:grid;grid-template-columns:1fr 360px;gap:80px;align-items:start}
 .hero .meta-row{font-family:var(--mono);font-size:11px;letter-spacing:0.30em;text-transform:uppercase;color:var(--tungsten);margin-bottom:40px;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
@@ -243,7 +265,7 @@ footer.site-foot a:hover{opacity:1;color:var(--platinum)}
 </style>
 </head>
 <body>
-<div id="preloader"><div id="preloader-dot"></div></div>
+<div id="preloader"><div id="preloader-left"></div><div id="preloader-right"></div><div id="preloader-line"></div></div>
 <header id="topnav">
   <a href="index.html" class="brand">Dr. Heather Leffew</a>
   <div class="nav-links">
@@ -280,6 +302,7 @@ footer.site-foot a:hover{opacity:1;color:var(--platinum)}
       </div>
     </div>
   </div>
+  <div class="scroll-cue" aria-hidden="true"><span>Scroll</span><div class="scroll-cue-line"></div></div>
 </section>
 
 <!-- BIO (paper) -->
@@ -422,49 +445,87 @@ window.addEventListener('scroll', () => {
 })();
 </script>
 
-<script src="cinematic_engine.js" defer></script>
+<script src="cinematic_engine_v3.js" defer></script>
 
 <script>
 window.addEventListener('load', () => {
   try {
+    // ── Initialize Lenis Smooth Scroll ──────────────────────────
+    let lenis;
+    if (typeof Lenis !== 'undefined') {
+      lenis = new Lenis({ duration: 1.4, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
+      if (typeof gsap !== 'undefined') {
+        gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+        gsap.ticker.lagSmoothing(0);
+      } else {
+        const lenisRaf = (time) => { lenis.raf(time); requestAnimationFrame(lenisRaf); };
+        requestAnimationFrame(lenisRaf);
+      }
+    }
+
     if (typeof gsap !== 'undefined') {
 
-      // ── Preloader dismiss ──────────────────────────────────────────
+      // ── Theatrical Opening Sequence ─────────────────────────────────
+      const tl = gsap.timeline({
+        onComplete: () => {
+          // Initialize ScrollTriggers ONLY AFTER the hero sequence is complete
+          // This prevents sections like the Bio from abruptly appearing if they are in the viewport
+          initScrollTriggers();
+        }
+      });
+
       const preloader = document.getElementById('preloader');
-      if (preloader) {
-        gsap.to(preloader, {
-          opacity: 0,
-          duration: 0.6,
-          ease: 'power2.inOut',
-          delay: 0.1,
-          onComplete: () => { preloader.style.display = 'none'; }
-        });
+      const preLeft = document.getElementById('preloader-left');
+      const preRight = document.getElementById('preloader-right');
+      const preLine = document.getElementById('preloader-line');
+      if (preloader && preLeft && preRight && preLine) {
+        tl.to(preLine, { height: '28vh', duration: 1.1, ease: 'power2.inOut' });
+        tl.to(preLine, { opacity: 0, height: '50vh', duration: 0.6, ease: 'power2.in' }, '+=0.15');
+        tl.to(preLeft, { xPercent: -100, duration: 1.1, ease: 'power3.inOut' }, '-=0.25');
+        tl.to(preRight, { xPercent: 100, duration: 1.1, ease: 'power3.inOut' }, '<');
+        tl.set(preloader, { display: 'none' });
+      } else if (preloader) {
+        tl.to(preloader, { opacity: 0, duration: 1.2, ease: 'power2.inOut', onComplete: () => { preloader.style.display = 'none'; } });
       }
 
-      // ── Cinematic opening sequence ─────────────────────────────────
-      // Beat 0 → 1.2s: WebGL star field resolves first, stage is set
-      gsap.to('#glCanvas',
-        { opacity: 1, duration: 1.8, ease: 'power2.inOut', delay: 0.2 }
-      );
+      // Fade in the spatial void
+      tl.to(['#deep-space', '#glCanvas'], { opacity: 1, duration: 3.5, ease: 'power2.inOut' }, "-=0.6");
 
       // Setup Kinetic Text for Hero Header
       let heroTitle = document.querySelector('.hero h1');
+      let split;
       if (heroTitle) {
-        heroTitle.style.opacity = 1; // Make container visible
-        const split = new SplitType(heroTitle, { types: 'chars' });
-        gsap.from(split.chars, {
-          opacity: 0,
-          y: 20,
-          rotateX: -90,
-          stagger: 0.02,
-          duration: 1.2,
-          ease: 'back.out(1.5)',
-          delay: 1.4,
-          onComplete: () => heroTitle.classList.add('ca-settle')
-        });
+        heroTitle.style.opacity = 1;
+        split = new SplitType(heroTitle, { types: 'chars' });
       }
 
-      // Setup Simplex Noise for Ambient SVG
+      // Nav slides in early during the void reveal
+      tl.to('#topnav', { y: 0, duration: 1.4, ease: 'power3.out' }, "-=2.8");
+
+      // Bring in the ambient SVG halo
+      tl.to('.ambient', { opacity: 0.35, scale: 1, rotation: 0, duration: 3.0, ease: 'power2.out' }, "-=2.8");
+
+      // Executive Profile eyebrow
+      tl.to('.meta-row span', { opacity: 1, x: 0, duration: 1.0, stagger: 0.2, ease: 'power2.out' }, "-=2.2");
+
+      // Cascade the name
+      if (split) {
+        tl.from(split.chars, { opacity: 0, y: 20, rotateX: -90, stagger: 0.04, duration: 1.5, ease: 'back.out(1.5)' }, "-=1.6");
+      }
+
+      // Draw the rule
+      tl.to('.hero-rule', { width: 64, opacity: 1, duration: 1.3, ease: 'power3.inOut' }, "-=1.0");
+
+      // Abstract subtitle
+      tl.to('.abstract', { opacity: 1, y: 0, duration: 1.3, ease: 'power2.out' }, "-=0.9");
+
+      // Contact links
+      tl.to('.contact-row a', { opacity: 1, y: 0, duration: 1.0, stagger: 0.2, ease: 'power2.out' }, "-=0.7");
+
+      // Scroll cue fades in last, inviting the user to scroll
+      tl.to('.scroll-cue', { opacity: 1, duration: 1.2, ease: 'power2.out' }, "-=0.3");
+
+      // Setup Simplex Noise for Ambient SVG independently of the timeline
       const ambientSvgPaths = document.querySelectorAll('.ambient svg circle');
       if (ambientSvgPaths.length && typeof SimplexNoise !== 'undefined') {
         const simplex = new SimplexNoise();
@@ -482,109 +543,185 @@ window.addEventListener('load', () => {
         animateAmbient();
       }
 
-      // Beat 0.8s: Ambient SVG halo drifts in behind the type
-      gsap.to('.ambient',
-        { opacity: 0.35, scale: 1, rotation: 0, duration: 2.5, ease: 'power2.out', delay: 0.8 }
-      );
+      function initScrollTriggers() {
+        if (typeof ScrollTrigger === 'undefined') return;
 
-      // Beat 1.0s: Meta / eyebrow row slides in from left
-      gsap.to('.meta-row span',
-        { opacity: 1, x: 0, duration: 0.7, stagger: 0.12, ease: 'power2.out', delay: 1.0 }
-      );
+        if (lenis) lenis.on('scroll', ScrollTrigger.update);
 
-      // Beat 1.9s: Rule draws itself across
-      gsap.to('.hero-rule',
-        { width: 64, opacity: 1, duration: 0.9, ease: 'power3.inOut', delay: 1.9 }
-      );
-
-      // Beat 2.2s: Abstract italic fades up
-      gsap.to('.abstract',
-        { opacity: 1, y: 0, duration: 0.9, ease: 'power2.out', delay: 2.2 }
-      );
-
-      // Beat 2.6s: Contact/CTA links stagger in last
-      gsap.to('.contact-row a',
-        { opacity: 1, y: 0, duration: 0.7, stagger: 0.12, ease: 'power2.out', delay: 2.6 }
-      );
-
-      if (typeof ScrollTrigger !== 'undefined') {
-        // Section Headers Stagger
-        gsap.utils.toArray('.section-eyebrow').forEach(el => {
-          gsap.fromTo(el, { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.8, ease: 'power2.out', scrollTrigger: { trigger: el, start: 'top 85%' } });
-        });
-        gsap.utils.toArray('.section-heading').forEach(el => {
-          gsap.fromTo(el, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', scrollTrigger: { trigger: el, start: 'top 85%' } });
+        // Fade out scroll cue as user begins scrolling
+        gsap.to('.scroll-cue', {
+          opacity: 0, y: -10, duration: 0.6, ease: 'power2.in',
+          scrollTrigger: { trigger: '.hero', start: 'top top', end: '+=120', scrub: true }
         });
 
-        // Bio Card & Contents
-        gsap.fromTo('.bio-card',
-          { y: 40, opacity: 0 },
-          { y: 0, opacity: 1, duration: 1, ease: 'power2.out', scrollTrigger: { trigger: '#executive-bio', start: 'top 80%' } }
-        );
-        gsap.fromTo('.bio-preview > p, #expandBioBtn',
-          { opacity: 0, y: 15 },
-          { opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: 'power2.out', scrollTrigger: { trigger: '.bio-card', start: 'top 75%' } }
-        );
-        gsap.fromTo('.headshot-frame',
-          { opacity: 0, scale: 0.95 },
-          { opacity: 1, scale: 1, duration: 1.2, ease: 'power2.out', scrollTrigger: { trigger: '.bio-card', start: 'top 75%' } }
-        );
-
-        // Projects Carousel Fade In
-        gsap.fromTo('.project-carousel',
-          { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, duration: 1, ease: 'power2.out', scrollTrigger: { trigger: '#featured-projects', start: 'top 80%' } }
-        );
-        gsap.fromTo('.view-all-link',
-          { opacity: 0, y: 10 },
-          { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out', scrollTrigger: { trigger: '.view-all-link', start: 'top 95%' } }
-        );
-
-        // Experience Cards & Contents Stagger
-        gsap.utils.toArray('.r-card').forEach(card => {
-          gsap.fromTo(card,
-            { y: 30, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.8, ease: 'power2.out', scrollTrigger: { trigger: card, start: 'top 85%' } }
+        // ── Act I: Executive Biography ───────────────────────────
+        const bioSection = document.querySelector('#executive-bio');
+        if (bioSection) {
+          const bioTl = gsap.timeline({
+            scrollTrigger: { trigger: bioSection, start: 'top 55%', toggleActions: 'play none none none' }
+          });
+          bioTl.fromTo(bioSection.querySelector('.section-eyebrow'),
+            { opacity: 0, x: -30, filter: 'blur(4px)' },
+            { opacity: 1, x: 0, filter: 'blur(0px)', duration: 1.2, ease: 'power3.out' }
           );
-          
-          const internals = card.querySelectorAll('.r-header, .r-intro, .bio-expand-btn');
-          if (internals.length > 0) {
-            gsap.fromTo(internals,
-              { opacity: 0, y: 10 },
-              { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out', scrollTrigger: { trigger: card, start: 'top 80%' } }
-            );
-          }
-        });
-
-        // Education Cards
-        gsap.utils.toArray('.edu-card').forEach(card => {
-          gsap.fromTo(card,
-            { y: 20, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.8, ease: 'power2.out', scrollTrigger: { trigger: card, start: 'top 90%' } }
+          bioTl.fromTo(bioSection.querySelector('.section-heading'),
+            { opacity: 0, y: 25, filter: 'blur(6px)' },
+            { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.4, ease: 'power3.out' }, '-=0.6'
           );
-        });
-
-        // Capabilities (Tech Blocks) Stagger
-        gsap.utils.toArray('.tech-block').forEach((block) => {
-          gsap.fromTo(block,
+          bioTl.fromTo('.bio-card',
+            { opacity: 0, y: 60, scale: 0.97 },
+            { opacity: 1, y: 0, scale: 1, duration: 2.0, ease: 'expo.out' }, '-=0.7'
+          );
+          bioTl.fromTo('.headshot-frame',
+            { opacity: 0, scale: 1.08, clipPath: 'inset(100% 0 0 0)' },
+            { opacity: 1, scale: 1, clipPath: 'inset(0% 0 0 0)', duration: 2.4, ease: 'power3.out' }, '-=1.5'
+          );
+          bioTl.fromTo('.bio-preview > p',
             { opacity: 0, y: 20 },
-            { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', scrollTrigger: { trigger: block, start: 'top 85%' } }
+            { opacity: 1, y: 0, duration: 1.2, stagger: 0.25, ease: 'power2.out' }, '-=1.8'
           );
-          const tags = block.querySelectorAll('.tagrow .tag');
-          if (tags.length > 0) {
-            gsap.fromTo(tags,
-              { opacity: 0, scale: 0.9, y: 5 },
-              { opacity: 1, scale: 1, y: 0, duration: 0.4, stagger: 0.02, ease: 'back.out(1.2)', scrollTrigger: { trigger: block, start: 'top 80%' } }
+          bioTl.fromTo('#expandBioBtn',
+            { opacity: 0, y: 10 },
+            { opacity: 1, y: 0, duration: 0.9, ease: 'power2.out' }, '-=0.6'
+          );
+        }
+
+        // ── Act II: Featured Projects ────────────────────────────
+        const projSection = document.querySelector('#featured-projects');
+        if (projSection) {
+          const projTl = gsap.timeline({
+            scrollTrigger: { trigger: projSection, start: 'top 65%', toggleActions: 'play none none none' }
+          });
+          projTl.fromTo(projSection.querySelector('.section-eyebrow'),
+            { opacity: 0, x: -30, filter: 'blur(4px)' },
+            { opacity: 1, x: 0, filter: 'blur(0px)', duration: 1.2, ease: 'power3.out' }
+          );
+          projTl.fromTo(projSection.querySelector('.section-heading'),
+            { opacity: 0, y: 25, filter: 'blur(6px)' },
+            { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.4, ease: 'power3.out' }, '-=0.6'
+          );
+          projTl.fromTo('.project-carousel',
+            { opacity: 0, y: 50, x: -20 },
+            { opacity: 1, y: 0, x: 0, duration: 2.0, ease: 'expo.out' }, '-=0.7'
+          );
+          projTl.fromTo('.view-all-link',
+            { opacity: 0, y: 12 },
+            { opacity: 1, y: 0, duration: 1.0, ease: 'power2.out' }, '-=1.0'
+          );
+        }
+
+        // ── Act III: Education ────────────────────────────────────
+        const eduSection = document.querySelector('#education');
+        if (eduSection) {
+          const eduTl = gsap.timeline({
+            scrollTrigger: { trigger: eduSection, start: 'top 65%', toggleActions: 'play none none none' }
+          });
+          eduTl.fromTo(eduSection.querySelector('.section-eyebrow'),
+            { opacity: 0, x: -30, filter: 'blur(4px)' },
+            { opacity: 1, x: 0, filter: 'blur(0px)', duration: 1.2, ease: 'power3.out' }
+          );
+          eduTl.fromTo(eduSection.querySelector('.section-heading'),
+            { opacity: 0, y: 25, filter: 'blur(6px)' },
+            { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.4, ease: 'power3.out' }, '-=0.6'
+          );
+          eduSection.querySelectorAll('.edu-card').forEach((card, i) => {
+            eduTl.fromTo(card,
+              { opacity: 0, y: 40, scale: 0.98 },
+              { opacity: 1, y: 0, scale: 1, duration: 1.5, ease: 'power3.out' },
+              i === 0 ? '-=0.6' : '-=0.9'
             );
+          });
+          const expandEduEl = document.querySelector('#expandEduBtn');
+          if (expandEduEl) {
+            const wrapper = expandEduEl.closest('div');
+            gsap.set(wrapper, { opacity: 0 });
+            eduTl.to(wrapper, { opacity: 1, duration: 0.9, ease: 'power2.out' }, '-=0.6');
+          }
+        }
+
+        // ── Act IV: Professional Experience ──────────────────────
+        const expSection = document.querySelector('#experience');
+        if (expSection) {
+          const expHdrTl = gsap.timeline({
+            scrollTrigger: { trigger: expSection, start: 'top 65%', toggleActions: 'play none none none' }
+          });
+          expHdrTl.fromTo(expSection.querySelector('.section-eyebrow'),
+            { opacity: 0, x: -30, filter: 'blur(4px)' },
+            { opacity: 1, x: 0, filter: 'blur(0px)', duration: 1.2, ease: 'power3.out' }
+          );
+          expHdrTl.fromTo(expSection.querySelector('.section-heading'),
+            { opacity: 0, y: 25, filter: 'blur(6px)' },
+            { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.4, ease: 'power3.out' }, '-=0.6'
+          );
+
+          expSection.querySelectorAll('.r-card').forEach((card) => {
+            const cardTl = gsap.timeline({
+              scrollTrigger: { trigger: card, start: 'top 78%', toggleActions: 'play none none none' }
+            });
+            cardTl.fromTo(card,
+              { opacity: 0, y: 50, scale: 0.98 },
+              { opacity: 1, y: 0, scale: 1, duration: 1.8, ease: 'expo.out' }
+            );
+            const header = card.querySelector('.r-header');
+            const intro = card.querySelector('.r-intro');
+            if (header) cardTl.fromTo(header,
+              { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 1.2, ease: 'power2.out' }, '-=1.2'
+            );
+            if (intro) cardTl.fromTo(intro,
+              { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 1.2, ease: 'power2.out' }, '-=0.8'
+            );
+          });
+        }
+
+        // ── Act V: Technical Capabilities ────────────────────────
+        const capSection = document.querySelector('#capabilities');
+        if (capSection) {
+          const capTl = gsap.timeline({
+            scrollTrigger: { trigger: capSection, start: 'top 65%', toggleActions: 'play none none none' }
+          });
+          capTl.fromTo(capSection.querySelector('.section-eyebrow'),
+            { opacity: 0, x: -30, filter: 'blur(4px)' },
+            { opacity: 1, x: 0, filter: 'blur(0px)', duration: 1.2, ease: 'power3.out' }
+          );
+          capTl.fromTo(capSection.querySelector('.section-heading'),
+            { opacity: 0, y: 25, filter: 'blur(6px)' },
+            { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.4, ease: 'power3.out' }, '-=0.6'
+          );
+
+          capSection.querySelectorAll('.tech-block').forEach((block) => {
+            const blockTl = gsap.timeline({
+              scrollTrigger: { trigger: block, start: 'top 78%', toggleActions: 'play none none none' }
+            });
+            blockTl.fromTo(block,
+              { opacity: 0, y: 30 },
+              { opacity: 1, y: 0, duration: 1.5, ease: 'power3.out' }
+            );
+            const tags = block.querySelectorAll('.tag');
+            if (tags.length) {
+              blockTl.fromTo(tags,
+                { opacity: 0, scale: 0.85, y: 8 },
+                { opacity: 1, scale: 1, y: 0, duration: 0.7, stagger: 0.05, ease: 'back.out(1.5)' }, '-=0.9'
+              );
+            }
+          });
+        }
+
+        // ── Subtle parallax depth on section content ─────────────
+        gsap.utils.toArray('.band').forEach(band => {
+          const inner = band.querySelector('.col-wide') || band.querySelector('.bio-wrap');
+          if (inner) {
+            gsap.fromTo(inner, { yPercent: 2 }, {
+              yPercent: -2, ease: 'none',
+              scrollTrigger: { trigger: band, start: 'top bottom', end: 'bottom top', scrub: true }
+            });
           }
         });
-
       }
     } else {
       // No GSAP — make everything visible immediately so nothing is stuck hidden
       const preloader = document.getElementById('preloader');
       if (preloader) preloader.style.display = 'none';
-      document.querySelectorAll('.meta-row span, h1, .hero-rule, .abstract, .contact-row a, .ambient, #glCanvas, .hero-text > *, .headshot-frame, .gs-reveal, .tech-block').forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
+      document.querySelectorAll('.meta-row span, h1, .hero-rule, .abstract, .contact-row a, .ambient, #glCanvas, #deep-space, .hero-text > *, .headshot-frame, .gs-reveal, .tech-block, .band .section-eyebrow, .band .section-heading, .bio-card, .project-carousel, .view-all-link, .r-card, .edu-card').forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; el.style.filter = 'none'; el.style.clipPath = 'none'; });
     }
   } catch(e) {}
 });
