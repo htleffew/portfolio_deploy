@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About | Dr. Heather Leffew</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="design_system/css/global_chrome.css">
+<style>
+:root {
+  --obsidian:#030303;--charcoal:#161616;--graphite:#222222;--brushed:#333333;
+  --tungsten:#A1A1A6;--platinum:#F5F5F7;--flare:#FFFFFF;
+  --paper:#F5F5F7;--paper-2:#E9E9E9;--paper-3:#DDDDDD;
+  --ink:#030303;--ink-2:#222222;--ink-3:#5E5E5A;
+  --sapphire-deep:#0F52BA;--sapphire:#4D8CFF;--ink-blue:#1A3A6B;
+  --display:'Playfair Display','Times New Roman',serif;
+  --body:'Lora',Georgia,serif;
+  --mono:'JetBrains Mono','SF Mono',Menlo,monospace;
+  --ease-out:cubic-bezier(0.16,1,0.3,1);
+  --ease-std:cubic-bezier(0.4,0,0.2,1);
+  --col:680px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;border-radius:0 !important}
+::selection{background:rgba(77,140,255,0.35);color:#fff}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--paper);color:var(--ink);font-size:16px;line-height:1.78;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+#topnav{position:fixed;top:0;left:0;right:0;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;z-index:150;font-family:var(--mono);font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink);background:rgba(245,245,247,0.82);backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);border-bottom:1px solid rgba(0,0,0,0.08);transition:background 0.6s var(--ease-std),color 0.6s var(--ease-std),border-color 0.6s var(--ease-std)}
+#topnav .brand{font-family:var(--display);font-size:15px;font-weight:600;letter-spacing:0.04em;text-transform:none;color:inherit;text-decoration:none}
+#topnav .brand:hover{opacity:0.85}
+#topnav .nav-links{display:flex;gap:28px;align-items:center}
+#topnav .nav-links a,#topnav .nav-links button{color:inherit;text-decoration:none;opacity:0.7;transition:opacity 0.25s;background:none;border:none;font-family:inherit;font-size:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer}
+#topnav .nav-links a:hover,#topnav .nav-links button:hover{opacity:1}
+#topnav .nav-btn{color:var(--ink);border:1px solid rgba(0,0,0,0.2) !important;padding:8px 16px;transition:all 0.3s;opacity:1 !important}
+#topnav .nav-btn:hover{background:var(--ink);color:var(--paper) !important}
+@media(max-width:768px){#topnav{padding:0 24px}}
+
+#progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:200;pointer-events:none;background:transparent}
+#progress::after{content:'';position:absolute;left:0;top:0;bottom:0;width:var(--p,0%);background:linear-gradient(90deg,var(--ink-blue) 0%,var(--sapphire-deep) 100%);transition:width 0.05s linear}
+
+.about-hero{padding:160px 0 80px;text-align:left}
+.about-hero .col{max-width:var(--col);margin:0 auto;padding:0 32px}
+.about-hero .eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:0.30em;text-transform:uppercase;color:var(--ink-blue);margin-bottom:18px}
+.about-hero h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,3.5vw,42px);letter-spacing:-0.018em;line-height:1.12;color:var(--ink);margin-bottom:28px}
+.about-hero .lede{font-family:var(--body);font-style:italic;font-size:19px;line-height:1.7;color:var(--ink-2);max-width:60ch}
+
+.about-body{padding:0 0 100px}
+.about-body .col{max-width:var(--col);margin:0 auto;padding:0 32px}
+.about-body p{font-family:var(--body);font-size:16.5px;line-height:1.85;color:var(--ink-2);margin-bottom:28px;max-width:62ch}
+.about-body p:last-child{margin-bottom:0}
+.about-body .section-break{width:48px;height:1px;background:var(--ink-blue);margin:48px 0;opacity:0.4}
+
+.about-headshot{margin:48px 0;max-width:320px}
+.about-headshot img{width:100%;display:block;filter:grayscale(100%) contrast(1.1);transition:filter 0.6s ease}
+.about-headshot:hover img{filter:grayscale(0%) contrast(1.05)}
+
+.about-cta{padding:60px 0 80px;border-top:1px solid var(--paper-3)}
+.about-cta .col{max-width:var(--col);margin:0 auto;padding:0 32px}
+.about-cta .links{display:flex;gap:32px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;letter-spacing:0.10em;text-transform:uppercase}
+.about-cta .links a{color:var(--ink-blue);text-decoration:none;border-bottom:1px solid rgba(0,0,0,0.2);padding-bottom:4px;transition:all 0.3s}
+.about-cta .links a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+
+footer.site-foot{background:var(--obsidian);color:var(--tungsten);padding:60px 48px;border-top:1px solid var(--graphite);font-family:var(--mono);font-size:10px;letter-spacing:0.16em;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;position:relative;z-index:10}
+footer.site-foot a{color:inherit;text-decoration:none;opacity:0.8;transition:opacity 0.3s}
+footer.site-foot a:hover{opacity:1;color:var(--platinum)}
+@media(max-width:768px){footer.site-foot{flex-direction:column;gap:24px;text-align:center;padding:40px 24px}}
+</style>
+</head>
+<body>
+
+<header id="topnav">
+  <a href="index.html" class="brand">Dr. Heather Leffew</a>
+  <div class="nav-links">
+    <button id="trigger-search">Search</button>
+    <a href="about.html">About</a>
+    <a href="projects-repository.html">Research Library</a>
+    <a href="resume.pdf" target="_blank" class="nav-btn">Resume -></a>
+  </div>
+</header>
+<div id="progress"></div>
+
+<section class="about-hero">
+  <div class="col">
+    <div class="eyebrow">About</div>
+    <h1>The Robopsychologist</h1>
+    <p class="lede">I love machines and I love humans. I have spent my entire career trying to understand how they think, how they interact, and what happens when they shape each other.</p>
+  </div>
+</section>
+
+<section class="about-body">
+  <div class="col">
+
+    <p>I have been a computer geek my entire life. I have also spent that life obsessed with the way people think. Not what they say they think, but the implicit signals buried in their language, their behavior, their patterns: the things they reveal without knowing they are revealing them. My career has been about one thing: taking messy, unstructured, chaotic, deeply ambiguous data and slicing through the gray areas with disciplined proxy measurement, statistical rigor, and a deep appreciation for how humans navigate the world at the individual, group, and system level.</p>
+
+    <p>That obsession led me to clinical psychology, forensic psychiatric evaluation, and critical incident response. I sat across from people in crisis and learned that what someone tells you directly is only part of the picture. Then it led me to my doctoral research, where I studied the written communications of 100 mass murderers and used computational psycholinguistics to measure implicit power drives in their language. K-means clustering found two distinct behavioral typologies. Binary logistic regression confirmed that real-world attack behaviors predicted cluster membership. The language told us what no interview ever could.</p>
+
+    <p>That research produced an insight I have never stopped applying: language reveals implicit psychological states that predict behavioral outcomes, even when the subject cannot be directly assessed. If that is true of humans, it is true of machines too.</p>
+
+    <div class="section-break"></div>
+
+    <p>At TikTok, I built measurement and detection systems processing over a billion records. Statistical safety frameworks for detecting semantic coercion. Network analysis that shifted content moderation from chasing individual pieces of content to identifying systematic bad actors through their behavioral signatures. I worked on child safety, CSAM network detection, mass violence risk assessment, and livestreamed violence UX analysis. At Spokeo, I built and scaled the entire data science and AI function: a 49-terabyte knowledge graph with autonomous entity resolution, a 26-research-question behavioral evaluation program, and an FCRA compliance architecture where legal requirements are machine-enforced at the inference layer rather than relegated to policy documents.</p>
+
+    <p>At every level, the method is the same. Take the chaos. Find the implicit signals. Measure them with rigor. Classify, predict, and build governance around what you find.</p>
+
+    <div class="section-break"></div>
+
+    <div class="about-headshot">
+      <img src="design_system/assets/Heather_headshot_2.jpg" alt="Dr. Heather Leffew">
+    </div>
+
+    <p>But the reason I am writing this page is not to list what I have built. It is to explain what I believe we need to build next.</p>
+
+    <p>AI and machine learning are becoming deeply integrated into the systems that judge, measure, and make decisions for human beings. At the same time, humans are learning to work in partnership with these machines in ways we are only beginning to understand. During this period in history, there is nothing more consequential than getting this right: understanding how human-AI interactions actually unfold, what implicit signals pass between them, how those signals shape states, traits, behaviors, and cognitive processes on both sides, and what all of that means for outcomes.</p>
+
+    <p>The field right now is conceptualizing human-computer interaction and human-AI interaction with tools borrowed from computer science and UX. Those tools are not wrong, but they are incomplete. They flatten the behavioral dynamics that behavioral scientists have spent decades learning to hold. The messy, looping, self-modifying, context-dependent interplay of human cognition and machine behavior does not reduce cleanly to metrics and A/B tests. It requires the kind of measurement science that can work with ambiguity, implicit signals, and complex systems without pretending the complexity away.</p>
+
+    <p>That is what I want to build. A total rethinking of the methods by which we judge LLM outputs and understand their impacts on human states, traits, behaviors, and cognitive processes, and vice versa. Roadmaps for how AI adoption can improve human productivity, function, and wellness. Measurement systems that detect potential harms through implicit signals before those harms become visible in outcomes. Frameworks for efficient human-agent partnerships grounded in a real understanding of how the partnership actually works at a behavioral level.</p>
+
+    <p>I published an NLP analysis of Claude Sonnet's unsolicited clinical diagnostics, showing they caused measurable user harm. I built a clinical AI system for autism assessment with a validity check that flags its own suspicious performance. I designed a game where the core mechanic is red-teaming your own AI system's content filter through natural language paraphrasing. My Post-Asimovian Framework proposes psycholinguistic typology discovery as the observable state variable for adaptive AI safety governance: the same implicit signal measurement methods from my dissertation, formalized as control theory for alignment.</p>
+
+    <p>Every project I have ever done is a different angle on the same question: how do we measure what thinking systems are actually doing, and how do we use that measurement to make the interaction between humans and machines better, safer, and more honest?</p>
+
+    <p>I call myself a robopsychologist because that is what I do. And I believe that right now, in this moment, there is no work that matters more.</p>
+
+  </div>
+</section>
+
+<section class="about-cta">
+  <div class="col">
+    <div class="links">
+      <a href="index.html">Executive Profile</a>
+      <a href="projects-repository.html">Research Library</a>
+      <a href="resume.pdf" target="_blank">Resume PDF</a>
+      <a href="https://linkedin.com/in/heathertleffew" target="_blank">LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<script>
+let cachedScrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+window.addEventListener('resize', () => { cachedScrollHeight = document.documentElement.scrollHeight - window.innerHeight; });
+window.addEventListener('scroll', () => {
+  const p = cachedScrollHeight > 0 ? (window.scrollY / cachedScrollHeight) * 100 : 0;
+  const progEl = document.getElementById('progress');
+  if(progEl) progEl.style.setProperty('--p', p + '%');
+}, { passive: true });
+</script>
+
+<script src="design_system/js/global_chrome.js"></script>
+
+</body>
+</html>

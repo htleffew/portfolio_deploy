@@ -67,6 +67,7 @@
             <a href="${pathPrefix}index.html" class="brand">Dr. Heather Leffew</a>
             <div class="nav-links">
                 <button id="trigger-search">Search</button>
+                <a href="${pathPrefix}about.html">About</a>
                 <a href="${pathPrefix}projects-repository.html">Research Library</a>
                 <a href="${pathPrefix}resume.pdf" target="_blank" class="nav-btn">Resume -></a>
             </div>
