@@ -1,5 +1,33 @@
 [
     {
+        "id": "Multimodal_Autism_AI",
+        "title": "Building an Ultra-Realistic Multimodal AI for Autism Assessment",
+        "desc": "The diagnosis of Autism Spectrum Disorder (ASD) relies heavily on the Autism Diagnostic Observation Schedule, Second Edition (ADOS-2). This assessment is the clinical gold standard. It involves a trained clinician observing a child through a series of structured and semi-structured tasks to evaluate social interaction, communication, play, and repetitive behaviors. While highly effective, the ADOS-2 is time-intensive and inherently subjective.",
+        "cat": "Research & Architecture",
+        "subtype": "CLINICAL & BEHAVIORAL ML",
+        "tags": [
+            "Clinical & Behavioral ML",
+            "Data Science"
+        ],
+        "url": "Multimodal_Autism_AI/multimodal-autism-ai.html",
+        "time": "10 min read",
+        "visual": ""
+    },
+    {
+        "id": "ADHD_Focus_Playlist",
+        "title": "How I Accidentally Wrote a Research Paper About My Own Playlist",
+        "desc": "This was supposed to be one line on my About page. I was going to embed a Spotify playlist, write something like 'this helps me focus,' and move on with my life. But I have ADHD, and I am a psychologist, and I am constitutionally incapable of encountering a behavioral phenomenon without pulling it apart to figure out why it works.",
+        "cat": "Neuroscience",
+        "subtype": "ADHD",
+        "tags": [
+            "ADHD",
+            "Neuroscience"
+        ],
+        "url": "ADHD_Focus_Playlist/adhd-focus-playlist.html",
+        "time": "10 min read",
+        "visual": ""
+    },
+    {
         "id": "Account_Prioritization",
         "title": "Account Prioritization",
         "desc": "Interactive mathematical telemetry simulator and architectural case study.",
