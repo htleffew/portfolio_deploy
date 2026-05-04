@@ -40,5 +40,19 @@
         "url": "AI_Equity_Framework/ai-equity-framework.html",
         "time": "5 min read",
         "visual": "<svg id=\"sim-svg\" preserveaspectratio=\"none\" viewbox=\"0 0 400 300\"></svg>"
+    },
+    {
+        "id": "Multimodal_Autism_AI",
+        "title": "Building an Ultra-Realistic Multimodal AI for Autism Assessment",
+        "desc": "The diagnosis of Autism Spectrum Disorder (ASD) relies heavily on the Autism Diagnostic Observation Schedule, Second Edition (ADOS-2).",
+        "cat": "Research & Architecture",
+        "subtype": "MULTIMODAL AUTISM AI",
+        "tags": [
+            "Clinical & Behavioral",
+            "Data Science"
+        ],
+        "url": "Multimodal_Autism_AI/multimodal-autism-ai.html",
+        "time": "10 min read",
+        "visual": ""
     }
 ]
