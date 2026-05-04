@@ -4,7 +4,7 @@
  * 2. Three.js Particle Network with Morphing & ShaderMaterial Filaments
  */
 
-document.addEventListener('DOMContentLoaded', () => {
+const initCinematicEngine = () => {
     // ==========================================
     // 1. RAW GLSL DEEP SPACE STARFIELD
     // ==========================================
@@ -310,4 +310,10 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     animate();
-});
+};
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCinematicEngine);
+} else {
+    initCinematicEngine();
+}
