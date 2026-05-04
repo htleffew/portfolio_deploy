@@ -6,83 +6,6 @@
     <title>AI Equity Framework | Dr. Heather Leffew</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        /* ============================================================
-           TOKENS, dual mode, no radii, sharp editorial
-           ============================================================ */
-        :root {
-          --obsidian:#030303;
-          --charcoal:#161616;
-          --graphite:#222222;
-          --brushed:#333333;
-          --tungsten:#A1A1A6;
-          --platinum:#F5F5F7;
-          --flare:#FFFFFF;
-
-          --paper:#F5F5F7;          
-          --paper-2:#E9E9E9;        
-          --paper-3:#DDDDDD;        
-          --ink:#030303;            
-          --ink-2:#222222;           
-          --ink-3:#5E5E5A;          
-
-          --sapphire-deep:#0F52BA;
-          --sapphire:#4D8CFF;
-          --ink-blue:#1A3A6B;       
-
-          --display:'Playfair Display','Times New Roman',serif;
-          --body:'Lora',Georgia,serif;
-          --mono:'JetBrains Mono','SF Mono',Menlo,monospace;
-
-          --ease-out:cubic-bezier(0.16,1,0.3,1);
-          --ease-std:cubic-bezier(0.4,0,0.2,1);
-
-          --col:720px;
-          --col-wide:1080px;
-        }
-
-        *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; border-radius:0 !important; }
-        ::selection { background:rgba(77,140,255,0.35); color:#fff; }
-        html { scroll-behavior:smooth; }
-        body {
-  font-family:var(--body);
-  background:var(--obsidian);
-  color:var(--platinum);
-  font-size:15px;
-  line-height:1.78;
-  overflow-x:hidden;
-  -webkit-font-smoothing:antialiased;
-}
-
-        /* ============================================================
-           MODE BANDS
-           ============================================================ */
-        .band { position:relative; padding:140px 0; transition:background 0.9s var(--ease-std), color 0.9s var(--ease-std); }
-        .band--dark  { background:var(--obsidian); color:var(--platinum); }
-        .band--paper { background:var(--platinum); color:var(--obsidian); }
-        .band--ink   { background:var(--obsidian); color:var(--platinum); }   
-
-        .band--dark + .band--paper, .band--paper + .band--dark, .band--ink + .band--paper, .band--paper + .band--ink {
-          border-top:1px solid rgba(0,0,0,0.0);
-        }
-
-        .col      { max-width:var(--col);      margin:0 auto; padding:0 32px; }
-        .col-wide { max-width:var(--col-wide); margin:0 auto; padding:0 48px; }
-
-        /* ============================================================
-           GLOBAL CHROME
-           ============================================================ */
-        #progress {
-          position:fixed; top:0; left:0; right:0; height:2px; z-index:200; pointer-events:none; background:transparent;
-        }
-        #progress::after {
-          content:''; position:absolute; left:0; top:0; bottom:0; width:var(--p,0%);
-          background:linear-gradient(90deg, var(--sapphire) 0%, var(--sapphire-deep) 100%);
-        }
-
-        #topnav {
-          position:fixed; top:0; left:0; right:0; height:60px; display:flex; align-items:center; justify-content:space-between;
-          padding:0 32px; z-index:150; font-family:var(--mono); font-size:11px; letter-spacing:0.18em; text-transform:uppercase;
-          color:var(--platinum); background:rgba(3,3,3,0.55); backdrop-filter:blur(14px) saturate(140%);
           -webkit-backdrop-filter:blur(14px) saturate(140%); border-bottom:1px solid rgba(255,255,255,0.06);
           transition:background 0.6s var(--ease-std), color 0.6s var(--ease-std), border-color 0.6s var(--ease-std);
         }
@@ -265,67 +188,7 @@
         .sim-viz svg { width: 100%; height: 100%; min-height: 250px; }
 
     
-/* ============================================================
-   SIDENOTES: Hybrid Responsive (Institutional Standard)
-   ============================================================ */
-.sn, .sidenote { position:relative; }
-.sn-num { font-family:var(--mono); font-size:11px; color:var(--sapphire); vertical-align:super; cursor:pointer; padding:0 2px; margin-right:6px; }
-.band--paper .sn-num { color:var(--ink-blue); }
-.sn-num:hover { color:var(--hansa); }
-.sn-body, .sidenote { display:none; }
 
-@media (min-width: 1360px) {
-  p.col-with-sidenotes { position:relative; }
-  .sn, .sidenote { position:absolute; left:calc(100% + 40px); width:280px; font-family:var(--body); font-size:14px; line-height:1.6; color:var(--tungsten); display:block; padding-bottom:8px; border-bottom:1px solid rgba(255,255,255,0.06); }
-  .band--paper .sn, .band--paper .sidenote { color:var(--ink-3); border-bottom-color:rgba(0,0,0,0.06); }
-  .sn-num { position:absolute; left:-24px; top:2px; }
-  .sn-body { display:block; }
-}
-
-@media (max-width: 1359px) {
-  p.col-with-sidenotes { position:relative; }
-  .sn { display:inline; }
-  .sn-body, .sidenote { display:block; margin:12px 0; padding:12px 16px; font-family:var(--body); font-size:15px; line-height:1.6; color:var(--platinum); background:rgba(255,255,255,0.04); border-left:2px solid var(--sapphire); }
-  .band--paper .sn-body, .band--paper .sidenote { color:var(--ink); background:rgba(0,0,0,0.04); border-left-color:var(--ink-blue); }
-  .sn-num { display:inline; position:static; margin-right:6px; }
-}
-
-/* ============================================================
-   MASTER GRID: Centered, Balanced, Wide
-   ============================================================ */
-section.band:not(.front) {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-section.band:not(.front) > * {
-  width: 100%;
-  max-width: var(--col);
-  margin-left: auto;
-  margin-right: auto;
-}
-section.band:not(.front) > .col-wide, 
-section.band:not(.front) > .stat-grid, 
-section.band:not(.front) > .figure, 
-section.band:not(.front) > .report-prose,
-section.band:not(.front) > .simulator-layout,
-section.band:not(.front) > .sandbox-layout {
-  max-width: var(--col-wide);
-}
-
-@media (min-width: 1180px) and (max-width: 1359px) {
-  #spine {
-    width: 44px; overflow: hidden; white-space: nowrap;
-    transition: width 0.4s cubic-bezier(0.16,1,0.3,1), background 0.6s cubic-bezier(0.4,0,0.2,1);
-  }
-  #spine:hover { width: 250px; }
-}
-@media (min-width: 1360px) {
-  #spine { width: auto; overflow: visible; }
-}
-
-/* Portrait Mode Space Fix */
-.front { min-height: clamp(400px, 80vh, 850px) !important; justify-content: center !important; }
 
 </style>
 </head>
@@ -375,7 +238,7 @@ section.band:not(.front) > .sandbox-layout {
             <div class="eyebrow">01 / The Launch Window Gap</div>
             <h2>The Launch Window Gap</h2>
             <div class="col-main">
-                <p class="dropcap col-with-sidenotes">In enterprise AI, there is a fundamental tension between engineering velocity and ethical safety. <span class="sn"><span class="sn-num">1</span><span class="sn-body">This methodology borrows heavily from clinical trial design. When a human population is ethically too vulnerable to expose to an untested hypothesis, calibrated synthetic cohorts become the absolute moral and scientific standard.</span></span>Engineers demand production data to tune models; ethicists and domain experts demand fairness before a single user is exposed to risk. This creates the "Launch Window Gap": a terrifying period where no reliable fairness signal exists, yet the consequences of algorithmic harm can permanently damage vulnerable populations (Barocas & Selbst, 2016). Intuition-driven review is fast but mathematically empty. Data-driven review is reliable, but waiting for production data means waiting for real human harm to occur.</p> 
+                <p class="has-dropcap col-with-sidenotes">In enterprise AI, there is a fundamental tension between engineering velocity and ethical safety. <span class="sn"><span class="sn-num">1</span><span class="sn-body">This methodology borrows heavily from clinical trial design. When a human population is ethically too vulnerable to expose to an untested hypothesis, calibrated synthetic cohorts become the absolute moral and scientific standard.</span></span>Engineers demand production data to tune models; ethicists and domain experts demand fairness before a single user is exposed to risk. This creates the "Launch Window Gap": a terrifying period where no reliable fairness signal exists, yet the consequences of algorithmic harm can permanently damage vulnerable populations (Barocas & Selbst, 2016). Intuition-driven review is fast but mathematically empty. Data-driven review is reliable, but waiting for production data means waiting for real human harm to occur.</p> 
                 
                 <p>As an interdisciplinary researcher bridging these teams, I had to architect a compromise: a framework that forces a massive data pipeline to respect human vulnerability. The framework closes the gap by generating digital twin synthetic users that behave with the exact statistical properties of the real user base. This allows us to mathematically simulate harm and calibrate our ethical thresholds before the product ever launches. Calibration is the load-bearing piece of the architecture; without it, the engineers are simply tuning alarms to a fictional population.</p>
                 

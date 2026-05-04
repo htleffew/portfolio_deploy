@@ -8,51 +8,6 @@
     <link rel="stylesheet" href="../design_system/assets/css/institutional.css">
     <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
     <style>
-        .code-block {
-            background: var(--obsidian);
-            border: 1px solid var(--graphite);
-            padding: 1.5rem;
-            font-family: var(--mono);
-            font-size: 0.85rem;
-            color: var(--platinum);
-            overflow-x: auto;
-            margin: 2rem auto;
-            max-width: var(--col);
-        }
-        .code-block pre { margin: 0; white-space: pre-wrap; }
-        .band--paper .code-block { background: var(--paper-2); border-color: var(--paper-3); color: var(--ink); }
-        .report-prose ul { max-width: var(--col); margin: 22px auto; padding: 0 32px 0 52px; font-size: 18px; line-height: 1.78; }
-        .report-prose ul li { margin-bottom: 12px; }
-        
-        table.data-table {
-            width: 100%;
-            max-width: var(--col);
-            margin: 32px auto;
-            border-collapse: collapse;
-            font-size: 16px;
-            color: var(--platinum);
-        }
-        .band--paper table.data-table { color: var(--ink); }
-        table.data-table th, table.data-table td {
-            padding: 12px 16px;
-            text-align: left;
-            border-bottom: 1px solid var(--graphite);
-        }
-        .band--paper table.data-table th, .band--paper table.data-table td { border-bottom-color: var(--paper-3); }
-        table.data-table th {
-            font-family: var(--mono);
-            font-size: 12px;
-            font-weight: 500;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--sapphire);
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-        table.data-table th:hover { color: var(--flare); }
-        .band--paper table.data-table th { color: var(--ink-blue); }
-        .band--paper table.data-table th:hover { color: var(--sapphire-deep); }
-        
         /* Interactive Simulator Styles */
         .priority-sim {
             background: var(--charcoal);
@@ -128,7 +83,7 @@
     <div class="eyebrow">01 / The Single Metric Flaw</div>
     <h2>The Blind Spot in Conversion Probability</h2>
     <div class="report-prose">
-        <p class="dropcap">Let us look at a specific scenario: 6sense aims to enhance its account ranking system for sales outreach. Historically, machine learning systems in this space have relied on a single metric, which is the probability that an account will convert. You train a classification model, score your leads from 0 to 1, and hand the highest probabilities to the sales team.</p>
+        <p class="has-dropcap">Let us look at a specific scenario: 6sense aims to enhance its account ranking system for sales outreach. Historically, machine learning systems in this space have relied on a single metric, which is the probability that an account will convert. You train a classification model, score your leads from 0 to 1, and hand the highest probabilities to the sales team.</p>
         
         <p>This approach makes intuitive sense, but it has a significant blind spot. It treats all conversions as equal. A 90% chance of closing a $1,000 deal will always rank higher than a 10% chance of closing a $1,000,000 deal. To fix this, 6sense's business goal is to prioritize target accounts based on <em>both</em> their likelihood to convert and their expected deal size. By calculating a final prioritization score that balances these two factors, we can help sales teams allocate their time toward the highest-impact opportunities.</p>
     </div>
