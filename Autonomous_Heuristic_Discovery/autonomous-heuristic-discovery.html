@@ -6,69 +6,7 @@
     <title>Autonomous Heuristic Discovery | Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../design_system/assets/css/institutional.css">
-    <style>
-        /* Code Block override for formatting JSON payloads */
-        .code-block {
-            background: var(--obsidian);
-            border: 1px solid var(--graphite);
-            padding: 1.5rem;
-            font-family: var(--mono);
-            font-size: 0.85rem;
-            color: var(--platinum);
-            overflow-x: auto;
-            margin: 2rem auto;
-            max-width: var(--col);
-        }
-        .code-block pre {
-            margin: 0;
-            white-space: pre-wrap;
-        }
-        
-        .band--paper .code-block {
-            background: var(--paper-2);
-            border-color: var(--paper-3);
-            color: var(--ink);
-        }
-        
-        /* Ensure bullet points align gracefully with text blocks */
-        .report-prose ul {
-            max-width: var(--col);
-            margin: 22px auto;
-            padding: 0 32px 0 52px;
-            font-size: 18px;
-            line-height: 1.78;
-        }
-        
-        .report-prose ul li {
-            margin-bottom: 12px;
-        }
 
-        /* Basic Structural Table Styling for Report Prose */
-        table {
-            width: 100%;
-            max-width: var(--col);
-            margin: 32px auto;
-            border-collapse: collapse;
-            font-size: 16px;
-            color: var(--platinum);
-        }
-        .band--paper table { color: var(--ink); }
-        th, td {
-            padding: 12px 16px;
-            text-align: left;
-            border-bottom: 1px solid var(--graphite);
-        }
-        .band--paper th, .band--paper td { border-bottom-color: var(--paper-3); }
-        th {
-            font-family: var(--mono);
-            font-size: 12px;
-            font-weight: 500;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--sapphire);
-        }
-        .band--paper th { color: var(--ink-blue); }
-    </style>
 </head>
 <body data-category="Enterprise Systems Architecture" data-title="Autonomous Heuristic Discovery">
 
@@ -113,7 +51,7 @@
             <div class="eyebrow">01 / The Orchestration Layer</div>
             <h2>Skill-Based Routing</h2>
             <div class="report-prose">
-                <p class="dropcap">The architecture commits to token efficiency through skill-based routing, retrieval quality via a unified person-centric index, and continuous heuristic iteration using learning-to-rank versioning. There is no manual intervention at runtime; the point is to let the orchestration layer synthesize disparate data signals into a canonical entity view automatically.</p>
+                <p class="has-dropcap">The architecture commits to token efficiency through skill-based routing, retrieval quality via a unified person-centric index, and continuous heuristic iteration using learning-to-rank versioning. There is no manual intervention at runtime; the point is to let the orchestration layer synthesize disparate data signals into a canonical entity view automatically.</p>
 
                 <p>The core orchestration relies on a two-pass routing layer rather than injecting the entire tool surface into the context window. The system passes a lightweight prompt of approximately 248 tokens, containing one-line tool summaries, to a routing agent. The agent returns an array of required skills, and the second pass loads only the full schemas and detailed instructions for those selected tools.</p>
 
@@ -192,7 +130,7 @@
             <div class="report-prose">
                 <p>Heuristics are authorized for production through a four-gate waterfall evaluation process. The framework tests each proposed data bridge against a strict threshold before it is allowed to influence the entity resolution graph.</p>
 
-                <ul>
+                <ul class="bullets">
                     <li><strong>Gate 1 (Network Bridge):</strong> Requires a fill rate above 50 percent for primary vendors.</li>
                     <li><strong>Gate 2 (Persistent ID Bridge):</strong> Requires a fill rate above 70 percent.</li>
                     <li><strong>Gate 3 (Stock Ticker Bridge):</strong> Sparse bridge retained for public company records.</li>

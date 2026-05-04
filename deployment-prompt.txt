@@ -1,0 +1,13 @@
+# Three-Phase Deployment Audit Prompt
+
+When adding a new HTML case study to the portfolio, provide this file or copy the prompt below to Antigravity to ensure strict structural alignment and proper deployment.
+
+---
+
+I have a new HTML case study ready for deployment located at `[insert file path]`. Please execute the Three-Phase Deployment Audit:
+
+1. Structural Conformity Check: Audit the HTML against `portfolio-design-system/STYLE.md`. Strip all inline `<style>` blocks. Ensure all standard components (tables, code blocks, lists) are utilizing the global primitives from `institutional.css`. Leave any hyper-specific visualization CSS untouched, but verify the layout uses the proper `.band` and `.col` structures.
+
+2. Index Registration: Update `portfolio_deploy/master_index.json` to include the new project metadata, ensuring it has the correct category, tags, and file paths.
+
+3. Pipeline Execution: Run `node sync_index.js` (in `portfolio_deploy`) to dynamically regenerate the site-wide "Related Works" footers and the Projects dashboard. Then, run `node sync_assets.js` (in `portfolio-design-system`) to guarantee the deployment repository has the absolute latest global CSS and JS primitives.

@@ -218,4 +218,79 @@
             .catch(err => console.error("Failed to load related works", err));
     }
 
+    // 7. Inject Custom Magnetic Cursor
+    if (window.innerWidth > 768 && !document.getElementById('custom-cursor')) {
+        const cursor = document.createElement('div');
+        cursor.id = 'custom-cursor';
+        document.body.appendChild(cursor);
+        let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
+        document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
+        const renderCursor = () => {
+            cursorX += (mouseX - cursorX) * 0.15;
+            cursorY += (mouseY - cursorY) * 0.15;
+            cursor.style.transform = `translate(${cursorX}px, ${cursorY}px) translate(-50%, -50%)`;
+            requestAnimationFrame(renderCursor);
+        };
+        requestAnimationFrame(renderCursor);
+        
+        const attachCursorHover = () => {
+            document.querySelectorAll('a, button, .tag, input, select, .sn-num, .gloss, .sb-item, .sb-header, .sb-link, .r-card, .p-card, .db-row, .tick, .bio-expand-btn, .dashboard-sidebar').forEach(el => {
+                if(el.dataset.cursorBound) return;
+                el.dataset.cursorBound = "1";
+                el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+            });
+        };
+        attachCursorHover();
+        setInterval(attachCursorHover, 1000);
+    }
+
+    // 8. 3D Tilt Parallax for Cards Globally
+    if (window.innerWidth > 768) {
+        const attachTilt = () => {
+            document.querySelectorAll('.p-card, .r-card, .edu-card, .bio-card, .db-row, .figure .frame').forEach(card => {
+                if(card.dataset.tiltBound) return;
+                card.dataset.tiltBound = "1";
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateX = ((y - centerY) / centerY) * -3; 
+                    const rotateY = ((x - centerX) / centerX) * 3;
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.01, 1.01, 1.01)`;
+                    card.style.transition = 'transform 0.1s ease-out';
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+                    card.style.transition = 'transform 0.6s ease-out';
+                });
+            });
+        };
+        attachTilt();
+        setInterval(attachTilt, 1000);
+    }
+
+    // 9. Generative UI Audio Feedback
+    let audioCtx;
+    const playClick = () => {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(200, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(80, audioCtx.currentTime + 0.08);
+        gain.gain.setValueAtTime(0.02, audioCtx.currentTime); // subtle
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.08);
+    };
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('button, a, .p-card, .bio-expand-btn, .r-card, .db-row')) playClick();
+    });
+
 })();
