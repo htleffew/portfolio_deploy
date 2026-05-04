@@ -46,7 +46,7 @@ function renderDashboard() {
         row.href = p.url;
         row.className = 'db-row';
         row.style.opacity = '0';
-        row.style.transform = 'translateY(10px)';
+        row.style.transform = 'translate3d(0, 40px, -100px) rotateX(-15deg)';
 
         const tagMarkup = p.tags ? p.tags.slice(0, 3).map(t => `<span class="db-tag">${t}</span>`).join('') : '';
 
@@ -62,7 +62,7 @@ function renderDashboard() {
             </div>
         `;
         tableWrap.appendChild(row);
-        gsap.to(row, { opacity: 1, y: 0, duration: 0.5, delay: count * 0.03, ease: 'power2.out' });
+        gsap.to(row, { opacity: 1, y: 0, z: 0, rotateX: 0, duration: 0.8, delay: count * 0.04, ease: 'back.out(1.2)' });
     });
 
     noRes.style.display = count === 0 ? 'block' : 'none';

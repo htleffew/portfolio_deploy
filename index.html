@@ -72,29 +72,14 @@ html{scroll-behavior:smooth}
 
 /* Cinematic Film Grain Overlay */
 
-/* Breathing Deep Space Gradients */
-body::after {
-  content: "";
+/* Deep Space Canvas Engine */
+#deep-space {
   position: fixed;
   inset: 0;
-  z-index: -20;
+  z-index: -40; /* Behind everything */
   pointer-events: none;
-  background: radial-gradient(circle at 50% 50%, rgba(77, 140, 255, 0.05) 0%, transparent 60%);
-  animation: pulse-slow 50s ease-in-out infinite alternate;
-  will-change: transform, opacity;
-}
-.ambient-gradient-b {
-  position: fixed;
-  inset: 0;
-  z-index: -15;
-  pointer-events: none;
-  background: radial-gradient(circle at 80% 20%, rgba(15, 82, 186, 0.08) 0%, transparent 50%);
-  animation: pulse-slow 80s ease-in-out infinite alternate-reverse;
-  will-change: transform, opacity;
-}
-@keyframes pulse-slow {
-  0% { transform: scale(1) translate(0, 0); opacity: 0.5; }
-  100% { transform: scale(1.5) translate(-10%, 10%); opacity: 1; }
+  width: 100vw;
+  height: 100vh;
 }
 
 .band{position:relative;padding:80px 0;transition:background 0.9s var(--ease-std),color 0.9s var(--ease-std)}
@@ -264,7 +249,7 @@ footer.site-foot a:hover{opacity:1;color:var(--platinum)}
   </div>
 </header>
 <div id="progress"></div>
-<div class="ambient-gradient-b"></div>
+<canvas id="deep-space"></canvas>
 <canvas id="glCanvas"></canvas>
 
 
@@ -433,226 +418,6 @@ window.addEventListener('scroll', () => {
 })();
 </script>
 
-<script>
-window.addEventListener('load', function initWebGL() {
-  try {
-    if (typeof THREE === 'undefined') throw new Error("THREE.js not loaded");
-    const canvas = document.getElementById('glCanvas');
-    if (!canvas) return;
-    
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: "high-performance" });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    
-    const scene = new THREE.Scene();
-
-    const renderScene = new THREE.RenderPass(scene, camera);
-    const bloomPass = new THREE.UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
-    bloomPass.threshold = 0.1;
-    bloomPass.strength = 1.2;
-    bloomPass.radius = 0.8;
-    
-    const composer = new THREE.EffectComposer(renderer);
-    composer.addPass(renderScene);
-    composer.addPass(bloomPass);
-
-    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 200);
-    camera.position.set(0, 0, 16);
-    
-    function createGlowTexture() {
-      const canvas = document.createElement('canvas');
-      canvas.width = 64; canvas.height = 64;
-      const ctx = canvas.getContext('2d');
-      const gradient = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
-      gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
-      gradient.addColorStop(0.2, 'rgba(77, 140, 255, 0.8)');
-      gradient.addColorStop(0.5, 'rgba(77, 140, 255, 0.2)');
-      gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, 64, 64);
-      return new THREE.CanvasTexture(canvas);
-    }
-
-    const particleCount = 80;
-    const particles = new THREE.BufferGeometry();
-    const positions = new Float32Array(particleCount * 3);
-    const velocities = new Float32Array(particleCount * 3);
-    
-    for(let i = 0; i < particleCount; i++) {
-      positions[i * 3] = (Math.random() - 0.5) * 40;
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 20;
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 30 - 5;
-      
-      velocities[i * 3] = (Math.random() - 0.5) * 0.006;
-      velocities[i * 3 + 1] = (Math.random() - 0.5) * 0.006;
-      velocities[i * 3 + 2] = (Math.random() - 0.5) * 0.006;
-    }
-    
-    particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    
-    const pMaterial = new THREE.PointsMaterial({
-      size: 1.5,
-      map: createGlowTexture(),
-      transparent: true,
-      opacity: 0.8,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false
-    });
-    
-    const pointCloud = new THREE.Points(particles, pMaterial);
-    scene.add(pointCloud);
-    
-    const maxLines = 1500; 
-    const linePositions = new Float32Array(maxLines * 6);
-    const lineColors = new Float32Array(maxLines * 6);
-    
-    const linesGeometry = new THREE.BufferGeometry();
-    linesGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3).setUsage(THREE.DynamicDrawUsage));
-    linesGeometry.setAttribute('color', new THREE.BufferAttribute(lineColors, 3).setUsage(THREE.DynamicDrawUsage));
-    
-    const linesMaterial = new THREE.LineBasicMaterial({
-      vertexColors: true,
-      blending: THREE.AdditiveBlending,
-      transparent: true,
-      opacity: 0.15,
-      depthWrite: false
-    });
-    const linesMesh = new THREE.LineSegments(linesGeometry, linesMaterial);
-    scene.add(linesMesh);
-
-    // Keep it slightly biased to the right for layout balance
-    pointCloud.position.x = 2;
-    linesMesh.position.x = 2;
-
-    const mouse = new THREE.Vector2(-9999, -9999);
-    window.addEventListener('mousemove', (e) => {
-      mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
-      mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
-    });
-    window.addEventListener('mouseout', () => { mouse.x = -9999; });
-
-    let scrollProgress = 0;
-    let webglScrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-    window.addEventListener('resize', () => {
-      webglScrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-    });
-    window.addEventListener('scroll', () => {
-      scrollProgress = webglScrollHeight > 0 ? window.scrollY / webglScrollHeight : 0;
-    }, { passive: true });
-
-    window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      composer.setSize(window.innerWidth, window.innerHeight);
-    });
-
-    const baseColor = new THREE.Color(0x0F52BA);
-    const highlightColor = new THREE.Color(0x4D8CFF);
-    
-    let frameCount = 0;
-    function animate() {
-      requestAnimationFrame(animate);
-
-      camera.position.z = 25;
-      camera.position.y = 2 + (scrollProgress * 5);
-      camera.lookAt(0, 0, 0);
-
-      const posAttr = particles.attributes.position;
-
-      let vertexpos = 0;
-      let colorpos = 0;
-      let lineCount = 0;
-
-      const vector = new THREE.Vector3(mouse.x, mouse.y, 0.5);
-      vector.unproject(camera);
-      const dir = vector.sub(camera.position).normalize();
-      const distance = -camera.position.z / dir.z;
-      const mouseWorld = camera.position.clone().add(dir.multiplyScalar(distance));
-
-      mouseWorld.x -= pointCloud.position.x;
-
-      for(let i = 0; i < particleCount; i++) {
-        let x = posAttr.getX(i);
-        let y = posAttr.getY(i);
-        let z = posAttr.getZ(i);
-
-        let vx = velocities[i * 3];
-        let vy = velocities[i * 3 + 1];
-        let vz = velocities[i * 3 + 2];
-
-        x += vx;
-        y += vy;
-        z += vz;
-
-        // Gentle bounds bounce
-        if (x > 20 || x < -20) velocities[i * 3] *= -1;
-        if (y > 10 || y < -10) velocities[i * 3 + 1] *= -1;
-        if (z > 15 || z < -25) velocities[i * 3 + 2] *= -1;
-
-        // Gentle mouse repulsion
-        if (mouse.x !== -9999) {
-          const dx = x - mouseWorld.x;
-          const dy = y - mouseWorld.y;
-          const distSq = dx*dx + dy*dy;
-
-          if (distSq < 25) {
-            const force = (25 - distSq) / 25;
-            x += dx * force * 0.05;
-            y += dy * force * 0.05;
-          }
-        }
-
-        posAttr.setXYZ(i, x, y, z);
-
-        // Only calculate lines every other frame to reduce computation
-        if ((frameCount & 1) === 0 && lineCount < maxLines) {
-          for(let j = i + 1; j < particleCount; j++) {
-            if (lineCount >= maxLines) break;
-
-            const dx = x - posAttr.getX(j);
-            const dy = y - posAttr.getY(j);
-            const dz = z - posAttr.getZ(j);
-            const distSq = dx*dx + dy*dy + dz*dz;
-
-            if (distSq < 45) {
-              linePositions[vertexpos++] = x; linePositions[vertexpos++] = y; linePositions[vertexpos++] = z;
-              linePositions[vertexpos++] = posAttr.getX(j); linePositions[vertexpos++] = posAttr.getY(j); linePositions[vertexpos++] = posAttr.getZ(j);
-
-              const alpha = 1.0 - (distSq / 45);
-              const c = baseColor.clone().lerp(highlightColor, alpha);
-
-              lineColors[colorpos++] = c.r; lineColors[colorpos++] = c.g; lineColors[colorpos++] = c.b;
-              lineColors[colorpos++] = c.r; lineColors[colorpos++] = c.g; lineColors[colorpos++] = c.b;
-
-              lineCount++;
-            }
-          }
-        }
-      }
-
-      frameCount++;
-
-      posAttr.needsUpdate = true;
-      if ((frameCount & 1) === 1) {
-        linesGeometry.setDrawRange(0, lineCount * 2);
-        linesGeometry.attributes.position.needsUpdate = true;
-        linesGeometry.attributes.color.needsUpdate = true;
-      }
-
-      let opacityTarget = 1.0 - (scrollProgress * 2.5);
-      if (opacityTarget < 0.05) opacityTarget = 0.05;
-      pMaterial.opacity = 0.8 * opacityTarget;
-      linesMaterial.opacity = 0.15 * opacityTarget;
-
-      composer.render();
-    }
-
-    animate();
-  } catch (err) {
-    console.error("WebGL Engine failed to initialize:", err);
-  }
-});
 </script>
 
 <script>
