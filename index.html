@@ -93,8 +93,7 @@ body::after {
 .headshot-frame{position:relative;width:100%;aspect-ratio:3/4;overflow:hidden;border:none}
 .headshot-frame img{width:100%;height:100%;object-fit:cover;filter:grayscale(100%) contrast(1.1);transition:filter 0.6s ease}
 .headshot-frame:hover img{filter:grayscale(0%) contrast(1.05)}
-.ambient{position:absolute;right:-10%;top:50%;transform:translateY(-50%);width:60%;max-width:780px;aspect-ratio:1;pointer-events:none;z-index:1;opacity:0;animation:ambientFade 1.6s 0.6s var(--ease-out) forwards}
-@keyframes ambientFade{to{opacity:0.25}}
+.ambient{position:absolute;right:-10%;top:50%;transform:translateY(-50%);width:60%;max-width:780px;aspect-ratio:1;pointer-events:none;z-index:1;opacity:0}
 .ambient svg{width:100%;height:100%;display:block}
 .bracket{font-family:var(--mono);font-size:10px;letter-spacing:0.30em;text-transform:uppercase;color:inherit}
 .bracket::before,.bracket::after{content:'';display:inline-block;width:14px;height:1px;background:currentColor;vertical-align:middle;opacity:0.5}
@@ -208,8 +207,6 @@ footer.site-foot a{color:inherit;text-decoration:none;opacity:0.8;transition:opa
 footer.site-foot a:hover{opacity:1;color:var(--platinum)}
 @media(max-width:768px){footer.site-foot{flex-direction:column;gap:24px;text-align:center;padding:40px 24px}}
 
-.reveal{opacity:0;transform:translateY(18px);transition:opacity 0.9s var(--ease-out),transform 0.9s var(--ease-out)}
-.reveal.is-on{opacity:1;transform:none}
 
 </style>
 </head>
@@ -596,51 +593,130 @@ window.addEventListener('scroll', () => {
 </script>
 
 <script>
-try {
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if(e.isIntersecting) {
-        e.target.classList.add('is-on');
-        observer.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-} catch(e) {
-  document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-on'));
-}
-
 window.addEventListener('load', () => {
   try {
     if (typeof gsap !== 'undefined') {
       // Lenis smooth scrolling disabled for performance
       // The interpolation adds too much overhead with complex WebGL animations
 
-      gsap.fromTo('.meta-row', { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 1.0, ease: 'power2.out', delay: 0.4 });
-      gsap.fromTo('h1', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1.4, ease: 'power3.out', delay: 0.9 });
-      gsap.fromTo('.hero-text > p, .hero-rule', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 1.2, stagger: 0.2, ease: 'power2.out', delay: 1.3 });
-      gsap.fromTo('.contact-row', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', delay: 1.8 });
+      // Hero Section Initial Load Sequence
+      // 1. WebGL Canvas subtle fade-in
+      gsap.fromTo('#glCanvas', 
+        { opacity: 0 }, 
+        { opacity: 1, duration: 3.0, ease: 'power2.inOut' }
+      );
+
+      // 2. Staggered meta-row elements
+      gsap.fromTo('.meta-row span', 
+        { opacity: 0, x: -15 }, 
+        { opacity: 1, x: 0, duration: 0.8, stagger: 0.15, ease: 'power2.out', delay: 0.4 }
+      );
+
+      // 3. Main Heading with subtle scale and slide
+      gsap.fromTo('h1', 
+        { opacity: 0, y: 30, scale: 0.98 }, 
+        { opacity: 1, y: 0, scale: 1, duration: 1.4, ease: 'power3.out', delay: 0.8 }
+      );
+
+      // 4. Hero rule draws itself out
+      gsap.fromTo('.hero-rule', 
+        { width: 0, opacity: 0 }, 
+        { width: 64, opacity: 1, duration: 1.0, ease: 'power3.inOut', delay: 1.2 }
+      );
+
+      // 5. Abstract text fades up
+      gsap.fromTo('.abstract', 
+        { opacity: 0, y: 15 }, 
+        { opacity: 1, y: 0, duration: 1.0, ease: 'power2.out', delay: 1.4 }
+      );
+
+      // 6. Contact links staggered entrance
+      gsap.fromTo('.contact-row a', 
+        { opacity: 0, y: 10 }, 
+        { opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: 'power2.out', delay: 1.6 }
+      );
+
+      // 7. Ambient SVG Graphic scaling and rotating in
+      gsap.fromTo('.ambient', 
+        { opacity: 0, scale: 0.8, rotation: -10 }, 
+        { opacity: 0.25, scale: 1, rotation: 0, duration: 2.5, ease: 'power2.out', delay: 1.0 }
+      );
 
       if (typeof ScrollTrigger !== 'undefined') {
+        // Section Headers Stagger
+        gsap.utils.toArray('.section-eyebrow').forEach(el => {
+          gsap.fromTo(el, { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.8, ease: 'power2.out', scrollTrigger: { trigger: el, start: 'top 85%' } });
+        });
+        gsap.utils.toArray('.section-heading').forEach(el => {
+          gsap.fromTo(el, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', scrollTrigger: { trigger: el, start: 'top 85%' } });
+        });
+
+        // Bio Card & Contents
         gsap.fromTo('.bio-card',
           { y: 40, opacity: 0 },
           { y: 0, opacity: 1, duration: 1, ease: 'power2.out', scrollTrigger: { trigger: '#executive-bio', start: 'top 80%' } }
         );
+        gsap.fromTo('.bio-preview > p, #expandBioBtn',
+          { opacity: 0, y: 15 },
+          { opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: 'power2.out', scrollTrigger: { trigger: '.bio-card', start: 'top 75%' } }
+        );
+        gsap.fromTo('.headshot-frame',
+          { opacity: 0, scale: 0.95 },
+          { opacity: 1, scale: 1, duration: 1.2, ease: 'power2.out', scrollTrigger: { trigger: '.bio-card', start: 'top 75%' } }
+        );
+
+        // Projects Carousel Fade In
+        gsap.fromTo('.project-carousel',
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 1, ease: 'power2.out', scrollTrigger: { trigger: '#featured-projects', start: 'top 80%' } }
+        );
+        gsap.fromTo('.view-all-link',
+          { opacity: 0, y: 10 },
+          { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out', scrollTrigger: { trigger: '.view-all-link', start: 'top 95%' } }
+        );
+
+        // Experience Cards & Contents Stagger
         gsap.utils.toArray('.r-card').forEach(card => {
           gsap.fromTo(card,
             { y: 30, opacity: 0 },
             { y: 0, opacity: 1, duration: 0.8, ease: 'power2.out', scrollTrigger: { trigger: card, start: 'top 85%' } }
           );
+          
+          const internals = card.querySelectorAll('.r-header, .r-intro, .bio-expand-btn');
+          if (internals.length > 0) {
+            gsap.fromTo(internals,
+              { opacity: 0, y: 10 },
+              { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out', scrollTrigger: { trigger: card, start: 'top 80%' } }
+            );
+          }
         });
+
+        // Education Cards
         gsap.utils.toArray('.edu-card').forEach(card => {
           gsap.fromTo(card,
             { y: 20, opacity: 0 },
             { y: 0, opacity: 1, duration: 0.8, ease: 'power2.out', scrollTrigger: { trigger: card, start: 'top 90%' } }
           );
         });
+
+        // Capabilities (Tech Blocks) Stagger
+        gsap.utils.toArray('.tech-block').forEach((block) => {
+          gsap.fromTo(block,
+            { opacity: 0, y: 20 },
+            { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', scrollTrigger: { trigger: block, start: 'top 85%' } }
+          );
+          const tags = block.querySelectorAll('.tagrow .tag');
+          if (tags.length > 0) {
+            gsap.fromTo(tags,
+              { opacity: 0, scale: 0.9, y: 5 },
+              { opacity: 1, scale: 1, y: 0, duration: 0.4, stagger: 0.02, ease: 'back.out(1.2)', scrollTrigger: { trigger: block, start: 'top 80%' } }
+            );
+          }
+        });
+
       }
     } else {
-      document.querySelectorAll('.hero-text > *, .headshot-frame, .gs-reveal').forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
+      document.querySelectorAll('.hero-text > *, .headshot-frame, .gs-reveal, .tech-block').forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
     }
   } catch(e) {}
 });
