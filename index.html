@@ -14,6 +14,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js" defer></script>
+<script src="https://unpkg.com/split-type" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js" defer></script>
 <style>
 :root {
   --obsidian:#030303;--charcoal:#161616;--graphite:#222222;--brushed:#333333;
@@ -30,7 +38,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;border-radius:0 !important}
 ::selection{background:rgba(77,140,255,0.35);color:#fff}
 html{scroll-behavior:smooth}
-body{font-family:var(--body);background:var(--obsidian);color:var(--platinum);font-size:16px;line-height:1.78;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
 
 /* ─── Preloader ─────────────────────────────────────────────────── */
 #preloader {
@@ -426,7 +434,7 @@ window.addEventListener('scroll', () => {
 </script>
 
 <script>
-(function initWebGL() {
+window.addEventListener('load', function initWebGL() {
   try {
     if (typeof THREE === 'undefined') throw new Error("THREE.js not loaded");
     const canvas = document.getElementById('glCanvas');
@@ -437,6 +445,16 @@ window.addEventListener('scroll', () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
     
     const scene = new THREE.Scene();
+
+    const renderScene = new THREE.RenderPass(scene, camera);
+    const bloomPass = new THREE.UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
+    bloomPass.threshold = 0.1;
+    bloomPass.strength = 1.2;
+    bloomPass.radius = 0.8;
+    
+    const composer = new THREE.EffectComposer(renderer);
+    composer.addPass(renderScene);
+    composer.addPass(bloomPass);
 
     const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 200);
     camera.position.set(0, 0, 16);
@@ -526,6 +544,7 @@ window.addEventListener('scroll', () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
+      composer.setSize(window.innerWidth, window.innerHeight);
     });
 
     const baseColor = new THREE.Color(0x0F52BA);
@@ -626,14 +645,14 @@ window.addEventListener('scroll', () => {
       pMaterial.opacity = 0.8 * opacityTarget;
       linesMaterial.opacity = 0.15 * opacityTarget;
 
-      renderer.render(scene, camera);
+      composer.render();
     }
-    
+
     animate();
   } catch (err) {
     console.error("WebGL Engine failed to initialize:", err);
   }
-})();
+});
 </script>
 
 <script>
@@ -659,19 +678,48 @@ window.addEventListener('load', () => {
         { opacity: 1, duration: 1.8, ease: 'power2.inOut', delay: 0.2 }
       );
 
+      // Setup Kinetic Text for Hero Header
+      let heroTitle = document.querySelector('.hero h1');
+      if (heroTitle) {
+        heroTitle.style.opacity = 1; // Make container visible
+        const split = new SplitType(heroTitle, { types: 'chars' });
+        gsap.from(split.chars, {
+          opacity: 0,
+          y: 20,
+          rotateX: -90,
+          stagger: 0.02,
+          duration: 1.2,
+          ease: 'back.out(1.5)',
+          delay: 1.4
+        });
+      }
+
+      // Setup Simplex Noise for Ambient SVG
+      const ambientSvgPaths = document.querySelectorAll('.ambient svg circle');
+      if (ambientSvgPaths.length && typeof SimplexNoise !== 'undefined') {
+        const simplex = new SimplexNoise();
+        let time = 0;
+        function animateAmbient() {
+          time += 0.002;
+          ambientSvgPaths.forEach((path, i) => {
+            const noise = simplex.noise2D(i * 0.1, time);
+            const scale = 1 + (noise * 0.05);
+            path.style.transform = `scale(${scale})`;
+            path.style.transformOrigin = 'center';
+          });
+          requestAnimationFrame(animateAmbient);
+        }
+        animateAmbient();
+      }
+
       // Beat 0.8s: Ambient SVG halo drifts in behind the type
       gsap.to('.ambient',
-        { opacity: 0.25, scale: 1, rotation: 0, duration: 2.5, ease: 'power2.out', delay: 0.8 }
+        { opacity: 0.35, scale: 1, rotation: 0, duration: 2.5, ease: 'power2.out', delay: 0.8 }
       );
 
       // Beat 1.0s: Meta / eyebrow row slides in from left
       gsap.to('.meta-row span',
         { opacity: 1, x: 0, duration: 0.7, stagger: 0.12, ease: 'power2.out', delay: 1.0 }
-      );
-
-      // Beat 1.4s: Main heading rises and settles
-      gsap.to('h1',
-        { opacity: 1, y: 0, scale: 1, duration: 1.2, ease: 'power3.out', delay: 1.4 }
       );
 
       // Beat 1.9s: Rule draws itself across
@@ -775,8 +823,14 @@ const expandBtn=document.getElementById('expandBioBtn');
 const collapseBtn=document.getElementById('collapseBioBtn');
 const fullContent=document.getElementById('bioFullContent');
 if(expandBtn&&fullContent&&collapseBtn){
-  expandBtn.addEventListener('click',()=>{fullContent.style.display='block';expandBtn.style.display='none';gsap.to(fullContent,{opacity:1,duration:0.6,ease:'power2.out',onComplete:()=>{fullContent.focus();ScrollTrigger.refresh()}})});
-  collapseBtn.addEventListener('click',()=>{gsap.to(fullContent,{opacity:0,duration:0.4,ease:'power2.in',onComplete:()=>{fullContent.style.display='none';expandBtn.style.display='inline-flex';ScrollTrigger.refresh()}});document.getElementById('executive-bio').scrollIntoView({behavior:'smooth',block:'start'})});
+  expandBtn.addEventListener('click',()=>{
+    const expand = () => { fullContent.style.display='block'; fullContent.style.opacity=1; expandBtn.style.display='none'; fullContent.focus(); ScrollTrigger.refresh(); };
+    if (document.startViewTransition) { document.startViewTransition(expand); } else { expandBtn.style.display='none'; fullContent.style.display='block'; gsap.to(fullContent,{opacity:1,duration:0.6,ease:'power2.out',onComplete:()=>{fullContent.focus();ScrollTrigger.refresh()}}); }
+  });
+  collapseBtn.addEventListener('click',()=>{
+    const collapse = () => { fullContent.style.display='none'; fullContent.style.opacity=0; expandBtn.style.display='inline-flex'; document.getElementById('executive-bio').scrollIntoView({behavior:'smooth',block:'start'}); ScrollTrigger.refresh(); };
+    if (document.startViewTransition) { document.startViewTransition(collapse); } else { gsap.to(fullContent,{opacity:0,duration:0.4,ease:'power2.in',onComplete:()=>{fullContent.style.display='none';expandBtn.style.display='inline-flex';ScrollTrigger.refresh();document.getElementById('executive-bio').scrollIntoView({behavior:'smooth',block:'start'});}}); }
+  });
 }
 
 // Expandable Education Section
@@ -784,8 +838,14 @@ const expandEdu=document.getElementById('expandEduBtn');
 const collapseEdu=document.getElementById('collapseEduBtn');
 const eduContent=document.getElementById('eduFullContent');
 if(expandEdu&&eduContent&&collapseEdu){
-  expandEdu.addEventListener('click',()=>{eduContent.style.display='block';expandEdu.style.display='none';gsap.to(eduContent,{opacity:1,duration:0.6,ease:'power2.out',onComplete:()=>{ScrollTrigger.refresh()}})});
-  collapseEdu.addEventListener('click',()=>{gsap.to(eduContent,{opacity:0,duration:0.4,ease:'power2.in',onComplete:()=>{eduContent.style.display='none';expandEdu.style.display='inline-flex';ScrollTrigger.refresh();document.getElementById('education').scrollIntoView({behavior:'smooth',block:'start'})}})});
+  expandEdu.addEventListener('click',()=>{
+    const expand = () => { eduContent.style.display='block'; eduContent.style.opacity=1; expandEdu.style.display='none'; ScrollTrigger.refresh(); };
+    if (document.startViewTransition) { document.startViewTransition(expand); } else { expandEdu.style.display='none'; eduContent.style.display='block'; gsap.to(eduContent,{opacity:1,duration:0.6,ease:'power2.out',onComplete:()=>ScrollTrigger.refresh()}); }
+  });
+  collapseEdu.addEventListener('click',()=>{
+    const collapse = () => { eduContent.style.display='none'; eduContent.style.opacity=0; expandEdu.style.display='inline-flex'; document.getElementById('education').scrollIntoView({behavior:'smooth',block:'start'}); ScrollTrigger.refresh(); };
+    if (document.startViewTransition) { document.startViewTransition(collapse); } else { gsap.to(eduContent,{opacity:0,duration:0.4,ease:'power2.in',onComplete:()=>{eduContent.style.display='none';expandEdu.style.display='inline-flex';ScrollTrigger.refresh();document.getElementById('education').scrollIntoView({behavior:'smooth',block:'start'});}}); }
+  });
 }
 
 // Expandable Experience Bullets
@@ -886,6 +946,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 <!-- Global Chrome Injector -->
 <script src="design_system/js/global_chrome.js"></script>
+
+
 </body>
 </html>
 
