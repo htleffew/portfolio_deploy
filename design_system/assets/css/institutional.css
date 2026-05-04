@@ -59,6 +59,7 @@ body {
   line-height:1.78;
   overflow-x:hidden;
   -webkit-font-smoothing:antialiased;
+  cursor:none;
 }
 
 .atmosphere {
@@ -494,10 +495,97 @@ table.data-table tr:last-child td { border-bottom:none; }
 .show-engineering .code-container { display:block; }
 
 /* ============================================================
-   IMMERSIVE UI: View Transitions & Cursor Rules
+   IMMERSIVE UI: Magnetic Cursor & View Transitions
    ============================================================ */
+#custom-cursor {
+  position: fixed;
+  top: 0; left: 0;
+  width: 16px; height: 16px;
+  background: var(--flare);
+  border-radius: 50% !important;
+  pointer-events: none;
+  z-index: 10000;
+  mix-blend-mode: difference;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s var(--ease-out), height 0.3s var(--ease-out), background 0.3s var(--ease-out);
+  will-change: transform, width, height;
+}
+#custom-cursor.hovering {
+  width: 48px; height: 48px;
+  background: var(--sapphire);
+}
+@media(max-width:768px){ #custom-cursor { display: none !important; } body { cursor: auto; } }
 
-/* Custom cursor completely removed per user request. Elements use native cursors. */
+/* Allow I-beam text selection natively */
+p, span, h1, h2, h3, h4, h5, h6, li, blockquote, .abstract, .lede, .body, pre, code {
+  cursor: text;
+}
+a, button, .tag, input, select, .sn-num, .gloss, .sb-item, .sb-header, .sb-link, .r-card, .p-card, .db-row, .tick {
+  cursor: pointer;
+}
+
+::view-transition-old(root), ::view-transition-new(root) {
+  animation-duration: 0.6s;
+  animation-timing-function: var(--ease-std);
+}
+
+
+
+/* ============================================================
+   IMMERSIVE UI: Magnetic Cursor & View Transitions
+   ============================================================ */
+#custom-cursor {
+  position: fixed;
+  top: 0; left: 0;
+  width: 16px; height: 16px;
+  background: var(--flare);
+  border-radius: 50% !important;
+  pointer-events: none;
+  z-index: 10000;
+  mix-blend-mode: difference;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s var(--ease-out), height 0.3s var(--ease-out), background 0.3s var(--ease-out);
+  will-change: transform, width, height;
+}
+#custom-cursor.hovering {
+  width: 48px; height: 48px;
+  background: var(--sapphire);
+}
+@media(max-width:768px){ #custom-cursor { display: none !important; } body { cursor: auto; } }
+
+/* Allow I-beam text selection natively */
+p, span, h1, h2, h3, h4, h5, h6, li, blockquote, .abstract, .lede, .body, pre, code {
+  cursor: text;
+}
+a, button, .tag, input, select, .sn-num, .gloss, .sb-item, .sb-header, .sb-link, .r-card, .p-card, .db-row, .tick {
+  cursor: pointer;
+}
+
+::view-transition-old(root), ::view-transition-new(root) {
+
+
+
+/* ============================================================
+   IMMERSIVE UI: Magnetic Cursor & View Transitions
+   ============================================================ */
+#custom-cursor {
+  position: fixed;
+  top: 0; left: 0;
+  width: 16px; height: 16px;
+  background: var(--flare);
+  border-radius: 50% !important;
+  pointer-events: none;
+  z-index: 10000;
+  mix-blend-mode: difference;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s var(--ease-out), height 0.3s var(--ease-out), background 0.3s var(--ease-out);
+  will-change: transform, width, height;
+}
+#custom-cursor.hovering {
+  width: 48px; height: 48px;
+  background: var(--sapphire);
+}
+@media(max-width:768px){ #custom-cursor { display: none !important; } body { cursor: auto; } }
 
 /* Allow I-beam text selection natively */
 p, span, h1, h2, h3, h4, h5, h6, li, blockquote, .abstract, .lede, .body, pre, code {
@@ -513,8 +601,12 @@ a, button, .tag, input, select, .sn-num, .gloss, .sb-item, .sb-header, .sb-link,
 }
 
 /* ============================================================
-   FILM GRAIN OVERLAY
+   CLAUDE PHASE 2: KINETIC TYPE SYSTEM
    ============================================================ */
+
+/* ─────────────────────────────────────────────────────────────────
+   FILM GRAIN OVERLAY
+   ───────────────────────────────────────────────────────────────── */
 #grain {
   position: fixed; inset: 0; z-index: 9998;
   pointer-events: none;
@@ -537,9 +629,19 @@ a, button, .tag, input, select, .sn-num, .gloss, .sb-item, .sb-header, .sb-link,
   100%{ transform: translate(-2%,1%); }
 }
 
-/* ============================================================
-   KINETIC TYPE SYSTEM
-   ============================================================ */
+/* ─────────────────────────────────────────────────────────────────
+   SECTION TYPOGRAPHY
+   ───────────────────────────────────────────────────────────────── */
+
+/* Chromatic Aberration Settle */
+@keyframes ca-settle {
+  0%   { text-shadow: -3px 0 0 rgba(255,0,64,0.7), 3px 0 0 rgba(0,255,200,0.7); filter: blur(0.6px); }
+  40%  { text-shadow: -1.5px 0 0 rgba(255,0,64,0.4), 1.5px 0 0 rgba(0,255,200,0.4); filter: blur(0.2px); }
+  100% { text-shadow: none; filter: none; }
+}
+.ca-settle {
+  animation: ca-settle 0.9s var(--ease-out) forwards;
+}
 
 /* SplitText Base States (Characters start hidden for staggered reveal) */
 .split-reveal .char {
@@ -559,25 +661,18 @@ a, button, .tag, input, select, .sn-num, .gloss, .sb-item, .sb-header, .sb-link,
   will-change: stroke-dashoffset, fill;
 }
 
+/* Houdini Paint Worklet Shimmer Base State */
+.shimmer-text {
+  --shimmer-pos: -100%;
+  background: paint(textShimmer);
+  -webkit-background-clip: text;
+  color: transparent;
+  will-change: --shimmer-pos;
+}
+
 /* GPU Acceleration Utilities */
 .gpu-accelerate {
   will-change: transform, opacity;
   transform: translateZ(0);
   backface-visibility: hidden;
-}
-
-/* ============================================================
-   CINEMATIC SCROLL REVEAL (Shared initial hidden states)
-   Hero elements & scroll-triggered sections start invisible;
-   GSAP is the sole choreographer.
-   ============================================================ */
-.front .meta-row span,
-.front h1,
-.front .abstract,
-.front .byline,
-.front .citation {
-  opacity: 0;
-}
-.front .ambient {
-  opacity: 0;
 }
