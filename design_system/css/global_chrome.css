@@ -261,29 +261,7 @@ footer.site-foot a:hover {
     line-height: 1.6;
 }
 
-/* ============================================================
-   IMMERSIVE UI: Magnetic Cursor & View Transitions
-   ============================================================ */
-body { cursor: none; }
-
-#custom-cursor {
-  position: fixed;
-  top: 0; left: 0;
-  width: 16px; height: 16px;
-  background: var(--flare, #FFFFFF);
-  border-radius: 50% !important;
-  pointer-events: none;
-  z-index: 10000;
-  mix-blend-mode: difference;
-  transform: translate(-50%, -50%);
-  transition: width 0.3s cubic-bezier(0.16,1,0.3,1), height 0.3s cubic-bezier(0.16,1,0.3,1), background 0.3s cubic-bezier(0.16,1,0.3,1);
-  will-change: transform, width, height;
-}
-#custom-cursor.hovering {
-  width: 48px; height: 48px;
-  background: var(--sapphire, #4D8CFF);
-}
-@media(max-width:768px){ #custom-cursor { display: none !important; } body { cursor: auto; } }
+/* Custom cursor completely removed per user request. Elements will natively use pointer. */
 
 /* Allow I-beam text selection natively */
 p, span, h1, h2, h3, h4, h5, h6, li, blockquote, .abstract, .lede, .body, pre, code {

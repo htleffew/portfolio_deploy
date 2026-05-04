@@ -43,29 +43,44 @@ const initCinematicEngine = () => {
                     uv = uv * 2.0 - 1.0;
                     uv.x *= u_resolution.x / u_resolution.y;
 
+                    // Slow organic rotation of the entire field
+                    float rotTime = u_time * 0.02;
+                    float s = sin(rotTime), c = cos(rotTime);
+                    mat2 rot = mat2(c, -s, s, c);
+                    uv *= rot;
+
                     // Starfield layers
                     vec3 color = vec3(0.01, 0.01, 0.015); // Deep space background
                     
-                    float t = u_time * 0.02;
+                    float t = u_time * 0.05; // Base drift speed
                     for(float i=0.0; i<3.0; i++) {
-                        vec2 q = uv * (1.0 + i*0.5) + t * (i+1.0)*0.1;
+                        // Each layer scales differently and drifts in different directions
+                        vec2 q = uv * (1.0 + i*0.8);
+                        q.y += t * (0.2 + i*0.1); // Continuous upward drift
+                        q.x -= t * (0.1 + i*0.05); // Slight lateral drift
+                        
                         vec2 id = floor(q * 10.0);
                         vec2 f = fract(q * 10.0) - 0.5;
                         
                         float h = hash(id + i);
                         if(h > 0.95) { // Star density
                             float r = length(f);
-                            // Glow attenuation
                             float glow = 0.01 / (r * r + 0.01);
-                            // Twinkle
-                            glow *= 0.5 + 0.5 * sin(u_time * (h * 5.0) + h * 10.0);
-                            vec3 starColor = mix(vec3(0.3, 0.5, 1.0), vec3(1.0, 0.9, 0.8), hash(id*2.0));
-                            color += starColor * glow * 0.5;
+                            
+                            // Complex overlapping twinkle (no hard blinks)
+                            float twinkle1 = sin(u_time * 1.5 + h * 100.0);
+                            float twinkle2 = cos(u_time * 0.8 + h * 50.0);
+                            float pulse = 0.6 + 0.4 * (twinkle1 * twinkle2);
+                            
+                            glow *= pulse;
+                            
+                            vec3 starColor = mix(vec3(0.1, 0.3, 0.8), vec3(0.6, 0.8, 1.0), hash(id*2.0));
+                            color += starColor * glow * (0.4 + i*0.2); // Depth dimming
                         }
                     }
 
                     // Ambient vignette
-                    float dist = length(uv);
+                    float dist = length(gl_FragCoord.xy / u_resolution.xy * 2.0 - 1.0);
                     color *= 1.0 - smoothstep(0.5, 2.0, dist);
 
                     gl_FragColor = vec4(color, 1.0);
@@ -126,6 +141,10 @@ const initCinematicEngine = () => {
     // Resize handler
     let width = window.innerWidth;
     let height = window.innerHeight;
+    // Parallax tracking camera
+    const camera = new THREE.PerspectiveCamera(45, width / height, 1, 1000);
+    camera.position.z = 100;
+    
     const resizeThree = () => {
         width = window.innerWidth;
         height = window.innerHeight;
@@ -135,15 +154,11 @@ const initCinematicEngine = () => {
     };
     window.addEventListener('resize', resizeThree);
     resizeThree();
-
+    
     const scene = new THREE.Scene();
     
-    // Parallax tracking camera
-    const camera = new THREE.PerspectiveCamera(45, width / height, 1, 1000);
-    camera.position.z = 100;
-    
-    // Physics states
-    const particleCount = 80; // Keep it optimal
+    // Physics states (Ultra-sparse, elegant)
+    const particleCount = 35; // Reduced from 80 for extreme sparsity
     const particles = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     const targetPositions = new Float32Array(particleCount * 3); // For neural morphing
@@ -172,21 +187,36 @@ const initCinematicEngine = () => {
         targetPositions[i*3+2] = (Math.random() - 0.5) * 20; // Z spread
         
         velocities.push({
-            x: (Math.random() - 0.5) * 0.25,
-            y: (Math.random() - 0.5) * 0.25,
-            z: (Math.random() - 0.5) * 0.25
+            x: (Math.random() - 0.5) * 0.02, // Extremely slow drift
+            y: (Math.random() - 0.5) * 0.02,
+            z: (Math.random() - 0.5) * 0.02
         });
     }
 
     particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     particles.setAttribute('targetPosition', new THREE.BufferAttribute(targetPositions, 3));
 
-    // Particle Material
+    // Generate circular alpha map for particles
+    const circleCanvas = document.createElement('canvas');
+    circleCanvas.width = 32;
+    circleCanvas.height = 32;
+    const ctx = circleCanvas.getContext('2d');
+    const gradient = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
+    gradient.addColorStop(0, 'rgba(255,255,255,1)');
+    gradient.addColorStop(0.3, 'rgba(255,255,255,0.8)');
+    gradient.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, 32, 32);
+    const circleTexture = new THREE.CanvasTexture(circleCanvas);
+
+    // Particle Material - Deep integration with starfield
     const pMaterial = new THREE.PointsMaterial({
-        color: 0xffffff,
-        size: 1.5,
+        color: 0x4d8cff, // Sapphire glow
+        size: 4.5,
+        map: circleTexture,
         transparent: true,
-        opacity: 0.6,
+        opacity: 0.35, // Very soft
+        depthWrite: false,
         blending: THREE.AdditiveBlending
     });
     const particleSystem = new THREE.Points(particles, pMaterial);
@@ -210,7 +240,7 @@ const initCinematicEngine = () => {
     const linesMaterial = new THREE.LineBasicMaterial({
         vertexColors: true,
         transparent: true,
-        opacity: 0.8,
+        opacity: 0.25, // Extremely faint base opacity
         blending: THREE.AdditiveBlending,
         depthWrite: false
     });
@@ -220,6 +250,9 @@ const initCinematicEngine = () => {
 
     // Force visibility to bypass any GSAP opacity issues
     container.style.opacity = '1';
+    container.style.display = 'block';
+
+    console.log("Cinematic engine initialized, rendering Three.js particles:", particleCount);
 
     // Interactivity
     let mouseX = 0, mouseY = 0;
@@ -240,8 +273,9 @@ const initCinematicEngine = () => {
         });
     }
 
-    const baseColor = new THREE.Color(0x1a3a6b);
-    const highlightColor = new THREE.Color(0x4d8cff);
+    // Refined Palette (Tied to deep-space background)
+    const baseColor = new THREE.Color(0x0f52ba); // Deep Sapphire
+    const highlightColor = new THREE.Color(0x4d8cff); // Light Sapphire
 
     const animate = () => {
         requestAnimationFrame(animate);
@@ -268,21 +302,21 @@ const initCinematicEngine = () => {
             y += velocities[i].y;
             z += velocities[i].z;
 
-            // Mouse Repulsion
+            // Mouse Repulsion (Extremely gentle nudge, not chaotic)
             const dxm = x - mouseWorldX;
             const dym = y - mouseWorldY;
             const distMouseSq = dxm*dxm + dym*dym;
             
-            if (distMouseSq < 1500) {
-                const repulseForce = (1500 - distMouseSq) / 1500;
+            if (distMouseSq < 2000) {
+                const repulseForce = (2000 - distMouseSq) / 2000;
                 const angle = Math.atan2(dym, dxm);
-                velocities[i].x += Math.cos(angle) * repulseForce * 0.02;
-                velocities[i].y += Math.sin(angle) * repulseForce * 0.02;
+                velocities[i].x += Math.cos(angle) * repulseForce * 0.002;
+                velocities[i].y += Math.sin(angle) * repulseForce * 0.002;
             }
 
-            // Restore velocities slowly back to original range so they don't accelerate infinitely
+            // Restore velocities slowly back to original range
             const currentSpeedSq = velocities[i].x*velocities[i].x + velocities[i].y*velocities[i].y + velocities[i].z*velocities[i].z;
-            if(currentSpeedSq > 0.0625) { // max speed ~0.25
+            if(currentSpeedSq > 0.001) { // max speed extremely low
                 velocities[i].x *= 0.98;
                 velocities[i].y *= 0.98;
                 velocities[i].z *= 0.98;
@@ -316,17 +350,27 @@ const initCinematicEngine = () => {
                 const dz = finalZ - posAttr.getZ(j);
                 const distSq = dx*dx + dy*dy + dz*dz;
 
-                const connectDistance = morphFactor > 0.5 ? 6000 : 4000; // Large enough to guarantee multiple connections (distance ~63-77)
+                const connectDistance = morphFactor > 0.5 ? 4000 : 3500; // Sparse, elegant constellation
 
                 if (distSq < connectDistance) {
                     if (lineIdx < maxLines) {
                         linePositions[lineIdx*6] = finalX; linePositions[lineIdx*6+1] = finalY; linePositions[lineIdx*6+2] = finalZ;
                         linePositions[lineIdx*6+3] = posAttr.getX(j); linePositions[lineIdx*6+4] = posAttr.getY(j); linePositions[lineIdx*6+5] = posAttr.getZ(j);
 
-                        const alpha = 1.0 - (distSq / connectDistance);
-                        // Increase base opacity modifier to 2.5 to make lines very bright and distinct
-                        const intensity = alpha * (1.0 + morphFactor) * 2.5;
-                        const c = baseColor.clone().lerp(highlightColor, alpha);
+                        const alpha = Math.pow(1.0 - (distSq / connectDistance), 2.0); // Non-linear falloff for elegant depth
+                        
+                        // Increase brightness if the connection is near the mouse
+                        const midX = (finalX + posAttr.getX(j)) * 0.5;
+                        const midY = (finalY + posAttr.getY(j)) * 0.5;
+                        const dMouseSq = (midX - mouseWorldX)*(midX - mouseWorldX) + (midY - mouseWorldY)*(midY - mouseWorldY);
+                        
+                        let mouseGlow = 0;
+                        if (dMouseSq < 3000) {
+                            mouseGlow = Math.pow(1.0 - (dMouseSq / 3000), 2.0) * 0.8; // Gentle highlight, not blinding
+                        }
+
+                        const intensity = (alpha * 0.6) + mouseGlow; // Faint base, soft highlight
+                        const c = baseColor.clone().lerp(highlightColor, Math.min(1.0, alpha + mouseGlow));
 
                         lineColors[lineIdx*6] = c.r * intensity; lineColors[lineIdx*6+1] = c.g * intensity; lineColors[lineIdx*6+2] = c.b * intensity;
                         lineColors[lineIdx*6+3] = c.r * intensity; lineColors[lineIdx*6+4] = c.g * intensity; lineColors[lineIdx*6+5] = c.b * intensity;
@@ -336,13 +380,13 @@ const initCinematicEngine = () => {
                 }
             }
 
-            // Connect to mouse pointer
-            if (distMouseSq < 3000 && lineIdx < maxLines) {
+            // Connect to mouse pointer - reduced density, highly elegant
+            if (distMouseSq < 1500 && lineIdx < maxLines) {
                 linePositions[lineIdx*6] = finalX; linePositions[lineIdx*6+1] = finalY; linePositions[lineIdx*6+2] = finalZ;
                 linePositions[lineIdx*6+3] = mouseWorldX; linePositions[lineIdx*6+4] = mouseWorldY; linePositions[lineIdx*6+5] = 0;
 
-                const alpha = 1.0 - (distMouseSq / 3000);
-                const intensity = alpha * 3.0; // Very bright mouse connections
+                const alpha = 1.0 - (distMouseSq / 1500);
+                const intensity = alpha * 0.7; // Very soft glow
                 lineColors[lineIdx*6] = highlightColor.r * intensity; lineColors[lineIdx*6+1] = highlightColor.g * intensity; lineColors[lineIdx*6+2] = highlightColor.b * intensity;
                 lineColors[lineIdx*6+3] = highlightColor.r * intensity; lineColors[lineIdx*6+4] = highlightColor.g * intensity; lineColors[lineIdx*6+5] = highlightColor.b * intensity;
                 
