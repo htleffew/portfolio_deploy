@@ -4,6 +4,12 @@
  */
 
 (function initGlobalChrome() {
+    // 0. Force Scroll to Top on Refresh
+    if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+
     // 1. Determine relative depth to root (portfolio_deploy/)
     const pathDepth = window.location.pathname.split('/').length - 2; // Rough heuristic
     // A better heuristic is to check if we are in a subdirectory by looking for index.html or known root files.
