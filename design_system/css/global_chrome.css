@@ -354,3 +354,82 @@ a, button, .tag, input, select, .sn-num, .gloss, .sb-item, .sb-header, .sb-link,
 @view-transition {
   navigation: auto;
 }
+
+/* ============================================================
+   CINEMATIC LOADING SYSTEM (Shared across all pages)
+   ============================================================ */
+
+/* Preloader Curtain Reveal */
+#preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  pointer-events: none;
+  overflow: hidden;
+}
+#preloader-left, #preloader-right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50.5%;
+  background: var(--obsidian, #030303);
+  will-change: transform;
+}
+#preloader-left { left: 0; }
+#preloader-right { right: 0; }
+#preloader-line {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1px;
+  height: 0;
+  background: linear-gradient(180deg, transparent 0%, var(--sapphire, #4D8CFF) 30%, var(--sapphire, #4D8CFF) 70%, transparent 100%);
+  transform: translate(-50%, -50%);
+  will-change: height, opacity;
+}
+
+/* Lenis Smooth Scroll Utilities */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+
+/* Scroll Cue Indicator */
+.scroll-cue {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  z-index: 5;
+}
+.scroll-cue span {
+  font-family: var(--mono, 'JetBrains Mono', monospace);
+  font-size: 9px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--tungsten, #A1A1A6);
+}
+.scroll-cue-line {
+  width: 1px;
+  height: 48px;
+  position: relative;
+  overflow: hidden;
+}
+.scroll-cue-line::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent, var(--sapphire, #4D8CFF));
+  animation: scrollDrip 2s ease-in-out infinite;
+}
+@keyframes scrollDrip {
+  0%   { top: -100%; opacity: 0; }
+  30%  { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
