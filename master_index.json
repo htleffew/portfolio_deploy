@@ -128,13 +128,13 @@
     },
     {
         "id": "Autonomous_Heuristic_Discovery",
-        "title": "Agentic Discovery & Two-Pass Orchestration Research",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
-        "cat": "Research & Architecture",
-        "subtype": "AUTONOMOUS HEURISTIC DISCOVERY",
+        "title": "Autonomous Heuristic Discovery. Dr. Heather Leffew",
+        "desc": "Transitioning entity resolution from siloed search buckets into an integrated, agent-driven loop.",
+        "cat": "Enterprise Systems Architecture",
+        "subtype": "HEURISTIC DISCOVERY",
         "tags": [
-            "Data Science",
-            "Reinforcement Learning"
+            "Agentic AI",
+            "Data Architecture"
         ],
         "url": "Autonomous_Heuristic_Discovery/autonomous-heuristic-discovery.html",
         "time": "5 min read",
@@ -1232,5 +1232,20 @@
         "url": "Multimodal_Autism_AI/multimodal-autism-ai.html",
         "time": "10 min read",
         "visual": ""
+    },
+    {
+        "id": "Account_Prioritization",
+        "title": "Dual-Model Account Prioritization",
+        "desc": "Moving beyond single-metric classification by combining probability-to-convert with expected deal size.",
+        "cat": "Machine Learning",
+        "subtype": "PREDICTIVE RANKING",
+        "tags": [
+            "Classification",
+            "Regression",
+            "MLOps"
+        ],
+        "url": "Account_Prioritization/account-prioritization.html",
+        "time": "7 min read",
+        "visual": "<svg fill=\"none\" viewbox=\"0 0 600 600\">\n<defs>\n<lineargradient id=\"g2\" x1=\"0\" x2=\"1\" y1=\"1\" y2=\"0\">\n<stop offset=\"0%\" stop-color=\"#1A3A6B\" stop-opacity=\"0.6\"></stop>\n<stop offset=\"100%\" stop-color=\"#4D8CFF\" stop-opacity=\"0.2\"></stop>\n</lineargradient>\n</defs>\n<path d=\"M100 500 L200 400 L300 450 L500 100\" stroke=\"url(#g2)\" stroke-width=\"4\"></path>\n<circle cx=\"500\" cy=\"100\" r=\"8\" fill=\"#4D8CFF\"></circle>\n</svg>"
     }
 ]
