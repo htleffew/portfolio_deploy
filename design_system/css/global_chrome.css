@@ -260,3 +260,40 @@ footer.site-foot a:hover {
     color: var(--tungsten, #A1A1A6);
     line-height: 1.6;
 }
+
+/* ============================================================
+   IMMERSIVE UI: Magnetic Cursor & View Transitions
+   ============================================================ */
+body { cursor: none; }
+
+#custom-cursor {
+  position: fixed;
+  top: 0; left: 0;
+  width: 16px; height: 16px;
+  background: var(--flare, #FFFFFF);
+  border-radius: 50% !important;
+  pointer-events: none;
+  z-index: 10000;
+  mix-blend-mode: difference;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s cubic-bezier(0.16,1,0.3,1), height 0.3s cubic-bezier(0.16,1,0.3,1), background 0.3s cubic-bezier(0.16,1,0.3,1);
+  will-change: transform, width, height;
+}
+#custom-cursor.hovering {
+  width: 48px; height: 48px;
+  background: var(--sapphire, #4D8CFF);
+}
+@media(max-width:768px){ #custom-cursor { display: none !important; } body { cursor: auto; } }
+
+/* Allow I-beam text selection natively */
+p, span, h1, h2, h3, h4, h5, h6, li, blockquote, .abstract, .lede, .body, pre, code {
+  cursor: text;
+}
+a, button, .tag, input, select, .sn-num, .gloss, .sb-item, .sb-header, .sb-link, .r-card, .p-card, .db-row, .tick, .dashboard-sidebar {
+  cursor: pointer;
+}
+
+::view-transition-old(root), ::view-transition-new(root) {
+  animation-duration: 0.6s;
+  animation-timing-function: cubic-bezier(0.4,0,0.2,1);
+}
