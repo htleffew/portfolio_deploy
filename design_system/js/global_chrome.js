@@ -293,4 +293,18 @@
         if (e.target.closest('button, a, .p-card, .bio-expand-btn, .r-card, .db-row')) playClick();
     });
 
+    // 10. View Transitions API Navigation Intercept
+    // Dynamically assign 'portal-card' view-transition-name to the clicked card before navigating
+    document.addEventListener('click', (e) => {
+        const card = e.target.closest('.p-card, .r-card, .db-row');
+        if (!card) return;
+        
+        // If it's a link, we assign the transition name to it right before the browser navigates
+        const href = card.getAttribute('href') || (card.tagName === 'A' ? card.href : null);
+        if (href && !href.startsWith('#') && !href.startsWith('mailto:')) {
+            card.classList.add('is-transitioning-portal');
+            // The browser natively handles the cross-document transition via the CSS @view-transition rule
+        }
+    });
+
 })();

@@ -565,3 +565,41 @@ a, button, .tag, input, select, .sn-num, .gloss, .sb-item, .sb-header, .sb-link,
   animation-duration: 0.6s;
   animation-timing-function: var(--ease-std);
 }
+
+/* ============================================================
+   CLAUDE PHASE 2: KINETIC TYPE SYSTEM
+   ============================================================ */
+
+/* SplitText Base States (Characters start hidden for staggered reveal) */
+.split-reveal .char {
+  opacity: 0;
+  transform: translateY(20px) rotateX(-90deg);
+  will-change: transform, opacity;
+  transform-origin: 50% 50% -20px;
+}
+
+/* DrawSVG Base States for Eyebrows */
+.eyebrow svg text {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 0.5;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  will-change: stroke-dashoffset, fill;
+}
+
+/* Houdini Paint Worklet Shimmer Base State */
+.shimmer-text {
+  --shimmer-pos: -100%;
+  background: paint(textShimmer);
+  -webkit-background-clip: text;
+  color: transparent;
+  will-change: --shimmer-pos;
+}
+
+/* GPU Acceleration Utilities */
+.gpu-accelerate {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}

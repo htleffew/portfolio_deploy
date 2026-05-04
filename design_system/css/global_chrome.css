@@ -297,3 +297,82 @@ a, button, .tag, input, select, .sn-num, .gloss, .sb-item, .sb-header, .sb-link,
   animation-duration: 0.6s;
   animation-timing-function: cubic-bezier(0.4,0,0.2,1);
 }
+
+/* ============================================================
+   CLAUDE PHASE 1: SPATIAL NARRATIVE & VIEW TRANSITIONS
+   ============================================================ */
+
+/* 1. Global Background Parallax Layers */
+@supports (animation-timeline: scroll()) {
+  body::before {
+    /* Deep Starfield Parallax */
+    animation: parallax-bg-deep linear both;
+    animation-timeline: scroll(root block);
+    will-change: transform;
+  }
+  .particle-network-layer {
+    /* Particle Network Midground */
+    animation: parallax-bg-mid linear both;
+    animation-timeline: scroll(root block);
+    will-change: transform;
+  }
+}
+@keyframes parallax-bg-deep {
+  to { transform: translateY(10%); } /* 0.1x scroll speed */
+}
+@keyframes parallax-bg-mid {
+  to { transform: translateY(40%); } /* 0.4x scroll speed */
+}
+
+/* 2. Advanced View Transitions (Cross-Document & Named) */
+
+/* The root crossfade */
+::view-transition-old(root) {
+  animation: 0.4s cubic-bezier(0.4, 0, 0.2, 1) both fade-out, 0.4s cubic-bezier(0.4, 0, 0.2, 1) both scale-down;
+}
+::view-transition-new(root) {
+  animation: 0.6s cubic-bezier(0.16, 1, 0.3, 1) both fade-in, 0.6s cubic-bezier(0.16, 1, 0.3, 1) both scale-up;
+}
+
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fade-out { from { opacity: 1; } to { opacity: 0; } }
+@keyframes scale-up { from { transform: scale(0.98); } to { transform: scale(1); } }
+@keyframes scale-down { from { transform: scale(1); } to { transform: scale(0.98); } }
+
+/* Shared Element Morphing (Portal Effect) */
+/* The hero image/container on destination pages */
+.hero-morph-target {
+  view-transition-name: portal-card;
+}
+
+/* The card being clicked gets this class applied dynamically via JS */
+.is-transitioning-portal {
+  view-transition-name: portal-card;
+}
+
+::view-transition-old(portal-card),
+::view-transition-new(portal-card) {
+  animation-duration: 0.8s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  height: 100%;
+}
+
+/* 3. Card WebGL Distortion Hover Base (CSS side) */
+.gl-card-container {
+  position: relative;
+  overflow: hidden;
+  /* GPU acceleration hint */
+  will-change: transform;
+}
+.gl-card-canvas {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Opt-in to MPA View Transitions natively */
+@view-transition {
+  navigation: auto;
+}
