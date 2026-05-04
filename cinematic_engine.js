@@ -147,14 +147,23 @@ const initCinematicEngine = () => {
     const particles = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     const targetPositions = new Float32Array(particleCount * 3); // For neural morphing
+    const floatingPositions = new Float32Array(particleCount * 3); // True un-lerped positions
     const velocities = [];
 
     // Initialize Random Cloud & Target Neural Topology
     for (let i = 0; i < particleCount; i++) {
         // Random Cloud
-        positions[i*3] = (Math.random() - 0.5) * 160;
-        positions[i*3+1] = (Math.random() - 0.5) * 160;
-        positions[i*3+2] = (Math.random() - 0.5) * 160;
+        const rx = (Math.random() - 0.5) * 160;
+        const ry = (Math.random() - 0.5) * 160;
+        const rz = (Math.random() - 0.5) * 160;
+        
+        positions[i*3] = rx;
+        positions[i*3+1] = ry;
+        positions[i*3+2] = rz;
+        
+        floatingPositions[i*3] = rx;
+        floatingPositions[i*3+1] = ry;
+        floatingPositions[i*3+2] = rz;
         
         // Neural Node Targets (Simulated structure)
         const layer = Math.floor(Math.random() * 4); // 4 layers
@@ -163,9 +172,9 @@ const initCinematicEngine = () => {
         targetPositions[i*3+2] = (Math.random() - 0.5) * 20; // Z spread
         
         velocities.push({
-            x: (Math.random() - 0.5) * 0.05,
-            y: (Math.random() - 0.5) * 0.05,
-            z: (Math.random() - 0.5) * 0.05
+            x: (Math.random() - 0.5) * 0.25,
+            y: (Math.random() - 0.5) * 0.25,
+            z: (Math.random() - 0.5) * 0.25
         });
     }
 
@@ -190,7 +199,7 @@ const initCinematicEngine = () => {
     // We will use standard LineBasicMaterial with opacity for performance, as real ShaderMaterial lines 
     // require heavy thick-line geometric expansion to look good, which hits performance. 
     // But we will use AdditiveBlending to simulate neon.
-    const maxLines = particleCount * 4;
+    const maxLines = 2500;
     const linesGeometry = new THREE.BufferGeometry();
     const linePositions = new Float32Array(maxLines * 6);
     const lineColors = new Float32Array(maxLines * 6);
@@ -201,13 +210,16 @@ const initCinematicEngine = () => {
     const linesMaterial = new THREE.LineBasicMaterial({
         vertexColors: true,
         transparent: true,
-        opacity: 0.3,
+        opacity: 0.8,
         blending: THREE.AdditiveBlending,
         depthWrite: false
     });
     
     const linesMesh = new THREE.LineSegments(linesGeometry, linesMaterial);
     scene.add(linesMesh);
+
+    // Force visibility to bypass any GSAP opacity issues
+    container.style.opacity = '1';
 
     // Interactivity
     let mouseX = 0, mouseY = 0;
@@ -243,23 +255,49 @@ const initCinematicEngine = () => {
         const targetAttr = particles.attributes.targetPosition;
         let lineIdx = 0;
 
-        for (let i = 0; i < particleCount; i++) {
-            let x = posAttr.getX(i);
-            let y = posAttr.getY(i);
-            let z = posAttr.getZ(i);
+        // Interactive Mouse World coords
+        const mouseWorldX = mouseX * 80;
+        const mouseWorldY = mouseY * 80;
 
-            // Base Brownian motion
+        for (let i = 0; i < particleCount; i++) {
+            let x = floatingPositions[i*3];
+            let y = floatingPositions[i*3+1];
+            let z = floatingPositions[i*3+2];
+
             x += velocities[i].x;
             y += velocities[i].y;
             z += velocities[i].z;
 
-            // Bounds wrapping for random cloud mode
-            if (x > 80) x = -80; else if (x < -80) x = 80;
-            if (y > 80) y = -80; else if (y < -80) y = 80;
-            if (z > 80) z = -80; else if (z < -80) z = 80;
+            // Mouse Repulsion
+            const dxm = x - mouseWorldX;
+            const dym = y - mouseWorldY;
+            const distMouseSq = dxm*dxm + dym*dym;
+            
+            if (distMouseSq < 1500) {
+                const repulseForce = (1500 - distMouseSq) / 1500;
+                const angle = Math.atan2(dym, dxm);
+                velocities[i].x += Math.cos(angle) * repulseForce * 0.02;
+                velocities[i].y += Math.sin(angle) * repulseForce * 0.02;
+            }
+
+            // Restore velocities slowly back to original range so they don't accelerate infinitely
+            const currentSpeedSq = velocities[i].x*velocities[i].x + velocities[i].y*velocities[i].y + velocities[i].z*velocities[i].z;
+            if(currentSpeedSq > 0.0625) { // max speed ~0.25
+                velocities[i].x *= 0.98;
+                velocities[i].y *= 0.98;
+                velocities[i].z *= 0.98;
+            }
+
+            // Bounds wrapping (wall bounce instead of warp so lines don't streak across screen)
+            if (x > 80 || x < -80) { velocities[i].x *= -1; x = Math.max(-80, Math.min(80, x)); }
+            if (y > 80 || y < -80) { velocities[i].y *= -1; y = Math.max(-80, Math.min(80, y)); }
+            if (z > 80 || z < -80) { velocities[i].z *= -1; z = Math.max(-80, Math.min(80, z)); }
+
+            floatingPositions[i*3] = x;
+            floatingPositions[i*3+1] = y;
+            floatingPositions[i*3+2] = z;
 
             // Neural Morphing Lerp
-            // When scrolling to bio, particles lerp from their floating positions to their target positions
             const tx = targetAttr.getX(i);
             const ty = targetAttr.getY(i);
             const tz = targetAttr.getZ(i);
@@ -278,7 +316,7 @@ const initCinematicEngine = () => {
                 const dz = finalZ - posAttr.getZ(j);
                 const distSq = dx*dx + dy*dy + dz*dz;
 
-                const connectDistance = morphFactor > 0.5 ? 800 : 400; // Neural connections are longer
+                const connectDistance = morphFactor > 0.5 ? 6000 : 4000; // Large enough to guarantee multiple connections (distance ~63-77)
 
                 if (distSq < connectDistance) {
                     if (lineIdx < maxLines) {
@@ -286,14 +324,29 @@ const initCinematicEngine = () => {
                         linePositions[lineIdx*6+3] = posAttr.getX(j); linePositions[lineIdx*6+4] = posAttr.getY(j); linePositions[lineIdx*6+5] = posAttr.getZ(j);
 
                         const alpha = 1.0 - (distSq / connectDistance);
-                        const c = baseColor.clone().lerp(highlightColor, alpha * (1.0 + morphFactor));
+                        // Increase base opacity modifier to 2.5 to make lines very bright and distinct
+                        const intensity = alpha * (1.0 + morphFactor) * 2.5;
+                        const c = baseColor.clone().lerp(highlightColor, alpha);
 
-                        lineColors[lineIdx*6] = c.r; lineColors[lineIdx*6+1] = c.g; lineColors[lineIdx*6+2] = c.b;
-                        lineColors[lineIdx*6+3] = c.r; lineColors[lineIdx*6+4] = c.g; lineColors[lineIdx*6+5] = c.b;
+                        lineColors[lineIdx*6] = c.r * intensity; lineColors[lineIdx*6+1] = c.g * intensity; lineColors[lineIdx*6+2] = c.b * intensity;
+                        lineColors[lineIdx*6+3] = c.r * intensity; lineColors[lineIdx*6+4] = c.g * intensity; lineColors[lineIdx*6+5] = c.b * intensity;
 
                         lineIdx++;
                     }
                 }
+            }
+
+            // Connect to mouse pointer
+            if (distMouseSq < 3000 && lineIdx < maxLines) {
+                linePositions[lineIdx*6] = finalX; linePositions[lineIdx*6+1] = finalY; linePositions[lineIdx*6+2] = finalZ;
+                linePositions[lineIdx*6+3] = mouseWorldX; linePositions[lineIdx*6+4] = mouseWorldY; linePositions[lineIdx*6+5] = 0;
+
+                const alpha = 1.0 - (distMouseSq / 3000);
+                const intensity = alpha * 3.0; // Very bright mouse connections
+                lineColors[lineIdx*6] = highlightColor.r * intensity; lineColors[lineIdx*6+1] = highlightColor.g * intensity; lineColors[lineIdx*6+2] = highlightColor.b * intensity;
+                lineColors[lineIdx*6+3] = highlightColor.r * intensity; lineColors[lineIdx*6+4] = highlightColor.g * intensity; lineColors[lineIdx*6+5] = highlightColor.b * intensity;
+                
+                lineIdx++;
             }
         }
 
