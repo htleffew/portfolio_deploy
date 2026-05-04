@@ -45,6 +45,14 @@
         head.appendChild(link);
     }
 
+    // 2.5 Inject Film Grain Overlay
+    if (!document.getElementById('grain')) {
+        const grain = document.createElement('div');
+        grain.id = 'grain';
+        grain.setAttribute('aria-hidden', 'true');
+        document.body.insertBefore(grain, document.body.firstChild);
+    }
+
     // 3. Construct and Inject Top Navigation
     if (!document.getElementById('topnav')) {
         const header = document.createElement('header');

@@ -459,7 +459,8 @@ window.addEventListener('load', () => {
           stagger: 0.02,
           duration: 1.2,
           ease: 'back.out(1.5)',
-          delay: 1.4
+          delay: 1.4,
+          onComplete: () => heroTitle.classList.add('ca-settle')
         });
       }
 
@@ -710,6 +711,56 @@ document.addEventListener('DOMContentLoaded', async () => {
     const errorMsg = '<div style="padding: 36px; color: var(--tungsten); font-family: var(--mono); font-size: 11px; text-transform: uppercase;">Engine initialization failed. Loading static fallback...</div>';
     g1.innerHTML = errorMsg;
   }
+});
+</script>
+
+<!-- Progressive Disclosure (Experience Cards) -->
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.r-card').forEach(card => {
+    const intro   = card.querySelector('.r-intro');
+    const bullets = card.querySelector('.r-bullets');
+    if (!intro || !bullets) return;
+    bullets.style.display = 'none';
+    bullets.style.opacity = '0';
+    
+    const btnWrap = document.createElement('div');
+    btnWrap.style.cssText = 'margin-top:16px;margin-bottom:8px;';
+    const btn = document.createElement('button');
+    btn.className = 'bio-expand-btn';
+    btn.innerHTML = 'View Details <span>+</span>';
+    
+    let open = false;
+    btn.addEventListener('click', () => {
+      if (!open) {
+        bullets.style.display = 'block';
+        btn.innerHTML = 'Hide Details <span>-</span>';
+        if (typeof gsap !== 'undefined') {
+          gsap.to(bullets, { opacity: 1, duration: 0.6, ease: 'power2.out' });
+        } else {
+          bullets.style.opacity = '1';
+        }
+      } else {
+        if (typeof gsap !== 'undefined') {
+          gsap.to(bullets, {
+            opacity: 0,
+            duration: 0.4,
+            ease: 'power2.in',
+            onComplete: () => { bullets.style.display = 'none'; }
+          });
+        } else {
+          bullets.style.display = 'none';
+          bullets.style.opacity = '0';
+        }
+        btn.innerHTML = 'View Details <span>+</span>';
+      }
+      open = !open;
+      if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+    });
+    
+    btnWrap.appendChild(btn);
+    intro.parentNode.insertBefore(btnWrap, intro.nextSibling);
+  });
 });
 </script>
 
