@@ -331,10 +331,13 @@ section.band:not(.front) > .sandbox-layout {
 </head>
 <body>
 
+    <!-- Reading progress -->
     <div id="progress"></div>
 
+    <!-- Top nav (Rendered via JS) -->
+    <div id="global-nav-container"></div>
 
-
+    <!-- Chapter spine -->
     <aside id="spine"></aside>
 
     <main>
@@ -485,7 +488,7 @@ section.band:not(.front) > .sandbox-layout {
         <section class="band band--paper" data-spine="References" data-section="References">
             <div class="eyebrow">07 / Bibliography</div>
             <h2>References</h2>
-            <div class="col-main">
+            <div class="report-prose">
                 <ul style="list-style-type:none; padding:0; margin-top:24px; font-family:var(--body); font-size:16px;">
                     <li style="margin-bottom:16px; padding-left:36px; text-indent:-36px;">
                         Barocas, S., & Selbst, A. D. (2016). Big data's disparate impact. <em>California Law Review</em>, 104, 671-732.
@@ -505,46 +508,7 @@ section.band:not(.front) > .sandbox-layout {
     </main>
 
     <script>
-        // Spine navigation setup
-        const spine = document.getElementById('spine');
-        const sections = Array.from(document.querySelectorAll('section[data-spine]'));
-        sections.forEach((sec, i) => {
-            const row = document.createElement('div');
-            row.className = 'row';
-            row.innerHTML = `<div class="num">0${i+1}</div><div class="tick"></div><div class="label">${sec.getAttribute('data-spine')}</div>`;
-            row.addEventListener('click', () => { sec.scrollIntoView({ behavior:'smooth' }); });
-            spine.appendChild(row);
-        });
-        
-        const obs = new IntersectionObserver(entries => {
-            entries.forEach(e => {
-                if(e.isIntersecting) {
-                    const idx = sections.indexOf(e.target);
-                    Array.from(spine.children).forEach((child, i) => {
-                        child.classList.remove('is-active', 'is-paper-active');
-                        if(i === idx) {
-                            const isPaper = e.target.classList.contains('band--paper');
-                            const invertContrast = !isPaper;
-                            child.classList.add(invertContrast ? 'is-paper-active' : 'is-active');
-                            if(invertContrast) {
-                                document.getElementById('topnav').classList.add('is-paper');
-                                document.getElementById('spine').classList.add('is-paper');
-                            } else {
-                                document.getElementById('topnav').classList.remove('is-paper');
-                                document.getElementById('spine').classList.remove('is-paper');
-                            }
-                        }
-                    });
-                }
-            });
-        }, { rootMargin: "-45% 0px -45% 0px" });
-        sections.forEach(s => obs.observe(s));
-
-        window.addEventListener('scroll', () => {
-            const p = document.documentElement.scrollTop / (document.documentElement.scrollHeight - document.documentElement.clientHeight);
-            document.body.style.setProperty('--p', (p*100)+'%');
-        });
-
+    <script>
         // Threshold Calibrator Simulator Setup
         document.addEventListener("DOMContentLoaded", () => {
             const sliderPenalty = document.getElementById('slider-penalty');
@@ -653,40 +617,10 @@ section.band:not(.front) > .sandbox-layout {
         });
     </script>
 
-<script>
-/* ============================================================
-   DYNAMIC SIDENOTE CLEARANCE (Global Portfolio Mandate)
-   ============================================================ */
-document.addEventListener('DOMContentLoaded', () => {
-    const sidenoteParagraphs = document.querySelectorAll('.col-with-sidenotes');
-    sidenoteParagraphs.forEach(p => {
-        const sn = p.querySelector('.sn');
-        if (sn) {
-            const updateHeight = () => {
-                if (window.innerWidth >= 1240) {
-                    // Calculate exact clearance needed based on the sidenote's absolute top position
-                    const neededHeight = sn.offsetTop + sn.offsetHeight + 40;
-                    p.style.minHeight = neededHeight + 'px';
-                } else {
-                    p.style.minHeight = 'auto';
-                }
-            };
-            updateHeight();
-            setTimeout(updateHeight, 250);
-            window.addEventListener('resize', updateHeight);
-        }
-    });
-});
-</script>
-
-
 <!-- ============================================================
      GLOBAL APP SHELL (BACK MATTER)
      ============================================================ -->
 <section class="band band--dark back-matter" data-spine="Research Graph" data-section="Research Graph">
-  
-  
-
   <div class="back-matter" style="padding-top:0;">
     <h3 style="margin-bottom:22px;">Related Works</h3>
     <div class="related">
@@ -703,73 +637,7 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
     <div class="rt">&rarr;</div>
   </a>
-
 </section>
-
-
-
-
-<script>
-document.addEventListener('DOMContentLoaded', async () => {
-    try {
-        const pathPrefix = window.location.pathname.includes('projects-repository.html') ? './' : '../';
-        const response = await fetch(pathPrefix + 'projects_index.json');
-        if (!response.ok) return;
-        const projects = await response.json();
-        
-        const currentPath = window.location.pathname;
-        let me = projects.find(p => currentPath.includes(p.id));
-        if (!me) me = projects[0]; // fallback
-        
-        // 1. Populate Recommendations
-        if (document.getElementById('recommendation-grid')) {
-            let scored = projects.map(p => {
-                if (p.id === me.id) return { ...p, score: -1 }; 
-                let score = 0;
-                if(p.tags && me.tags) {
-                    p.tags.forEach(t => { if (me.tags.includes(t)) score++; });
-                }
-                if (p.cat === me.cat) score += 0.5;
-                return { ...p, score };
-            });
-            scored.sort((a, b) => b.score - a.score);
-            const top3 = scored.slice(0, 3);
-
-            const grid = document.getElementById('recommendation-grid');
-            grid.innerHTML = '';
-            top3.forEach(p => {
-                const card = document.createElement('a');
-                card.href = pathPrefix + p.url;
-                card.className = 'r-card';
-                card.innerHTML = `
-                    <div class="eb">${p.cat}</div>
-                    <div class="ti">${p.title}</div>
-                    <div class="ds">${p.desc.substring(0, 100)}...</div>
-                    <div class="ar">Read More &rarr;</div>
-                `;
-                grid.appendChild(card);
-            });
-        }
-        
-        // 2. Populate Next Chapter
-        const nextChapLink = document.getElementById('next-chap-link');
-        const nextChapTitle = document.getElementById('next-chap-title');
-        if (nextChapLink && nextChapTitle) {
-            let currentIndex = projects.findIndex(p => p.id === me.id);
-            if (currentIndex === -1) currentIndex = 0;
-            let nextIndex = (currentIndex + 1) % projects.length;
-            let nextProj = projects[nextIndex];
-            
-            nextChapLink.href = pathPrefix + nextProj.url;
-            nextChapTitle.textContent = nextProj.title;
-        }
-
-    } catch(e) {
-        console.log("Global Frame JS resting.");
-    }
-});
-</script>
-
 
 <!-- Global Chrome Injector -->
 <script src="../design_system/js/global_chrome.js"></script>

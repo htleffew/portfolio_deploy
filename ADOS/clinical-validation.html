@@ -8,9 +8,15 @@
     <link rel="stylesheet" href="../design_system/assets/css/institutional.css">
 </head>
 <body data-category="Clinical ML" data-title="Uncertainty Quantification">
-    <!-- Global Chrome dynamically injected -->
 
-    <main>
+<!-- Reading progress -->
+<div id="progress"></div>
+
+<!-- Top nav (Rendered via JS) -->
+<div id="global-nav-container"></div>
+
+<!-- Chapter spine -->
+<aside id="spine"></aside>
         
         <section class="band band--dark front" data-spine="Problem Space" data-section="Front matter">
             <div class="col-wide">
@@ -183,11 +189,29 @@
             </div>
         </section>
 
-    </main>
+<!-- ============================================================
+     GLOBAL APP SHELL (BACK MATTER)
+     ============================================================ -->
+<section class="band band--dark back-matter" data-spine="Research Graph" data-section="Research Graph">
+  <div class="back-matter" style="padding-top:0;">
+    <h3 style="margin-bottom:22px;">Related Works</h3>
+    <div class="related">
+      <div class="related-grid" id="recommendation-grid">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </div>
 
-    
+  <a class="next-chap" id="next-chap-link" href="#">
+    <div class="lf">
+      <div class="eb">Next Publication</div>
+      <div class="ti" id="next-chap-title">Loading...</div>
+    </div>
+    <div class="rt">&rarr;</div>
+  </a>
+</section>
 
-<!-- Sidenote logic handled globally -->
+<!-- Global Chrome Injector -->
 <script src="../design_system/js/global_chrome.js"></script>
 </body>
 </html>
