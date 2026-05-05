@@ -172,13 +172,9 @@ window.addEventListener('load', () => {
             { opacity: 0, x: -40, filter: 'blur(4px)' },
             { opacity: 1, x: 0, filter: 'blur(0px)', duration: 1.6, ease: 'expo.out' }
           );
-          libTl.fromTo(libBand.querySelector('.dashboard-main'),
-            { opacity: 0, y: 40, filter: 'blur(4px)' },
-            { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.8, ease: 'expo.out' }, '-=1.0'
-          );
-          libTl.fromTo(libBand.querySelector('.dashboard-layout'),
-            { opacity: 0 },
-            { opacity: 1, duration: 0.1 }, 0
+          libTl.fromTo(libBand.querySelectorAll('.db-controls, .db-chips'),
+            { opacity: 0, y: 20, filter: 'blur(4px)' },
+            { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.8, stagger: 0.1, ease: 'expo.out' }, '-=1.0'
           );
         }
 
