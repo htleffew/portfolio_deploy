@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dr. Heather Leffew — Profile Kit</title>
+<link rel="stylesheet" href="../../colors_and_type.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+  *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { margin:0; padding:0; background:var(--obsidian); color:var(--platinum); font-family:'Lora',serif; overflow-x:hidden; }
+  ::selection { background: rgba(255,255,255,0.20); color:#fff; }
+  .headshot-wrap:hover img { filter: grayscale(0%) contrast(1.05) !important; }
+  /* Defensive line-height for all heading + list copy in case inline styles get clipped */
+  h1,h2,h3,h4 { line-height: 1.2; }
+  ul, ol { list-style: none; }
+  li { line-height: 1.7; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="AmbientBackdrop.jsx"></script>
+<script type="text/babel" src="GlobalNav.jsx"></script>
+<script type="text/babel" src="Hero.jsx"></script>
+<script type="text/babel" src="BioCard.jsx"></script>
+<script type="text/babel" src="ProjectCarousel.jsx"></script>
+<script type="text/babel" src="ResumeCard.jsx"></script>
+<script type="text/babel" src="EducationCard.jsx"></script>
+<script type="text/babel" src="TechStack.jsx"></script>
+<script type="text/babel" src="ResearchFeed.jsx"></script>
+
+<script type="text/babel" data-presets="react">
+const ROLES = [
+  { title:'Director of Data Science', company:'Spokeo', dates:'Sep 2025 — Present', intro:'Founding technical leader who built and scaled Spokeo\u2019s Data Science and AI function, delivering production ML and NLP systems across search relevance, fraud detection, customer intelligence, and data procurement in partnership with ~80 engineers across 8+ cross-functional squads.', bullets:[
+      'Owned the AI operating model with executive leadership, defining an OKR taxonomy and delivery mechanisms.',
+      'Led end-to-end delivery of a proprietary 15-step ML intelligence pipeline combining knowledge graphs, graph ML, and weak supervision across ~49TB of multi-vendor data.',
+      'Reduced core processing time from 150+ hours to 24\u201336 hours; established A/B testing and model evaluation practices for repeatable releases.',
+      'Delivered NLP-driven schema discovery via a semantic clustering engine that mapped thousands of vendor columns to 75 canonical attribute types.',
+  ]},
+  { title:'Full-Stack Principal Data Scientist & Applied Researcher', company:'TikTok USDS | ByteDance', dates:'Jul 2022 — Jul 2025', intro:'Owned the roadmap for ML measurement and detection capabilities and led cross-functional teams up to 25, setting evaluation standards for accuracy, safety, and operational readiness.', bullets:[
+      'Launched an analytics product suite processing 1B+ records, improving brand-safety assurance and content-strategy optimization.',
+      'Delivered measurement products identifying 400K+ violative accounts, enabling enforcement on 15K+ accounts without increasing appeals; reduced manual review effort by 40%.',
+      'Led the creation of an industry-first external IRB methodology for ethical review of platform-research initiatives.',
+      'Deployed organization-wide automated detection systems with 95% accuracy.',
+  ]},
+  { title:'Director of Evaluations and Analytics', company:'Brower Psychological Police and Public Safety Services', dates:'Jul 2019 — Jul 2022', intro:'Directed three product teams (18 total members) delivering digital psychological assessment products, people-analytics platforms, and wellness programs in regulated public-safety environments.', bullets:[
+      'Increased operational throughput 5x via cloud-based assessment products and end-to-end workflow digitization.',
+      'Secured $500K+ in grant funding through evidence-based proposals demonstrating measurable DEI outcomes.',
+      'Built partnerships with national regulatory bodies, aligning offerings to achieve compliance and accreditation.',
+  ]},
+];
+
+const App = () => (
+  <div>
+    <AmbientBackdrop />
+    <GlobalNav />
+    <Hero />
+    <BioCard />
+    <ProjectCarousel />
+
+    <section style={{maxWidth:1400,margin:'0 auto',padding:'60px 48px 120px'}}>
+      <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:11,letterSpacing:'0.25em',textTransform:'uppercase',color:'var(--sapphire)',marginBottom:24}}>Organizational Outcomes</div>
+      <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:40,color:'var(--flare)',margin:'0 0 48px',lineHeight:1.1,fontWeight:600}}>Professional Experience</h2>
+      <div style={{display:'flex',flexDirection:'column',gap:40,marginBottom:60}}>
+        {ROLES.map((r, i) => <ResumeCard key={i} {...r} />)}
+      </div>
+
+      <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:11,letterSpacing:'0.25em',textTransform:'uppercase',color:'var(--sapphire)',marginTop:80,marginBottom:24}}>Academic Background</div>
+      <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:40,color:'var(--flare)',margin:'0 0 48px',lineHeight:1.1,fontWeight:600}}>Education &amp; Research</h2>
+      <div style={{display:'flex',flexDirection:'column',gap:40,marginBottom:60}}>
+        <EducationCard degree="Doctor of Philosophy (PhD), Psychology" school="Fielding Graduate University · APA Accredited"
+          rows={[
+            {label:'Specialization', value:'Quantitative Predictive Linguistics'},
+            {label:'Dissertation', value:'Instrumental and Affective Mass Murder: Establishing a Predictive Typology with Computer-Mediated Linguistic Analysis.'},
+            {label:'Conference Presentation', value:'Implicit Power Drives in the Manifestos Preceding Autogenic Massacres.'},
+          ]}/>
+        <EducationCard degree="Master of Arts (MA), Psychology" school="Fielding Graduate University · WSCUC Accredited · 4.14 GPA"
+          rows={[{label:'Specialization', value:'Advanced Psychometrics'}]}/>
+        <EducationCard degree="Bachelor of Science (BS), Psychology" school="Liberty University · SACSOC Accredited · Summa Cum Laude (4.00 GPA)"
+          rows={[{label:'Specialization', value:'Emergency Management & Public Safety'}]}/>
+      </div>
+
+      <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:11,letterSpacing:'0.25em',textTransform:'uppercase',color:'var(--sapphire)',marginTop:80,marginBottom:24}}>Core Competencies</div>
+      <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:40,color:'var(--flare)',margin:'0 0 24px',lineHeight:1.1,fontWeight:600}}>Technical &amp; Leadership Capabilities</h2>
+      <TechStack title="Leadership & AI Strategy" tags={['Technical Leadership','AI Strategy','ML Leadership','Product Strategy','Cross-Functional Leadership','OKR Taxonomy','AI Governance','Responsible AI','Regulatory Compliance','Bias Mitigation']}/>
+      <TechStack title="Machine Learning & Modeling" tags={['Neuro-Symbolic AI','Graph ML','Knowledge Graphs','Entity Resolution','Weak Supervision','Reinforcement Learning','Agentic Systems','LLMs','NLP','Semantic Clustering','XGBoost','Causal Inference']}/>
+      <TechStack title="MLOps & Infrastructure" tags={['End-to-End Pipelines','Distributed Computing','AWS SageMaker','AWS Glue','AWS EMR','Databricks','Delta Lake','Apache Spark','Airflow','Docker','Kubernetes','CI/CD']}/>
+      <TechStack title="Technical Stack" tags={['Python','Pandas / NumPy','Scikit-learn','PyTorch','TensorFlow','Hugging Face','PySpark','SQL / Hive / Scala','Kafka','Tableau / Power BI']}/>
+    </section>
+
+    <ResearchFeed />
+
+    <footer style={{borderTop:'1px solid rgba(255,255,255,0.05)',padding:'60px 48px',display:'flex',justifyContent:'space-between',alignItems:'center',background:'rgba(3,3,3,0.3)',position:'relative',zIndex:10,fontFamily:"'JetBrains Mono',monospace",fontSize:10,color:'var(--tungsten)',letterSpacing:'0.10em',textTransform:'uppercase'}}>
+      <div>&copy; 2026 Dr. Heather Leffew. All Rights Reserved.</div>
+      <div style={{display:'flex',gap:24}}>
+        <a href="https://linkedin.com/in/heathertleffew" target="_blank" style={{color:'var(--tungsten)',textDecoration:'none'}}>LinkedIn</a>
+      </div>
+    </footer>
+  </div>
+);
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
