@@ -1,9 +1,35 @@
 # Three-Phase Deployment Audit Prompt
 
-I have a new HTML case study ready for deployment located at `[insert file path]`. Please execute the Three-Phase Deployment Audit:
+I have a new HTML case study ready for deployment. Please find the new folder/file in C:\Users\drhea\repos\Pm_html\portfolio_deploy and execute the Four-Phase Deployment Audit on the new file:
 
-1. Structural Conformity Check: Audit the HTML against `portfolio-design-system/STYLE.md`. Strip all inline `<style>` blocks. Ensure all standard components (tables, code blocks, lists) are utilizing the global primitives from `institutional.css`. Leave any hyper-specific visualization CSS untouched, but verify the layout uses the proper `.band` and `.col` structures.
+## Phase 1: Structural Conformity Check
+- Verify the `<head>` contains exactly ONE stylesheet link: `../design_system/assets/css/institutional.css`. Tokens load automatically via `@import url('../../tokens.css')` inside that file.
+- Verify NO inline `<style>` blocks contain `:root` token declarations — tokens come exclusively from `tokens.css`.
+- Verify NO Google Fonts `<link>` tags in `<head>` — fonts load through `tokens.css` via `@import url(...)`.
+- Strip any remaining inline `<style>` blocks that duplicate standard component styles from `institutional.css`. Leave ONLY page-specific interactive widget CSS (sliders, sandboxes, live charts) in inline blocks.
+- Verify the layout uses proper `.band` and `.col-wide` structures with alternating `band--dark` / `band--paper` / `band--ink` modes.
+- Verify every `<section>` has `data-spine` and `data-section` attributes for the chapter spine.
+- Verify SVG diagrams use token colors (`var(--phthalo)`, `var(--alizarin)`, etc.) — never hardcoded hex values.
+- Verify all standard components use institutional.css classes:
+  - Typography: `.has-dropcap`, `.eyebrow`, `.is-chapter`, `.col-with-sidenotes`
+  - Figures: `.figure`, `.frame`, `.cap`, `.cap .num`
+  - Tables: `.data-table`
+  - Sidenotes: `.sn`, `.sn-num`, `.sn-body`
+  - Reveals: `.reveal` on all scroll-animated elements
+  - Bullets: `.bullets`
 
-2. Index Registration: Update `portfolio_deploy/master_index.json` to include the new project metadata, ensuring it has the correct category, tags, and file paths.
+## Phase 2: Index Registration
+- Update `portfolio_deploy/projects_index.json` to include the new project metadata, ensuring it has the correct category, tags, description, and file paths.
 
-3. Pipeline Execution: Run `node sync_index.js` (in `portfolio_deploy`) to dynamically regenerate the site-wide "Related Works" footers and the Projects dashboard. Then, run `node sync_assets.js` (in `portfolio-design-system`) to guarantee the deployment repository has the absolute latest global CSS and JS primitives.
+## Phase 3: Pipeline Execution
+- Run `node sync_index.js` (in `portfolio_deploy`) to dynamically regenerate the site-wide "Related Works" footers and the Projects dashboard.
+
+## Phase 4: Browser Verification
+- Open the deployed page in the browser and verify:
+  - Top navigation renders correctly (no FOUC)
+  - Footer renders correctly
+  - Typography matches the design system (Playfair Display headings, Lora body, JetBrains Mono labels)
+  - Spine navigation populates and highlights correctly on scroll
+  - Related Works grid populates from projects_index.json
+  - All interactive widgets function (sliders, toggles, simulators)
+  - Console shows no JavaScript errors or missing resource warnings

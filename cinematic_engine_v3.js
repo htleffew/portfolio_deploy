@@ -248,10 +248,6 @@ const initCinematicEngine = () => {
     const linesMesh = new THREE.LineSegments(linesGeometry, linesMaterial);
     scene.add(linesMesh);
 
-    // Force visibility to bypass any GSAP opacity issues
-    container.style.opacity = '1';
-    container.style.display = 'block';
-
     console.log("Cinematic engine initialized, rendering Three.js particles:", particleCount);
 
     // Interactivity
@@ -414,3 +410,14 @@ if (document.readyState === 'loading') {
 } else {
     initCinematicEngine();
 }
+
+// Universal Fade-in logic for pages without GSAP
+setTimeout(() => {
+    const ds = document.getElementById('deep-space');
+    const glc = document.getElementById('glCanvas');
+    if (typeof gsap === 'undefined') {
+        if (ds) { ds.style.transition = 'opacity 3.5s ease-in-out'; ds.style.opacity = '1'; }
+        if (glc) { glc.style.transition = 'opacity 3.5s ease-in-out'; glc.style.opacity = '1'; }
+    }
+}, 100);
+

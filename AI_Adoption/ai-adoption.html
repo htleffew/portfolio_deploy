@@ -4,8 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The AI Productivity J-Curve. Dr. Heather Leffew</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../design_system/assets/css/institutional.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js" defer></script>
+<script src="../cinematic_engine_v3.js" defer></script>
 </head>
 
 <body data-category="Systems Dynamics" data-title="AI Productivity J-Curve">
@@ -21,30 +30,14 @@
 
 <div class="atmosphere"></div>
 
-
 <!-- ============================================================
      FRONT MATTER
      ============================================================ -->
+<canvas id="deep-space"></canvas>
+<canvas id="glCanvas"></canvas>
+
 <section class="band band--dark front" data-spine="Front" data-section="Front matter">
-  <div class="ambient" aria-hidden="true">
-    <svg viewBox="0 0 600 600" fill="none">
-      <defs>
-        <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#4D8CFF" stop-opacity="0.55"/>
-          <stop offset="100%" stop-color="#0F52BA" stop-opacity="0.0"/>
-        </linearGradient>
-      </defs>
-      <path d="M 100 200 Q 300 450 500 100" stroke="url(#g1)" stroke-width="2" fill="none"/>
-      <line x1="100" y1="300" x2="500" y2="300" stroke="#4D8CFF" stroke-width="1" stroke-dasharray="2 6" opacity="0.8"/>
-      <g fill="#4D8CFF" opacity="0.7">
-        <circle cx="100" cy="200" r="3.5"/>
-        <circle cx="200" cy="300" r="3.5"/>
-        <circle cx="300" cy="350" r="3.5"/>
-        <circle cx="400" cy="275" r="3.5"/>
-        <circle cx="500" cy="100" r="3.5"/>
-      </g>
-    </svg>
-  </div>
+  
 
   <div class="col-wide">
     <div class="grid">
@@ -78,9 +71,7 @@
         </div>
       </div>
      </div>
-     <div></div>
-    </div>
-  </div>
+     <div>
 </section>
 
 <!-- ============================================================
@@ -108,7 +99,7 @@
 <!-- ============================================================
      2, DRIVERS OF THE DIP (ink)
      ============================================================ -->
-<section class="band band--ink" data-spine="Drivers" data-section="Key market drivers">
+<section class="band band--dark" data-spine="Drivers" data-section="Key market drivers">
   <div class="eyebrow reveal">02 / Key Drivers</div>
   <h2 class="reveal">Why the floor drops out first.</h2>
 
@@ -117,7 +108,7 @@
   </p>
 
   <p class="reveal col-with-sidenotes">
-    Early adopters, particularly older and well-established firms, often experience deeper short-term losses during this phase. They possess more entrenched legacy systems that must be overcome, creating high initial friction. Furthermore, the market is currently experiencing what the World Economic Forum terms a "white-collar recession" — a dynamic where firms reduce specialized staff to manage costs while simultaneously attempting to invest heavily in long-term AI capabilities<span class="sn"><span class="sn-num">2</span><span class="sn-body">This creates an exceptionally dangerous short-term environment: legacy systems require deep architectural knowledge to untangle, yet the very staff equipped to untangle them are often reduced during the initial CapEx allocation for the AI software itself.</span></span>.
+    Early adopters, particularly older and well-established firms, often experience deeper short-term losses during this phase. They possess more entrenched legacy systems that must be overcome, creating high initial friction. Furthermore, the market is currently experiencing what the World Economic Forum terms a "white-collar recession" , a dynamic where firms reduce specialized staff to manage costs while simultaneously attempting to invest heavily in long-term AI capabilities<span class="sn"><span class="sn-num">2</span><span class="sn-body">This creates an exceptionally dangerous short-term environment: legacy systems require deep architectural knowledge to untangle, yet the very staff equipped to untangle them are often reduced during the initial CapEx allocation for the AI software itself.</span></span>.
   </p>
 
   <p class="reveal">
@@ -128,7 +119,7 @@
 <!-- ============================================================
      3, DEFINING THE MATH (dark)
      ============================================================ -->
-<section class="band band--dark" data-spine="The Math" data-section="Formulating the model">
+<section class="band band--paper" data-spine="The Math" data-section="Formulating the model">
   <div class="eyebrow reveal">03 / Formulating the Model</div>
   <h2 class="reveal">Separating the signals over time.</h2>
 
@@ -148,7 +139,7 @@
 <!-- ============================================================
      4, THE SANDBOX (paper)
      ============================================================ -->
-<section class="band band--paper" data-spine="Sandbox" data-section="Interactive simulator">
+<section class="band band--dark" data-spine="Sandbox" data-section="Interactive simulator">
   <div class="eyebrow reveal">04 / The Sandbox</div>
   <h2 class="reveal">Map the trough dynamically.</h2>
 
@@ -229,20 +220,18 @@
     <div class="inner">
       <div class="lab">Reading the simulator metrics</div>
       The three outputs below the chart represent the critical milestones of the integration lifecycle. <strong>Max Drawdown</strong> indicates the deepest point of the initial performance loss (the floor of the trough). It represents the peak organizational friction and capital outlay before adaptation takes hold. <strong>Breakeven Horizon</strong> calculates the exact month where the cumulative algorithmic gains finally eclipse the initial intangible investments. Finally, <strong>M24 Net ROI</strong> represents the terminal value of the project at the end of the two-year simulation. If a project has a massive M24 Net ROI but a Breakeven Horizon of Month 22, it will likely be cancelled by impatient stakeholders long before it succeeds.
-    </div>
-  </div>
 
 </section>
 
 <!-- ============================================================
      5, NAVIGATING THE CURVE (ink)
      ============================================================ -->
-<section class="band band--ink" data-spine="Strategies" data-section="Navigating the integration">
+<section class="band band--paper" data-spine="Strategies" data-section="Navigating the integration">
   <div class="eyebrow reveal">05 / Navigating the Curve</div>
   <h2 class="reveal">Strategies for the implementation dip.</h2>
 
   <p class="reveal col-with-sidenotes">
-    Visualizing these dynamics mathematically clarifies why aggressive integration is not inherently optimal if the foundational requirements are not met. However, evidence shows that early AI adopters who persist through the dip ultimately demonstrate stronger long-term growth and competitiveness. To survive the trough, organizations must adopt specific navigational strategies<span class="sn"><span class="sn-num">3</span><span class="sn-body">As documented in <i>The Conversation</i>, poorly implemented AI often results in "workslop"—where employees spend more time correcting hallucinated outputs than they save by using the tool, severely deepening the J-Curve dip.</span></span>.
+    Visualizing these dynamics mathematically clarifies why aggressive integration is not inherently optimal if the foundational requirements are not met. However, evidence shows that early AI adopters who persist through the dip ultimately demonstrate stronger long-term growth and competitiveness. To survive the trough, organizations must adopt specific navigational strategies<span class="sn"><span class="sn-num">3</span><span class="sn-body">As documented in <i>The Conversation</i>, poorly implemented AI often results in "workslop", where employees spend more time correcting hallucinated outputs than they save by using the tool, severely deepening the J-Curve dip.</span></span>.
   </p>
 
   <ul class="bullets reveal">
@@ -256,52 +245,28 @@
 <!-- ============================================================
      REFERENCES
      ============================================================ -->
-<section class="band band--paper" data-spine="References" data-section="References">
-  <div class="eyebrow">06 / Bibliography</div>
-  <h2>References</h2>
-  <div class="report-prose">
-    <ul style="list-style-type:none; padding:0; margin-top:24px; font-family:var(--body); font-size:16px;">
-      <li style="margin-bottom:16px; padding-left:36px; text-indent:-36px;">
-        Brynjolfsson, E., Rock, D., & Syverson, C. (2021). The Productivity J-Curve: How Intangibles Complement General Purpose Technologies. <em>American Economic Journal: Macroeconomics</em>, 13(1), 333-72.
-      </li>
-      <li style="margin-bottom:16px; padding-left:36px; text-indent:-36px;">
-        MIT Sloan. (2024). The ‘productivity paradox’ of AI adoption in manufacturing firms.
-      </li>
-      <li style="margin-bottom:16px; padding-left:36px; text-indent:-36px;">
-        World Economic Forum. (2025). AI paradoxes in 2026.
-      </li>
-      <li style="margin-bottom:16px; padding-left:36px; text-indent:-36px;">
-        World Economic Forum. (2025). AI Agents in Action: Foundations for Evaluation and Governance.
-      </li>
-      <li style="margin-bottom:16px; padding-left:36px; text-indent:-36px;">
-        Artificial Intelligence News. (2025). Global AI Report 2025.
-      </li>
-      <li style="margin-bottom:16px; padding-left:36px; text-indent:-36px;">
-        The Conversation. (2024). AI ‘workslop’ is creating unnecessary extra work. Here’s how we can stop it.
-      </li>
-      <li style="margin-bottom:16px; padding-left:36px; text-indent:-36px;">
-        Harvard Business Review. (2026). Why Companies That Choose AI Augmentation Over Automation May Win.
-      </li>
-      <li style="margin-bottom:16px; padding-left:36px; text-indent:-36px;">
-        McKinsey & Company. (2024). The State of AI.
-      </li>
-    </ul>
-  </div>
-</section>
 
 <!-- ============================================================
      BACK MATTER & GLOBAL CHROME SCRIPTS
      ============================================================ -->
-<section class="band band--dark back-matter" data-spine="Research Graph" data-section="Research Graph">
-  <div class="back-matter" style="padding-top:0;">
-    <h3 style="margin-bottom:22px;">Related Works</h3>
+<section class="band band--dark back-matter" data-spine="Research Graph" data-section="Research Graph">  <h3 style="margin-top:0;">Bibliography</h3>
+  <ol class="biblio">
+    <li><span class="n">[1]</span><span class="ent">Brynjolfsson, E., Rock, D., & Syverson, C. (2021). The Productivity J-Curve: How Intangibles Complement General Purpose Technologies. <em>American Economic Journal: Macroeconomics</em>, 13(1), 333-72.</span></li>
+    <li><span class="n">[2]</span><span class="ent">MIT Sloan. (2024). The ‘productivity paradox’ of AI adoption in manufacturing firms.</span></li>
+    <li><span class="n">[3]</span><span class="ent">World Economic Forum. (2025). AI paradoxes in 2026.</span></li>
+    <li><span class="n">[4]</span><span class="ent">World Economic Forum. (2025). AI Agents in Action: Foundations for Evaluation and Governance.</span></li>
+    <li><span class="n">[5]</span><span class="ent">Artificial Intelligence News. (2025). Global AI Report 2025.</span></li>
+    <li><span class="n">[6]</span><span class="ent">The Conversation. (2024). AI ‘workslop’ is creating unnecessary extra work. Here’s how we can stop it.</span></li>
+    <li><span class="n">[7]</span><span class="ent">Harvard Business Review. (2026). Why Companies That Choose AI Augmentation Over Automation May Win.</span></li>
+    <li><span class="n">[8]</span><span class="ent">McKinsey & Company. (2024). The State of AI.</span></li>
+  </ol>
+
+    <h3>Related Cases</h3>
     <div class="related">
       <div class="related-grid" id="recommendation-grid">
         <!-- Populated by JS -->
       </div>
     </div>
-  </div>
-
   <a class="next-chap" id="next-chap-link" href="#">
     <div class="lf">
       <div class="eb">Next Publication</div>
@@ -310,8 +275,6 @@
     <div class="rt">&rarr;</div>
   </a>
 </section>
-
-
 
 <script>
     function updateSimulation() {
@@ -400,7 +363,6 @@
         document.getElementById('svg-line').setAttribute('d', pathD);
         document.getElementById('svg-area').setAttribute('d', areaD);
     }
-
 
     
     function layoutSidenotes() {

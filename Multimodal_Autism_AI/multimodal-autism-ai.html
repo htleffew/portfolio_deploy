@@ -4,23 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Multimodal AI for Autism Assessment | Dr. Heather Leffew</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../design_system/assets/css/institutional.css">
 <style>
 /* ============================================================
    COMPONENT-SPECIFIC STYLES
    ============================================================ */
-.toggle-container {
-    display: flex; align-items: center; gap: 14px; margin-top: 36px;
-    font-family: var(--mono); font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--tungsten);
-}
-.switch { position: relative; display: inline-block; width: 44px; height: 22px; }
-.switch input { opacity: 0; width: 0; height: 0; }
-.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255,255,255,0.1); transition: .4s; border-radius: 22px; border: 1px solid rgba(255,255,255,0.2); }
-.slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 4px; bottom: 3px; background-color: var(--sapphire); transition: .4s; border-radius: 50%; }
-input:checked + .slider { background-color: rgba(77,140,255,0.15); border-color: var(--sapphire); }
-input:checked + .slider:before { transform: translateX(20px); }
-.view-active { color: var(--platinum); font-weight: 500; }
+
 
 /* Interactive Profile Explorer */
 .explorer { max-width: var(--col-wide); margin: 48px auto; padding: 0 32px; }
@@ -38,10 +27,81 @@ input:checked + .slider:before { transform: translateX(20px); }
 .profile-card .mval { font-family: var(--body); font-size: 16px; color: var(--ink); }
 .profile-card .mval.highlight { font-size: 24px; font-weight: 500; font-family: var(--display); color: var(--sapphire-deep); }
 @media(min-width: 768px) { .profile-card { grid-template-columns: repeat(2, 1fr); } .profile-card .full-width { grid-column: span 2; } }
+
+/* Bayesian Workbench (from ADOS merge) */
+.sandbox-layout {
+    max-width: var(--col-wide); margin: 48px auto; padding: 0 32px;
+    display: grid; grid-template-columns: 280px 1fr; gap: 32px;
+}
+.vars-panel {
+    background: rgba(255,255,255,0.04); border: 1px solid var(--paper-3);
+    padding: 24px; 
+}
+.panel-title {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--ink-3); margin-bottom: 20px;
+    padding-bottom: 12px; border-bottom: 1px solid var(--paper-3);
+}
+.slider-group { margin-bottom: 16px; }
+.slider-label {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-family: var(--mono); font-size: 11px; color: var(--ink-2); margin-bottom: 6px;
+}
+.slider-val { color: var(--sapphire); font-weight: 600; }
+.slider-group input[type="range"] {
+    width: 100%; -webkit-appearance: none; height: 4px;
+    background: var(--paper-3);  outline: none;
+}
+.slider-group input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 14px; height: 14px;
+    background: var(--sapphire);  cursor: pointer;
+}
+.output-panel { display: flex; flex-direction: column; gap: 24px; }
+.model-readouts { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.readout-box {
+    background: rgba(255,255,255,0.03); border: 1px solid var(--paper-3);
+    padding: 20px;  position: relative;
+}
+.r-title { font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 8px; }
+.r-val { font-family: var(--display); font-size: 2rem; font-weight: 600; color: var(--ink); }
+.r-desc { font-family: var(--body); font-size: 12px; color: var(--ink-3); margin-top: 8px; line-height: 1.5; }
+.visual-bar-container { width: 100%; height: 6px; background: var(--paper-3);  margin-top: 8px; overflow: hidden; }
+.visual-bar-fill { height: 100%; background: var(--sapphire);  transition: width 0.3s ease; }
+.late-fusion-box {
+    background: rgba(255,255,255,0.03); border: 1px solid var(--paper-3);
+    padding: 24px;  text-align: center;
+}
+.f-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 8px; }
+.f-val { font-family: var(--display); font-size: 2.5rem; font-weight: 700; color: var(--ink); }
+.confidence-indicator {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 4px 10px;  display: inline-block;
+    background: rgba(77,140,255,0.1); color: var(--sapphire); border: 1px solid rgba(77,140,255,0.2);
+}
+.confidence-indicator.high-risk {
+    background: rgba(122,22,38,0.15); color: #e05555; border-color: rgba(122,22,38,0.3);
+}
+.confidence-indicator.diverge {
+    background: rgba(219,168,68,0.15); color: #DBA844; border-color: rgba(219,168,68,0.3);
+}
+@media(max-width: 768px) {
+    .sandbox-layout { grid-template-columns: 1fr; }
+    .model-readouts { grid-template-columns: 1fr; }
+}
 </style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js" defer></script>
+<script src="../cinematic_engine_v3.js" defer></script>
 </head>
 
-<body>
+<body data-category="Clinical ML" data-title="Multimodal Autism AI">
 
 <!-- Reading progress -->
 <div id="progress"></div>
@@ -52,129 +112,63 @@ input:checked + .slider:before { transform: translateX(20px); }
 <!-- Chapter spine -->
 <aside id="spine"></aside>
 
+<!-- Atmospheric gradient -->
+<div class="atmosphere"></div>
+
 <!-- ============================================================
      FRONT MATTER
      ============================================================ -->
+<canvas id="deep-space"></canvas>
+<canvas id="glCanvas"></canvas>
+
 <section class="band band--dark front" data-spine="Front" data-section="Front matter">
   <div class="col-wide">
-    <div class="grid" style="display:grid; grid-template-columns:minmax(0,1fr) 320px; gap:80px; align-items:end;">
-     <div>
-      <div class="meta-row">
-        <span class="bracket">Working note</span>
-        <span class="sep">/</span>
-        <span>Clinical &amp; behavioral ML</span>
-        <span class="sep">/</span>
-        <span>Autism Assessment</span>
-        <span class="sep">/</span>
-        <span>10 min read</span>
-      </div>
-
-      <h1>Building an Ultra-Realistic Multimodal AI for Autism Assessment</h1>
-
-      <p class="abstract">
-        The diagnosis of Autism Spectrum Disorder (ASD) relies heavily on the Autism Diagnostic Observation Schedule, Second Edition (ADOS-2). This assessment is the clinical gold standard. It involves a trained clinician observing a child through a series of structured and semi-structured tasks to evaluate social interaction, communication, play, and repetitive behaviors. While highly effective, the ADOS-2 is time-intensive and inherently subjective.
-      </p>
-
-      <div class="toggle-container">
-          <span id="label-clinical" class="view-active">Clinical View</span>
-          <label class="switch">
-              <input type="checkbox" id="viewToggle">
-              <span class="slider"></span>
-          </label>
-          <span id="label-engineering">Engineering View</span>
-      </div>
-     </div>
-     <div></div>
+    <div class="meta-row">
+      <span class="bracket">Working note</span>
+      <span class="sep">/</span>
+      <span>Clinical &amp; behavioral ML</span>
+      <span class="sep">/</span>
+      <span>Autism Assessment</span>
+      <span class="sep">/</span>
+      <span>14 min read</span>
     </div>
-  </div>
+
+    <h1>Building an Ultra-Realistic Multimodal AI for Autism Assessment</h1>
+
+    <p class="abstract">
+      The diagnosis of Autism Spectrum Disorder (ASD) relies heavily on the Autism Diagnostic Observation Schedule, Second Edition (ADOS-2). This assessment is the clinical gold standard. It involves a trained clinician observing a child through a series of structured and semi-structured tasks to evaluate social interaction, communication, play, and repetitive behaviors. While highly effective, the ADOS-2 is time-intensive and inherently subjective. This case study documents how I built a late-fusion Bayesian ensemble pipeline that processes gaze-tracking, skeletal pose, and prosodic audio to generate ADOS-2-aligned risk scores, while mathematically preserving clinical doubt.
+    </p>
+
+    <div class="byline">
+      <div>
+        Subject
+        <strong>ADOS-2 Behavioral Telemetry</strong>
+      </div>
+      <div>
+        Architecture
+        <strong>Late Fusion Bayesian Ensemble</strong>
+      </div>
+      <div>
+        Output
+        <strong>Uncertainty-Quantified Risk Scores</strong>
+      </div>
+    </div>
 </section>
 
+
 <!-- ============================================================
-     1, DATA SIMULATION
+     ADOS MERGE: THE OVERLAP PROBLEM
      ============================================================ -->
-<section class="band band--paper" data-spine="Simulation" data-section="Data Philosophy">
-  <div class="eyebrow">01 / Data Philosophy</div>
-  <h2 class="is-chapter">The Philosophy of Ultra-Realistic Data Simulation</h2>
+<section class="band band--paper" data-spine="Overlap" data-section="The Overlap Problem">
+  <div class="eyebrow">01 / The Overlap Problem</div>
+  <h2 class="is-chapter">The Overlap Problem</h2>
+    <p class="has-dropcap">When technical teams look at behavioral telemetry through a purely statistical lens, they inevitably try to draw sharp lines to separate clinical profiles. But as a clinical psychologist, I had to demonstrate that human psychology doesn't work that way. <em>Gaze-to-face percentage</em> overlaps by nearly 78% between symptomatic and non-symptomatic groups. I routinely observe that a subject with high-functioning ASD and a typically-developing subject with social anxiety can produce nearly identical visual engagement metrics (Lord et al., 2000).</p>
 
-  <p class="has-dropcap col-main">
-    A common pitfall in clinical machine learning is training models on idealized, perfectly separated datasets. When these models are deployed in the real world, they fail because real clinical data is noisy, incomplete, and highly ambiguous.
-  </p>
+    <span class="sidenote">Any pipeline that claims an AUC of &gt; 0.95 on single behavioral features is likely overfitting the distribution rather than finding genuine clinical signal. The underlying human data is simply not that separable.</span>
 
-  <div class="figure reveal">
-    <div class="frame" style="padding:0; border:1px solid var(--paper-3); border-radius:4px; overflow:hidden;">
-        <img src="point_cloud.png" alt="Split-screen showing real clinical room vs glowing 3D point cloud" style="width:100%; display:block; height:auto;">
-    </div>
-    <div class="cap"><span class="num">FIG. 01</span> Left: Simulated clinical observation room. Right: Equivalent representation in 3D skeletal and gaze-tracking feature space.</div>
-  </div>
+    <p>If we simply dump this tabular array into a single Random Forest or XGBoost model, it will draw artificial decision boundaries through highly ambiguous terrain (Vapnik, 1995). It will force a classification, frequently reporting high artificial confidence on mixed, contradictory human signals. This is the danger of letting data scientists chase a high AUC without clinical context: the model learns to confidently guess rather than admit confusion.</p>
 
-  <p class="col-main">
-    To ensure the models learn robust decision boundaries rather than memorizing artifacts, this framework employs an "Ultra-Realistic" data simulation pipeline. The system generates a synthetic dataset of 1,200 profiles (with a 22 percent ASD prevalence) engineered with maximum clinical variability.
-  </p>
-
-  <div class="method">
-    <div class="inner">
-      <div class="lab">Enforcing Realism</div>
-      We enforce realism through four specific constraints:
-      <ul style="margin-top: 10px; margin-left: 20px;">
-          <li><b>Clinical Overlap:</b> In textbook examples, ASD and neurotypical profiles look entirely distinct. In reality, there is massive overlap. The simulation enforces a 60 to 80 percent statistical overlap in behavioral features between the two groups. This mimics the ambiguity of borderline cases.</li>
-          <li><b>Measurement Noise:</b> Technical failures happen. Cameras get bumped, lighting changes, and background noise obscures audio. The pipeline injects a substantial 25 to 35 percent measurement error into all extracted features to simulate these real-world conditions.</li>
-          <li><b>Missingness:</b> Clinical records are rarely perfect. The system randomly drops 8 to 15 percent of the data. Downstream, the pipeline must handle this missingness using median and clinical-range imputation.</li>
-          <li><b>Challenging Subtypes:</b> To prevent the model from relying on easy classifications, 35 percent of the dataset consists of difficult profiles. This includes "masked ASD" (where individuals compensate to hide traits), "high-functioning ASD," and non-ASD "developmental delay" (which often mimics ASD behaviors).</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="table-container">
-    <table class="data-table">
-        <thead>
-            <tr>
-                <th>Simulation Parameter</th>
-                <th>Target Value / Range</th>
-                <th>Clinical Rationale</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td>Total Profiles</td><td>1,200</td><td>Ensures statistical significance for model training.</td></tr>
-            <tr><td>ASD Prevalence</td><td>22%</td><td>Reflects specialized clinical referral rates.</td></tr>
-            <tr><td>Group Overlap</td><td>60% - 80%</td><td>Simulates borderline and ambiguous behavioral presentations.</td></tr>
-            <tr><td>Measurement Noise</td><td>25% - 35%</td><td>Accounts for sensor errors, poor lighting, and background audio.</td></tr>
-            <tr><td>Missing Data</td><td>8% - 15%</td><td>Mimics occluded camera angles or dropped audio frames.</td></tr>
-            <tr><td>Challenging Subtypes</td><td>35%</td><td>Prevents overfitting to textbook, easily separable cases.</td></tr>
-        </tbody>
-    </table>
-  </div>
-
-  <div class="code-container">
-      <div class="code-block">
-# Python implementation of the Ultra-Realistic Data Simulation
-import numpy as np
-from sklearn.datasets import make_classification
-
-def generate_clinical_data(n_samples=1200, prevalence=0.22, noise_level=0.30, missing_rate=0.10):
-    # Generate base overlapping data
-    X, y = make_classification(
-        n_samples=n_samples,
-        n_features=10,
-        n_informative=6,
-        n_redundant=2,
-        weights=[1 - prevalence, prevalence],
-        flip_y=0.15, # Introduces clinical overlap/ambiguity
-        class_sep=0.4  # Low separation enforces 60-80% overlap
-    )
-    
-    # Inject Measurement Noise
-    noise = np.random.normal(0, noise_level, X.shape)
-    X_noisy = X + noise
-    
-    # Inject Missingness
-    mask = np.random.rand(*X_noisy.shape) < missing_rate
-    X_noisy[mask] = np.nan
-    
-    return X_noisy, y
-
-X_simulated, y_simulated = generate_clinical_data()
-      </div>
-  </div>
+    <p>I had to work with the ML engineers to build an architecture that mathematically learned how to hesitate. When human metrics misalign (when a subject exhibits excellent visual engagement, but severe repetitive behavior constraints), the algorithm cannot quietly average these traits and confidently guess "Low Risk." It must systematically flag the internal variance directly to the clinician.</p>
 </section>
 
 <!-- ============================================================
@@ -184,7 +178,7 @@ X_simulated, y_simulated = generate_clinical_data()
   <div class="eyebrow">02 / Feature Extraction</div>
   <h2>Feature Extraction and ADOS-2 Mapping</h2>
 
-  <p class="col-main">
+  <p>
     The system processes simulated video and audio streams to extract 10 core behavioral features. These features are not arbitrary. They are specifically chosen to map directly to the standard ADOS-2 scoring domains, where a score of 0 indicates typical behavior, 1 indicates mild concern, and 2 indicates clear evidence of atypical behavior.
   </p>
 
@@ -238,7 +232,7 @@ X_simulated, y_simulated = generate_clinical_data()
       <div class="cap"><span class="num">FIG. 02</span> Hierarchical extraction tree mapping multimodal data streams to specific ADOS-2 behavioral domains.</div>
   </div>
 
-  <ul class="bullets col-main" style="margin-top: 24px;">
+  <ul class="bullets" style="margin-top: 24px;">
       <li><strong>Social Communication (Domain A)</strong>: Eye Contact (A1) measured via <span class="gloss">MediaPipe<span class="gloss-tip"><b>MediaPipe</b>, Google's open-source library for on-device pose, face mesh, and gaze estimation.</span></span>, Facial Expressions (A2), Response to Name (A4), Joint Attention (A7).</li>
       <li><strong>Communication (Domain B)</strong>: Vocalizations (B1) and Repetitive Language (B2) mapped via <span class="gloss">Whisper<span class="gloss-tip"><b>Whisper</b>, OpenAI's open-weights speech recognition model used to extract prosodic features and phrase repetitions.</span></span> models.</li>
       <li><strong>Play and Repetitive Behaviors (Domains C and D)</strong>: Functional Play (C1), Hand Mannerisms (D1), and Sensory Interests (D4) mapped via skeletal and gaze tracking.</li>
@@ -266,7 +260,6 @@ X_simulated, y_simulated = generate_clinical_data()
             <tr><td>Pose Estimation</td><td>Domain D</td><td>Sensory Interests (D4)</td><td>Duration (seconds)</td></tr>
         </tbody>
     </table>
-  </div>
 </section>
 
 <!-- ============================================================
@@ -276,7 +269,7 @@ X_simulated, y_simulated = generate_clinical_data()
   <div class="eyebrow">03 / ML Architecture</div>
   <h2>The Machine Learning Architecture</h2>
 
-  <p class="col-main">
+  <p>
     Once the features are extracted and imputed, they are passed into a machine learning pipeline. The framework evaluates four distinct modeling strategies, utilizing conservative hyperparameters (like shallow decision trees and strong L1/L2 regularization) to prevent overfitting on the noisy data.
   </p>
 
@@ -318,21 +311,47 @@ meta_learner = LogisticRegression()
 meta_learner.fit(X_meta, y_simulated)
 consensus_prediction = meta_learner.predict_proba(X_meta)[:, 1]
       </div>
-  </div>
+</section>
+
+
+<!-- ============================================================
+     ADOS MERGE: LATE FUSION ARCHITECTURE
+     ============================================================ -->
+<section class="band band--dark" data-spine="Late Fusion" data-section="Late Fusion Architecture">
+  <div class="eyebrow">04 / Late Fusion</div>
+  <h2>Late Fusion Architecture</h2>
+    <p>To capture this necessary hesitation, the architecture employs a Late Fusion Bayesian Ensemble approach. Rather than dumping all fifty behavioral telemetry markers into a single opaque gradient booster, the features are strictly segregated into domain-specific sub-models.</p>
+
+    <div class="table-container">
+    <table class="data-table">
+      <thead>
+        <tr><th>Domain</th><th>Features Tracked</th><th>Algorithm</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Social Affect</td><td>Gaze %, Mutual Episodes, Joint Attention</td><td>Random Forest (Max Depth: 6)</td></tr>
+        <tr><td>Communication</td><td>Phrase Repetition, Vocalization Rate</td><td>XGBoost (L1 Regularization)</td></tr>
+        <tr><td>Restricted Behavior</td><td>Functional Play %, Hand Mannerisms</td><td>Logistic Regression (C=0.3)</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Each sub-model operates independently, forced to render a localized probability based solely on its designated behavioral sphere. They are deliberately deprived of cross-domain context. It is only at the terminal node, the Meta-Learner, that these probabilities converge. The Meta-Learner calculates the arithmetic mean for the overall risk score, but critically, it computes the <em>Standard Deviation</em> across the sub-model predictions.</p>
+
+    <p>This variance becomes the <strong>System Clinical Confidence</strong>. If the Social model predicts 80% risk, but the Communication model predicts 10% risk, the mean is 45%. A standard network would quietly report "Moderate Risk, 45%". Our pipeline reports "45% Risk &plusmn; 0.35 Variance : LOW CONFIDENCE - MODELS DIVERGE." Thus, mathematical doubt is preserved and surfaced directly to the reviewing clinician.</p>
 </section>
 
 <!-- ============================================================
      4, EVALUATION
      ============================================================ -->
-<section class="band band--dark" data-spine="Evaluation" data-section="Results & Overfitting">
-  <div class="eyebrow">04 / Evaluation</div>
+<section class="band band--paper" data-spine="Evaluation" data-section="Results & Overfitting">
+  <div class="eyebrow">05 / Evaluation</div>
   <h2>Interpreting the Results and Overfitting Warnings</h2>
 
-  <p class="col-main">
+  <p>
     When evaluating the models, Supervised Logistic Regression achieved the highest overall performance with an Area Under the Curve (AUC) of 0.974 and a Recall of 0.950.
   </p>
 
-  <p class="col-main">
+  <p>
     In many machine learning domains, an AUC of 0.974 is cause for celebration. In clinical AI, it is a red flag. The system includes an automated realism validation module that flags any AUC over 0.95 as "suspiciously high." Even with the injected noise and 80 percent group overlap, the model performed too well. This automated warning suggests that the engineering team needs to inject further noise or apply dimensionality reduction to ensure the model will truly generalize to unseen, real-world clinical environments.
   </p>
 
@@ -384,7 +403,7 @@ consensus_prediction = meta_learner.predict_proba(X_meta)[:, 1]
     </table>
   </div>
 
-  <p class="col-main">
+  <p>
     In terms of feature importance, Phrase Repetition Rate emerged as the most predictive feature (Importance Score: 0.514), followed by Hand Flapping Duration. This aligns perfectly with recent peer-reviewed literature, which confirms that machine learning algorithms trained on natural prosodic features and speech rhythms are highly sensitive biomarkers for ASD across multiple languages.
   </p>
 
@@ -413,17 +432,16 @@ consensus_prediction = meta_learner.predict_proba(X_meta)[:, 1]
           </svg>
       </div>
       <div class="cap"><span class="num">FIG. 04</span> Random Forest feature importance scores validating prosodic rhythm as the primary split vector.</div>
-  </div>
 </section>
 
 <!-- ============================================================
      5, CLINICAL PRACTICE (Interactive)
      ============================================================ -->
-<section class="band band--paper" data-spine="Practice" data-section="Clinical Practice">
-  <div class="eyebrow">05 / Clinical Practice</div>
+<section class="band band--dark" data-spine="Practice" data-section="Clinical Practice">
+  <div class="eyebrow">06 / Clinical Practice</div>
   <h2>Bridging the Gap to Clinical Practice</h2>
 
-  <p class="col-main">
+  <p>
     Raw probabilities and AUC scores are useful for engineers, but they are not helpful for a clinician sitting with a patient. The final step of the framework is translating these mathematical outputs into automated, HTML-based clinical reports. The system generates a consensus probability, calculates the ADOS-2 algorithm score, and provides a risk stratification alongside actionable recommendations.
   </p>
 
@@ -460,21 +478,99 @@ consensus_prediction = meta_learner.predict_proba(X_meta)[:, 1]
               <span class="mval" id="cardRec">Routine screening</span>
           </div>
       </div>
+</section>
+
+
+<!-- ============================================================
+     ADOS MERGE: INTERACTIVE BAYESIAN WORKBENCH
+     ============================================================ -->
+<section class="band band--paper" data-spine="Workbench" data-section="Interactive Bayesian Workbench">
+  <div class="eyebrow">07 / The Workbench</div>
+  <h2>Simulating the Divergence</h2>
+    <p>To fully grasp this mechanism, we will simulate the Late Fusion process directly in the DOM. Manipulate the behavioral telemetry sliders below. When features are in strict alignment (e.g., low gaze, low joint attention, high phrase repetition), the ensemble reaches high consensus and low uncertainty. <strong>However, if you input conflicting signals (e.g., high gaze but high phrase repetition), watch how the sub-models branch apart, forcing the system's Uncertainty metric to spike.</strong></p>
   </div>
+
+  <!-- INTERACTIVE MODULE -->
+  <div class="sandbox-layout">
+    <div class="vars-panel">
+      <div class="panel-title">Behavioral Telemetry</div>
+
+      <div class="slider-group">
+        <div class="slider-label"><span>Gaze-to-Face %</span> <span class="slider-val" id="val-gaze">75</span></div>
+        <input type="range" id="rng-gaze" min="10" max="100" value="75" oninput="updateEnsemble()">
+      </div>
+
+      <div class="slider-group">
+        <div class="slider-label"><span>Joint Attention Bids</span> <span class="slider-val" id="val-att">12</span></div>
+        <input type="range" id="rng-att" min="0" max="25" value="12" step="1" oninput="updateEnsemble()">
+      </div>
+
+      <div class="slider-group" style="margin-top:1rem;">
+        <div class="slider-label"><span>Phrase Repetition %</span> <span class="slider-val" id="val-rep">2</span></div>
+        <input type="range" id="rng-rep" min="0" max="20" value="2" oninput="updateEnsemble()">
+      </div>
+
+      <div class="slider-group">
+        <div class="slider-label"><span>Functional Play %</span> <span class="slider-val" id="val-play">90</span></div>
+        <input type="range" id="rng-play" min="10" max="100" value="90" oninput="updateEnsemble()">
+      </div>
+
+      <div style="font-family:var(--mono); font-size:0.65rem; color:var(--ink-3); line-height:1.5; margin-top:1rem; padding-top:1rem; border-top:1px dashed var(--paper-3);">
+        <strong>Test:</strong> Lower Gaze but keep Functional Play High. Watch Model 1 diverge from Model 2.
+      </div>
+    </div>
+
+    <div class="output-panel">
+      <div class="model-readouts">
+        <div class="readout-box">
+          <div class="confidence-indicator" id="ind-social">Model 1</div>
+          <div class="r-title">Social Domain Model (Random Forest)</div>
+          <div class="r-val" id="out-soc">18.4%</div>
+          <div class="visual-bar-container"><div class="visual-bar-fill" id="bar-soc" style="width:18.4%;"></div></div>
+          <div class="r-desc">Evaluates Gaze-to-Face and Joint Attention. Heavy emphasis on visual orientation.</div>
+        </div>
+
+        <div class="readout-box">
+          <div class="confidence-indicator" id="ind-comm">Model 2</div>
+          <div class="r-title">Communication &amp; Repetitive Model (XGBoost)</div>
+          <div class="r-val" id="out-comm">12.1%</div>
+          <div class="visual-bar-container"><div class="visual-bar-fill" id="bar-comm" style="width:12.1%;"></div></div>
+          <div class="r-desc">Evaluates Phrase Repetition and Functional Play. Heavy L1 Regularization.</div>
+        </div>
+      </div>
+
+      <div class="late-fusion-box">
+        <div class="f-label">Late Fusion Risk Probability</div>
+        <div class="f-val" id="out-score">15.2%</div>
+
+        <div style="margin-top:1.5rem; padding-top:1rem; border-top:1px dashed var(--paper-3); display:flex; justify-content:space-around; text-align:left;">
+          <div>
+            <div style="font-family:var(--mono); font-size:0.65rem; color:var(--ink-3); text-transform:uppercase;">Calculated Std Deviation</div>
+            <div id="out-var" style="font-family:var(--display); font-weight:600; font-size:1.5rem; color:var(--ink);">&plusmn; 0.04</div>
+          </div>
+          <div>
+            <div style="font-family:var(--mono); font-size:0.65rem; color:var(--ink-3); text-transform:uppercase;">System Clinical Confidence</div>
+            <div id="out-conf" class="confidence-indicator" style="position:relative; top:0; right:0; margin-top:8px; display:inline-block;">HIGH CONSENSUS</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- END INTERACTIVE MODULE -->
 </section>
 
 <!-- ============================================================
      6, FUTURE DIRECTIONS
      ============================================================ -->
 <section class="band band--dark" data-spine="Future" data-section="Future Directions">
-  <div class="eyebrow">06 / Future Directions</div>
+  <div class="eyebrow">08 / Future Directions</div>
   <h2>Future Directions</h2>
 
-  <p class="col-main">
+  <p>
     This framework successfully bridges the gap between raw machine learning metrics and clinical utility. By translating feature arrays into interpretable ADOS-2 scores and quantifying uncertainty, it provides a template for safe AI deployment in healthcare.
   </p>
 
-  <p class="col-main">
+  <p>
     However, the current implementation has limitations. Most notably, it lacks temporal sequence analysis. Currently, the system counts the total number of social smiles or the average response latency. In reality, the exact timing of a behavior matters deeply. A smile that occurs randomly is clinically different from a smile that occurs exactly one second after a clinician initiates a joint attention bid.
   </p>
 
@@ -509,23 +605,42 @@ consensus_prediction = meta_learner.predict_proba(X_meta)[:, 1]
       <div class="cap"><span class="num">FIG. 05</span> Temporal sequencing graph. Simple aggregate counts fail to capture the critical clinical latency between a clinician's bid and a child's response.</div>
   </div>
 
-  <p class="col-main">
+  <p>
     Machine learning will not replace the nuanced judgment of a trained clinician. But by automating the tedious extraction of behavioral markers and providing a mathematically rigorous second opinion, multimodal AI can make gold-standard autism assessments more accessible, objective, and efficient.
   </p>
+</section>
+
+
+<!-- ============================================================
+     ADOS MERGE: IMPLEMENTATIONAL IMPLICATIONS
+     ============================================================ -->
+<section class="band band--paper" data-spine="Implications" data-section="Implementational Implications">
+  <div class="eyebrow">09 / Implications</div>
+  <h2>Implementational Implications</h2>
+    <p>Applying this variance threshold systematically across the 400-patient synthetic scale immediately alters how downstream text generation should be handled. When the standard deviation exceeds 0.25 (as demonstrated in the workbench when inputs drastically conflict), the system's final HTML narrative reporting should dynamically shift tone.</p>
+
+    <p>Phrases like "The telemetry suggests an elevated 72% likelihood" must be programmatically replaced with "The telemetry presents conflicting vectors; the 72% mean score carries high model variance, suggesting a mixed behavioral presentation that requires manual clinical review."</p>
+
+    <p>This is the fundamental constraint of building predictive architecture for human psychology. Engineering a model to achieve 0.89 AUC on isolated cross-validation folds is mathematically straightforward. Engineering a model that knows when to gracefully admit confusion, and how to communicate that confusion directly to a healthcare provider, is the strict requirement for production deployment.</p>
 </section>
 
 <!-- ============================================================
      BACK MATTER & GLOBAL CHROME SCRIPTS
      ============================================================ -->
-<section class="band band--dark back-matter" data-spine="Research Graph" data-section="Research Graph">
-  <div class="back-matter" style="padding-top:0;">
-    <h3 style="margin-bottom:22px;">Related Works</h3>
+<section class="band band--dark back-matter" data-spine="Back" data-section="Back matter">
+  <h3 style="margin-top:0;">Bibliography</h3>
+  <ol class="biblio">
+    <li><span class="n">[1]</span><span class="ent">Lord, C., Risi, S., Lambrecht, L., Cook, E. H., Leventhal, B. L., DiLavore, P. C., ... &amp; Rutter, M. (2000). The autism diagnostic observation schedule-generic: a standard measure of social and communication deficits associated with the spectrum of autism. <i>Journal of autism and developmental disorders</i>, 30(3), 205-223.</span></li>
+    <li><span class="n">[2]</span><span class="ent">Vapnik, V. N. (1995). <i>The nature of statistical learning theory</i>. Springer.</span></li>
+    <li><span class="n">[3]</span><span class="ent">Lord, C., Rutter, M., DiLavore, P. C., Risi, S., Gotham, K., &amp; Bishop, S. (2012). <i>Autism Diagnostic Observation Schedule, Second Edition (ADOS-2)</i>. Western Psychological Services.</span></li>
+  </ol>
+
+    <h3>Related Cases</h3>
     <div class="related">
       <div class="related-grid" id="recommendation-grid">
         <!-- Populated by JS -->
       </div>
     </div>
-  </div>
 
   <a class="next-chap" id="next-chap-link" href="#">
     <div class="lf">
@@ -536,26 +651,108 @@ consensus_prediction = meta_learner.predict_proba(X_meta)[:, 1]
   </a>
 </section>
 
-<!-- Link to global JS for navigation and recommendations -->
+
+
+<!-- Global Chrome Injector -->
 <script src="../design_system/js/global_chrome.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // Engineering Toggle Logic
-        const viewToggle = document.getElementById('viewToggle');
-        const labelClinical = document.getElementById('label-clinical');
-        const labelEngineering = document.getElementById('label-engineering');
 
-        viewToggle.addEventListener('change', (e) => {
-            if(e.target.checked) {
-                document.body.classList.add('show-engineering');
-                labelEngineering.classList.add('view-active');
-                labelClinical.classList.remove('view-active');
-            } else {
-                document.body.classList.remove('show-engineering');
-                labelClinical.classList.add('view-active');
-                labelEngineering.classList.remove('view-active');
-            }
-        });
+    // ================================================================
+    // Bayesian Workbench: updateEnsemble() - FULLY IMPLEMENTED
+    // Simulates a Late Fusion Bayesian Ensemble with two domain-specific
+    // sub-models, computing risk probability, std deviation, and
+    // clinical confidence from four behavioral telemetry sliders.
+    // ================================================================
+    function updateEnsemble() {
+        // Read slider values
+        const gaze = parseFloat(document.getElementById('rng-gaze').value);
+        const att  = parseFloat(document.getElementById('rng-att').value);
+        const rep  = parseFloat(document.getElementById('rng-rep').value);
+        const play = parseFloat(document.getElementById('rng-play').value);
+
+        // Update displayed values
+        document.getElementById('val-gaze').textContent = gaze;
+        document.getElementById('val-att').textContent = att;
+        document.getElementById('val-rep').textContent = rep;
+        document.getElementById('val-play').textContent = play;
+
+        // --- Model 1: Social Domain (Random Forest proxy) ---
+        // High gaze + high joint attention = LOW risk
+        // Normalize: gaze 10-100 -> 0-1, att 0-25 -> 0-1
+        const gazeNorm = (gaze - 10) / 90;
+        const attNorm  = att / 25;
+        // Social risk: inverse of social engagement quality
+        const socialRisk = Math.max(0, Math.min(100,
+            (1 - (gazeNorm * 0.6 + attNorm * 0.4)) * 100
+        ));
+
+        // --- Model 2: Communication & Repetitive (XGBoost proxy) ---
+        // High repetition + low functional play = HIGH risk
+        // Normalize: rep 0-20 -> 0-1, play 10-100 -> 0-1
+        const repNorm  = rep / 20;
+        const playNorm = (play - 10) / 90;
+        // Comm risk: repetition drives risk up, functional play drives it down
+        const commRisk = Math.max(0, Math.min(100,
+            (repNorm * 0.55 + (1 - playNorm) * 0.45) * 100
+        ));
+
+        // --- Late Fusion Meta-Learner ---
+        const fusionScore = (socialRisk + commRisk) / 2;
+
+        // --- Standard Deviation (uncertainty metric) ---
+        const stdDev = Math.abs(socialRisk - commRisk) / 200;
+        // Scale: 0 = perfect agreement, 0.5 = maximum divergence
+
+        // --- Confidence classification ---
+        let confLabel, confClass;
+        if (stdDev < 0.10) {
+            confLabel = 'HIGH CONSENSUS';
+            confClass = '';
+        } else if (stdDev < 0.25) {
+            confLabel = 'MODERATE VARIANCE';
+            confClass = 'diverge';
+        } else {
+            confLabel = 'MODELS DIVERGE - LOW CONFIDENCE';
+            confClass = 'high-risk';
+        }
+
+        // --- Update DOM ---
+        document.getElementById('out-soc').textContent  = socialRisk.toFixed(1) + '%';
+        document.getElementById('out-comm').textContent  = commRisk.toFixed(1) + '%';
+        document.getElementById('out-score').textContent = fusionScore.toFixed(1) + '%';
+        document.getElementById('out-var').innerHTML     = '&plusmn; ' + stdDev.toFixed(2);
+
+        // Update confidence indicator
+        const confEl = document.getElementById('out-conf');
+        confEl.textContent = confLabel;
+        confEl.className = 'confidence-indicator' + (confClass ? ' ' + confClass : '');
+
+        // Update visual bars
+        document.getElementById('bar-soc').style.width  = socialRisk.toFixed(1) + '%';
+        document.getElementById('bar-comm').style.width  = commRisk.toFixed(1) + '%';
+
+        // Update model indicator badges
+        const indSoc = document.getElementById('ind-social');
+        const indComm = document.getElementById('ind-comm');
+        if (socialRisk > 50) {
+            indSoc.className = 'confidence-indicator high-risk';
+        } else if (socialRisk > 30) {
+            indSoc.className = 'confidence-indicator diverge';
+        } else {
+            indSoc.className = 'confidence-indicator';
+        }
+        if (commRisk > 50) {
+            indComm.className = 'confidence-indicator high-risk';
+        } else if (commRisk > 30) {
+            indComm.className = 'confidence-indicator diverge';
+        } else {
+            indComm.className = 'confidence-indicator';
+        }
+    }
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+
 
         // Profile Explorer Logic
         const patientData = {
@@ -622,7 +819,7 @@ consensus_prediction = meta_learner.predict_proba(X_meta)[:, 1]
                 const row = document.createElement('div');
                 row.className = 'row';
                 if(i===0) row.classList.add('is-active');
-                row.innerHTML = `<span class="num">0${i+1}</span><div class="tick"></div><span class="label">${label}</span>`;
+                row.innerHTML = `<span class="num">${String(i+1).padStart(2,"0")}</span><div class="tick"></div><span class="label">${label}</span>`;
                 row.addEventListener('click', () => sec.scrollIntoView({behavior:'smooth'}));
                 spine.appendChild(row);
                 
@@ -650,6 +847,9 @@ consensus_prediction = meta_learner.predict_proba(X_meta)[:, 1]
             });
         }
     });
+
+    // Initialize workbench with default values
+    document.addEventListener("DOMContentLoaded", function() { if(typeof updateEnsemble === "function") updateEnsemble(); });
 </script>
 </body>
 </html>
