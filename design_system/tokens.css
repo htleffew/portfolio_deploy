@@ -3,47 +3,31 @@
    Single source of truth for all design variables.
    
    IMPORT THIS FILE in any CSS that needs design tokens:
-     @import url('tokens.css');
+     @import "../tokens.css";
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@300;400;500;700&display=swap');
 
 :root {
-  /* ── NEUTRALS — "Mineral" scale (dark register) ── */
+  /* ── NEUTRALS — "Mineral" scale ── */
   --obsidian:  #030303; /* deepest background */
-  --charcoal:  #1A1A1A; /* card / panel surface — note: some legacy uses #161616 */
-  --graphite:  #222222; /* card borders, secondary surface */
+  --charcoal:  #1A1A1A; /* card / panel surface */
   --brushed:   #333333; /* hairline borders */
   --tungsten:  #A1A1A6; /* muted body / metadata */
   --platinum:  #F5F5F7; /* primary body text */
   --flare:     #FFFFFF; /* headlines, highlights */
 
-  /* ── NEUTRALS — Paper register (light-mode inversion) ── */
-  --paper:     #F5F5F7;
-  --paper-2:   #E9E9E9;
-  --paper-3:   #DDDDDD;
-  --ink:       #030303;
-  --ink-2:     #222222;
-  --ink-3:     #5E5E5A;
-
   /* ── ACCENT — chrome ── */
   --sapphire-deep: #0F52BA;  /* deep CTA / link rest */
   --sapphire:      #4D8CFF;  /* link hover, inline accents */
-  --ink-blue:      #1A3A6B;  /* paper-mode accent text */
 
-  /* ── CASE-STUDY DIAGRAM PALETTE — "Oil paint quartet" ──
-     Real pigment names. Glazed flavor (true to source, no lift),
-     except Hansa which is always lifted. Monochrome scales use
-     Phthalo Blue ONLY (--phthalo + --phthalo-lift) — it is the
-     only pigment in the set whose tint stages stay coherent.
-     Dioxazine is a reserve fifth, used only when the analysis
-     genuinely has five categories. */
+  /* ── CASE-STUDY DIAGRAM PALETTE — "Oil paint quartet" ── */
   --phthalo:       #0F3A6B;  /* Phthalo Blue — primary chart blue */
-  --phthalo-lift:  #3866A0;  /* Phthalo Blue, lifted — monochrome scale only */
+  --phthalo-lift:  #3866A0;  /* Phthalo Blue, lifted */
   --alizarin:      #7A1626;  /* Alizarin Crimson */
   --hookers:       #1A4A38;  /* Hooker's Green */
-  --hansa:         #DBA844;  /* Hansa Yellow Light — always the lifted value */
-  --dioxazine:     #3D1F4A;  /* Dioxazine Purple — reserve fifth color */
+  --hansa:         #DBA844;  /* Hansa Yellow Light */
+  --dioxazine:     #3D1F4A;  /* Dioxazine Purple */
 
   /* ── SEMANTIC COLOR ROLES ── */
   --bg:           var(--obsidian);
@@ -57,15 +41,14 @@
   --link-hover:   var(--flare);
   --accent:       var(--sapphire);
 
-  /* ── TYPE FAMILIES (canonical names) ── */
-  --font-display: 'Playfair Display', 'Times New Roman', serif;
-  --font-body:    'Lora', Georgia, 'Times New Roman', serif;
-  --font-mono:    'JetBrains Mono', 'SF Mono', Menlo, monospace;
+  /* ── LAYOUT COLUMNS ── */
+  --col:      860px;
+  --col-wide: 1200px;
 
-  /* ── TYPE FAMILIES (backward-compatible short aliases) ── */
-  --display: var(--font-display);
-  --body:    var(--font-body);
-  --mono:    var(--font-mono);
+  /* ── TYPE FAMILIES ── */
+  --font-display: 'Playfair Display', 'Times New Roman', serif;   /* editorial headlines */
+  --font-body:    'Lora', Georgia, 'Times New Roman', serif;       /* reading prose */
+  --font-mono:    'JetBrains Mono', 'SF Mono', Menlo, monospace;   /* eyebrows, labels, data */
 
   /* ── TYPE SCALE ── */
   --fs-caption:   10px;
@@ -101,10 +84,6 @@
   --space-9:  60px;
   --space-section: 120px;
 
-  /* ── LAYOUT COLUMNS ── */
-  --col:      840px;
-  --col-wide: 1100px;
-
   /* ── RADII ── */
   --radius-sm:   4px;
   --radius-md:   8px;
@@ -121,19 +100,127 @@
   --shadow-card:  0 8px 32px rgba(0,0,0,0.30);
   --shadow-glow:  0 0 20px 0 rgba(77,140,255,0.06);
 
-  /* ── MOTION (canonical names) ── */
+  /* ── MOTION ── */
   --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
   --dur-fast: 0.30s;
   --dur-base: 0.40s;
   --dur-slow: 0.60s;
   --dur-marquee: 90s;
-
-  /* ── MOTION (backward-compatible short aliases) ── */
-  --ease-std: var(--ease-standard);
-  --ease-out: var(--ease-out-soft);
 }
 
 /* ── GLOBAL RESET ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; border-radius: 0 !important; }
 ::selection { background: rgba(77,140,255,0.35); color: #fff; }
+
+/* ============================================================
+   SEMANTIC ELEMENT STYLES
+   Apply by adding classnames or using inside .ds-scope
+   ============================================================ */
+
+.ds-scope {
+  background: var(--bg);
+  color: var(--fg-2);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-lg);
+  line-height: var(--leading-reading);
+  -webkit-font-smoothing: antialiased;
+}
+
+.ds-h1, h1.ds {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-h1);
+  letter-spacing: var(--tracking-display);
+  line-height: var(--leading-tight);
+  color: var(--fg-1);
+}
+
+.ds-h2, h2.ds {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-h2);
+  line-height: var(--leading-tight);
+  color: var(--fg-1);
+}
+
+.ds-h3, h3.ds {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-h3);
+  line-height: var(--leading-snug);
+  color: var(--fg-1);
+}
+
+.ds-h4, h4.ds {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-h4);
+  line-height: var(--leading-snug);
+  color: var(--fg-1);
+}
+
+.ds-lede {
+  font-family: var(--font-body);
+  font-size: var(--fs-lede);
+  line-height: var(--leading-reading);
+  color: var(--fg-3);
+}
+
+.ds-p, p.ds {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-lg);
+  line-height: var(--leading-reading);
+  color: var(--fg-2);
+}
+
+.ds-eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: var(--tracking-caps-x);
+  text-transform: uppercase;
+  color: var(--fg-3);
+}
+
+.ds-eyebrow--accent { color: var(--accent); letter-spacing: var(--tracking-caps); }
+
+.ds-mono-label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--fg-3);
+}
+
+.ds-caption {
+  font-family: var(--font-mono);
+  font-size: var(--fs-caption);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--fg-3);
+}
+
+.ds-code, code.ds {
+  font-family: var(--font-mono);
+  font-size: var(--fs-body-sm);
+  color: var(--accent);
+  background: rgba(77,140,255,0.06);
+  padding: 0.15em 0.4em;
+  border-radius: var(--radius-sm);
+}
+
+.ds-link, a.ds {
+  color: var(--link);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color var(--dur-fast) var(--ease-standard),
+              border-color var(--dur-fast) var(--ease-standard);
+}
+.ds-link:hover { color: var(--link-hover); border-bottom-color: var(--link-hover); }
+
+.ds-rule {
+  height: 1px;
+  width: 64px;
+  background: var(--accent);
+  border: 0;
+}
