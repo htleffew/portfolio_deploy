@@ -589,7 +589,7 @@ table.data-table tr:last-child td { border-bottom:none; }
 /* Financial Data Table Style */
 .db-table { display: flex; flex-direction: column; }
 .db-row {
-  display: grid; grid-template-columns: 160px 1fr 40px; gap: 32px;
+  display: grid; grid-template-columns: 1fr 40px; gap: 32px;
   padding: 32px 0; border-bottom: 1px solid var(--graphite);
   text-decoration: none; color: inherit; align-items: start;
   transition: background 0.3s;
