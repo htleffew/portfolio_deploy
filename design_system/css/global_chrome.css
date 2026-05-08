@@ -4,6 +4,14 @@
    ============================================================ */
 @import url('../tokens.css');
 
+/* Global body — transparent to starfield, obsidian base */
+body {
+    background: var(--obsidian);
+    color: var(--platinum);
+    margin: 0;
+    padding: 0;
+}
+
 /* DEEP SPACE STARFIELD CANVAS (shared ambient background) */
 #deep-space {
     position: fixed;
@@ -14,6 +22,11 @@
     height: 100vh;
     opacity: 0;
 }
+
+/* BAND BACKGROUNDS — translucent so starfield shows through */
+.band { position: relative; padding: 80px 0; transition: background 0.9s cubic-bezier(0.4,0,0.2,1), color 0.9s cubic-bezier(0.4,0,0.2,1); }
+.band--dark { background: rgba(3,3,3,0.6); color: var(--platinum); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.band--paper { background: rgba(245,245,247,0.85); color: var(--ink); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
 
 /* TOP NAV */
 #topnav {
