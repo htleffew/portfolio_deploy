@@ -22,9 +22,9 @@ body {
 }
 
 .band { position:relative; padding:140px 0; transition:background 0.9s var(--ease-std), color 0.9s var(--ease-std); }
-.band--dark  { background:var(--obsidian); color:var(--platinum); }
-.band--paper { background:var(--platinum); color:var(--obsidian); }
-.band--ink   { background:var(--charcoal); color:var(--platinum); }
+.band--dark  { background:rgba(3,3,3,0.6); color:var(--platinum); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); }
+.band--paper { background:rgba(245,245,247,0.85); color:var(--obsidian); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); }
+.band--ink   { background:rgba(26,26,26,0.7); color:var(--platinum); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); }
 
 .band--dark + .band--paper, .band--paper + .band--dark, .band--ink + .band--paper, .band--paper + .band--ink {
   border-top:1px solid rgba(0,0,0,0.0);
