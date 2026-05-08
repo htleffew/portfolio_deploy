@@ -317,10 +317,11 @@ input[type=range]::-webkit-slider-runnable-track {
 /* ============================================================
    MASTER GRID: Centered, Balanced, Wide
    ============================================================ */
+:root { --grid-left: max(32px, calc(50vw - 540px)); }
+@media (min-width: 1360px) { :root { --grid-left: max(260px, calc(50vw - 540px)); } }
+
 section.band:not(.front) {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: block; /* Fallback for small screens */
 }
 section.band:not(.front) > * {
   width: 100%;
@@ -328,13 +329,31 @@ section.band:not(.front) > * {
   margin-left: auto;
   margin-right: auto;
 }
-section.band:not(.front) > .col-wide, 
-section.band:not(.front) > .stat-grid, 
-section.band:not(.front) > .figure, 
-section.band:not(.front) > .report-prose,
-section.band:not(.front) > .simulator-layout,
-section.band:not(.front) > .sandbox-layout {
-  max-width: var(--col-wide);
+
+@media (min-width: 1240px) {
+  section.band:not(.front) {
+    display: grid;
+    grid-template-columns: var(--grid-left) 680px 400px minmax(16px, 1fr);
+    align-items: start;
+  }
+  section.band:not(.front) > * {
+    grid-column: 2 / 3;
+    margin-left: 0 !important; margin-right: 0 !important;
+  }
+  section.band:not(.front) > .col-wide, 
+  section.band:not(.front) > .stat-grid, 
+  section.band:not(.front) > .figure, 
+  section.band:not(.front) > .report-prose,
+  section.band:not(.front) > .simulator-layout,
+  section.band:not(.front) > .sandbox-layout {
+    grid-column: 2 / 4;
+    width: 100%; max-width: none;
+  }
+}
+
+p, li, .abstract, .r-intro, .p-desc, .db-desc {
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 @media (min-width: 1180px) and (max-width: 1359px) {
