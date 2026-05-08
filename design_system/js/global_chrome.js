@@ -4,11 +4,9 @@
  */
 
 (function initGlobalChrome() {
-    // 0. Force Scroll to Top on Refresh
-    if ('scrollRestoration' in history) {
-        history.scrollRestoration = 'manual';
-    }
-    window.scrollTo(0, 0);
+    // 0. Scroll restoration is handled by Lenis + GSAP preloader sequence.
+    //    Do NOT force scrollTo(0,0) here — it fights with the cinematic
+    //    loading timeline and causes visible page jumps.
 
     // 1. Determine relative depth to root (portfolio_deploy/)
     const pathDepth = window.location.pathname.split('/').length - 2; // Rough heuristic
@@ -240,7 +238,7 @@
     // 8. 3D Tilt Parallax for Cards Globally
     if (window.innerWidth > 768) {
         const attachTilt = () => {
-            document.querySelectorAll('.p-card, .r-card, .edu-card, .bio-card, .db-row, .figure .frame').forEach(card => {
+            document.querySelectorAll('.p-card, .r-card, .edu-card, .bio-card').forEach(card => {
                 if(card.dataset.tiltBound) return;
                 card.dataset.tiltBound = "1";
                 card.addEventListener('mousemove', (e) => {
