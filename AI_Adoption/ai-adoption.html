@@ -7,9 +7,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../design_system/css/global_chrome.css">
 <link rel="stylesheet" href="../design_system/assets/css/institutional.css">
+<script src="../design_system/js/cinematic_engine_v3.js" defer></script>
 </head>
 
 <body data-category="Systems Dynamics" data-title="AI Productivity J-Curve">
+<canvas id="deep-space"></canvas>
+<script>window.addEventListener('load',()=>{const ds=document.getElementById('deep-space');if(ds&&typeof gsap!=='undefined'){gsap.to(ds,{opacity:1,duration:3.5,ease:'power2.inOut',delay:0.5})}else if(ds){ds.style.opacity='1'}});</script>
 
 <!-- Reading progress -->
 <div id="progress"></div>

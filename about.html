@@ -34,8 +34,11 @@
 .about-cta .links a:hover{color:var(--ink);border-bottom-color:var(--ink)}
 
 </style>
+<script src="design_system/js/cinematic_engine_v3.js" defer></script>
 </head>
 <body>
+<canvas id="deep-space"></canvas>
+<script>window.addEventListener('load',()=>{const ds=document.getElementById('deep-space');if(ds&&typeof gsap!=='undefined'){gsap.to(ds,{opacity:1,duration:3.5,ease:'power2.inOut',delay:0.5})}else if(ds){ds.style.opacity='1'}});</script>
 
 <header id="topnav">
   <a href="index.html" class="brand">Dr. Heather Leffew</a>
