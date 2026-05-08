@@ -4,12 +4,27 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Research & Engineering Library | Dr. Heather Leffew</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="design_system/assets/css/institutional.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js" defer></script>
 <script src="https://unpkg.com/split-type" defer></script>
+<style>
+  /* Initial hidden states — GSAP is sole reveal controller */
+  .front .meta-row span, .front h1, .front .abstract, .ambient,
+  #topnav, .scroll-cue { opacity: 0; }
+  #topnav { transform: translateY(-100%); }
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js" defer></script>
+<script src="cinematic_engine_v3.js" defer></script>
 </head>
 <body>
 <div id="preloader"><div id="preloader-left"></div><div id="preloader-right"></div><div id="preloader-line"></div></div>
@@ -17,35 +32,11 @@
 
 
 
+<canvas id="deep-space"></canvas>
+<canvas id="glCanvas"></canvas>
+
 <section class="band band--dark front" data-spine="Library" data-section="Library">
-  <div class="ambient" aria-hidden="true">
-    <svg viewBox="0 0 600 600" fill="none">
-      <defs>
-        <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#4D8CFF" stop-opacity="0.55"/>
-          <stop offset="100%" stop-color="#0F52BA" stop-opacity="0.0"/>
-        </linearGradient>
-      </defs>
-      <g stroke="url(#g1)" stroke-width="1" fill="none">
-        <circle cx="300" cy="300" r="80"/>
-        <circle cx="300" cy="300" r="140"/>
-        <circle cx="300" cy="300" r="200"/>
-        <circle cx="300" cy="300" r="260"/>
-      </g>
-      <line x1="60" y1="540" x2="540" y2="60" stroke="#4D8CFF" stroke-width="1" stroke-dasharray="2 6" opacity="0.8"/>
-      <g fill="#4D8CFF" opacity="0.7">
-        <circle cx="120" cy="490" r="2.5"/>
-        <circle cx="180" cy="430" r="2.5"/>
-        <circle cx="240" cy="380" r="2.5"/>
-        <circle cx="300" cy="310" r="2.5"/>
-        <circle cx="360" cy="260" r="2.5"/>
-        <circle cx="420" cy="210" r="2.5"/>
-        <circle cx="480" cy="140" r="2.5"/>
-      </g>
-      <circle cx="380" cy="380" r="3.5" fill="#7A1626" opacity="0.95"/>
-      <text x="400" y="386" font-family="JetBrains Mono" font-size="10" fill="#A1A1A6" letter-spacing="2">OUTLIER</text>
-    </svg>
-  </div>
+  
   <div class="col-wide">
     <div class="grid">
       <div>
@@ -110,7 +101,13 @@ window.addEventListener('load', () => {
 
       // ── Theatrical Opening Sequence ─────────────────────────────
       const tl = gsap.timeline({
-        onComplete: () => { initScrollTriggers(); }
+        onComplete: () => {
+          initScrollTriggers();
+          // Initialize library dashboard AFTER preloader completes
+          if (typeof window.initLibraryDashboard === 'function') {
+            window.initLibraryDashboard();
+          }
+        }
       });
 
       const preloader = document.getElementById('preloader');
@@ -130,8 +127,8 @@ window.addEventListener('load', () => {
       // Nav slides in during the curtain reveal
       tl.to('#topnav', { y: 0, duration: 1.4, ease: 'power3.out' }, "-=0.8");
 
-      // Ambient SVG halo
-      tl.to('.ambient', { opacity: 0.32, duration: 3.0, ease: 'power2.out' }, "-=1.2");
+      // Cinematic engine fade in
+      tl.to(['#deep-space', '#glCanvas'], { opacity: 1, duration: 3.5, ease: 'power2.inOut' }, "-=0.6");
 
       // Eyebrow meta row
       tl.to('.front .meta-row span', { opacity: 1, x: 0, duration: 1.0, stagger: 0.2, ease: 'power2.out' }, "-=2.2");
@@ -194,7 +191,7 @@ window.addEventListener('load', () => {
       // No GSAP — make everything visible immediately
       const preloader = document.getElementById('preloader');
       if (preloader) preloader.style.display = 'none';
-      document.querySelectorAll('.front .meta-row span, .front h1, .front .abstract, .front .ambient, .library-band .dashboard-layout, .library-band .dashboard-sidebar, .library-band .dashboard-main, #topnav').forEach(el => {
+      document.querySelectorAll('.front .meta-row span, .front h1, .front .abstract, #deep-space, #glCanvas, .library-band .dashboard-layout, .library-band .dashboard-sidebar, .library-band .dashboard-main, #topnav').forEach(el => {
         el.style.opacity = '1';
         el.style.transform = 'none';
         el.style.filter = 'none';

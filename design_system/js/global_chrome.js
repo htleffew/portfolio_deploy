@@ -261,7 +261,8 @@
             });
         };
         attachTilt();
-        setInterval(attachTilt, 1000);
+        const tiltObserver = new MutationObserver(attachTilt);
+        tiltObserver.observe(document.body, { childList: true, subtree: true });
     }
 
     // 9. Generative UI Audio Feedback

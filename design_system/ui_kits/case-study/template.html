@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{TITLE}} | Dr. Heather Leffew</title>
+    <!-- Design System: tokens load via @import inside institutional.css -->
+    <link rel="stylesheet" href="../design_system/assets/css/institutional.css">
+
+    <!-- Three.js cinematic engine (optional — include only if page has hero canvas) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js" defer></script>
+    <script src="../cinematic_engine_v3.js" defer></script>
+</head>
+
+<!--
+  TEMPLATE INSTRUCTIONS (for /html_translation workflow):
+  
+  1. Replace all {{PLACEHOLDER}} values with actual content.
+  2. body data-category: Used by breadcrumb nav and Related Works engine.
+  3. body data-title: Used by breadcrumb nav label.
+  4. Sections MUST alternate: band--dark → band--paper → band--dark (or band--ink).
+  5. Every <section> MUST have data-spine="" (spine label) and data-section="" (full label).
+  6. Standard components use institutional.css classes — do NOT add inline styles for:
+     - Typography (.has-dropcap, .eyebrow, .is-chapter, .col-with-sidenotes)
+     - Layout (.band, .band--dark, .band--paper, .band--ink, .col-wide)
+     - Figures (.figure, .frame, .cap, .cap .num)
+     - Tables (.data-table)
+     - Sidenotes (.sn, .sn-num, .sn-body)
+     - Reveals (.reveal)
+     - Bullets (.bullets)
+     - Methods (.method, .method .lab, .method .inner)
+  7. Only page-specific interactive widgets (sliders, live charts) may use inline <style>.
+  8. SVG diagrams MUST use token colors: var(--phthalo), var(--alizarin), var(--hookers),
+     var(--hansa), var(--dioxazine). Never hardcode hex values.
+  9. Register in projects_index.json after creation.
+-->
+
+<body data-category="{{CATEGORY}}" data-title="{{SHORT_TITLE}}">
+
+<!-- Reading progress -->
+<div id="progress"></div>
+
+<!-- Top nav (injected by global_chrome.js) -->
+<div id="global-nav-container"></div>
+
+<!-- Chapter spine (populated by institutional.js) -->
+<aside id="spine"></aside>
+
+<!-- Atmospheric gradient -->
+<div class="atmosphere"></div>
+
+<!-- ============================================================
+     FRONT MATTER (always band--dark)
+     ============================================================ -->
+<canvas id="deep-space"></canvas>
+<canvas id="glCanvas"></canvas>
+
+<section class="band band--dark front" data-spine="Front" data-section="Front matter">
+  <div class="col-wide">
+    <div class="grid">
+     <div>
+      <div class="meta-row">
+        <span class="bracket">{{FORMAT}}</span>
+        <span class="sep">/</span>
+        <span>{{CATEGORY}}</span>
+        <span class="sep">/</span>
+        <span>{{SUBCATEGORY}}</span>
+      </div>
+
+      <h1>{{HEADLINE}}</h1>
+
+      <p class="abstract">
+        {{ABSTRACT}}
+      </p>
+
+      <div class="byline">
+        <div>
+          Subject
+          <strong>{{SUBJECT}}</strong>
+        </div>
+        <div>
+          Architecture
+          <strong>{{ARCHITECTURE}}</strong>
+        </div>
+        <div>
+          Output
+          <strong>{{OUTPUT}}</strong>
+        </div>
+      </div>
+     </div>
+     <div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 01 (paper mode)
+     ============================================================ -->
+<section class="band band--paper" data-spine="{{SPINE_01}}" data-section="{{SECTION_01}}">
+  <div class="eyebrow reveal">01 / {{EYEBROW_01}}</div>
+  <h2 class="reveal is-chapter">{{HEADING_01}}</h2>
+
+  <p class="has-dropcap reveal col-with-sidenotes">
+    {{BODY_01}}
+  </p>
+</section>
+
+<!-- ============================================================
+     SECTION 02 (dark or ink mode)
+     ============================================================ -->
+<section class="band band--dark" data-spine="{{SPINE_02}}" data-section="{{SECTION_02}}">
+  <div class="eyebrow reveal">02 / {{EYEBROW_02}}</div>
+  <h2 class="reveal">{{HEADING_02}}</h2>
+
+  <p class="reveal">
+    {{BODY_02}}
+  </p>
+</section>
+
+<!-- ============================================================
+     ADD MORE SECTIONS AS NEEDED
+     Continue alternating band--paper / band--dark / band--ink
+     ============================================================ -->
+
+<!-- ============================================================
+     REFERENCES (always band--paper)
+     ============================================================ -->
+<section class="band band--paper" data-spine="References" data-section="References">
+  <div class="eyebrow">Bibliography</div>
+  <h2>References</h2>
+  <div class="report-prose">
+    <ul class="bib">
+      <!-- APA-format citations -->
+      <li>{{CITATION_01}}</li>
+      <li>{{CITATION_02}}</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================================================
+     BACK MATTER: Related Works & Next Chapter Link
+     (always band--dark)
+     ============================================================ -->
+<section class="band band--dark back-matter" data-spine="Research Graph" data-section="Research Graph">
+  <div class="back-matter" style="padding-top:0;">
+    <h3 style="margin-bottom:22px;">Related Works</h3>
+    <div class="related">
+      <div class="related-grid" id="recommendation-grid">
+        <!-- Populated by institutional.js from projects_index.json -->
+      </div>
+    </div>
+  </div>
+
+  <a class="next-chap" id="next-chap-link" href="#">
+    <div class="lf">
+      <div class="eb">Next Publication</div>
+      <div class="ti" id="next-chap-title">Loading...</div>
+    </div>
+    <div class="rt">&rarr;</div>
+  </a>
+</section>
+
+<!-- ============================================================
+     PAGE-SPECIFIC SCRIPTS
+     Place any interactive widget logic (sliders, simulators, etc.) here.
+     ============================================================ -->
+<script>
+  // {{PAGE_SCRIPTS}}
+</script>
+
+<!-- ============================================================
+     GLOBAL CHROME (must be last script)
+     Injects: nav, footer, search modal, grain overlay, film grain,
+     spine engine, sidenote layout, reading progress, Related Works
+     ============================================================ -->
+<script src="../design_system/assets/js/institutional.js"></script>
+<script src="../design_system/js/global_chrome.js"></script>
+</body>
+</html>

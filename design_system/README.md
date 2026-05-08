@@ -199,10 +199,20 @@ The site has **no icon font and almost no icons** — and that is the deliberate
 .
 ├─ README.md                    ← you are here
 ├─ SKILL.md                     ← cross-compatible Agent Skills definition
-├─ colors_and_type.css          ← all CSS vars: tokens + semantic styles
+├─ tokens.css                   ← SINGLE SOURCE OF TRUTH: all CSS vars, fonts, reset
+│                                  Every other CSS file @imports from here
+├─ colors_and_type.css          ← (legacy — superseded by tokens.css)
 ├─ assets/
+│   ├─ css/
+│   │   └─ institutional.css    ← component styles (@import url('../../tokens.css'))
+│   ├─ js/
+│   │   └─ institutional.js     ← spine, sidenotes, reveals, Related Works engine
 │   ├─ Heather_headshot_2.jpg
 │   └─ Heather-Leffew-PhD_Resume-042026.pdf
+├─ css/
+│   └─ global_chrome.css        ← app shell styles (@import url('../tokens.css'))
+├─ js/
+│   └─ global_chrome.js         ← runtime nav/footer/search/grain injector
 ├─ preview/                     ← design-system tab cards (Type, Colors, Spacing, Components, Brand)
 │   ├─ type-display.html
 │   ├─ type-body-mono.html
@@ -225,6 +235,8 @@ The site has **no icon font and almost no icons** — and that is the deliberate
 │   ├─ wordmark.html
 │   └─ icon-glyphs.html
 └─ ui_kits/
+    ├─ case-study/
+    │   └─ template.html            ← canonical HTML skeleton for new case studies
     └─ profile/
         ├─ README.md
         ├─ index.html               ← interactive recreation of the executive profile
@@ -239,7 +251,23 @@ The site has **no icon font and almost no icons** — and that is the deliberate
         └─ AmbientBackdrop.jsx
 ```
 
+### CSS Architecture
+
+```
+tokens.css (single source of truth — colors, fonts, spacing, motion)
+  ↑ @import                            ↑ @import
+  institutional.css                      global_chrome.css
+  (case study components)                (app shell chrome)
+```
+
+Every HTML page needs exactly ONE stylesheet link: `institutional.css`. Tokens cascade automatically through the `@import` chain. Google Fonts also load through `tokens.css` — no separate `<link>` tag required.
+
+### Adding a new case study
+
+The fastest path is to invoke `/html_translation` in Antigravity, which copies `template.html` and builds the full HTML artifact. For the manual process, see `portfolio_deploy/README.md`.
+
 ### Caveats / known substitutions
-- **Fonts** are loaded from Google Fonts (Playfair Display, Lora, JetBrains Mono) — same as the live site. **No font files are bundled** because the live site itself relies on Google Fonts. If an offline build is ever needed, host the WOFF2 files locally and update `colors_and_type.css`.
+- **Fonts** are loaded from Google Fonts (Playfair Display, Lora, JetBrains Mono) via `@import` in `tokens.css`. **No font files are bundled.** If an offline build is ever needed, host the WOFF2 files locally and update `tokens.css`.
 - **No icon set is bundled.** This is deliberate (see ICONOGRAPHY). If a future surface needs icons, Lucide is the recommended substitution and should be flagged.
 - **The WebGL ambient backdrop is implemented but optional.** Pages that don't include Three.js will fall back to a flat obsidian background, which the system explicitly supports.
+- **`colors_and_type.css` is legacy.** It has been superseded by `tokens.css` and is retained only for reference. Do not use it in new pages.

@@ -197,4 +197,15 @@ async function initLibrary() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', initLibrary);
+// Allow page-level script to call initLibraryDashboard() after preloader completes.
+// Fallback: if no page script calls it within 3s, self-init.
+window.__libraryInitCalled = false;
+window.initLibraryDashboard = function() {
+  if (!window.__libraryInitCalled) {
+    window.__libraryInitCalled = true;
+    initLibrary();
+  }
+};
+setTimeout(() => {
+  if (!window.__libraryInitCalled) window.initLibraryDashboard();
+}, 3000);

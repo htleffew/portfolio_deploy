@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dual-Model Account Prioritization | Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../design_system/assets/css/institutional.css">
     <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
     <style>
@@ -15,8 +14,7 @@
             padding: 32px;
             max-width: var(--col);
             margin: 40px auto;
-            border-radius: 0;
-            display: grid;
+                        display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 40px;
             align-items: center;
@@ -44,12 +42,25 @@
         .plotly-dual { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; }
         @media (max-width: 800px) { .plotly-dual { grid-template-columns: 1fr; } }
     </style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js" defer></script>
+<script src="../cinematic_engine_v3.js" defer></script>
 </head>
 <body data-category="Machine Learning" data-title="Dual-Model Account Prioritization">
 
 <div id="progress"></div>
 <div id="global-nav-container"></div>
 <aside id="spine"></aside>
+
+<canvas id="deep-space"></canvas>
+<canvas id="glCanvas"></canvas>
 
 <section class="band band--dark front" data-spine="Overview" data-section="Front matter">
     <div class="col-wide">
@@ -74,16 +85,11 @@
             <div>
                 <span>IMPACT</span>
                 <strong>High-value account ranking</strong>
-            </div>
-        </div>
-    </div>
 </section>
 
 <section class="band band--paper" data-spine="The Flaw" data-section="The Flaw">
     <div class="eyebrow">01 / The Single Metric Flaw</div>
-    <h2>The Blind Spot in Conversion Probability</h2>
-    <div class="report-prose">
-        <p class="has-dropcap">Let us look at a specific scenario: 6sense aims to enhance its account ranking system for sales outreach. Historically, machine learning systems in this space have relied on a single metric, which is the probability that an account will convert. You train a classification model, score your leads from 0 to 1, and hand the highest probabilities to the sales team.</p>
+    <h2>The Blind Spot in Conversion Probability</h2>        <p class="has-dropcap">Let us look at a specific scenario: 6sense aims to enhance its account ranking system for sales outreach. Historically, machine learning systems in this space have relied on a single metric, which is the probability that an account will convert. You train a classification model, score your leads from 0 to 1, and hand the highest probabilities to the sales team.</p>
         
         <p>This approach makes intuitive sense, but it has a significant blind spot. It treats all conversions as equal. A 90% chance of closing a $1,000 deal will always rank higher than a 10% chance of closing a $1,000,000 deal. To fix this, 6sense's business goal is to prioritize target accounts based on <em>both</em> their likelihood to convert and their expected deal size. By calculating a final prioritization score that balances these two factors, we can help sales teams allocate their time toward the highest-impact opportunities.</p>
     </div>
@@ -103,18 +109,12 @@
             <div class="priority-score-label" style="color:var(--ink-blue);">Priority Score</div>
             <div class="priority-score-display" id="sim-score" style="color:var(--ink);">$100,000</div>
         </div>
-    </div>
-    
-    <div class="report-prose">
-        <p>In this walkthrough, we will build out the architecture, preprocessing steps, and MLOps considerations for this dual-model approach.</p>
-    </div>
+    </div>        <p>In this walkthrough, we will build out the architecture, preprocessing steps, and MLOps considerations for this dual-model approach.</p>
 </section>
 
 <section class="band band--dark" data-spine="Preprocessing" data-section="Data Preprocessing">
     <div class="eyebrow">02 / Architecture</div>
-    <h2>Data Architecture & Preprocessing</h2>
-    <div class="report-prose">
-        <p>To explore this, we will use a simulated dataset of 6,000 records that mirrors real-world sales signals typically retrieved from a data warehouse like Hive.</p>
+    <h2>Data Architecture & Preprocessing</h2>        <p>To explore this, we will use a simulated dataset of 6,000 records that mirrors real-world sales signals typically retrieved from a data warehouse like Hive.</p>
         <p>Our feature space is divided into three main categories. We have firmographics (industry, region, company size, revenue), engagement signals (30-day page views, meetings booked, demo requests, email clicks), and sales metadata (sales owner ID, historical win status).</p>
         
         <table class="data-table">
@@ -184,14 +184,11 @@ preprocessor = ColumnTransformer(
     ])
 
 X_processed = preprocessor.fit_transform(X)</code></pre>
-    </div>
 </section>
 
 <section class="band band--paper" data-spine="Stage 1: Classification" data-section="Stage 1: Predicting Conversion">
     <div class="eyebrow">03 / Stage 1</div>
-    <h2>Predicting Conversion Probability</h2>
-    <div class="report-prose">
-        <p>Our core architecture relies on XGBoost for both predictive tasks. XGBoost is a highly scalable tree boosting system that handles sparse data beautifully and provides state-of-the-art performance for tabular datasets.</p>
+    <h2>Predicting Conversion Probability</h2>        <p>Our core architecture relies on XGBoost for both predictive tasks. XGBoost is a highly scalable tree boosting system that handles sparse data beautifully and provides state-of-the-art performance for tabular datasets.</p>
         <p>For the first stage, we use the <code>XGBClassifier</code> with a <code>binary:logistic</code> objective to predict the probability of conversion.</p>
         <p>The main hurdle here is class imbalance. Only 9.47% of our accounts actually convert. If we do not correct for this, the model might simply learn to predict "no conversion" every time and still achieve high accuracy.</p>
         <p>We handle this in two ways. First, we use a stratified 80/20 train/test split. Stratification ensures that both our training and testing sets maintain that exact proportion of positive cases. Second, we utilize the <code>scale_pos_weight</code> parameter in XGBoost. We set this to 9.56, which is the ratio of negative to positive instances. This tells the algorithm to heavily penalize misclassifications of the minority class, forcing it to pay attention to the rare conversion events.</p>
@@ -215,25 +212,18 @@ classifier = XGBClassifier(
     random_state=42
 )
 classifier.fit(X_train_c, y_train_c)</code></pre>
-    </div>
-
-    <div class="report-prose">
-        <p>When evaluating this model, standard accuracy is unhelpful. Instead, we track Precision, Recall, F1-Score, and ROC-AUC. Crucially, we prioritize the Precision-Recall Area Under Curve (PR-AUC) over ROC-AUC. Research shows that ROC plots can be visually deceptive in highly imbalanced scenarios. PR-AUC specifically evaluates the fraction of true positives among positive predictions, making it a vastly more informative metric for rare-event data.</p>
+    </div>        <p>When evaluating this model, standard accuracy is unhelpful. Instead, we track Precision, Recall, F1-Score, and ROC-AUC. Crucially, we prioritize the Precision-Recall Area Under Curve (PR-AUC) over ROC-AUC. Research shows that ROC plots can be visually deceptive in highly imbalanced scenarios. PR-AUC specifically evaluates the fraction of true positives among positive predictions, making it a vastly more informative metric for rare-event data.</p>
     </div>
     
     <div class="plotly-wrapper">
         <div class="plotly-dual">
             <div id="plot-roc" style="height: 350px;"></div>
-            <div id="plot-pr" style="height: 350px;"></div>
-        </div>
-    </div>
+            <div id="plot-pr" style="height: 350px;">
 </section>
 
 <section class="band band--dark" data-spine="Stage 2: Regression" data-section="Stage 2: Predicting Deal Size">
     <div class="eyebrow">04 / Stage 2</div>
-    <h2>Predicting Expected Deal Size</h2>
-    <div class="report-prose">
-        <p>For the second stage, we want to predict the monetary value of the deal. As noted earlier, while the underlying dummy data was simulated with a lognormal distribution to reflect real-world skew, we train the actual <code>XGBRegressor</code> using a standard squared error objective (<code>objective='reg:squarederror'</code>).</p>
+    <h2>Predicting Expected Deal Size</h2>        <p>For the second stage, we want to predict the monetary value of the deal. As noted earlier, while the underlying dummy data was simulated with a lognormal distribution to reflect real-world skew, we train the actual <code>XGBRegressor</code> using a standard squared error objective (<code>objective='reg:squarederror'</code>).</p>
         <p>There is a very specific training nuance here. We train this regressor exclusively on the subset of accounts that successfully converted (<code>converted_next_90d == 1</code>).</p>
         <p>This is a mathematical necessity. Deal size is only relevant upon conversion. If we trained the regressor on non-converting accounts (which have a deal size of $0), the model would become confused, trying to learn the features of a $0 deal rather than learning what drives a large deal versus a small deal among actual buyers.</p>
     </div>
@@ -251,22 +241,16 @@ regressor = XGBRegressor(
     random_state=42
 )
 regressor.fit(X_train_r, y_train_r)</code></pre>
-    </div>
-    
-    <div class="report-prose">
-        <p>We evaluate this regression model using Mean Squared Error (MSE) and Root Mean Squared Error (RMSE) because the latter is highly interpretable (the error is expressed in actual US Dollars) alongside R-squared to measure the explained variance.</p>
+    </div>        <p>We evaluate this regression model using Mean Squared Error (MSE) and Root Mean Squared Error (RMSE) because the latter is highly interpretable (the error is expressed in actual US Dollars) alongside R-squared to measure the explained variance.</p>
     </div>
 
     <div class="plotly-wrapper">
-        <div id="plot-3d-regression" style="width:100%; height: 500px;"></div>
-    </div>
+        <div id="plot-3d-regression" style="width:100%; height: 500px;">
 </section>
 
 <section class="band band--paper" data-spine="Synthesis" data-section="Synthesizing the Priority Score">
     <div class="eyebrow">05 / Synthesis</div>
-    <h2>Synthesizing the Priority Score</h2>
-    <div class="report-prose">
-        <p>Now we bring the two models together. Our final ranking metric is calculated with a simple expected value formula:</p>
+    <h2>Synthesizing the Priority Score</h2>        <p>Now we bring the two models together. Our final ranking metric is calculated with a simple expected value formula:</p>
         <p style="font-family:var(--mono); text-align:center; margin: 32px 0;">Priority Score = P(convert) * E[deal_size]</p>
         <p>You might notice an interesting dynamic here. We are applying our regression model (which was trained only on converters) to all accounts, including those that will likely never convert. Is this analytically sound?</p>
         <p>Yes, it is. A low conversion probability naturally suppresses the final priority score. If the regressor looks at a tiny company and predicts a theoretical deal size of $100,000, but the classifier determines there is only a 0.1% chance of them buying, the final priority score becomes $100. The math elegantly self-corrects. As a final safety check, we clip all predicted deal sizes at a minimum of 0 to maintain ranking integrity.</p>
@@ -303,14 +287,11 @@ priority_scores = p_convert * e_deal_size
 # Attach to original dataframe for ranking
 df['priority_score'] = priority_scores
 df_ranked = df.sort_values(by='priority_score', ascending=False)</code></pre>
-    </div>
 </section>
 
 <section class="band band--dark" data-spine="SHAP" data-section="Interpretability with SHAP">
     <div class="eyebrow">06 / Interpretability</div>
-    <h2>Interpretability with SHAP</h2>
-    <div class="report-prose">
-        <p>If you hand a sales team a list of scores without explanation, they will likely ignore it. We need to provide transparency into the model's decision-making.</p>
+    <h2>Interpretability with SHAP</h2>        <p>If you hand a sales team a list of scores without explanation, they will likely ignore it. We need to provide transparency into the model's decision-making.</p>
         <p>To do this, we utilize SHapley Additive exPlanations (SHAP). SHAP provides a unified, game-theoretic framework that assigns a unique importance value to each feature for a particular prediction. It allows us to show exactly why an account received a high score (for example, "This account scored highly because 30-day page views are elevated and they are in the SaaS industry"). It provides both local interpretability for individual predictions and global interpretability for the model as a whole, often visualized through summary beeswarm plots.</p>
     </div>
 
@@ -330,14 +311,11 @@ shap_values = explainer.shap_values(X_train_c)
 
 # Generate a beeswarm summary plot
 shap.summary_plot(shap_values, X_train_c, feature_names=preprocessor.get_feature_names_out())</code></pre>
-    </div>
 </section>
 
 <section class="band band--paper" data-spine="MLOps" data-section="MLOps and Deployment">
     <div class="eyebrow">07 / Deployment</div>
-    <h2>MLOps and System Deployment</h2>
-    <div class="report-prose">
-        <p>Transitioning this dual-model from a localized Python script to an enterprise Go-to-Market tool requires strict MLOps practices.</p>
+    <h2>MLOps and System Deployment</h2>        <p>Transitioning this dual-model from a localized Python script to an enterprise Go-to-Market tool requires strict MLOps practices.</p>
         <p>Models degrade over time as market conditions change. We monitor this concept drift using the Population Stability Index (PSI) and Kolmogorov-Smirnov (KS) tests. If we detect high drift, or if we see performance degradation (like drops in PR-AUC or R-squared), it triggers a retraining cycle. We can manage these workflows using orchestrators like Airflow or Kubeflow, often falling back on a fixed quarterly retraining schedule as a baseline.</p>
         <p>For persistence and delivery, the models and preprocessing artifacts (like our median imputers and One-Hot encoders) are serialized using joblib, pickle, or MLflow. The scoring logic itself is deployed as a dynamic API using Flask or FastAPI. This allows the system to push scores directly into CRMs and visualization dashboards like Tableau or Power BI.</p>
     </div>
@@ -378,24 +356,15 @@ def predict_priority(data: AccountData):
         "expected_deal_size": float(e_deal),
         "priority_score": float(priority_score)
     }</code></pre>
-    </div>
-
-    <div class="report-prose">
-        <p>Finally, we establish a qualitative feedback loop with the sales teams. Their on-the-ground experience is integrated back into the system to continuously refine the algorithm's utility.</p>
+    </div>        <p>Finally, we establish a qualitative feedback loop with the sales teams. Their on-the-ground experience is integrated back into the system to continuously refine the algorithm's utility.</p>
         <p>By combining the probability of a win with the magnitude of the deal, 6sense moves away from single-metric optimization. The result is a highly logical, data-driven strategy that aligns machine learning outputs directly with business revenue goals.</p>
-    </div>
 </section>
 
 <!-- Back Matter -->
-<section class="band band--dark back-matter" data-spine="Research Graph" data-section="Research Graph">
-  <div class="back-matter" style="padding-top:0;">
-    <h3 style="margin-bottom:22px;">Related Works</h3>
+<section class="band band--dark back-matter" data-spine="Research Graph" data-section="Research Graph">    <h3 style="margin-bottom:22px;">Related Works</h3>
     <div class="related">
       <div class="related-grid" id="recommendation-grid">
         <!-- Populated by JS -->
-      </div>
-    </div>
-  </div>
 </section>
 
 <script>
