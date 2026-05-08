@@ -4,7 +4,87 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Equity Framework | Dr. Heather Leffew</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../design_system/css/global_chrome.css">
+    <link rel="stylesheet" href="../design_system/assets/css/institutional.css">
     <style>
+          -webkit-backdrop-filter:blur(14px) saturate(140%); border-bottom:1px solid rgba(255,255,255,0.06);
+          transition:background 0.6s var(--ease-std), color 0.6s var(--ease-std), border-color 0.6s var(--ease-std);
+        }
+        #topnav.is-paper { background:rgba(245,245,247,0.82); border-bottom-color:rgba(0,0,0,0.08); color:var(--ink); }
+        #topnav .brand { font-family:var(--display); font-size:15px; font-weight:600; letter-spacing:0.04em; text-transform:none; color:inherit; text-decoration:none; }
+        #topnav .crumbs { display:flex; gap:18px; align-items:center; }
+        #topnav .crumbs a { color:inherit; text-decoration:none; opacity:0.7; transition:opacity .25s; }
+        #topnav .sep { opacity:0.35; }
+
+        #spine {
+          position:fixed; left:18px; top:50%; transform:translateY(-50%); z-index:130; pointer-events:auto;
+          display:flex; flex-direction:column; gap:14px; padding:18px 14px; background:rgba(3,3,3,0.45);
+          color:var(--platinum); backdrop-filter:blur(14px) saturate(140%); -webkit-backdrop-filter:blur(14px) saturate(140%);
+          border:1px solid rgba(255,255,255,0.08); transition:none;
+        }
+        #spine.is-paper { background:rgba(245,245,247,0.78); border-color:rgba(0,0,0,0.10); color:var(--ink); }
+        #spine .row { display:flex; align-items:center; gap:10px; cursor:pointer; }
+        #spine .tick { width:16px; height:1px; background:currentColor; opacity:0.35; transition:width .35s var(--ease-out), opacity .35s var(--ease-out); }
+        #spine .row.is-active .tick { width:28px; opacity:1; background:var(--sapphire); }
+        #spine .row.is-paper-active .tick { background:var(--ink-blue); }
+        #spine .label { font-family:var(--mono); font-size:9.5px; letter-spacing:0.18em; text-transform:uppercase; opacity:0.55; transition:opacity .35s; white-space:nowrap; }
+        #spine .row:hover .label, #spine .row.is-active .label { opacity:1; }
+        #spine .num { font-family:var(--mono); font-size:9px; opacity:0.4; width:14px; }
+        @media (max-width:1180px) { #spine { display:none; } }
+
+        /* ============================================================
+           FRONT MATTER & SECTIONS
+           ============================================================ */
+        .front { min-height:100vh; padding:160px 0 100px; display:flex; flex-direction:column; justify-content:center; position:relative; overflow:hidden; }
+        .front .meta-row { font-family:var(--mono); font-size:11px; letter-spacing:0.30em; text-transform:uppercase; color:var(--tungsten); margin-bottom:40px; display:flex; gap:18px; align-items:center; flex-wrap:wrap; }
+        .front .meta-row .sep { opacity:0.4; }
+        .front h1 {
+  font-family:var(--display); font-weight:600;
+  font-size:clamp(32px, 4.0vw, 54px);
+  letter-spacing:-0.018em; line-height:1.06;
+  color:var(--flare); margin-bottom:36px;
+  max-width:18ch;
+}
+        .front .abstract {
+  font-family:var(--body); font-style:italic;
+  font-size:17px; line-height:1.62; color:var(--platinum);
+  max-width:60ch; margin-bottom:48px;
+}
+
+        .byline-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:2rem; max-width:800px; margin-top:2rem; border-top:1px solid rgba(255,255,255,0.1); padding-top:2rem; }
+        .by-cell .by-lab { font-family:var(--mono); font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:var(--tungsten); margin-bottom:0.5rem; }
+        .by-cell .by-val { font-family:var(--body); font-style:italic; font-size:1.1rem; color:var(--platinum); }
+
+        .band--paper h2, .band--dark h2 {
+  font-family:var(--display); font-weight:600;
+  font-size:clamp(26px, 2.8vw, 36px); letter-spacing:-0.012em; line-height:1.12;
+  margin:0 auto 28px; max-width:var(--col); padding:0 32px;
+}
+        .band--paper h2 { color:var(--ink); } .band--dark h2 { color:var(--flare); }
+        
+        .band--paper .eyebrow, .band--dark .eyebrow { font-family:var(--mono); font-size:10.5px; letter-spacing:0.30em; text-transform:uppercase; margin:0 auto 18px; max-width:var(--col); padding:0 32px; }
+        .band--paper .eyebrow { color:var(--ink-blue); } .band--dark .eyebrow { color:var(--sapphire); }
+        
+        .band--paper p, .band--dark p { margin:0 auto 22px; max-width:var(--col); padding:0 32px; font-size:18px; line-height:1.78; }
+        .band--paper p { color:var(--ink); } .band--dark p { color:var(--platinum); }
+
+        .dropcap::first-letter { font-family: var(--display); font-weight: 600; font-size: 5rem; line-height: 0.8; float: left; margin: 0.05em 0.1em -0.1em 0; color: var(--sapphire); }
+        .band--paper .dropcap::first-letter { color: var(--ink-blue); }
+
+
+        .method { margin: 3rem auto; max-width: var(--col); padding: 0 32px; }
+        .method .inner { border-left: 3px solid var(--sapphire); padding-left: 1.5rem; }
+        .band--paper .method .inner { border-left-color: var(--ink-blue); }
+        .method .lab { font-family: var(--mono); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sapphire); margin-bottom: 0.5rem; }
+        .band--paper .method .lab { color: var(--ink-blue); }
+
+        .gloss { position: relative; border-bottom: 1px dotted var(--sapphire); cursor: help; }
+        .band--paper .gloss { border-bottom-color: var(--ink-blue); }
+        .gloss-tip { display: none; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); width: 250px; padding: 1rem; background: var(--obsidian); border: 1px solid var(--graphite); color: var(--platinum); font-family: var(--body); font-style: italic; font-size: 13.5px; z-index: 100; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 10px; }
+        .gloss:hover .gloss-tip { display: block; }
+        .band--paper .gloss-tip { background: #fff; border-color: var(--paper-3); color: var(--ink); }
+
         /* ============================================================
            INTERACTIVE SIMULATOR (THRESHOLD CALIBRATOR)
            ============================================================ */
@@ -16,6 +96,11 @@
             max-width: var(--col-wide);
             min-height: 400px;
             padding: 0 48px;
+        }
+        .col-main {
+            max-width: var(--col);
+            margin: 0 auto;
+            padding: 0;
         }
         @media(max-width:900px) { .simulator-layout { grid-template-columns: 1fr; padding: 0 32px;} }
 
@@ -106,17 +191,8 @@
 
     
 
-</style>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js" defer></script>
-<script src="../design_system/js/cinematic_engine_v3.js" defer></script>
+</style>
 </head>
 <body>
 
@@ -131,10 +207,7 @@
 
     <main>
         <!-- FRONT MATTER -->
-        
-<canvas id="glCanvas"></canvas>
-
-<section class="band band--dark front" data-spine="Architecture" data-section="Front matter">
+        <section class="band band--dark front" data-spine="Architecture" data-section="Front matter">
             <div class="col-wide">
                 <div class="meta-row">
                     <span>Enterprise Systems Architecture</span>
@@ -143,7 +216,7 @@
                 </div>
                 <h1>A dual-mode fairness platform that calibrates the threshold before launch, and enforces it after.</h1>
                 <p class="abstract">
-                    A walk through the architecture of an enterprise AI equity framework. The system links a pre-launch simulation lab, where synthetic user populations are calibrated against historical telemetry, with an automated post-launch monitoring pipeline. The architecture ensures that the threshold used to trigger production alerts is derived from statistical reality, not from regulatory guesswork.
+                    A walk through the architecture of an enterprise AI equity framework. The system links a pre-launch simulation lab—where synthetic user populations are calibrated against historical telemetry—with an automated post-launch monitoring pipeline. The architecture ensures that the threshold used to trigger production alerts is derived from statistical reality, not from regulatory guesswork.
                 </p>
                 <div class="byline-grid">
                     <div class="by-cell">
@@ -156,14 +229,17 @@
                     </div>
                     <div class="by-cell">
                         <div class="by-lab">OUTPUT</div>
-                        <div class="by-val">Validated alert thresholds
+                        <div class="by-val">Validated alert thresholds</div>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <!-- SECTION 01 -->
         <section class="band band--paper" data-spine="The Gap" data-section="The Launch Window Gap">
             <div class="eyebrow">01 / The Launch Window Gap</div>
             <h2>The Launch Window Gap</h2>
-            <div>
+            <div class="col-main">
                 <p class="has-dropcap col-with-sidenotes">In enterprise AI, there is a fundamental tension between engineering velocity and ethical safety. <span class="sn"><span class="sn-num">1</span><span class="sn-body">This methodology borrows heavily from clinical trial design. When a human population is ethically too vulnerable to expose to an untested hypothesis, calibrated synthetic cohorts become the absolute moral and scientific standard.</span></span>Engineers demand production data to tune models; ethicists and domain experts demand fairness before a single user is exposed to risk. This creates the "Launch Window Gap": a terrifying period where no reliable fairness signal exists, yet the consequences of algorithmic harm can permanently damage vulnerable populations (Barocas & Selbst, 2016). Intuition-driven review is fast but mathematically empty. Data-driven review is reliable, but waiting for production data means waiting for real human harm to occur.</p> 
                 
                 <p>As an interdisciplinary researcher bridging these teams, I had to architect a compromise: a framework that forces a massive data pipeline to respect human vulnerability. The framework closes the gap by generating digital twin synthetic users that behave with the exact statistical properties of the real user base. This allows us to mathematically simulate harm and calibrate our ethical thresholds before the product ever launches. Calibration is the load-bearing piece of the architecture; without it, the engineers are simply tuning alarms to a fictional population.</p>
@@ -172,25 +248,29 @@
                     <div class="inner">
                         <div class="lab">Why A/B testing is insufficient</div>
                         An A/B test in production exposes the harm hypothesis to real users to learn whether it materializes. For fairness questions, the A/B test is the harm. The simulation ensures the hypothesis gets tested on synthetic users before any real user is exposed.
+                    </div>
+                </div>
+            </div>
         </section>
 
         <!-- SECTION 02 -->
         <section class="band band--dark" data-spine="Mode 1" data-section="Pre-Launch Simulation">
             <div class="eyebrow">02 / Mode 1: Pre-Launch Simulation</div>
             <h2>Pre-Launch Simulation Lab</h2>
-            <div>
+            <div class="col-main">
                 <p>The Simulation Lab is the proactive instrument. The interface is a GUI with four control surfaces: User Segments, Success Metric, Target Group, and Penalty Slider. The four-surface design encodes a specific theory of fairness review: the team must define the harm hypothesis explicitly before running the simulation. This protects against the trap where a fairness audit becomes a fishing expedition that produces a finding because the protocol kept slicing the data until something crossed the threshold.</p>
 
                 <p>The calibration step takes a file of historical data from an analogous, non-AI feature. The system runs a profiling script against the historical data to extract the exact proportion of user segments, fitted probability distributions on behavioral metrics, and the real-world standard deviation of the chosen success metric. The synthetic population is generated using <span class="gloss">Faker<span class="gloss-tip"><b>Faker</b>, A Python package that generates synthetic data for categorical and identity-level fields.</span></span> for identity fields and <code>numpy</code> for the continuous distributions. As long as the calibration data is recent and representative, the simulation's digital twins behave like real users on every dimension that matters.</p>
 
                 <p>The bias injection step is where the hypothesis becomes data. The system applies the user-defined penalty to the baseline success scores of the target group. I elected to use a <code>RandomForestClassifier</code> on the synthetic data, with protected attributes explicitly excluded from the training set, to test whether the bias signal propagates through proxy variables. This is the realistic threat model: production AI features rarely have the protected attribute as a feature. The analysis stack then runs a drift analysis and a SHAP explainer to generate the audit verdict.</p>
+            </div>
         </section>
 
         <!-- SECTION 03 (INTERACTIVE) -->
         <section class="band band--paper" data-spine="Calibration" data-section="Setting the Threshold">
             <div class="eyebrow">03 / Setting the Threshold</div>
             <h2>Simulating the Threshold</h2>
-            <div>
+            <div class="col-main">
                 <p>The alarm threshold comes out of the simulation rather than going in. The team runs the simulation with hypothesized penalty levels, observes which penalty levels produce statistically significant disparities, and selects the threshold that corresponds to the smallest disparity the team would treat as actionable (Hardt et al., 2016). The interactive simulator below demonstrates the mathematics of this calibration: as the disparity penalty increases, the statistical power to detect it depends entirely on the variance and cohort size.</p>
             </div>
 
@@ -233,43 +313,66 @@
                 </div>
             </div>
 
-            <div>
+            <div class="col-main">
                 <p>The threshold is calibrated to the team's tolerance and to the statistical power of the available sample, rather than picked from a regulatory document. If the team agrees that a Cohen's <em>d</em> >= 0.20 is operationally meaningful, the simulation establishes exactly what disparity magnitude the post-launch monitor must be tuned to catch.</p>
+            </div>
         </section>
 
         <!-- SECTION 04 -->
         <section class="band band--dark" data-spine="Schema" data-section="The Intersectional Schema">
             <div class="eyebrow">04 / The Intersectional Schema</div>
             <h2>The Intersectional Schema</h2>
-            <div>
+            <div class="col-main">
                 <p>The framework executes its analysis across an intersectional schema of forty variables. Engineering schemas often treat users as flat, single-attribute data points. But human reality is fiercely intersectional. Sociological harm rarely happens because of a single demographic trait; it occurs at the collision of variables. The richness of this schema allows the system to ask whether a disparity is concentrated specifically in the intersection of "new-user" and "likely-assistive-tech-user."</p>
 
-                <p>The inclusion of the <code>accessibility_likelihood_score</code> requires specific attention. Accessibility is the dimension that technical audits most often miss, simply because the protected attribute isn't neatly collected in a drop-down menu. As a researcher, I know that failing to measure a vulnerable population is functionally equivalent to ignoring them. We built a logistic regression to infer accessibility needs purely from navigation patterns. We rigidly quarantine this inferred attribute so it can never be used for product targeting, it exists solely inside the fairness pipeline. The alternative was unacceptable: leaving the most structurally vulnerable user population with no fairness signal at all.</p>
+                <p>The inclusion of the <code>accessibility_likelihood_score</code> requires specific attention. Accessibility is the dimension that technical audits most often miss, simply because the protected attribute isn't neatly collected in a drop-down menu. As a researcher, I know that failing to measure a vulnerable population is functionally equivalent to ignoring them. We built a logistic regression to infer accessibility needs purely from navigation patterns. We rigidly quarantine this inferred attribute so it can never be used for product targeting—it exists solely inside the fairness pipeline. The alternative was unacceptable: leaving the most structurally vulnerable user population with no fairness signal at all.</p>
+            </div>
         </section>
 
         <!-- SECTION 05 -->
         <section class="band band--paper" data-spine="Mode 2" data-section="Post-Launch Monitoring">
             <div class="eyebrow">05 / Mode 2: Post-Launch Monitoring</div>
             <h2>Automated Post-Launch Monitoring</h2>
-            <div>
+            <div class="col-main">
                 <p>The Post-Launch Monitoring System is the continuous assurance instrument. It runs hands-off on a scheduled cadence. The input is a continuous stream of real user interaction data from the live AI feature, accessed via a scheduled query against the production data warehouse.</p>
 
                 <p>The architectural choice that makes the monitoring trustworthy is that it uses the exact <code>analyze_drift()</code> function from the pre-launch simulation. A common failure mode in fairness pipelines is that the pre-launch and post-launch logic drift apart over time. The framework forces them to share the function, which means a methodology change propagates to both modes by editing a single piece of code. If the disparity crosses the pre-validated alarm threshold, the alerting layer uses webhooks to post a detailed alert to the engineering team's incident channels, including the affected segment, the failing metric, the disparity magnitude, and a preliminary SHAP analysis to seed the investigation.</p>
+            </div>
         </section>
 
         <!-- SECTION 06 -->
         <section class="band band--dark" data-spine="Limits" data-section="Limits">
             <div class="eyebrow">06 / Limits and what this is not</div>
             <h2>Limits and what this is not</h2>
-            <div>
+            <div class="col-main">
                 <p>The architecture commits to three things: a simulation engine that calibrates against historical telemetry, a schema that supports intersectional disparity analysis, and a strict coupling between the pre-launch threshold and the post-launch monitor. The architecture does not commit to catching harms the team failed to hypothesize, replacing human qualitative research, or substituting for legal compliance review. What the framework offers is a structural guarantee: an alarm threshold calibrated against historical reality before launch, and enforced mechanically after launch.</p>
+            </div>
         </section>
 
         <!-- SECTION 07 -->
-        
+        <section class="band band--paper" data-spine="References" data-section="References">
+            <div class="eyebrow">07 / Bibliography</div>
+            <h2>References</h2>
+            <div class="report-prose">
+                <ul style="list-style-type:none; padding:0; margin-top:24px; font-family:var(--body); font-size:16px;">
+                    <li style="margin-bottom:16px; padding-left:36px; text-indent:-36px;">
+                        Barocas, S., & Selbst, A. D. (2016). Big data's disparate impact. <em>California Law Review</em>, 104, 671-732.
+                    </li>
+                    <li style="margin-bottom:16px; padding-left:36px; text-indent:-36px;">
+                        Hardt, M., Price, E., & Srebro, N. (2016). Equality of opportunity in supervised learning. <em>Advances in neural information processing systems</em>, 29.
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+
+
+
+
 
     </main>
 
+    <script>
     <script>
         // Threshold Calibrator Simulator Setup
         document.addEventListener("DOMContentLoaded", () => {
@@ -382,18 +485,16 @@
 <!-- ============================================================
      GLOBAL APP SHELL (BACK MATTER)
      ============================================================ -->
-<section class="band band--paper back-matter" data-spine="Research Graph" data-section="Research Graph">  <h3 style="margin-top:0;">Bibliography</h3>
-  <ol class="biblio">
-    <li><span class="n">[1]</span><span class="ent">Barocas, S., & Selbst, A. D. (2016). Big data's disparate impact. <em>California Law Review</em>, 104, 671-732.</span></li>
-    <li><span class="n">[2]</span><span class="ent">Hardt, M., Price, E., & Srebro, N. (2016). Equality of opportunity in supervised learning. <em>Advances in neural information processing systems</em>, 29.</span></li>
-  </ol>
-
-    <h3>Related Cases</h3>
+<section class="band band--dark back-matter" data-spine="Research Graph" data-section="Research Graph">
+  <div class="back-matter" style="padding-top:0;">
+    <h3 style="margin-bottom:22px;">Related Works</h3>
     <div class="related">
       <div class="related-grid" id="recommendation-grid">
         <!-- Populated by JS -->
       </div>
     </div>
+  </div>
+
   <a class="next-chap" id="next-chap-link" href="#">
     <div class="lf">
       <div class="eb">Next Publication</div>
