@@ -43,6 +43,18 @@ jobs:
             git push
           fi
 
+      - name: Inject cache-busting version strings
+        run: |
+          SHORT_SHA=$(echo "${{ github.sha }}" | cut -c1-7)
+          echo "Cache-bust version: $SHORT_SHA"
+          find . -name '*.html' -not -path './.git/*' | while read f; do
+            # Add ?v=SHA to local .css href references (skip http/https URLs)
+            sed -i -E 's|(href="([^":]*/)?[^"]+\.css)"|\1?v='"$SHORT_SHA"'"|g' "$f"
+            # Add ?v=SHA to local .js src references (skip http/https URLs)
+            sed -i -E 's|(src="([^":]*/)?[^"]+\.js)"|\1?v='"$SHORT_SHA"'"|g' "$f"
+          done
+          echo "Cache-busted $(find . -name '*.html' -not -path './.git/*' | wc -l) HTML files"
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
