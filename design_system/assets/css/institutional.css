@@ -320,10 +320,10 @@ input[type=range]::-webkit-slider-runnable-track {
 :root { --grid-left: max(32px, calc(50vw - 540px)); }
 @media (min-width: 1360px) { :root { --grid-left: max(260px, calc(50vw - 540px)); } }
 
-section.band:not(.front) {
+section.band:not(.front):not(.library-band):not(.back-matter) {
   display: block; /* Fallback for small screens */
 }
-section.band:not(.front) > * {
+section.band:not(.front):not(.library-band):not(.back-matter) > * {
   width: 100%;
   max-width: var(--col);
   margin-left: auto;
@@ -331,21 +331,22 @@ section.band:not(.front) > * {
 }
 
 @media (min-width: 1240px) {
-  section.band:not(.front) {
+  section.band:not(.front):not(.library-band):not(.back-matter) {
     display: grid;
     grid-template-columns: var(--grid-left) 680px 400px minmax(16px, 1fr);
     align-items: start;
   }
-  section.band:not(.front) > * {
+  section.band:not(.front):not(.library-band):not(.back-matter) > * {
     grid-column: 2 / 3;
     margin-left: 0 !important; margin-right: 0 !important;
   }
-  section.band:not(.front) > .col-wide, 
-  section.band:not(.front) > .stat-grid, 
-  section.band:not(.front) > .figure, 
-  section.band:not(.front) > .report-prose,
-  section.band:not(.front) > .simulator-layout,
-  section.band:not(.front) > .sandbox-layout {
+  section.band:not(.front):not(.library-band):not(.back-matter) > .col-wide, 
+  section.band:not(.front):not(.library-band):not(.back-matter) > .stat-grid, 
+  section.band:not(.front):not(.library-band):not(.back-matter) > .figure, 
+  section.band:not(.front):not(.library-band):not(.back-matter) > .report-prose,
+  section.band:not(.front):not(.library-band):not(.back-matter) > .simulator-layout,
+  section.band:not(.front):not(.library-band):not(.back-matter) > .dashboard-layout,
+  section.band:not(.front):not(.library-band):not(.back-matter) > .sandbox-layout {
     grid-column: 2 / 4;
     width: 100%; max-width: none;
   }
