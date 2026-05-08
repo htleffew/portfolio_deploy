@@ -36,17 +36,15 @@ function renderDashboard() {
         });
     }
 
-    // 3. Render
+    // 3. Render — cards start hidden, animated by ScrollTrigger
     tableWrap.innerHTML = '';
-    let count = 0;
 
     filtered.forEach(p => {
-        count++;
         const row = document.createElement('a');
         row.href = p.url;
         row.className = 'db-row';
         row.style.opacity = '0';
-        row.style.transform = 'translate3d(0, 40px, -100px) rotateX(-15deg)';
+        row.style.transform = 'translateY(40px)';
 
         const tagMarkup = p.tags ? p.tags.slice(0, 3).map(t => `<span class="db-tag">${t}</span>`).join('') : '';
 
@@ -62,11 +60,36 @@ function renderDashboard() {
             </div>
         `;
         tableWrap.appendChild(row);
-        gsap.to(row, { opacity: 1, y: 0, z: 0, rotateX: 0, duration: 0.8, delay: count * 0.04, ease: 'back.out(1.2)' });
     });
 
-    noRes.style.display = count === 0 ? 'block' : 'none';
-    if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+    // 4. Animate cards via ScrollTrigger (scroll-based, not time-based)
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        const rows = tableWrap.querySelectorAll('.db-row');
+        rows.forEach((row, i) => {
+            gsap.to(row, {
+                opacity: 1,
+                y: 0,
+                duration: 0.7,
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: row,
+                    start: 'top 92%',
+                    toggleActions: 'play none none none',
+                    once: true
+                },
+                delay: i * 0.06
+            });
+        });
+        ScrollTrigger.refresh();
+    } else {
+        // No GSAP — just show everything
+        tableWrap.querySelectorAll('.db-row').forEach(row => {
+            row.style.opacity = '1';
+            row.style.transform = 'none';
+        });
+    }
+
+    noRes.style.display = filtered.length === 0 ? 'block' : 'none';
 }
 
 function handleFilterChange(filterVal) {
@@ -197,8 +220,8 @@ async function initLibrary() {
     }
 }
 
-// Allow page-level script to call initLibraryDashboard() after preloader completes.
-// Fallback: if no page script calls it within 3s, self-init.
+// Self-init immediately on load — cards are hidden until ScrollTrigger reveals them.
+// No timer needed; the data loads into the DOM right away, scroll handles the reveal.
 window.__libraryInitCalled = false;
 window.initLibraryDashboard = function() {
   if (!window.__libraryInitCalled) {
@@ -206,6 +229,10 @@ window.initLibraryDashboard = function() {
     initLibrary();
   }
 };
-setTimeout(() => {
-  if (!window.__libraryInitCalled) window.initLibraryDashboard();
-}, 3000);
+
+// Init as soon as the DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => window.initLibraryDashboard());
+} else {
+    window.initLibraryDashboard();
+}
