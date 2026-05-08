@@ -45,8 +45,11 @@
         .plotly-dual { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; }
         @media (max-width: 800px) { .plotly-dual { grid-template-columns: 1fr; } }
     </style>
+<script src="../design_system/js/cinematic_engine_v3.js" defer></script>
 </head>
 <body data-category="Machine Learning" data-title="Dual-Model Account Prioritization">
+<canvas id="deep-space"></canvas>
+<script>window.addEventListener('load',()=>{const ds=document.getElementById('deep-space');if(ds&&typeof gsap!=='undefined'){gsap.to(ds,{opacity:1,duration:3.5,ease:'power2.inOut',delay:0.5})}else if(ds){ds.style.opacity='1'}});</script>
 
 <div id="progress"></div>
 <div id="global-nav-container"></div>

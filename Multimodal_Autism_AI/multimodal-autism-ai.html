@@ -40,9 +40,12 @@ input:checked + .slider:before { transform: translateX(20px); }
 .profile-card .mval.highlight { font-size: 24px; font-weight: 500; font-family: var(--display); color: var(--sapphire-deep); }
 @media(min-width: 768px) { .profile-card { grid-template-columns: repeat(2, 1fr); } .profile-card .full-width { grid-column: span 2; } }
 </style>
+<script src="../design_system/js/cinematic_engine_v3.js" defer></script>
 </head>
 
 <body>
+<canvas id="deep-space"></canvas>
+<script>window.addEventListener('load',()=>{const ds=document.getElementById('deep-space');if(ds&&typeof gsap!=='undefined'){gsap.to(ds,{opacity:1,duration:3.5,ease:'power2.inOut',delay:0.5})}else if(ds){ds.style.opacity='1'}});</script>
 
 <!-- Reading progress -->
 <div id="progress"></div>

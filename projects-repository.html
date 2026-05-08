@@ -11,10 +11,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js" defer></script>
 <script src="https://unpkg.com/split-type" defer></script>
+<script src="design_system/js/cinematic_engine_v3.js" defer></script>
 </head>
 <body>
 <div id="preloader"><div id="preloader-left"></div><div id="preloader-right"></div><div id="preloader-line"></div></div>
 <div class="atmosphere"></div>
+<canvas id="deep-space"></canvas>
 
 
 
@@ -131,8 +133,9 @@ window.addEventListener('load', () => {
       // Nav slides in during the curtain reveal
       tl.to('#topnav', { y: 0, duration: 1.4, ease: 'power3.out' }, "-=0.8");
 
-      // Ambient SVG halo
+      // Ambient SVG halo + deep-space starfield
       tl.to('.ambient', { opacity: 0.32, duration: 3.0, ease: 'power2.out' }, "-=1.2");
+      tl.to('#deep-space', { opacity: 1, duration: 3.5, ease: 'power2.inOut' }, "-=2.8");
 
       // Eyebrow meta row
       tl.to('.front .meta-row span', { opacity: 1, x: 0, duration: 1.0, stagger: 0.2, ease: 'power2.out' }, "-=2.2");
@@ -195,7 +198,7 @@ window.addEventListener('load', () => {
       // No GSAP — make everything visible immediately
       const preloader = document.getElementById('preloader');
       if (preloader) preloader.style.display = 'none';
-      document.querySelectorAll('.front .meta-row span, .front h1, .front .abstract, .front .ambient, .library-band .dashboard-layout, .library-band .dashboard-sidebar, .library-band .dashboard-main, #topnav').forEach(el => {
+      document.querySelectorAll('.front .meta-row span, .front h1, .front .abstract, .front .ambient, #deep-space, .library-band .dashboard-layout, .library-band .dashboard-sidebar, .library-band .dashboard-main, #topnav').forEach(el => {
         el.style.opacity = '1';
         el.style.transform = 'none';
         el.style.filter = 'none';
