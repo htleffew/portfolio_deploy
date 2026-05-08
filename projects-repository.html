@@ -86,7 +86,7 @@ window.addEventListener('load', () => {
 
       // ── Theatrical Opening Sequence ─────────────────────────────
       const tl = gsap.timeline({
-        onComplete: () => { initScrollTriggers(); }
+        onComplete: () => { initScrollTriggers(); if (typeof initLibraryDashboard === 'function') initLibraryDashboard(); }
       });
 
       const preloader = document.getElementById('preloader');
