@@ -22,7 +22,7 @@ const ProjectCard = ({ eyebrow, title, desc }) => {
         <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:10,letterSpacing:'0.35em',textTransform:'uppercase',color:'var(--tungsten)',marginBottom:18}}>{eyebrow}</div>
         <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:26,color:'var(--flare)',margin:'0 0 14px',fontWeight:600,lineHeight:1.25}}>{title}</h3>
         <p style={{fontFamily:"'Lora',serif",fontSize:14.5,color:'var(--platinum)',lineHeight:1.8,flexGrow:1,margin:0}}>{desc}</p>
-        <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:11,color:'var(--sapphire)',textTransform:'uppercase',letterSpacing:'0.10em',marginTop:20,opacity:hover?1:0.7,transition:'opacity 0.3s'}}>Read Case Study &rarr;</span>
+        <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:11,color:'var(--phthalo-lift)',textTransform:'uppercase',letterSpacing:'0.10em',marginTop:20,opacity:hover?1:0.7,transition:'opacity 0.3s'}}>Read Case Study &rarr;</span>
       </div>
     </a>
   );
@@ -32,7 +32,7 @@ const ProjectCarousel = () => {
   const [paused, setPaused] = React.useState(false);
   return (
     <section style={{maxWidth:1400,margin:'0 auto',padding:'120px 48px 60px',borderTop:'1px solid rgba(51,51,51,0.3)'}}>
-      <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:11,letterSpacing:'0.25em',textTransform:'uppercase',color:'var(--sapphire)',marginBottom:24}}>Featured Work</div>
+      <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:11,letterSpacing:'0.25em',textTransform:'uppercase',color:'var(--phthalo-lift)',marginBottom:24}}>Featured Work</div>
       <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:40,color:'var(--flare)',margin:'0 0 48px',lineHeight:1.1,fontWeight:600}}>Interactive Simulators &amp; Projects</h2>
       <div onMouseEnter={()=>setPaused(true)} onMouseLeave={()=>setPaused(false)}
            style={{position:'relative',width:'100%',overflow:'hidden',paddingBottom:24,

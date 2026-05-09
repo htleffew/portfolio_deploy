@@ -30,8 +30,8 @@
   --ink-3:#5E5E5A;          /* meta ink              <- inverse of tungsten */
 
   /* Brand accents */
-  --sapphire-deep:#0F52BA;
-  --sapphire:#4D8CFF;
+  --phthalo:#0F3A6B;
+  --phthalo-lift:#3866A0;
   --ink-blue:#1A3A6B;       /* sapphire's light-mode counterpart */
   /* Case-study figure palette, "Oil paint quartet".
      Real pigment names. Glazed flavor (no lift), except Hansa
@@ -111,7 +111,7 @@ body {
 #progress::after {
   content:''; position:absolute; left:0; top:0; bottom:0;
   width:var(--p,0%);
-  background:linear-gradient(90deg, var(--sapphire) 0%, var(--sapphire-deep) 100%);
+  background:linear-gradient(90deg, var(--phthalo-lift) 0%, var(--phthalo) 100%);
   transition:width 0.05s linear;
 }
 
@@ -151,7 +151,15 @@ body {
   backdrop-filter:blur(14px) saturate(140%);
   -webkit-backdrop-filter:blur(14px) saturate(140%);
   border:1px solid rgba(255,255,255,0.08);
-  transition:background 0.6s var(--ease-std), border-color 0.6s var(--ease-std), color 0.6s var(--ease-std);
+  transition:opacity 0.6s var(--ease-std), transform 0.6s var(--ease-std), background 0.6s var(--ease-std), border-color 0.6s var(--ease-std), color 0.6s var(--ease-std);
+  opacity:1;
+}
+
+/* Hide the spine entirely when the first section (hero) is active */
+#spine:has(.row:first-child.is-active) {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-50%) translateX(-20px);
 }
 #spine.is-paper { background:rgba(245,245,247,0.78); border-color:rgba(0,0,0,0.10); color:var(--ink); }
 #spine .row { display:flex; align-items:center; gap:10px; cursor:pointer; }
@@ -159,7 +167,7 @@ body {
   width:16px; height:1px; background:currentColor; opacity:0.35;
   transition:width .35s var(--ease-out), opacity .35s var(--ease-out);
 }
-#spine .row.is-active .tick { width:28px; opacity:1; background:var(--sapphire); }
+#spine .row.is-active .tick { width:28px; opacity:1; background:var(--phthalo-lift); }
 #spine .row.is-paper-active .tick { background:var(--ink-blue); }
 #spine .label { font-family:var(--mono); font-size:9.5px; letter-spacing:0.18em; text-transform:uppercase; opacity:0.55; transition:opacity .35s; white-space:nowrap; }
 #spine .row:hover .label, #spine .row.is-active .label { opacity:1; }
@@ -180,8 +188,8 @@ body {
   transition:background 0.6s var(--ease-std), border-color 0.6s var(--ease-std), color 0.6s var(--ease-std);
 }
 #status.is-paper { background:rgba(245,245,247,0.78); border-color:rgba(0,0,0,0.10); color:var(--ink); }
-#status .dot { width:5px; height:5px; background:var(--sapphire); display:inline-block; }
-#status .pct { color:var(--sapphire); font-weight:500; }
+#status .dot { width:5px; height:5px; background:var(--phthalo-lift); display:inline-block; }
+#status .pct { color:var(--phthalo-lift); font-weight:500; }
 #status.is-paper .dot { background:var(--ink-blue); }
 #status.is-paper .pct { color:var(--ink-blue); }
 
@@ -279,7 +287,7 @@ body {
 }
 .band--dark .eyebrow, .band--ink .eyebrow {
   font-family:var(--mono); font-size:10.5px; letter-spacing:0.30em; text-transform:uppercase;
-  color:var(--sapphire); margin:0 auto 18px; max-width:var(--col); padding:0 32px;
+  color:var(--phthalo-lift); margin:0 auto 18px; max-width:var(--col); padding:0 32px;
 }
 .band--dark .lede, .band--ink .lede {
   font-family:var(--body); font-style:italic; font-size:21px; line-height:1.6; color:var(--tungsten);
@@ -297,7 +305,7 @@ body {
   padding:0 2px;
   transition:color .2s;
 }
-.band--dark .sn-num, .band--ink .sn-num { color:var(--sapphire); }
+.band--dark .sn-num, .band--ink .sn-num { color:var(--phthalo-lift); }
 .sn-num:hover { color:var(--hansa); }
 
 .sn-body {
@@ -335,7 +343,7 @@ body {
     background:rgba(0,0,0,0.04);
     border-left:2px solid var(--ink-blue);
   }
-  .band--dark .sn-body.is-open, .band--ink .sn-body.is-open { background:rgba(255,255,255,0.04); border-left-color:var(--sapphire); }
+  .band--dark .sn-body.is-open, .band--ink .sn-body.is-open { background:rgba(255,255,255,0.04); border-left-color:var(--phthalo-lift); }
 }
 
 /* ============================================================
@@ -348,7 +356,7 @@ body {
   position:relative;
 }
 .gloss:hover { color:var(--ink-blue); }
-.band--dark .gloss:hover, .band--ink .gloss:hover { color:var(--sapphire); }
+.band--dark .gloss:hover, .band--ink .gloss:hover { color:var(--phthalo-lift); }
 .gloss .gloss-tip {
   position:absolute; left:50%; transform:translate(-50%, -8px);
   bottom:100%; min-width:280px; max-width:340px;
@@ -381,7 +389,7 @@ body {
   position:relative;
   transition:color .25s;
 }
-.band--dark .xlink, .band--ink .xlink { color:var(--sapphire); }
+.band--dark .xlink, .band--ink .xlink { color:var(--phthalo-lift); }
 .xlink:hover { color:var(--hansa); }
 .band--dark .xlink:hover, .band--ink .xlink:hover { color:var(--flare); }
 
@@ -402,7 +410,7 @@ body {
   border-color:rgba(0,0,0,0.10); box-shadow:0 18px 60px rgba(0,0,0,0.18);
 }
 #hover-preview.is-on { opacity:1; transform:translateY(0); }
-#hover-preview .h-eb { font-family:var(--mono); font-size:9.5px; letter-spacing:0.30em; text-transform:uppercase; color:var(--sapphire); margin-bottom:10px; }
+#hover-preview .h-eb { font-family:var(--mono); font-size:9.5px; letter-spacing:0.30em; text-transform:uppercase; color:var(--phthalo-lift); margin-bottom:10px; }
 #hover-preview.is-paper .h-eb { color:var(--ink-blue); }
 #hover-preview .h-t  { font-family:var(--display); font-size:20px; font-weight:600; line-height:1.22; margin-bottom:10px; }
 #hover-preview .h-d  { font-family:var(--body); font-size:13.5px; line-height:1.6; opacity:0.85; }
@@ -419,7 +427,7 @@ body {
   letter-spacing:-0.005em;
   text-align:center;
 }
-.pullquote::before { content:'\201C'; display:block; font-style:normal; font-size:1.6em; line-height:0; color:var(--sapphire); margin-bottom:14px; }
+.pullquote::before { content:'\201C'; display:block; font-style:normal; font-size:1.6em; line-height:0; color:var(--phthalo-lift); margin-bottom:14px; }
 .pullquote .qa {
   display:block; margin-top:36px;
   font-family:var(--mono); font-size:11px; font-style:normal; font-weight:400;
@@ -450,7 +458,7 @@ body {
 }
 .band--dark .figure .cap, .band--ink .figure .cap { color:var(--tungsten); }
 .figure .cap .num { color:var(--ink-blue); margin-right:10px; }
-.band--dark .figure .cap .num, .band--ink .figure .cap .num { color:var(--sapphire); }
+.band--dark .figure .cap .num, .band--ink .figure .cap .num { color:var(--phthalo-lift); }
 
 /* ============================================================
    STATS STRIP, sharp, no boxes
@@ -484,7 +492,7 @@ body {
 }
 .band--dark .tag, .band--ink .tag { color:var(--tungsten); border-color:var(--graphite); }
 .tag.is-on { color:var(--ink-blue); border-color:var(--ink-blue); }
-.band--dark .tag.is-on, .band--ink .tag.is-on { color:var(--sapphire); border-color:var(--sapphire); }
+.band--dark .tag.is-on, .band--ink .tag.is-on { color:var(--phthalo-lift); border-color:var(--phthalo-lift); }
 
 /* Bracket-style label (for "Case 07", category eyebrows) */
 .bracket {
@@ -506,9 +514,9 @@ body {
   background:var(--paper-2);
   font-family:var(--body); font-size:15.5px; line-height:1.7; color:var(--ink-2);
 }
-.band--dark .method .inner, .band--ink .method .inner { background:var(--charcoal); border-left-color:var(--sapphire); color:var(--platinum); }
+.band--dark .method .inner, .band--ink .method .inner { background:var(--charcoal); border-left-color:var(--phthalo-lift); color:var(--platinum); }
 .method .lab { font-family:var(--mono); font-size:9.5px; letter-spacing:0.30em; text-transform:uppercase; color:var(--ink-blue); margin-bottom:8px; }
-.band--dark .method .lab, .band--ink .method .lab { color:var(--sapphire); }
+.band--dark .method .lab, .band--ink .method .lab { color:var(--phthalo-lift); }
 
 /* ============================================================
    BACK MATTER
@@ -526,7 +534,7 @@ body {
   display:grid; grid-template-columns:50px 1fr; gap:20px;
 }
 .back-matter .biblio li:last-child { border-bottom:1px solid var(--graphite); }
-.back-matter .biblio .n { font-family:var(--mono); font-size:11px; color:var(--sapphire); letter-spacing:0.20em; }
+.back-matter .biblio .n { font-family:var(--mono); font-size:11px; color:var(--phthalo-lift); letter-spacing:0.20em; }
 .back-matter .biblio .ent i { color:var(--tungsten); }
 
 .back-matter .related { max-width:var(--col-wide); margin:0 auto 60px; padding:0 48px; }
@@ -542,7 +550,7 @@ body {
 }
 .r-card:last-child { border-right:0; }
 .r-card:hover { background:rgba(77,140,255,0.04); }
-.r-card .eb { font-family:var(--mono); font-size:9.5px; letter-spacing:0.28em; text-transform:uppercase; color:var(--sapphire); margin-bottom:14px; }
+.r-card .eb { font-family:var(--mono); font-size:9.5px; letter-spacing:0.28em; text-transform:uppercase; color:var(--phthalo-lift); margin-bottom:14px; }
 .r-card .ti { font-family:var(--display); font-size:22px; font-weight:600; line-height:1.18; color:var(--flare); margin-bottom:12px; }
 .r-card .ds { font-family:var(--body); font-size:14px; line-height:1.65; color:var(--tungsten); margin-bottom:20px; }
 .r-card .ar { font-family:var(--mono); font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:var(--platinum); opacity:0.7; }
@@ -563,9 +571,9 @@ body {
   transition:background .35s var(--ease-std);
 }
 .next-chap:hover { background:rgba(77,140,255,0.05); }
-.next-chap .lf .eb { font-family:var(--mono); font-size:10px; letter-spacing:0.30em; text-transform:uppercase; color:var(--sapphire); margin-bottom:12px; }
+.next-chap .lf .eb { font-family:var(--mono); font-size:10px; letter-spacing:0.30em; text-transform:uppercase; color:var(--phthalo-lift); margin-bottom:12px; }
 .next-chap .lf .ti { font-family:var(--display); font-size:32px; font-weight:600; color:var(--flare); line-height:1.18; max-width:22ch; }
-.next-chap .rt { font-family:var(--mono); font-size:14px; letter-spacing:0.20em; text-transform:uppercase; color:var(--sapphire); }
+.next-chap .rt { font-family:var(--mono); font-size:14px; letter-spacing:0.20em; text-transform:uppercase; color:var(--phthalo-lift); }
 
 /* ============================================================
    GLOSSARY HOVER state, hide tooltip when JS detects mode change
@@ -598,7 +606,7 @@ footer.site-foot a:hover { opacity:1; color:var(--platinum); }
 ul.bullets { max-width:var(--col); margin:0 auto 22px; padding:0 32px; list-style:none; }
 ul.bullets li { padding-left:22px; position:relative; margin-bottom:10px; font-size:17px; line-height:1.7; color:inherit; }
 ul.bullets li::before { content:'\25B8'; position:absolute; left:0; top:1px; font-family:var(--mono); color:var(--ink-blue); font-size:11px; }
-.band--dark ul.bullets li::before, .band--ink ul.bullets li::before { color:var(--sapphire); }
+.band--dark ul.bullets li::before, .band--ink ul.bullets li::before { color:var(--phthalo-lift); }
 
 </style>
 </head>
@@ -653,8 +661,8 @@ ul.bullets li::before { content:'\25B8'; position:absolute; left:0; top:1px; fon
     <svg viewBox="0 0 600 600" fill="none">
       <defs>
         <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#4D8CFF" stop-opacity="0.55"/>
-          <stop offset="100%" stop-color="#0F52BA" stop-opacity="0.0"/>
+          <stop offset="0%" stop-color="#3866A0" stop-opacity="0.55"/>
+          <stop offset="100%" stop-color="#0F3A6B" stop-opacity="0.0"/>
         </linearGradient>
       </defs>
       <g stroke="url(#g1)" stroke-width="1" fill="none">
@@ -663,8 +671,8 @@ ul.bullets li::before { content:'\25B8'; position:absolute; left:0; top:1px; fon
         <circle cx="300" cy="300" r="200"/>
         <circle cx="300" cy="300" r="260"/>
       </g>
-      <line x1="60" y1="540" x2="540" y2="60" stroke="#4D8CFF" stroke-width="1" stroke-dasharray="2 6" opacity="0.8"/>
-      <g fill="#4D8CFF" opacity="0.7">
+      <line x1="60" y1="540" x2="540" y2="60" stroke="#3866A0" stroke-width="1" stroke-dasharray="2 6" opacity="0.8"/>
+      <g fill="#3866A0" opacity="0.7">
         <circle cx="120" cy="490" r="2.5"/>
         <circle cx="180" cy="430" r="2.5"/>
         <circle cx="240" cy="380" r="2.5"/>
@@ -870,7 +878,7 @@ ul.bullets li::before { content:'\25B8'; position:absolute; left:0; top:1px; fon
           <text x="70"  y="195">CatBoost</text> <rect x="130" y="188" width="98" height="10" fill="#0F3A6B" fill-opacity="0.9"/>
           <line x1="70" y1="220" x2="210" y2="220" stroke="#333"/>
           <text x="70"  y="244" fill="#FFF">ensemble</text>
-          <rect x="130" y="234" width="96" height="14" fill="#4D8CFF"/>
+          <rect x="130" y="234" width="96" height="14" fill="#3866A0"/>
           <text x="232" y="244" fill="#FFF" text-anchor="end">0.79</text>
           <!-- COMMUNICATION (disagreeing) -->
           <rect x="260" y="50" width="200" height="260" fill="#0F0F0F" stroke="#222"/>
@@ -893,7 +901,7 @@ ul.bullets li::before { content:'\25B8'; position:absolute; left:0; top:1px; fon
           <text x="510" y="195">CatBoost</text> <rect x="570" y="188" width="102" height="10" fill="#1A4A38" fill-opacity="0.9"/>
           <line x1="510" y1="220" x2="690" y2="220" stroke="#333"/>
           <text x="510" y="244" fill="#FFF">ensemble</text>
-          <rect x="570" y="234" width="100" height="14" fill="#4D8CFF"/>
+          <rect x="570" y="234" width="100" height="14" fill="#3866A0"/>
           <text x="692" y="244" fill="#FFF" text-anchor="end">0.71</text>
         </g>
         <!-- arrows to fused -->
@@ -905,7 +913,7 @@ ul.bullets li::before { content:'\25B8'; position:absolute; left:0; top:1px; fon
         <!-- fused panel -->
         <rect x="760" y="50" width="120" height="260" fill="#161616" stroke="#1A3A6B" stroke-width="1"/>
         <text x="820" y="175" text-anchor="middle" font-family="Playfair Display" font-size="34" fill="#FFFFFF" font-weight="600">0.65</text>
-        <text x="820" y="200" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#4D8CFF" letter-spacing="2">FUSED</text>
+        <text x="820" y="200" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#3866A0" letter-spacing="2">FUSED</text>
         <text x="820" y="236" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#FF6B6B" letter-spacing="2">CROSS-DOMAIN</text>
         <text x="820" y="250" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#FF6B6B" letter-spacing="2">DISAGREEMENT</text>
         <text x="820" y="264" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#FF6B6B" letter-spacing="2">FLAG</text>
@@ -1127,7 +1135,7 @@ ul.bullets li::before { content:'\25B8'; position:absolute; left:0; top:1px; fon
     <svg viewBox="0 0 920 240" preserveAspectRatio="none">
       <!-- center node, this case -->
       <g>
-        <circle cx="460" cy="120" r="34" fill="#0F52BA" stroke="#4D8CFF"/>
+        <circle cx="460" cy="120" r="34" fill="#0F3A6B" stroke="#3866A0"/>
         <text x="460" y="116" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#FFFFFF" letter-spacing="1">NOTE 07</text>
         <text x="460" y="132" text-anchor="middle" font-family="Playfair Display" font-size="11" fill="#FFFFFF" font-style="italic">this</text>
       </g>
@@ -1148,11 +1156,11 @@ ul.bullets li::before { content:'\25B8'; position:absolute; left:0; top:1px; fon
         <line x1="490" y1="110" x2="740" y2="60"  stroke="#1A3A6B"/>
         <line x1="490" y1="130" x2="780" y2="180" stroke="#1A3A6B"/>
         <circle cx="760" cy="60"  r="22" fill="#030303" stroke="#1A3A6B"/>
-        <text x="760" y="62" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#4D8CFF" letter-spacing="1">NOTE 11</text>
+        <text x="760" y="62" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#3866A0" letter-spacing="1">NOTE 11</text>
         <text x="760" y="40" text-anchor="middle" font-family="Lora" font-size="11" fill="#A1A1A6" font-style="italic">UX livestream violence</text>
 
         <circle cx="800" cy="180" r="22" fill="#030303" stroke="#1A3A6B"/>
-        <text x="800" y="182" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#4D8CFF" letter-spacing="1">NOTE 14</text>
+        <text x="800" y="182" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#3866A0" letter-spacing="1">NOTE 14</text>
         <text x="800" y="208" text-anchor="middle" font-family="Lora" font-size="11" fill="#A1A1A6" font-style="italic">harmful helpfulness NLP</text>
       </g>
       <!-- legend -->
