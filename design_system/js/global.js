@@ -435,28 +435,20 @@ if (document.readyState === 'loading') {
     // and root pages are 0 levels deep.
     // Let's use a simpler heuristic based on document URI relative to 'portfolio_deploy'
     
-    // Safer relative path detection:
     const isRoot = window.location.pathname.endsWith('index.html') && !window.location.pathname.includes('/') || 
                    window.location.pathname.split('/').pop() === 'index.html' && window.location.pathname.split('/').slice(-2)[0] !== 'ADOS' && window.location.pathname.split('/').slice(-2)[0] !== 'AI_Equity_Framework' ||
                    !window.location.pathname.includes('/') ||
                    window.location.pathname.endsWith('projects-repository.html');
-                   
-    // Let's use a reliable way: count slashes after the domain. But locally file:/// paths are tricky.
-    // Alternative: We can just use a relative script tag src to determine path prefix.
-    const scripts = document.getElementsByTagName('script');
+                     // Determine the path prefix relative to this script
     let pathPrefix = './';
-    for (let i = 0; i < scripts.length; i++) {
-        const src = scripts[i].getAttribute('src');
-        if (src && src.includes('global.js')) {
-            const match = src.match(/^(.*?)design_system\/js\/global\.js/);
-            if (match) {
-                pathPrefix = match[1];
-            }
-            break;
+    const gsScript = document.querySelector('script[src*="global.js"]');
+    if (gsScript) {
+        const src = gsScript.getAttribute('src');
+        const dsIndex = src.indexOf('design_system/js/global.js');
+        if (dsIndex !== -1) {
+            pathPrefix = src.substring(0, dsIndex);
         }
     }
-    
-    // Fallback if empty
     if (!pathPrefix) pathPrefix = './';
 
     // 2.5 Inject Film Grain Overlay
