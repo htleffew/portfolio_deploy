@@ -410,11 +410,63 @@ const initCinematicEngine = () => {
     animate();
 };
 
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initCinematicEngine);
-} else {
-    initCinematicEngine();
-}
+// --- Self-bootstrapping cinematic launcher ---------------------------------
+// Injects #deep-space and #glCanvas into the DOM if absent, then dynamically
+// loads Three.js and its postprocessing chain if not already present, then
+// fires initCinematicEngine. No page needs to declare canvases or load
+// Three.js manually — this is the single source of truth.
+(function launchCinematicEngine() {
+    if (!document.getElementById('deep-space')) {
+        const ds = document.createElement('canvas');
+        ds.id = 'deep-space';
+        document.body.insertBefore(ds, document.body.firstChild);
+    }
+    if (!document.getElementById('glCanvas')) {
+        const gc = document.createElement('canvas');
+        gc.id = 'glCanvas';
+        document.body.insertBefore(gc, document.body.firstChild);
+    }
+
+    if (typeof THREE !== 'undefined') {
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initCinematicEngine);
+        } else {
+            initCinematicEngine();
+        }
+        return;
+    }
+
+    const CDN = 'https://cdn.jsdelivr.net/npm/three@0.128.0';
+    const threeDeps = [
+        'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js',
+        CDN + '/examples/js/postprocessing/EffectComposer.js',
+        CDN + '/examples/js/postprocessing/RenderPass.js',
+        CDN + '/examples/js/postprocessing/ShaderPass.js',
+        CDN + '/examples/js/shaders/CopyShader.js',
+        CDN + '/examples/js/shaders/LuminosityHighPassShader.js',
+        CDN + '/examples/js/postprocessing/UnrealBloomPass.js',
+        'https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js'
+    ];
+
+    const loadSeq3 = (urls, cb) => {
+        if (!urls.length) { cb(); return; }
+        const s = document.createElement('script');
+        s.src = urls[0];
+        s.onload  = () => loadSeq3(urls.slice(1), cb);
+        s.onerror = () => loadSeq3(urls.slice(1), cb);
+        document.head.appendChild(s);
+    };
+
+    const readyThenInit = () => {
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initCinematicEngine);
+        } else {
+            initCinematicEngine();
+        }
+    };
+
+    loadSeq3(threeDeps, readyThenInit);
+})();
 
 
 /* === global_chrome.js === */
@@ -457,6 +509,24 @@ if (document.readyState === 'loading') {
         grain.id = 'grain';
         grain.setAttribute('aria-hidden', 'true');
         document.body.insertBefore(grain, document.body.firstChild);
+    }
+
+    // 2.6 Inject cinematic canvases and atmosphere if missing.
+    //     Belt-and-suspenders guard alongside launchCinematicEngine().
+    if (!document.getElementById('deep-space')) {
+        const ds = document.createElement('canvas');
+        ds.id = 'deep-space';
+        document.body.insertBefore(ds, document.body.firstChild);
+    }
+    if (!document.getElementById('glCanvas')) {
+        const gc = document.createElement('canvas');
+        gc.id = 'glCanvas';
+        document.body.insertBefore(gc, document.body.firstChild);
+    }
+    if (!document.querySelector('.atmosphere')) {
+        const atm = document.createElement('div');
+        atm.className = 'atmosphere';
+        document.body.insertBefore(atm, document.body.firstChild);
     }
 
     // 2.8 Custom Cursor logic removed per user request
@@ -705,88 +775,141 @@ if (document.readyState === 'loading') {
 
 
 
+
 // ==========================================
 // GLOBAL CINEMATIC REVEAL ORCHESTRATION
+// Self-bootstrapping: dynamically loads GSAP + companions if absent.
+// Pages need ZERO additional script tags beyond global.js.
 // ==========================================
-window.addEventListener('load', () => {
+(function mountOrchestration() {
     if (window.disableGlobalOrchestration) return;
-    if (typeof gsap !== 'undefined') {
-        const tl = gsap.timeline({
-            onComplete: () => {
-                if (typeof ScrollTrigger !== 'undefined') {
-                    ScrollTrigger.refresh();
-                    initScrollTriggers();
-                }
+
+    const gsapDeps = [
+        'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js',
+        'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js',
+        'https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js',
+        'https://unpkg.com/split-type'
+    ];
+
+    const alreadyLoaded = (url) => {
+        if (url.includes('gsap.min')      && typeof gsap !== 'undefined')          return true;
+        if (url.includes('ScrollTrigger') && typeof ScrollTrigger !== 'undefined') return true;
+        if (url.includes('lenis')         && typeof Lenis !== 'undefined')         return true;
+        if (url.includes('split-type')    && typeof SplitType !== 'undefined')     return true;
+        return false;
+    };
+
+    const loadSeq = (urls, cb) => {
+        if (!urls.length) { cb(); return; }
+        if (alreadyLoaded(urls[0])) { loadSeq(urls.slice(1), cb); return; }
+        const s = document.createElement('script');
+        s.src = urls[0];
+        s.onload  = () => loadSeq(urls.slice(1), cb);
+        s.onerror = () => loadSeq(urls.slice(1), cb);
+        document.head.appendChild(s);
+    };
+
+    const runOrchestration = () => {
+        // Guard against the timing race: if GSAP loaded dynamically and
+        // window.load already fired, addEventListener('load') will never
+        // trigger. Run the timeline immediately in that case.
+        const doTimeline = () => {
+
+            if (typeof gsap === 'undefined') {
+                const pre = document.getElementById('preloader');
+                if (pre) pre.style.display = 'none';
+                document.querySelectorAll(
+                    '.meta-row span, h1, .hero-rule, .abstract, .ambient, #glCanvas, #deep-space, ' +
+                    '.scroll-cue, .band .section-eyebrow, .band .section-heading, .type-block, ' +
+                    '.swatch-grid, .tagrow, .p-card, .r-card, .demo-box, .dashboard-layout, .reveal, .ds-prose'
+                ).forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
+                return;
             }
-        });
 
-        const preloader = document.getElementById('preloader');
-        const preLeft = document.getElementById('preloader-left');
-        const preRight = document.getElementById('preloader-right');
-        const preLine = document.getElementById('preloader-line');
-        if (preloader && preLeft && preRight && preLine) {
-            tl.to(preLine, { height: '28vh', duration: 1.1, ease: 'power2.inOut' })
-              .to(preLine, { opacity: 0, height: '50vh', duration: 0.6, ease: 'power2.in' }, '+=0.15')
-              .to(preLeft, { xPercent: -100, duration: 1.1, ease: 'power3.inOut' }, '-=0.25')
-              .to(preRight, { xPercent: 100, duration: 1.1, ease: 'power3.inOut' }, '<')
-              .set(preloader, { display: 'none' });
-        } else if (preloader) {
-            tl.to(preloader, { opacity: 0, duration: 1.2, ease: 'power2.inOut', onComplete: () => { preloader.style.display = 'none'; } });
-        }
+            if (typeof ScrollTrigger !== 'undefined') gsap.registerPlugin(ScrollTrigger);
 
-        // Fade in the spatial void (managed by cinematic_engine_v3)
-        tl.to(['#deep-space', '#glCanvas'], { opacity: 1, duration: 3.5, ease: 'power2.inOut' }, "-=0.6");
+            if (typeof Lenis !== 'undefined') {
+                const lenis = new Lenis({ duration: 1.4, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
+                gsap.ticker.add(time => lenis.raf(time * 1000));
+                gsap.ticker.lagSmoothing(0);
+            }
 
-        let split;
-        const heroTitle = document.querySelector('.hero h1');
-        if (heroTitle && typeof SplitType !== 'undefined') {
-            heroTitle.style.opacity = 1;
-            split = new SplitType(heroTitle, { types: 'words, chars' });
-        }
-
-        tl.to('#topnav', { y: 0, duration: 1.4, ease: 'power3.out' }, "-=2.8");
-        tl.to('.ambient', { opacity: 0.35, scale: 1, rotation: 0, duration: 3.0, ease: 'power2.out' }, "-=2.8");
-        tl.to('.meta-row span', { opacity: 1, x: 0, duration: 1.0, stagger: 0.2, ease: 'power2.out' }, "-=2.2");
-        if (split) {
-            tl.from(split.chars, { opacity: 0, y: 20, rotateX: -90, stagger: 0.04, duration: 1.5, ease: 'back.out(1.5)' }, "-=1.6");
-        }
-        tl.to('.hero-rule', { width: 64, opacity: 1, duration: 1.3, ease: 'power3.inOut' }, "-=1.0");
-        tl.to('.abstract', { opacity: 1, y: 0, duration: 1.3, ease: 'power2.out' }, "-=0.9");
-        tl.to('.scroll-cue', { opacity: 1, duration: 1.2, ease: 'power2.out' }, "-=0.3");
-
-        function initScrollTriggers() {
-            gsap.to('.scroll-cue', {
-                opacity: 0, y: -10, duration: 0.6, ease: 'power2.in',
-                scrollTrigger: { trigger: '.hero', start: 'top top', end: '+=120', scrub: true }
-            });
-
-            gsap.utils.toArray('.band').forEach(band => {
-                const tlBand = gsap.timeline({
-                    scrollTrigger: { trigger: band, start: 'top 75%', toggleActions: 'play none none none' }
-                });
-                const eyebrow = band.querySelector('.section-eyebrow');
-                const heading = band.querySelector('.section-heading');
-                
-                if (eyebrow) tlBand.fromTo(eyebrow, { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 1.2, ease: 'power3.out' });
-                if (heading) tlBand.fromTo(heading, { opacity: 0, y: 25 }, { opacity: 1, y: 0, duration: 1.4, ease: 'power3.out' }, '-=0.6');
-                
-                const reveals = band.querySelectorAll('.type-block, .swatch-grid, .tagrow, .p-card, .r-card, .demo-box, .dashboard-layout');
-                if (reveals.length) {
-                    tlBand.fromTo(reveals, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 1.5, stagger: 0.15, ease: 'expo.out' }, '-=0.8');
+            const tl = gsap.timeline({
+                onComplete: () => {
+                    if (typeof ScrollTrigger !== 'undefined') {
+                        ScrollTrigger.refresh();
+                        initScrollTriggers();
+                    }
                 }
             });
 
-            // Independent reveals for long-form case study paragraphs
-            gsap.utils.toArray('.reveal, .ds-prose').forEach(el => {
-                gsap.fromTo(el, { opacity: 0, y: 40 }, {
-                    opacity: 1, y: 0, duration: 1.2, ease: 'expo.out',
-                    scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
+            const preloader = document.getElementById('preloader');
+            const preLeft   = document.getElementById('preloader-left');
+            const preRight  = document.getElementById('preloader-right');
+            const preLine   = document.getElementById('preloader-line');
+            if (preloader && preLeft && preRight && preLine) {
+                tl.to(preLine,  { height: '28vh', duration: 1.1, ease: 'power2.inOut' })
+                  .to(preLine,  { opacity: 0, height: '50vh', duration: 0.6, ease: 'power2.in' }, '+=0.15')
+                  .to(preLeft,  { xPercent: -100, duration: 1.1, ease: 'power3.inOut' }, '-=0.25')
+                  .to(preRight, { xPercent:  100, duration: 1.1, ease: 'power3.inOut' }, '<')
+                  .set(preloader, { display: 'none' });
+            } else if (preloader) {
+                tl.to(preloader, { opacity: 0, duration: 1.2, ease: 'power2.inOut',
+                                   onComplete: () => { preloader.style.display = 'none'; } });
+            }
+
+            tl.to(['#deep-space', '#glCanvas'], { opacity: 1, duration: 3.5, ease: 'power2.inOut' }, '-=0.6');
+
+            let split;
+            const heroTitle = document.querySelector('.hero h1');
+            if (heroTitle && typeof SplitType !== 'undefined') {
+                heroTitle.style.opacity = 1;
+                split = new SplitType(heroTitle, { types: 'words, chars' });
+            }
+
+            tl.to('#topnav',        { y: 0, duration: 1.4, ease: 'power3.out' }, '-=2.8');
+            tl.to('.ambient',       { opacity: 0.35, scale: 1, rotation: 0, duration: 3.0, ease: 'power2.out' }, '-=2.8');
+            tl.to('.meta-row span', { opacity: 1, x: 0, duration: 1.0, stagger: 0.2, ease: 'power2.out' }, '-=2.2');
+            if (split) {
+                tl.from(split.chars, { opacity: 0, y: 20, rotateX: -90, stagger: 0.04, duration: 1.5, ease: 'back.out(1.5)' }, '-=1.6');
+            }
+            tl.to('.hero-rule',  { width: 64, opacity: 1, duration: 1.3, ease: 'power3.inOut' }, '-=1.0');
+            tl.to('.abstract',   { opacity: 1, y: 0,      duration: 1.3, ease: 'power2.out'   }, '-=0.9');
+            tl.to('.scroll-cue', { opacity: 1,             duration: 1.2, ease: 'power2.out'   }, '-=0.3');
+
+            function initScrollTriggers() {
+                gsap.to('.scroll-cue', {
+                    opacity: 0, y: -10, duration: 0.6, ease: 'power2.in',
+                    scrollTrigger: { trigger: '.hero', start: 'top top', end: '+=120', scrub: true }
                 });
-            });
+                gsap.utils.toArray('.band').forEach(band => {
+                    const tlBand = gsap.timeline({
+                        scrollTrigger: { trigger: band, start: 'top 75%', toggleActions: 'play none none none' }
+                    });
+                    const eyebrow = band.querySelector('.section-eyebrow');
+                    const heading = band.querySelector('.section-heading');
+                    if (eyebrow) tlBand.fromTo(eyebrow, { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 1.2, ease: 'power3.out' });
+                    if (heading) tlBand.fromTo(heading, { opacity: 0, y: 25  }, { opacity: 1, y: 0, duration: 1.4, ease: 'power3.out' }, '-=0.6');
+                    const reveals = band.querySelectorAll('.type-block, .swatch-grid, .tagrow, .p-card, .r-card, .demo-box, .dashboard-layout');
+                    if (reveals.length) {
+                        tlBand.fromTo(reveals, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 1.5, stagger: 0.15, ease: 'expo.out' }, '-=0.8');
+                    }
+                });
+                gsap.utils.toArray('.reveal, .ds-prose').forEach(el => {
+                    gsap.fromTo(el, { opacity: 0, y: 40 }, {
+                        opacity: 1, y: 0, duration: 1.2, ease: 'expo.out',
+                        scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
+                    });
+                });
+            }
+        }; // end doTimeline
+
+        if (document.readyState === 'complete') {
+            doTimeline(); // window already loaded — run now
+        } else {
+            window.addEventListener('load', doTimeline);
         }
-    } else {
-        const preloader = document.getElementById('preloader');
-        if (preloader) preloader.style.display = 'none';
-        document.querySelectorAll('.meta-row span, h1, .hero-rule, .abstract, .ambient, #glCanvas, #deep-space, .scroll-cue, .band .section-eyebrow, .band .section-heading, .type-block, .swatch-grid, .tagrow, .p-card, .r-card, .demo-box, .dashboard-layout').forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
-    }
-});
+    }; // end runOrchestration
+
+    loadSeq(gsapDeps, runOrchestration);
+})(); // end mountOrchestration IIFE
