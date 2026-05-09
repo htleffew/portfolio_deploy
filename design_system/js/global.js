@@ -770,7 +770,7 @@ window.addEventListener('load', () => {
                 if (eyebrow) tlBand.fromTo(eyebrow, { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 1.2, ease: 'power3.out' });
                 if (heading) tlBand.fromTo(heading, { opacity: 0, y: 25 }, { opacity: 1, y: 0, duration: 1.4, ease: 'power3.out' }, '-=0.6');
                 
-                const reveals = band.querySelectorAll('.type-block, .swatch-grid, .tagrow, .p-card, .r-card, .demo-box, .dashboard-layout');
+                const reveals = band.querySelectorAll('.type-block, .swatch-grid, .tagrow, .p-card, .r-card, .demo-box, .dashboard-layout, .reveal, .ds-prose');
                 if (reveals.length) {
                     tlBand.fromTo(reveals, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 1.5, stagger: 0.15, ease: 'expo.out' }, '-=0.8');
                 }
