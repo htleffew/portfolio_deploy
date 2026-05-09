@@ -28,7 +28,10 @@
     for (let i = 0; i < scripts.length; i++) {
         const src = scripts[i].getAttribute('src');
         if (src && src.includes('global_chrome.js')) {
-            pathPrefix = src.replace('design_system/js/global_chrome.js', '');
+            const match = src.match(/^(.*?)design_system\/js\/global_chrome\.js/);
+            if (match) {
+                pathPrefix = match[1];
+            }
             break;
         }
     }
