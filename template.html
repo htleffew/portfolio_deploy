@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Template | Obsidian & Chrome</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="design_system/css/global_chrome.css">
+<link rel="stylesheet" href="design_system/assets/css/institutional.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+<script src="https://unpkg.com/split-type" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js" defer></script>
+
+<style>
+/* Base inline styles mirroring index.html */
+:root {
+  --obsidian:#030303;--charcoal:#161616;--graphite:#222222;--brushed:#333333;
+  --tungsten:#A1A1A6;--platinum:#F5F5F7;--flare:#FFFFFF;
+  --paper:#F5F5F7;--paper-2:#E9E9E9;--paper-3:#DDDDDD;
+  --ink:#030303;--ink-2:#222222;--ink-3:#5E5E5A;
+  --phthalo:#0F3A6B;--phthalo-lift:#3866A0;--ink-blue:#1A3A6B;
+  --display:'Playfair Display','Times New Roman',serif;
+  --body:'Lora',Georgia,serif;
+  --mono:'JetBrains Mono','SF Mono',Menlo,monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;border-radius:0 !important;word-break:normal;overflow-wrap:normal;hyphens:none;-webkit-hyphens:none}
+::selection{background:rgba(77,140,255,0.35);color:#fff}
+html{scroll-behavior:smooth}
+
+/* Color Palette Swatches */
+.swatch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 24px; margin-bottom: 48px; }
+.swatch { display: flex; flex-direction: column; gap: 8px; }
+.swatch-color { width: 100%; aspect-ratio: 1; border: 1px solid var(--graphite); }
+.band--paper .swatch-color { border-color: var(--paper-3); }
+.swatch-label { font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--tungsten); }
+.band--paper .swatch-label { color: var(--ink-3); }
+
+/* Typography Block */
+.type-block { margin-bottom: 48px; display: flex; flex-direction: column; gap: 16px; }
+
+/* Structural Reused Components from index.html */
+.col-wide{max-width:1400px;margin:0 auto;padding:0 48px}
+@media(max-width:768px){.col-wide{padding:0 24px}}
+
+.section-eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:0.30em;text-transform:uppercase;color:var(--phthalo-lift);margin-bottom:18px}
+.band--paper .section-eyebrow{color:var(--ink-blue)}
+.section-heading{font-family:var(--display);font-size:clamp(24px,3.0vw,32px);font-weight:600;letter-spacing:-0.012em;line-height:1.12;color:var(--flare);margin-bottom:48px}
+.band--paper .section-heading{color:var(--ink)}
+
+/* Buttons & Links */
+.contact-row{display:flex;gap:32px;font-family:var(--mono);font-size:11px;letter-spacing:0.10em;text-transform:uppercase; margin-bottom: 48px;}
+.contact-row a{color:var(--phthalo);text-decoration:none;border-bottom:1px solid transparent;transition:all 0.3s}
+.contact-row a:hover{color:var(--flare);border-bottom-color:var(--flare)}
+.contact-row a.primary{color:var(--flare);border-bottom-color:rgba(255,255,255,0.3)}
+.band--paper .contact-row a{color:var(--ink-blue);}
+.band--paper .contact-row a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+.band--paper .contact-row a.primary{color:var(--ink);border-bottom-color:rgba(0,0,0,0.3)}
+
+/* index.html specific classes */
+.bio-card{background:#fff;border:1px solid var(--paper-3);padding:48px;position:relative;overflow:hidden;margin-bottom:48px;}
+.bio-card p{font-family:var(--body);font-size:16px;line-height:1.85;color:var(--ink);margin-bottom:24px;max-width:1100px}
+.bio-card p:last-of-type{margin-bottom:0}
+.bio-expand-btn{background:transparent;border:1px solid rgba(0,0,0,0.2);color:var(--ink-blue);font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:0.10em;padding:12px 24px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:all 0.3s;margin-top:16px;outline:none}
+.bio-expand-btn:hover{border-color:var(--ink-blue);background:rgba(26,58,107,0.06)}
+.p-card{width:420px;min-height:280px;position:relative;background:rgba(22,22,22,0.65);border:1px solid var(--graphite);text-decoration:none;overflow:hidden;transition:border-color 0.6s,transform 0.4s,background 0.35s;display:flex;flex-direction:column;cursor:pointer;margin-bottom:48px;}
+.p-card:hover{transform:translateY(-4px);border-color:rgba(77,140,255,0.4);background:rgba(15,82,186,0.15)}
+.p-content{padding:36px;display:flex;flex-direction:column;height:100%}
+.p-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:0.35em;text-transform:uppercase;color:var(--tungsten);margin-bottom:18px}
+.p-title{font-family:var(--display);font-size:20px;color:var(--flare);margin-bottom:14px;font-weight:600;line-height:1.25}
+.p-desc{font-family:var(--body);font-size:15px;color:var(--tungsten);line-height:1.7;flex-grow:1}
+.p-link{font-family:var(--mono);font-size:10px;color:var(--phthalo-lift);text-transform:uppercase;letter-spacing:0.18em;margin-top:20px;display:inline-block;opacity:0.7;transition:opacity 0.3s}
+.p-card:hover .p-link{opacity:1}
+.resume-stack{display:flex;flex-direction:column;gap:0;margin-bottom:48px;}
+.r-card{position:relative;overflow:hidden;transition:border-color 0.7s}
+.band--dark .r-card{background:rgba(22,22,22,0.65);border:1px solid var(--graphite);border-bottom:0}
+.band--dark .r-card:last-child{border-bottom:1px solid var(--graphite)}
+.band--dark .r-card:hover{border-color:var(--tungsten)}
+.band--paper .r-card{background:#fff;border:1px solid var(--paper-3);border-bottom:0}
+.band--paper .r-card:last-child{border-bottom:1px solid var(--paper-3)}
+.band--paper .r-card:hover{border-color:rgba(0,0,0,0.2)}
+.r-bg{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(0,0,0,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,0.02) 1px,transparent 1px);background-size:40px 40px;z-index:0}
+.band--dark .r-bg{background-image:linear-gradient(rgba(245,245,247,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(245,245,247,0.02) 1px,transparent 1px)}
+.r-content{position:relative;z-index:1;padding:48px}
+.r-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;padding-bottom:24px}
+.band--dark .r-header{border-bottom:1px solid var(--graphite)}
+.band--paper .r-header{border-bottom:1px solid var(--paper-3)}
+.r-title{font-family:var(--display);font-size:22px;font-weight:600;margin-bottom:8px;line-height:1.2}
+.band--dark .r-title{color:var(--flare)}
+.band--paper .r-title{color:var(--ink)}
+.r-company{font-family:var(--body);font-size:15px;font-style:italic}
+.band--dark .r-company{color:var(--phthalo-lift)}
+.band--paper .r-company{color:var(--ink-blue)}
+.r-dates{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:0.10em;padding:6px 16px;white-space:nowrap}
+.band--dark .r-dates{color:var(--tungsten);border:1px solid var(--graphite)}
+.band--paper .r-dates{color:var(--ink-3);border:1px solid var(--paper-3)}
+.r-intro{font-family:var(--body);font-size:15px;line-height:1.8;margin-bottom:24px;max-width:900px}
+.band--dark .r-intro{color:var(--platinum)}
+.band--paper .r-intro{color:var(--ink-2)}
+.tagrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.tag{font-family:var(--mono);font-size:10px;letter-spacing:0.20em;text-transform:uppercase;padding:6px 12px;background:transparent;transition:border-color 0.3s,color 0.3s}
+.band--dark .tag{color:var(--tungsten);border:1px solid var(--graphite)}
+.band--dark .tag:hover{border-color:rgba(77,140,255,0.5);color:var(--platinum)}
+.band--paper .tag{color:var(--ink-3);border:1px solid var(--paper-3)}
+.band--paper .tag:hover{border-color:var(--ink-blue);color:var(--ink)}
+
+/* about.html specific classes */
+.about-hero{padding:160px 0 80px;text-align:left; position:relative;}
+.about-hero .col{max-width:var(--col);margin:0 auto;padding:0 32px}
+.about-hero .eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:0.30em;text-transform:uppercase;color:var(--ink-blue);margin-bottom:18px}
+.about-hero h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,3.5vw,42px);letter-spacing:-0.018em;line-height:1.12;color:var(--ink);margin-bottom:28px}
+.about-hero .lede{font-family:var(--body);font-style:italic;font-size:19px;line-height:1.7;color:var(--ink-2);max-width:60ch}
+.about-body{padding:0 0 100px}
+.about-body .col{max-width:var(--col);margin:0 auto;padding:0 32px}
+.about-body p{font-family:var(--body);font-size:16.5px;line-height:1.85;color:var(--ink-2);margin-bottom:28px;max-width:62ch}
+.about-body p:last-child{margin-bottom:0}
+.about-body .section-break{width:48px;height:1px;background:var(--ink-blue);margin:48px 0;opacity:0.4}
+.about-headshot{margin:36px 0 0;max-width:280px}
+.about-headshot img{width:100%;display:block;filter:grayscale(100%) contrast(1.1);transition:filter 0.6s ease}
+.about-headshot:hover img{filter:grayscale(0%) contrast(1.05)}
+.spotify-embed{margin:32px 0 36px;max-width:100%}
+.spotify-embed iframe{display:block}
+.about-cta{padding:60px 0 80px;border-top:1px solid var(--paper-3)}
+.about-cta .col{max-width:var(--col);margin:0 auto;padding:0 32px}
+.about-cta .links{display:flex;gap:32px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;letter-spacing:0.10em;text-transform:uppercase}
+.about-cta .links a{color:var(--ink-blue);text-decoration:none;border-bottom:1px solid rgba(0,0,0,0.2);padding-bottom:4px;transition:all 0.3s}
+.about-cta .links a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+
+/* multimodal-autism-ai.html specific classes */
+.explorer { max-width: var(--col-wide); margin: 48px 0; padding: 0; }
+.profile-selector { 
+    width: 100%; max-width: 320px; padding: 12px 16px; margin-bottom: 32px; 
+    font-family: var(--mono); font-size: 12px; background: transparent; 
+    color: var(--ink); border: 1px solid var(--paper-3); cursor: pointer; 
+}
+.profile-card {
+    background: #fff; border: 1px solid var(--paper-3); padding: 32px;
+    display: grid; grid-template-columns: 1fr; gap: 24px;
+}
+.profile-card .metric { display: flex; flex-direction: column; gap: 8px; }
+.profile-card .mlab { font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-blue); }
+.profile-card .mval { font-family: var(--body); font-size: 16px; color: var(--ink); }
+.profile-card .mval.highlight { font-size: 24px; font-weight: 500; font-family: var(--display); color: var(--phthalo); }
+@media(min-width: 768px) { .profile-card { grid-template-columns: repeat(2, 1fr); } .profile-card .full-width { grid-column: span 2; } }
+
+/* Fix Typography contrasts by removing any background that would hide the dark text */
+.no-bg-wrapper { background: transparent !important; }
+
+/* In the Paper theme, ensure typography blocks have proper dark coloring */
+.band--paper .type-block h1.ds-h1, 
+.band--paper .type-block h2.ds-h2, 
+.band--paper .type-block h3.ds-h3, 
+.band--paper .type-block h4.ds-h4 { color: var(--ink); }
+
+.band--paper .type-block p.ds-lede { color: var(--ink-3); }
+.band--paper .type-block p.ds-p { color: var(--ink-2); }
+.band--paper .type-block .ds-eyebrow { color: var(--ink-blue); }
+.band--paper .type-block .ds-caption { color: var(--ink-3); }
+
+/* In the Dark theme, ensure typography blocks have proper light coloring */
+.band--dark .type-block h1.ds-h1, 
+.band--dark .type-block h2.ds-h2, 
+.band--dark .type-block h3.ds-h3, 
+.band--dark .type-block h4.ds-h4 { color: var(--flare); }
+
+.band--dark .type-block p.ds-lede { color: var(--tungsten); }
+.band--dark .type-block p.ds-p { color: var(--platinum); }
+.band--dark .type-block .ds-eyebrow { color: var(--phthalo-lift); }
+.band--dark .type-block .ds-caption { color: var(--tungsten); }
+
+/* Preloader fixes from index.html */
+#preloader { position: fixed; inset: 0; z-index: 9999; pointer-events: none; overflow: hidden; }
+#preloader-left, #preloader-right { position: absolute; top: 0; bottom: 0; width: 50.5%; background: var(--obsidian); will-change: transform; }
+#preloader-left { left: 0; }
+#preloader-right { right: 0; }
+#preloader-line { position: absolute; left: 50%; top: 50%; width: 1px; height: 0; background: linear-gradient(180deg, transparent 0%, var(--phthalo-lift) 30%, var(--phthalo-lift) 70%, transparent 100%); transform: translate(-50%, -50%); will-change: height, opacity; }
+
+.ambient { position:absolute; right:-10%; top:50%; transform:translateY(-50%); width:60%; max-width:780px; aspect-ratio:1; pointer-events:none; z-index:1; opacity:0; }
+.ambient svg { width:100%; height:100%; display:block; }
+.scroll-cue{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:12px;opacity:0;z-index:5}
+.scroll-cue span{font-family:var(--mono);font-size:9px;letter-spacing:0.35em;text-transform:uppercase;color:var(--tungsten)}
+.scroll-cue-line{width:1px;height:48px;position:relative;overflow:hidden}
+.scroll-cue-line::after{content:'';position:absolute;top:-100%;left:0;width:100%;height:100%;background:linear-gradient(to bottom,transparent,var(--phthalo-lift));animation:scrollDrip 2s ease-in-out infinite}
+@keyframes scrollDrip{0%{top:-100%;opacity:0}30%{opacity:1}100%{top:100%;opacity:0}}
+.hero .meta-row span, .hero h1, .hero .hero-rule, .hero .abstract { opacity: 0; }
+.band .section-eyebrow, .band .section-heading, .type-block, .swatch-grid, .tagrow, .p-card, .r-card, .demo-box, .dashboard-layout { opacity: 0; }
+</style>
+</head>
+<body>
+<div id="preloader"><div id="preloader-left"></div><div id="preloader-right"></div><div id="preloader-line"></div></div>
+
+<header id="topnav">
+  <a href="index.html" class="brand">Dr. Heather Leffew</a>
+  <div class="nav-links">
+    <button id="trigger-search">Search</button>
+    <a href="about.html">About</a>
+    <a href="projects-repository.html">Research Library</a>
+    <a href="resume.pdf" target="_blank" class="nav-btn">Resume -></a>
+  </div>
+</header>
+<div id="progress"></div>
+<canvas id="deep-space"></canvas>
+<canvas id="glCanvas"></canvas>
+
+<!-- INTRO / HERO SECTION -->
+<section class="hero band band--dark front" data-mode="dark" style="min-height: 50vh; padding-top: 160px;" data-spine="Overview" data-section="Overview">
+
+  <div class="ambient" aria-hidden="true">
+    <svg viewBox="0 0 600 600" fill="none">
+      <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3866A0" stop-opacity="0.55"/><stop offset="100%" stop-color="#0F3A6B" stop-opacity="0.0"/></linearGradient></defs>
+      <g stroke="url(#g1)" stroke-width="1" fill="none"><circle cx="300" cy="300" r="80"/><circle cx="300" cy="300" r="140"/><circle cx="300" cy="300" r="200"/><circle cx="300" cy="300" r="260"/></g>
+      <line x1="60" y1="540" x2="540" y2="60" stroke="#3866A0" stroke-width="1" stroke-dasharray="2 6" opacity="0.6"/>
+    </svg>
+  </div>
+
+  <div class="col-wide">
+    <div class="meta-row" style="font-family:var(--mono);font-size:11px;letter-spacing:0.30em;text-transform:uppercase;color:var(--tungsten);margin-bottom:40px;"><span>Design System</span><span class="sep" style="opacity:0.4;margin:0 18px;">&middot;</span><span>Obsidian &amp; Chrome</span></div>
+    <h1 style="font-family:var(--display);font-weight:600;font-size:clamp(28px,3.5vw,46px);letter-spacing:-0.018em;line-height:1.06;color:var(--flare);margin-bottom:28px;">Master Template Guideline</h1>
+    <div class="hero-rule" style="width:64px;height:1px;background:var(--phthalo-lift);margin-bottom:32px;"></div>
+    <p class="abstract ds-lede" style="color:var(--tungsten); font-family:var(--body); font-style:italic; font-size:18px; line-height:1.62; max-width:60ch;">This document serves as the authoritative standard for all components, typography, colors, and layout structures used across the portfolio. It encompasses both the "Dark Mode" (Obsidian) and "Light Mode" (Paper) structural bands, and includes all page controls and types.</p>
+  </div>
+  <div class="scroll-cue" aria-hidden="true"><span>Scroll</span><div class="scroll-cue-line"></div></div>
+</section>
+
+<!-- ==========================================
+     PAGE TYPE 1: LANDING PAGE ELEMENTS
+     ========================================== -->
+<section class="band band--dark" data-mode="dark" data-spine="Landing Elements" data-section="Landing">
+  <div class="col-wide">
+    <div class="section-eyebrow">Dark Mode (Obsidian)</div>
+    <h2 class="section-heading">Landing Page Elements</h2>
+    
+    <div class="ds-eyebrow" style="margin-bottom: 24px; color:var(--phthalo-lift); font-family:var(--mono); font-size:11px; letter-spacing:0.35em; text-transform:uppercase;">Color Palette</div>
+    <div class="swatch-grid">
+      <div class="swatch"><div class="swatch-color" style="background: var(--obsidian);"></div><div class="swatch-label">Obsidian<br>#030303</div></div>
+      <div class="swatch"><div class="swatch-color" style="background: var(--charcoal);"></div><div class="swatch-label">Charcoal<br>#1A1A1A</div></div>
+      <div class="swatch"><div class="swatch-color" style="background: var(--brushed);"></div><div class="swatch-label">Brushed<br>#333333</div></div>
+      <div class="swatch"><div class="swatch-color" style="background: var(--tungsten);"></div><div class="swatch-label">Tungsten<br>#A1A1A6</div></div>
+      <div class="swatch"><div class="swatch-color" style="background: var(--platinum);"></div><div class="swatch-label">Platinum<br>#F5F5F7</div></div>
+      <div class="swatch"><div class="swatch-color" style="background: var(--flare);"></div><div class="swatch-label">Flare<br>#FFFFFF</div></div>
+      <div class="swatch"><div class="swatch-color" style="background: var(--phthalo);"></div><div class="swatch-label">Phthalo Blue<br>#0F3A6B</div></div>
+      <div class="swatch"><div class="swatch-color" style="background: var(--phthalo-lift);"></div><div class="swatch-label">Phthalo Lift<br>#3866A0</div></div>
+    </div>
+
+    <div class="ds-eyebrow" style="margin-bottom: 24px; color:var(--phthalo-lift); font-family:var(--mono); font-size:11px; letter-spacing:0.35em; text-transform:uppercase;">Typography</div>
+    <div class="type-block no-bg-wrapper">
+      <h1 class="ds-h1" style="font-family:var(--display); font-weight:600; font-size:clamp(40px, 5.5vw, 72px); letter-spacing:-0.015em; line-height:1.10;">Heading Level 1</h1>
+      <h2 class="ds-h2" style="font-family:var(--display); font-weight:600; font-size:40px; line-height:1.10;">Heading Level 2</h2>
+      <h3 class="ds-h3" style="font-family:var(--display); font-weight:600; font-size:28px; line-height:1.25;">Heading Level 3</h3>
+      <h4 class="ds-h4" style="font-family:var(--display); font-weight:600; font-size:20px; line-height:1.25;">Heading Level 4</h4>
+      <p class="ds-lede" style="font-family:var(--body); font-size:18px; line-height:1.85;">Lede Paragraph: Measuring what machines and humans reveal through language, behavior, and implicit signals to build the science of how they think.</p>
+      <p class="ds-p" style="font-family:var(--body); font-size:16px; line-height:1.85;">Body Paragraph: Her doctoral research used computational psycholinguistics to measure implicit power drives in the manifestos of mass murderers.</p>
+      <div class="ds-eyebrow" style="font-family:var(--mono); font-size:11px; letter-spacing:0.35em; text-transform:uppercase;">Eyebrow Mono Label</div>
+      <div class="ds-caption" style="font-family:var(--mono); font-size:10px; letter-spacing:0.10em; text-transform:uppercase;">Caption Mono Label</div>
+      <p class="ds-p" style="font-family:var(--body); font-size:16px; line-height:1.85;">Inline code example: <code class="ds-code" style="font-family:var(--mono); font-size:13px; background:rgba(77,140,255,0.06); color:var(--phthalo-lift); padding:0.15em 0.4em; border-radius:4px;">npm run dev</code> or <code class="ds-code" style="font-family:var(--mono); font-size:13px; background:rgba(77,140,255,0.06); color:var(--phthalo-lift); padding:0.15em 0.4em; border-radius:4px;">const x = 10;</code></p>
+    </div>
+
+    <div class="ds-eyebrow" style="margin-bottom: 24px; color:var(--phthalo-lift); font-family:var(--mono); font-size:11px; letter-spacing:0.35em; text-transform:uppercase;">Tags</div>
+    <div class="tagrow" style="margin-bottom: 48px;">
+      <span class="tag">Technical Leadership</span>
+      <span class="tag">AI Strategy</span>
+      <span class="tag">Machine Learning</span>
+      <span class="tag">NLP</span>
+    </div>
+
+    <div class="ds-eyebrow" style="margin-bottom: 24px; color:var(--phthalo-lift); font-family:var(--mono); font-size:11px; letter-spacing:0.35em; text-transform:uppercase;">Project Card</div>
+    <a href="#" class="p-card">
+      <div class="p-content">
+        <div class="p-eyebrow">Case Study</div>
+        <h3 class="p-title">Multimodal Autism AI</h3>
+        <p class="p-desc">Using advanced language and audio models to detect implicit markers in diagnostic interviews.</p>
+        <div class="p-link">View Research -></div>
+      </div>
+    </a>
+
+    <div class="ds-eyebrow" style="margin-bottom: 24px; color:var(--phthalo-lift); font-family:var(--mono); font-size:11px; letter-spacing:0.35em; text-transform:uppercase;">Resume Card</div>
+    <div class="resume-stack">
+      <div class="r-card">
+        <div class="r-bg"></div>
+        <div class="r-content">
+          <div class="r-header">
+            <div>
+              <h3 class="r-title">Director of Data Science</h3>
+              <p class="r-company">Spokeo</p>
+            </div>
+            <div class="r-dates">Sep 2025 - Present</div>
+          </div>
+          <p class="r-intro">Founding technical leader who built and scaled Spokeo's Data Science and AI function.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     PAGE TYPE 2: ABOUT PAGE ELEMENTS
+     ========================================== -->
+<section class="band band--paper" data-mode="paper" data-spine="About Elements" data-section="About">
+  <div class="col-wide">
+    <div class="section-eyebrow">Light Mode (Paper)</div>
+    <h2 class="section-heading">About Page Elements</h2>
+    
+    <div class="ds-eyebrow" style="margin-bottom: 24px; color:var(--ink-blue); font-family:var(--mono); font-size:11px; letter-spacing:0.35em; text-transform:uppercase;">Color Palette</div>
+    <div class="swatch-grid">
+      <div class="swatch"><div class="swatch-color" style="background: var(--paper);"></div><div class="swatch-label">Paper<br>#F5F5F7</div></div>
+      <div class="swatch"><div class="swatch-color" style="background: var(--paper-2);"></div><div class="swatch-label">Paper 2<br>#E9E9E9</div></div>
+      <div class="swatch"><div class="swatch-color" style="background: var(--paper-3);"></div><div class="swatch-label">Paper 3<br>#DDDDDD</div></div>
+      <div class="swatch"><div class="swatch-color" style="background: var(--ink);"></div><div class="swatch-label">Ink<br>#030303</div></div>
+      <div class="swatch"><div class="swatch-color" style="background: var(--ink-2);"></div><div class="swatch-label">Ink 2<br>#222222</div></div>
+      <div class="swatch"><div class="swatch-color" style="background: var(--ink-3);"></div><div class="swatch-label">Ink 3<br>#5E5E5A</div></div>
+      <div class="swatch"><div class="swatch-color" style="background: var(--ink-blue);"></div><div class="swatch-label">Ink Blue<br>#1A3A6B</div></div>
+      <div class="swatch"><div class="swatch-color" style="background: var(--phthalo-lift);"></div><div class="swatch-label">Phthalo Lift<br>#3866A0</div></div>
+    </div>
+
+    <div class="ds-eyebrow" style="margin-bottom: 24px; color:var(--ink-blue); font-family:var(--mono); font-size:11px; letter-spacing:0.35em; text-transform:uppercase;">Typography</div>
+    <div class="type-block no-bg-wrapper">
+      <h1 class="ds-h1" style="font-family:var(--display); font-weight:600; font-size:clamp(40px, 5.5vw, 72px); letter-spacing:-0.015em; line-height:1.10;">Heading Level 1</h1>
+      <h2 class="ds-h2" style="font-family:var(--display); font-weight:600; font-size:40px; line-height:1.10;">Heading Level 2</h2>
+      <h3 class="ds-h3" style="font-family:var(--display); font-weight:600; font-size:28px; line-height:1.25;">Heading Level 3</h3>
+      <h4 class="ds-h4" style="font-family:var(--display); font-weight:600; font-size:20px; line-height:1.25;">Heading Level 4</h4>
+      <p class="ds-lede" style="font-family:var(--body); font-size:18px; line-height:1.85;">Lede Paragraph: Measuring what machines and humans reveal through language, behavior, and implicit signals to build the science of how they think.</p>
+      <p class="ds-p" style="font-family:var(--body); font-size:16px; line-height:1.85;">Body Paragraph: Her doctoral research used computational psycholinguistics to measure implicit power drives in the manifestos of mass murderers.</p>
+      <div class="ds-eyebrow" style="font-family:var(--mono); font-size:11px; letter-spacing:0.35em; text-transform:uppercase;">Eyebrow Mono Label</div>
+      <div class="ds-caption" style="font-family:var(--mono); font-size:10px; letter-spacing:0.10em; text-transform:uppercase;">Caption Mono Label</div>
+      <p class="ds-p" style="font-family:var(--body); font-size:16px; line-height:1.85;">Inline code example: <code class="ds-code" style="font-family:var(--mono); font-size:13px; background:rgba(77,140,255,0.06); color:var(--phthalo-lift); padding:0.15em 0.4em; border-radius:4px;">npm run dev</code> or <code class="ds-code" style="font-family:var(--mono); font-size:13px; background:rgba(77,140,255,0.06); color:var(--phthalo-lift); padding:0.15em 0.4em; border-radius:4px;">const x = 10;</code></p>
+    </div>
+
+    <div class="ds-eyebrow" style="margin-bottom: 24px; color:var(--ink-blue); font-family:var(--mono); font-size:11px; letter-spacing:0.35em; text-transform:uppercase;">About Page specific blocks</div>
+    
+    <div style="border:1px dashed rgba(0,0,0,0.2); padding:24px; margin-bottom:48px;">
+      <section class="about-hero" style="padding:40px 0;">
+          <div class="eyebrow">About Component</div>
+          <h1>I, Robopsychologist</h1>
+          <p class="lede">I love machines and I love humans. I have spent my entire career trying to understand how they think, how they interact, and what happens when they shape each other.</p>
+          <div class="about-headshot">
+            <img src="design_system/assets/Heather_headshot_2.jpg" alt="Dr. Heather Leffew">
+          </div>
+      </section>
+
+      <section class="about-body" style="padding:40px 0;">
+          <p>This is a paragraph inside the about body. It uses ink-2 color and specific leading.</p>
+          <div class="section-break"></div>
+          <p>And here is the section break line.</p>
+      </section>
+
+      <section class="about-cta" style="padding:40px 0;">
+          <div class="links">
+            <a href="#">Executive Profile</a>
+            <a href="#">Research Library</a>
+            <a href="#">Resume PDF</a>
+          </div>
+      </section>
+    </div>
+
+    <div class="ds-eyebrow" style="margin-bottom: 24px; color:var(--ink-blue); font-family:var(--mono); font-size:11px; letter-spacing:0.35em; text-transform:uppercase;">Biography Card</div>
+    <div class="bio-card">
+      <p><strong>Dr. Heather Leffew</strong> is a PhD psychologist and data science executive who has spent twenty years building measurement systems that cut through ambiguity in human and machine behavior.</p>
+      <button class="bio-expand-btn">Read Full Biography <span>+</span></button>
+    </div>
+
+    <div class="ds-eyebrow" style="margin-bottom: 24px; color:var(--ink-blue); font-family:var(--mono); font-size:11px; letter-spacing:0.35em; text-transform:uppercase;">Spotify Embed</div>
+    <div class="spotify-embed">
+      <iframe style="border-radius:12px; background:var(--paper-2);" src="https://open.spotify.com/embed/playlist/75ZbuIdCJWXIZRkidseQZN?utm_source=generator&theme=0" width="100%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    </div>
+
+  </div>
+</section>
+
+<!-- ==========================================
+     PAGE TYPE 3: DASHBOARD ELEMENTS
+     ========================================== -->
+<section class="band band--dark" data-mode="dark" data-spine="Dashboard Elements" data-section="Dashboard">
+  <div class="col-wide">
+    <div class="section-eyebrow">Dashboard Layout</div>
+    <h2 class="section-heading">Project Repository Dashboard</h2>
+    
+    <div class="dashboard-layout" style="border:1px dashed rgba(255,255,255,0.2); padding: 24px;">
+      <aside class="dashboard-sidebar">
+        <div class="db-header">TAXONOMY (Sidebar)</div>
+        <div id="sidebar-accordion">
+          <div class="sb-item">
+            <div class="sb-header">Domain Area</div>
+          </div>
+        </div>
+      </aside>
+      
+      <main class="dashboard-main">
+        <div class="db-controls">
+          <input type="text" id="searchInput" placeholder="Search publications by title, keyword, or concept...">
+          <select id="sortDropdown">
+             <option value="relevance">Sort by Relevance</option>
+             <option value="alpha">Sort Alphabetically</option>
+          </select>
+        </div>
+        <div class="db-chips" id="tagContainer">
+           <button class="tag active" style="font-family:var(--mono); font-size:10px; letter-spacing:0.2em; text-transform:uppercase; padding:6px 12px; background:var(--phthalo); color:var(--flare); border:1px solid var(--phthalo);">Machine Learning</button>
+           <button class="tag" style="font-family:var(--mono); font-size:10px; letter-spacing:0.2em; text-transform:uppercase; padding:6px 12px; background:transparent; color:var(--tungsten); border:1px solid var(--graphite);">NLP</button>
+        </div>
+        
+        
+        <div class="db-table" id="tableWrap">
+           <a href="#" class="db-row" style="display:flex; align-items:center; justify-content:space-between; padding:24px; background:rgba(22,22,22,0.65); border:1px solid var(--graphite); text-decoration:none; margin-bottom:8px;">
+             <div class="db-cell c-date" style="font-family:var(--mono); font-size:11px; color:var(--tungsten); width:60px;">2026</div>
+             <div class="db-cell c-title" style="font-family:var(--display); font-size:20px; color:var(--flare); font-weight:600; flex-grow:1;">Multimodal Autism AI</div>
+             <div class="db-cell c-tags" style="font-family:var(--mono); font-size:10px; color:var(--phthalo-lift); text-transform:uppercase; margin-right:24px;"><span class="table-tag" style="border:1px solid var(--phthalo-lift); padding:4px 8px;">Clinical ML</span></div>
+             <div class="db-cell c-arrow" style="font-family:var(--display); font-size:24px; color:var(--phthalo-lift);">&rarr;</div>
+           </a>
+           <a href="#" class="db-row" style="display:flex; align-items:center; justify-content:space-between; padding:24px; background:rgba(22,22,22,0.65); border:1px solid var(--graphite); text-decoration:none; margin-bottom:8px;">
+             <div class="db-cell c-date" style="font-family:var(--mono); font-size:11px; color:var(--tungsten); width:60px;">2025</div>
+             <div class="db-cell c-title" style="font-family:var(--display); font-size:20px; color:var(--flare); font-weight:600; flex-grow:1;">Autoresearch Master</div>
+             <div class="db-cell c-tags" style="font-family:var(--mono); font-size:10px; color:var(--tungsten); text-transform:uppercase; margin-right:24px;"><span class="table-tag" style="border:1px solid var(--graphite); padding:4px 8px;">Agentic Systems</span></div>
+             <div class="db-cell c-arrow" style="font-family:var(--display); font-size:24px; color:var(--tungsten);">&rarr;</div>
+           </a>
+        </div>
+    
+</main>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==========================================
+     PAGE TYPE 4: CASE STUDY ELEMENTS
+     ========================================== -->
+<section class="band band--dark" data-mode="dark" data-spine="Case Study (Dark)" data-section="Case Study (Dark)">
+  <div class="col-wide">
+    <div class="section-eyebrow">Project Pages</div>
+    <h2 class="section-heading">Individual Case Study (Dark Mode)</h2>
+    <p class="ds-lede" style="margin-bottom: 48px; max-width: 70ch;">This section demonstrates the native layout of the case study components in a dark environment.</p>
+    
+    <div style="border:1px dashed rgba(255,255,255,0.2); padding:24px;" class="demo-box">
+        <div class="eyebrow">01 / Case Study Component</div>
+        <h2 class="is-chapter">The Philosophy of Ultra-Realistic Data Simulation</h2>
+
+        <p class="has-dropcap col-main">
+          A common pitfall in clinical machine learning is training models on idealized, perfectly separated datasets. This text uses the <span class="gloss">Gloss Tooltip<span class="gloss-tip"><b>Gloss Tooltip</b>, used to define specialized terminology inline without disrupting prose.</span></span> component.
+        </p>
+
+        <div class="figure reveal">
+          <div class="frame" style="display:flex; align-items:center; justify-content:center; height:150px;">
+              
+          <svg viewBox="0 0 400 150" style="width:100%; height:100%; background:var(--obsidian); border:1px solid var(--graphite);">
+             <polyline points="0,130 50,110 100,120 150,80 200,90 250,40 300,50 350,20 400,30" fill="none" stroke="var(--phthalo-lift)" stroke-width="2"/>
+             <line x1="0" y1="80" x2="400" y2="80" stroke="var(--alizarin)" stroke-width="1" stroke-dasharray="4 4" opacity="0.8"/>
+             <circle cx="250" cy="40" r="4" fill="var(--alizarin)"/>
+             <text x="250" y="25" fill="var(--alizarin)" font-family="monospace" font-size="10" text-anchor="middle">THRESHOLD CROSSED</text>
+          </svg>
+    
+          </div>
+          <div class="cap"><span class="num">FIG. 01</span> Receiver Operating Characteristic curve. The highly steep arch indicates potential overfitting.</div>
+        </div>
+
+        <div class="method">
+          <div class="inner">
+            <div class="lab">Enforcing Realism (Method Box)</div>
+            We enforce realism through constraints:
+            <ul class="bullets">
+                <li><strong>Clinical Overlap:</strong> Statistical overlap in behavioral features between groups.</li>
+                <li><strong>Measurement Noise:</strong> Injecting 25% to 35% error.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table class="data-table">
+              <thead>
+                  <tr>
+                      <th>Simulation Parameter</th>
+                      <th>Target Value</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                    <td>Total Profiles</td>
+                    <td>1,200</td>
+                  </tr>
+              </tbody>
+          </table>
+        </div>
+
+        <div class="code-container">
+            <div class="code-block">
+<pre><code># Python implementation of the Ultra-Realistic Data Simulation
+import numpy as np
+
+def generate_clinical_data():
+    return True</code></pre>
+            </div>
+        </div>
+
+        <div class="ds-eyebrow" style="margin-bottom: 24px; margin-top:48px;">Interactive Profile Explorer</div>
+        <div class="explorer" style="margin: 0 auto; max-width: var(--col);">
+            <select class="profile-selector" style="margin-bottom: 24px; padding: 8px; font-family: var(--mono); background: transparent; color: inherit; border: 1px solid var(--graphite);">
+                <option value="PART_0012">Patient ID: PART_0012</option>
+            </select>
+            <div class="profile-card" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 24px; border: 1px solid var(--graphite); border-radius: 4px; background: rgba(0,0,0,0.02);">
+                <div class="metric" style="display: flex; flex-direction: column; gap: 8px;">
+                    <span class="mlab" style="font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.6;">Consensus Probability</span>
+                    <span class="mval highlight" style="font-family: var(--display); font-size: 24px; font-weight: 600; color: var(--phthalo);">2.9%</span>
+                </div>
+                <div class="metric" style="display: flex; flex-direction: column; gap: 8px;">
+                    <span class="mlab" style="font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.6;">ADOS-2 Score</span>
+                    <span class="mval highlight" style="font-family: var(--display); font-size: 24px; font-weight: 600; color: var(--phthalo);">3 / 18</span>
+                </div>
+                <div class="metric full-width" style="grid-column: 1 / -1; display: flex; flex-direction: column; gap: 8px;">
+                    <span class="mlab" style="font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.6;">Clinical Recommendation</span>
+                    <span class="mval" style="font-family: var(--body); font-size: 16px;">Routine screening</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="band band--paper" data-mode="paper" data-spine="Case Study (Light)" data-section="Case Study (Light)">
+  <div class="col-wide">
+    <div class="section-eyebrow">Project Pages</div>
+    <h2 class="section-heading">Individual Case Study (Light Mode)</h2>
+    <p class="ds-lede" style="margin-bottom: 48px; max-width: 70ch;">This section demonstrates the native layout of the exact same components adapting seamlessly to a light environment.</p>
+    
+    <div style="border:1px dashed rgba(0,0,0,0.1); padding:24px;" class="demo-box">
+        <div class="eyebrow">01 / Case Study Component</div>
+        <h2 class="is-chapter">The Philosophy of Ultra-Realistic Data Simulation</h2>
+
+        <p class="has-dropcap col-main">
+          A common pitfall in clinical machine learning is training models on idealized, perfectly separated datasets. This text uses the <span class="gloss">Gloss Tooltip<span class="gloss-tip"><b>Gloss Tooltip</b>, used to define specialized terminology inline without disrupting prose.</span></span> component.
+        </p>
+
+        <div class="figure reveal">
+          <div class="frame" style="display:flex; align-items:center; justify-content:center; height:150px;">
+              
+          <svg viewBox="0 0 400 150" style="width:100%; height:100%; background:var(--obsidian); border:1px solid var(--graphite);">
+             <polyline points="0,130 50,110 100,120 150,80 200,90 250,40 300,50 350,20 400,30" fill="none" stroke="var(--phthalo-lift)" stroke-width="2"/>
+             <line x1="0" y1="80" x2="400" y2="80" stroke="var(--alizarin)" stroke-width="1" stroke-dasharray="4 4" opacity="0.8"/>
+             <circle cx="250" cy="40" r="4" fill="var(--alizarin)"/>
+             <text x="250" y="25" fill="var(--alizarin)" font-family="monospace" font-size="10" text-anchor="middle">THRESHOLD CROSSED</text>
+          </svg>
+    
+          </div>
+          <div class="cap"><span class="num">FIG. 01</span> Receiver Operating Characteristic curve. The highly steep arch indicates potential overfitting.</div>
+        </div>
+
+        <div class="method">
+          <div class="inner">
+            <div class="lab">Enforcing Realism (Method Box)</div>
+            We enforce realism through constraints:
+            <ul class="bullets">
+                <li><strong>Clinical Overlap:</strong> Statistical overlap in behavioral features between groups.</li>
+                <li><strong>Measurement Noise:</strong> Injecting 25% to 35% error.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table class="data-table">
+              <thead>
+                  <tr>
+                      <th>Simulation Parameter</th>
+                      <th>Target Value</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                    <td>Total Profiles</td>
+                    <td>1,200</td>
+                  </tr>
+              </tbody>
+          </table>
+        </div>
+
+        <div class="code-container">
+            <div class="code-block">
+<pre><code># Python implementation of the Ultra-Realistic Data Simulation
+import numpy as np
+
+def generate_clinical_data():
+    return True</code></pre>
+            </div>
+        </div>
+
+        <div class="ds-eyebrow" style="margin-bottom: 24px; margin-top:48px;">Interactive Profile Explorer</div>
+        <div class="explorer" style="margin: 0 auto; max-width: var(--col);">
+            <select class="profile-selector" style="margin-bottom: 24px; padding: 8px; font-family: var(--mono); background: transparent; color: inherit; border: 1px solid var(--graphite);">
+                <option value="PART_0012">Patient ID: PART_0012</option>
+            </select>
+            <div class="profile-card" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 24px; border: 1px solid var(--graphite); border-radius: 4px; background: rgba(0,0,0,0.02);">
+                <div class="metric" style="display: flex; flex-direction: column; gap: 8px;">
+                    <span class="mlab" style="font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.6;">Consensus Probability</span>
+                    <span class="mval highlight" style="font-family: var(--display); font-size: 24px; font-weight: 600; color: var(--phthalo);">2.9%</span>
+                </div>
+                <div class="metric" style="display: flex; flex-direction: column; gap: 8px;">
+                    <span class="mlab" style="font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.6;">ADOS-2 Score</span>
+                    <span class="mval highlight" style="font-family: var(--display); font-size: 24px; font-weight: 600; color: var(--phthalo);">3 / 18</span>
+                </div>
+                <div class="metric full-width" style="grid-column: 1 / -1; display: flex; flex-direction: column; gap: 8px;">
+                    <span class="mlab" style="font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.6;">Clinical Recommendation</span>
+                    <span class="mval" style="font-family: var(--body); font-size: 16px;">Routine screening</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  </div>
+</section>
+<!-- PROJECT SPECIFIC / INSTITUTIONAL PALETTE -->
+<section class="band band--dark" data-mode="dark">
+  <div class="col-wide">
+    <div class="section-eyebrow">Case Study Assets</div>
+    <h2 class="section-heading">Diagram Colors (Oil Paint Quartet)</h2>
+    
+    <div class="swatch-grid" style="margin-bottom: 0;">
+      <div class="swatch"><div class="swatch-color" style="background: var(--phthalo);"></div><div class="swatch-label">Phthalo Blue<br>#0F3A6B</div></div>
+      <div class="swatch"><div class="swatch-color" style="background: var(--phthalo-lift);"></div><div class="swatch-label">Phthalo Lift<br>#3866A0</div></div>
+      <div class="swatch"><div class="swatch-color" style="background: var(--alizarin);"></div><div class="swatch-label">Alizarin<br>#7A1626</div></div>
+      <div class="swatch"><div class="swatch-color" style="background: var(--hookers);"></div><div class="swatch-label">Hooker's Green<br>#1A4A38</div></div>
+      <div class="swatch"><div class="swatch-color" style="background: var(--hansa);"></div><div class="swatch-label">Hansa Yellow<br>#DBA844</div></div>
+      <div class="swatch"><div class="swatch-color" style="background: var(--dioxazine);"></div><div class="swatch-label">Dioxazine<br>#3D1F4A</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- BACK MATTER DEMO -->
+<section class="band band--dark back-matter" data-mode="dark" data-spine="Back Matter" data-section="Back Matter">
+  <div class="col-wide">
+    <div class="back-matter" style="padding-top:0;">
+      <h3 style="margin-bottom:22px; font-family:var(--display); font-size:28px; color:var(--flare); font-weight:600;">Related Works</h3>
+      <div class="related">
+        <div class="related-grid" id="recommendation-grid">
+           <!-- Handled by global chrome if needed, otherwise demo static box -->
+           <a href="#" class="p-card" style="width:100%; margin:0;">
+             <div class="p-content" style="padding:24px;">
+               <div class="p-eyebrow">Case Study</div>
+               <h3 class="p-title">Related Project Title</h3>
+             </div>
+           </a>
+        </div>
+      </div>
+    </div>
+
+    <a class="next-chap" id="next-chap-link" href="#" style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--graphite); padding:40px 0; margin-top:60px; color:var(--flare); text-decoration:none;">
+      <div class="lf">
+        <div class="eb" style="font-family:var(--mono); font-size:10px; text-transform:uppercase; letter-spacing:0.3em; color:var(--tungsten); margin-bottom:12px;">Next Publication</div>
+        <div class="ti" id="next-chap-title" style="font-family:var(--display); font-size:24px; font-weight:600;">Autonomous Heuristic Discovery</div>
+      </div>
+      <div class="rt" style="font-size:32px; font-family:var(--display);">&rarr;</div>
+    </a>
+  </div>
+</section>
+
+<!-- ==========================================
+     PAGE TYPE 4.5: BOILERPLATE & DEPENDENCIES
+     ========================================== -->
+<section class="band band--paper" data-mode="paper" data-spine="Boilerplate" data-section="Boilerplate">
+  <div class="col-wide">
+    <div class="section-eyebrow">Implementation</div>
+    <h2 class="section-heading">Boilerplate & Required Dependencies</h2>
+
+    <p class="ds-lede" style="margin-bottom: 48px; max-width: 70ch;">
+      To render the Obsidian & Chrome design system correctly, your HTML file must include the exact sequence of stylesheets, external CDNs, and JavaScript components shown below.
+    </p>
+
+    <div class="code-container" style="margin:0; max-width:100%;">
+      <div class="code-block" style="margin:0;">
+<pre><code>&lt;!-- 1. Google Fonts --&gt;
+&lt;link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet"&gt;
+
+&lt;!-- 2. Institutional Stylesheets --&gt;
+&lt;link rel="stylesheet" href="design_system/css/global_chrome.css"&gt;
+&lt;link rel="stylesheet" href="design_system/assets/css/institutional.css"&gt;
+
+&lt;!-- 3. Animation & Cinematic CDNs --&gt;
+&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer&gt;&lt;/script&gt;
+&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer&gt;&lt;/script&gt;
+&lt;script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js" defer&gt;&lt;/script&gt;
+&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer&gt;&lt;/script&gt;
+&lt;script src="https://unpkg.com/split-type" defer&gt;&lt;/script&gt;
+&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js" defer&gt;&lt;/script&gt;
+
+&lt;!-- 4. Global Core Scripts (Place at bottom of body) --&gt;
+&lt;script src="design_system/js/cinematic_engine_v3.js" defer&gt;&lt;/script&gt;
+&lt;script src="design_system/js/global_chrome.js" defer&gt;&lt;/script&gt;</code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     PAGE TYPE 5: JAVASCRIPT COMPONENTS (DOCUMENTATION)
+     ========================================== -->
+<section class="band band--dark" data-mode="dark" data-spine="JS Architecture" data-section="JS Architecture">
+  <div class="col-wide">
+    <div class="section-eyebrow">Standalone Files</div>
+    <h2 class="section-heading">JavaScript Component Architecture</h2>
+
+    <p class="ds-lede" style="margin-bottom: 48px; max-width: 70ch;">
+      The Obsidian & Chrome design system relies on a set of standalone JavaScript files that orchestrate the interactive, cinematic, and functional layers of the site. They are included as external scripts rather than inline blocks to ensure consistent caching and maintainability.
+    </p>
+
+    <div class="ds-eyebrow" style="margin-bottom: 24px; color:var(--phthalo-lift);">Core Engines</div>
+    
+    <div style="border:1px solid var(--graphite); background:rgba(22,22,22,0.65); padding:32px; border-radius:4px; margin-bottom:24px;">
+      <h3 style="font-family:var(--display); font-size:24px; color:var(--flare); margin-bottom:8px;">1. cinematic_engine_v3.js</h3>
+      <div style="font-family:var(--mono); font-size:11px; letter-spacing:0.1em; color:var(--tungsten); margin-bottom:16px; text-transform:uppercase;">Dependency: GSAP, Lenis, SplitType, Three.js</div>
+      <p style="font-family:var(--body); font-size:15px; color:var(--platinum); line-height:1.7;">
+        This file is the powerhouse of the site's visual experience. It handles:
+      </p>
+      <ul style="font-family:var(--body); font-size:15px; color:var(--platinum); line-height:1.7; margin-top:12px; margin-left:24px; list-style-type:circle;">
+        <li><strong>Lenis Smooth Scrolling:</strong> Hijacks native scroll to provide fluid, momentum-based scrolling.</li>
+        <li><strong>GSAP ScrollTriggers:</strong> Orchestrates elements fading in, sliding up, and blurring/unblurring as they enter the viewport.</li>
+        <li><strong>Theatrical Opening Sequences:</strong> Controls the initial preloader curtain split, the text splitting effects (`SplitType`), and the fade-in sequence for hero elements.</li>
+      </ul>
+    </div>
+
+    <div style="border:1px solid var(--graphite); background:rgba(22,22,22,0.65); padding:32px; border-radius:4px; margin-bottom:24px;">
+      <h3 style="font-family:var(--display); font-size:24px; color:var(--flare); margin-bottom:8px;">2. global_chrome.js</h3>
+      <div style="font-family:var(--mono); font-size:11px; letter-spacing:0.1em; color:var(--tungsten); margin-bottom:16px; text-transform:uppercase;">Dependency: None (Vanilla JS)</div>
+      <p style="font-family:var(--body); font-size:15px; color:var(--platinum); line-height:1.7;">
+        This script provides the institutional "wrapper" functionality that persists across every page:
+      </p>
+      <ul style="font-family:var(--body); font-size:15px; color:var(--platinum); line-height:1.7; margin-top:12px; margin-left:24px; list-style-type:circle;">
+        <li><strong>Navigation Mode Observer:</strong> Uses `IntersectionObserver` to detect when a `.band--paper` enters the viewport, toggling the `is-paper` class on the top navigation to invert text colors for contrast.</li>
+        <li><strong>Progress Bar:</strong> Calculates scroll depth and updates the `--p` CSS variable driving the top progress indicator.</li>
+        <li><strong>Dynamic "Next Project" Back Matter:</strong> Queries the `projects_index.json` to dynamically inject the correct canonical link into the bottom "Next Publication" component.</li>
+      </ul>
+    </div>
+
+    <div style="border:1px solid var(--graphite); background:rgba(22,22,22,0.65); padding:32px; border-radius:4px; margin-bottom:48px;">
+      <h3 style="font-family:var(--display); font-size:24px; color:var(--flare); margin-bottom:8px;">3. library_dashboard.js</h3>
+      <div style="font-family:var(--mono); font-size:11px; letter-spacing:0.1em; color:var(--tungsten); margin-bottom:16px; text-transform:uppercase;">Dependency: master_index.json</div>
+      <p style="font-family:var(--body); font-size:15px; color:var(--platinum); line-height:1.7;">
+        Used specifically on the `projects-repository.html` page to render the interactive project directory:
+      </p>
+      <ul style="font-family:var(--body); font-size:15px; color:var(--platinum); line-height:1.7; margin-top:12px; margin-left:24px; list-style-type:circle;">
+        <li><strong>Data Fetching:</strong> Asynchronously loads the master JSON database of publications.</li>
+        <li><strong>DOM Injection:</strong> Dynamically builds the `.db-row` table elements, the `.db-chips` tag filters, and the sidebar accordion.</li>
+        <li><strong>Search & Filter Logic:</strong> Executes real-time string matching and tag intersection to filter the visible table rows.</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<footer class="site-foot">
+  <div>&copy; <span id="year">2026</span> Dr. Heather Leffew. All Rights Reserved.</div>
+  <div>
+    <a href="projects-repository.html" style="margin-right:24px;">Research Library</a>
+    <a href="about.html">About</a>
+  </div>
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// Simple navigation mode observer
+(function initNavMode() {
+  const nav = document.getElementById('topnav');
+  const bands = document.querySelectorAll('[data-mode]');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        nav.classList.toggle('is-paper', entry.target.dataset.mode === 'paper');
+      }
+    });
+  }, { rootMargin: "-15% 0px -84% 0px" });
+  bands.forEach(b => observer.observe(b));
+})();
+
+// Basic tooltip interaction for demo
+document.querySelectorAll('.gloss').forEach(gloss => {
+    gloss.addEventListener('mouseenter', () => {
+        const tip = gloss.querySelector('.gloss-tip');
+        if(tip) tip.style.cssText += 'visibility:visible; opacity:1;';
+    });
+    gloss.addEventListener('mouseleave', () => {
+        const tip = gloss.querySelector('.gloss-tip');
+        if(tip) tip.style.cssText += 'visibility:hidden; opacity:0;';
+    });
+});
+</script>
+
+
+
+<!-- ==========================================
+     GLOBAL JS & CINEMATIC ENGINE
+     ========================================== -->
+<script src="design_system/js/cinematic_engine_v3.js" defer></script>
+<script src="design_system/js/global_chrome.js" defer></script>
+
+<script>
+window.addEventListener('load', () => {
+    if (typeof gsap !== 'undefined') {
+        const tl = gsap.timeline({
+            onComplete: () => {
+                if (typeof ScrollTrigger !== 'undefined') {
+                    ScrollTrigger.refresh();
+                    initScrollTriggers();
+                }
+            }
+        });
+
+        const preloader = document.getElementById('preloader');
+        const preLeft = document.getElementById('preloader-left');
+        const preRight = document.getElementById('preloader-right');
+        const preLine = document.getElementById('preloader-line');
+        if (preloader && preLeft && preRight && preLine) {
+            tl.to(preLine, { height: '28vh', duration: 1.1, ease: 'power2.inOut' })
+              .to(preLine, { opacity: 0, height: '50vh', duration: 0.6, ease: 'power2.in' }, '+=0.15')
+              .to(preLeft, { xPercent: -100, duration: 1.1, ease: 'power3.inOut' }, '-=0.25')
+              .to(preRight, { xPercent: 100, duration: 1.1, ease: 'power3.inOut' }, '<')
+              .set(preloader, { display: 'none' });
+        } else if (preloader) {
+            tl.to(preloader, { opacity: 0, duration: 1.2, ease: 'power2.inOut', onComplete: () => { preloader.style.display = 'none'; } });
+        }
+
+        // Fade in the spatial void (managed by cinematic_engine_v3)
+        tl.to(['#deep-space', '#glCanvas'], { opacity: 1, duration: 3.5, ease: 'power2.inOut' }, "-=0.6");
+
+        let split;
+        const heroTitle = document.querySelector('.hero h1');
+        if (heroTitle && typeof SplitType !== 'undefined') {
+            heroTitle.style.opacity = 1;
+            split = new SplitType(heroTitle, { types: 'chars' });
+        }
+
+        tl.to('#topnav', { y: 0, duration: 1.4, ease: 'power3.out' }, "-=2.8");
+        tl.to('.ambient', { opacity: 0.35, scale: 1, rotation: 0, duration: 3.0, ease: 'power2.out' }, "-=2.8");
+        tl.to('.meta-row span', { opacity: 1, x: 0, duration: 1.0, stagger: 0.2, ease: 'power2.out' }, "-=2.2");
+        if (split) {
+            tl.from(split.chars, { opacity: 0, y: 20, rotateX: -90, stagger: 0.04, duration: 1.5, ease: 'back.out(1.5)' }, "-=1.6");
+        }
+        tl.to('.hero-rule', { width: 64, opacity: 1, duration: 1.3, ease: 'power3.inOut' }, "-=1.0");
+        tl.to('.abstract', { opacity: 1, y: 0, duration: 1.3, ease: 'power2.out' }, "-=0.9");
+        tl.to('.scroll-cue', { opacity: 1, duration: 1.2, ease: 'power2.out' }, "-=0.3");
+
+        function initScrollTriggers() {
+            gsap.to('.scroll-cue', {
+                opacity: 0, y: -10, duration: 0.6, ease: 'power2.in',
+                scrollTrigger: { trigger: '.hero', start: 'top top', end: '+=120', scrub: true }
+            });
+
+            gsap.utils.toArray('.band').forEach(band => {
+                const tlBand = gsap.timeline({
+                    scrollTrigger: { trigger: band, start: 'top 75%', toggleActions: 'play none none none' }
+                });
+                const eyebrow = band.querySelector('.section-eyebrow');
+                const heading = band.querySelector('.section-heading');
+                
+                if (eyebrow) tlBand.fromTo(eyebrow, { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 1.2, ease: 'power3.out' });
+                if (heading) tlBand.fromTo(heading, { opacity: 0, y: 25 }, { opacity: 1, y: 0, duration: 1.4, ease: 'power3.out' }, '-=0.6');
+                
+                const reveals = band.querySelectorAll('.type-block, .swatch-grid, .tagrow, .p-card, .r-card, .demo-box, .dashboard-layout');
+                if (reveals.length) {
+                    tlBand.fromTo(reveals, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 1.5, stagger: 0.15, ease: 'expo.out' }, '-=0.8');
+                }
+            });
+        }
+    } else {
+        const preloader = document.getElementById('preloader');
+        if (preloader) preloader.style.display = 'none';
+        document.querySelectorAll('.meta-row span, h1, .hero-rule, .abstract, .ambient, #glCanvas, #deep-space, .scroll-cue, .band .section-eyebrow, .band .section-heading, .type-block, .swatch-grid, .tagrow, .p-card, .r-card, .demo-box, .dashboard-layout').forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
+    }
+});
+</script>
+
+</body>
+
+</html>

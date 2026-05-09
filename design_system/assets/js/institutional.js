@@ -197,14 +197,14 @@ document.addEventListener('DOMContentLoaded', () => {
                         const card = document.createElement('a');
                         card.href = '../' + p.url;
                         card.style.cssText = 'display:flex; flex-direction:column; padding:32px; background:var(--charcoal, #161616); border:1px solid var(--graphite, #222222); text-decoration:none; color:inherit; transition:border-color 0.4s ease, background 0.4s ease; border-radius:0 !important;';
-                        card.onmouseover = () => { card.style.borderColor = 'var(--sapphire, #4D8CFF)'; card.style.background = 'var(--obsidian, #030303)'; };
+                        card.onmouseover = () => { card.style.borderColor = 'var(--phthalo-lift, #3866A0)'; card.style.background = 'var(--obsidian, #030303)'; };
                         card.onmouseout = () => { card.style.borderColor = 'var(--graphite, #222222)'; card.style.background = 'var(--charcoal, #161616)'; };
                         
                         card.innerHTML = `
-                            <div style="font-family:var(--mono, monospace); font-size:10px; color:var(--sapphire, #4D8CFF); margin-bottom:16px; text-transform:uppercase; letter-spacing:0.18em;">${p.cat}</div>
+                            <div style="font-family:var(--mono, monospace); font-size:10px; color:var(--phthalo-lift, #3866A0); margin-bottom:16px; text-transform:uppercase; letter-spacing:0.18em;">${p.cat}</div>
                             <h3 style="font-family:var(--display, serif); font-size:22px; font-weight:600; color:var(--flare, #fff); margin-bottom:12px; line-height:1.2; letter-spacing:-0.015em;">${p.title}</h3>
                             <p style="font-family:var(--body, serif); font-size:14px; color:var(--tungsten, #A1A1A6); line-height:1.78; margin:0; flex-grow:1;">${p.desc.substring(0, 120)}...</p>
-                            <div style="font-family:var(--mono, monospace); font-size:10px; color:var(--platinum, #F5F5F7); margin-top:24px; text-transform:uppercase; letter-spacing:0.18em; opacity:0.6; display:flex; align-items:center; gap:8px;">Read More <span style="color:var(--sapphire, #4D8CFF)">&rarr;</span></div>
+                            <div style="font-family:var(--mono, monospace); font-size:10px; color:var(--platinum, #F5F5F7); margin-top:24px; text-transform:uppercase; letter-spacing:0.18em; opacity:0.6; display:flex; align-items:center; gap:8px;">Read More <span style="color:var(--phthalo-lift, #3866A0)">&rarr;</span></div>
                         `;
                         grid.appendChild(card);
                     });

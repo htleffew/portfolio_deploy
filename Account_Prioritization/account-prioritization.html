@@ -24,10 +24,10 @@
         }
         .priority-sim .controls { display: flex; flex-direction: column; gap: 24px; }
         .priority-sim .output { text-align: center; padding-left: 40px; border-left: 1px solid var(--graphite); }
-        .sim-val { font-family: var(--mono); font-size: 14px; color: var(--sapphire); float: right; font-weight: bold; }
+        .sim-val { font-family: var(--mono); font-size: 14px; color: var(--phthalo-lift); float: right; font-weight: bold; }
         .priority-sim label { display: block; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--tungsten); margin-bottom: 8px; }
         .priority-score-display { font-family: var(--display); font-size: 48px; color: var(--flare); font-weight: 600; line-height: 1; margin-top: 10px; }
-        .priority-score-label { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--sapphire); }
+        .priority-score-label { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--phthalo-lift); }
         
         input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; }
         input[type=range]::-webkit-slider-thumb {
@@ -474,7 +474,7 @@ def predict_priority(data: AccountData):
         };
 
         // 1. ROC Curve
-        const rocTrace = { x: [0, 0.1, 0.3, 0.5, 0.8, 1], y: [0, 0.7, 0.85, 0.92, 0.98, 1], type: 'scatter', mode: 'lines', name: 'ROC', line: { color: '#4D8CFF', width: 3 } };
+        const rocTrace = { x: [0, 0.1, 0.3, 0.5, 0.8, 1], y: [0, 0.7, 0.85, 0.92, 0.98, 1], type: 'scatter', mode: 'lines', name: 'ROC', line: { color: '#3866A0', width: 3 } };
         const rocBaseline = { x: [0, 1], y: [0, 1], type: 'scatter', mode: 'lines', name: 'Random', line: { dash: 'dash', color: '#5E5E5A' } };
         Plotly.newPlot('plot-roc', [rocTrace, rocBaseline], {
             ...layoutLight, title: { text: 'ROC-AUC Curve', font: { color: '#030303' } },
@@ -505,7 +505,7 @@ def predict_priority(data: AccountData):
         };
         const traceScat = {
             x: [2, 4, 1, 5, 3], y: [1, 5, 2, 4, 3], z: [3000, 45000, 1500, 60000, 12000],
-            mode: 'markers', type: 'scatter3d', marker: { color: '#FFFFFF', size: 5, symbol: 'circle', line: {color: '#4D8CFF', width: 1}}
+            mode: 'markers', type: 'scatter3d', marker: { color: '#FFFFFF', size: 5, symbol: 'circle', line: {color: '#3866A0', width: 1}}
         };
         Plotly.newPlot('plot-3d-regression', [trace3D, traceScat], {
             ...layoutDark, title: { text: 'Predicted Deal Size (USD)', font: { color: '#FFFFFF' } },

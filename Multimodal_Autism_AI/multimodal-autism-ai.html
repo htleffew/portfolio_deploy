@@ -26,7 +26,7 @@
 .profile-card .metric { display: flex; flex-direction: column; gap: 8px; }
 .profile-card .mlab { font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-blue); }
 .profile-card .mval { font-family: var(--body); font-size: 16px; color: var(--ink); }
-.profile-card .mval.highlight { font-size: 24px; font-weight: 500; font-family: var(--display); color: var(--sapphire-deep); }
+.profile-card .mval.highlight { font-size: 24px; font-weight: 500; font-family: var(--display); color: var(--phthalo); }
 @media(min-width: 768px) { .profile-card { grid-template-columns: repeat(2, 1fr); } .profile-card .full-width { grid-column: span 2; } }
 </style>
 <script src="../design_system/js/cinematic_engine_v3.js" defer></script>
@@ -177,7 +177,7 @@ X_simulated, y_simulated = generate_clinical_data()</code></pre>
           <svg viewBox="0 0 800 300" style="width:100%; height:auto;">
               <defs>
                   <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                    <path d="M 0 0 L 10 5 L 0 10 z" fill="#4D8CFF" />
+                    <path d="M 0 0 L 10 5 L 0 10 z" fill="#3866A0" />
                   </marker>
               </defs>
               <g font-family="JetBrains Mono" font-size="12" fill="#A1A1A6">
@@ -186,14 +186,14 @@ X_simulated, y_simulated = generate_clinical_data()</code></pre>
                   <text x="400" y="44" text-anchor="middle" fill="#F5F5F7" font-weight="bold">MULTIMODAL INPUT</text>
                   
                   <!-- Streams -->
-                  <path d="M 400 60 L 400 90 L 200 90 L 200 120" fill="none" stroke="#4D8CFF" stroke-width="2" marker-end="url(#arrow)"/>
-                  <path d="M 400 60 L 400 90 L 600 90 L 600 120" fill="none" stroke="#4D8CFF" stroke-width="2" marker-end="url(#arrow)"/>
+                  <path d="M 400 60 L 400 90 L 200 90 L 200 120" fill="none" stroke="#3866A0" stroke-width="2" marker-end="url(#arrow)"/>
+                  <path d="M 400 60 L 400 90 L 600 90 L 600 120" fill="none" stroke="#3866A0" stroke-width="2" marker-end="url(#arrow)"/>
                   
-                  <rect x="120" y="120" width="160" height="30" rx="4" fill="#030303" stroke="#0F52BA" stroke-width="1"/>
-                  <text x="200" y="140" text-anchor="middle" fill="#4D8CFF">Video Stream (CV)</text>
+                  <rect x="120" y="120" width="160" height="30" rx="4" fill="#030303" stroke="#0F3A6B" stroke-width="1"/>
+                  <text x="200" y="140" text-anchor="middle" fill="#3866A0">Video Stream (CV)</text>
                   
-                  <rect x="520" y="120" width="160" height="30" rx="4" fill="#030303" stroke="#0F52BA" stroke-width="1"/>
-                  <text x="600" y="140" text-anchor="middle" fill="#4D8CFF">Audio Stream (NLP)</text>
+                  <rect x="520" y="120" width="160" height="30" rx="4" fill="#030303" stroke="#0F3A6B" stroke-width="1"/>
+                  <text x="600" y="140" text-anchor="middle" fill="#3866A0">Audio Stream (NLP)</text>
 
                   <!-- Nodes -->
                   <path d="M 200 150 L 200 180 L 100 180 L 100 210" fill="none" stroke="#333333" stroke-width="1" marker-end="url(#arrow)"/>
@@ -203,19 +203,19 @@ X_simulated, y_simulated = generate_clinical_data()</code></pre>
 
                   <rect x="30" y="210" width="140" height="60" rx="2" fill="#030303" stroke="#222222"/>
                   <text x="100" y="235" text-anchor="middle" font-size="10">Gaze/Face Tracking</text>
-                  <text x="100" y="255" text-anchor="middle" fill="#0F52BA" font-size="9">A1, A2, A7</text>
+                  <text x="100" y="255" text-anchor="middle" fill="#0F3A6B" font-size="9">A1, A2, A7</text>
 
                   <rect x="230" y="210" width="140" height="60" rx="2" fill="#030303" stroke="#222222"/>
                   <text x="300" y="235" text-anchor="middle" font-size="10">Pose Estimation</text>
-                  <text x="300" y="255" text-anchor="middle" fill="#0F52BA" font-size="9">C1, D1, D4</text>
+                  <text x="300" y="255" text-anchor="middle" fill="#0F3A6B" font-size="9">C1, D1, D4</text>
 
                   <rect x="430" y="210" width="140" height="60" rx="2" fill="#030303" stroke="#222222"/>
                   <text x="500" y="235" text-anchor="middle" font-size="10">Prosodic Extract</text>
-                  <text x="500" y="255" text-anchor="middle" fill="#0F52BA" font-size="9">B1, A4</text>
+                  <text x="500" y="255" text-anchor="middle" fill="#0F3A6B" font-size="9">B1, A4</text>
 
                   <rect x="630" y="210" width="140" height="60" rx="2" fill="#030303" stroke="#222222"/>
                   <text x="700" y="235" text-anchor="middle" font-size="10">Speech to Text</text>
-                  <text x="700" y="255" text-anchor="middle" fill="#0F52BA" font-size="9">B2</text>
+                  <text x="700" y="255" text-anchor="middle" fill="#0F3A6B" font-size="9">B2</text>
               </g>
           </svg>
       </div>
@@ -339,7 +339,7 @@ consensus_prediction = meta_learner.predict_proba(X_meta)[:, 1]</code></pre>
                   <text x="300" y="42" text-anchor="middle" fill="#7A1626" font-weight="bold">OVERFITTING RISK ZONE (AUC > 0.95)</text>
 
                   <!-- ROC Curve -->
-                  <path d="M 50 250 Q 80 40 550 20" fill="none" stroke="#4D8CFF" stroke-width="3"/>
+                  <path d="M 50 250 Q 80 40 550 20" fill="none" stroke="#3866A0" stroke-width="3"/>
                   <circle cx="160" cy="50" r="4" fill="#F5F5F7"/>
                   <text x="175" y="55" fill="#F5F5F7">AUC: 0.974</text>
               </g>
@@ -382,17 +382,17 @@ consensus_prediction = meta_learner.predict_proba(X_meta)[:, 1]</code></pre>
 
                   <!-- Bars -->
                   <text x="180" y="45" text-anchor="end" fill="#F5F5F7">Phrase Repetition Rate</text>
-                  <rect x="200" y="30" width="310" height="20" fill="#0F52BA"/>
-                  <text x="520" y="45" fill="#4D8CFF">0.514</text>
+                  <rect x="200" y="30" width="310" height="20" fill="#0F3A6B"/>
+                  <text x="520" y="45" fill="#3866A0">0.514</text>
 
                   <text x="180" y="75" text-anchor="end">Hand Flapping Duration</text>
-                  <rect x="200" y="60" width="180" height="20" fill="#4D8CFF"/>
+                  <rect x="200" y="60" width="180" height="20" fill="#3866A0"/>
 
                   <text x="180" y="105" text-anchor="end">Eye Contact (%)</text>
-                  <rect x="200" y="90" width="140" height="20" fill="#4D8CFF"/>
+                  <rect x="200" y="90" width="140" height="20" fill="#3866A0"/>
 
                   <text x="180" y="135" text-anchor="end">Response to Name</text>
-                  <rect x="200" y="120" width="90" height="20" fill="#4D8CFF"/>
+                  <rect x="200" y="120" width="90" height="20" fill="#3866A0"/>
               </g>
           </svg>
       </div>
@@ -477,8 +477,8 @@ consensus_prediction = meta_learner.predict_proba(X_meta)[:, 1]</code></pre>
                   <line x1="200" y1="100" x2="750" y2="100" stroke="#222" stroke-width="20" stroke-linecap="round"/>
 
                   <!-- Markers -->
-                  <circle cx="300" cy="40" r="6" fill="#0F52BA"/>
-                  <text x="300" y="20" text-anchor="middle" fill="#4D8CFF">Joint Attention Bid</text>
+                  <circle cx="300" cy="40" r="6" fill="#0F3A6B"/>
+                  <text x="300" y="20" text-anchor="middle" fill="#3866A0">Joint Attention Bid</text>
 
                   <circle cx="450" cy="100" r="6" fill="#DBA844"/>
                   <text x="450" y="125" text-anchor="middle" fill="#DBA844">Social Smile</text>

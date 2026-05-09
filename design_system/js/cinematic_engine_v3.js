@@ -211,7 +211,7 @@ const initCinematicEngine = () => {
 
     // Particle Material - Deep integration with starfield
     const pMaterial = new THREE.PointsMaterial({
-        color: 0x4d8cff, // Sapphire glow
+        color: 0x4d8cff, // Phthalo Lift glow
         size: 4.5,
         map: circleTexture,
         transparent: true,
@@ -274,8 +274,8 @@ const initCinematicEngine = () => {
     }
 
     // Refined Palette (Tied to deep-space background)
-    const baseColor = new THREE.Color(0x0f52ba); // Deep Sapphire
-    const highlightColor = new THREE.Color(0x4d8cff); // Light Sapphire
+    const baseColor = new THREE.Color(0x0f52ba); // Deep Phthalo Lift
+    const highlightColor = new THREE.Color(0x4d8cff); // Light Phthalo Lift
 
     const animate = () => {
         requestAnimationFrame(animate);

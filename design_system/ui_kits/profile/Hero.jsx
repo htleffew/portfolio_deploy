@@ -7,12 +7,12 @@ const Hero = () => (
         <h1 style={{fontFamily:"'Playfair Display',serif",fontSize:'clamp(40px,5.5vw,68px)',fontWeight:600,letterSpacing:'-0.015em',lineHeight:1.1,color:'var(--flare)',margin:'0 0 24px'}}>
           Machine Learning Leadership &amp; Strategy
         </h1>
-        <div style={{width:64,height:1,background:'var(--sapphire)',marginBottom:24}}/>
+        <div style={{width:64,height:1,background:'var(--phthalo-lift)',marginBottom:24}}/>
         <p style={{fontFamily:"'Lora',serif",fontSize:18,lineHeight:1.8,color:'var(--tungsten)',maxWidth:640,margin:'0 0 32px'}}>Modeling Human Complexity Through Applied AI</p>
         <div style={{display:'flex',gap:32,fontFamily:"'JetBrains Mono',monospace",fontSize:11,letterSpacing:'0.10em',textTransform:'uppercase'}}>
           <a href="../../assets/Heather-Leffew-PhD_Resume-042026.pdf" target="_blank" style={{color:'var(--flare)',textDecoration:'none',borderBottom:'1px solid rgba(255,255,255,0.3)',paddingBottom:2}}>Resume PDF <span>&darr;</span></a>
-          <a href="https://linkedin.com/in/heathertleffew" target="_blank" style={{color:'var(--sapphire-deep)',textDecoration:'none'}}>LinkedIn</a>
-          <a href="#research" style={{color:'var(--sapphire-deep)',textDecoration:'none'}}>Research Index</a>
+          <a href="https://linkedin.com/in/heathertleffew" target="_blank" style={{color:'var(--phthalo)',textDecoration:'none'}}>LinkedIn</a>
+          <a href="#research" style={{color:'var(--phthalo)',textDecoration:'none'}}>Research Index</a>
         </div>
       </div>
       <div style={{position:'relative',width:'100%',aspectRatio:'3/4',borderRadius:12,overflow:'hidden',border:'1px solid rgba(51,51,51,0.5)'}} className="headshot-wrap">

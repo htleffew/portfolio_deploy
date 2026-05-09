@@ -8,7 +8,7 @@ const BioCard = () => {
   };
   const protect = {position:'absolute',inset:0,background:'linear-gradient(to right, rgba(3,3,3,0.92) 0%, rgba(3,3,3,0.85) 70%, rgba(3,3,3,0) 100%)',opacity:0.5,pointerEvents:'none',borderRadius:12};
   const p = {position:'relative',zIndex:1,fontFamily:"'Lora',serif",fontSize:16,lineHeight:1.85,color:'var(--platinum)',marginBottom:24,maxWidth:1100};
-  const btn = {position:'relative',zIndex:1,background:'transparent',border:'1px solid rgba(255,255,255,0.20)',color:'var(--sapphire)',fontFamily:"'JetBrains Mono',monospace",fontSize:11,textTransform:'uppercase',letterSpacing:'0.10em',padding:'12px 24px',borderRadius:4,cursor:'pointer',display:'inline-flex',alignItems:'center',gap:8,marginTop:16};
+  const btn = {position:'relative',zIndex:1,background:'transparent',border:'1px solid rgba(255,255,255,0.20)',color:'var(--phthalo-lift)',fontFamily:"'JetBrains Mono',monospace",fontSize:11,textTransform:'uppercase',letterSpacing:'0.10em',padding:'12px 24px',borderRadius:4,cursor:'pointer',display:'inline-flex',alignItems:'center',gap:8,marginTop:16};
   return (
     <section style={{maxWidth:1400,margin:'0 auto',padding:'0 48px 80px'}}>
       <div style={cardStyle}>

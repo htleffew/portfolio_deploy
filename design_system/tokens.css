@@ -18,12 +18,10 @@
   --flare:     #FFFFFF; /* headlines, highlights */
 
   /* ── ACCENT — chrome ── */
-  --sapphire-deep: #0F52BA;  /* deep CTA / link rest */
-  --sapphire:      #4D8CFF;  /* link hover, inline accents */
+  --phthalo: #0F3A6B;  /* deep CTA / link rest */
+  --phthalo-lift:      #3866A0;  /* link hover, inline accents */
 
   /* ── CASE-STUDY DIAGRAM PALETTE — "Oil paint quartet" ── */
-  --phthalo:       #0F3A6B;  /* Phthalo Blue — primary chart blue */
-  --phthalo-lift:  #3866A0;  /* Phthalo Blue, lifted */
   --alizarin:      #7A1626;  /* Alizarin Crimson */
   --hookers:       #1A4A38;  /* Hooker's Green */
   --hansa:         #DBA844;  /* Hansa Yellow Light */
@@ -37,9 +35,9 @@
   --fg-3:         var(--tungsten);  /* meta / muted */
   --rule:         rgba(51,51,51,0.5);
   --rule-soft:    rgba(255,255,255,0.05);
-  --link:         var(--sapphire-deep);
+  --link:         var(--phthalo);
   --link-hover:   var(--flare);
-  --accent:       var(--sapphire);
+  --accent:       var(--phthalo-lift);
 
   /* ── LAYOUT COLUMNS ── */
   --col:      860px;
@@ -110,7 +108,7 @@
 }
 
 /* ── GLOBAL RESET ── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; border-radius: 0 !important; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; border-radius: 0 !important; word-break: normal; overflow-wrap: normal; hyphens: none; -webkit-hyphens: none; }
 ::selection { background: rgba(77,140,255,0.35); color: #fff; }
 
 /* ============================================================

@@ -28,7 +28,7 @@ The portfolio operates on a dual-mode system (`band--dark` and `band--paper`) de
 - `--ink-3: #5E5E5A;` (Muted text)
 
 ### Brand Accents
-- `--sapphire: #4D8CFF;` (Primary interaction color, Dark mode focus)
+- `--phthalo-lift: #3866A0;` (Primary interaction color, Dark mode focus)
 - `--ink-blue: #1A3A6B;` (Primary interaction color, Light mode focus)
 
 ## 3. Typographic Hierarchy
@@ -66,7 +66,7 @@ The portfolio operates on a dual-mode system (`band--dark` and `band--paper`) de
 - `--ink-3: #5E5E5A;` (Muted text)
 
 ### Brand Accents
-- `--sapphire: #4D8CFF;` (Primary interaction color, Dark mode focus)
+- `--phthalo-lift: #3866A0;` (Primary interaction color, Dark mode focus)
 - `--ink-blue: #1A3A6B;` (Primary interaction color, Light mode focus)
 
 ## 3. Typographic Hierarchy
@@ -114,8 +114,8 @@ section.band:not(.front) {
 }
 /* Ensure paragraphs wrap properly on all viewports */
 p, li, .abstract, .r-intro, .p-desc, .db-desc {
-  overflow-wrap: break-word;
-  hyphens: auto;
+  overflow-wrap: normal;
+  hyphens: none;
 }
 /* Portrait Mode Space Fix */
 .front { min-height: clamp(400px, 80vh, 850px) !important; justify-content: center !important; }
