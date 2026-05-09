@@ -111,7 +111,8 @@
 </style>
 </head>
 <body>
-<div id="preloader"><div id="preloader-left"></div><div id="preloader-right"></div><div id="preloader-line"></div></div>
+<canvas id="deep-space"></canvas>
+<script>window.addEventListener('load',()=>{const ds=document.getElementById('deep-space');if(ds&&typeof gsap!=='undefined'){gsap.to(ds,{opacity:1,duration:3.5,ease:'power2.inOut',delay:0.5})}else if(ds){ds.style.opacity='1'}});</script>
 
 <header id="topnav">
   <a href="../index.html" class="brand">Dr. Heather Leffew</a>
