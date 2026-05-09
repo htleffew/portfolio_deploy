@@ -3419,3 +3419,6 @@ ul.bullets li::before { content:'\25B8'; position:absolute; left:0; top:1px; fon
 
   /* Split Type layout fixes */
   .line, .word, .char { display: inline-block; }
+/* Defensive CSS for SplitType Typography to prevent mid-word breaks */
+.line, .word, .char { display: inline-block; }
+.word { white-space: nowrap; }

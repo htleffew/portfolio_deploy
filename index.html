@@ -209,6 +209,7 @@ window.addEventListener('scroll', () => {
 </script>
 
 <script>
+window.disableGlobalOrchestration = true;
 window.addEventListener('load', () => {
   try {
     // ── Initialize Lenis Smooth Scroll ──────────────────────────
@@ -257,7 +258,7 @@ window.addEventListener('load', () => {
       let split;
       if (heroTitle) {
         heroTitle.style.opacity = 1;
-        split = new SplitType(heroTitle, { types: 'chars' });
+        split = new SplitType(heroTitle, { types: 'words, chars' });
       }
 
       // Nav slides in early during the void reveal
