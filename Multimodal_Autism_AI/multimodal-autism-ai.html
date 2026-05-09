@@ -11,17 +11,6 @@
 /* ============================================================
    COMPONENT-SPECIFIC STYLES
    ============================================================ */
-.toggle-container {
-    display: flex; align-items: center; gap: 14px; margin-top: 36px;
-    font-family: var(--mono); font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--tungsten);
-}
-.switch { position: relative; display: inline-block; width: 44px; height: 22px; }
-.switch input { opacity: 0; width: 0; height: 0; }
-.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255,255,255,0.1); transition: .4s; border-radius: 22px; border: 1px solid rgba(255,255,255,0.2); }
-.slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 4px; bottom: 3px; background-color: var(--sapphire); transition: .4s; border-radius: 50%; }
-input:checked + .slider { background-color: rgba(77,140,255,0.15); border-color: var(--sapphire); }
-input:checked + .slider:before { transform: translateX(20px); }
-.view-active { color: var(--platinum); font-weight: 500; }
 
 /* Interactive Profile Explorer */
 .explorer { max-width: var(--col-wide); margin: 48px auto; padding: 0 32px; }
@@ -78,15 +67,6 @@ input:checked + .slider:before { transform: translateX(20px); }
       <p class="abstract">
         The diagnosis of Autism Spectrum Disorder (ASD) relies heavily on the Autism Diagnostic Observation Schedule, Second Edition (ADOS-2). This assessment is the clinical gold standard. It involves a trained clinician observing a child through a series of structured and semi-structured tasks to evaluate social interaction, communication, play, and repetitive behaviors. While highly effective, the ADOS-2 is time-intensive and inherently subjective.
       </p>
-
-      <div class="toggle-container">
-          <span id="label-clinical" class="view-active">Clinical View</span>
-          <label class="switch">
-              <input type="checkbox" id="viewToggle">
-              <span class="slider"></span>
-          </label>
-          <span id="label-engineering">Engineering View</span>
-      </div>
      </div>
      <div></div>
     </div>
@@ -150,7 +130,7 @@ input:checked + .slider:before { transform: translateX(20px); }
 
   <div class="code-container">
       <div class="code-block">
-# Python implementation of the Ultra-Realistic Data Simulation
+<pre><code># Python implementation of the Ultra-Realistic Data Simulation
 import numpy as np
 from sklearn.datasets import make_classification
 
@@ -171,12 +151,12 @@ def generate_clinical_data(n_samples=1200, prevalence=0.22, noise_level=0.30, mi
     X_noisy = X + noise
     
     # Inject Missingness
-    mask = np.random.rand(*X_noisy.shape) < missing_rate
+    mask = np.random.rand(*X_noisy.shape) &lt; missing_rate
     X_noisy[mask] = np.nan
     
     return X_noisy, y
 
-X_simulated, y_simulated = generate_clinical_data()
+X_simulated, y_simulated = generate_clinical_data()</code></pre>
       </div>
   </div>
 </section>
@@ -298,7 +278,7 @@ X_simulated, y_simulated = generate_clinical_data()
 
   <div class="code-container">
       <div class="code-block">
-# Example of Late Fusion Architecture using scikit-learn
+<pre><code># Example of Late Fusion Architecture using scikit-learn
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import cross_val_predict
@@ -320,7 +300,7 @@ X_meta = np.column_stack((prob_social, prob_comm, prob_rep))
 # Train Meta-Learner
 meta_learner = LogisticRegression()
 meta_learner.fit(X_meta, y_simulated)
-consensus_prediction = meta_learner.predict_proba(X_meta)[:, 1]
+consensus_prediction = meta_learner.predict_proba(X_meta)[:, 1]</code></pre>
       </div>
   </div>
 </section>
@@ -565,23 +545,6 @@ consensus_prediction = meta_learner.predict_proba(X_meta)[:, 1]
 <script src="../design_system/js/global_chrome.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // Engineering Toggle Logic
-        const viewToggle = document.getElementById('viewToggle');
-        const labelClinical = document.getElementById('label-clinical');
-        const labelEngineering = document.getElementById('label-engineering');
-
-        viewToggle.addEventListener('change', (e) => {
-            if(e.target.checked) {
-                document.body.classList.add('show-engineering');
-                labelEngineering.classList.add('view-active');
-                labelClinical.classList.remove('view-active');
-            } else {
-                document.body.classList.remove('show-engineering');
-                labelClinical.classList.add('view-active');
-                labelEngineering.classList.remove('view-active');
-            }
-        });
-
         // Profile Explorer Logic
         const patientData = {
             "PART_0012": {
@@ -656,10 +619,9 @@ consensus_prediction = meta_learner.predict_proba(X_meta)[:, 1]
                         if(e.isIntersecting) {
                             [...spine.children].forEach(c => c.classList.remove('is-active', 'is-paper-active'));
                             const isPaper = e.target.classList.contains('band--paper');
-                            const invertContrast = !isPaper;
-                            row.classList.add(invertContrast ? 'is-paper-active' : 'is-active');
+                            row.classList.add('is-active');
                             
-                            if(invertContrast) {
+                            if(isPaper) {
                                 spine.classList.add('is-paper');
                                 if(topnav) topnav.classList.add('is-paper');
                                 if(status) status.classList.add('is-paper');
