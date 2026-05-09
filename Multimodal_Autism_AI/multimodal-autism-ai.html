@@ -5,31 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Multimodal AI for Autism Assessment | Dr. Heather Leffew</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../design_system/css/global_chrome.css">
-<link rel="stylesheet" href="../design_system/assets/css/institutional.css">
-<style>
-/* ============================================================
-   COMPONENT-SPECIFIC STYLES
-   ============================================================ */
-
-/* Interactive Profile Explorer */
-.explorer { max-width: var(--col-wide); margin: 48px auto; padding: 0 32px; }
-.profile-selector { 
-    width: 100%; max-width: 320px; padding: 12px 16px; margin-bottom: 32px; 
-    font-family: var(--mono); font-size: 12px; background: transparent; 
-    color: var(--ink); border: 1px solid var(--paper-3); cursor: pointer; 
-}
-.profile-card {
-    background: #fff; border: 1px solid var(--paper-3); padding: 32px;
-    display: grid; grid-template-columns: 1fr; gap: 24px;
-}
-.profile-card .metric { display: flex; flex-direction: column; gap: 8px; }
-.profile-card .mlab { font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-blue); }
-.profile-card .mval { font-family: var(--body); font-size: 16px; color: var(--ink); }
-.profile-card .mval.highlight { font-size: 24px; font-weight: 500; font-family: var(--display); color: var(--phthalo); }
-@media(min-width: 768px) { .profile-card { grid-template-columns: repeat(2, 1fr); } .profile-card .full-width { grid-column: span 2; } }
-</style>
-<script src="../design_system/js/cinematic_engine_v3.js" defer></script>
+<link rel="stylesheet" href="../design_system/css/global.css">
 </head>
 
 <body>
@@ -542,7 +518,6 @@ consensus_prediction = meta_learner.predict_proba(X_meta)[:, 1]</code></pre>
 </section>
 
 <!-- Link to global JS for navigation and recommendations -->
-<script src="../design_system/js/global_chrome.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         // Profile Explorer Logic
@@ -638,5 +613,6 @@ consensus_prediction = meta_learner.predict_proba(X_meta)[:, 1]</code></pre>
         }
     });
 </script>
+<script src="../design_system/js/global.js" defer></script>
 </body>
 </html>
