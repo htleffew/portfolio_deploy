@@ -717,6 +717,7 @@ if (document.readyState === 'loading') {
 // GLOBAL CINEMATIC REVEAL ORCHESTRATION
 // ==========================================
 window.addEventListener('load', () => {
+    if (window.disableGlobalOrchestration) return;
     if (typeof gsap !== 'undefined') {
         const tl = gsap.timeline({
             onComplete: () => {
@@ -748,7 +749,7 @@ window.addEventListener('load', () => {
         const heroTitle = document.querySelector('.hero h1');
         if (heroTitle && typeof SplitType !== 'undefined') {
             heroTitle.style.opacity = 1;
-            split = new SplitType(heroTitle, { types: 'chars' });
+            split = new SplitType(heroTitle, { types: 'words, chars' });
         }
 
         tl.to('#topnav', { y: 0, duration: 1.4, ease: 'power3.out' }, "-=2.8");
