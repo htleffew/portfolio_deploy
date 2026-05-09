@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,15 +6,6 @@
     <title>Autonomous Research & Mutation Boundaries | Dr. Heather Leffew</title>
     <meta name="description" content="An architectural case study on bounding autonomous LLM research agents within regulated enterprise environments using the Fixed Harness / Mutation Budget dichotomy.">
     <!-- Design System: tokens load via @import inside institutional.css -->
-    <!-- Three.js cinematic engine -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js" defer></script>
     <!-- Page-specific interactive widget styles (simulator only) -->
     
 <link rel="stylesheet" href="../design_system/css/global.css">
@@ -34,6 +25,7 @@
 <!-- Atmospheric gradient -->
 <div class="atmosphere"></div>
 
+<canvas id="deep-space"></canvas>
 <canvas id="glCanvas"></canvas>
 
 <!-- ============================================================
@@ -212,7 +204,7 @@
 
         <rect x="250" y="170" width="230" height="55" fill="var(--dioxazine)" fill-opacity="0.12" stroke="var(--dioxazine)" stroke-width="1"/>
         <text x="365" y="195" text-anchor="middle" fill="var(--dioxazine)" font-family="var(--mono)" font-size="9" letter-spacing="1.5">MODEL / HYPER SPACE</text>
-        <text x="365" y="213" text-anchor="middle" fill="var(--dioxazine)" font-family="var(--mono)" font-size="8">Cost: 10–25 units</text>
+        <text x="365" y="213" text-anchor="middle" fill="var(--dioxazine)" font-family="var(--mono)" font-size="8">Cost: 10â€“25 units</text>
 
         <rect x="510" y="170" width="230" height="55" fill="var(--phthalo-lift)" fill-opacity="0.12" stroke="var(--phthalo-lift)" stroke-width="1"/>
         <text x="625" y="195" text-anchor="middle" fill="var(--phthalo-lift)" font-family="var(--mono)" font-size="9" letter-spacing="1.5">METRIC SPACE</text>
@@ -221,7 +213,7 @@
         <!-- Budget meter -->
         <rect x="250" y="260" width="490" height="30" fill="none" stroke="var(--brushed)" stroke-width="1"/>
         <rect x="250" y="260" width="490" height="30" fill="var(--phthalo-lift)" fill-opacity="0.2"/>
-        <text x="495" y="280" text-anchor="middle" fill="var(--phthalo-lift)" font-family="var(--mono)" font-size="11" letter-spacing="2">BUDGET: 100 → 0</text>
+        <text x="495" y="280" text-anchor="middle" fill="var(--phthalo-lift)" font-family="var(--mono)" font-size="11" letter-spacing="2">BUDGET: 100 â†’ 0</text>
 
         <!-- SYSTEM HALT zone -->
         <rect x="250" y="320" width="490" height="45" fill="var(--alizarin)" fill-opacity="0.08" stroke="var(--alizarin)" stroke-width="1" stroke-dasharray="4 4"/>
@@ -398,7 +390,7 @@
         <!-- Anomaly zone -->
         <rect x="80" y="40" width="680" height="60" fill="var(--alizarin)" fill-opacity="0.04"/>
 
-        <!-- Normal performance line (iterations 0–10) -->
+        <!-- Normal performance line (iterations 0â€“10) -->
         <polyline points="80,240 120,232 160,225 200,218 240,212 280,206 320,200 360,195 400,190 440,186 480,182"
                   stroke="var(--phthalo)" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
 
@@ -467,7 +459,7 @@
 
   <div class="method reveal">
     <div class="lab">CUSUM Statistic</div>
-    <div class="inner">S<sub>t</sub> = max(0, S<sub>t-1</sub> + (x<sub>t</sub> − μ₀ − k)), where x<sub>t</sub> is the observed metric at iteration t, μ₀ is the target value, k is the allowance parameter, and the trigger fires when S<sub>t</sub> > h (the decision threshold).</div>
+    <div class="inner">S<sub>t</sub> = max(0, S<sub>t-1</sub> + (x<sub>t</sub> âˆ’ Î¼â‚€ âˆ’ k)), where x<sub>t</sub> is the observed metric at iteration t, Î¼â‚€ is the target value, k is the allowance parameter, and the trigger fires when S<sub>t</sub> > h (the decision threshold).</div>
   </div>
 
   <div class="code-container reveal">
@@ -537,7 +529,7 @@
         <text x="380" y="112" text-anchor="middle" fill="var(--phthalo-lift)" font-family="var(--mono)" font-size="7">cost: 20</text>
 
         <line x1="430" y1="100" x2="450" y2="100" stroke="var(--phthalo-lift)" stroke-width="1.5"/>
-        <text x="460" y="104" fill="var(--tungsten)" font-family="var(--mono)" font-size="14">···</text>
+        <text x="460" y="104" fill="var(--tungsten)" font-family="var(--mono)" font-size="14">Â·Â·Â·</text>
         <line x1="480" y1="100" x2="500" y2="100" stroke="var(--phthalo-lift)" stroke-width="1.5"/>
 
         <rect x="500" y="70" width="100" height="60" fill="var(--phthalo-lift)" fill-opacity="0.06" stroke="var(--phthalo-lift)" stroke-width="1"/>
@@ -638,7 +630,7 @@
             <button class="sim-btn btn-danger" id="btn-pii" onclick="simViolate()">Disable PII Redaction Filter</button>
           </div>
           <div class="sim-sep"></div>
-          <button class="sim-btn" id="btn-reset" onclick="simReset()">↺ Reset Simulator</button>
+          <button class="sim-btn" id="btn-reset" onclick="simReset()">â†º Reset Simulator</button>
         </div>
         <!-- Output -->
         <div class="sim-output">
@@ -695,7 +687,7 @@
       <li>Karpathy, A. (2026). <em>karpathy/autoresearch</em>. GitHub. <a href="https://github.com/karpathy/autoresearch" target="_blank" rel="noopener">github.com</a></li>
       <li>Lu, C., Lu, C., Lange, R. T., Foerster, J., Clune, J., &amp; Ha, D. (2024). The AI Scientist: Towards fully automated open-ended scientific discovery. <em>arXiv preprint</em>, arXiv:2408.06292. <a href="https://arxiv.org/abs/2408.06292" target="_blank" rel="noopener">arxiv.org</a></li>
       <li>National Institute of Standards and Technology. (2023). <em>Artificial Intelligence Risk Management Framework (AI RMF 1.0)</em>. NIST AI 100-1. <a href="https://doi.org/10.6028/NIST.AI.100-1" target="_blank" rel="noopener">doi.org</a></li>
-      <li>Page, E. S. (1954). Continuous inspection schemes. <em>Biometrika</em>, 41(1/2), 100–115. <a href="https://doi.org/10.2307/2333009" target="_blank" rel="noopener">doi.org</a></li>
+      <li>Page, E. S. (1954). Continuous inspection schemes. <em>Biometrika</em>, 41(1/2), 100â€“115. <a href="https://doi.org/10.2307/2333009" target="_blank" rel="noopener">doi.org</a></li>
     </ul>
   </div>
 </section>
@@ -733,18 +725,18 @@
   let mutationCount = 0;
 
   const hyperMsgs = [
-    'Adjusted RandomForest n_estimators: 150 → 220',
-    'Tuned XGBoost learning_rate: 0.1 → 0.05',
-    'Set regularization lambda: 0.01 → 0.1',
-    'Switched max_depth: 6 → 8',
-    'Reduced min_samples_split: 5 → 3'
+    'Adjusted RandomForest n_estimators: 150 â†’ 220',
+    'Tuned XGBoost learning_rate: 0.1 â†’ 0.05',
+    'Set regularization lambda: 0.01 â†’ 0.1',
+    'Switched max_depth: 6 â†’ 8',
+    'Reduced min_samples_split: 5 â†’ 3'
   ];
 
   const featureMsgs = [
-    'Engineered polynomial feature: cohort_age² × tenure',
-    'Created interaction term: segment_id × quarterly_revenue',
+    'Engineered polynomial feature: cohort_ageÂ² Ã— tenure',
+    'Created interaction term: segment_id Ã— quarterly_revenue',
     'Applied log transform to skewed_metric_3',
-    'Binned continuous variable: response_latency → quartile buckets',
+    'Binned continuous variable: response_latency â†’ quartile buckets',
     'Derived rolling 90-day average for engagement_score'
   ];
 
@@ -792,7 +784,7 @@
     budget -= cost;
     mutationCount++;
     var msg = msgs[mutationCount % msgs.length];
-    addLog('[ MUT-' + String(mutationCount).padStart(2,'0') + ' ] ' + msg + ' (−' + cost + ')', 'is-success');
+    addLog('[ MUT-' + String(mutationCount).padStart(2,'0') + ' ] ' + msg + ' (âˆ’' + cost + ')', 'is-success');
     updateBar();
     if (budget <= 0) {
       halted = true;
@@ -832,3 +824,5 @@
 <script src="../design_system/js/global.js" defer></script>
 </body>
 </html>
+
+

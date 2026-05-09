@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -67,7 +67,7 @@
 window.disableGlobalOrchestration = true;
 window.addEventListener('load', () => {
   try {
-    // ── Initialize Lenis Smooth Scroll ──────────────────────────
+    // â”€â”€ Initialize Lenis Smooth Scroll â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     let lenis;
     if (typeof Lenis !== 'undefined') {
       lenis = new Lenis({ duration: 1.4, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
@@ -83,7 +83,7 @@ window.addEventListener('load', () => {
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
       gsap.registerPlugin(ScrollTrigger);
 
-      // ── Theatrical Opening Sequence ─────────────────────────────
+      // â”€â”€ Theatrical Opening Sequence â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
       const tl = gsap.timeline({
         onComplete: () => { initScrollTriggers(); }
       });
@@ -137,7 +137,7 @@ window.addEventListener('load', () => {
           scrollTrigger: { trigger: '.front', start: 'top top', end: '+=120', scrub: true }
         });
 
-        // ── Dashboard Library Section ─────────────────────────────
+        // â”€â”€ Dashboard Library Section â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         const libBand = document.querySelector('.library-band');
         if (libBand) {
           const libTl = gsap.timeline({
@@ -153,7 +153,7 @@ window.addEventListener('load', () => {
           );
         }
 
-        // ── Subtle parallax depth on section content ─────────────
+        // â”€â”€ Subtle parallax depth on section content â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         gsap.utils.toArray('.band').forEach(band => {
           const inner = band.querySelector('.col-wide') || band.querySelector('.dashboard-layout');
           if (inner) {
@@ -166,7 +166,7 @@ window.addEventListener('load', () => {
       }
 
     } else {
-      // No GSAP — make everything visible immediately
+      // No GSAP â€” make everything visible immediately
       const preloader = document.getElementById('preloader');
       if (preloader) preloader.style.display = 'none';
       document.querySelectorAll('.front .meta-row span, .front h1, .front .abstract, #deep-space, .library-band .dashboard-layout, .library-band .dashboard-sidebar, .library-band .dashboard-main, #topnav').forEach(el => {
@@ -213,3 +213,6 @@ window.addEventListener('scroll', () => {
 <script src="design_system/js/global.js" defer></script>
 </body>
 </html>
+
+
+
