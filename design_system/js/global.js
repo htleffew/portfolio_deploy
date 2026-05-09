@@ -447,8 +447,8 @@ if (document.readyState === 'loading') {
     let pathPrefix = './';
     for (let i = 0; i < scripts.length; i++) {
         const src = scripts[i].getAttribute('src');
-        if (src && src.includes('global_chrome.js')) {
-            const match = src.match(/^(.*?)design_system\/js\/global_chrome\.js/);
+        if (src && src.includes('global.js')) {
+            const match = src.match(/^(.*?)design_system\/js\/global\.js/);
             if (match) {
                 pathPrefix = match[1];
             }
@@ -458,19 +458,6 @@ if (document.readyState === 'loading') {
     
     // Fallback if empty
     if (!pathPrefix) pathPrefix = './';
-
-    // 2. Inject CSS
-    const cssId = 'global-chrome-css';
-    if (!document.getElementById(cssId)) {
-        const head  = document.getElementsByTagName('head')[0];
-        const link  = document.createElement('link');
-        link.id   = cssId;
-        link.rel  = 'stylesheet';
-        link.type = 'text/css';
-        link.href = pathPrefix + 'design_system/css/global_chrome.css';
-        link.media = 'all';
-        head.appendChild(link);
-    }
 
     // 2.5 Inject Film Grain Overlay
     if (!document.getElementById('grain')) {
@@ -724,3 +711,81 @@ if (document.readyState === 'loading') {
 })();
 
 
+
+
+// ==========================================
+// GLOBAL CINEMATIC REVEAL ORCHESTRATION
+// ==========================================
+window.addEventListener('load', () => {
+    if (typeof gsap !== 'undefined') {
+        const tl = gsap.timeline({
+            onComplete: () => {
+                if (typeof ScrollTrigger !== 'undefined') {
+                    ScrollTrigger.refresh();
+                    initScrollTriggers();
+                }
+            }
+        });
+
+        const preloader = document.getElementById('preloader');
+        const preLeft = document.getElementById('preloader-left');
+        const preRight = document.getElementById('preloader-right');
+        const preLine = document.getElementById('preloader-line');
+        if (preloader && preLeft && preRight && preLine) {
+            tl.to(preLine, { height: '28vh', duration: 1.1, ease: 'power2.inOut' })
+              .to(preLine, { opacity: 0, height: '50vh', duration: 0.6, ease: 'power2.in' }, '+=0.15')
+              .to(preLeft, { xPercent: -100, duration: 1.1, ease: 'power3.inOut' }, '-=0.25')
+              .to(preRight, { xPercent: 100, duration: 1.1, ease: 'power3.inOut' }, '<')
+              .set(preloader, { display: 'none' });
+        } else if (preloader) {
+            tl.to(preloader, { opacity: 0, duration: 1.2, ease: 'power2.inOut', onComplete: () => { preloader.style.display = 'none'; } });
+        }
+
+        // Fade in the spatial void (managed by cinematic_engine_v3)
+        tl.to(['#deep-space', '#glCanvas'], { opacity: 1, duration: 3.5, ease: 'power2.inOut' }, "-=0.6");
+
+        let split;
+        const heroTitle = document.querySelector('.hero h1');
+        if (heroTitle && typeof SplitType !== 'undefined') {
+            heroTitle.style.opacity = 1;
+            split = new SplitType(heroTitle, { types: 'chars' });
+        }
+
+        tl.to('#topnav', { y: 0, duration: 1.4, ease: 'power3.out' }, "-=2.8");
+        tl.to('.ambient', { opacity: 0.35, scale: 1, rotation: 0, duration: 3.0, ease: 'power2.out' }, "-=2.8");
+        tl.to('.meta-row span', { opacity: 1, x: 0, duration: 1.0, stagger: 0.2, ease: 'power2.out' }, "-=2.2");
+        if (split) {
+            tl.from(split.chars, { opacity: 0, y: 20, rotateX: -90, stagger: 0.04, duration: 1.5, ease: 'back.out(1.5)' }, "-=1.6");
+        }
+        tl.to('.hero-rule', { width: 64, opacity: 1, duration: 1.3, ease: 'power3.inOut' }, "-=1.0");
+        tl.to('.abstract', { opacity: 1, y: 0, duration: 1.3, ease: 'power2.out' }, "-=0.9");
+        tl.to('.scroll-cue', { opacity: 1, duration: 1.2, ease: 'power2.out' }, "-=0.3");
+
+        function initScrollTriggers() {
+            gsap.to('.scroll-cue', {
+                opacity: 0, y: -10, duration: 0.6, ease: 'power2.in',
+                scrollTrigger: { trigger: '.hero', start: 'top top', end: '+=120', scrub: true }
+            });
+
+            gsap.utils.toArray('.band').forEach(band => {
+                const tlBand = gsap.timeline({
+                    scrollTrigger: { trigger: band, start: 'top 75%', toggleActions: 'play none none none' }
+                });
+                const eyebrow = band.querySelector('.section-eyebrow');
+                const heading = band.querySelector('.section-heading');
+                
+                if (eyebrow) tlBand.fromTo(eyebrow, { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 1.2, ease: 'power3.out' });
+                if (heading) tlBand.fromTo(heading, { opacity: 0, y: 25 }, { opacity: 1, y: 0, duration: 1.4, ease: 'power3.out' }, '-=0.6');
+                
+                const reveals = band.querySelectorAll('.type-block, .swatch-grid, .tagrow, .p-card, .r-card, .demo-box, .dashboard-layout');
+                if (reveals.length) {
+                    tlBand.fromTo(reveals, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 1.5, stagger: 0.15, ease: 'expo.out' }, '-=0.8');
+                }
+            });
+        }
+    } else {
+        const preloader = document.getElementById('preloader');
+        if (preloader) preloader.style.display = 'none';
+        document.querySelectorAll('.meta-row span, h1, .hero-rule, .abstract, .ambient, #glCanvas, #deep-space, .scroll-cue, .band .section-eyebrow, .band .section-heading, .type-block, .swatch-grid, .tagrow, .p-card, .r-card, .demo-box, .dashboard-layout').forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
+    }
+});

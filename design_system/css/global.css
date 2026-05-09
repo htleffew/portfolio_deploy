@@ -3416,3 +3416,6 @@ ul.bullets li::before { content:'\25B8'; position:absolute; left:0; top:1px; fon
   h1,h2,h3,h4 { line-height: 1.2; }
   ul, ol { list-style: none; }
   li { line-height: 1.7; }
+
+  /* Split Type layout fixes */
+  .line, .word, .char { display: inline-block; }
