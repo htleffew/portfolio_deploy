@@ -6,9 +6,6 @@
 <title>Design System Template | Obsidian & Chrome</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="design_system/css/global_chrome.css">
-<link rel="stylesheet" href="design_system/assets/css/institutional.css">
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js" defer></script>
@@ -16,179 +13,8 @@
 <script src="https://unpkg.com/split-type" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js" defer></script>
 
-<style>
-/* Base inline styles mirroring index.html */
-:root {
-  --obsidian:#030303;--charcoal:#161616;--graphite:#222222;--brushed:#333333;
-  --tungsten:#A1A1A6;--platinum:#F5F5F7;--flare:#FFFFFF;
-  --paper:#F5F5F7;--paper-2:#E9E9E9;--paper-3:#DDDDDD;
-  --ink:#030303;--ink-2:#222222;--ink-3:#5E5E5A;
-  --phthalo:#0F3A6B;--phthalo-lift:#3866A0;--ink-blue:#1A3A6B;
-  --display:'Playfair Display','Times New Roman',serif;
-  --body:'Lora',Georgia,serif;
-  --mono:'JetBrains Mono','SF Mono',Menlo,monospace;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;border-radius:0 !important;word-break:normal;overflow-wrap:normal;hyphens:none;-webkit-hyphens:none}
-::selection{background:rgba(77,140,255,0.35);color:#fff}
-html{scroll-behavior:smooth}
 
-/* Color Palette Swatches */
-.swatch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 24px; margin-bottom: 48px; }
-.swatch { display: flex; flex-direction: column; gap: 8px; }
-.swatch-color { width: 100%; aspect-ratio: 1; border: 1px solid var(--graphite); }
-.band--paper .swatch-color { border-color: var(--paper-3); }
-.swatch-label { font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--tungsten); }
-.band--paper .swatch-label { color: var(--ink-3); }
-
-/* Typography Block */
-.type-block { margin-bottom: 48px; display: flex; flex-direction: column; gap: 16px; }
-
-/* Structural Reused Components from index.html */
-.col-wide{max-width:1400px;margin:0 auto;padding:0 48px}
-@media(max-width:768px){.col-wide{padding:0 24px}}
-
-.section-eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:0.30em;text-transform:uppercase;color:var(--phthalo-lift);margin-bottom:18px}
-.band--paper .section-eyebrow{color:var(--ink-blue)}
-.section-heading{font-family:var(--display);font-size:clamp(24px,3.0vw,32px);font-weight:600;letter-spacing:-0.012em;line-height:1.12;color:var(--flare);margin-bottom:48px}
-.band--paper .section-heading{color:var(--ink)}
-
-/* Buttons & Links */
-.contact-row{display:flex;gap:32px;font-family:var(--mono);font-size:11px;letter-spacing:0.10em;text-transform:uppercase; margin-bottom: 48px;}
-.contact-row a{color:var(--phthalo);text-decoration:none;border-bottom:1px solid transparent;transition:all 0.3s}
-.contact-row a:hover{color:var(--flare);border-bottom-color:var(--flare)}
-.contact-row a.primary{color:var(--flare);border-bottom-color:rgba(255,255,255,0.3)}
-.band--paper .contact-row a{color:var(--ink-blue);}
-.band--paper .contact-row a:hover{color:var(--ink);border-bottom-color:var(--ink)}
-.band--paper .contact-row a.primary{color:var(--ink);border-bottom-color:rgba(0,0,0,0.3)}
-
-/* index.html specific classes */
-.bio-card{background:#fff;border:1px solid var(--paper-3);padding:48px;position:relative;overflow:hidden;margin-bottom:48px;}
-.bio-card p{font-family:var(--body);font-size:16px;line-height:1.85;color:var(--ink);margin-bottom:24px;max-width:1100px}
-.bio-card p:last-of-type{margin-bottom:0}
-.bio-expand-btn{background:transparent;border:1px solid rgba(0,0,0,0.2);color:var(--ink-blue);font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:0.10em;padding:12px 24px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:all 0.3s;margin-top:16px;outline:none}
-.bio-expand-btn:hover{border-color:var(--ink-blue);background:rgba(26,58,107,0.06)}
-.p-card{width:420px;min-height:280px;position:relative;background:rgba(22,22,22,0.65);border:1px solid var(--graphite);text-decoration:none;overflow:hidden;transition:border-color 0.6s,transform 0.4s,background 0.35s;display:flex;flex-direction:column;cursor:pointer;margin-bottom:48px;}
-.p-card:hover{transform:translateY(-4px);border-color:rgba(77,140,255,0.4);background:rgba(15,82,186,0.15)}
-.p-content{padding:36px;display:flex;flex-direction:column;height:100%}
-.p-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:0.35em;text-transform:uppercase;color:var(--tungsten);margin-bottom:18px}
-.p-title{font-family:var(--display);font-size:20px;color:var(--flare);margin-bottom:14px;font-weight:600;line-height:1.25}
-.p-desc{font-family:var(--body);font-size:15px;color:var(--tungsten);line-height:1.7;flex-grow:1}
-.p-link{font-family:var(--mono);font-size:10px;color:var(--phthalo-lift);text-transform:uppercase;letter-spacing:0.18em;margin-top:20px;display:inline-block;opacity:0.7;transition:opacity 0.3s}
-.p-card:hover .p-link{opacity:1}
-.resume-stack{display:flex;flex-direction:column;gap:0;margin-bottom:48px;}
-.r-card{position:relative;overflow:hidden;transition:border-color 0.7s}
-.band--dark .r-card{background:rgba(22,22,22,0.65);border:1px solid var(--graphite);border-bottom:0}
-.band--dark .r-card:last-child{border-bottom:1px solid var(--graphite)}
-.band--dark .r-card:hover{border-color:var(--tungsten)}
-.band--paper .r-card{background:#fff;border:1px solid var(--paper-3);border-bottom:0}
-.band--paper .r-card:last-child{border-bottom:1px solid var(--paper-3)}
-.band--paper .r-card:hover{border-color:rgba(0,0,0,0.2)}
-.r-bg{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(0,0,0,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,0.02) 1px,transparent 1px);background-size:40px 40px;z-index:0}
-.band--dark .r-bg{background-image:linear-gradient(rgba(245,245,247,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(245,245,247,0.02) 1px,transparent 1px)}
-.r-content{position:relative;z-index:1;padding:48px}
-.r-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;padding-bottom:24px}
-.band--dark .r-header{border-bottom:1px solid var(--graphite)}
-.band--paper .r-header{border-bottom:1px solid var(--paper-3)}
-.r-title{font-family:var(--display);font-size:22px;font-weight:600;margin-bottom:8px;line-height:1.2}
-.band--dark .r-title{color:var(--flare)}
-.band--paper .r-title{color:var(--ink)}
-.r-company{font-family:var(--body);font-size:15px;font-style:italic}
-.band--dark .r-company{color:var(--phthalo-lift)}
-.band--paper .r-company{color:var(--ink-blue)}
-.r-dates{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:0.10em;padding:6px 16px;white-space:nowrap}
-.band--dark .r-dates{color:var(--tungsten);border:1px solid var(--graphite)}
-.band--paper .r-dates{color:var(--ink-3);border:1px solid var(--paper-3)}
-.r-intro{font-family:var(--body);font-size:15px;line-height:1.8;margin-bottom:24px;max-width:900px}
-.band--dark .r-intro{color:var(--platinum)}
-.band--paper .r-intro{color:var(--ink-2)}
-.tagrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.tag{font-family:var(--mono);font-size:10px;letter-spacing:0.20em;text-transform:uppercase;padding:6px 12px;background:transparent;transition:border-color 0.3s,color 0.3s}
-.band--dark .tag{color:var(--tungsten);border:1px solid var(--graphite)}
-.band--dark .tag:hover{border-color:rgba(77,140,255,0.5);color:var(--platinum)}
-.band--paper .tag{color:var(--ink-3);border:1px solid var(--paper-3)}
-.band--paper .tag:hover{border-color:var(--ink-blue);color:var(--ink)}
-
-/* about.html specific classes */
-.about-hero{padding:160px 0 80px;text-align:left; position:relative;}
-.about-hero .col{max-width:var(--col);margin:0 auto;padding:0 32px}
-.about-hero .eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:0.30em;text-transform:uppercase;color:var(--ink-blue);margin-bottom:18px}
-.about-hero h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,3.5vw,42px);letter-spacing:-0.018em;line-height:1.12;color:var(--ink);margin-bottom:28px}
-.about-hero .lede{font-family:var(--body);font-style:italic;font-size:19px;line-height:1.7;color:var(--ink-2);max-width:60ch}
-.about-body{padding:0 0 100px}
-.about-body .col{max-width:var(--col);margin:0 auto;padding:0 32px}
-.about-body p{font-family:var(--body);font-size:16.5px;line-height:1.85;color:var(--ink-2);margin-bottom:28px;max-width:62ch}
-.about-body p:last-child{margin-bottom:0}
-.about-body .section-break{width:48px;height:1px;background:var(--ink-blue);margin:48px 0;opacity:0.4}
-.about-headshot{margin:36px 0 0;max-width:280px}
-.about-headshot img{width:100%;display:block;filter:grayscale(100%) contrast(1.1);transition:filter 0.6s ease}
-.about-headshot:hover img{filter:grayscale(0%) contrast(1.05)}
-.spotify-embed{margin:32px 0 36px;max-width:100%}
-.spotify-embed iframe{display:block}
-.about-cta{padding:60px 0 80px;border-top:1px solid var(--paper-3)}
-.about-cta .col{max-width:var(--col);margin:0 auto;padding:0 32px}
-.about-cta .links{display:flex;gap:32px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;letter-spacing:0.10em;text-transform:uppercase}
-.about-cta .links a{color:var(--ink-blue);text-decoration:none;border-bottom:1px solid rgba(0,0,0,0.2);padding-bottom:4px;transition:all 0.3s}
-.about-cta .links a:hover{color:var(--ink);border-bottom-color:var(--ink)}
-
-/* multimodal-autism-ai.html specific classes */
-.explorer { max-width: var(--col-wide); margin: 48px 0; padding: 0; }
-.profile-selector { 
-    width: 100%; max-width: 320px; padding: 12px 16px; margin-bottom: 32px; 
-    font-family: var(--mono); font-size: 12px; background: transparent; 
-    color: var(--ink); border: 1px solid var(--paper-3); cursor: pointer; 
-}
-.profile-card {
-    background: #fff; border: 1px solid var(--paper-3); padding: 32px;
-    display: grid; grid-template-columns: 1fr; gap: 24px;
-}
-.profile-card .metric { display: flex; flex-direction: column; gap: 8px; }
-.profile-card .mlab { font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-blue); }
-.profile-card .mval { font-family: var(--body); font-size: 16px; color: var(--ink); }
-.profile-card .mval.highlight { font-size: 24px; font-weight: 500; font-family: var(--display); color: var(--phthalo); }
-@media(min-width: 768px) { .profile-card { grid-template-columns: repeat(2, 1fr); } .profile-card .full-width { grid-column: span 2; } }
-
-/* Fix Typography contrasts by removing any background that would hide the dark text */
-.no-bg-wrapper { background: transparent !important; }
-
-/* In the Paper theme, ensure typography blocks have proper dark coloring */
-.band--paper .type-block h1.ds-h1, 
-.band--paper .type-block h2.ds-h2, 
-.band--paper .type-block h3.ds-h3, 
-.band--paper .type-block h4.ds-h4 { color: var(--ink); }
-
-.band--paper .type-block p.ds-lede { color: var(--ink-3); }
-.band--paper .type-block p.ds-p { color: var(--ink-2); }
-.band--paper .type-block .ds-eyebrow { color: var(--ink-blue); }
-.band--paper .type-block .ds-caption { color: var(--ink-3); }
-
-/* In the Dark theme, ensure typography blocks have proper light coloring */
-.band--dark .type-block h1.ds-h1, 
-.band--dark .type-block h2.ds-h2, 
-.band--dark .type-block h3.ds-h3, 
-.band--dark .type-block h4.ds-h4 { color: var(--flare); }
-
-.band--dark .type-block p.ds-lede { color: var(--tungsten); }
-.band--dark .type-block p.ds-p { color: var(--platinum); }
-.band--dark .type-block .ds-eyebrow { color: var(--phthalo-lift); }
-.band--dark .type-block .ds-caption { color: var(--tungsten); }
-
-/* Preloader fixes from index.html */
-#preloader { position: fixed; inset: 0; z-index: 9999; pointer-events: none; overflow: hidden; }
-#preloader-left, #preloader-right { position: absolute; top: 0; bottom: 0; width: 50.5%; background: var(--obsidian); will-change: transform; }
-#preloader-left { left: 0; }
-#preloader-right { right: 0; }
-#preloader-line { position: absolute; left: 50%; top: 50%; width: 1px; height: 0; background: linear-gradient(180deg, transparent 0%, var(--phthalo-lift) 30%, var(--phthalo-lift) 70%, transparent 100%); transform: translate(-50%, -50%); will-change: height, opacity; }
-
-.ambient { position:absolute; right:-10%; top:50%; transform:translateY(-50%); width:60%; max-width:780px; aspect-ratio:1; pointer-events:none; z-index:1; opacity:0; }
-.ambient svg { width:100%; height:100%; display:block; }
-.scroll-cue{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:12px;opacity:0;z-index:5}
-.scroll-cue span{font-family:var(--mono);font-size:9px;letter-spacing:0.35em;text-transform:uppercase;color:var(--tungsten)}
-.scroll-cue-line{width:1px;height:48px;position:relative;overflow:hidden}
-.scroll-cue-line::after{content:'';position:absolute;top:-100%;left:0;width:100%;height:100%;background:linear-gradient(to bottom,transparent,var(--phthalo-lift));animation:scrollDrip 2s ease-in-out infinite}
-@keyframes scrollDrip{0%{top:-100%;opacity:0}30%{opacity:1}100%{top:100%;opacity:0}}
-.hero .meta-row span, .hero h1, .hero .hero-rule, .hero .abstract { opacity: 0; }
-.band .section-eyebrow, .band .section-heading, .type-block, .swatch-grid, .tagrow, .p-card, .r-card, .demo-box, .dashboard-layout { opacity: 0; }
-</style>
+<link rel="stylesheet" href="design_system/css/global.css">
 </head>
 <body>
 <div id="preloader"><div id="preloader-left"></div><div id="preloader-right"></div><div id="preloader-line"></div></div>
@@ -669,9 +495,8 @@ def generate_clinical_data():
 <pre><code>&lt;!-- 1. Google Fonts --&gt;
 &lt;link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet"&gt;
 
-&lt;!-- 2. Institutional Stylesheets --&gt;
-&lt;link rel="stylesheet" href="design_system/css/global_chrome.css"&gt;
-&lt;link rel="stylesheet" href="design_system/assets/css/institutional.css"&gt;
+&lt;!-- 2. Global Stylesheet --&gt;
+&lt;link rel="stylesheet" href="design_system/css/global.css"&gt;
 
 &lt;!-- 3. Animation & Cinematic CDNs --&gt;
 &lt;script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer&gt;&lt;/script&gt;
@@ -681,9 +506,8 @@ def generate_clinical_data():
 &lt;script src="https://unpkg.com/split-type" defer&gt;&lt;/script&gt;
 &lt;script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js" defer&gt;&lt;/script&gt;
 
-&lt;!-- 4. Global Core Scripts (Place at bottom of body) --&gt;
-&lt;script src="design_system/js/cinematic_engine_v3.js" defer&gt;&lt;/script&gt;
-&lt;script src="design_system/js/global_chrome.js" defer&gt;&lt;/script&gt;</code></pre>
+&lt;!-- 4. Global Core Script (Place at bottom of body) --&gt;
+&lt;script src="design_system/js/global.js" defer&gt;&lt;/script&gt;</code></pre>
       </div>
     </div>
   </div>
@@ -704,33 +528,23 @@ def generate_clinical_data():
     <div class="ds-eyebrow" style="margin-bottom: 24px; color:var(--phthalo-lift);">Core Engines</div>
     
     <div style="border:1px solid var(--graphite); background:rgba(22,22,22,0.65); padding:32px; border-radius:4px; margin-bottom:24px;">
-      <h3 style="font-family:var(--display); font-size:24px; color:var(--flare); margin-bottom:8px;">1. cinematic_engine_v3.js</h3>
+      <h3 style="font-family:var(--display); font-size:24px; color:var(--flare); margin-bottom:8px;">1. global.js</h3>
       <div style="font-family:var(--mono); font-size:11px; letter-spacing:0.1em; color:var(--tungsten); margin-bottom:16px; text-transform:uppercase;">Dependency: GSAP, Lenis, SplitType, Three.js</div>
       <p style="font-family:var(--body); font-size:15px; color:var(--platinum); line-height:1.7;">
-        This file is the powerhouse of the site's visual experience. It handles:
+        This file is the consolidated powerhouse of the site's visual experience and institutional functionality. It handles:
       </p>
       <ul style="font-family:var(--body); font-size:15px; color:var(--platinum); line-height:1.7; margin-top:12px; margin-left:24px; list-style-type:circle;">
         <li><strong>Lenis Smooth Scrolling:</strong> Hijacks native scroll to provide fluid, momentum-based scrolling.</li>
         <li><strong>GSAP ScrollTriggers:</strong> Orchestrates elements fading in, sliding up, and blurring/unblurring as they enter the viewport.</li>
         <li><strong>Theatrical Opening Sequences:</strong> Controls the initial preloader curtain split, the text splitting effects (`SplitType`), and the fade-in sequence for hero elements.</li>
-      </ul>
-    </div>
-
-    <div style="border:1px solid var(--graphite); background:rgba(22,22,22,0.65); padding:32px; border-radius:4px; margin-bottom:24px;">
-      <h3 style="font-family:var(--display); font-size:24px; color:var(--flare); margin-bottom:8px;">2. global_chrome.js</h3>
-      <div style="font-family:var(--mono); font-size:11px; letter-spacing:0.1em; color:var(--tungsten); margin-bottom:16px; text-transform:uppercase;">Dependency: None (Vanilla JS)</div>
-      <p style="font-family:var(--body); font-size:15px; color:var(--platinum); line-height:1.7;">
-        This script provides the institutional "wrapper" functionality that persists across every page:
-      </p>
-      <ul style="font-family:var(--body); font-size:15px; color:var(--platinum); line-height:1.7; margin-top:12px; margin-left:24px; list-style-type:circle;">
         <li><strong>Navigation Mode Observer:</strong> Uses `IntersectionObserver` to detect when a `.band--paper` enters the viewport, toggling the `is-paper` class on the top navigation to invert text colors for contrast.</li>
         <li><strong>Progress Bar:</strong> Calculates scroll depth and updates the `--p` CSS variable driving the top progress indicator.</li>
-        <li><strong>Dynamic "Next Project" Back Matter:</strong> Queries the `projects_index.json` to dynamically inject the correct canonical link into the bottom "Next Publication" component.</li>
+        <li><strong>Dynamic Navigation:</strong> Handles the global topnav, search overlay logic, footer rendering, and "Next Publication" back matter.</li>
       </ul>
     </div>
 
     <div style="border:1px solid var(--graphite); background:rgba(22,22,22,0.65); padding:32px; border-radius:4px; margin-bottom:48px;">
-      <h3 style="font-family:var(--display); font-size:24px; color:var(--flare); margin-bottom:8px;">3. library_dashboard.js</h3>
+      <h3 style="font-family:var(--display); font-size:24px; color:var(--flare); margin-bottom:8px;">2. library_dashboard.js</h3>
       <div style="font-family:var(--mono); font-size:11px; letter-spacing:0.1em; color:var(--tungsten); margin-bottom:16px; text-transform:uppercase;">Dependency: master_index.json</div>
       <p style="font-family:var(--body); font-size:15px; color:var(--platinum); line-height:1.7;">
         Used specifically on the `projects-repository.html` page to render the interactive project directory:
@@ -788,9 +602,6 @@ document.querySelectorAll('.gloss').forEach(gloss => {
 <!-- ==========================================
      GLOBAL JS & CINEMATIC ENGINE
      ========================================== -->
-<script src="design_system/js/cinematic_engine_v3.js" defer></script>
-<script src="design_system/js/global_chrome.js" defer></script>
-
 <script>
 window.addEventListener('load', () => {
     if (typeof gsap !== 'undefined') {
@@ -867,6 +678,7 @@ window.addEventListener('load', () => {
 });
 </script>
 
+<script src="design_system/js/global.js" defer></script>
 </body>
 
 </html>

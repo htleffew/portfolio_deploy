@@ -5,47 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dual-Model Account Prioritization | Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../design_system/css/global_chrome.css">
-<link rel="stylesheet" href="../design_system/assets/css/institutional.css">
     <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
-    <style>
-        /* Interactive Simulator Styles */
-        .priority-sim {
-            background: var(--charcoal);
-            border: 1px solid var(--graphite);
-            padding: 32px;
-            max-width: var(--col);
-            margin: 40px auto;
-            border-radius: 0;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            align-items: center;
-        }
-        .priority-sim .controls { display: flex; flex-direction: column; gap: 24px; }
-        .priority-sim .output { text-align: center; padding-left: 40px; border-left: 1px solid var(--graphite); }
-        .sim-val { font-family: var(--mono); font-size: 14px; color: var(--phthalo-lift); float: right; font-weight: bold; }
-        .priority-sim label { display: block; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--tungsten); margin-bottom: 8px; }
-        .priority-score-display { font-family: var(--display); font-size: 48px; color: var(--flare); font-weight: 600; line-height: 1; margin-top: 10px; }
-        .priority-score-label { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--phthalo-lift); }
-        
-        input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; }
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none; height: 16px; width: 8px;
-            background: var(--flare); cursor: pointer; margin-top: -7px;
-        }
-        input[type=range]::-webkit-slider-runnable-track {
-            width: 100%; height: 2px; cursor: pointer; background: var(--brushed);
-        }
-        @media (max-width: 768px) { .priority-sim { grid-template-columns: 1fr; } .priority-sim .output { border-left: none; border-top: 1px solid var(--graphite); padding-left: 0; padding-top: 24px; } }
-        
-        /* Plotly Containers */
-        .plotly-wrapper { width: 100%; max-width: var(--col-wide); margin: 40px auto; display: flex; justify-content: center; background: #000; border: 1px solid var(--graphite); padding: 20px; }
-        .band--paper .plotly-wrapper { background: #fff; border-color: var(--paper-3); }
-        .plotly-dual { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; }
-        @media (max-width: 800px) { .plotly-dual { grid-template-columns: 1fr; } }
-    </style>
-<script src="../design_system/js/cinematic_engine_v3.js" defer></script>
+    
+<link rel="stylesheet" href="../design_system/css/global.css">
 </head>
 <body data-category="Machine Learning" data-title="Dual-Model Account Prioritization">
 <canvas id="deep-space"></canvas>
@@ -579,6 +541,6 @@ def predict_priority(data: AccountData):
   </a>
 </section>
 
-<script src="../design_system/js/global_chrome.js"></script>
+<script src="../design_system/js/global.js" defer></script>
 </body>
 </html>
