@@ -1017,7 +1017,7 @@ input[type=range]::-webkit-slider-runnable-track {
 .back-matter .biblio .ent a { color:var(--phthalo-lift); text-decoration:none; transition:color .2s; }
 .back-matter .biblio .ent a:hover { color:var(--flare); }
 
-.reveal { opacity:1; transform:none; }
+.reveal { opacity: 0; }
 
 /* ============================================================
    SIDENOTES: Hybrid Responsive (Institutional Standard)
@@ -2790,7 +2790,7 @@ footer.site-foot a:hover { opacity:1; color:var(--platinum); }
 /* ============================================================
    Reveal — translate + opacity, no bounces
    ============================================================ */
-.reveal { opacity:0; transform:translateY(18px); transition:opacity .9s var(--ease-out), transform .9s var(--ease-out); }
+.reveal { opacity: 0; }
 .reveal.is-on { opacity:1; transform:none; }
 
 /* ============================================================
@@ -3393,7 +3393,7 @@ footer.site-foot a:hover { opacity:1; color:var(--platinum); }
 /* ============================================================
    Reveal, translate + opacity, no bounces
    ============================================================ */
-.reveal { opacity:0; transform:translateY(18px); transition:opacity .9s var(--ease-out), transform .9s var(--ease-out); }
+.reveal { opacity: 0; }
 .reveal.is-on { opacity:1; transform:none; }
 
 /* ============================================================
