@@ -1,0 +1,83 @@
+<!--
+  COMPONENT: SVG Hierarchy Tree
+  SOURCE:    multimodal-autism-ai.html — FIG.02
+  CSS REQUIRED: .figure, .frame, .cap, .cap .num (all in global.css)
+  BAND CONTEXT: Designed for band--dark. On band--paper, text colors will need adjustment.
+  
+  CUSTOMIZE:
+  - Root label: "MULTIMODAL INPUT" → your system name
+  - Stream labels: "Video Stream (CV)" / "Audio Stream (NLP)" → your Level 2 nodes
+  - Leaf labels and sub-labels → your Level 3 nodes
+  - viewBox: expand width for more leaf nodes (e.g., "0 0 1200 300")
+  - FIG number and caption text
+-->
+
+<div class="figure reveal">
+  <div class="frame">
+    <svg viewBox="0 0 800 300" style="width:100%; height:auto;">
+      <defs>
+        <!-- REUSABLE: Copy this arrow marker into any SVG diagram -->
+        <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5"
+                markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="#3866A0" />
+        </marker>
+      </defs>
+      <g font-family="JetBrains Mono" font-size="12" fill="#A1A1A6">
+
+        <!-- ROOT NODE — CUSTOMIZE: label, x/y position -->
+        <rect x="300" y="20" width="200" height="40" rx="4"
+              fill="#161616" stroke="#333333" stroke-width="2"/>
+        <text x="400" y="44" text-anchor="middle"
+              fill="#F5F5F7" font-weight="bold">MULTIMODAL INPUT</text>
+
+        <!-- BRANCH PATHS to Level 2 — CUSTOMIZE: path coordinates -->
+        <path d="M 400 60 L 400 90 L 200 90 L 200 120"
+              fill="none" stroke="#3866A0" stroke-width="2" marker-end="url(#arrow)"/>
+        <path d="M 400 60 L 400 90 L 600 90 L 600 120"
+              fill="none" stroke="#3866A0" stroke-width="2" marker-end="url(#arrow)"/>
+
+        <!-- LEVEL 2 NODES (Stream) — CUSTOMIZE: labels, x/y positions -->
+        <rect x="120" y="120" width="160" height="30" rx="4"
+              fill="#030303" stroke="#0F3A6B" stroke-width="1"/>
+        <text x="200" y="140" text-anchor="middle" fill="#3866A0">Video Stream (CV)</text>
+
+        <rect x="520" y="120" width="160" height="30" rx="4"
+              fill="#030303" stroke="#0F3A6B" stroke-width="1"/>
+        <text x="600" y="140" text-anchor="middle" fill="#3866A0">Audio Stream (NLP)</text>
+
+        <!-- BRANCH PATHS to Level 3 — CUSTOMIZE: coordinates -->
+        <path d="M 200 150 L 200 180 L 100 180 L 100 210"
+              fill="none" stroke="#333333" stroke-width="1" marker-end="url(#arrow)"/>
+        <path d="M 200 150 L 200 180 L 300 180 L 300 210"
+              fill="none" stroke="#333333" stroke-width="1" marker-end="url(#arrow)"/>
+        <path d="M 600 150 L 600 180 L 500 180 L 500 210"
+              fill="none" stroke="#333333" stroke-width="1" marker-end="url(#arrow)"/>
+        <path d="M 600 150 L 600 180 L 700 180 L 700 210"
+              fill="none" stroke="#333333" stroke-width="1" marker-end="url(#arrow)"/>
+
+        <!-- LEVEL 3 NODES (Leaf) — CUSTOMIZE: labels, sub-labels, x/y -->
+        <rect x="30"  y="210" width="140" height="60" rx="2" fill="#030303" stroke="#222222"/>
+        <text x="100" y="235" text-anchor="middle" font-size="10">Gaze/Face Tracking</text>
+        <text x="100" y="255" text-anchor="middle" fill="#0F3A6B" font-size="9">A1, A2, A7</text>
+
+        <rect x="230" y="210" width="140" height="60" rx="2" fill="#030303" stroke="#222222"/>
+        <text x="300" y="235" text-anchor="middle" font-size="10">Pose Estimation</text>
+        <text x="300" y="255" text-anchor="middle" fill="#0F3A6B" font-size="9">C1, D1, D4</text>
+
+        <rect x="430" y="210" width="140" height="60" rx="2" fill="#030303" stroke="#222222"/>
+        <text x="500" y="235" text-anchor="middle" font-size="10">Prosodic Extract</text>
+        <text x="500" y="255" text-anchor="middle" fill="#0F3A6B" font-size="9">B1, A4</text>
+
+        <rect x="630" y="210" width="140" height="60" rx="2" fill="#030303" stroke="#222222"/>
+        <text x="700" y="235" text-anchor="middle" font-size="10">Speech to Text</text>
+        <text x="700" y="255" text-anchor="middle" fill="#0F3A6B" font-size="9">B2</text>
+
+      </g>
+    </svg>
+  </div>
+  <!-- CUSTOMIZE: FIG number and caption -->
+  <div class="cap">
+    <span class="num">FIG. 02</span>
+    Hierarchical extraction tree mapping multimodal data streams to specific ADOS-2 behavioral domains.
+  </div>
+</div>

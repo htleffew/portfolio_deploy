@@ -1,0 +1,131 @@
+<!--
+  COMPONENT: Patient Profile Explorer (Clinical Report Card + Dropdown)
+  SOURCE:    multimodal-autism-ai.html — Section 05 "Bridging the Gap to Clinical Practice"
+  CSS REQUIRED: .explorer, .profile-selector, .profile-card, .metric, .mlab, .mval,
+                .highlight, .full-width (all in global.css)
+  BAND CONTEXT: Designed for band--paper
+
+  CUSTOMIZE:
+  - patientData object: replace with your data schema
+  - profileSelector options: match your data keys
+  - profile-card .metric blocks: add/remove fields to match schema
+  - Risk color modifiers: .highlight (neutral blue), .highlight.moderate (gold), .highlight.high (--warn)
+  
+  GENERALIZATION CONTEXTS:
+  - ML model comparison: switch between model outputs for same input
+  - Persona profiles: marketing personas with demographic + behavior data  
+  - Scenario analysis: show output for different parameter scenarios
+  - API response display: structured JSON → readable card
+-->
+
+<!-- DEPENDENCY: No external JS needed -->
+
+<div class="explorer">
+
+  <!-- CUSTOMIZE: option values must match patientData keys below -->
+  <select id="profileSelector" class="profile-selector">
+    <option value="PART_0012">Patient ID: PART_0012 (Low Risk)</option>
+    <option value="PART_0013">Patient ID: PART_0013 (Low-Moderate Risk)</option>
+    <option value="PART_0032">Patient ID: PART_0032 (High Risk)</option>
+  </select>
+
+  <div class="profile-card" id="profileCard">
+
+    <!-- METRIC: Plain value -->
+    <div class="metric">
+      <span class="mlab">Profile ID</span>
+      <span class="mval" id="cardTitle">PART_0012</span>
+    </div>
+
+    <!-- METRIC: Plain value -->
+    <div class="metric">
+      <span class="mlab">Age</span>
+      <span class="mval"><span id="cardAge">100</span> months</span>
+    </div>
+
+    <!-- METRIC: Full-width (spans both columns on desktop) -->
+    <div class="metric full-width">
+      <span class="mlab">Key Behaviors</span>
+      <span class="mval" id="cardBehaviors">High gaze (74.7%), 100% functional play</span>
+    </div>
+
+    <!-- METRIC: Highlighted value (risk-aware color) -->
+    <!-- CUSTOMIZE: add class "moderate" or "high" to .highlight for color coding -->
+    <div class="metric">
+      <span class="mlab">Consensus Probability</span>
+      <span class="mval highlight" id="cardProb">2.9%</span>
+    </div>
+
+    <div class="metric">
+      <span class="mlab">ADOS-2 Score</span>
+      <span class="mval highlight" id="cardAdos">3 / 18</span>
+    </div>
+
+    <!-- METRIC: Full-width recommendation -->
+    <div class="metric full-width">
+      <span class="mlab">Clinical Recommendation</span>
+      <span class="mval" id="cardRec">Routine screening</span>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function() {
+  // CUSTOMIZE: Replace with your data. Keys must match <option value="...">
+  // Schema: { [key]: { [fieldId]: value, ... } }
+  const patientData = {
+    "PART_0012": {
+      age: 100,
+      behaviors: "High gaze (74.7%), 100% functional play",
+      prob: "2.9%",
+      ados: "3 / 18",
+      rec: "Routine screening. Bayesian uncertainty was extremely low (0.003).",
+      // CUSTOMIZE: risk level drives CSS class on .highlight elements
+      // values: "" (neutral/blue) | "moderate" (gold) | "high" (red/alizarin)
+      riskLevel: ""
+    },
+    "PART_0013": {
+      age: 70,
+      behaviors: "Typical gaze, reduced smiling, 50% functional play",
+      prob: "26.2%",
+      ados: "N/A",
+      rec: "Continued surveillance. Predictions ranged wildly from 2.3% to 50.1% depending on the algorithm.",
+      riskLevel: "moderate"
+    },
+    "PART_0032": {
+      age: 76,
+      behaviors: "Reduced gaze (36.2%), high phrase repetition",
+      prob: "78.2%",
+      ados: "9 / 18",
+      rec: "Prompt comprehensive evaluation by a developmental specialist.",
+      riskLevel: "high"
+    }
+  };
+
+  const sel      = document.getElementById('profileSelector');
+  const highlights = document.querySelectorAll('.mval.highlight');
+
+  function updateCard(id) {
+    const d = patientData[id];
+    if (!d) return;
+
+    // CUSTOMIZE: update each field by its element ID
+    document.getElementById('cardTitle').textContent    = id;
+    document.getElementById('cardAge').textContent      = d.age;
+    document.getElementById('cardBehaviors').textContent = d.behaviors;
+    document.getElementById('cardProb').textContent     = d.prob;
+    document.getElementById('cardAdos').textContent     = d.ados;
+    document.getElementById('cardRec').textContent      = d.rec;
+
+    // Apply risk color class to all highlighted values
+    highlights.forEach(function(el) {
+      el.classList.remove('moderate', 'high');
+      if (d.riskLevel) el.classList.add(d.riskLevel);
+    });
+  }
+
+  sel.addEventListener('change', function(e) { updateCard(e.target.value); });
+  updateCard(sel.value); // initialize
+})();
+</script>

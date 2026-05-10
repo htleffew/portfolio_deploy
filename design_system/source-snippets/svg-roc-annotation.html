@@ -1,0 +1,70 @@
+<!--
+  COMPONENT: SVG ROC with Threshold Annotation
+  SOURCE:    multimodal-autism-ai.html — FIG.03
+  CSS REQUIRED: .figure, .frame, .cap, .cap .num (all in global.css)
+  BAND CONTEXT: Designed for band--dark (frame background: #0c0c0c)
+  
+  CUSTOMIZE:
+  - Risk zone rect: y, height to position threshold
+  - Dashed line: y1/y2 to match threshold position
+  - Zone label text and AUC value
+  - ROC curve path (the Q bezier control point)
+  - FIG number and caption
+-->
+
+<div class="figure reveal">
+  <div class="frame" style="background:#0c0c0c;">
+    <svg viewBox="0 0 600 300" style="width:100%; height:auto;">
+      <g font-family="JetBrains Mono" font-size="10" fill="#A1A1A6">
+
+        <!-- Chart Axes -->
+        <line x1="50" y1="250" x2="550" y2="250" stroke="#333" stroke-width="2"/>
+        <line x1="50" y1="250" x2="50"  y2="20"  stroke="#333" stroke-width="2"/>
+        <text x="300" y="280" text-anchor="middle">False Positive Rate</text>
+        <text x="20"  y="135" text-anchor="middle"
+              transform="rotate(-90 20,135)">True Positive Rate</text>
+
+        <!-- Random Classifier Baseline -->
+        <line x1="50" y1="250" x2="550" y2="20"
+              stroke="#444" stroke-width="1" stroke-dasharray="4 4"/>
+
+        <!-- ═══════════════════════════════════════════════════
+             THRESHOLD ANNOTATION PATTERN — copy for any threshold
+             CUSTOMIZE: y (top of zone), height, y1/y2 of line,
+                        y of label text, label string
+             ═══════════════════════════════════════════════════ -->
+
+        <!-- 1. Risk zone rect -->
+        <rect x="50" y="20" width="500" height="35"
+              fill="#7A1626" opacity="0.1"/>
+
+        <!-- 2. Dashed threshold line -->
+        <line x1="50" y1="55" x2="550" y2="55"
+              stroke="#7A1626" stroke-width="1" stroke-dasharray="2 4"/>
+
+        <!-- 3. Bold zone label -->
+        <text x="300" y="42" text-anchor="middle"
+              fill="#7A1626" font-weight="bold">
+          OVERFITTING RISK ZONE (AUC > 0.95)
+        </text>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+
+        <!-- ROC Curve — CUSTOMIZE: Q control point to shape curve -->
+        <path d="M 50 250 Q 80 40 550 20"
+              fill="none" stroke="#3866A0" stroke-width="3"/>
+
+        <!-- AUC Annotation — CUSTOMIZE: cx/cy position and text -->
+        <circle cx="160" cy="50" r="4" fill="#F5F5F7"/>
+        <text x="175" y="55" fill="#F5F5F7">AUC: 0.974</text>
+
+      </g>
+    </svg>
+  </div>
+  <!-- CUSTOMIZE: FIG number and caption text -->
+  <div class="cap">
+    <span class="num">FIG. 03</span>
+    Receiver Operating Characteristic curve. The highly steep arch indicates potential overfitting
+    to the synthetic constraints.
+  </div>
+</div>

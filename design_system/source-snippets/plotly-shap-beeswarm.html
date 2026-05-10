@@ -1,0 +1,74 @@
+<!--
+  COMPONENT: Plotly SHAP Beeswarm (Browser Approximation)
+  SOURCE:    account-prioritization.html — Section 06 (plot-shap)
+  CSS REQUIRED: .plotly-wrapper, .figure, .cap (all in global.css)
+  BAND CONTEXT: Designed for band--dark
+  NOTE: This is a JS approximation of a real SHAP beeswarm. Real SHAP requires Python.
+  
+  CUSTOMIZE:
+  - feats array: replace with your feature names (most → least important order)
+  - numPoints: increase for denser swarm (200 is standard)
+  - Spread scaling: (feats.length - i) gives linear decay; multiply by importance scores for real ranking
+  - margin.l: increase to 200+ for long feature names
+  - Title text
+-->
+
+<!-- DEPENDENCY: Load Plotly before this snippet -->
+<!-- <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script> -->
+
+<div class="plotly-wrapper">
+  <!-- CUSTOMIZE: change id if using multiple SHAP charts on one page -->
+  <div id="plot-shap" style="width:100%; height:400px;"></div>
+</div>
+
+<script>
+(function() {
+  // CUSTOMIZE: your feature names, ordered most → least important
+  const feats = [
+    '30d_page_views',
+    'demo_requests',
+    'industry_SaaS',
+    'revenue_tier',
+    'historical_win'
+  ];
+
+  const numPoints = 200; // CUSTOMIZE: point density per feature
+
+  const shapData = feats.map(function(name, i) {
+    const xv = [], cv = [];
+    for (let j = 0; j < numPoints; j++) {
+      // Spread decreases by rank — top feature has widest distribution
+      // CUSTOMIZE: replace (feats.length - i) with actual importance weights
+      const s = (Math.random() - 0.5) * 2 * (feats.length - i);
+      xv.push(s);
+      cv.push(Math.abs(s)); // color by magnitude
+    }
+    return {
+      x: xv,
+      y: Array(numPoints).fill(name),
+      mode: 'markers',
+      type: 'scatter',
+      marker: {
+        color: cv,
+        colorscale: 'Bluered', // blue=negative impact, red=positive — SHAP convention
+        size: 6,
+        opacity: 0.6
+      },
+      name: name,
+      showlegend: false
+    };
+  });
+
+  // .reverse() puts most important feature at TOP (Plotly renders bottom-to-top)
+  Plotly.newPlot('plot-shap', shapData.reverse(), {
+    paper_bgcolor: 'rgba(0,0,0,0)',
+    plot_bgcolor: 'rgba(0,0,0,0)',
+    font: { color: '#A1A1A6', family: "'JetBrains Mono', monospace" },
+    title: { text: 'SHAP Global Feature Importance', font: { color: '#FFFFFF' } },
+    xaxis: { title: 'SHAP Value (Impact on Model Output)' },
+    yaxis: { title: '' },
+    // CUSTOMIZE: increase l if feature names are long (>15 chars needs l:200+)
+    margin: { t: 50, b: 40, l: 150, r: 20 }
+  }, { displayModeBar: false });
+})();
+</script>
