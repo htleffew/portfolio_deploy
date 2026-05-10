@@ -231,27 +231,36 @@
    ============================================================ */
 /* @import tokens.css removed (merged) */
 
-/* Global body — transparent to starfield, obsidian base */
+/* html carries the obsidian base colour. Body background is explicitly
+   transparent so the #glCanvas fixed layer at z-index:0 can show through
+   the translucent .band overlays. Never rely on the body background
+   being propagated to html — set html directly. */
+html {
+    background-color: var(--obsidian);
+}
 body {
-    background: var(--obsidian);
+    background-color: transparent;
     color: var(--platinum);
     margin: 0;
     padding: 0;
 }
 
-/* DEEP SPACE STARFIELD CANVAS (shared ambient background) */
+/* DEEP SPACE CANVAS — retired. All cinematic rendering is now unified
+   in the Three.js scene on #glCanvas. This element is kept in the DOM
+   for backward compatibility but renders nothing. */
 #deep-space {
-    position: fixed;
-    inset: 0;
-    z-index: -40;
-    pointer-events: none;
-    width: 100vw;
-    height: 100vh;
-    opacity: 0;
+    display: none;
 }
 
+/* AMBIENT SVG ("bullseye") — removed from design system.
+   Cinematic depth is provided by the Three.js particle starfield. */
+.ambient {
+    display: none !important;
+}
+
+
 /* BAND BACKGROUNDS — translucent so starfield shows through */
-.band { position: relative; padding: 80px 0; transition: background 0.9s cubic-bezier(0.4,0,0.2,1), color 0.9s cubic-bezier(0.4,0,0.2,1); }
+.band { position: relative; z-index: 1; padding: 80px 0; transition: background 0.9s cubic-bezier(0.4,0,0.2,1), color 0.9s cubic-bezier(0.4,0,0.2,1); }
 .band--dark { background: rgba(3,3,3,0.6); color: var(--platinum); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
 .band--paper { background: rgba(245,245,247,0.85); color: var(--ink); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
 
@@ -703,18 +712,18 @@ html.lenis, html.lenis body { height: auto; }
   100% { top: 100%; opacity: 0; }
 }
 
-/* Cinematic Canvas Engine Elements */
-
-
+/* Cinematic Canvas — unified Three.js particle starfield + network.
+   z-index:0 places it above html background paint but below all
+   positioned page content. pointer-events:none keeps it non-interactive. */
 #glCanvas {
   position: fixed;
   inset: 0;
-  z-index: -30;
+  z-index: 0;
   pointer-events: none;
   border: none;
   outline: none;
   background: transparent;
-  opacity: 0; /* JS will fade in */
+  opacity: 0; /* GSAP fades in during reveal sequence */
 }
 
 
@@ -729,7 +738,7 @@ html.lenis, html.lenis body { height: auto; }
 html { scroll-behavior:smooth; }
 body {
   font-family:var(--body);
-  background:var(--obsidian);
+  background-color: transparent; /* obsidian is on html; canvas shows through */
   color:var(--platinum);
   font-size:17px;
   line-height:1.78;
@@ -743,7 +752,7 @@ body {
   transition:background 1.2s var(--ease-std);
 }
 
-.band { position:relative; padding:140px 0; transition:background 0.9s var(--ease-std), color 0.9s var(--ease-std); }
+.band { position:relative; z-index:1; padding:140px 0; transition:background 0.9s var(--ease-std), color 0.9s var(--ease-std); }
 .band--dark  { background:rgba(3,3,3,0.6); color:var(--platinum); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); }
 .band--paper { background:rgba(245,245,247,0.85); color:var(--obsidian); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); }
 .band--ink   { background:rgba(26,26,26,0.7); color:var(--platinum); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); }
@@ -1446,7 +1455,7 @@ html{scroll-behavior:smooth}
 }
 
 /* ─── Hero elements start invisible so GSAP is the sole reveal ── */
-.meta-row span, h1, .hero-rule, .abstract, .contact-row a, .ambient, #glCanvas, #deep-space {
+.meta-row span, h1, .hero-rule, .abstract, .contact-row a, #glCanvas {
   opacity: 0;
 }
 /* ─── Scroll-revealed elements start hidden for cinematic entrance ─ */
@@ -1482,7 +1491,7 @@ html.lenis, html.lenis body { height: auto; }
 
 #progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:200;pointer-events:none;background:transparent}
 #progress::after{content:'';position:absolute;left:0;top:0;bottom:0;width:var(--p,0%);background:linear-gradient(90deg,var(--phthalo-lift) 0%,var(--phthalo) 100%);transition:width 0.05s linear}
-#glCanvas{position:fixed;inset:0;z-index:-30;pointer-events:none;border:none;outline:none;background:transparent;opacity:0}
+#glCanvas{position:fixed;inset:0;z-index:0;pointer-events:none;border:none;outline:none;background:transparent;opacity:0}
 
 #topnav{position:fixed;top:0;left:0;right:0;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;z-index:150;font-family:var(--mono);font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--platinum);background:rgba(3,3,3,0.55);backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);border-bottom:1px solid rgba(255,255,255,0.06);transform:translateY(-100%);transition:background 0.6s var(--ease-std),color 0.6s var(--ease-std),border-color 0.6s var(--ease-std)}
 #topnav.is-paper{background:rgba(245,245,247,0.82);border-bottom-color:rgba(0,0,0,0.08);color:var(--ink)}
@@ -2282,9 +2291,9 @@ body {
    Each <section.band> declares its own mode.
    ============================================================ */
 .band { position:relative; padding:140px 0; transition:background 0.9s var(--ease-std), color 0.9s var(--ease-std); }
-.band--dark  { background:var(--obsidian); color:var(--platinum); }
+.band--dark  { background:rgba(3,3,3,0.6); color:var(--platinum); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); }
 .band--paper { background:var(--platinum); color:var(--obsidian); }
-.band--ink   { background:var(--obsidian); color:var(--platinum); }   /* unified with --dark; kept as a class for layout/quote slabs */
+.band--ink   { background:rgba(26,26,26,0.7); color:var(--platinum); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); }
 
 .band--dark + .band--paper, .band--paper + .band--dark, .band--ink + .band--paper, .band--paper + .band--ink {
   /* hairline scroll-edge between mode flips */
@@ -2885,9 +2894,9 @@ body {
    Each <section.band> declares its own mode.
    ============================================================ */
 .band { position:relative; padding:140px 0; transition:background 0.9s var(--ease-std), color 0.9s var(--ease-std); }
-.band--dark  { background:var(--obsidian); color:var(--platinum); }
+.band--dark  { background:rgba(3,3,3,0.6); color:var(--platinum); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); }
 .band--paper { background:var(--platinum); color:var(--obsidian); }
-.band--ink   { background:var(--obsidian); color:var(--platinum); }   /* unified with --dark; kept as a class for layout/quote slabs */
+.band--ink   { background:rgba(26,26,26,0.7); color:var(--platinum); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); }
 
 .band--dark + .band--paper, .band--paper + .band--dark, .band--ink + .band--paper, .band--paper + .band--ink {
   /* hairline scroll-edge between mode flips */
@@ -3409,7 +3418,7 @@ ul.bullets li::before { content:'\25B8'; position:absolute; left:0; top:1px; fon
 
 /* Extracted from index.html */
 *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; word-break: keep-all; overflow-wrap: break-word; hyphens: none; -webkit-hyphens: none; }
-  html, body { margin:0; padding:0; background:var(--obsidian); color:var(--platinum); font-family:'Lora',serif; overflow-x:hidden; }
+  html, body { color:var(--platinum); font-family:'Lora',serif; overflow-x:hidden; }
   ::selection { background: rgba(255,255,255,0.20); color:#fff; }
   .headshot-wrap:hover img { filter: grayscale(0%) contrast(1.05) !important; }
   /* Defensive line-height for all heading + list copy in case inline styles get clipped */
