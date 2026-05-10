@@ -1079,15 +1079,21 @@ section.band:not(.front):not(.library-band):not(.back-matter) > * {
     grid-column: 2 / 3;
     margin-left: 0 !important; margin-right: 0 !important;
   }
-  section.band:not(.front):not(.library-band):not(.back-matter) > .col-wide, 
-  section.band:not(.front):not(.library-band):not(.back-matter) > .stat-grid, 
-  section.band:not(.front):not(.library-band):not(.back-matter) > .figure, 
-  section.band:not(.front):not(.library-band):not(.back-matter) > .report-prose,
+  section.band:not(.front):not(.library-band):not(.back-matter) > .col-wide,
+  section.band:not(.front):not(.library-band):not(.back-matter) > .bio-wrap,
+  section.band:not(.front):not(.library-band):not(.back-matter) > .stat-grid,
+  section.band:not(.front):not(.library-band):not(.back-matter) > .figure,
+  section.band:not(.front):not(.library-band):not(.back-matter) > .plotly-wrapper,
   section.band:not(.front):not(.library-band):not(.back-matter) > .simulator-layout,
   section.band:not(.front):not(.library-band):not(.back-matter) > .dashboard-layout,
   section.band:not(.front):not(.library-band):not(.back-matter) > .sandbox-layout {
     grid-column: 2 / 4;
     width: 100%; max-width: none;
+  }
+  section.band:not(.front):not(.library-band):not(.back-matter) > .report-prose {
+    grid-column: 2 / 3;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 }
 

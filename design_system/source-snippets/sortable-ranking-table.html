@@ -1,0 +1,106 @@
+<!--
+  COMPONENT: Sortable Ranking Table
+  SOURCE:    account-prioritization.html — Section 05 "Synthesizing the Priority Score"
+  CSS REQUIRED: .data-table, table, th, td (all in global.css)
+  BAND CONTEXT: Designed for band--paper (also works in band--dark with CSS scoping)
+  
+  HOW SORTING WORKS:
+  - Each <th> has data-sort="[key]" attribute
+  - Clicking a header sets sortKey and rerenders tbody via innerHTML
+  - renderTable() sorts tData array descending by sortKey
+  - Special case: sortKey="score" computes a.p * a.d dynamically
+  - Special case: sortKey="acc" sorts alphabetically
+  
+  CUSTOMIZE:
+  - tData array: your actual data rows
+  - Column headers: th text + data-sort keys
+  - renderTable() row template: match your data schema
+  - Score formula: (r.p * r.d) → your ranking formula
+  - Highlighted column: the "score" td with color styling
+-->
+
+<!-- No external dependencies needed -->
+
+<table class="data-table" id="dynamic-rank-table">
+  <thead>
+    <tr>
+      <!-- CUSTOMIZE: column headers and data-sort keys -->
+      <th data-sort="acc">Account ▼</th>
+      <th data-sort="prob">P(convert) ▼</th>
+      <th data-sort="deal">E[deal_size] ▼</th>
+      <th data-sort="score">Priority Score ▼</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Populated by JS below -->
+  </tbody>
+</table>
+
+<script>
+(function() {
+  // CUSTOMIZE: replace with your actual data
+  // Schema: array of objects with keys matching data-sort values
+  const tData = [
+    { acc: 'Target A', p: 0.85, d: 10000  },
+    { acc: 'Target B', p: 0.15, d: 250000 },
+    { acc: 'Target C', p: 0.02, d: 500000 },
+    { acc: 'Target D', p: 0.90, d: 1000   }
+  ];
+
+  let sortKey = 'score'; // CUSTOMIZE: default sort column key
+  const tbody  = document.querySelector('#dynamic-rank-table tbody');
+  const theads = document.querySelectorAll('#dynamic-rank-table th');
+
+  function renderTable() {
+    // Sort a copy of the data
+    const sorted = tData.slice().sort(function(a, b) {
+      // CUSTOMIZE: add cases for your column keys
+      if (sortKey === 'score') {
+        return (b.p * b.d) - (a.p * a.d); // descending by computed score
+      }
+      if (sortKey === 'acc') {
+        return a.acc.localeCompare(b.acc); // ascending alphabetical
+      }
+      return b[sortKey] - a[sortKey]; // descending numeric
+    });
+
+    // CUSTOMIZE: update this template to match your column structure
+    tbody.innerHTML = sorted.map(function(r) {
+      const score = r.p * r.d; // CUSTOMIZE: your ranking formula
+      return '<tr>' +
+        '<td>' + r.acc + '</td>' +
+        '<td>' + r.p.toFixed(2) + '</td>' +
+        '<td>$' + r.d.toLocaleString() + '</td>' +
+        // CUSTOMIZE: highlighted column uses --ink-blue / --phthalo-lift for emphasis
+        '<td style="color:var(--ink-blue); font-weight:bold;">$' +
+          score.toLocaleString() + '</td>' +
+      '</tr>';
+    }).join('');
+  }
+
+  // Click header to sort by that column
+  theads.forEach(function(th) {
+    th.style.cursor = 'pointer';
+    th.addEventListener('click', function() {
+      const key = th.getAttribute('data-sort');
+      if (key) { sortKey = key; renderTable(); }
+    });
+  });
+
+  renderTable(); // initialize
+})();
+</script>
+
+<!--
+  WHY THIS COMPONENT EXISTS:
+  The sortable table makes the core insight interactive — the same accounts rank 
+  differently depending on whether you sort by conversion probability, deal size, 
+  or the synthesized priority score. The reader discovers that "highest probability" 
+  ≠ "best account" by clicking through the columns themselves.
+  
+  GENERALIZATION:
+  Works for any dataset where different metrics produce different rankings:
+  - ML models ranked by AUC vs. Precision vs. Recall
+  - Accounts ranked by revenue vs. engagement vs. propensity
+  - Features ranked by importance vs. correlation vs. p-value
+-->

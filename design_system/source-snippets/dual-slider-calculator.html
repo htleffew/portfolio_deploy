@@ -1,0 +1,74 @@
+<!--
+  COMPONENT: Dual Slider Calculator (Priority Score Simulator)
+  SOURCE:    account-prioritization.html — Section 01 "The Single Metric Flaw"
+  CSS REQUIRED: .priority-sim, .controls, .output, .sim-val,
+                .priority-score-label, .priority-score-display (all in global.css)
+  BAND CONTEXT: Works in both band--dark and band--paper with CSS scoping
+  
+  CUSTOMIZE:
+  - Slider 1: label text, min/max/value, display format (currently %)
+  - Slider 2: label text, min/max/step/value, display format (currently $currency)
+  - Formula in updateSim(): change (p * d) to any A × B expression
+  - Output label: "Priority Score" → your metric name
+  - Output format: $Math.round(p * d).toLocaleString() → your format
+-->
+
+<div class="priority-sim">
+  <div class="controls">
+    <div>
+      <label>
+        Probability to Convert
+        <span class="sim-val" id="val-prob">10%</span>
+      </label>
+      <!-- CUSTOMIZE: min, max, value -->
+      <input type="range" id="sim-prob" min="0" max="100" value="10">
+    </div>
+    <div>
+      <label>
+        Expected Deal Size
+        <span class="sim-val" id="val-deal">$1,000,000</span>
+      </label>
+      <!-- CUSTOMIZE: min, max, step, value -->
+      <input type="range" id="sim-deal" min="0" max="1000000" step="10000" value="1000000">
+    </div>
+  </div>
+  <div class="output">
+    <!-- CUSTOMIZE: label text -->
+    <div class="priority-score-label">Priority Score</div>
+    <div class="priority-score-display" id="sim-score">$100,000</div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const sProb   = document.getElementById('sim-prob');
+  const sDeal   = document.getElementById('sim-deal');
+  const vProb   = document.getElementById('val-prob');
+  const vDeal   = document.getElementById('val-deal');
+  const outScore = document.getElementById('sim-score');
+
+  function updateSim() {
+    const p = parseFloat(sProb.value) / 100;           // CUSTOMIZE: normalize your slider
+    const d = parseFloat(sDeal.value);                  // CUSTOMIZE: parse your slider
+    vProb.textContent = sProb.value + '%';              // CUSTOMIZE: display format
+    vDeal.textContent = '$' + d.toLocaleString();       // CUSTOMIZE: display format
+    // CUSTOMIZE: change formula here
+    outScore.textContent = '$' + Math.round(p * d).toLocaleString();
+  }
+
+  sProb.addEventListener('input', updateSim);
+  sDeal.addEventListener('input', updateSim);
+  updateSim(); // initialize display
+})();
+</script>
+
+<!--
+  GENERALIZATION — 5 other A × B patterns:
+  1. Risk Score = Probability(breach) × Financial Impact ($)
+  2. Expected Return = Win Rate (%) × Average Contract Value ($)
+  3. Weighted Priority = Urgency (1-10) × Strategic Value (1-10)
+  4. Clinical Risk = Symptom Severity (0-1) × Frequency Score (0-100)
+  5. Ad Budget Efficiency = Click Rate (%) × Conversion Value ($)
+  
+  For each: rename labels, adjust min/max/step, change formula in updateSim().
+-->
