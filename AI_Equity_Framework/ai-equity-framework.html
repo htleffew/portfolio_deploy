@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,8 +7,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../design_system/css/global.css">
 </head>
-<body>
-<canvas id="deep-space"></canvas>
+<body data-category="Enterprise Systems Architecture" data-title="AI Equity Framework">
+<div id="preloader"><div id="preloader-left"></div><div id="preloader-right"></div><div id="preloader-line"></div></div>
 
 
     <!-- Reading progress -->
@@ -20,7 +20,10 @@
     <!-- Chapter spine -->
     <aside id="spine"></aside>
 
-    <main>
+    <div class="atmosphere"></div>
+
+    <canvas id="glCanvas"></canvas>
+
         <!-- FRONT MATTER -->
         <section class="band band--dark front" data-spine="Architecture" data-section="Front matter">
             <div class="col-wide">
@@ -187,7 +190,6 @@
 
     </main>
 
-    <script>
     <script>
         // Threshold Calibrator Simulator Setup
         document.addEventListener("DOMContentLoaded", () => {

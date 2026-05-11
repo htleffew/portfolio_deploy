@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,11 +7,13 @@
     <meta name="description" content="An architectural case study on bounding autonomous LLM research agents within regulated enterprise environments using the Fixed Harness / Mutation Budget dichotomy.">
     <!-- Design System: tokens load via @import inside institutional.css -->
     <!-- Page-specific interactive widget styles (simulator only) -->
-    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../design_system/css/global.css">
 </head>
 
 <body data-category="Enterprise LLM Orchestration" data-title="Autoresearch Master">
+
+<div id="preloader"><div id="preloader-left"></div><div id="preloader-right"></div><div id="preloader-line"></div></div>
 
 <!-- Reading progress -->
 <div id="progress"></div>
@@ -25,7 +27,6 @@
 <!-- Atmospheric gradient -->
 <div class="atmosphere"></div>
 
-<canvas id="deep-space"></canvas>
 <canvas id="glCanvas"></canvas>
 
 <!-- ============================================================
@@ -733,8 +734,8 @@
   ];
 
   const featureMsgs = [
-    'Engineered polynomial feature: cohort_ageÂ² Ã— tenure',
-    'Created interaction term: segment_id Ã— quarterly_revenue',
+    'Engineered polynomial feature: cohort_age^2 x tenure',
+    'Created interaction term: segment_id x quarterly_revenue',
     'Applied log transform to skewed_metric_3',
     'Binned continuous variable: response_latency â†’ quartile buckets',
     'Derived rolling 90-day average for engagement_score'
