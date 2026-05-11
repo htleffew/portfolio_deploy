@@ -665,10 +665,30 @@ const initCinematicEngine = () => {
             }
             const heroRule = document.querySelector('.hero-rule');
             if (heroRule) tl.to(heroRule,   { width: 64, opacity: 1, duration: 1.3, ease: 'power3.inOut' }, '-=1.0');
+
+            // ── Article pages use .front h1 (not .hero h1) ──────────────────
+            // The bare `h1 { opacity: 0 }` CSS rule hides all h1s site-wide.
+            // For article pages, reveal .front h1 with a simpler fade+lift.
+            const frontTitle = document.querySelector('.front h1');
+            if (frontTitle && !heroTitle) {
+                // No .hero on this page — it's an article page.
+                tl.fromTo(frontTitle,
+                    { opacity: 0, y: 28 },
+                    { opacity: 1, y: 0, duration: 1.4, ease: 'power3.out' },
+                    '-=2.0'
+                );
+            } else if (frontTitle && heroTitle) {
+                // Both exist (edge case) — reveal the front title too.
+                tl.to(frontTitle, { opacity: 1, duration: 1.0, ease: 'power2.out' }, '-=0.5');
+            }
+
+            // ── .abstract reveal ─────────────────────────────────────────────
+            // Works for both .hero .abstract (index) and .front .abstract (articles).
             const abstractEl = document.querySelector('.abstract');
-            if (abstractEl) tl.to(abstractEl, { opacity: 1, y: 0,     duration: 1.3, ease: 'power2.out'   }, '-=0.9');
+            if (abstractEl) tl.to(abstractEl, { opacity: 1, y: 0, duration: 1.3, ease: 'power2.out' }, '-=0.9');
             const scrollCue = document.querySelector('.scroll-cue');
-            if (scrollCue) tl.to(scrollCue,  { opacity: 1,            duration: 1.2, ease: 'power2.out'   }, '-=0.3');
+            if (scrollCue) tl.to(scrollCue,  { opacity: 1, duration: 1.2, ease: 'power2.out' }, '-=0.3');
+
 
             function initScrollTriggers() {
                 gsap.to('.scroll-cue', {
