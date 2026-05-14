@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Paper Template</title>
+    <style>
+        :root {
+            --tweak-colors-bg-paper: #ffffff;
+            --tweak-colors-text-ink: #000000;
+            --tweak-typography-title-font-size: 24;
+            --tweak-typography-body-font-size: 12;
+            --tweak-typography-body-line-height: 2.0;
+            --tweak-spacing-margins: 96;
+            --tweak-spacing-indentation: 48;
+            --tweak-apa-hanging-indent: 48;
+        }
+        body {
+            background-color: var(--tweak-colors-bg-paper);
+            color: var(--tweak-colors-text-ink);
+            font-family: "Times New Roman", Times, serif;
+            font-size: calc(var(--tweak-typography-body-font-size) * 1px);
+            line-height: var(--tweak-typography-body-line-height);
+            margin: 0; padding: calc(var(--tweak-spacing-margins) * 1px);
+            max-width: 800px; margin: 0 auto;
+        }
+        h1 { text-align: center; font-size: calc(var(--tweak-typography-title-font-size) * 1px); }
+        .authors { text-align: center; font-style: italic; margin-bottom: 40px; }
+        p { text-indent: calc(var(--tweak-spacing-indentation) * 1px); margin: 0; }
+        .reference {
+            text-indent: calc(var(--tweak-apa-hanging-indent) * -1px);
+            padding-left: calc(var(--tweak-apa-hanging-indent) * 1px);
+            margin-bottom: 12px;
+        }
+        .chart-placeholder {
+            width: 100%; height: var(--tweak-spacing-chart-height, 300px);
+            background: #f0f0f0; border: 1px solid var(--tweak-colors-chart-axis-line, #ddd);
+            display: flex; align-items: center; justify-content: center;
+            margin: 20px 0; color: #999; font-family: sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="tweak-text-paper-title">Paper Title</h1>
+    <div class="authors tweak-text-authors">Author Name</div>
+    
+    <div style="text-align: center; font-weight: bold; margin-bottom: 10px;">Abstract</div>
+    <p class="tweak-text-abstract-text" style="text-indent: 0; text-align: justify; margin-bottom: 40px;">Abstract text...</p>
+    
+    <p>Introduction to the implicit signals <span class="tweak-apa-bracket-style">(Leffew, 2026)</span>.</p>
+    
+    <div class="chart-placeholder">D3.js Visualization Placeholder</div>
+    
+    <h2 style="text-align: center; margin-top: 40px;">References</h2>
+    <div class="reference">Leffew, H. (2026). <i>Implicit Signals in Human-AI Interaction</i>. Journal of Computational Linguistics.</div>
+    
+    <script>
+        window.addEventListener('tweaks-updated', (e) => {
+            if (e.detail.text) {
+                if (e.detail.text.paperTitle) document.querySelector('.tweak-text-paper-title').textContent = e.detail.text.paperTitle;
+                if (e.detail.text.authors) document.querySelector('.tweak-text-authors').textContent = e.detail.text.authors;
+                if (e.detail.text.abstractText) document.querySelector('.tweak-text-abstract-text').textContent = e.detail.text.abstractText;
+            }
+        });
+    </script>
+</body>
+</html>
