@@ -1715,7 +1715,7 @@ var MIDI_SONGS = [
   {"title":"Zombie Nation - Kernkraft 400",        "file":"Zombie Nation - Kernkraft 400.mid"}
 ];
 var P = {
-  playing:false, started:false, _starting:false, songIdx:0, shuffle:true, muted:false, vol:0.25,
+  playing:false, started:false, _starting:false, schedGen:0, songIdx:0, shuffle:true, muted:false, vol:0.25,
   master:null, limiter:null, parts:[], synths:[], endTimer:null, clockTimer:null,
   schedulerTimer:null, noteEvents:[], eventCursor:0, songStartAudioTime:0,
   songStartMs:0, activeDuration:0
@@ -1910,8 +1910,9 @@ function schedSong(){
   initTone();
   var song=MIDI_SONGS[P.songIdx];
   updateDisplay();
+  var gen=++P.schedGen;
   ensureParsed(song, function(midi){
-    if(!P.playing) return;
+    if(!P.playing || P.schedGen!==gen) return;
     P.activeDuration=Math.max(1, midi.duration || 1);
     midi.tracks.forEach(scheduleTrack);
     startClock();
@@ -1930,15 +1931,24 @@ function startPlay(){
   var btn=document.getElementById('jb-play-btn');
   if(btn){btn.textContent='PAUSE'; btn.classList.add('jb-btn-on');}
   setVu(true);
+  var startGuard=setTimeout(function(){
+    if(P._starting){
+      P._starting=false; P.playing=false;
+      if(btn){btn.textContent='PLAY'; btn.classList.remove('jb-btn-on');}
+      setVu(false);
+    }
+  }, 8000);
   Tone.start()
     .then(function(){ return Tone.loaded ? Tone.loaded() : null; })
     .then(function(){
+      clearTimeout(startGuard);
       P._starting=false;
       P.playing=true;
       initTone();
       schedSong();
     })
     .catch(function(){
+      clearTimeout(startGuard);
       P._starting=false;
       P.playing=false;
       if(btn){btn.textContent='PLAY'; btn.classList.remove('jb-btn-on');}
