@@ -1727,19 +1727,41 @@ function dbForVolume(v){
   return v <= 0 ? -Infinity : 20 * Math.log10(v);
 }
 
+// Persistent synth pool — created once, never disposed
+var _pool = null;
+var _poolIdx = 0;
+
 function initTone(){
   if(P.master) return;
   P.master = new Tone.Gain(P.muted ? 0 : P.vol).toDestination();
   P.limiter = new Tone.Limiter(-3).connect(P.master);
+  // Pre-allocate 20 melodic synths + 1 drum rack — reused across every song skip
+  _pool = {melodic: []};
+  for(var _i = 0; _i < 20; _i++){
+    var _g = new Tone.Gain(0.14).connect(P.limiter);
+    var _s = new Tone.PolySynth(Tone.Synth, {
+      maxPolyphony: 10,
+      oscillator: {type: 'triangle'},
+      envelope: {attack:0.006, decay:0.08, sustain:0.28, release:0.22}
+    }).connect(_g);
+    _pool.melodic.push({synth:_s, gain:_g});
+  }
+  var _dg = new Tone.Gain(0.18).connect(P.limiter);
+  _pool.drum = {
+    gain: _dg,
+    kick: new Tone.MembraneSynth({pitchDecay:0.025,octaves:4,envelope:{attack:0.001,decay:0.18,sustain:0.01,release:0.08}}).connect(_dg),
+    noise: new Tone.NoiseSynth({noise:{type:'white'},envelope:{attack:0.001,decay:0.055,sustain:0,release:0.035}}).connect(_dg)
+  };
 }
 
 function cancelAll(){
   if(P.endTimer){ clearTimeout(P.endTimer); P.endTimer=null; }
   if(P.clockTimer){ clearInterval(P.clockTimer); P.clockTimer=null; }
   if(P.schedulerTimer){ clearInterval(P.schedulerTimer); P.schedulerTimer=null; }
-  P.synths.forEach(function(node){ try{ if(node && typeof node.releaseAll==='function') node.releaseAll(Tone.now()); }catch(e){} });
-  P.parts.forEach(function(part){ try{ part.dispose(); }catch(e){} });
-  P.synths.forEach(function(node){ try{ node.dispose(); }catch(e){} });
+  // Release all pool voices immediately — no disposal, no node churn
+  if(_pool){
+    _pool.melodic.forEach(function(sl){ try{ sl.synth.releaseAll(0); }catch(e){} });
+  }
   P.parts=[];
   P.synths=[];
   P.noteEvents=[];
@@ -1796,62 +1818,43 @@ function trackGain(track){
   return 0.14;
 }
 
-function makeMelodicSynth(track){
-  var gain=new Tone.Gain(trackGain(track)).connect(P.limiter);
-  var synth=new Tone.PolySynth(Tone.Synth, {
-    maxPolyphony: 24,
-    oscillator:{type:waveForTrack(track)},
-    envelope:{attack:0.006, decay:0.08, sustain:0.28, release:0.22}
-  }).connect(gain);
-  P.synths.push(synth, gain);
-  return synth;
-}
-
-function makeDrumRack(){
-  var gain=new Tone.Gain(0.18).connect(P.limiter);
-  var kick=new Tone.MembraneSynth({
-    pitchDecay:0.025,
-    octaves:4,
-    envelope:{attack:0.001, decay:0.18, sustain:0.01, release:0.08}
-  }).connect(gain);
-  var noise=new Tone.NoiseSynth({
-    noise:{type:'white'},
-    envelope:{attack:0.001, decay:0.055, sustain:0, release:0.035}
-  }).connect(gain);
-  P.synths.push(kick, noise, gain);
-  return {kick:kick, noise:noise};
-}
+// makeMelodicSynth and makeDrumRack replaced by pool — see initTone
 
 function scheduleTrack(track){
   if(!track.notes || !track.notes.length) return;
+  if(!_pool) return;
 
   if(track.isPercussion){
-    var rack=makeDrumRack();
+    var _drum = _pool.drum;
     track.notes.forEach(function(note){
       P.noteEvents.push({
         time: note.time,
-        play: function(time){
-          var velocity = Math.max(0.08, Math.min(0.9, note.velocity || 0.7));
-          if(note.midi <= 43){
-            rack.kick.triggerAttackRelease('C2','16n',time,velocity);
+        play: (function(n){ return function(time){
+          var velocity = Math.max(0.08, Math.min(0.9, n.velocity || 0.7));
+          if(n.midi <= 43){
+            _drum.kick.triggerAttackRelease('C2','16n',time,velocity);
           } else {
-            rack.noise.triggerAttackRelease(Math.min(Math.max(note.duration,0.035),0.08), time, velocity*0.65);
+            _drum.noise.triggerAttackRelease(Math.min(Math.max(n.duration,0.035),0.08),time,velocity*0.65);
           }
-        }
+        }; })(note)
       });
     });
     return;
   }
 
-  var synth=makeMelodicSynth(track);
+  // Round-robin assign pool slot; configure gain for this track's instrument family
+  var _slot = _pool.melodic[_poolIdx % _pool.melodic.length];
+  _poolIdx++;
+  try{ _slot.gain.gain.setValueAtTime(trackGain(track), Tone.now()); }catch(e){}
+
   track.notes.forEach(function(note){
     P.noteEvents.push({
       time: note.time,
-      play: function(time){
-        var hz = Tone.Frequency(note.midi,'midi').toFrequency();
-        var velocity = Math.max(0.05, Math.min(0.95, note.velocity || 0.7));
-        synth.triggerAttackRelease(hz, Math.max(note.duration,0.035), time, velocity);
-      }
+      play: (function(n, sl){ return function(time){
+        var hz = Tone.Frequency(n.midi,'midi').toFrequency();
+        var velocity = Math.max(0.05, Math.min(0.95, n.velocity || 0.7));
+        sl.synth.triggerAttackRelease(hz, Math.max(n.duration,0.035), time, velocity);
+      }; })(note, _slot)
     });
   });
 }
@@ -1895,26 +1898,23 @@ function pickNextIndex(){
 function schedSong(){
   cancelAll();
   if(!P.playing) return;
+  _poolIdx = 0;  // reset round-robin pool assignment
+  initTone();
   var song=MIDI_SONGS[P.songIdx];
   updateDisplay();
   var gen=++P.schedGen;
-  // Small delay lets WebAudio finish node disposal before spawning new ones
-  setTimeout(function(){
+  ensureParsed(song, function(midi){
     if(!P.playing || P.schedGen!==gen) return;
-    initTone();
-    ensureParsed(song, function(midi){
-      if(!P.playing || P.schedGen!==gen) return;
-      P.activeDuration=Math.max(1, midi.duration || 1);
-      midi.tracks.forEach(scheduleTrack);
-      startClock();
-      startEventScheduler();
-      P.endTimer=setTimeout(function(){
-        if(!P.playing) return;
-        P.songIdx=pickNextIndex();
-        schedSong();
-      }, Math.ceil((P.activeDuration+0.6)*1000));
-    });
-  }, 80);
+    P.activeDuration=Math.max(1, midi.duration || 1);
+    midi.tracks.forEach(scheduleTrack);
+    startClock();
+    startEventScheduler();
+    P.endTimer=setTimeout(function(){
+      if(!P.playing) return;
+      P.songIdx=pickNextIndex();
+      schedSong();
+    }, Math.ceil((P.activeDuration+0.6)*1000));
+  });
 }
 
 function startPlay(){
