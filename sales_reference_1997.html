@@ -1695,6 +1695,7 @@ var MIDI_SONGS = [{"title":"DOOM - Theme","file":"doom.mid","sanitized":false,"d
 var P = {
   playing:false, started:false, songIdx:0, shuffle:true, muted:false, vol:0.25,
   master:null, limiter:null, parts:[], synths:[], endTimer:null, clockTimer:null,
+  schedulerTimer:null, noteEvents:[], eventCursor:0, songStartAudioTime:0,
   songStartMs:0, activeDuration:0
 };
 
@@ -1722,11 +1723,14 @@ function initTone(){
 function cancelAll(){
   if(P.endTimer){ clearTimeout(P.endTimer); P.endTimer=null; }
   if(P.clockTimer){ clearInterval(P.clockTimer); P.clockTimer=null; }
-  try { Tone.Transport.stop(); Tone.Transport.cancel(0); Tone.Transport.position = 0; } catch(e) {}
+  if(P.schedulerTimer){ clearInterval(P.schedulerTimer); P.schedulerTimer=null; }
+  P.synths.forEach(function(node){ try{ if(node && typeof node.releaseAll==='function') node.releaseAll(Tone.now()); }catch(e){} });
   P.parts.forEach(function(part){ try{ part.dispose(); }catch(e){} });
   P.synths.forEach(function(node){ try{ node.dispose(); }catch(e){} });
   P.parts=[];
   P.synths=[];
+  P.noteEvents=[];
+  P.eventCursor=0;
 }
 
 function setVu(on){
@@ -1810,35 +1814,60 @@ function scheduleTrack(track){
 
   if(track.isPercussion){
     var rack=makeDrumRack();
-    var drumEvents=track.notes.map(function(note){
-      return {time:note.time, midi:note.midi, duration:Math.max(note.duration,0.035), velocity:note.velocity||0.7};
+    track.notes.forEach(function(note){
+      P.noteEvents.push({
+        time: note.time,
+        play: function(time){
+          var velocity = Math.max(0.08, Math.min(0.9, note.velocity || 0.7));
+          if(note.midi <= 43){
+            rack.kick.triggerAttackRelease('C2','16n',time,velocity);
+          } else {
+            rack.noise.triggerAttackRelease(Math.min(Math.max(note.duration,0.035),0.08), time, velocity*0.65);
+          }
+        }
+      });
     });
-    var drumPart=new Tone.Part(function(time,note){
-      var velocity=Math.max(0.08, Math.min(0.9, note.velocity));
-      if(note.midi<=43){
-        rack.kick.triggerAttackRelease('C2','16n',time,velocity);
-      } else {
-        rack.noise.triggerAttackRelease(Math.min(note.duration,0.08),time,velocity*0.65);
-      }
-    }, drumEvents).start(0);
-    P.parts.push(drumPart);
     return;
   }
 
   var synth=makeMelodicSynth(track);
-  var events=track.notes.map(function(note){
-    return {
-      time:note.time,
-      midi:note.midi,
-      duration:Math.max(note.duration,0.035),
-      velocity:Math.max(0.05, Math.min(0.95, note.velocity || 0.7))
-    };
+  track.notes.forEach(function(note){
+    P.noteEvents.push({
+      time: note.time,
+      play: function(time){
+        var hz = Tone.Frequency(note.midi,'midi').toFrequency();
+        var velocity = Math.max(0.05, Math.min(0.95, note.velocity || 0.7));
+        synth.triggerAttackRelease(hz, Math.max(note.duration,0.035), time, velocity);
+      }
+    });
   });
-  var part=new Tone.Part(function(time,note){
-    var hz=Tone.Frequency(note.midi,'midi').toFrequency();
-    synth.triggerAttackRelease(hz, note.duration, time, note.velocity);
-  }, events).start(0);
-  P.parts.push(part);
+}
+
+function startEventScheduler(){
+  var lookAhead = 0.25;
+  P.noteEvents.sort(function(a,b){ return a.time - b.time; });
+  P.eventCursor = 0;
+  P.songStartAudioTime = Tone.now() + 0.1;
+
+  function pump(){
+    if(!P.playing) return;
+    var now = Tone.now();
+    var horizon = now - P.songStartAudioTime + lookAhead;
+    while(P.eventCursor < P.noteEvents.length && P.noteEvents[P.eventCursor].time <= horizon){
+      var ev = P.noteEvents[P.eventCursor++];
+      var playTime = P.songStartAudioTime + ev.time;
+      if(playTime < now) playTime = now + 0.005;
+      try { ev.play(playTime); } catch(e) {}
+    }
+    if(P.eventCursor >= P.noteEvents.length && P.schedulerTimer){
+      clearInterval(P.schedulerTimer);
+      P.schedulerTimer = null;
+    }
+  }
+
+  if(P.schedulerTimer) clearInterval(P.schedulerTimer);
+  P.schedulerTimer = setInterval(pump, 50);
+  pump();
 }
 
 function pickNextIndex(){
@@ -1861,7 +1890,7 @@ function schedSong(){
 
   midi.tracks.forEach(scheduleTrack);
   startClock();
-  Tone.Transport.start('+0.06');
+  startEventScheduler();
 
   P.endTimer=setTimeout(function(){
     if(!P.playing) return;
