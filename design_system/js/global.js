@@ -543,17 +543,111 @@ const initCinematicEngine = () => {
         if (e.target.closest('button, a, .p-card, .bio-expand-btn, .r-card, .db-row')) playClick();
     });
 
-    // 10. View Transitions API Navigation Intercept
-    // Dynamically assign 'portal-card' view-transition-name to the clicked card before navigating
-    document.addEventListener('click', (e) => {
-        const card = e.target.closest('.p-card, .r-card, .db-row');
-        if (!card) return;
+    // 10. SPA Router with WebGL Shader Transitions
+    document.addEventListener('click', async (e) => {
+        const link = e.target.closest('a');
+        if (!link) return;
         
-        // If it's a link, we assign the transition name to it right before the browser navigates
-        const href = card.getAttribute('href') || (card.tagName === 'A' ? card.href : null);
-        if (href && !href.startsWith('#') && !href.startsWith('mailto:')) {
-            card.classList.add('is-transitioning-portal');
-            // The browser natively handles the cross-document transition via the CSS @view-transition rule
+        const href = link.getAttribute('href');
+        if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('http') || link.target === '_blank') return;
+        
+        // Prevent default navigation to trigger WebGL transition
+        e.preventDefault();
+
+        // Check for Tweaker config
+        const tweakerConfig = window.__TWEAKER_CONFIG || {};
+        const shaderName = tweakerConfig.transitions?.shader || 'cinematic-zoom';
+        const duration = tweakerConfig.transitions?.duration || 1.2;
+
+        if (typeof HyperShader === 'undefined' || typeof gsap === 'undefined') {
+             // Fallback
+             window.location.href = href;
+             return;
+        }
+
+        // Prepare DOM for WebGL capture: group current content
+        let currentScene = document.getElementById('scene-current');
+        if (!currentScene) {
+            currentScene = document.createElement('div');
+            currentScene.id = 'scene-current';
+            currentScene.className = 'scene';
+            // Move everything EXCEPT scripts/styles/canvases/grain into currentScene
+            const children = Array.from(document.body.childNodes);
+            children.forEach(child => {
+                if (child.tagName === 'SCRIPT' || child.tagName === 'CANVAS' || child.id === 'grain' || child.id === 'glCanvas' || child.id === 'search-overlay') return;
+                currentScene.appendChild(child);
+            });
+            document.body.appendChild(currentScene);
+        }
+
+        const nextScene = document.createElement('div');
+        nextScene.id = 'scene-next';
+        nextScene.className = 'scene';
+        nextScene.style.position = 'absolute';
+        nextScene.style.top = '0';
+        nextScene.style.left = '0';
+        nextScene.style.width = '100%';
+        nextScene.style.minHeight = '100vh';
+        nextScene.style.opacity = '0';
+        nextScene.style.zIndex = '50';
+        nextScene.style.pointerEvents = 'none';
+        document.body.appendChild(nextScene);
+
+        try {
+            // Fetch next page
+            const res = await fetch(href);
+            const html = await res.text();
+            
+            // Parse HTML
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            
+            // Extract body content
+            const nextChildren = Array.from(doc.body.childNodes);
+            nextChildren.forEach(child => {
+                if (child.tagName === 'SCRIPT' || child.tagName === 'CANVAS' || child.id === 'grain' || child.id === 'glCanvas') return;
+                nextScene.appendChild(document.importNode(child, true));
+            });
+
+            // Initialize HyperShader transition
+            const tl = HyperShader.init({
+                bgColor: '#030303',
+                scenes: ['scene-current', 'scene-next'],
+                transitions: [{
+                    time: 0,
+                    shader: shaderName,
+                    duration: duration,
+                    ease: 'power2.inOut'
+                }]
+            });
+
+            tl.eventCallback('onComplete', () => {
+                // Swap DOM
+                if (currentScene.parentNode) {
+                    currentScene.parentNode.removeChild(currentScene);
+                }
+                nextScene.id = 'scene-current';
+                nextScene.style.position = '';
+                nextScene.style.opacity = '1';
+                nextScene.style.zIndex = '';
+                nextScene.style.pointerEvents = '';
+                
+                // Update URL
+                window.history.pushState({}, '', href);
+                window.scrollTo(0, 0);
+
+                // Run orchestration manually
+                if (typeof initCinematicEngine !== 'undefined') initCinematicEngine();
+                // We don't re-run mountOrchestration as it's an IIFE, but we can trigger DOMContentLoaded
+                const event = new Event('DOMContentLoaded');
+                document.dispatchEvent(event);
+            });
+
+            tl.play();
+
+        } catch (err) {
+            console.error("SPA Fetch Error:", err);
+            window.location.href = href;
         }
     });
 
@@ -575,7 +669,8 @@ const initCinematicEngine = () => {
         'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js',
         'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js',
         'https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js',
-        'https://unpkg.com/split-type'
+        'https://unpkg.com/split-type',
+        'https://cdn.jsdelivr.net/npm/@hyperframes/shader-transitions@0.4.45/dist/index.global.js'
     ];
 
     const alreadyLoaded = (url) => {
@@ -583,6 +678,7 @@ const initCinematicEngine = () => {
         if (url.includes('ScrollTrigger') && typeof ScrollTrigger !== 'undefined') return true;
         if (url.includes('lenis')         && typeof Lenis !== 'undefined')         return true;
         if (url.includes('split-type')    && typeof SplitType !== 'undefined')     return true;
+        if (url.includes('shader-transitions') && typeof HyperShader !== 'undefined') return true;
         return false;
     };
 

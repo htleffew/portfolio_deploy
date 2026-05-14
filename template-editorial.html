@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editorial Template</title>
+    <style>
+        :root {
+            --tweak-colors-bg-editorial: #fcfbfa;
+            --tweak-colors-text-editorial: #222222;
+            --tweak-colors-accent-quote: #b34d4d;
+            --tweak-typography-body-font-size: 21;
+            --tweak-typography-body-line-height: 1.8;
+            --tweak-typography-drop-cap-size: 84;
+            --tweak-spacing-reading-width: 720;
+            --tweak-spacing-paragraph-margin-bottom: 32;
+        }
+        body {
+            background-color: var(--tweak-colors-bg-editorial);
+            color: var(--tweak-colors-text-editorial);
+            font-family: Lora, Georgia, serif;
+            font-size: calc(var(--tweak-typography-body-font-size) * 1px);
+            line-height: var(--tweak-typography-body-line-height);
+            margin: 0; padding: 40px 20px;
+        }
+        article {
+            max-width: calc(var(--tweak-spacing-reading-width) * 1px);
+            margin: 0 auto;
+        }
+        p { margin-bottom: calc(var(--tweak-spacing-paragraph-margin-bottom) * 1px); }
+        .drop-cap {
+            float: left;
+            font-size: calc(var(--tweak-typography-drop-cap-size) * 1px);
+            line-height: 0.8;
+            padding-right: 8px;
+            color: var(--tweak-colors-accent-quote);
+        }
+    </style>
+</head>
+<body>
+    <article>
+        <h1 class="tweak-text-article-title" style="font-family: Playfair Display, serif;">Title</h1>
+        <h3 class="tweak-text-article-subtitle">Subtitle</h3>
+        <p><span class="drop-cap tweak-text-drop-cap-letter">W</span>e are entering a new era of human-computer interaction...</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    </article>
+    <script>
+        window.addEventListener('tweaks-updated', (e) => {
+            if (e.detail.text) {
+                if (e.detail.text.articleTitle) document.querySelector('.tweak-text-article-title').textContent = e.detail.text.articleTitle;
+                if (e.detail.text.articleSubtitle) document.querySelector('.tweak-text-article-subtitle').textContent = e.detail.text.articleSubtitle;
+                if (e.detail.text.dropCapLetter) document.querySelector('.tweak-text-drop-cap-letter').textContent = e.detail.text.dropCapLetter;
+            }
+        });
+    </script>
+</body>
+</html>
