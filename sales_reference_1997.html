@@ -705,9 +705,6 @@
         <button class="jb-btn jb-btn-on" onclick="jbToggle()" id="jb-play-btn">
           PLAY
         </button>
-        <button class="jb-btn" onclick="jbNext()" title="Next">
-          &gt;&gt;|
-        </button>
         <button class="jb-btn" onclick="jbShuffle()" id="jb-shuf-btn">
           SHUF
         </button>
@@ -24269,15 +24266,6 @@ PERFORMANCE OF THIS SOFTWARE.
         }
         if (P.playing) stopPlay();
         else startPlay();
-      };
-
-      window.jbNext = function () {
-        P.songIdx = pickNextIndex();
-        if (P.playing) {
-          updateDisplay();
-          restartPlayback();
-        }
-        else updateDisplay();
       };
 
       window.jbPrev = function () {
