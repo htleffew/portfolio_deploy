@@ -1846,6 +1846,7 @@ function scheduleTrack(track){
   var _slot = _pool.melodic[_poolIdx % _pool.melodic.length];
   _poolIdx++;
   try{ _slot.gain.gain.setValueAtTime(trackGain(track), Tone.now()); }catch(e){}
+  try{ _slot.synth.set({oscillator:{type:waveForTrack(track)}}); }catch(e){}
 
   track.notes.forEach(function(note){
     P.noteEvents.push({
