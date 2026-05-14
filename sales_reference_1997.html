@@ -1907,22 +1907,26 @@ function pickNextIndex(){
 function schedSong(){
   cancelAll();
   if(!P.playing) return;
-  initTone();
   var song=MIDI_SONGS[P.songIdx];
   updateDisplay();
   var gen=++P.schedGen;
-  ensureParsed(song, function(midi){
+  // Small delay lets WebAudio finish node disposal before spawning new ones
+  setTimeout(function(){
     if(!P.playing || P.schedGen!==gen) return;
-    P.activeDuration=Math.max(1, midi.duration || 1);
-    midi.tracks.forEach(scheduleTrack);
-    startClock();
-    startEventScheduler();
-    P.endTimer=setTimeout(function(){
-      if(!P.playing) return;
-      P.songIdx=pickNextIndex();
-      schedSong();
-    }, Math.ceil((P.activeDuration+0.6)*1000));
-  });
+    initTone();
+    ensureParsed(song, function(midi){
+      if(!P.playing || P.schedGen!==gen) return;
+      P.activeDuration=Math.max(1, midi.duration || 1);
+      midi.tracks.forEach(scheduleTrack);
+      startClock();
+      startEventScheduler();
+      P.endTimer=setTimeout(function(){
+        if(!P.playing) return;
+        P.songIdx=pickNextIndex();
+        schedSong();
+      }, Math.ceil((P.activeDuration+0.6)*1000));
+    });
+  }, 80);
 }
 
 function startPlay(){
@@ -1964,9 +1968,14 @@ function stopPlay(){
   cancelAll();
 }
 
+
+function prefetchAll(){
+  MIDI_SONGS.forEach(function(s){ ensureParsed(s, function(){}); });
+}
 window.gcEnter=function(){
   var s=document.getElementById('gc-splash');
   if(s) s.style.display='none';
+  prefetchAll();
   if(!P.started){P.started=true; startPlay();}
 };
 
@@ -2050,6 +2059,68 @@ tryAutoStart();
           el.src = c[el.getAttribute("data-dedup-src")];
         });
       })();
-    </script>
+    
+// ── Rainbow cursor trail ─────────────────────────────────────────────────────
+(function(){
+  var canvas = document.getElementById('sparkle-canvas');
+  if(!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var W = window.innerWidth, H = window.innerHeight;
+  canvas.width = W; canvas.height = H;
+  window.addEventListener('resize', function(){
+    W = window.innerWidth; H = window.innerHeight;
+    canvas.width = W; canvas.height = H;
+  });
+
+  var particles = [];
+  var hue = 0;
+  var mx = -999, my = -999;
+
+  window.addEventListener('mousemove', function(e){
+    mx = e.clientX; my = e.clientY;
+    hue = (hue + 4) % 360;
+    for(var i = 0; i < 4; i++){
+      var angle = Math.random() * Math.PI * 2;
+      var speed = Math.random() * 1.5 + 0.3;
+      particles.push({
+        x: mx + (Math.random()-0.5)*6,
+        y: my + (Math.random()-0.5)*6,
+        vx: Math.cos(angle)*speed,
+        vy: Math.sin(angle)*speed - 0.5,
+        life: 1.0,
+        decay: Math.random()*0.025 + 0.02,
+        size: Math.random()*4 + 2,
+        hue: (hue + Math.random()*40 - 20 + 360) % 360
+      });
+    }
+  });
+
+  function loop(){
+    ctx.clearRect(0, 0, W, H);
+    for(var i = particles.length - 1; i >= 0; i--){
+      var p = particles[i];
+      p.x += p.vx; p.y += p.vy;
+      p.vy += 0.04; // gentle gravity
+      p.life -= p.decay;
+      if(p.life <= 0){ particles.splice(i, 1); continue; }
+      var breath = 0.6 + 0.4 * Math.sin(Date.now()/400 + i);
+      ctx.save();
+      ctx.globalAlpha = p.life * breath;
+      // Glowing dot with radial gradient
+      var grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size);
+      grad.addColorStop(0, 'hsl('+p.hue+',100%,90%)');
+      grad.addColorStop(0.5, 'hsl('+p.hue+',100%,60%)');
+      grad.addColorStop(1, 'hsla('+p.hue+',100%,40%,0)');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+      ctx.fill();
+      ctx.restore();
+    }
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+</script>
   </body>
 </html>
