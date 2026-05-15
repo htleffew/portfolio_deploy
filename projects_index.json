@@ -1,8 +1,25 @@
 [
     {
+        "id": "Juggernaut",
+        "title": "The Hazard of Presence",
+        "desc": "Architecting large-scale NLP moderation telemetry systems utilizing multi-pass filtering, TF-IDF emoji parsing, and transformer inference.",
+        "cat": "Research & Architecture",
+        "subtype": "DATA SCIENCE",
+        "tags": [
+            "NLP",
+            "Data Pipeline",
+            "Content Moderation",
+            "Telemetry",
+            "Python"
+        ],
+        "url": "Juggernaut/juggernaut.html",
+        "time": "10 min read",
+        "visual": "<svg fill=\"none\" viewBox=\"0 0 600 600\"><circle cx=\"300\" cy=\"300\" r=\"150\" stroke=\"#3866A0\" stroke-width=\"2\"/><circle cx=\"300\" cy=\"300\" r=\"50\" fill=\"#7A1626\"/></svg>"
+    },
+    {
         "id": "Multimodal_Autism_AI",
         "title": "Multimodal AI for Autism Assessment: Bayesian Uncertainty in Clinical ADOS",
-        "desc": "A late-fusion Bayesian ensemble pipeline that processes gaze-tracking, skeletal pose, and prosodic audio to generate ADOS-2-aligned risk scores—while mathematically preserving clinical doubt. Features an interactive workbench demonstrating how conflicting behavioral telemetry forces sub-model divergence and uncertainty quantification.",
+        "desc": "A late-fusion Bayesian ensemble pipeline that processes gaze-tracking, skeletal pose, and prosodic audio to generate ADOS-2-aligned risk scores\u00e2\u20ac\u201dwhile mathematically preserving clinical doubt. Features an interactive workbench demonstrating how conflicting behavioral telemetry forces sub-model divergence and uncertainty quantification.",
         "cat": "Research & Architecture",
         "subtype": "CLINICAL & BEHAVIORAL ML",
         "tags": [
@@ -151,7 +168,7 @@
             "Data Science",
             "Data Science"
         ],
-        "url": "Simplified_Chinese_Tokens/index.html",
+        "url": "Simplified_Chinese_Tokens/simplified_chinese_tokens.html",
         "time": "6 min read",
         "visual": ""
     }
