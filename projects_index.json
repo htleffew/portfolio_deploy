@@ -19,7 +19,7 @@
     {
         "id": "Multimodal_Autism_AI",
         "title": "Multimodal AI for Autism Assessment: Bayesian Uncertainty in Clinical ADOS",
-        "desc": "A late-fusion Bayesian ensemble pipeline that processes gaze-tracking, skeletal pose, and prosodic audio to generate ADOS-2-aligned risk scores\u00e2\u20ac\u201dwhile mathematically preserving clinical doubt. Features an interactive workbench demonstrating how conflicting behavioral telemetry forces sub-model divergence and uncertainty quantification.",
+        "desc": "A late-fusion Bayesian ensemble pipeline that processes gaze-tracking, skeletal pose, and prosodic audio to generate ADOS-2-aligned risk scoresâ€”while mathematically preserving clinical doubt. Features an interactive workbench demonstrating how conflicting behavioral telemetry forces sub-model divergence and uncertainty quantification.",
         "cat": "Research & Architecture",
         "subtype": "CLINICAL & BEHAVIORAL ML",
         "tags": [
