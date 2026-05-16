@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
+const matter = require('gray-matter');
 
 const deployDir = __dirname;
 const masterPath = path.join(deployDir, 'master_index.json');
@@ -31,49 +32,41 @@ subdirs.forEach(dir => {
     const dirPath = path.join(deployDir, dir);
     const files = fs.readdirSync(dirPath);
     
-    // Look for primary HTML file (usually name-matching or first HTML)
-    const htmlFile = files.find(f => f.endsWith('.html'));
+    // Look for primary Markdown file to extract metadata, but keep URL pointing to the HTML output
+    const mdFile = files.find(f => f.endsWith('.md') && !f.toLowerCase().includes('readme'));
+    const htmlFile = files.find(f => f.endsWith('.html') && !f.toLowerCase().includes('readme'));
     
-    if (htmlFile) {
+    if (mdFile && htmlFile) {
         const relativeUrl = `${dir}/${htmlFile}`;
         
         if (!existingUrls.has(relativeUrl)) {
             console.log(`[DEPLOY] Found new project: ${relativeUrl}`);
             
-            // 3. Extract Metadata
-            const htmlContent = fs.readFileSync(path.join(dirPath, htmlFile), 'utf8');
+            // 3. Extract Metadata from Markdown Frontmatter
+            const mdContent = fs.readFileSync(path.join(dirPath, mdFile), 'utf8');
+            const parsed = matter(mdContent);
+            const data = parsed.data;
             
-            // Extract Title
-            const titleMatch = htmlContent.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
-            const title = titleMatch ? titleMatch[1].trim().replace(/<[^>]+>/g, '') : dir;
+            const title = data.title || dir;
+            const desc = data.description || data.abstract || "Interactive mathematical telemetry simulator and architectural case study.";
+            const subtype = data.format || data.subcategory || dir.toUpperCase();
             
-            // Extract Description
-            const descMatch = htmlContent.match(/<p[^>]*class="abstract"[^>]*>([\s\S]*?)<\/p>/i);
-            const desc = descMatch ? descMatch[1].trim().replace(/\s+/g, ' ').replace(/<[^>]+>/g, '') : "Interactive mathematical telemetry simulator and architectural case study.";
-            
-            // Extract Meta Row
-            let subtype = dir.toUpperCase();
-            let tags = ["Data Science"];
-            let time = "5 min read";
-            
-            const metaMatch = htmlContent.match(/<div class="meta-row">[\s\S]*?<span class="bracket">.*?<\/span>[\s\S]*?<span class="sep">\/<\/span>[\s\S]*?<span>(.*?)<\/span>[\s\S]*?<span class="sep">\/<\/span>[\s\S]*?<span>(.*?)<\/span>[\s\S]*?<span class="sep">\/<\/span>[\s\S]*?<span>(.*?)<\/span>/i);
-            
-            if (metaMatch) {
-                const rawTag = metaMatch[1].replace(/&amp;/g, '&').trim();
-                tags.push(rawTag);
-                subtype = metaMatch[2].trim().toUpperCase();
-                time = metaMatch[3].trim();
+            let tags = data.tags || ["Data Science"];
+            if (!Array.isArray(tags)) {
+                tags = [tags];
+            }
+            if (data.category && !tags.includes(data.category)) {
+                tags.push(data.category);
             }
             
-            // Extract Visual (empty by default, unless specific pattern is desired, 
-            // but normally it's populated via manual edit in master if complex SVGs are needed)
-            const visual = ""; 
+            const time = data.time || "5 min read";
+            const visual = data.visual || ""; 
 
             const newProject = {
                 id: dir,
                 title: title,
                 desc: desc,
-                cat: "Research & Architecture",
+                cat: data.category || "Research & Architecture",
                 subtype: subtype,
                 tags: tags,
                 url: relativeUrl,
