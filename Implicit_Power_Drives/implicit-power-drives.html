@@ -1,0 +1,1984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Implicit Power Drives in the Manifestos Preceding Autogenic Massacres | Dr. Heather Leffew</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../design_system/css/global.css">
+<style>
+/* ============================================================
+   TOKENS, dual mode, no radii, sharp editorial
+   ============================================================ */
+:root {
+  /* Mineral neutrals (dark register) */
+  --obsidian:#030303;
+  --charcoal:#161616;
+  --graphite:#222222;
+  --brushed:#333333;
+  --tungsten:#A1A1A6;
+  --platinum:#F5F5F7;
+  --flare:#FFFFFF;
+
+  /* Paper neutrals, perfect inversion of the dark register.
+     Paper base = platinum (#F5F5F7). Ink base = obsidian (#030303).
+     Tints are the literal channel-flips of charcoal/graphite/tungsten. */
+  --paper:#F5F5F7;          /* base reading surface  <- inverse of obsidian */
+  --paper-2:#E9E9E9;        /* raised surface        <- inverse of charcoal */
+  --paper-3:#DDDDDD;        /* hairline              <- inverse of graphite */
+  --ink:#030303;            /* primary ink           <- obsidian */
+  --ink-2:#222222;           /* secondary ink         <- graphite */
+  --ink-3:#5E5E5A;          /* meta ink              <- inverse of tungsten */
+
+  /* Brand accents */
+  --sapphire-deep:#0F52BA;
+  --sapphire:#4D8CFF;
+  --ink-blue:#1A3A6B;       /* sapphire's light-mode counterpart */
+  /* Case-study figure palette, "Oil paint quartet".
+     Real pigment names. Glazed flavor (no lift), except Hansa
+     which is always lifted. Monochrome / sequential scales
+     restrict to Phthalo Blue only. */
+  --phthalo:#0F3A6B;        /* Phthalo Blue, primary categorical */
+  --phthalo-lift:#3866A0;   /* Phthalo Blue, lifted, monochrome scale only */
+  --alizarin:#7A1626;       /* Alizarin Crimson */
+  --hookers:#1A4A38;        /* Hooker's Green */
+  --hansa:#DBA844;          /* Hansa Yellow Light, always lifted */
+  --dioxazine:#3D1F4A;      /* Dioxazine Purple, reserve fifth */
+
+  /* Type */
+  --display:'Playfair Display','Times New Roman',serif;
+  --body:'Lora',Georgia,serif;
+  --mono:'JetBrains Mono','SF Mono',Menlo,monospace;
+
+  /* Motion */
+  --ease-out:cubic-bezier(0.16,1,0.3,1);
+  --ease-std:cubic-bezier(0.4,0,0.2,1);
+
+  /* Reading column */
+  --col:680px;
+  --col-wide:1080px;
+}
+
+/* No radii. Anywhere. */
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; border-radius:0 !important; }
+
+::selection { background:rgba(77,140,255,0.35); color:#fff; }
+
+html { scroll-behavior:smooth; }
+body {
+  font-family:var(--body);
+  background:var(--obsidian);
+  color:var(--platinum);
+  font-size:18px;
+  line-height:1.78;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* Fixed atmosphere, switches with mode */
+.atmosphere {
+  position:fixed; inset:0; z-index:-30; pointer-events:none;
+  transition:background 1.2s var(--ease-std);
+}
+
+/* ============================================================
+   MODE BANDS
+   The page alternates between dark and light bands.
+   Each <section.band> declares its own mode.
+   ============================================================ */
+.band { position:relative; padding:140px 0; transition:background 0.9s var(--ease-std), color 0.9s var(--ease-std); }
+.band--dark  { background:var(--obsidian); color:var(--platinum); }
+.band--paper { background:var(--platinum); color:var(--obsidian); }
+.band--ink   { background:var(--obsidian); color:var(--platinum); }   /* unified with --dark; kept as a class for layout/quote slabs */
+
+.band--dark + .band--paper, .band--paper + .band--dark, .band--ink + .band--paper, .band--paper + .band--ink {
+  /* hairline scroll-edge between mode flips */
+  border-top:1px solid rgba(0,0,0,0.0);
+}
+
+.col      { max-width:var(--col);      margin:0 auto; padding:0 32px; }
+.col-wide { max-width:var(--col-wide); margin:0 auto; padding:0 48px; }
+
+/* ============================================================
+   GLOBAL CHROME
+   Top progress hairline + side chapter spine.
+   Both glass, that's where glass earns its keep.
+   ============================================================ */
+#progress {
+  position:fixed; top:0; left:0; right:0; height:2px;
+  z-index:200; pointer-events:none;
+  background:transparent;
+}
+#progress::after {
+  content:''; position:absolute; left:0; top:0; bottom:0;
+  width:var(--p,0%);
+  background:linear-gradient(90deg, var(--sapphire) 0%, var(--sapphire-deep) 100%);
+  transition:width 0.05s linear;
+}
+
+#topnav {
+  position:fixed; top:0; left:0; right:0; height:60px;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 32px; z-index:150;
+  font-family:var(--mono); font-size:11px; letter-spacing:0.18em; text-transform:uppercase;
+  color:var(--platinum);
+  background:rgba(3,3,3,0.55);
+  backdrop-filter:blur(14px) saturate(140%);
+  -webkit-backdrop-filter:blur(14px) saturate(140%);
+  border-bottom:1px solid rgba(255,255,255,0.06);
+  transition:background 0.6s var(--ease-std), color 0.6s var(--ease-std), border-color 0.6s var(--ease-std);
+}
+#topnav.is-paper {
+  background:rgba(245,245,247,0.82);
+  border-bottom-color:rgba(0,0,0,0.08);
+  color:var(--ink);
+}
+#topnav .brand { font-family:var(--display); font-size:15px; font-weight:600; letter-spacing:0.04em; text-transform:none; color:inherit; text-decoration:none; }
+#topnav .brand:visited { color:inherit; }
+#topnav .brand:hover { opacity:0.85; }
+#topnav .crumbs { display:flex; gap:18px; align-items:center; }
+#topnav .crumbs a { color:inherit; text-decoration:none; opacity:0.7; transition:opacity .25s; }
+#topnav .crumbs a:hover { opacity:1; }
+#topnav .sep { opacity:0.35; }
+
+/* Chapter spine, fixed left rail */
+#spine {
+  position:fixed; left:18px; top:50%; transform:translateY(-50%);
+  z-index:130; pointer-events:auto;
+  display:flex; flex-direction:column; gap:14px;
+  padding:18px 14px;
+  background:rgba(3,3,3,0.45);
+  color:var(--platinum);
+  backdrop-filter:blur(14px) saturate(140%);
+  -webkit-backdrop-filter:blur(14px) saturate(140%);
+  border:1px solid rgba(255,255,255,0.08);
+  transition:background 0.6s var(--ease-std), border-color 0.6s var(--ease-std), color 0.6s var(--ease-std);
+}
+#spine.is-paper { background:rgba(245,245,247,0.78); border-color:rgba(0,0,0,0.10); color:var(--ink); }
+#spine .row { display:flex; align-items:center; gap:10px; cursor:pointer; }
+#spine .tick {
+  width:16px; height:1px; background:currentColor; opacity:0.35;
+  transition:width .35s var(--ease-out), opacity .35s var(--ease-out);
+}
+#spine .row.is-active .tick { width:28px; opacity:1; background:var(--sapphire); }
+#spine .row.is-paper-active .tick { background:var(--ink-blue); }
+#spine .label { font-family:var(--mono); font-size:9.5px; letter-spacing:0.18em; text-transform:uppercase; opacity:0.55; transition:opacity .35s; white-space:nowrap; }
+#spine .row:hover .label, #spine .row.is-active .label { opacity:1; }
+#spine .num { font-family:var(--mono); font-size:9px; opacity:0.4; width:14px; }
+@media (max-width:1180px) { #spine { display:none; } }
+
+/* Reading-status pebble bottom-right */
+#status {
+  position:fixed; right:24px; bottom:24px; z-index:130;
+  font-family:var(--mono); font-size:10px; letter-spacing:0.16em; text-transform:uppercase;
+  color:var(--platinum);
+  padding:10px 14px;
+  background:rgba(3,3,3,0.45);
+  backdrop-filter:blur(14px) saturate(140%);
+  -webkit-backdrop-filter:blur(14px) saturate(140%);
+  border:1px solid rgba(255,255,255,0.08);
+  display:flex; gap:14px; align-items:center;
+  transition:background 0.6s var(--ease-std), border-color 0.6s var(--ease-std), color 0.6s var(--ease-std);
+}
+#status.is-paper { background:rgba(245,245,247,0.78); border-color:rgba(0,0,0,0.10); color:var(--ink); }
+#status .dot { width:5px; height:5px; background:var(--sapphire); display:inline-block; }
+#status .pct { color:var(--sapphire); font-weight:500; }
+#status.is-paper .dot { background:var(--ink-blue); }
+#status.is-paper .pct { color:var(--ink-blue); }
+
+/* ============================================================
+   FRONT MATTER (dark hero)
+   ============================================================ */
+.front {
+  min-height:100vh;
+  padding:160px 0 100px;
+  display:flex; flex-direction:column; justify-content:center;
+  position:relative; overflow:hidden;
+}
+.front .col-wide { position:relative; z-index:2; }
+.front .meta-row { font-family:var(--mono); font-size:11px; letter-spacing:0.30em; text-transform:uppercase; color:var(--tungsten); margin-bottom:40px; display:flex; gap:18px; align-items:center; flex-wrap:wrap; }
+.front .meta-row .sep { opacity:0.4; }
+.front h1 {
+  font-family:var(--display); font-weight:600;
+  font-size:clamp(44px, 5.0vw, 72px);
+  letter-spacing:-0.018em; line-height:1.06;
+  color:var(--flare); margin-bottom:36px;
+  max-width:18ch;
+}
+.front .abstract {
+  font-family:var(--body); font-style:italic;
+  font-size:22px; line-height:1.62; color:var(--platinum);
+  max-width:60ch; margin-bottom:48px;
+}
+.front .byline { display:flex; gap:36px; flex-wrap:wrap;
+  font-family:var(--mono); font-size:10.5px; letter-spacing:0.20em; text-transform:uppercase; color:var(--tungsten); }
+.front .byline strong { color:var(--platinum); font-weight:500; display:block; margin-top:6px; letter-spacing:0.08em; font-family:var(--body); font-style:italic; font-size:14px; text-transform:none; }
+
+/* Citation block in front matter, looks like a journal head */
+.front .citation {
+  font-family:var(--mono); font-size:10.5px; letter-spacing:0.10em; color:var(--tungsten);
+  border-top:1px solid rgba(255,255,255,0.18);
+  padding-top:24px;
+  line-height:1.85;
+}
+.front .citation b { color:var(--platinum); font-weight:500; }
+
+/* Ambient signal, a quiet calibrated arc, sits in the hero background */
+.ambient {
+  position:absolute; right:-12%; top:50%; transform:translateY(-50%);
+  width:64%; max-width:820px; aspect-ratio:1; pointer-events:none;
+  z-index:1;
+  opacity:0; animation:ambient-fade 1.6s 0.6s var(--ease-out) forwards;
+}
+@keyframes ambient-fade { to { opacity:0.32; } }
+.ambient svg { width:100%; height:100%; display:block; }
+/* On wider viewports the abstract + byline sit in a left column so the ambient
+   has visual room on the right; on narrower it stacks. */
+.front .grid { display:grid; grid-template-columns:minmax(0,1fr); gap:40px; }
+@media (min-width:980px) {
+  .front .grid { grid-template-columns:minmax(0,1fr) 320px; gap:80px; align-items:end; }
+}
+
+/* ============================================================
+   READING SECTIONS, PAPER MODE
+   ============================================================ */
+.band--paper h2 {
+  font-family:var(--display); font-weight:600; color:var(--ink);
+  font-size:clamp(34px, 3.6vw, 48px); letter-spacing:-0.012em; line-height:1.12;
+  margin:0 auto 28px; max-width:var(--col); padding:0 32px;
+}
+.band--paper .eyebrow {
+  font-family:var(--mono); font-size:10.5px; letter-spacing:0.30em; text-transform:uppercase;
+  color:var(--ink-blue); margin:0 auto 18px; max-width:var(--col); padding:0 32px;
+}
+.band--paper .lede {
+  font-family:var(--body); font-style:italic; font-size:21px; line-height:1.6; color:var(--ink-2);
+  margin:0 auto 36px; max-width:var(--col); padding:0 32px;
+}
+.band--paper p {
+  margin:0 auto 22px; max-width:var(--col); padding:0 32px;
+  font-size:18px; line-height:1.78; color:var(--ink);
+}
+
+/* Drop cap on first paragraph after h2.is-chapter */
+.has-dropcap::first-letter {
+  font-family:var(--display); font-weight:600;
+  font-size:5.6em; line-height:0.86;
+  float:left; margin:0.06em 0.10em -0.08em 0;
+  color:var(--ink-blue);
+}
+
+/* Dark mode prose */
+.band--dark p, .band--ink p {
+  margin:0 auto 22px; max-width:var(--col); padding:0 32px;
+  font-size:18px; line-height:1.78; color:var(--platinum);
+}
+.band--dark h2, .band--ink h2 {
+  font-family:var(--display); font-weight:600; color:var(--flare);
+  font-size:clamp(34px, 3.6vw, 48px); letter-spacing:-0.012em; line-height:1.12;
+  margin:0 auto 28px; max-width:var(--col); padding:0 32px;
+}
+.band--dark .eyebrow, .band--ink .eyebrow {
+  font-family:var(--mono); font-size:10.5px; letter-spacing:0.30em; text-transform:uppercase;
+  color:var(--sapphire); margin:0 auto 18px; max-width:var(--col); padding:0 32px;
+}
+.band--dark .lede, .band--ink .lede {
+  font-family:var(--body); font-style:italic; font-size:21px; line-height:1.6; color:var(--tungsten);
+  margin:0 auto 36px; max-width:var(--col); padding:0 32px;
+}
+
+/* ============================================================
+   GLOSSARY TERMS, dotted-underline + glass tooltip
+   <span class="gloss" data-def="...">term</span>
+   ============================================================ */
+.gloss {
+  border-bottom:1px dotted currentColor;
+  cursor:help;
+  position:relative;
+}
+.gloss:hover { color:var(--ink-blue); }
+.band--dark .gloss:hover, .band--ink .gloss:hover { color:var(--sapphire); }
+.gloss .gloss-tip {
+  position:absolute; left:50%; transform:translate(-50%, -8px);
+  bottom:100%; min-width:280px; max-width:340px;
+  font-family:var(--body); font-style:italic; font-size:13.5px; line-height:1.55;
+  font-weight:400;
+  color:var(--ink); padding:14px 16px;
+  background:rgba(255,255,255,0.92);
+  backdrop-filter:blur(16px) saturate(140%);
+  -webkit-backdrop-filter:blur(16px) saturate(140%);
+  border:1px solid rgba(0,0,0,0.10);
+  box-shadow:0 14px 40px rgba(0,0,0,0.18);
+  opacity:0; pointer-events:none;
+  transition:opacity .25s var(--ease-std), transform .25s var(--ease-std);
+  z-index:120;
+  text-align:left;
+}
+.band--dark .gloss .gloss-tip, .band--ink .gloss .gloss-tip {
+  background:rgba(20,20,20,0.92); color:var(--platinum);
+  border-color:rgba(255,255,255,0.10);
+}
+.gloss:hover .gloss-tip { opacity:1; transform:translate(-50%, -14px); }
+
+/* ============================================================
+   INTERNAL LINK PREVIEW CARDS
+   <a class="xlink" data-preview-id="case-03"...>
+   ============================================================ */
+.xlink {
+  color:var(--ink-blue); text-decoration:none;
+  border-bottom:1px solid currentColor;
+  position:relative;
+  transition:color .25s;
+}
+.band--dark .xlink, .band--ink .xlink { color:var(--sapphire); }
+.xlink:hover { color:var(--hansa); }
+.band--dark .xlink:hover, .band--ink .xlink:hover { color:var(--flare); }
+
+#hover-preview {
+  position:fixed; z-index:140; pointer-events:none;
+  width:340px; padding:22px 22px 20px;
+  background:rgba(20,20,20,0.92);
+  color:var(--platinum);
+  backdrop-filter:blur(18px) saturate(140%);
+  -webkit-backdrop-filter:blur(18px) saturate(140%);
+  border:1px solid rgba(255,255,255,0.10);
+  box-shadow:0 18px 60px rgba(0,0,0,0.45);
+  opacity:0; transform:translateY(8px);
+  transition:opacity .25s var(--ease-std), transform .25s var(--ease-std);
+}
+#hover-preview.is-paper {
+  background:rgba(245,243,238,0.94); color:var(--ink);
+  border-color:rgba(0,0,0,0.10); box-shadow:0 18px 60px rgba(0,0,0,0.18);
+}
+#hover-preview.is-on { opacity:1; transform:translateY(0); }
+#hover-preview .h-eb { font-family:var(--mono); font-size:9.5px; letter-spacing:0.30em; text-transform:uppercase; color:var(--sapphire); margin-bottom:10px; }
+#hover-preview.is-paper .h-eb { color:var(--ink-blue); }
+#hover-preview .h-t  { font-family:var(--display); font-size:20px; font-weight:600; line-height:1.22; margin-bottom:10px; }
+#hover-preview .h-d  { font-family:var(--body); font-size:13.5px; line-height:1.6; opacity:0.85; }
+#hover-preview .h-ft { font-family:var(--mono); font-size:9.5px; letter-spacing:0.20em; text-transform:uppercase; opacity:0.6; margin-top:14px; padding-top:12px; border-top:1px solid currentColor; }
+
+/* ============================================================
+   PULL QUOTES, dark INK band, full bleed
+   ============================================================ */
+.pullquote {
+  font-family:var(--display); font-style:italic; font-weight:500;
+  font-size:clamp(28px, 3.6vw, 48px); line-height:1.22;
+  color:var(--flare);
+  max-width:18ch; margin:0 auto;
+  letter-spacing:-0.005em;
+  text-align:center;
+}
+.pullquote::before { content:'\201C'; display:block; font-style:normal; font-size:1.6em; line-height:0; color:var(--sapphire); margin-bottom:14px; }
+.pullquote .qa {
+  display:block; margin-top:36px;
+  font-family:var(--mono); font-size:11px; font-style:normal; font-weight:400;
+  letter-spacing:0.30em; text-transform:uppercase; color:var(--tungsten);
+}
+
+/* ============================================================
+   FIGURES, full-bleed, paper-mode chart card
+   ============================================================ */
+.figure {
+  margin:48px auto;
+  max-width:var(--col-wide); padding:0 32px;
+}
+.figure .frame {
+  position:relative;
+  background:#fff;
+  border:1px solid var(--paper-3);
+  padding:32px 36px 28px;
+  transition:filter .35s var(--ease-std);
+}
+.band--dark .figure .frame, .band--ink .figure .frame {
+  background:#0A0A0A; border-color:var(--graphite);
+}
+.figure .frame:hover { filter:brightness(1.02); }
+.figure .cap {
+  font-family:var(--mono); font-size:11px; letter-spacing:0.18em; text-transform:uppercase;
+  color:var(--ink-3); margin-top:14px; max-width:60ch;
+}
+.band--dark .figure .cap, .band--ink .figure .cap { color:var(--tungsten); }
+.figure .cap .num { color:var(--ink-blue); margin-right:10px; }
+.band--dark .figure .cap .num, .band--ink .figure .cap .num { color:var(--sapphire); }
+
+/* ============================================================
+   STATS STRIP, sharp, no boxes
+   ============================================================ */
+.stats {
+  max-width:var(--col-wide); margin:48px auto; padding:0 32px;
+  display:grid; grid-template-columns:repeat(4, 1fr); gap:0;
+  border-top:1px solid var(--paper-3); border-bottom:1px solid var(--paper-3);
+}
+.band--dark .stats, .band--ink .stats { border-color:var(--graphite); }
+.stats .s {
+  padding:32px 24px; border-right:1px solid var(--paper-3);
+}
+.stats .s:last-child { border-right:0; }
+.band--dark .stats .s, .band--ink .stats .s { border-right-color:var(--graphite); }
+.stats .v { font-family:var(--mono); font-weight:500; font-size:38px; color:var(--ink); line-height:1; margin-bottom:10px; }
+.band--dark .stats .v, .band--ink .stats .v { color:var(--flare); }
+.stats .l { font-family:var(--mono); font-size:10px; letter-spacing:0.22em; text-transform:uppercase; color:var(--ink-3); }
+.band--dark .stats .l, .band--ink .stats .l { color:var(--tungsten); }
+
+@media (max-width:880px) { .stats { grid-template-columns:repeat(2,1fr); } .stats .s:nth-child(2) { border-right:0; } }
+
+/* ============================================================
+   TAGS, flat rectangular, no pills
+   ============================================================ */
+.tagrow { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+.tag {
+  font-family:var(--mono); font-size:10px; letter-spacing:0.20em; text-transform:uppercase;
+  color:var(--ink-3); border:1px solid var(--paper-3);
+  padding:6px 12px; background:transparent;
+}
+.band--dark .tag, .band--ink .tag { color:var(--tungsten); border-color:var(--graphite); }
+.tag.is-on { color:var(--ink-blue); border-color:var(--ink-blue); }
+.band--dark .tag.is-on, .band--ink .tag.is-on { color:var(--sapphire); border-color:var(--sapphire); }
+
+/* Bracket-style label (for "Case 07", category eyebrows) */
+.bracket {
+  font-family:var(--mono); font-size:10px; letter-spacing:0.30em; text-transform:uppercase; color:inherit;
+}
+.bracket::before, .bracket::after { content:''; display:inline-block; width:14px; height:1px; background:currentColor; vertical-align:middle; opacity:0.5; }
+.bracket::before { margin-right:10px; }
+.bracket::after  { margin-left:10px; }
+
+/* ============================================================
+   METHODOLOGY CALLOUT, sharp aside on paper
+   ============================================================ */
+.method {
+  max-width:var(--col); margin:36px auto; padding:0 32px;
+}
+.method .inner {
+  border-left:2px solid var(--ink-blue);
+  padding:20px 26px;
+  background:var(--paper-2);
+  font-family:var(--body); font-size:15.5px; line-height:1.7; color:var(--ink-2);
+}
+.band--dark .method .inner, .band--ink .method .inner { background:var(--charcoal); border-left-color:var(--sapphire); color:var(--platinum); }
+.method .lab { font-family:var(--mono); font-size:9.5px; letter-spacing:0.30em; text-transform:uppercase; color:var(--ink-blue); margin-bottom:8px; }
+.band--dark .method .lab, .band--ink .method .lab { color:var(--sapphire); }
+
+/* ============================================================
+   BACK MATTER
+   ============================================================ */
+.back-matter { padding-top:120px; padding-bottom:160px; }
+.back-matter h3 {
+  font-family:var(--display); font-weight:600; font-size:24px; line-height:1.2; color:var(--flare);
+  margin:0 auto 22px; max-width:var(--col-wide); padding:0 48px;
+}
+.back-matter .biblio { max-width:var(--col-wide); margin:0 auto 60px; padding:0 48px; }
+.back-matter .biblio li {
+  list-style:none;
+  font-family:var(--body); font-size:14.5px; line-height:1.65; color:var(--platinum);
+  padding:14px 0; border-top:1px solid var(--graphite);
+  display:grid; grid-template-columns:50px 1fr; gap:20px;
+}
+.back-matter .biblio li:last-child { border-bottom:1px solid var(--graphite); }
+.back-matter .biblio .n { font-family:var(--mono); font-size:11px; color:var(--sapphire); letter-spacing:0.20em; }
+.back-matter .biblio .ent i { color:var(--tungsten); }
+
+.back-matter .related { max-width:var(--col-wide); margin:0 auto 60px; padding:0 48px; }
+.related-grid {
+  display:grid; grid-template-columns:repeat(3, 1fr); gap:0;
+  border-top:1px solid var(--graphite); border-bottom:1px solid var(--graphite);
+}
+.r-card {
+  display:block; padding:28px 28px 32px;
+  border-right:1px solid var(--graphite);
+  text-decoration:none; color:inherit; position:relative;
+  transition:background .35s var(--ease-std);
+}
+.r-card:last-child { border-right:0; }
+.r-card:hover { background:rgba(77,140,255,0.04); }
+.r-card .eb { font-family:var(--mono); font-size:9.5px; letter-spacing:0.28em; text-transform:uppercase; color:var(--sapphire); margin-bottom:14px; }
+.r-card .ti { font-family:var(--display); font-size:22px; font-weight:600; line-height:1.18; color:var(--flare); margin-bottom:12px; }
+.r-card .ds { font-family:var(--body); font-size:14px; line-height:1.65; color:var(--tungsten); margin-bottom:20px; }
+.r-card .ar { font-family:var(--mono); font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:var(--platinum); opacity:0.7; }
+.r-card:hover .ar { opacity:1; }
+@media (max-width:880px) { .related-grid { grid-template-columns:1fr; } .r-card { border-right:0; border-bottom:1px solid var(--graphite); } .r-card:last-child { border-bottom:0; } }
+
+/* Cite-graph (mini SVG network) */
+.citegraph { max-width:var(--col-wide); margin:0 auto 60px; padding:0 48px; }
+.citegraph svg { width:100%; height:240px; display:block; background:var(--charcoal); border:1px solid var(--graphite); }
+.citegraph .lab { font-family:var(--mono); font-size:10px; letter-spacing:0.22em; text-transform:uppercase; color:var(--tungsten); margin-top:10px; }
+
+/* Next chapter */
+.next-chap {
+  max-width:var(--col-wide); margin:80px auto 0; padding:48px;
+  border-top:1px solid var(--graphite); border-bottom:1px solid var(--graphite);
+  display:flex; align-items:center; justify-content:space-between; gap:32px;
+  text-decoration:none; color:inherit;
+  transition:background .35s var(--ease-std);
+}
+.next-chap:hover { background:rgba(77,140,255,0.05); }
+.next-chap .lf .eb { font-family:var(--mono); font-size:10px; letter-spacing:0.30em; text-transform:uppercase; color:var(--sapphire); margin-bottom:12px; }
+.next-chap .lf .ti { font-family:var(--display); font-size:32px; font-weight:600; color:var(--flare); line-height:1.18; max-width:22ch; }
+.next-chap .rt { font-family:var(--mono); font-size:14px; letter-spacing:0.20em; text-transform:uppercase; color:var(--sapphire); }
+
+/* ============================================================
+   GLOSSARY HOVER state, hide tooltip when JS detects mode change
+   ============================================================ */
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer.site-foot {
+  background:var(--obsidian); color:var(--tungsten);
+  padding:60px 48px; border-top:1px solid var(--graphite);
+  font-family:var(--mono); font-size:10px; letter-spacing:0.16em; text-transform:uppercase;
+  display:flex; justify-content:space-between; align-items:center;
+}
+footer.site-foot a { color:inherit; text-decoration:none; opacity:0.8; }
+footer.site-foot a:hover { opacity:1; color:var(--platinum); }
+
+/* ============================================================
+   Reveal, translate + opacity, no bounces
+   ============================================================ */
+.reveal { opacity:0; transform:translateY(18px); transition:opacity .9s var(--ease-out), transform .9s var(--ease-out); }
+.reveal.is-on { opacity:1; transform:none; }
+
+/* ============================================================
+   Scroll-tied parallax helper (figures move at 0.96x scroll)
+   ============================================================ */
+.parallax { transform:translate3d(0,0,0); will-change:transform; }
+
+/* Minor: list item style for ul.bullets */
+ul.bullets { max-width:var(--col); margin:0 auto 22px; padding:0 32px; list-style:none; }
+ul.bullets li { padding-left:22px; position:relative; margin-bottom:10px; font-size:17px; line-height:1.7; color:inherit; }
+ul.bullets li::before { content:'\25B8'; position:absolute; left:0; top:1px; font-family:var(--mono); color:var(--ink-blue); font-size:11px; }
+.band--dark ul.bullets li::before, .band--ink ul.bullets li::before { color:var(--sapphire); }
+
+
+/* ============================================================
+   SIDENOTES: Adaptive Tufte-Style (Institutional Standard)
+   ============================================================ */
+.sn { position:relative; }
+.sn-num { font-family:var(--mono); font-size:9px; color:var(--sapphire); vertical-align:super; cursor:pointer; padding:0 2px; }
+.band--paper .sn-num { color:var(--ink-blue); }
+.sn-num:hover { color:var(--hansa); }
+.sn-body { display:none; }
+
+@media (min-width: 1240px) {
+  p.col-with-sidenotes { position:relative; }
+  .sn { position:absolute; left:calc(100% + 40px); width:240px; font-family:var(--body); font-size:12.5px; line-height:1.5; color:var(--tungsten); }
+  .band--paper .sn { color:var(--ink-3); }
+  .sn-num { position:absolute; left:-24px; top:2px; }
+  .sn-body { display:block; padding-bottom:8px; border-bottom:1px solid rgba(255,255,255,0.06); }
+  .band--paper .sn-body { border-bottom-color:rgba(0,0,0,0.06); }
+}
+
+@media (max-width: 1239px) {
+  p.col-with-sidenotes { position:relative; }
+  .sn { display:inline; }
+  .sn-body { display:block; margin:12px 0; padding:12px 16px; font-family:var(--body); font-size:14px; line-height:1.6; color:var(--platinum); background:rgba(255,255,255,0.04); border-left:2px solid var(--sapphire); }
+  .band--paper .sn-body { color:var(--ink); background:rgba(0,0,0,0.04); border-left-color:var(--ink-blue); }
+  .sn-num { display:inline; position:static; font-size:11px; margin-right:6px; }
+}
+
+
+/* ============================================================
+   MASTER GRID & PORTRAIT MODE POLISH
+   ============================================================ */
+:root { --grid-left: max(32px, calc(50vw - 540px)); }
+@media (min-width: 1360px) { :root { --grid-left: max(260px, calc(50vw - 540px)); } }
+
+@media (min-width: 1240px) {
+  section.band:not(.front) {
+    display: grid;
+    grid-template-columns: var(--grid-left) 680px 400px minmax(16px, 1fr);
+    align-items: start;
+  }
+  section.band:not(.front) > * {
+    grid-column: 2 / 3;
+    margin-left: 0 !important; 
+    margin-right: 0 !important;
+  }
+  section.band:not(.front) > .col-wide, 
+  section.band:not(.front) > .stat-grid, 
+  section.band:not(.front) > .figure, 
+  section.band:not(.front) > .report-prose {
+    grid-column: 2 / 4;
+    width: 100%; 
+    max-width: none;
+  }
+  .stat-grid { justify-content: start !important; }
+}
+
+@media (min-width: 1180px) and (max-width: 1359px) {
+  #spine {
+    width: 44px; overflow: hidden; white-space: nowrap;
+    transition: width 0.4s cubic-bezier(0.16,1,0.3,1), background 0.6s cubic-bezier(0.4,0,0.2,1);
+  }
+  #spine:hover { width: 250px; }
+}
+@media (min-width: 1360px) {
+  #spine { width: auto; overflow: visible; }
+}
+
+/* Portrait Mode Space Fix */
+.front { min-height: clamp(400px, 80vh, 850px) !important; justify-content: center !important; }
+
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+<script src="https://unpkg.com/split-type" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js" defer></script>
+
+</head>
+<body data-category="Forensic Psychology" data-title="Implicit Power Drives">
+<div id="preloader"><div id="preloader-left"></div><div id="preloader-right"></div><div id="preloader-line"></div></div>
+
+<div id="progress"></div>
+<div id="global-nav-container"></div>
+<aside id="spine"></aside>
+<div class="atmosphere"></div>
+<canvas id="glCanvas"></canvas>
+
+<!-- (Stripped) inline status pebble -->
+<div style="display:none">
+  <span class="sec">Front matter</span>
+  <span class="pct">0%</span>
+  <span>/</span>
+  <span class="time">~22 min</span>
+</div>
+
+<!-- (Stripped) hover preview portal -->
+
+
+
+
+<!-- ============================================================
+     FRONT MATTER
+     ============================================================ -->
+<section class="band band--dark front" data-spine="Front" data-section="Front matter">
+  <!-- Ambient calibration arc (background layer) -->
+  <div class="ambient" aria-hidden="true">
+    <svg viewBox="0 0 600 600" fill="none">
+      <defs>
+        <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#4D8CFF" stop-opacity="0.55"/>
+          <stop offset="100%" stop-color="#0F52BA" stop-opacity="0.0"/>
+        </linearGradient>
+      </defs>
+      <g stroke="url(#g1)" stroke-width="1" fill="none">
+        <circle cx="300" cy="300" r="80"/>
+        <circle cx="300" cy="300" r="140"/>
+        <circle cx="300" cy="300" r="200"/>
+        <circle cx="300" cy="300" r="260"/>
+      </g>
+      <line x1="60" y1="540" x2="540" y2="60" stroke="#4D8CFF" stroke-width="1" stroke-dasharray="2 6" opacity="0.8"/>
+      <g fill="#4D8CFF" opacity="0.7">
+        <circle cx="120" cy="490" r="2.5"/>
+        <circle cx="180" cy="430" r="2.5"/>
+        <circle cx="240" cy="380" r="2.5"/>
+        <circle cx="300" cy="310" r="2.5"/>
+        <circle cx="360" cy="260" r="2.5"/>
+        <circle cx="420" cy="210" r="2.5"/>
+        <circle cx="480" cy="140" r="2.5"/>
+      </g>
+      <circle cx="380" cy="380" r="3.5" fill="#7A1626" opacity="0.95"/>
+      <text x="400" y="386" font-family="JetBrains Mono" font-size="10" fill="#A1A1A6" letter-spacing="2">OUTLIER</text>
+    </svg>
+  </div>
+
+  <div class="col-wide">
+    <div class="grid">
+     <div>
+      <div class="meta-row">
+        <span class="bracket">Conference Poster (2017)</span>
+        <span class="sep">/</span>
+        <span>Fielding Graduate University · School of Psychology</span>
+        <span class="sep">/</span>
+        <span>10 min read</span>
+      </div>
+
+      <h1>Implicit Power Drives in the Manifestos Preceding Autogenic Massacres</h1>
+
+      <p class="abstract">
+        Twenty-three pre-attack manifestos from perpetrators of autogenic massacre, 111,811 author-generated words, and a single question: do these texts carry a measurable linguistic signature that distinguishes their authors from non-violent writers using the same medium? Computer-mediated linguistic analysis with LIWC2015 against a 23.5-million-word comparison corpus across six baseline mediums (personal blogs, novels, expressive writing, speech, multi-source composite) produced a stable answer. Implicit power-drive language was elevated in the manifesto corpus relative to every comparison baseline tested, with Welch's t-tests significant at alpha = .01 against blogs (t = 3.47, p &lt; .001) and expressive writing (t = 3.66, p &lt; .001), and at alpha = .05 against the multi-source composite (t = 2.43, p = .012). The consistency across diverse baselines was the directional finding that the larger typological study in the subsequent doctoral dissertation (Leffew, 2017 to dissertation pipeline) was built on. Presented at Fielding Graduate University, Summer Session 2017.
+      </p>
+
+      <div class="byline">
+        <div>Subject <strong>23 pre-attack manifestos, 111,811 words</strong></div>
+        <div>Method <strong>LIWC2015 + Welch's t-tests against 23.5M-word baseline corpus</strong></div>
+        <div>Output <strong>Linguistic precursor signal for the dissertation typology</strong></div>
+      </div>
+     </div>
+     <div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 1 SECTION -->
+<section class="band band--paper" data-spine="Context" data-section="The Phenomenon of Autogenic Massacres">
+  <div class="eyebrow reveal">01 / Context</div>
+  <h2 class="reveal">The Phenomenon of Autogenic Massacres</h2>
+  
+<div class="eyebrow">Context</div>
+
+<div class="two-col">
+<div class="prose" id="contextProseL">
+<p class="reveal">Power drive language elevated above all tested comparison baselines, including the multi-source composite. That breadth of elevation, consistent across comparison groups, suggests the result is a property of the corpus as a whole. In practical terms, this consistency was the directional finding that proved we could track and quantify dangerous mindsets mathematically, ultimately motivating the larger, conclusive typological study in the final dissertation.</p>
+</div>
+</div>
+
+</section>
+
+
+<!-- 2 SECTION -->
+<section class="band band--dark" data-spine="Corpus" data-section="Linguistic Corpus & Statistical Framework">
+  <div class="eyebrow reveal">02 / Methodology</div>
+  <h2 class="reveal">Linguistic Corpus &amp; Statistical Framework</h2>
+  
+<div class="eyebrow">Methodology</div>
+
+<div class="two-col">
+<div class="prose">
+<p>This study executed a computational psycholinguistic analysis quantifying power drive language across n=23 autogenic massacres. The linguistic corpus generated 111,811 unredacted, author-generated words covering the final manifestos and digital artifacts of all qualifying subjects.</p>
+<p>The statistical framework leveraged LIWC2015 to extract normalized frequencies of power-oriented lexicography. By setting conservative α=0.01 parameters across Independent Samples T-Tests, we established a mathematically rigorous boundary separating autogenic perpetrators from matched generalized populations.</p>
+</div>
+<div>
+<div class="glass-panel">
+<div class="telem-head-label" style="margin-bottom: 24px;">Corpus Parameters</div>
+<div class="stats-row" style="margin: 0;">
+<div class="stat-card">
+<div class="stat-val" id="valN">23</div>
+<div class="stat-lbl">Perpetrators Mapped</div>
+</div>
+<div class="stat-card">
+<div class="stat-val" id="valWords">111.8K</div>
+<div class="stat-lbl">Total Words Indexed</div>
+</div>
+</div>
+<div class="insight" style="margin: 32px 0 0 0;">
+<div class="prose" style="font-size: 13px; color: var(--tungsten);">
+              Comparison baselines consisted of large-scale linguistic datasets encompassing 23.5 million words across six distinct mediums (blogs, novels, speech, expressive writing, etc.) to ensure baseline control.
+            </div>
+</div>
+</div>
+</div>
+</div>
+
+</section>
+
+
+<!-- 3 SECTION -->
+<section class="band band--paper" data-spine="Results" data-section="Quantifying the Action Threshold">
+  <div class="eyebrow reveal">03 / Results</div>
+  <h2 class="reveal">Quantifying the Action Threshold</h2>
+  
+<div class="eyebrow">Results</div>
+
+<div class="prose" style="max-width: 800px; margin-bottom: 48px;">
+<p>A series of Independent Samples T-Tests assuming unequal variances (Welch’s t-test) revealed highly significant absolute differences. The mean frequency of power words expressed by autogenic perpetrators (M=3.00, SD=1.28) was consistently and severely elevated above every comparison baseline.</p>
+</div>
+<div class="telem-wrap" id="telemTable">
+<div class="telem-head">
+<div class="telem-head-label">T-Test Outcomes by Text Medium</div>
+<div class="telem-toggle">
+<button class="telem-btn active" id="btnFull" onclick="showView('full')">Full Output</button>
+<button class="telem-btn" id="btnSig" onclick="showView('sig')">Significance Only</button>
+</div>
+</div>
+<table class="telem" id="viewFull">
+<thead>
+<tr>
+<th>Comparison Baseline</th>
+<th>M Diff (M1 - M2)</th>
+<th>t-Value</th>
+<th>df</th>
+<th>p-Value</th>
+</tr>
+</thead>
+<tbody>
+<tr onclick="flashBar(0)">
+<td>Personal Blogs (M=2.07)</td>
+<td>+0.93</td>
+<td class="sig-hi">3.47</td>
+<td>22.01</td>
+<td class="sig-hi">&lt; .001***</td>
+</tr>
+<tr onclick="flashBar(1)">
+<td>Expressive Writing (M=2.02)</td>
+<td>+0.98</td>
+<td class="sig-hi">3.66</td>
+<td>22.00</td>
+<td class="sig-hi">&lt; .001***</td>
+</tr>
+<tr onclick="flashBar(2)">
+<td>Multi-source Composite (M=2.35)</td>
+<td>+0.65</td>
+<td class="sig-hi">2.43</td>
+<td>22.01</td>
+<td class="sig-hi">0.012*</td>
+</tr>
+</tbody>
+</table>
+<!-- Alternate View: Significance Cards -->
+<div id="viewSig" style="display: none;">
+<div class="sig-cards">
+<div class="sig-card">
+<div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--tungsten); margin-bottom: 8px;">Manifesto vs Blogs</div>
+<div style="font-family: 'JetBrains Mono', monospace; font-size: 24px; color: var(--sapphire);">p &lt; .001</div>
+<div style="font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--tungsten); margin-top: 8px;">Reject Null (H0)</div>
+</div>
+<div class="sig-card">
+<div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--tungsten); margin-bottom: 8px;">Manifesto vs Expressive</div>
+<div style="font-family: 'JetBrains Mono', monospace; font-size: 24px; color: var(--sapphire);">p &lt; .001</div>
+<div style="font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--tungsten); margin-top: 8px;">Reject Null (H0)</div>
+</div>
+<div class="sig-card">
+<div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--tungsten); margin-bottom: 8px;">Manifesto vs Composite</div>
+<div style="font-family: 'JetBrains Mono', monospace; font-size: 24px; color: var(--sapphire);">p = .012</div>
+<div style="font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--tungsten); margin-top: 8px;">Reject Null (H0)</div>
+</div>
+</div>
+</div>
+</div>
+<div class="chart-wrap" id="chartSection">
+<div class="chart-label">Mean Power Word Frequency (% Total Words)</div>
+<div class="chart-modes" id="chartModes">
+<button class="telem-btn active" id="modeAbs" onclick="setMode('abs')">Absolute</button>
+<button class="telem-btn" id="modeDiff" onclick="setMode('diff')">Differential</button>
+</div>
+<div id="barsContainer"></div>
+<div class="chart-zero-line"></div>
+<div class="chart-axis" id="chartAxis"></div>
+</div>
+
+</section>
+
+
+<!-- 4 SECTION -->
+<section class="band band--dark" data-spine="Semantics" data-section="Semantic Cartography of the Action Mindset">
+  <div class="eyebrow reveal">04 / Linguistics</div>
+  <h2 class="reveal">Semantic Cartography of the Action Mindset</h2>
+  
+<div class="eyebrow">Linguistics</div>
+
+<div class="prose" style="max-width: 800px; margin-bottom: 48px;">
+<p>Examining the specific semantic tokens driving these statistical elevations reveals a profound cognitive narrowing. The language shifts aggressively away from self-reflection toward externalized domination, out-group alienation, and rigid moral imperatives that serve to cognitively bypass natural inhibitions against violence.</p>
+</div>
+<div class="cloud-filters" id="cloudFilters">
+<button class="telem-btn active" data-cat="all" onclick="filterCloud('all')">All Dimensions</button>
+<button class="telem-btn" data-cat="threat" onclick="filterCloud('threat')">Threat / Aggression</button>
+<button class="telem-btn" data-cat="power" onclick="filterCloud('power')">Power / Certainty</button>
+<button class="telem-btn" data-cat="values" onclick="filterCloud('values')">Moral Values</button>
+<button class="telem-btn" data-cat="group" onclick="filterCloud('group')">In-Group Bias</button>
+</div>
+<div class="cloud-wrap" id="cloudWrap">
+<!-- Words dynamically injected via JS -->
+</div>
+
+</section>
+
+
+<!-- 5 SECTION -->
+<section class="band band--paper" data-spine="Application" data-section="Practical Application &amp; Future Horizons">
+  <div class="eyebrow reveal">05 / Findings</div>
+  <h2 class="reveal">Practical Application &amp; Future Horizons</h2>
+  
+<div class="eyebrow">Findings</div>
+
+<div class="two-col">
+<div class="glass-panel">
+<div class="eyebrow" style="color: var(--flare); margin-bottom: 24px;">Conclusions</div>
+<ul class="prose" style="padding-left: 20px; list-style-type: none; margin: 0;">
+<li style="margin-bottom: 16px; position: relative;">
+<span style="position: absolute; left: -20px; color: var(--sapphire);">▸</span>
+<strong>Predictive Efficacy:</strong> Elevated "power drive" frequency functions as a reliable linguistic telemetry point differentiating lethal autogenic perpetrators from the general population.
+          </li>
+<li style="margin-bottom: 16px; position: relative;">
+<span style="position: absolute; left: -20px; color: var(--sapphire);">▸</span>
+<strong>Targeted Modeling:</strong> The consistency across diverse comparative baseline models establishes robustness, validating implicit motive markers as viable features for predictive text classifiers.
+          </li>
+<li style="margin-bottom: 0px; position: relative;">
+<span style="position: absolute; left: -20px; color: var(--sapphire);">▸</span>
+<strong>Psychological Shift:</strong> The language indicates a severe operational transition, away from self-oriented depression towards externalized grievance and the perceived operational requirement for violence.
+          </li>
+</ul>
+</div>
+<div>
+<div class="insight">
+<div class="telem-head-label" style="margin-bottom: 16px;">Next Phase: Warning Behaviors</div>
+<div class="prose" style="font-size: 14px; color: var(--tungsten);">
+            This research directly cascaded into the core behavioral models governing our predictive AI validation systems. By identifying that linguistic markers of 'power' are measurable precursors to catastrophic action, we laid the groundwork for integrating NLP telemetry engines into live clinical and security environments, shifting from reactive assessment to proactive intervention.
+          </div>
+</div>
+</div>
+</div>
+
+</section>
+
+
+<!-- 6 SECTION -->
+<section class="band band--dark" data-spine="References" data-section="Reference Literature">
+  <div class="eyebrow reveal">06 / Sources</div>
+  <h2 class="reveal">Reference Literature</h2>
+  
+<div class="eyebrow">Sources</div>
+
+<div class="glass-panel">
+<div class="ref-text">
+<p>Harrison, M. A., &amp; Bowers, T. G. (2010). Autogenic massacre as a maladaptive response to status threat. <em>The Journal of Forensic Psychiatry &amp; Psychology, 21</em>(6), 916-932.</p>
+<p>Meloy, J. R., Hempel, A. G., Gray, B. T., Mohandie, K., Shiva, A., &amp; Richards, T. C. (2004). A comparative analysis of North American adolescent and adult mass murderers. <em>Behavioral Sciences &amp; the Law, 22</em>(3), 291-309.</p>
+<p>Meloy, J. R., Hoffmann, J., Guldimann, A., &amp; James, D. (2012). The role of warning behaviors in threat assessment: An exploration and suggested typology. <em>Behavioral Sciences &amp; the Law, 30</em>(3), 256-279.</p>
+<p>Mohandie, K. (2013). Threat assessment in schools. In J. R. Meloy &amp; J. Hoffman (Eds.), <em>International handbook of threat assessment</em> (pp. 126-141). New York, NY: Oxford University Press.</p>
+<p>Mullen, P. E. (2004). The autogenic (self-generated) massacre. <em>Behavioral Sciences &amp; the Law, 22</em>(3), 311-323.</p>
+<p>Murray, J. L. (2017). Mass media reporting and enabling of mass shootings. <em>Cultural Studies: Critical Methodologies, 17</em>(2), 114-124.</p>
+<p>Neuman, Y., Assaf, D., Cohen, Y., &amp; Knoll, J. L. (2015). Profiling school shooters: Automatic text-based analysis. <em>Frontiers in Psychiatry, 6</em>.</p>
+<p>Pennebaker, J. W. (2011). <em>The secret life of pronouns: What our words say about us.</em> New York, NY: Bloomsbury Press.</p>
+<p>Pennebaker, J. W., Boyd, R. L., Jordan, K., &amp; Blackburn, K. (2015). <em>The development and psychometric properties of LIWC2015.</em> Austin, TX: University of Texas at Austin.</p>
+<p>Schultheiss, O. C. (2013). Are implicit motives revealed in mere words? Testing the marker-word hypothesis with computer-based text analysis. <em>Frontiers in Psychology, 4</em>.</p>
+<p>Thompson, S., &amp; Kyle, K. (2005). Understanding mass school shootings: Links between personhood and power in the competitive school environment. <em>Journal of Primary Prevention, 26</em>(5), 419-438.</p>
+</div>
+</div>
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- Inline self-contained chrome scripts stripped. Spine init + global.js handle this now. -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const sections = document.querySelectorAll('section.band');
+    const spine = document.getElementById('spine');
+    const topnav = document.getElementById('topnav');
+    const status = document.getElementById('status');
+    const pctEl = status ? status.querySelector('.pct') : null;
+
+    const updateProgress = () => {
+      const scroll = window.scrollY;
+      const height = document.documentElement.scrollHeight - window.innerHeight;
+      const p = Math.min(100, Math.max(0, (scroll / height) * 100));
+      const progressEl = document.getElementById('progress');
+      if (progressEl) progressEl.style.setProperty('--p', p + '%');
+      if (pctEl) pctEl.innerText = Math.round(p) + '%';
+    };
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+
+    if (spine) {
+      spine.innerHTML = '';
+      sections.forEach((sec, i) => {
+        const label = sec.getAttribute('data-spine');
+        if (!label) return;
+        const row = document.createElement('div');
+        row.className = 'row';
+        if (i === 0) row.classList.add('is-active');
+        row.innerHTML = `<span class="num">0${i + 1}</span><div class="tick"></div><span class="label">${label}</span>`;
+        row.addEventListener('click', () => sec.scrollIntoView({ behavior: 'smooth' }));
+        spine.appendChild(row);
+
+        const observer = new IntersectionObserver(entries => {
+          entries.forEach(e => {
+            if (e.isIntersecting) {
+              [...spine.children].forEach(c => c.classList.remove('is-active', 'is-paper-active'));
+              const isPaper = e.target.classList.contains('band--paper');
+              row.classList.add('is-active');
+              if (isPaper) {
+                spine.classList.add('is-paper');
+                if (topnav) topnav.classList.add('is-paper');
+                if (status) status.classList.add('is-paper');
+              } else {
+                spine.classList.remove('is-paper');
+                if (topnav) topnav.classList.remove('is-paper');
+                if (status) status.classList.remove('is-paper');
+              }
+            }
+          });
+        }, { threshold: 0.3 });
+        observer.observe(sec);
+      });
+    }
+
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-on'); });
+    }, { threshold: 0.15 });
+    reveals.forEach(el => revealObs.observe(el));
+  });
+</script>
+<script type="text/discarded">
+const PREVIEWS_DISCARDED = {
+  'implicit-power-drives': {
+    eyebrow: 'Note 04 / Doctoral research',
+    title: 'Implicit power drives',
+    desc: 'Clinical validation framework quantifying behavioral typologies using T-tests and linguistic predictive limits in written manifestos.',
+    foot: '12 min read / Dissertation chapter',
+  },
+  'credit-fairness': {
+    eyebrow: 'Note 12 / Model validation',
+    title: 'Credit policy fairness',
+    desc: '100,000+ applicant simulation using SHAP to audit fairness and validate a 20.9% equitable approval shift.',
+    foot: '8 min read / Production audit',
+  },
+  'entity-resolution': {
+    eyebrow: 'Note 03 / Production pipeline',
+    title: 'Entity resolution pipeline',
+    desc: 'A 15-step distributed graph-ML pipeline for semantic identity fusion across 49TB of streaming vendor records.',
+    foot: '14 min read / Spokeo',
+  },
+};
+
+/* ============================================================
+   SPINE, generated from sections with [data-spine]
+   ============================================================ */
+const spine = document.getElementById('spine');
+const sections = [...document.querySelectorAll('[data-spine]')];
+sections.forEach((s, i) => {
+  const r = document.createElement('div');
+  r.className = 'row'; r.dataset.idx = i;
+  r.innerHTML = `<span class="num">${String(i+1).padStart(2,'0')}</span><span class="tick"></span><span class="label">${s.dataset.spine}</span>`;
+  r.addEventListener('click', () => s.scrollIntoView({behavior:'smooth', block:'start'}));
+  spine.appendChild(r);
+});
+
+/* ============================================================
+   SCROLL ENGINE, progress, status, mode, spine, reveals
+   ============================================================ */
+const progress = document.getElementById('progress');
+const topnav = document.getElementById('topnav');
+const status = document.getElementById('status');
+const statusSec = status.querySelector('.sec');
+const statusPct = status.querySelector('.pct');
+const atmosphere = document.querySelector('.atmosphere');
+const reveals = [...document.querySelectorAll('.reveal')];
+const spineRows = [...spine.querySelectorAll('.row')];
+
+const onScroll = () => {
+  const h = document.documentElement;
+  const y = window.scrollY;
+  const max = h.scrollHeight - window.innerHeight;
+  const p = Math.min(1, Math.max(0, y / max));
+  progress.style.setProperty('--p', (p * 100).toFixed(2) + '%');
+  statusPct.textContent = Math.round(p * 100) + '%';
+
+  // Find the section currently dominant near top of viewport
+  const trigger = window.innerHeight * 0.32;
+  let activeIdx = 0;
+  for (let i = 0; i < sections.length; i++) {
+    const r = sections[i].getBoundingClientRect();
+    if (r.top <= trigger) activeIdx = i;
+  }
+  const active = sections[activeIdx];
+  const mode = [...active.classList].find(c => c.startsWith('band--'));
+  const isPaper = mode !== 'band--paper';
+
+  statusSec.textContent = active.dataset.section;
+  spineRows.forEach((row, i) => {
+    row.classList.toggle('is-active', i === activeIdx);
+    row.classList.toggle('is-paper-active', i === activeIdx && isPaper);
+  });
+
+  topnav.classList.toggle('is-paper', isPaper);
+  status.classList.toggle('is-paper', isPaper);
+  spine.classList.toggle('is-paper', isPaper);
+
+  // Reveals
+  reveals.forEach(el => {
+    const r = el.getBoundingClientRect();
+    if (r.top < window.innerHeight * 0.92) el.classList.add('is-on');
+  });
+
+  // Parallax on figures (subtle)
+  document.querySelectorAll('.parallax').forEach(el => {
+    const r = el.getBoundingClientRect();
+    const center = r.top + r.height / 2 - window.innerHeight / 2;
+    el.style.transform = `translate3d(0, ${(-center * 0.04).toFixed(1)}px, 0)`;
+  });
+};
+window.addEventListener('scroll', onScroll, { passive:true });
+window.addEventListener('resize', onScroll);
+onScroll();
+
+/* ============================================================
+   HOVER PREVIEWS
+   ============================================================ */
+const hp = document.getElementById('hover-preview');
+const hpEb = hp.querySelector('.h-eb');
+const hpTi = hp.querySelector('.h-t');
+const hpDs = hp.querySelector('.h-d');
+const hpFt = hp.querySelector('.h-ft');
+let hpTimer;
+document.querySelectorAll('.xlink').forEach(a => {
+  a.addEventListener('mouseenter', e => {
+    const id = a.dataset.previewId;
+    if (!id || !PREVIEWS[id]) return;
+    const d = PREVIEWS[id];
+    hpEb.textContent = d.eyebrow;
+    hpTi.textContent = d.title;
+    hpDs.textContent = d.desc;
+    hpFt.textContent = d.foot;
+    // Position
+    const r = a.getBoundingClientRect();
+    let x = r.left;
+    let y = r.bottom + 12;
+    const w = 340, h = 180;
+    if (x + w > window.innerWidth - 16) x = window.innerWidth - w - 16;
+    if (y + h > window.innerHeight - 16) y = r.top - h - 12;
+    hp.style.left = x + 'px';
+    hp.style.top  = y + 'px';
+    // Sync mode of the preview to the section the link sits in
+    const inPaper = a.closest('.band--paper') !== null;
+    hp.classList.toggle('is-paper', inPaper);
+    clearTimeout(hpTimer);
+    hp.classList.add('is-on');
+  });
+  a.addEventListener('mouseleave', () => {
+    hpTimer = setTimeout(() => hp.classList.remove('is-on'), 80);
+  });
+});
+
+/* ============================================================
+   SIDENOTES
+   - Wide viewport: position each .sn-body in the right gutter,
+     vertically aligned with its inline .sn-num marker.
+   - Narrow viewport: tap to toggle inline footnote.
+   ============================================================ */
+function layoutSidenotes() {
+  if (window.innerWidth < 1080) return;
+  document.querySelectorAll('p.col-with-sidenotes').forEach(p => {
+    const pRect = p.getBoundingClientRect();
+    let lastBottom = -9999;
+    p.querySelectorAll('.sn').forEach(sn => {
+      const num = sn.querySelector('.sn-num');
+      const body = sn.querySelector('.sn-body');
+      if (!num || !body) return;
+      const numRect = num.getBoundingClientRect();
+      // top relative to paragraph
+      let top = numRect.top - pRect.top - 2;
+      // avoid stacking, push down if previous note's bottom would overlap
+      if (top < lastBottom + 12) top = lastBottom + 12;
+      body.style.top = top + 'px';
+      // remember bottom (estimate height: 240px wide, lh ~1.55, ~13.5px -> ~3 lines avg)
+      const bodyH = body.offsetHeight || 80;
+      lastBottom = top + bodyH;
+    });
+  });
+}
+window.addEventListener('load', layoutSidenotes);
+window.addEventListener('resize', layoutSidenotes);
+// Also re-layout after fonts settle
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(layoutSidenotes);
+
+document.querySelectorAll('.sn-num').forEach(n => {
+  n.addEventListener('click', () => {
+    if (window.innerWidth >= 1080) return;
+    const body = n.parentElement.querySelector('.sn-body');
+    if (body) body.classList.toggle('is-open');
+  });
+});
+</script>
+
+
+
+<!-- ============================================================
+     CUSTOM PAGE TELEMETRY
+     ============================================================ -->
+<script>
+
+</script>
+
+<script>
+/* ============================================================
+   DYNAMIC SIDENOTE CLEARANCE (Global Portfolio Mandate)
+   ============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+    const sidenoteParagraphs = document.querySelectorAll('.col-with-sidenotes');
+    sidenoteParagraphs.forEach(p => {
+        const sn = p.querySelector('.sn');
+        if (sn) {
+            const updateHeight = () => {
+                if (window.innerWidth >= 1240) {
+                    // Calculate exact clearance needed based on the sidenote's absolute top position
+                    const neededHeight = sn.offsetTop + sn.offsetHeight + 40;
+                    p.style.minHeight = neededHeight + 'px';
+                } else {
+                    p.style.minHeight = 'auto';
+                }
+            };
+            updateHeight();
+            setTimeout(updateHeight, 250);
+            window.addEventListener('resize', updateHeight);
+        }
+    });
+});
+</script>
+
+
+<!-- ============================================================
+     GLOBAL APP SHELL (BACK MATTER)
+     ============================================================ -->
+<section class="band band--dark back-matter" data-spine="Research Graph" data-section="Research Graph">
+  
+  
+
+  <div class="back-matter" style="padding-top:0;">
+    <h3 style="margin-bottom:22px;">Related Works</h3>
+    <div class="related">
+      <div class="related-grid" id="recommendation-grid">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </div>
+
+  <a class="next-chap" id="next-chap-link" href="#">
+    <div class="lf">
+      <div class="eb">Next Publication</div>
+      <div class="ti" id="next-chap-title">Loading...</div>
+    </div>
+    <div class="rt">&rarr;</div>
+  </a>
+
+</section>
+
+<script src="../design_system/js/global.js" defer></script>
+
+
+
+<script type="text/discarded">
+// Inline cinematic engine + global chrome stripped (name-collision with global.js).
+// global.js at ../design_system/js/global.js now handles all of this.
+// ==============================================================================
+// HARDCODED ANIMATION ELEMENTS (Normally in cinematic_engine_v3.js)
+// ==============================================================================
+﻿/**
+ * Cinematic WebGL Engine (Spatial Narrative)
+ * 1. Raw GLSL Deep Space Starfield
+ * 2. Three.js Particle Network with Morphing & ShaderMaterial Filaments
+ */
+
+const initCinematicEngine = () => {
+    // ==========================================
+    // 1. RAW GLSL DEEP SPACE STARFIELD
+    // ==========================================
+    const canvas = document.getElementById('deep-space');
+    if (canvas) {
+        const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+        if (gl) {
+            // Resize handler
+            const resize = () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                gl.viewport(0, 0, canvas.width, canvas.height);
+            };
+            window.addEventListener('resize', resize);
+            resize();
+
+            // Shaders
+            const vsSource = `
+                attribute vec2 position;
+                void main() {
+                    gl_Position = vec4(position, 0.0, 1.0);
+                }
+            `;
+            const fsSource = `
+                precision mediump float;
+                uniform vec2 u_resolution;
+                uniform float u_time;
+
+                // Simple pseudo-random
+                float hash(vec2 p) {
+                    return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453);
+                }
+
+                void main() {
+                    vec2 uv = gl_FragCoord.xy / u_resolution.xy;
+                    uv = uv * 2.0 - 1.0;
+                    uv.x *= u_resolution.x / u_resolution.y;
+
+                    // Slow organic rotation of the entire field
+                    float rotTime = u_time * 0.02;
+                    float s = sin(rotTime), c = cos(rotTime);
+                    mat2 rot = mat2(c, -s, s, c);
+                    uv *= rot;
+
+                    // Starfield layers
+                    vec3 color = vec3(0.01, 0.01, 0.015); // Deep space background
+                    
+                    float t = u_time * 0.05; // Base drift speed
+                    for(float i=0.0; i<3.0; i++) {
+                        // Each layer scales differently and drifts in different directions
+                        vec2 q = uv * (1.0 + i*0.8);
+                        q.y += t * (0.2 + i*0.1); // Continuous upward drift
+                        q.x -= t * (0.1 + i*0.05); // Slight lateral drift
+                        
+                        vec2 id = floor(q * 10.0);
+                        vec2 f = fract(q * 10.0) - 0.5;
+                        
+                        float h = hash(id + i);
+                        if(h > 0.95) { // Star density
+                            float r = length(f);
+                            float glow = 0.01 / (r * r + 0.01);
+                            
+                            // Complex overlapping twinkle (no hard blinks)
+                            float twinkle1 = sin(u_time * 1.5 + h * 100.0);
+                            float twinkle2 = cos(u_time * 0.8 + h * 50.0);
+                            float pulse = 0.6 + 0.4 * (twinkle1 * twinkle2);
+                            
+                            glow *= pulse;
+                            
+                            vec3 starColor = mix(vec3(0.1, 0.3, 0.8), vec3(0.6, 0.8, 1.0), hash(id*2.0));
+                            color += starColor * glow * (0.4 + i*0.2); // Depth dimming
+                        }
+                    }
+
+                    // Ambient vignette
+                    float dist = length(gl_FragCoord.xy / u_resolution.xy * 2.0 - 1.0);
+                    color *= 1.0 - smoothstep(0.5, 2.0, dist);
+
+                    gl_FragColor = vec4(color, 1.0);
+                }
+            `;
+
+            // Compile shader helper
+            const compileShader = (type, source) => {
+                const s = gl.createShader(type);
+                gl.shaderSource(s, source);
+                gl.compileShader(s);
+                return s;
+            };
+
+            const program = gl.createProgram();
+            gl.attachShader(program, compileShader(gl.VERTEX_SHADER, vsSource));
+            gl.attachShader(program, compileShader(gl.FRAGMENT_SHADER, fsSource));
+            gl.linkProgram(program);
+            gl.useProgram(program);
+
+            // Fullscreen quad
+            const buffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+                -1,-1,  1,-1, -1,1,
+                 1,-1,  1,1,  -1,1
+            ]), gl.STATIC_DRAW);
+
+            const posLoc = gl.getAttribLocation(program, "position");
+            gl.enableVertexAttribArray(posLoc);
+            gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
+
+            const resLoc = gl.getUniformLocation(program, "u_resolution");
+            const timeLoc = gl.getUniformLocation(program, "u_time");
+
+            const renderSpace = (time) => {
+                gl.uniform2f(resLoc, canvas.width, canvas.height);
+                gl.uniform1f(timeLoc, time * 0.001);
+                gl.drawArrays(gl.TRIANGLES, 0, 6);
+                requestAnimationFrame(renderSpace);
+            };
+            requestAnimationFrame(renderSpace);
+        }
+    }
+
+    // ==========================================
+    // 2. THREE.JS PARTICLE NETWORK
+    // ==========================================
+    if (typeof THREE === 'undefined') return;
+
+    const container = document.getElementById('glCanvas');
+    if (!container) return;
+
+    // Use WebGL renderer attached to the canvas
+    const renderer = new THREE.WebGLRenderer({ canvas: container, alpha: true, antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    
+    // Resize handler
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    // Parallax tracking camera
+    const camera = new THREE.PerspectiveCamera(45, width / height, 1, 1000);
+    camera.position.z = 100;
+    
+    const resizeThree = () => {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        renderer.setSize(width, height);
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+    };
+    window.addEventListener('resize', resizeThree);
+    resizeThree();
+    
+    const scene = new THREE.Scene();
+    
+    // Physics states (Ultra-sparse, elegant)
+    const particleCount = 35; // Reduced from 80 for extreme sparsity
+    const particles = new THREE.BufferGeometry();
+    const positions = new Float32Array(particleCount * 3);
+    const targetPositions = new Float32Array(particleCount * 3); // For neural morphing
+    const floatingPositions = new Float32Array(particleCount * 3); // True un-lerped positions
+    const velocities = [];
+
+    // Initialize Random Cloud & Target Neural Topology
+    for (let i = 0; i < particleCount; i++) {
+        // Random Cloud
+        const rx = (Math.random() - 0.5) * 160;
+        const ry = (Math.random() - 0.5) * 160;
+        const rz = (Math.random() - 0.5) * 160;
+        
+        positions[i*3] = rx;
+        positions[i*3+1] = ry;
+        positions[i*3+2] = rz;
+        
+        floatingPositions[i*3] = rx;
+        floatingPositions[i*3+1] = ry;
+        floatingPositions[i*3+2] = rz;
+        
+        // Neural Node Targets (Simulated structure)
+        const layer = Math.floor(Math.random() * 4); // 4 layers
+        targetPositions[i*3] = (layer - 1.5) * 40; // X spread by layer
+        targetPositions[i*3+1] = (Math.random() - 0.5) * 80; // Y spread
+        targetPositions[i*3+2] = (Math.random() - 0.5) * 20; // Z spread
+        
+        velocities.push({
+            x: (Math.random() - 0.5) * 0.02, // Extremely slow drift
+            y: (Math.random() - 0.5) * 0.02,
+            z: (Math.random() - 0.5) * 0.02
+        });
+    }
+
+    particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    particles.setAttribute('targetPosition', new THREE.BufferAttribute(targetPositions, 3));
+
+    // Generate circular alpha map for particles
+    const circleCanvas = document.createElement('canvas');
+    circleCanvas.width = 32;
+    circleCanvas.height = 32;
+    const ctx = circleCanvas.getContext('2d');
+    const gradient = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
+    gradient.addColorStop(0, 'rgba(255,255,255,1)');
+    gradient.addColorStop(0.3, 'rgba(255,255,255,0.8)');
+    gradient.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, 32, 32);
+    const circleTexture = new THREE.CanvasTexture(circleCanvas);
+
+    // Particle Material - Deep integration with starfield
+    const pMaterial = new THREE.PointsMaterial({
+        color: 0x4d8cff, // Phthalo Lift glow
+        size: 4.5,
+        map: circleTexture,
+        transparent: true,
+        opacity: 0.35, // Very soft
+        depthWrite: false,
+        blending: THREE.AdditiveBlending
+    });
+    const particleSystem = new THREE.Points(particles, pMaterial);
+    
+    // Add scroll parallax class for native CSS timelines (Phase 1)
+    container.classList.add('particle-network-layer');
+    scene.add(particleSystem);
+
+    // Dynamic Connections (Neon Filaments via ShaderMaterial)
+    // We will use standard LineBasicMaterial with opacity for performance, as real ShaderMaterial lines 
+    // require heavy thick-line geometric expansion to look good, which hits performance. 
+    // But we will use AdditiveBlending to simulate neon.
+    const maxLines = 2500;
+    const linesGeometry = new THREE.BufferGeometry();
+    const linePositions = new Float32Array(maxLines * 6);
+    const lineColors = new Float32Array(maxLines * 6);
+    
+    linesGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
+    linesGeometry.setAttribute('color', new THREE.BufferAttribute(lineColors, 3));
+    
+    const linesMaterial = new THREE.LineBasicMaterial({
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.25, // Extremely faint base opacity
+        blending: THREE.AdditiveBlending,
+        depthWrite: false
+    });
+    
+    const linesMesh = new THREE.LineSegments(linesGeometry, linesMaterial);
+    scene.add(linesMesh);
+
+    // Force visibility to bypass any GSAP opacity issues
+    container.style.opacity = '1';
+    container.style.display = 'block';
+
+    console.log("Cinematic engine initialized, rendering Three.js particles:", particleCount);
+
+    // Interactivity
+    let mouseX = 0, mouseY = 0;
+    window.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX / width) * 2 - 1;
+        mouseY = -(e.clientY / height) * 2 + 1;
+    });
+
+    // Morph State driven by Scroll (simulated globally here, real ScrollTrigger hooks in GSAP later)
+    let morphFactor = 0;
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        ScrollTrigger.create({
+            trigger: "#executive-bio",
+            start: "top 80%",
+            end: "top 20%",
+            scrub: 1,
+            onUpdate: (self) => { morphFactor = self.progress; }
+        });
+    }
+
+    // Refined Palette (Tied to deep-space background)
+    const baseColor = new THREE.Color(0x0f52ba); // Deep Phthalo Lift
+    const highlightColor = new THREE.Color(0x4d8cff); // Light Phthalo Lift
+
+    const animate = () => {
+        requestAnimationFrame(animate);
+
+        // Camera Parallax based on mouse (Spatial awareness)
+        camera.position.x += (mouseX * 15 - camera.position.x) * 0.05;
+        camera.position.y += (mouseY * 15 - camera.position.y) * 0.05;
+        camera.lookAt(scene.position);
+
+        const posAttr = particles.attributes.position;
+        const targetAttr = particles.attributes.targetPosition;
+        let lineIdx = 0;
+
+        // Interactive Mouse World coords
+        const mouseWorldX = mouseX * 80;
+        const mouseWorldY = mouseY * 80;
+
+        for (let i = 0; i < particleCount; i++) {
+            let x = floatingPositions[i*3];
+            let y = floatingPositions[i*3+1];
+            let z = floatingPositions[i*3+2];
+
+            x += velocities[i].x;
+            y += velocities[i].y;
+            z += velocities[i].z;
+
+            // Mouse Repulsion (Extremely gentle nudge, not chaotic)
+            const dxm = x - mouseWorldX;
+            const dym = y - mouseWorldY;
+            const distMouseSq = dxm*dxm + dym*dym;
+            
+            if (distMouseSq < 2000) {
+                const repulseForce = (2000 - distMouseSq) / 2000;
+                const angle = Math.atan2(dym, dxm);
+                velocities[i].x += Math.cos(angle) * repulseForce * 0.002;
+                velocities[i].y += Math.sin(angle) * repulseForce * 0.002;
+            }
+
+            // Restore velocities slowly back to original range
+            const currentSpeedSq = velocities[i].x*velocities[i].x + velocities[i].y*velocities[i].y + velocities[i].z*velocities[i].z;
+            if(currentSpeedSq > 0.001) { // max speed extremely low
+                velocities[i].x *= 0.98;
+                velocities[i].y *= 0.98;
+                velocities[i].z *= 0.98;
+            }
+
+            // Bounds wrapping (wall bounce instead of warp so lines don't streak across screen)
+            if (x > 80 || x < -80) { velocities[i].x *= -1; x = Math.max(-80, Math.min(80, x)); }
+            if (y > 80 || y < -80) { velocities[i].y *= -1; y = Math.max(-80, Math.min(80, y)); }
+            if (z > 80 || z < -80) { velocities[i].z *= -1; z = Math.max(-80, Math.min(80, z)); }
+
+            floatingPositions[i*3] = x;
+            floatingPositions[i*3+1] = y;
+            floatingPositions[i*3+2] = z;
+
+            // Neural Morphing Lerp
+            const tx = targetAttr.getX(i);
+            const ty = targetAttr.getY(i);
+            const tz = targetAttr.getZ(i);
+
+            // Mix floating position with target position based on morphFactor
+            const finalX = x + (tx - x) * morphFactor;
+            const finalY = y + (ty - y) * morphFactor;
+            const finalZ = z + (tz - z) * morphFactor;
+
+            posAttr.setXYZ(i, finalX, finalY, finalZ);
+
+            // Connect nearby nodes
+            for (let j = i + 1; j < particleCount; j++) {
+                const dx = finalX - posAttr.getX(j);
+                const dy = finalY - posAttr.getY(j);
+                const dz = finalZ - posAttr.getZ(j);
+                const distSq = dx*dx + dy*dy + dz*dz;
+
+                const connectDistance = morphFactor > 0.5 ? 4000 : 3500; // Sparse, elegant constellation
+
+                if (distSq < connectDistance) {
+                    if (lineIdx < maxLines) {
+                        linePositions[lineIdx*6] = finalX; linePositions[lineIdx*6+1] = finalY; linePositions[lineIdx*6+2] = finalZ;
+                        linePositions[lineIdx*6+3] = posAttr.getX(j); linePositions[lineIdx*6+4] = posAttr.getY(j); linePositions[lineIdx*6+5] = posAttr.getZ(j);
+
+                        const alpha = Math.pow(1.0 - (distSq / connectDistance), 2.0); // Non-linear falloff for elegant depth
+                        
+                        // Increase brightness if the connection is near the mouse
+                        const midX = (finalX + posAttr.getX(j)) * 0.5;
+                        const midY = (finalY + posAttr.getY(j)) * 0.5;
+                        const dMouseSq = (midX - mouseWorldX)*(midX - mouseWorldX) + (midY - mouseWorldY)*(midY - mouseWorldY);
+                        
+                        let mouseGlow = 0;
+                        if (dMouseSq < 3000) {
+                            mouseGlow = Math.pow(1.0 - (dMouseSq / 3000), 2.0) * 0.8; // Gentle highlight, not blinding
+                        }
+
+                        const intensity = (alpha * 0.6) + mouseGlow; // Faint base, soft highlight
+                        const c = baseColor.clone().lerp(highlightColor, Math.min(1.0, alpha + mouseGlow));
+
+                        lineColors[lineIdx*6] = c.r * intensity; lineColors[lineIdx*6+1] = c.g * intensity; lineColors[lineIdx*6+2] = c.b * intensity;
+                        lineColors[lineIdx*6+3] = c.r * intensity; lineColors[lineIdx*6+4] = c.g * intensity; lineColors[lineIdx*6+5] = c.b * intensity;
+
+                        lineIdx++;
+                    }
+                }
+            }
+
+            // Connect to mouse pointer - reduced density, highly elegant
+            if (distMouseSq < 1500 && lineIdx < maxLines) {
+                linePositions[lineIdx*6] = finalX; linePositions[lineIdx*6+1] = finalY; linePositions[lineIdx*6+2] = finalZ;
+                linePositions[lineIdx*6+3] = mouseWorldX; linePositions[lineIdx*6+4] = mouseWorldY; linePositions[lineIdx*6+5] = 0;
+
+                const alpha = 1.0 - (distMouseSq / 1500);
+                const intensity = alpha * 0.7; // Very soft glow
+                lineColors[lineIdx*6] = highlightColor.r * intensity; lineColors[lineIdx*6+1] = highlightColor.g * intensity; lineColors[lineIdx*6+2] = highlightColor.b * intensity;
+                lineColors[lineIdx*6+3] = highlightColor.r * intensity; lineColors[lineIdx*6+4] = highlightColor.g * intensity; lineColors[lineIdx*6+5] = highlightColor.b * intensity;
+                
+                lineIdx++;
+            }
+        }
+
+        posAttr.needsUpdate = true;
+        linesGeometry.setDrawRange(0, lineIdx * 2);
+        linesGeometry.attributes.position.needsUpdate = true;
+        linesGeometry.attributes.color.needsUpdate = true;
+
+        // Overall rotation for ambient feel
+        particleSystem.rotation.y += 0.001;
+        linesMesh.rotation.y += 0.001;
+
+        renderer.render(scene, camera);
+    };
+
+    animate();
+};
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCinematicEngine);
+} else {
+    initCinematicEngine();
+}
+
+
+// ==============================================================================
+// GLOBAL CHROME LOGIC (Normally in global_chrome.js)
+// ==============================================================================
+/**
+ * Global Chrome Injector
+ * Dynamically injects the global navigation, footer, and search modal.
+ */
+
+(function initGlobalChrome_DISABLED_replaced_by_external_global_js() {
+    return;  // Inline global chrome stripped; handled by ../design_system/js/global.js
+    // 0. Scroll restoration is handled by Lenis + GSAP preloader sequence.
+    //    Do NOT force scrollTo(0,0) here -- it fights with the cinematic
+    //    loading timeline and causes visible page jumps.
+
+    // 1. Determine relative depth to root (portfolio_deploy/)
+    const pathDepth = window.location.pathname.split('/').length - 2; // Rough heuristic
+    // A better heuristic is to check if we are in a subdirectory by looking for index.html or known root files.
+    // However, if we assume any page in a subdirectory is exactly 1 level deep (e.g. ADOS/clinical-validation.html),
+    // and root pages are 0 levels deep.
+    // Let's use a simpler heuristic based on document URI relative to 'portfolio_deploy'
+    
+    // Safer relative path detection:
+    const isRoot = window.location.pathname.endsWith('index.html') && !window.location.pathname.includes('/') || 
+                   window.location.pathname.split('/').pop() === 'index.html' && window.location.pathname.split('/').slice(-2)[0] !== 'ADOS' && window.location.pathname.split('/').slice(-2)[0] !== 'AI_Equity_Framework' ||
+                   !window.location.pathname.includes('/') ||
+                   window.location.pathname.endsWith('projects-repository.html');
+                   
+    // Let's use a reliable way: count slashes after the domain. But locally file:/// paths are tricky.
+    // Alternative: We can just use a relative script tag src to determine path prefix.
+    const scripts = document.getElementsByTagName('script');
+    let pathPrefix = './';
+    for (let i = 0; i < scripts.length; i++) {
+        const src = scripts[i].getAttribute('src');
+        if (src && src.includes('global_chrome.js')) {
+            pathPrefix = src.replace('design_system/js/global_chrome.js', '');
+            break;
+        }
+    }
+    
+    // Fallback if empty
+    if (!pathPrefix) pathPrefix = './';
+
+    // 2. Inject CSS
+    const cssId = 'global-chrome-css';
+    if (!document.getElementById(cssId)) {
+        const head  = document.getElementsByTagName('head')[0];
+        const link  = document.createElement('link');
+        link.id   = cssId;
+        link.rel  = 'stylesheet';
+        link.type = 'text/css';
+        link.href = pathPrefix + 'design_system/css/global_chrome.css';
+        link.media = 'all';
+        head.appendChild(link);
+    }
+
+    // 2.5 Inject Film Grain Overlay
+    if (!document.getElementById('grain')) {
+        const grain = document.createElement('div');
+        grain.id = 'grain';
+        grain.setAttribute('aria-hidden', 'true');
+        document.body.insertBefore(grain, document.body.firstChild);
+    }
+
+    // 2.8 Custom Cursor logic removed per user request
+
+    // 3. Construct and Inject Top Navigation
+    if (!document.getElementById('topnav')) {
+        const header = document.createElement('header');
+        header.id = 'topnav';
+        
+        // Wait, some pages might have a body data-mode="paper" which needs .is-paper class. 
+        // For simplicity, we just inject the dark header, and let existing scroll observer (if any) handle .is-paper
+        
+        header.innerHTML = `
+            <a href="${pathPrefix}index.html" class="brand">Dr. Heather Leffew</a>
+            <div class="nav-links">
+                <button id="trigger-search">Search</button>
+                <a href="${pathPrefix}about.html">About</a>
+                <a href="${pathPrefix}projects-repository.html">Research Library</a>
+                <a href="${pathPrefix}resume.pdf" target="_blank" class="nav-btn">Resume -></a>
+            </div>
+        `;
+        document.body.insertBefore(header, document.body.firstChild);
+    }
+
+    // 4. Construct and Inject Footer
+    if (!document.querySelector('footer.site-foot')) {
+        const footer = document.createElement('footer');
+        footer.className = 'site-foot';
+        footer.innerHTML = `
+            <div class="lf">Dr. Heather Leffew &copy; 2026</div>
+            <div style="display:flex;gap:24px;" class="rt">
+                <a href="${pathPrefix}projects-repository.html">Research Library</a>
+                <a href="https://linkedin.com/in/heathertleffew" target="_blank">LinkedIn</a>
+            </div>
+        `;
+        document.body.appendChild(footer);
+    }
+
+    // 5. Construct and Inject Search Modal
+    if (!document.getElementById('search-overlay')) {
+        const searchOverlay = document.createElement('div');
+        searchOverlay.id = 'search-overlay';
+        searchOverlay.innerHTML = `
+            <button id="search-close">Close [X]</button>
+            <div id="search-input-container">
+                <input type="text" id="search-input" placeholder="Search architecture, case studies, frameworks..." autocomplete="off">
+            </div>
+            <div id="search-results"></div>
+        `;
+        document.body.appendChild(searchOverlay);
+
+        // Search Logic
+        const searchTrigger = document.getElementById('trigger-search');
+        const searchClose = document.getElementById('search-close');
+        const searchInput = document.getElementById('search-input');
+        const searchResults = document.getElementById('search-results');
+        
+        let projectsData = [];
+        let isDataLoaded = false;
+
+        const openSearch = async () => {
+            searchOverlay.classList.add('is-active');
+            searchInput.focus();
+            
+            // Lazy load the projects index
+            if (!isDataLoaded) {
+                try {
+                    const res = await fetch(pathPrefix + 'projects_index.json');
+                    if (res.ok) {
+                        projectsData = await res.json();
+                        isDataLoaded = true;
+                    }
+                } catch(e) {
+                    console.error("Failed to load search index", e);
+                }
+            }
+        };
+
+        const closeSearch = () => {
+            searchOverlay.classList.remove('is-active');
+            searchInput.value = '';
+            searchResults.innerHTML = '';
+        };
+
+        const renderResults = (results) => {
+            searchResults.innerHTML = '';
+            if (results.length === 0 && searchInput.value.trim() !== '') {
+                searchResults.innerHTML = `<div style="color:var(--tungsten); font-family:var(--mono); text-align:center; margin-top:40px;">No results found for "${searchInput.value}"</div>`;
+                return;
+            }
+            
+            results.forEach(p => {
+                const a = document.createElement('a');
+                a.href = pathPrefix + p.url;
+                a.className = 'search-result-item';
+                a.innerHTML = `
+                    <div class="search-result-cat">${p.cat || 'Research'}</div>
+                    <div class="search-result-title">${p.title}</div>
+                    <div class="search-result-desc">${p.desc.substring(0, 140)}...</div>
+                `;
+                searchResults.appendChild(a);
+            });
+        };
+
+        const handleSearch = (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            if (query === '') {
+                searchResults.innerHTML = '';
+                return;
+            }
+            
+            const results = projectsData.filter(p => {
+                const titleMatch = (p.title || '').toLowerCase().includes(query);
+                const descMatch = (p.desc || '').toLowerCase().includes(query);
+                const catMatch = (p.cat || '').toLowerCase().includes(query);
+                const tagsMatch = p.tags ? p.tags.some(t => t.toLowerCase().includes(query)) : false;
+                return titleMatch || descMatch || catMatch || tagsMatch;
+            });
+            
+            renderResults(results);
+        };
+
+        if (searchTrigger) searchTrigger.addEventListener('click', openSearch);
+        searchClose.addEventListener('click', closeSearch);
+        searchInput.addEventListener('input', handleSearch);
+        
+        // Close on ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && searchOverlay.classList.contains('is-active')) {
+                closeSearch();
+            }
+        });
+    }
+
+    // 6. Populate Related Works and Next Publication
+    const recGrid = document.getElementById('recommendation-grid');
+    const nextChapLink = document.getElementById('next-chap-link');
+    const nextChapTitle = document.getElementById('next-chap-title');
+
+    if (recGrid || nextChapLink) {
+        fetch(pathPrefix + 'projects_index.json')
+            .then(res => res.json())
+            .then(data => {
+                // Determine current project id from URL
+                const currentPath = window.location.pathname;
+                const otherProjects = data.filter(p => !currentPath.includes(p.url.split('/').pop()));
+                
+                if (recGrid) {
+                    recGrid.innerHTML = '';
+                    // Pick 3 random or top projects
+                    const shuffled = otherProjects.sort(() => 0.5 - Math.random());
+                    const selected = shuffled.slice(0, 3);
+                    
+                    selected.forEach(p => {
+                        recGrid.innerHTML += `
+                            <a class="r-card" href="${pathPrefix}${p.url}">
+                                <div class="eb">${p.cat || 'Research'}</div>
+                                <div class="ti">${p.title}</div>
+                                <div class="ds">${p.desc.substring(0, 80)}...</div>
+                            </a>
+                        `;
+                    });
+                }
+
+                if (nextChapLink && nextChapTitle) {
+                    // Just pick the first from the other projects (or could be next in index)
+                    const nextP = otherProjects[0] || data[0];
+                    if (nextP) {
+                        nextChapLink.href = pathPrefix + nextP.url;
+                        nextChapTitle.innerText = nextP.title;
+                        const eb = nextChapLink.querySelector('.eb');
+                        if (eb) eb.innerText = 'Next Publication / ' + (nextP.cat || 'Research');
+                    }
+                }
+            })
+            .catch(err => console.error("Failed to load related works", err));
+    }
+
+    // 7. Custom Magnetic Cursor removed per user request
+
+    // 8. 3D Tilt Parallax for Cards Globally
+    if (window.innerWidth > 768) {
+        const attachTilt = () => {
+            document.querySelectorAll('.p-card, .r-card, .edu-card, .bio-card').forEach(card => {
+                if(card.dataset.tiltBound) return;
+                card.dataset.tiltBound = "1";
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateX = ((y - centerY) / centerY) * -3; 
+                    const rotateY = ((x - centerX) / centerX) * 3;
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.01, 1.01, 1.01)`;
+                    card.style.transition = 'transform 0.1s ease-out';
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+                    card.style.transition = 'transform 0.6s ease-out';
+                });
+            });
+        };
+        attachTilt();
+        const tiltObserver = new MutationObserver(attachTilt);
+        tiltObserver.observe(document.body, { childList: true, subtree: true });
+    }
+
+    // 9. Generative UI Audio Feedback
+    let audioCtx;
+    const playClick = () => {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(200, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(80, audioCtx.currentTime + 0.08);
+        gain.gain.setValueAtTime(0.02, audioCtx.currentTime); // subtle
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.08);
+    };
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('button, a, .p-card, .bio-expand-btn, .r-card, .db-row')) playClick();
+    });
+
+    // 10. View Transitions API Navigation Intercept
+    // Dynamically assign 'portal-card' view-transition-name to the clicked card before navigating
+    document.addEventListener('click', (e) => {
+        const card = e.target.closest('.p-card, .r-card, .db-row');
+        if (!card) return;
+        
+        // If it's a link, we assign the transition name to it right before the browser navigates
+        const href = card.getAttribute('href') || (card.tagName === 'A' ? card.href : null);
+        if (href && !href.startsWith('#') && !href.startsWith('mailto:')) {
+            card.classList.add('is-transitioning-portal');
+            // The browser natively handles the cross-document transition via the CSS @view-transition rule
+        }
+    });
+
+})();
+
+</script>
+</body>
+
+</html>
+
