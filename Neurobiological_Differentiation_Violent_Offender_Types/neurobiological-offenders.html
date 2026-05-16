@@ -1,677 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Neurobiological Differentiation of Violent Offender Types | Dr. Heather Leffew</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../design_system/css/global.css">
-<style>
-/* ============================================================
-   TOKENS, dual mode, no radii, sharp editorial
-   ============================================================ */
-:root {
-  /* Mineral neutrals (dark register) */
-  --obsidian:#030303;
-  --charcoal:#161616;
-  --graphite:#222222;
-  --brushed:#333333;
-  --tungsten:#A1A1A6;
-  --platinum:#F5F5F7;
-  --flare:#FFFFFF;
-
-  /* Paper neutrals, perfect inversion of the dark register.
-     Paper base = platinum (#F5F5F7). Ink base = obsidian (#030303).
-     Tints are the literal channel-flips of charcoal/graphite/tungsten. */
-  --paper:#F5F5F7;          /* base reading surface  <- inverse of obsidian */
-  --paper-2:#E9E9E9;        /* raised surface        <- inverse of charcoal */
-  --paper-3:#DDDDDD;        /* hairline              <- inverse of graphite */
-  --ink:#030303;            /* primary ink           <- obsidian */
-  --ink-2:#222222;           /* secondary ink         <- graphite */
-  --ink-3:#5E5E5A;          /* meta ink              <- inverse of tungsten */
-
-  /* Brand accents */
-  --sapphire-deep:#0F52BA;
-  --sapphire:#4D8CFF;
-  --ink-blue:#1A3A6B;       /* sapphire's light-mode counterpart */
-  /* Case-study figure palette, "Oil paint quartet".
-     Real pigment names. Glazed flavor (no lift), except Hansa
-     which is always lifted. Monochrome / sequential scales
-     restrict to Phthalo Blue only. */
-  --phthalo:#0F3A6B;        /* Phthalo Blue, primary categorical */
-  --phthalo-lift:#3866A0;   /* Phthalo Blue, lifted, monochrome scale only */
-  --alizarin:#7A1626;       /* Alizarin Crimson */
-  --hookers:#1A4A38;        /* Hooker's Green */
-  --hansa:#DBA844;          /* Hansa Yellow Light, always lifted */
-  --dioxazine:#3D1F4A;      /* Dioxazine Purple, reserve fifth */
-
-  /* Type */
-  --display:'Playfair Display','Times New Roman',serif;
-  --body:'Lora',Georgia,serif;
-  --mono:'JetBrains Mono','SF Mono',Menlo,monospace;
-
-  /* Motion */
-  --ease-out:cubic-bezier(0.16,1,0.3,1);
-  --ease-std:cubic-bezier(0.4,0,0.2,1);
-
-  /* Reading column */
-  --col:680px;
-  --col-wide:1080px;
-}
-
-/* No radii. Anywhere. */
-*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; border-radius:0 !important; }
-
-::selection { background:rgba(77,140,255,0.35); color:#fff; }
-
-html { scroll-behavior:smooth; }
-body {
-  font-family:var(--body);
-  background:var(--obsidian);
-  color:var(--platinum);
-  font-size:18px;
-  line-height:1.78;
-  overflow-x:hidden;
-  -webkit-font-smoothing:antialiased;
-}
-
-/* Fixed atmosphere, switches with mode */
-.atmosphere {
-  position:fixed; inset:0; z-index:-30; pointer-events:none;
-  transition:background 1.2s var(--ease-std);
-}
-
-/* ============================================================
-   MODE BANDS
-   The page alternates between dark and light bands.
-   Each <section.band> declares its own mode.
-   ============================================================ */
-.band { position:relative; padding:140px 0; transition:background 0.9s var(--ease-std), color 0.9s var(--ease-std); }
-.band--dark  { background:var(--obsidian); color:var(--platinum); }
-.band--paper { background:var(--platinum); color:var(--obsidian); }
-.band--ink   { background:var(--obsidian); color:var(--platinum); }   /* unified with --dark; kept as a class for layout/quote slabs */
-
-.band--dark + .band--paper, .band--paper + .band--dark, .band--ink + .band--paper, .band--paper + .band--ink {
-  /* hairline scroll-edge between mode flips */
-  border-top:1px solid rgba(0,0,0,0.0);
-}
-
-.col      { max-width:var(--col);      margin:0 auto; padding:0 32px; }
-.col-wide { max-width:var(--col-wide); margin:0 auto; padding:0 48px; }
-
-/* ============================================================
-   GLOBAL CHROME
-   Top progress hairline + side chapter spine.
-   Both glass, that's where glass earns its keep.
-   ============================================================ */
-#progress {
-  position:fixed; top:0; left:0; right:0; height:2px;
-  z-index:200; pointer-events:none;
-  background:transparent;
-}
-#progress::after {
-  content:''; position:absolute; left:0; top:0; bottom:0;
-  width:var(--p,0%);
-  background:linear-gradient(90deg, var(--sapphire) 0%, var(--sapphire-deep) 100%);
-  transition:width 0.05s linear;
-}
-
-#topnav {
-  position:fixed; top:0; left:0; right:0; height:60px;
-  display:flex; align-items:center; justify-content:space-between;
-  padding:0 32px; z-index:150;
-  font-family:var(--mono); font-size:11px; letter-spacing:0.18em; text-transform:uppercase;
-  color:var(--platinum);
-  background:rgba(3,3,3,0.55);
-  backdrop-filter:blur(14px) saturate(140%);
-  -webkit-backdrop-filter:blur(14px) saturate(140%);
-  border-bottom:1px solid rgba(255,255,255,0.06);
-  transition:background 0.6s var(--ease-std), color 0.6s var(--ease-std), border-color 0.6s var(--ease-std);
-}
-#topnav.is-paper {
-  background:rgba(245,245,247,0.82);
-  border-bottom-color:rgba(0,0,0,0.08);
-  color:var(--ink);
-}
-#topnav .brand { font-family:var(--display); font-size:15px; font-weight:600; letter-spacing:0.04em; text-transform:none; color:inherit; text-decoration:none; }
-#topnav .brand:visited { color:inherit; }
-#topnav .brand:hover { opacity:0.85; }
-#topnav .crumbs { display:flex; gap:18px; align-items:center; }
-#topnav .crumbs a { color:inherit; text-decoration:none; opacity:0.7; transition:opacity .25s; }
-#topnav .crumbs a:hover { opacity:1; }
-#topnav .sep { opacity:0.35; }
-
-/* Chapter spine, fixed left rail */
-#spine {
-  position:fixed; left:18px; top:50%; transform:translateY(-50%);
-  z-index:130; pointer-events:auto;
-  display:flex; flex-direction:column; gap:14px;
-  padding:18px 14px;
-  background:rgba(3,3,3,0.45);
-  color:var(--platinum);
-  backdrop-filter:blur(14px) saturate(140%);
-  -webkit-backdrop-filter:blur(14px) saturate(140%);
-  border:1px solid rgba(255,255,255,0.08);
-  transition:background 0.6s var(--ease-std), border-color 0.6s var(--ease-std), color 0.6s var(--ease-std);
-}
-#spine.is-paper { background:rgba(245,245,247,0.78); border-color:rgba(0,0,0,0.10); color:var(--ink); }
-#spine .row { display:flex; align-items:center; gap:10px; cursor:pointer; }
-#spine .tick {
-  width:16px; height:1px; background:currentColor; opacity:0.35;
-  transition:width .35s var(--ease-out), opacity .35s var(--ease-out);
-}
-#spine .row.is-active .tick { width:28px; opacity:1; background:var(--sapphire); }
-#spine .row.is-paper-active .tick { background:var(--ink-blue); }
-#spine .label { font-family:var(--mono); font-size:9.5px; letter-spacing:0.18em; text-transform:uppercase; opacity:0.55; transition:opacity .35s; white-space:nowrap; }
-#spine .row:hover .label, #spine .row.is-active .label { opacity:1; }
-#spine .num { font-family:var(--mono); font-size:9px; opacity:0.4; width:14px; }
-@media (max-width:1180px) { #spine { display:none; } }
-
-/* Reading-status pebble bottom-right */
-#status {
-  position:fixed; right:24px; bottom:24px; z-index:130;
-  font-family:var(--mono); font-size:10px; letter-spacing:0.16em; text-transform:uppercase;
-  color:var(--platinum);
-  padding:10px 14px;
-  background:rgba(3,3,3,0.45);
-  backdrop-filter:blur(14px) saturate(140%);
-  -webkit-backdrop-filter:blur(14px) saturate(140%);
-  border:1px solid rgba(255,255,255,0.08);
-  display:flex; gap:14px; align-items:center;
-  transition:background 0.6s var(--ease-std), border-color 0.6s var(--ease-std), color 0.6s var(--ease-std);
-}
-#status.is-paper { background:rgba(245,245,247,0.78); border-color:rgba(0,0,0,0.10); color:var(--ink); }
-#status .dot { width:5px; height:5px; background:var(--sapphire); display:inline-block; }
-#status .pct { color:var(--sapphire); font-weight:500; }
-#status.is-paper .dot { background:var(--ink-blue); }
-#status.is-paper .pct { color:var(--ink-blue); }
-
-/* ============================================================
-   FRONT MATTER (dark hero)
-   ============================================================ */
-.front {
-  min-height:100vh;
-  padding:160px 0 100px;
-  display:flex; flex-direction:column; justify-content:center;
-  position:relative; overflow:hidden;
-}
-.front .col-wide { position:relative; z-index:2; }
-.front .meta-row { font-family:var(--mono); font-size:11px; letter-spacing:0.30em; text-transform:uppercase; color:var(--tungsten); margin-bottom:40px; display:flex; gap:18px; align-items:center; flex-wrap:wrap; }
-.front .meta-row .sep { opacity:0.4; }
-.front h1 {
-  font-family:var(--display); font-weight:600;
-  font-size:clamp(44px, 5.0vw, 72px);
-  letter-spacing:-0.018em; line-height:1.06;
-  color:var(--flare); margin-bottom:36px;
-  max-width:18ch;
-}
-.front .abstract {
-  font-family:var(--body); font-style:italic;
-  font-size:22px; line-height:1.62; color:var(--platinum);
-  max-width:60ch; margin-bottom:48px;
-}
-.front .byline { display:flex; gap:36px; flex-wrap:wrap;
-  font-family:var(--mono); font-size:10.5px; letter-spacing:0.20em; text-transform:uppercase; color:var(--tungsten); }
-.front .byline strong { color:var(--platinum); font-weight:500; display:block; margin-top:6px; letter-spacing:0.08em; font-family:var(--body); font-style:italic; font-size:14px; text-transform:none; }
-
-/* Citation block in front matter, looks like a journal head */
-.front .citation {
-  font-family:var(--mono); font-size:10.5px; letter-spacing:0.10em; color:var(--tungsten);
-  border-top:1px solid rgba(255,255,255,0.18);
-  padding-top:24px;
-  line-height:1.85;
-}
-.front .citation b { color:var(--platinum); font-weight:500; }
-
-/* Ambient signal, a quiet calibrated arc, sits in the hero background */
-.ambient {
-  position:absolute; right:-12%; top:50%; transform:translateY(-50%);
-  width:64%; max-width:820px; aspect-ratio:1; pointer-events:none;
-  z-index:1;
-  opacity:0; animation:ambient-fade 1.6s 0.6s var(--ease-out) forwards;
-}
-@keyframes ambient-fade { to { opacity:0.32; } }
-.ambient svg { width:100%; height:100%; display:block; }
-/* On wider viewports the abstract + byline sit in a left column so the ambient
-   has visual room on the right; on narrower it stacks. */
-.front .grid { display:grid; grid-template-columns:minmax(0,1fr); gap:40px; }
-@media (min-width:980px) {
-  .front .grid { grid-template-columns:minmax(0,1fr) 320px; gap:80px; align-items:end; }
-}
-
-/* ============================================================
-   READING SECTIONS, PAPER MODE
-   ============================================================ */
-.band--paper h2 {
-  font-family:var(--display); font-weight:600; color:var(--ink);
-  font-size:clamp(34px, 3.6vw, 48px); letter-spacing:-0.012em; line-height:1.12;
-  margin:0 auto 28px; max-width:var(--col); padding:0 32px;
-}
-.band--paper .eyebrow {
-  font-family:var(--mono); font-size:10.5px; letter-spacing:0.30em; text-transform:uppercase;
-  color:var(--ink-blue); margin:0 auto 18px; max-width:var(--col); padding:0 32px;
-}
-.band--paper .lede {
-  font-family:var(--body); font-style:italic; font-size:21px; line-height:1.6; color:var(--ink-2);
-  margin:0 auto 36px; max-width:var(--col); padding:0 32px;
-}
-.band--paper p {
-  margin:0 auto 22px; max-width:var(--col); padding:0 32px;
-  font-size:18px; line-height:1.78; color:var(--ink);
-}
-
-/* Drop cap on first paragraph after h2.is-chapter */
-.has-dropcap::first-letter {
-  font-family:var(--display); font-weight:600;
-  font-size:5.6em; line-height:0.86;
-  float:left; margin:0.06em 0.10em -0.08em 0;
-  color:var(--ink-blue);
-}
-
-/* Dark mode prose */
-.band--dark p, .band--ink p {
-  margin:0 auto 22px; max-width:var(--col); padding:0 32px;
-  font-size:18px; line-height:1.78; color:var(--platinum);
-}
-.band--dark h2, .band--ink h2 {
-  font-family:var(--display); font-weight:600; color:var(--flare);
-  font-size:clamp(34px, 3.6vw, 48px); letter-spacing:-0.012em; line-height:1.12;
-  margin:0 auto 28px; max-width:var(--col); padding:0 32px;
-}
-.band--dark .eyebrow, .band--ink .eyebrow {
-  font-family:var(--mono); font-size:10.5px; letter-spacing:0.30em; text-transform:uppercase;
-  color:var(--sapphire); margin:0 auto 18px; max-width:var(--col); padding:0 32px;
-}
-.band--dark .lede, .band--ink .lede {
-  font-family:var(--body); font-style:italic; font-size:21px; line-height:1.6; color:var(--tungsten);
-  margin:0 auto 36px; max-width:var(--col); padding:0 32px;
-}
-
-/* ============================================================
-   GLOSSARY TERMS, dotted-underline + glass tooltip
-   <span class="gloss" data-def="...">term</span>
-   ============================================================ */
-.gloss {
-  border-bottom:1px dotted currentColor;
-  cursor:help;
-  position:relative;
-}
-.gloss:hover { color:var(--ink-blue); }
-.band--dark .gloss:hover, .band--ink .gloss:hover { color:var(--sapphire); }
-.gloss .gloss-tip {
-  position:absolute; left:50%; transform:translate(-50%, -8px);
-  bottom:100%; min-width:280px; max-width:340px;
-  font-family:var(--body); font-style:italic; font-size:13.5px; line-height:1.55;
-  font-weight:400;
-  color:var(--ink); padding:14px 16px;
-  background:rgba(255,255,255,0.92);
-  backdrop-filter:blur(16px) saturate(140%);
-  -webkit-backdrop-filter:blur(16px) saturate(140%);
-  border:1px solid rgba(0,0,0,0.10);
-  box-shadow:0 14px 40px rgba(0,0,0,0.18);
-  opacity:0; pointer-events:none;
-  transition:opacity .25s var(--ease-std), transform .25s var(--ease-std);
-  z-index:120;
-  text-align:left;
-}
-.band--dark .gloss .gloss-tip, .band--ink .gloss .gloss-tip {
-  background:rgba(20,20,20,0.92); color:var(--platinum);
-  border-color:rgba(255,255,255,0.10);
-}
-.gloss:hover .gloss-tip { opacity:1; transform:translate(-50%, -14px); }
-
-/* ============================================================
-   INTERNAL LINK PREVIEW CARDS
-   <a class="xlink" data-preview-id="case-03"...>
-   ============================================================ */
-.xlink {
-  color:var(--ink-blue); text-decoration:none;
-  border-bottom:1px solid currentColor;
-  position:relative;
-  transition:color .25s;
-}
-.band--dark .xlink, .band--ink .xlink { color:var(--sapphire); }
-.xlink:hover { color:var(--hansa); }
-.band--dark .xlink:hover, .band--ink .xlink:hover { color:var(--flare); }
-
-#hover-preview {
-  position:fixed; z-index:140; pointer-events:none;
-  width:340px; padding:22px 22px 20px;
-  background:rgba(20,20,20,0.92);
-  color:var(--platinum);
-  backdrop-filter:blur(18px) saturate(140%);
-  -webkit-backdrop-filter:blur(18px) saturate(140%);
-  border:1px solid rgba(255,255,255,0.10);
-  box-shadow:0 18px 60px rgba(0,0,0,0.45);
-  opacity:0; transform:translateY(8px);
-  transition:opacity .25s var(--ease-std), transform .25s var(--ease-std);
-}
-#hover-preview.is-paper {
-  background:rgba(245,243,238,0.94); color:var(--ink);
-  border-color:rgba(0,0,0,0.10); box-shadow:0 18px 60px rgba(0,0,0,0.18);
-}
-#hover-preview.is-on { opacity:1; transform:translateY(0); }
-#hover-preview .h-eb { font-family:var(--mono); font-size:9.5px; letter-spacing:0.30em; text-transform:uppercase; color:var(--sapphire); margin-bottom:10px; }
-#hover-preview.is-paper .h-eb { color:var(--ink-blue); }
-#hover-preview .h-t  { font-family:var(--display); font-size:20px; font-weight:600; line-height:1.22; margin-bottom:10px; }
-#hover-preview .h-d  { font-family:var(--body); font-size:13.5px; line-height:1.6; opacity:0.85; }
-#hover-preview .h-ft { font-family:var(--mono); font-size:9.5px; letter-spacing:0.20em; text-transform:uppercase; opacity:0.6; margin-top:14px; padding-top:12px; border-top:1px solid currentColor; }
-
-/* ============================================================
-   PULL QUOTES, dark INK band, full bleed
-   ============================================================ */
-.pullquote {
-  font-family:var(--display); font-style:italic; font-weight:500;
-  font-size:clamp(28px, 3.6vw, 48px); line-height:1.22;
-  color:var(--flare);
-  max-width:18ch; margin:0 auto;
-  letter-spacing:-0.005em;
-  text-align:center;
-}
-.pullquote::before { content:'\201C'; display:block; font-style:normal; font-size:1.6em; line-height:0; color:var(--sapphire); margin-bottom:14px; }
-.pullquote .qa {
-  display:block; margin-top:36px;
-  font-family:var(--mono); font-size:11px; font-style:normal; font-weight:400;
-  letter-spacing:0.30em; text-transform:uppercase; color:var(--tungsten);
-}
-
-/* ============================================================
-   FIGURES, full-bleed, paper-mode chart card
-   ============================================================ */
-.figure {
-  margin:48px auto;
-  max-width:var(--col-wide); padding:0 32px;
-}
-.figure .frame {
-  position:relative;
-  background:#fff;
-  border:1px solid var(--paper-3);
-  padding:32px 36px 28px;
-  transition:filter .35s var(--ease-std);
-}
-.band--dark .figure .frame, .band--ink .figure .frame {
-  background:#0A0A0A; border-color:var(--graphite);
-}
-.figure .frame:hover { filter:brightness(1.02); }
-.figure .cap {
-  font-family:var(--mono); font-size:11px; letter-spacing:0.18em; text-transform:uppercase;
-  color:var(--ink-3); margin-top:14px; max-width:60ch;
-}
-.band--dark .figure .cap, .band--ink .figure .cap { color:var(--tungsten); }
-.figure .cap .num { color:var(--ink-blue); margin-right:10px; }
-.band--dark .figure .cap .num, .band--ink .figure .cap .num { color:var(--sapphire); }
-
-/* ============================================================
-   STATS STRIP, sharp, no boxes
-   ============================================================ */
-.stats {
-  max-width:var(--col-wide); margin:48px auto; padding:0 32px;
-  display:grid; grid-template-columns:repeat(4, 1fr); gap:0;
-  border-top:1px solid var(--paper-3); border-bottom:1px solid var(--paper-3);
-}
-.band--dark .stats, .band--ink .stats { border-color:var(--graphite); }
-.stats .s {
-  padding:32px 24px; border-right:1px solid var(--paper-3);
-}
-.stats .s:last-child { border-right:0; }
-.band--dark .stats .s, .band--ink .stats .s { border-right-color:var(--graphite); }
-.stats .v { font-family:var(--mono); font-weight:500; font-size:38px; color:var(--ink); line-height:1; margin-bottom:10px; }
-.band--dark .stats .v, .band--ink .stats .v { color:var(--flare); }
-.stats .l { font-family:var(--mono); font-size:10px; letter-spacing:0.22em; text-transform:uppercase; color:var(--ink-3); }
-.band--dark .stats .l, .band--ink .stats .l { color:var(--tungsten); }
-
-@media (max-width:880px) { .stats { grid-template-columns:repeat(2,1fr); } .stats .s:nth-child(2) { border-right:0; } }
-
-/* ============================================================
-   TAGS, flat rectangular, no pills
-   ============================================================ */
-.tagrow { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
-.tag {
-  font-family:var(--mono); font-size:10px; letter-spacing:0.20em; text-transform:uppercase;
-  color:var(--ink-3); border:1px solid var(--paper-3);
-  padding:6px 12px; background:transparent;
-}
-.band--dark .tag, .band--ink .tag { color:var(--tungsten); border-color:var(--graphite); }
-.tag.is-on { color:var(--ink-blue); border-color:var(--ink-blue); }
-.band--dark .tag.is-on, .band--ink .tag.is-on { color:var(--sapphire); border-color:var(--sapphire); }
-
-/* Bracket-style label (for "Case 07", category eyebrows) */
-.bracket {
-  font-family:var(--mono); font-size:10px; letter-spacing:0.30em; text-transform:uppercase; color:inherit;
-}
-.bracket::before, .bracket::after { content:''; display:inline-block; width:14px; height:1px; background:currentColor; vertical-align:middle; opacity:0.5; }
-.bracket::before { margin-right:10px; }
-.bracket::after  { margin-left:10px; }
-
-/* ============================================================
-   METHODOLOGY CALLOUT, sharp aside on paper
-   ============================================================ */
-.method {
-  max-width:var(--col); margin:36px auto; padding:0 32px;
-}
-.method .inner {
-  border-left:2px solid var(--ink-blue);
-  padding:20px 26px;
-  background:var(--paper-2);
-  font-family:var(--body); font-size:15.5px; line-height:1.7; color:var(--ink-2);
-}
-.band--dark .method .inner, .band--ink .method .inner { background:var(--charcoal); border-left-color:var(--sapphire); color:var(--platinum); }
-.method .lab { font-family:var(--mono); font-size:9.5px; letter-spacing:0.30em; text-transform:uppercase; color:var(--ink-blue); margin-bottom:8px; }
-.band--dark .method .lab, .band--ink .method .lab { color:var(--sapphire); }
-
-/* ============================================================
-   BACK MATTER
-   ============================================================ */
-.back-matter { padding-top:120px; padding-bottom:160px; }
-.back-matter h3 {
-  font-family:var(--display); font-weight:600; font-size:24px; line-height:1.2; color:var(--flare);
-  margin:0 auto 22px; max-width:var(--col-wide); padding:0 48px;
-}
-.back-matter .biblio { max-width:var(--col-wide); margin:0 auto 60px; padding:0 48px; }
-.back-matter .biblio li {
-  list-style:none;
-  font-family:var(--body); font-size:14.5px; line-height:1.65; color:var(--platinum);
-  padding:14px 0; border-top:1px solid var(--graphite);
-  display:grid; grid-template-columns:50px 1fr; gap:20px;
-}
-.back-matter .biblio li:last-child { border-bottom:1px solid var(--graphite); }
-.back-matter .biblio .n { font-family:var(--mono); font-size:11px; color:var(--sapphire); letter-spacing:0.20em; }
-.back-matter .biblio .ent i { color:var(--tungsten); }
-
-.back-matter .related { max-width:var(--col-wide); margin:0 auto 60px; padding:0 48px; }
-.related-grid {
-  display:grid; grid-template-columns:repeat(3, 1fr); gap:0;
-  border-top:1px solid var(--graphite); border-bottom:1px solid var(--graphite);
-}
-.r-card {
-  display:block; padding:28px 28px 32px;
-  border-right:1px solid var(--graphite);
-  text-decoration:none; color:inherit; position:relative;
-  transition:background .35s var(--ease-std);
-}
-.r-card:last-child { border-right:0; }
-.r-card:hover { background:rgba(77,140,255,0.04); }
-.r-card .eb { font-family:var(--mono); font-size:9.5px; letter-spacing:0.28em; text-transform:uppercase; color:var(--sapphire); margin-bottom:14px; }
-.r-card .ti { font-family:var(--display); font-size:22px; font-weight:600; line-height:1.18; color:var(--flare); margin-bottom:12px; }
-.r-card .ds { font-family:var(--body); font-size:14px; line-height:1.65; color:var(--tungsten); margin-bottom:20px; }
-.r-card .ar { font-family:var(--mono); font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:var(--platinum); opacity:0.7; }
-.r-card:hover .ar { opacity:1; }
-@media (max-width:880px) { .related-grid { grid-template-columns:1fr; } .r-card { border-right:0; border-bottom:1px solid var(--graphite); } .r-card:last-child { border-bottom:0; } }
-
-/* Cite-graph (mini SVG network) */
-.citegraph { max-width:var(--col-wide); margin:0 auto 60px; padding:0 48px; }
-.citegraph svg { width:100%; height:240px; display:block; background:var(--charcoal); border:1px solid var(--graphite); }
-.citegraph .lab { font-family:var(--mono); font-size:10px; letter-spacing:0.22em; text-transform:uppercase; color:var(--tungsten); margin-top:10px; }
-
-/* Next chapter */
-.next-chap {
-  max-width:var(--col-wide); margin:80px auto 0; padding:48px;
-  border-top:1px solid var(--graphite); border-bottom:1px solid var(--graphite);
-  display:flex; align-items:center; justify-content:space-between; gap:32px;
-  text-decoration:none; color:inherit;
-  transition:background .35s var(--ease-std);
-}
-.next-chap:hover { background:rgba(77,140,255,0.05); }
-.next-chap .lf .eb { font-family:var(--mono); font-size:10px; letter-spacing:0.30em; text-transform:uppercase; color:var(--sapphire); margin-bottom:12px; }
-.next-chap .lf .ti { font-family:var(--display); font-size:32px; font-weight:600; color:var(--flare); line-height:1.18; max-width:22ch; }
-.next-chap .rt { font-family:var(--mono); font-size:14px; letter-spacing:0.20em; text-transform:uppercase; color:var(--sapphire); }
-
-/* ============================================================
-   GLOSSARY HOVER state, hide tooltip when JS detects mode change
-   ============================================================ */
-
-/* ============================================================
-   FOOTER
-   ============================================================ */
-footer.site-foot {
-  background:var(--obsidian); color:var(--tungsten);
-  padding:60px 48px; border-top:1px solid var(--graphite);
-  font-family:var(--mono); font-size:10px; letter-spacing:0.16em; text-transform:uppercase;
-  display:flex; justify-content:space-between; align-items:center;
-}
-footer.site-foot a { color:inherit; text-decoration:none; opacity:0.8; }
-footer.site-foot a:hover { opacity:1; color:var(--platinum); }
-
-/* ============================================================
-   Reveal, translate + opacity, no bounces
-   ============================================================ */
-.reveal { opacity:0; transform:translateY(18px); transition:opacity .9s var(--ease-out), transform .9s var(--ease-out); }
-.reveal.is-on { opacity:1; transform:none; }
-
-/* ============================================================
-   Scroll-tied parallax helper (figures move at 0.96x scroll)
-   ============================================================ */
-.parallax { transform:translate3d(0,0,0); will-change:transform; }
-
-/* Minor: list item style for ul.bullets */
-ul.bullets { max-width:var(--col); margin:0 auto 22px; padding:0 32px; list-style:none; }
-ul.bullets li { padding-left:22px; position:relative; margin-bottom:10px; font-size:17px; line-height:1.7; color:inherit; }
-ul.bullets li::before { content:'\25B8'; position:absolute; left:0; top:1px; font-family:var(--mono); color:var(--ink-blue); font-size:11px; }
-.band--dark ul.bullets li::before, .band--ink ul.bullets li::before { color:var(--sapphire); }
-
-
-/* ============================================================
-   SIDENOTES: Adaptive Tufte-Style (Institutional Standard)
-   ============================================================ */
-.sn { position:relative; }
-.sn-num { font-family:var(--mono); font-size:9px; color:var(--sapphire); vertical-align:super; cursor:pointer; padding:0 2px; }
-.band--paper .sn-num { color:var(--ink-blue); }
-.sn-num:hover { color:var(--hansa); }
-.sn-body { display:none; }
-
-@media (min-width: 1240px) {
-  p.col-with-sidenotes { position:relative; }
-  .sn { position:absolute; left:calc(100% + 40px); width:240px; font-family:var(--body); font-size:12.5px; line-height:1.5; color:var(--tungsten); }
-  .band--paper .sn { color:var(--ink-3); }
-  .sn-num { position:absolute; left:-24px; top:2px; }
-  .sn-body { display:block; padding-bottom:8px; border-bottom:1px solid rgba(255,255,255,0.06); }
-  .band--paper .sn-body { border-bottom-color:rgba(0,0,0,0.06); }
-}
-
-@media (max-width: 1239px) {
-  p.col-with-sidenotes { position:relative; }
-  .sn { display:inline; }
-  .sn-body { display:block; margin:12px 0; padding:12px 16px; font-family:var(--body); font-size:14px; line-height:1.6; color:var(--platinum); background:rgba(255,255,255,0.04); border-left:2px solid var(--sapphire); }
-  .band--paper .sn-body { color:var(--ink); background:rgba(0,0,0,0.04); border-left-color:var(--ink-blue); }
-  .sn-num { display:inline; position:static; font-size:11px; margin-right:6px; }
-}
-
-
-/* ============================================================
-   MASTER GRID & PORTRAIT MODE POLISH
-   ============================================================ */
-:root { --grid-left: max(32px, calc(50vw - 540px)); }
-@media (min-width: 1360px) { :root { --grid-left: max(260px, calc(50vw - 540px)); } }
-
-@media (min-width: 1240px) {
-  section.band:not(.front) {
-    display: grid;
-    grid-template-columns: var(--grid-left) 680px 400px minmax(16px, 1fr);
-    align-items: start;
-  }
-  section.band:not(.front) > * {
-    grid-column: 2 / 3;
-    margin-left: 0 !important; 
-    margin-right: 0 !important;
-  }
-  section.band:not(.front) > .col-wide, 
-  section.band:not(.front) > .stat-grid, 
-  section.band:not(.front) > .figure, 
-  section.band:not(.front) > .report-prose {
-    grid-column: 2 / 4;
-    width: 100%; 
-    max-width: none;
-  }
-  .stat-grid { justify-content: start !important; }
-}
-
-@media (min-width: 1180px) and (max-width: 1359px) {
-  #spine {
-    width: 44px; overflow: hidden; white-space: nowrap;
-    transition: width 0.4s cubic-bezier(0.16,1,0.3,1), background 0.6s cubic-bezier(0.4,0,0.2,1);
-  }
-  #spine:hover { width: 250px; }
-}
-@media (min-width: 1360px) {
-  #spine { width: auto; overflow: visible; }
-}
-
-/* Portrait Mode Space Fix */
-.front { min-height: clamp(400px, 80vh, 850px) !important; justify-content: center !important; }
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neurobiological Threat Typologies | Dr. Heather Leffew</title>
+    <!-- Design System: tokens load via @import inside institutional.css -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js" defer></script>
+    <link rel="stylesheet" href="../design_system/css/global.css">
+    <style>
+      /* Ensure Markdown components look correct in the reading column */
+      .markdown-body { margin-top: 1.5rem; }
+      .markdown-body p { margin-bottom: 1.25em; }
+      .markdown-body img { max-width: 100%; height: auto; display: block; margin: 2em auto; }
+      .markdown-body pre { padding: 1.5em; overflow-x: auto; background: var(--obsidian); border: 1px solid var(--charcoal); margin: 2em 0; }
+      .markdown-body code { font-family: var(--mono); font-size: 0.85em; }
+    </style>
 </head>
-<body data-category="Forensic Neuroscience" data-title="Violent Offender Neurobiology">
-<div id="preloader"><div id="preloader-left"></div><div id="preloader-right"></div><div id="preloader-line"></div></div>
 
+<body data-category="Clinical Diagnostics · Forensic Intelligence" data-title="Neurobiological_Differentiation_Violent_Offender_Types">
+
+<!-- Reading progress -->
 <div id="progress"></div>
+
+<!-- Top nav (injected by global_chrome.js) -->
 <div id="global-nav-container"></div>
+
+<!-- Chapter spine (populated by global_chrome.js) -->
 <aside id="spine"></aside>
+
+<!-- Atmospheric gradient -->
 <div class="atmosphere"></div>
+
 <canvas id="glCanvas"></canvas>
 
-
-
-
-<!-- ============================================================
-     FRONT MATTER
-     ============================================================ -->
+<!-- FRONT MATTER -->
 <section class="band band--dark front" data-spine="Front" data-section="Front matter">
-  <!-- Ambient calibration arc (background layer) -->
-  <div class="ambient" aria-hidden="true">
-    <svg viewBox="0 0 600 600" fill="none">
-      <defs>
-        <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#4D8CFF" stop-opacity="0.55"/>
-          <stop offset="100%" stop-color="#0F52BA" stop-opacity="0.0"/>
-        </linearGradient>
-      </defs>
-      <g stroke="url(#g1)" stroke-width="1" fill="none">
-        <circle cx="300" cy="300" r="80"/>
-        <circle cx="300" cy="300" r="140"/>
-        <circle cx="300" cy="300" r="200"/>
-        <circle cx="300" cy="300" r="260"/>
-      </g>
-      <line x1="60" y1="540" x2="540" y2="60" stroke="#4D8CFF" stroke-width="1" stroke-dasharray="2 6" opacity="0.8"/>
-      <g fill="#4D8CFF" opacity="0.7">
-        <circle cx="120" cy="490" r="2.5"/>
-        <circle cx="180" cy="430" r="2.5"/>
-        <circle cx="240" cy="380" r="2.5"/>
-        <circle cx="300" cy="310" r="2.5"/>
-        <circle cx="360" cy="260" r="2.5"/>
-        <circle cx="420" cy="210" r="2.5"/>
-        <circle cx="480" cy="140" r="2.5"/>
-      </g>
-      <circle cx="380" cy="380" r="3.5" fill="#7A1626" opacity="0.95"/>
-      <text x="400" y="386" font-family="JetBrains Mono" font-size="10" fill="#A1A1A6" letter-spacing="2">OUTLIER</text>
-    </svg>
-  </div>
-
   <div class="col-wide">
     <div class="grid">
      <div>
       <div class="meta-row">
-        <span class="bracket">Working note</span>
+        <span class="bracket">CASE STUDY</span>
         <span class="sep">/</span>
         <span>Clinical Diagnostics · Forensic Intelligence</span>
         <span class="sep">/</span>
@@ -681,13 +56,21 @@ ul.bullets li::before { content:'\25B8'; position:absolute; left:0; top:1px; fon
       <h1>Neurobiological Threat Typologies</h1>
 
       <p class="abstract">
-        Differentiating severe violent escalation pathways by structurally mapping cortical vs. subcortical autonomic processing.
+        Differentiating severe violent escalation pathways by structurally mapping cortical vs. subcortical autonomic processing...
       </p>
 
       <div class="byline">
         <div>
-          Authored By
-          <strong>Dr. Heather Leffew</strong>
+          Subject
+          <strong>N/A</strong>
+        </div>
+        <div>
+          Architecture
+          <strong>N/A</strong>
+        </div>
+        <div>
+          Output
+          <strong>N/A</strong>
         </div>
       </div>
      </div>
@@ -696,338 +79,60 @@ ul.bullets li::before { content:'\25B8'; position:absolute; left:0; top:1px; fon
   </div>
 </section>
 
-<!-- 1 SECTION -->
-<section class="band band--paper" data-spine="Autonomic & Neurological Mapping" data-section="Cortical vs. Subcortical Violence Vectors">
-  <div class="eyebrow reveal">Autonomic & Neurological Mapping</div>
-  <h2 class="reveal">Cortical vs. Subcortical Violence Vectors</h2>
-  
+<!-- INJECTED MARKDOWN CONTENT -->
 
+<!-- SECTION 1: Introduction -->
+<section class="band band--paper" data-spine="Introduction" data-section="Introduction">
+  <div class="col-wide markdown-body">
+    <h1>Neurobiological Threat Typologies</h1>
+<div class="eyebrow reveal">01 / Introduction</div>
+<h2 class="reveal is-chapter">Dr. Heather Leffew
+Obelus Institute
+May 2026</h2>
 
+  </div>
+</section>
+
+<!-- SECTION 2: Abstract -->
+<section class="band band--dark" data-spine="Abstract" data-section="Abstract">
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">02 / Abstract</div>
+<h2 class="reveal is-chapter">Abstract</h2>
+<p class="reveal">Differentiating severe violent escalation pathways by structurally mapping cortical vs. subcortical autonomic processing.</p>
+<p class="reveal">Autonomic &amp; Neurological Mapping</p>
+
+  </div>
+</section>
+
+<!-- SECTION 3: Cortical vs. Subcortical Violence Vectors -->
+<section class="band band--paper" data-spine="Cortical vs. Subcort" data-section="Cortical vs. Subcortical Violence Vectors">
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">03 / Cortical vs. Subcortical Violence Vectors</div>
+<h2 class="reveal is-chapter">Cortical vs. Subcortical Violence Vectors</h2>
 <p class="reveal">Mitigating violence requires understanding that not all offenders are built the same way. General behavioral categories often fail because two people can commit the exact same crime for completely different biological reasons. By looking at clinical neuroscience, we can understand that severe threat actors generally fall into two distinct profiles: Impulsive Offending (ImO) and Instrumental Offending (InO).</p>
 <p class="reveal"><strong>Impulsive Offending (ImO)</strong> is driven by dysfunctions in the frontal lobe of the brain. Simply put, this group cannot regulate their emotions. When they get upset, their heart rate spikes, and their biology forces an explosive, emotionally intense outburst (the violence is an end in itself). Conversely, <strong>Instrumental Offending (InO)</strong> is largely psychopathic. These individuals have severe under-activity in the fear centers of the brain (the amygdala). Because they do not feel normal anxiety or fear responses, they are able to enact cold, calculated violence directly as a means to an end, completely immune to emotional friction.</p>
-<div class="glass-panel" style="margin-top: 48px;">
-<div style="font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;color:var(--flare);letter-spacing:0.1em;margin-bottom:24px;text-align:center;">Clinical Diagnostic Simulator</div>
-<div class="sim-controls">
-<button class="diag-btn active" id="btnImo">[ImO] Cortical / Reactive Profile</button>
-<button class="diag-btn" id="btnIno" style="border-color:var(--tuningsten)">[InO] Subcortical / Instrumental Profile</button>
-</div>
-<div class="telem-layout">
-<div class="diag-stat-box">
-<div class="kpi-row">
-<div class="kpi-label">Primary Locus of Dysfunction</div>
-<div class="kpi-val" id="valLocus">Frontal Lobe (Cortical)</div>
-</div>
-<div class="kpi-row">
-<div class="kpi-label" style="display:flex; justify-content:space-between"><span>Autonomic Cardiac Reactivity</span><span id="pctHr" style="color:var(--sapphire)">92%</span></div>
-<div class="kpi-meter"><div class="kpi-fill" id="fillHr" style="width: 92%;"></div></div>
-</div>
-<div class="kpi-row">
-<div class="kpi-label" style="display:flex; justify-content:space-between"><span>Aversive/Fear Conditioning Immunity</span><span id="pctFear" style="color:var(--tungsten)">15%</span></div>
-<div class="kpi-meter"><div class="kpi-fill" id="fillFear" style="width: 15%; background: var(--tungsten);"></div></div>
-</div>
-</div>
-<div class="ekg-box" id="ekgDisplay">
-<div class="ekg-header" id="ekgHeader">Sympathetic Hyper-Arousal Detected</div>
-<svg id="svgEkg" style="width:100%; height:80px; stroke: var(--sapphire); stroke-width: 2; fill: none; stroke-linecap: round;" viewbox="0 0 400 100">
-<!-- ImO erratic spike pattern -->
-<path d="M 0,50 L 50,50 L 60,10 L 70,90 L 80,40 L 90,60 L 100,20 L 110,80 L 120,50 L 170,50 L 180,10 L 190,90 L 200,40 L 210,60 L 220,50 L 270,50 L 280,0 L 290,100 L 300,50 L 350,50 L 360,20 L 370,80 L 380,50 L 400,50" id="ekgPath"></path>
-</svg>
-<div class="ekg-warning" id="ekgWarn">ImO: EMOTIONAL CASCADE IMMINENT</div>
-</div>
-</div>
-</div>
+<p class="reveal">Clinical Diagnostic Simulator</p>
+<p class="reveal">[ImO] Cortical / Reactive Profile
+[InO] Subcortical / Instrumental Profile</p>
+<p class="reveal">Primary Locus of Dysfunction</p>
+<p class="reveal">Frontal Lobe (Cortical)</p>
+<p class="reveal">Autonomic Cardiac Reactivity92%</p>
+<p class="reveal">Aversive/Fear Conditioning Immunity15%</p>
+<p class="reveal">Sympathetic Hyper-Arousal Detected</p>
+<p class="reveal"><img src="fig_2.svg" alt="Figure 2"></p>
+<p class="reveal">ImO: EMOTIONAL CASCADE IMMINENT</p>
 
+  </div>
 </section>
 
 
-
-
-
-
-
-
-
-<!-- Inline self-contained chrome scripts stripped. Spine init + global.js handle this now. -->
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const sections = document.querySelectorAll('section.band');
-    const spine = document.getElementById('spine');
-    const topnav = document.getElementById('topnav');
-    const status = document.getElementById('status');
-    const pctEl = status ? status.querySelector('.pct') : null;
-
-    const updateProgress = () => {
-      const scroll = window.scrollY;
-      const height = document.documentElement.scrollHeight - window.innerHeight;
-      const p = Math.min(100, Math.max(0, (scroll / height) * 100));
-      const progressEl = document.getElementById('progress');
-      if (progressEl) progressEl.style.setProperty('--p', p + '%');
-      if (pctEl) pctEl.innerText = Math.round(p) + '%';
-    };
-    window.addEventListener('scroll', updateProgress, { passive: true });
-    updateProgress();
-
-    if (spine) {
-      spine.innerHTML = '';
-      sections.forEach((sec, i) => {
-        const label = sec.getAttribute('data-spine');
-        if (!label) return;
-        const row = document.createElement('div');
-        row.className = 'row';
-        if (i === 0) row.classList.add('is-active');
-        row.innerHTML = `<span class="num">0${i + 1}</span><div class="tick"></div><span class="label">${label}</span>`;
-        row.addEventListener('click', () => sec.scrollIntoView({ behavior: 'smooth' }));
-        spine.appendChild(row);
-
-        const observer = new IntersectionObserver(entries => {
-          entries.forEach(e => {
-            if (e.isIntersecting) {
-              [...spine.children].forEach(c => c.classList.remove('is-active', 'is-paper-active'));
-              const isPaper = e.target.classList.contains('band--paper');
-              row.classList.add('is-active');
-              if (isPaper) {
-                spine.classList.add('is-paper');
-                if (topnav) topnav.classList.add('is-paper');
-                if (status) status.classList.add('is-paper');
-              } else {
-                spine.classList.remove('is-paper');
-                if (topnav) topnav.classList.remove('is-paper');
-                if (status) status.classList.remove('is-paper');
-              }
-            }
-          });
-        }, { threshold: 0.3 });
-        observer.observe(sec);
-      });
-    }
-
-    const reveals = document.querySelectorAll('.reveal');
-    const revealObs = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-on'); });
-    }, { threshold: 0.15 });
-    reveals.forEach(el => revealObs.observe(el));
-  });
-</script>
-<script type="text/discarded">
-const PREVIEWS_DISCARDED = {
-  'implicit-power-drives': {
-    eyebrow: 'Note 04 / Doctoral research',
-    title: 'Implicit power drives',
-    desc: 'Clinical validation framework quantifying behavioral typologies using T-tests and linguistic predictive limits in written manifestos.',
-    foot: '12 min read / Dissertation chapter',
-  },
-  'credit-fairness': {
-    eyebrow: 'Note 12 / Model validation',
-    title: 'Credit policy fairness',
-    desc: '100,000+ applicant simulation using SHAP to audit fairness and validate a 20.9% equitable approval shift.',
-    foot: '8 min read / Production audit',
-  },
-  'entity-resolution': {
-    eyebrow: 'Note 03 / Production pipeline',
-    title: 'Entity resolution pipeline',
-    desc: 'A 15-step distributed graph-ML pipeline for semantic identity fusion across 49TB of streaming vendor records.',
-    foot: '14 min read / Spokeo',
-  },
-};
-
-/* ============================================================
-   SPINE, generated from sections with [data-spine]
-   ============================================================ */
-const spine = document.getElementById('spine');
-const sections = [...document.querySelectorAll('[data-spine]')];
-sections.forEach((s, i) => {
-  const r = document.createElement('div');
-  r.className = 'row'; r.dataset.idx = i;
-  r.innerHTML = `<span class="num">${String(i+1).padStart(2,'0')}</span><span class="tick"></span><span class="label">${s.dataset.spine}</span>`;
-  r.addEventListener('click', () => s.scrollIntoView({behavior:'smooth', block:'start'}));
-  spine.appendChild(r);
-});
-
-/* ============================================================
-   SCROLL ENGINE, progress, status, mode, spine, reveals
-   ============================================================ */
-const progress = document.getElementById('progress');
-const topnav = document.getElementById('topnav');
-const status = document.getElementById('status');
-const statusSec = status.querySelector('.sec');
-const statusPct = status.querySelector('.pct');
-const atmosphere = document.querySelector('.atmosphere');
-const reveals = [...document.querySelectorAll('.reveal')];
-const spineRows = [...spine.querySelectorAll('.row')];
-
-const onScroll = () => {
-  const h = document.documentElement;
-  const y = window.scrollY;
-  const max = h.scrollHeight - window.innerHeight;
-  const p = Math.min(1, Math.max(0, y / max));
-  progress.style.setProperty('--p', (p * 100).toFixed(2) + '%');
-  statusPct.textContent = Math.round(p * 100) + '%';
-
-  // Find the section currently dominant near top of viewport
-  const trigger = window.innerHeight * 0.32;
-  let activeIdx = 0;
-  for (let i = 0; i < sections.length; i++) {
-    const r = sections[i].getBoundingClientRect();
-    if (r.top <= trigger) activeIdx = i;
-  }
-  const active = sections[activeIdx];
-  const mode = [...active.classList].find(c => c.startsWith('band--'));
-  const isPaper = mode !== 'band--paper';
-
-  statusSec.textContent = active.dataset.section;
-  spineRows.forEach((row, i) => {
-    row.classList.toggle('is-active', i === activeIdx);
-    row.classList.toggle('is-paper-active', i === activeIdx && isPaper);
-  });
-
-  topnav.classList.toggle('is-paper', isPaper);
-  status.classList.toggle('is-paper', isPaper);
-  spine.classList.toggle('is-paper', isPaper);
-
-  // Reveals
-  reveals.forEach(el => {
-    const r = el.getBoundingClientRect();
-    if (r.top < window.innerHeight * 0.92) el.classList.add('is-on');
-  });
-
-  // Parallax on figures (subtle)
-  document.querySelectorAll('.parallax').forEach(el => {
-    const r = el.getBoundingClientRect();
-    const center = r.top + r.height / 2 - window.innerHeight / 2;
-    el.style.transform = `translate3d(0, ${(-center * 0.04).toFixed(1)}px, 0)`;
-  });
-};
-window.addEventListener('scroll', onScroll, { passive:true });
-window.addEventListener('resize', onScroll);
-onScroll();
-
-/* ============================================================
-   HOVER PREVIEWS
-   ============================================================ */
-const hp = document.getElementById('hover-preview');
-const hpEb = hp.querySelector('.h-eb');
-const hpTi = hp.querySelector('.h-t');
-const hpDs = hp.querySelector('.h-d');
-const hpFt = hp.querySelector('.h-ft');
-let hpTimer;
-document.querySelectorAll('.xlink').forEach(a => {
-  a.addEventListener('mouseenter', e => {
-    const id = a.dataset.previewId;
-    if (!id || !PREVIEWS[id]) return;
-    const d = PREVIEWS[id];
-    hpEb.textContent = d.eyebrow;
-    hpTi.textContent = d.title;
-    hpDs.textContent = d.desc;
-    hpFt.textContent = d.foot;
-    // Position
-    const r = a.getBoundingClientRect();
-    let x = r.left;
-    let y = r.bottom + 12;
-    const w = 340, h = 180;
-    if (x + w > window.innerWidth - 16) x = window.innerWidth - w - 16;
-    if (y + h > window.innerHeight - 16) y = r.top - h - 12;
-    hp.style.left = x + 'px';
-    hp.style.top  = y + 'px';
-    // Sync mode of the preview to the section the link sits in
-    const inPaper = a.closest('.band--paper') !== null;
-    hp.classList.toggle('is-paper', inPaper);
-    clearTimeout(hpTimer);
-    hp.classList.add('is-on');
-  });
-  a.addEventListener('mouseleave', () => {
-    hpTimer = setTimeout(() => hp.classList.remove('is-on'), 80);
-  });
-});
-
-/* ============================================================
-   SIDENOTES
-   - Wide viewport: position each .sn-body in the right gutter,
-     vertically aligned with its inline .sn-num marker.
-   - Narrow viewport: tap to toggle inline footnote.
-   ============================================================ */
-function layoutSidenotes() {
-  if (window.innerWidth < 1080) return;
-  document.querySelectorAll('p.col-with-sidenotes').forEach(p => {
-    const pRect = p.getBoundingClientRect();
-    let lastBottom = -9999;
-    p.querySelectorAll('.sn').forEach(sn => {
-      const num = sn.querySelector('.sn-num');
-      const body = sn.querySelector('.sn-body');
-      if (!num || !body) return;
-      const numRect = num.getBoundingClientRect();
-      // top relative to paragraph
-      let top = numRect.top - pRect.top - 2;
-      // avoid stacking, push down if previous note's bottom would overlap
-      if (top < lastBottom + 12) top = lastBottom + 12;
-      body.style.top = top + 'px';
-      // remember bottom (estimate height: 240px wide, lh ~1.55, ~13.5px -> ~3 lines avg)
-      const bodyH = body.offsetHeight || 80;
-      lastBottom = top + bodyH;
-    });
-  });
-}
-window.addEventListener('load', layoutSidenotes);
-window.addEventListener('resize', layoutSidenotes);
-// Also re-layout after fonts settle
-if (document.fonts && document.fonts.ready) document.fonts.ready.then(layoutSidenotes);
-
-document.querySelectorAll('.sn-num').forEach(n => {
-  n.addEventListener('click', () => {
-    if (window.innerWidth >= 1080) return;
-    const body = n.parentElement.querySelector('.sn-body');
-    if (body) body.classList.toggle('is-open');
-  });
-});
-</script>
-
-
-
-<!-- ============================================================
-     CUSTOM PAGE TELEMETRY
-     ============================================================ -->
-<script>
-
-</script>
-
-<script>
-/* ============================================================
-   DYNAMIC SIDENOTE CLEARANCE (Global Portfolio Mandate)
-   ============================================================ */
-document.addEventListener('DOMContentLoaded', () => {
-    const sidenoteParagraphs = document.querySelectorAll('.col-with-sidenotes');
-    sidenoteParagraphs.forEach(p => {
-        const sn = p.querySelector('.sn');
-        if (sn) {
-            const updateHeight = () => {
-                if (window.innerWidth >= 1240) {
-                    // Calculate exact clearance needed based on the sidenote's absolute top position
-                    const neededHeight = sn.offsetTop + sn.offsetHeight + 40;
-                    p.style.minHeight = neededHeight + 'px';
-                } else {
-                    p.style.minHeight = 'auto';
-                }
-            };
-            updateHeight();
-            setTimeout(updateHeight, 250);
-            window.addEventListener('resize', updateHeight);
-        }
-    });
-});
-</script>
-
-
-<!-- ============================================================
-     GLOBAL APP SHELL (BACK MATTER)
-     ============================================================ -->
+<!-- BACK MATTER: Related Works -->
 <section class="band band--dark back-matter" data-spine="Research Graph" data-section="Research Graph">
-  
-  
-
   <div class="back-matter" style="padding-top:0;">
     <h3 style="margin-bottom:22px;">Related Works</h3>
     <div class="related">
       <div class="related-grid" id="recommendation-grid">
-        <!-- Populated by JS -->
+        <!-- Populated by global_chrome.js from projects_index.json -->
       </div>
     </div>
   </div>
@@ -1039,74 +144,13 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
     <div class="rt">&rarr;</div>
   </a>
-
 </section>
 
+<!-- INJECTED SCRIPTS -->
+interactive_0.js,interactive_1.js,interactive_3.js,interactive_5.js
+
+<!-- GLOBAL CHROME -->
+<!-- Need relative pathing adjustment based on actual file depth, defaulting to root pathing for now -->
 <script src="../design_system/js/global.js" defer></script>
-
-<script type="text/discarded">
-// Async recommendation populator stripped; global.js handles it
-document.addEventListener('DOMContentLoaded', async () => {
-    try {
-        const pathPrefix = window.location.pathname.includes('projects-repository.html') ? './' : '../';
-        const response = await fetch(pathPrefix + 'projects_index.json');
-        if (!response.ok) return;
-        const projects = await response.json();
-        
-        const currentPath = window.location.pathname;
-        let me = projects.find(p => currentPath.includes(p.id));
-        if (!me) me = projects[0]; // fallback
-        
-        // 1. Populate Recommendations
-        if (document.getElementById('recommendation-grid')) {
-            let scored = projects.map(p => {
-                if (p.id === me.id) return { ...p, score: -1 }; 
-                let score = 0;
-                if(p.tags && me.tags) {
-                    p.tags.forEach(t => { if (me.tags.includes(t)) score++; });
-                }
-                if (p.cat === me.cat) score += 0.5;
-                return { ...p, score };
-            });
-            scored.sort((a, b) => b.score - a.score);
-            const top3 = scored.slice(0, 3);
-
-            const grid = document.getElementById('recommendation-grid');
-            grid.innerHTML = '';
-            top3.forEach(p => {
-                const card = document.createElement('a');
-                card.href = pathPrefix + p.url;
-                card.className = 'r-card';
-                card.innerHTML = `
-                    <div class="eb">${p.cat}</div>
-                    <div class="ti">${p.title}</div>
-                    <div class="ds">${p.desc.substring(0, 100)}...</div>
-                    <div class="ar">Read More &rarr;</div>
-                `;
-                grid.appendChild(card);
-            });
-        }
-        
-        // 2. Populate Next Chapter
-        const nextChapLink = document.getElementById('next-chap-link');
-        const nextChapTitle = document.getElementById('next-chap-title');
-        if (nextChapLink && nextChapTitle) {
-            let currentIndex = projects.findIndex(p => p.id === me.id);
-            if (currentIndex === -1) currentIndex = 0;
-            let nextIndex = (currentIndex + 1) % projects.length;
-            let nextProj = projects[nextIndex];
-            
-            nextChapLink.href = pathPrefix + nextProj.url;
-            nextChapTitle.textContent = nextProj.title;
-        }
-
-    } catch(e) {
-        console.log("Global Frame JS resting.");
-    }
-});
-</script>
-
-
 </body>
 </html>
-

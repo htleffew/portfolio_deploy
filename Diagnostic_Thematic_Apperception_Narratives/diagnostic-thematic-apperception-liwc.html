@@ -1,543 +1,228 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LIWC NLP Extraction in TAT Narratives | Dr. Heather Leffew</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../design_system/css/global.css">
-<style>
-/* ============================================================
-   TOKENS, dual mode, no radii, sharp editorial
-   ============================================================ */
-:root {
-  --obsidian:#030303; --charcoal:#161616; --graphite:#222222; --brushed:#333333; --tungsten:#A1A1A6; --platinum:#F5F5F7; --flare:#FFFFFF;
-  --paper:#F5F5F7; --paper-2:#E9E9E9; --paper-3:#DDDDDD; --ink:#030303; --ink-2:#222222; --ink-3:#5E5E5A;
-  --sapphire-deep:#0F52BA; --sapphire:#4D8CFF; --ink-blue:#1A3A6B;
-  --phthalo:#0F3A6B; --phthalo-lift:#3866A0; --alizarin:#7A1626; --hookers:#1A4A38; --hansa:#DBA844; --dioxazine:#3D1F4A;
-  --display:'Playfair Display','Times New Roman',serif; --body:'Lora',Georgia,serif; --mono:'JetBrains Mono','SF Mono',Menlo,monospace;
-  --ease-out:cubic-bezier(0.16,1,0.3,1); --ease-std:cubic-bezier(0.4,0,0.2,1);
-  --col:680px; --col-wide:1080px;
-}
-
-*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; border-radius:0 !important; }
-::selection { background:rgba(77,140,255,0.35); color:#fff; }
-html { scroll-behavior:smooth; }
-body { font-family:var(--body); background:var(--obsidian); color:var(--platinum); font-size:18px; line-height:1.78; overflow-x:hidden; -webkit-font-smoothing:antialiased; }
-
-.atmosphere { position:fixed; inset:0; z-index:-30; pointer-events:none; transition:background 1.2s var(--ease-std); }
-.band { position:relative; padding:140px 0; transition:background 0.9s var(--ease-std), color 0.9s var(--ease-std); }
-.band--dark  { background:var(--obsidian); color:var(--platinum); }
-.band--paper { background:var(--platinum); color:var(--obsidian); }
-.band--dark + .band--paper, .band--paper + .band--dark { border-top:1px solid rgba(0,0,0,0.0); }
-
-.col { max-width:var(--col); margin:0 auto; padding:0 32px; }
-.col-wide { max-width:var(--col-wide); margin:0 auto; padding:0 48px; }
-
-#progress { position:fixed; top:0; left:0; right:0; height:2px; z-index:200; pointer-events:none; background:transparent; }
-#progress::after { content:''; position:absolute; left:0; top:0; bottom:0; width:var(--p,0%); background:linear-gradient(90deg, var(--sapphire) 0%, var(--sapphire-deep) 100%); transition:width 0.05s linear; }
-
-#topnav { position:fixed; top:0; left:0; right:0; height:60px; display:flex; align-items:center; justify-content:space-between; padding:0 32px; z-index:150; font-family:var(--mono); font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:var(--platinum); background:rgba(3,3,3,0.55); backdrop-filter:blur(14px) saturate(140%); border-bottom:1px solid rgba(255,255,255,0.06); transition:background 0.6s var(--ease-std); }
-#topnav.is-paper { background:rgba(245,245,247,0.82); border-bottom-color:rgba(0,0,0,0.08); color:var(--ink); }
-#topnav .brand { font-family:var(--display); font-size:15px; font-weight:600; letter-spacing:0.04em; text-transform:none; color:inherit; text-decoration:none; }
-#topnav .crumbs { display:flex; gap:18px; align-items:center; }
-#topnav .crumbs a { color:inherit; text-decoration:none; opacity:0.7; transition:opacity .25s; }
-#topnav .sep { opacity:0.35; }
-
-#spine { position:fixed; left:18px; top:50%; transform:translateY(-50%); z-index:130; pointer-events:auto; display:flex; flex-direction:column; gap:14px; padding:18px 14px; background:rgba(3,3,3,0.45); color:var(--platinum); backdrop-filter:blur(14px) saturate(140%); border:1px solid rgba(255,255,255,0.08); transition:background 0.6s var(--ease-std); }
-#spine.is-paper { background:rgba(245,245,247,0.78); border-color:rgba(0,0,0,0.10); color:var(--ink); }
-#spine .row { display:flex; align-items:center; gap:10px; cursor:pointer; }
-#spine .tick { width:16px; height:1px; background:currentColor; opacity:0.35; transition:width .35s var(--ease-out); }
-#spine .row.is-active .tick { width:28px; opacity:1; background:var(--sapphire); }
-#spine .row.is-paper-active .tick { background:var(--ink-blue); }
-#spine .label { font-family:var(--mono); font-size:9.5px; letter-spacing:0.18em; text-transform:uppercase; opacity:0.55; transition:opacity .35s; white-space:nowrap; }
-#spine .row:hover .label, #spine .row.is-active .label { opacity:1; }
-#spine .num { font-family:var(--mono); font-size:9px; opacity:0.4; width:14px; }
-@media (max-width:1180px) { #spine { display:none; } }
-
-/* ============================================================
-   FRONT MATTER
-   ============================================================ */
-.front { min-height:100vh; padding:160px 0 100px; display:flex; flex-direction:column; justify-content:center; position:relative; overflow:hidden; }
-.front .meta-row { font-family:var(--mono); font-size:11px; letter-spacing:0.30em; text-transform:uppercase; color:var(--tungsten); margin-bottom:40px; display:flex; gap:18px; align-items:center; flex-wrap:wrap; }
-.front .meta-row .sep { opacity:0.4; }
-.front h1 { font-family:var(--display); font-weight:600; font-size:clamp(44px, 5.0vw, 72px); letter-spacing:-0.018em; line-height:1.06; color:var(--flare); margin-bottom:36px; max-width:20ch; }
-.front .abstract { font-family:var(--body); font-style:italic; font-size:22px; line-height:1.62; color:var(--platinum); max-width:60ch; margin-bottom:48px; }
-
-.ambient { position:absolute; right:-10%; top:50%; transform:translateY(-50%); width:60%; max-width:820px; aspect-ratio:1; pointer-events:none; z-index:1; opacity:0; animation:ambient-fade 1.6s 0.6s var(--ease-out) forwards; }
-@keyframes ambient-fade { to { opacity:0.30; } }
-.ambient svg { width:100%; height:100%; display:block; filter:blur(3px); }
-
-/* ============================================================
-   TYPOGRAPHY & SECTIONS
-   ============================================================ */
-.band--paper h2, .band--dark h2 { font-family:var(--display); font-weight:600; font-size:clamp(34px, 3.6vw, 48px); letter-spacing:-0.012em; line-height:1.12; margin:0 auto 28px; max-width:var(--col); padding:0 32px; }
-.band--paper h2 { color:var(--ink); } .band--dark h2 { color:var(--flare); }
-.band--paper .eyebrow, .band--dark .eyebrow { font-family:var(--mono); font-size:10.5px; letter-spacing:0.30em; text-transform:uppercase; margin:0 auto 18px; max-width:var(--col); padding:0 32px; }
-.band--paper .eyebrow { color:var(--ink-blue); } .band--dark .eyebrow { color:var(--sapphire); }
-.band--paper p, .band--dark p { margin:0 auto 22px; max-width:var(--col); padding:0 32px; font-size:18px; line-height:1.78; }
-.band--paper p { color:var(--ink); } .band--dark p { color:var(--platinum); }
-
-.has-dropcap::first-letter { font-family:var(--display); font-weight:600; font-size:5.6em; line-height:0.86; float:left; margin:0.06em 0.10em -0.08em 0; color:var(--sapphire); }
-.band--paper .has-dropcap::first-letter { color:var(--ink-blue); }
-
-.reveal { opacity:0; transform:translateY(18px); transition:opacity .9s var(--ease-out), transform .9s var(--ease-out); }
-.reveal.is-on { opacity:1; transform:none; }
-
-/* ============================================================
-   STAT GRID & FIGURES
-   ============================================================ */
-.stat-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:24px; max-width:var(--col-wide); margin:64px auto; padding:0 32px; }
-.stat-card { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:32px 36px; display:flex; flex-direction:column; gap:12px; }
-.band--paper .stat-card { background:#fff; border-color:var(--paper-3); }
-.stat-card .val { font-family:var(--mono); font-size:42px; font-weight:300; letter-spacing:-0.04em; color:var(--flare); line-height:1; }
-.band--paper .stat-card .val { color:var(--ink); }
-.stat-card .lbl { font-family:var(--mono); font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--sapphire); }
-.band--paper .stat-card .lbl { color:var(--ink-blue); }
-.stat-card .diff { font-family:var(--body); font-style:italic; font-size:15px; color:var(--tungsten); line-height:1.5; }
-.band--paper .stat-card .diff { color:var(--ink-3); }
-
-.figure { margin:64px auto; max-width:var(--col-wide); padding:0 32px; }
-.figure .frame { position:relative; background:var(--obsidian); border:1px solid var(--graphite); padding:32px 36px 28px; }
-.band--paper .figure .frame { background:#fff; border-color:var(--paper-3); }
-
-.sim-btn { font-family:var(--mono); font-size:10px; letter-spacing:0.15em; text-transform:uppercase; padding:8px 16px; border:1px solid var(--graphite); background:transparent; color:var(--tungsten); cursor:pointer; transition:all .3s; }
-.sim-btn.is-active { border-color:var(--sapphire); color:var(--flare); background:rgba(77, 140, 255, 0.1); }
-
-/* ============================================================
-   TUTORIAL CODE BLOCK
-   ============================================================ */
-.code-wrapper { max-width:var(--col-wide); margin:48px auto; padding:0 32px; }
-.code-header { background:rgba(255,255,255,0.05); padding:12px 24px; font-family:var(--mono); font-size:11px; letter-spacing:0.1em; color:var(--tungsten); border:1px solid var(--graphite); border-bottom:none; display:flex; justify-content:space-between; }
-.band--paper .code-header { background:rgba(0,0,0,0.03); border-color:var(--paper-3); color:var(--ink-3); }
-.code-block { background:var(--obsidian); border:1px solid var(--graphite); padding:32px 24px; font-family:var(--mono); font-size:13px; line-height:1.7; color:var(--platinum); overflow-x:auto; margin:0; tab-size:4; }
-.band--paper .code-block { background:#fff; border-color:var(--paper-3); color:var(--ink); }
-.code-block .kw { color:#c678dd; } 
-.code-block .fn { color:#61afef; } 
-.code-block .str { color:#98c379; } 
-.code-block .cm { color:#5c6370; font-style:italic; } 
-.band--paper .code-block .kw { color:#9c27b0; } 
-.band--paper .code-block .fn { color:#0288d1; } 
-.band--paper .code-block .str { color:#388e3c; } 
-.band--paper .code-block .cm { color:#757575; }
-
-/* ============================================================
-   SIDENOTES: Adaptive Tufte-Style (Institutional Standard)
-   ============================================================ */
-.sn { position:relative; }
-.sn-num { font-family:var(--mono); font-size:9px; color:var(--sapphire); vertical-align:super; cursor:pointer; padding:0 2px; }
-.band--paper .sn-num { color:var(--ink-blue); }
-.sn-num:hover { color:var(--hansa); }
-.sn-body { display:none; }
-
-@media (min-width: 1240px) {
-  p.col-with-sidenotes { position:relative; }
-  .sn { position:absolute; left:calc(100% + 48px); width:220px; font-family:var(--body); font-size:12.5px; line-height:1.5; color:var(--tungsten); }
-  .band--paper .sn { color:var(--ink-3); }
-  .sn-num { position:absolute; left:-24px; top:2px; }
-  .sn-body { display:block; padding-bottom:8px; border-bottom:1px solid rgba(255,255,255,0.06); }
-  .band--paper .sn-body { border-bottom-color:rgba(0,0,0,0.06); }
-}
-
-@media (max-width: 1239px) {
-  p.col-with-sidenotes { position:relative; }
-  .sn { display:inline; }
-  .sn-body { display:block; margin:12px 0; padding:12px 16px; font-family:var(--body); font-size:14px; line-height:1.6; color:var(--platinum); background:rgba(255,255,255,0.04); border-left:2px solid var(--sapphire); }
-  .band--paper .sn-body { color:var(--ink); background:rgba(0,0,0,0.04); border-left-color:var(--ink-blue); }
-  .sn-num { display:inline; position:static; font-size:11px; margin-right:6px; }
-}
-
-
-/* ============================================================
-   MASTER GRID & PORTRAIT MODE POLISH
-   ============================================================ */
-:root { --grid-left: max(32px, calc(50vw - 540px)); }
-@media (min-width: 1360px) { :root { --grid-left: max(260px, calc(50vw - 540px)); } }
-
-@media (min-width: 1240px) {
-  section.band:not(.front) {
-    display: grid;
-    grid-template-columns: var(--grid-left) 680px 400px minmax(16px, 1fr);
-    align-items: start;
-  }
-  section.band:not(.front) > * {
-    grid-column: 2 / 3;
-    margin-left: 0 !important; 
-    margin-right: 0 !important;
-  }
-  section.band:not(.front) > .col-wide, 
-  section.band:not(.front) > .stat-grid, 
-  section.band:not(.front) > .figure, 
-  section.band:not(.front) > .report-prose {
-    grid-column: 2 / 4;
-    width: 100%; 
-    max-width: none;
-  }
-  .stat-grid { justify-content: start !important; }
-}
-
-@media (min-width: 1180px) and (max-width: 1359px) {
-  #spine {
-    width: 44px; overflow: hidden; white-space: nowrap;
-    transition: width 0.4s cubic-bezier(0.16,1,0.3,1), background 0.6s cubic-bezier(0.4,0,0.2,1);
-  }
-  #spine:hover { width: 250px; }
-}
-@media (min-width: 1360px) {
-  #spine { width: auto; overflow: visible; }
-}
-
-/* Portrait Mode Space Fix */
-.front { min-height: clamp(400px, 80vh, 850px) !important; justify-content: center !important; }
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIWC and the TAT. | Dr. Heather Leffew</title>
+    <!-- Design System: tokens load via @import inside institutional.css -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js" defer></script>
+    <link rel="stylesheet" href="../design_system/css/global.css">
+    <style>
+      /* Ensure Markdown components look correct in the reading column */
+      .markdown-body { margin-top: 1.5rem; }
+      .markdown-body p { margin-bottom: 1.25em; }
+      .markdown-body img { max-width: 100%; height: auto; display: block; margin: 2em auto; }
+      .markdown-body pre { padding: 1.5em; overflow-x: auto; background: var(--obsidian); border: 1px solid var(--charcoal); margin: 2em 0; }
+      .markdown-body code { font-family: var(--mono); font-size: 0.85em; }
+    </style>
 </head>
-<body data-category="Clinical Psychology" data-title="TAT Narratives">
-<div id="preloader"><div id="preloader-left"></div><div id="preloader-right"></div><div id="preloader-line"></div></div>
 
+<body data-category="Psycholinguistic Measurement" data-title="Diagnostic_Thematic_Apperception_Narratives">
+
+<!-- Reading progress -->
 <div id="progress"></div>
+
+<!-- Top nav (injected by global_chrome.js) -->
 <div id="global-nav-container"></div>
+
+<!-- Chapter spine (populated by global_chrome.js) -->
 <aside id="spine"></aside>
+
+<!-- Atmospheric gradient -->
 <div class="atmosphere"></div>
+
 <canvas id="glCanvas"></canvas>
 
-<!-- ============================================================
-     FRONT MATTER
-     ============================================================ -->
+<!-- FRONT MATTER -->
 <section class="band band--dark front" data-spine="Front" data-section="Front matter">
-  <div class="ambient" aria-hidden="true">
-    <svg viewBox="0 0 600 600" fill="none">
-      <defs>
-        <radialGradient id="r1" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="#DBA844" stop-opacity="0.25"/>
-          <stop offset="100%" stop-color="#0F3A6B" stop-opacity="0.0"/>
-        </radialGradient>
-      </defs>
-      <circle cx="300" cy="300" r="280" fill="url(#r1)"/>
-      <path d="M 150,300 C 150,300 300,100 450,300 T 750,300" stroke="#7A1626" stroke-width="1.5" stroke-dasharray="2 6" opacity="0.6"/>
-    </svg>
-  </div>
   <div class="col-wide">
-    <div class="meta-row"><span>Clinical NLP</span><span class="sep">/</span><span>LIWC Arrays</span></div>
-    <h1>LIWC NLP Extraction in TAT Narratives.</h1>
-    <p class="abstract">
-      Automating the diagnosis of human psychology. By pointing Linguistic Inquiry and Word Count (LIWC) parsers at unstructured Thematic Apperception Test (TAT) narratives, we replace the inter-rater variance of traditional clinical scoring with deterministic, multidimensional vectors that mathematically map latent cognitive distress.
-    </p>
-    <div class="byline" style="margin-top:32px;">
-      <div style="font-family:var(--mono); font-size:10.5px; letter-spacing:0.20em; text-transform:uppercase; color:var(--tungsten);">
-        Domain
-        <strong style="color:var(--platinum); font-weight:500; display:block; margin-top:6px; letter-spacing:0.08em; font-family:var(--body); font-style:italic; font-size:14px; text-transform:none;">Clinical Data Science</strong>
+    <div class="grid">
+     <div>
+      <div class="meta-row">
+        <span class="bracket">CASE STUDY</span>
+        <span class="sep">/</span>
+        <span>Psycholinguistic Measurement</span>
+        <span class="sep">/</span>
+        <span>Misc</span>
       </div>
-      <div style="font-family:var(--mono); font-size:10.5px; letter-spacing:0.20em; text-transform:uppercase; color:var(--tungsten); margin-left:48px;">
-        Methodology
-        <strong style="color:var(--platinum); font-weight:500; display:block; margin-top:6px; letter-spacing:0.08em; font-family:var(--body); font-style:italic; font-size:14px; text-transform:none;">Linguistic Extraction Pipeline</strong>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- ============================================================
-     SECTIONS
-     ============================================================ -->
-<section class="band band--dark" data-spine="Context" data-section="NLP Data Science">
-  <div class="eyebrow reveal">01 / The Context</div>
-  <h2 class="reveal is-chapter">Scraping the Human Condition.</h2>
-  <p class="has-dropcap reveal col-with-sidenotes">
-    As a clinical psychologist, I'm intimately familiar with the limitations of traditional projective testing. When an employee or patient is asked to write a narrative based on ambiguous stimuli<span class="sn"><span class="sn-num">1</span><span class="sn-body"><strong>Murray, H. A. (1943).</strong> Thematic apperception test manual. Harvard University Press. The TAT relies on the projective hypothesis, assuming individuals project their own unconscious needs, fears, and motives onto ambiguous social stimuli.</span></span>, the resulting text is profoundly rich but entirely unstructured. Historically, extracting meaning required subjective clinical interpretation. This introduces massive inter-rater variance: two highly trained clinicians reading the exact same narrative will inevitably score it differently based on their own biases.
-  </p>
-  <p class="reveal col-with-sidenotes">
-    To scale psychological insights for enterprise applications - like analyzing engagement surveys or 360-degree feedback loops - we need to remove the clinician from the immediate parsing loop. By passing these free-response narratives through a deterministic Natural Language Processing architecture<span class="sn"><span class="sn-num">2</span><span class="sn-body"><strong>Pennebaker, J. W., et al. (2015).</strong> The development and psychometric properties of LIWC2015. UT Faculty/Researcher Works. The LIWC engine deterministically maps tokens to established cognitive and emotional psychometric dictionaries.</span></span>, we transform qualitative psychological distress into a dense, reproducible numerical matrix. We move from subjective interpretation to objective vector correlations.
-  </p>
-</section>
+      <h1>LIWC and the TAT.</h1>
 
-<section class="band band--paper" data-spine="Feature Engineering" data-section="Exploratory Data">
-  <div class="eyebrow reveal">02 / Feature Engineering</div>
-  <h2 class="reveal">Clustering Negative Affect.</h2>
-  <p class="reveal">
-    The architecture tokenizes the narrative and maps it against hierarchical psycho-linguistic dictionaries. Specific abstract concepts like generalized anxiety, distinct anger, and cognitive processing density cluster reliably under algorithmic scrutiny. Using Python's data stack, we calculate the covariance across thousands of parsed clinical sentences, allowing mathematical models to flag psychopathology patterns much faster than manual review.
-  </p>
+      <p class="abstract">
+        A Fielding Graduate University paper makes the case that Linguistic Inquiry and Word Count belongs in Thematic Appercept...
+      </p>
 
-  <div class="code-wrapper reveal">
-    <div class="code-header">
-      <span>liwc_correlation_extraction.py</span>
-      <span>PYTHON</span>
-    </div>
-    <pre class="code-block"><code><span class="cm"># Isolating Clout, Authenticity, and Affect from text input arrays</span>
-<span class="kw">import</span> pandas <span class="kw">as</span> pd
-<span class="kw">import</span> seaborn <span class="kw">as</span> sns
-
-<span class="kw">def</span> <span class="fn">extract_affect_covariance</span>(filepath):
-    df = pd.<span class="fn">read_excel</span>(filepath)
-    <span class="cm"># The correlation reveals how often anxiety and anger co-emerge</span>
-    affect_correlations = df[[<span class="str">'posemo'</span>, <span class="str">'negemo'</span>, <span class="str">'anx'</span>, <span class="str">'anger'</span>, <span class="str">'sad'</span>]].<span class="fn">corr</span>()
-    
-    <span class="cm"># Rendering a heatmap to map emotional clustering</span>
-    <span class="kw">return</span> sns.<span class="fn">heatmap</span>(affect_correlations, annot=<span class="kw">True</span>, cmap=<span class="str">"vlag"</span>)</code></pre>
-  </div>
-
-  <div class="stat-grid reveal">
-    <div class="stat-card">
-      <div class="lbl">Negative Affect (negemo)</div>
-      <div class="val">r = 0.84</div>
-      <div class="diff">Correlation with unstructured Anxiety markers in TAT narratives.</div>
-    </div>
-    <div class="stat-card">
-      <div class="lbl">Cognitive Clout</div>
-      <div class="val">r = -0.62</div>
-      <div class="diff">Inverse correlation mapping linguistic uncertainty processing.</div>
-    </div>
-  </div>
-</section>
-
-<section class="band band--dark" data-spine="Radar Simulation" data-section="Simulation">
-  <div class="eyebrow reveal">03 / The Data Signature</div>
-  <h2 class="reveal">Mapping Psychological Topography.</h2>
-  <p class="reveal">
-    Instead of isolating individual emotions, we construct a multidimensional mean across six key psycho-linguistic axes: Anger, Anxiety, Sadness, Positive Emotion, Cognitive Mechanisms, and Clout. By layering these cohorts mathematically, the latent distress signature emerges vividly. An algorithm can ingest an enterprise dataset and overlay these vectors to detect workforce stress without reading a single private sentence.
-  </p>
-
-  <div class="figure reveal">
-    <div class="frame">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; flex-wrap:wrap; gap:16px;">
-        <div style="font-family:var(--mono); font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--tungsten);">Interactive: SVG Radar Matrix</div>
-        <div class="sim-controls" style="display:flex; gap:16px;">
-          <button class="sim-btn is-active" id="btn-distress">High Distress Cohort</button>
-          <button class="sim-btn" id="btn-baseline">Baseline Stability Cohort</button>
+      <div class="byline">
+        <div>
+          Subject
+          <strong>N/A</strong>
+        </div>
+        <div>
+          Architecture
+          <strong>N/A</strong>
+        </div>
+        <div>
+          Output
+          <strong>N/A</strong>
         </div>
       </div>
-      
-      <div class="svg-container" style="width:100%; height:50vh; min-height:400px; background:var(--charcoal); border:1px solid var(--graphite); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;">
-        <!-- Pure SVG Radar Chart Simulator -->
-        <svg id="radar-svg" viewBox="-200 -200 400 400" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" style="max-height:360px; max-width:360px; overflow:visible;">
-          <!-- Grid Circles -->
-          <g stroke="var(--graphite)" fill="none" stroke-width="1">
-            <circle r="32"/>
-            <circle r="64"/>
-            <circle r="96"/>
-            <circle r="128"/>
-            <circle r="160"/>
-          </g>
-          <!-- Axes Lines -->
-          <g id="radar-axes" stroke="var(--tungsten)" stroke-width="1" stroke-dasharray="2,4" opacity="0.5"></g>
-          <!-- Labels -->
-          <g id="radar-labels" font-family="var(--mono)" font-size="10px" fill="var(--platinum)" opacity="0.9"></g>
-          
-          <!-- Data Polygon -->
-          <path id="radar-polygon" fill="rgba(122, 22, 38, 0.3)" stroke="#7A1626" stroke-width="2" style="transition: d 0.8s var(--ease-out), fill 0.8s var(--ease-out), stroke 0.8s var(--ease-out);"></path>
-          
-          <!-- Data Points -->
-          <g id="radar-points"></g>
-        </svg>
-      </div>
+     </div>
+     <div></div>
     </div>
   </div>
 </section>
 
-<!-- Section 04: References -->
+<!-- INJECTED MARKDOWN CONTENT -->
+
+<!-- SECTION 1: Introduction -->
+<section class="band band--paper" data-spine="Introduction" data-section="Introduction">
+  <div class="col-wide markdown-body">
+    <h1>LIWC and the TAT.</h1>
+<div class="eyebrow reveal">01 / Introduction</div>
+<h2 class="reveal is-chapter">Dr. Heather Leffew
+Obelus Institute
+May 2026</h2>
+
+  </div>
+</section>
+
+<!-- SECTION 2: Abstract -->
+<section class="band band--dark" data-spine="Abstract" data-section="Abstract">
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">02 / Abstract</div>
+<h2 class="reveal is-chapter">Abstract</h2>
+<p class="reveal">A Fielding Graduate University paper makes the case that Linguistic Inquiry and Word Count belongs in Thematic Apperception Test interpretation. An accompanying pipeline scores 677 card responses from 69 participants across 31 TAT cards and tests whether specific cards reliably pull for the themes they were designed to elicit. Together they sketch a path toward continuous, item-level TAT scoring.</p>
+<p class="reveal">01 / The Case</p>
+
+  </div>
+</section>
+
+<!-- SECTION 3: What words give away that stories cannot. -->
+<section class="band band--paper" data-spine="What words give away" data-section="What words give away that stories cannot.">
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">03 / What words give away that stories cannot.</div>
+<h2 class="reveal is-chapter">What words give away that stories cannot.</h2>
+<p class="reveal">The Thematic Apperception Test asks a respondent to look at an ambiguous picture and tell a story about it1<strong>Morgan &amp; Murray (1935).</strong> A method for investigating fantasies: The Thematic Apperception Test. <em>Archives of Neurology &amp; Psychiatry, 34</em>, 289-306. The projective hypothesis: ambiguous stimuli are perceived and organized according to the respondent&#39;s needs, motives, and feelings (Teglasi, 2010).. Traditional interpretation treats those stories as content. A clinician reads the narrative for themes, conflicts, object relations, and the rest. Inter-rater variability has been the recurring weakness of the method since Murray first published it in 1935.</p>
+<p class="reveal">Tausczik and Pennebaker (2010) make a distinction worth bringing into projective assessment. Content words carry the &quot;what&quot; of a message. Function words2<strong>Tausczik &amp; Pennebaker (2010).</strong> The psychological meaning of words: LIWC and computerized text analysis methods. <em>Journal of Language and Social Psychology, 29</em>(1), 24-54. Function words are pronouns, prepositions, articles, conjunctions, and auxiliary verbs - the structural scaffolding of a sentence. carry the &quot;how.&quot; Pronouns, prepositions, articles, conjunctions, auxiliary verbs. These are largely outside conscious management. A respondent can suppress mention of family or money. They cannot easily suppress how often they reach for the word &quot;I.&quot;</p>
+<p class="reveal">LIWC2015 is a deterministic dictionary parser. It scores a text against roughly ninety psychometrically anchored categories: pronoun families, affect categories, social processes, cognitive processes, drives, personal concerns. Pairing it with the TAT does not replace the clinician. It adds a second channel of evidence, one that responds to the parts of language the respondent is not watching.</p>
+<p class="reveal">02 / The Dataset</p>
+
+  </div>
+</section>
+
+<!-- SECTION 4: Six hundred seventy-seven narratives, split four ways. -->
+<section class="band band--dark" data-spine="Six hundred seventy-" data-section="Six hundred seventy-seven narratives, split four ways.">
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">04 / Six hundred seventy-seven narratives, split four ways.</div>
+<h2 class="reveal is-chapter">Six hundred seventy-seven narratives, split four ways.</h2>
+<p class="reveal">The corpus is built from a TAT administration to 69 participants covering 31 card types. Each narrative was cleaned to strip assessor prompts and behavioral observations, then split so the same dataset can be queried at four different grains: each individual response to each individual card, each individual&#39;s full protocol, all responses to a single card, and the whole corpus as a single document. LIWC-published base rates for blogs, expressive writing, novels, and other text genres sit alongside the TAT data so any finding can be sanity-checked against an external reference.</p>
+<p class="reveal">Card responses</p>
+<p class="reveal">677</p>
+<p class="reveal">Independent card-level narratives from 69 participants, after cleaning and exclusion of mislabeled records.</p>
+<p class="reveal">Cards represented</p>
+<p class="reveal">31</p>
+<p class="reveal">Frequencies range from 60 (Card 2) down to 2 (Card 13G); card-level analysis is limited to the higher-frequency cards.</p>
+<p class="reveal">LIWC2015 features</p>
+<p class="reveal">~90</p>
+<p class="reveal">Pronoun families, affect categories, social processes, cognitive processes, drives, personal concerns, temporal focus.</p>
+<p class="reveal">Card-level analysis privileges the cards that produced enough narratives to support inference. The dataset assigns five mutually exclusive types to each row (INDVNARR, INDVCARDALLRESP, INDVRESPALLCARDS, WHOLECORPORA, BASERATE), so the same LIWC variable can be examined at whichever grain the question requires.</p>
+<p class="reveal">03 / The Finding</p>
+
+  </div>
+</section>
+
+<!-- SECTION 5: Cards pull for the themes they were designed to elicit. -->
+<section class="band band--paper" data-spine="Cards pull for the t" data-section="Cards pull for the themes they were designed to elicit.">
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">05 / Cards pull for the themes they were designed to elicit.</div>
+<h2 class="reveal is-chapter">Cards pull for the themes they were designed to elicit.</h2>
+<p class="reveal">A MANOVA across Cards 1, 2, 3BM, 4, and 8BM (the five highest-frequency cards) tests whether LIWC variables differ by card. They do, with significance on every emotion, social, drive, and personal concern category examined. The signature each card produces lines up with what the test&#39;s clinical literature claims it elicits.</p>
+<p class="reveal">Card 1 (boy with violin) pulls 1.88x the corpus baseline for achievement language. Card 2 (farm scene) pulls 1.80x for family and 2.55x for work. Card 3BM (huddled figure) pulls 4.74x for sadness and 2.17x for anxiety. Card 4 (woman restraining a man) pulls 3.38x for anger. Card 8BM (surgical scene) pulls 4.57x for death language. Every contrast across cards reaches p &lt; .05; most reach p &lt; .001.</p>
+<p class="reveal">LIWC Means by Card, normalized to per-axis max</p>
+<p class="reveal">Card 1 / Achievement
+Card 3BM / Sadness
+Card 8BM / Death</p>
+<p class="reveal"><img src="fig_2.svg" alt="Figure 2"></p>
+<p class="reveal">FIG. 01   Six LIWC axes per card: anxiety, anger, sadness, achievement drive, power drive, death. Values are mean LIWC scores from the MANOVA, normalized to the per-axis maximum across the five compared cards.</p>
+<p class="reveal">04 / Style Words</p>
+
+  </div>
+</section>
+
+<!-- SECTION 6: Pronouns and negation as clinical signal. -->
+<section class="band band--dark" data-spine="Pronouns and negatio" data-section="Pronouns and negation as clinical signal.">
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">06 / Pronouns and negation as clinical signal.</div>
+<h2 class="reveal is-chapter">Pronouns and negation as clinical signal.</h2>
+<p class="reveal">Function-word patterns map onto clinical states with surprising consistency. Depressed and suicidal individuals use more first-person singular pronouns, more death-related words, and more negatively valenced language (Bernard et al., 2016). Grief over a romantic loss raises first-person singular and lowers causal words (Boals &amp; Klein, 2005). High rates of negation track with the self-aggression associated with suicidality and substance dependence (Hargitai et al., 2007). The interpretation has to be careful: high first-person singular can mark pain, pathological egocentrism, or simple self-awareness depending on what else is going on in the language.</p>
+<p class="reveal">Psychotic speech leaves a different signature. The open-narrative format of the TAT lets neologisms, tangentiality, and the kind of temporal-proximity word linkage central to the Cloze procedure (Salzinger et al., 1964) surface in a way structured tests cannot capture. Pairing LIWC with TAT narratives helps separate disordered thought form from disordered thought content - a distinction that drives both conceptualization and intervention (Langdon, Coltheart, Ward, &amp; Catts, 2002).</p>
+<p class="reveal">Trait measurement also benefits. Linguistic analysis of narratives can differentiate person-oriented from thing-oriented respondents (McIntyre &amp; Graziano, 2016), and latent semantic analysis recovers Big Five traits from natural speech (Kwantes et al., 2016). For cognitive functioning, the linguistic content of TAT narratives discriminates participants with agenesis of the corpus callosum from age- and intelligence-matched controls (Turk, Brown, Symington, &amp; Paul, 2010), pointing to a use case beyond the affective domain.</p>
+<p class="reveal">05 / Future Direction</p>
+
+  </div>
+</section>
+
+<!-- SECTION 7: Toward continuous item-level TAT scoring. -->
+<section class="band band--paper" data-spine="Toward continuous it" data-section="Toward continuous item-level TAT scoring.">
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">07 / Toward continuous item-level TAT scoring.</div>
+<h2 class="reveal is-chapter">Toward continuous item-level TAT scoring.</h2>
+<p class="reveal">The card-level effects in section 03 suggest a way to put more structure on TAT interpretation. If each card pulls reliably for a known set of LIWC variables, then those variables can function as the card&#39;s measurement axes. A respondent&#39;s score on each axis can be compared against a card-specific norm metric rather than a global one. Is this person&#39;s response to Card 3BM unusually sad compared to other people&#39;s responses to Card 3BM? Does the same elevation show up across their full protocol? Does it line up with a current or historical diagnosis?</p>
+<p class="reveal">The framing is closer to continuous manifest-variable item response than to traditional projective scoring. Each card is treated as its own measure with its own threshold; the whole protocol is treated as a larger measure built from those item-level scores. The clinician stays in the loop, since LIWC cannot read irony, idiom, or the contextual oddness of a narrative that earns clinical attention through its strangeness rather than its frequency counts. But the diagnostic pathway gains a quantitative spine the TAT has not historically had.</p>
+<p class="reveal">06 / Bibliography</p>
+
+  </div>
+</section>
+
+<!-- SECTION 8: References -->
 <section class="band band--paper" data-spine="References" data-section="References">
-  <div class="eyebrow reveal">04 / Bibliography</div>
-  <h2 class="reveal">References</h2>
-  <div class="report-prose reveal">
-    <ul style="list-style-type:none; padding:0; margin-top:24px; font-family:var(--body); font-size:16px;">
-      <li style="margin-bottom:16px; padding-left:36px; text-indent:-36px;">
-        Murray, H. A. (1943). <em>Thematic apperception test manual</em>. Harvard University Press.
-      </li>
-      <li style="margin-bottom:16px; padding-left:36px; text-indent:-36px;">
-        Pennebaker, J. W., Booth, R. J., Boyd, R. L., & Francis, M. E. (2015). Linguistic Inquiry and Word Count: LIWC2015. <em>Pennebaker Conglomerates</em>.
-      </li>
-    </ul>
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">08 / References</div>
+<h2 class="reveal is-chapter">References</h2>
+<ul>
+<li>Aronow, E., Weiss, K. A., &amp; Reznikoff, M. (2001). <em>A practical guide to the Thematic Apperception Test: The TAT in clinical practice</em>. Routledge.</li>
+<li>Bernard, J. D., Baddeley, J. L., Rodriguez, B. F., &amp; Burke, P. A. (2016). Depression, language, and affect: An examination of the influence of baseline depression and affect induction on language. <em>Journal of Language and Social Psychology, 35</em>(3), 317-326.</li>
+<li>Boals, A., &amp; Klein, K. (2005). Word use in emotional narratives about failed romantic relationships and subsequent mental health. <em>Journal of Language and Social Psychology, 24</em>(3), 252-268.</li>
+<li>Cohen, A. S., Minor, K. S., Baillie, L. E., &amp; Dahir, A. M. (2007). Clarifying the linguistic signature: Measuring personality from natural speech. <em>Journal of Personality Assessment, 90</em>(6), 559-563.</li>
+<li>Gruber, N., &amp; Kreuzpointner, L. (2013). Measuring the reliability of picture story exercises like the TAT. <em>PLoS One, 8</em>(11), e79450.</li>
+<li>Hargitai, R., Naszódi, M., Kis, B., Nagy, L., Bóna, A., &amp; László, J. (2007). Linguistic markers of depressive dynamics in self-narratives: Negation and self-reference. <em>Empirical Text and Culture Research, 3</em>, 26-38.</li>
+<li>He, Q., Veldkamp, B. P., Glas, C. A., &amp; de Vries, T. (2015). Automated assessment of patients&#39; self-narratives for posttraumatic stress disorder screening using natural language processing and text mining. <em>Assessment</em>, 1-16.</li>
+<li>Kuperberg, G. R. (2010). Language in schizophrenia part 1: An introduction. <em>Language and Linguistics Compass, 4</em>(8), 576-589.</li>
+<li>Kwantes, P. J., Derbentseva, N., Lam, Q., Vartanian, O., &amp; Marmurek, H. H. (2016). Assessing the Big Five personality traits with latent semantic analysis. <em>Personality and Individual Differences, 102</em>, 229-233.</li>
+<li>Langdon, R., Coltheart, M., Ward, P. B., &amp; Catts, S. V. (2002). Disturbed communication in schizophrenia: The role of poor pragmatics and poor mind-reading. <em>Psychological Medicine, 32</em>, 1273-1284.</li>
+<li>Leffew, H. (2017). <em>Interpretation of the Thematic Apperception Test: A case for the inclusion of linguistic analysis</em>. Fielding Graduate University.</li>
+<li>Marini, A., Spoletini, I., Rubino, I. A., Ciuffa, M., Bria, P., Martinotti, G., ... Spalletta, G. (2008). The language of schizophrenia: An analysis of micro and macrolinguistic abilities and their neuropsychological correlates. <em>Schizophrenia Research, 105</em>(1-3), 144-155.</li>
+<li>McIntyre, M. M., &amp; Graziano, W. G. (2016). Seeing people, seeing things: Individual differences in selective attention. <em>Personality and Social Psychology Bulletin, 42</em>(9), 1258-1271.</li>
+<li>Morgan, C. D., &amp; Murray, H. A. (1935). A method for investigating fantasies: The Thematic Apperception Test. <em>Archives of Neurology &amp; Psychiatry, 34</em>, 289-306.</li>
+<li>Pennebaker, J. W., Booth, R. J., Boyd, R. L., &amp; Francis, M. E. (2015). <em>Linguistic Inquiry and Word Count: LIWC2015</em>. Pennebaker Conglomerates.</li>
+<li>Pennebaker, J. W., &amp; King, L. A. (1999). Linguistic styles: Language use as an individual difference. <em>Journal of Personality and Social Psychology, 77</em>(6), 1296-1312.</li>
+<li>Salzinger, K., Portnoy, S., &amp; Feldman, R. S. (1964). Verbal behavior of schizophrenic and normal subjects. <em>Annals of the New York Academy of Sciences, 105</em>, 845-860.</li>
+<li>Seih, Y. T., Beier, S., &amp; Pennebaker, J. W. (2016). Development and examination of the linguistic category model in a computerized text analysis method. <em>Journal of Language and Social Psychology</em>, 1-13.</li>
+<li>Semin, G. R., &amp; Fiedler, K. (1988). The cognitive functions of linguistic categories in describing persons: Social cognition and language. <em>Journal of Personality and Social Psychology, 54</em>, 558-568.</li>
+<li>Tausczik, Y. R., &amp; Pennebaker, J. W. (2010). The psychological meaning of words: LIWC and computerized text analysis methods. <em>Journal of Language and Social Psychology, 29</em>(1), 24-54.</li>
+<li>Teglasi, H. (2010). <em>Essentials of TAT and other storytelling assessments</em> (2nd ed.). John Wiley &amp; Sons.</li>
+<li>Turk, A. A., Brown, W. S., Symington, M., &amp; Paul, L. K. (2010). Social narratives in agenesis of the corpus callosum: Linguistic analysis of the Thematic Apperception Test. <em>Neuropsychologia, 48</em>(1), 43-50.</li>
+<li>Winter, D. G. (1998). &quot;Toward a science of personality psychology&quot;: David McClelland&#39;s development of empirically derived TAT measures. <em>History of Psychology, 1</em>(2), 130-153.</li>
+</ul>
+
   </div>
 </section>
 
 
-
-
-
-
-<!-- ============================================================
-     TELEMETRY LOGIC
-     ============================================================ -->
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-
-    /* --- Spine Observer Logic --- */
-    const spine = document.getElementById('spine');
-    const sections = Array.from(document.querySelectorAll('section[data-spine]'));
-    sections.forEach((sec, i) => {
-      const row = document.createElement('div');
-      row.className = 'row';
-      const isPaper = sec.classList.contains('band--paper');
-      row.innerHTML = `<div class="num">0${i+1}</div><div class="tick"></div><div class="label">${sec.getAttribute('data-spine')}</div>`;
-      row.addEventListener('click', () => { sec.scrollIntoView({ behavior:'smooth' }); });
-      spine.appendChild(row);
-    });
-    
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if(e.isIntersecting) {
-          const idx = sections.indexOf(e.target);
-          Array.from(spine.children).forEach((child, i) => {
-            child.classList.remove('is-active', 'is-paper-active');
-            if(i === idx) {
-              const isPaper = e.target.classList.contains('band--paper');
-              child.classList.add(isPaper ? 'is-paper-active' : 'is-active');
-              const topnavEl = document.getElementById('topnav');
-              const spineEl = document.getElementById('spine');
-              if(isPaper) {
-                if (topnavEl) topnavEl.classList.add('is-paper');
-                if (spineEl) spineEl.classList.add('is-paper');
-              } else {
-                if (topnavEl) topnavEl.classList.remove('is-paper');
-                if (spineEl) spineEl.classList.remove('is-paper');
-              }
-            }
-          });
-        }
-      });
-    }, { rootMargin: "-45% 0px -45% 0px" });
-    sections.forEach(s => obs.observe(s));
-
-    /* --- Vanilla JS / SVG Radar Simulator --- */
-    const dimensions = ["Anger", "Anxiety", "Sadness", "PosEmo", "CogMech", "Clout"];
-    const distressData = [0.85, 0.90, 0.75, 0.20, 0.65, 0.30];
-    const baselineData = [0.30, 0.40, 0.25, 0.85, 0.80, 0.70];
-    const R = 160;
-
-    const axesGroup = document.getElementById('radar-axes');
-    const labelsGroup = document.getElementById('radar-labels');
-    const polygon = document.getElementById('radar-polygon');
-    const pointsGroup = document.getElementById('radar-points');
-
-    function getCoordinates(value, index, total) {
-        // -PI/2 shifts the start to the top (12 o'clock)
-        const angle = (Math.PI * 2 * index / total) - (Math.PI / 2);
-        const r = value * R;
-        return { x: r * Math.cos(angle), y: r * Math.sin(angle) };
-    }
-
-    // Draw static axes and labels
-    dimensions.forEach((dim, i) => {
-        const { x, y } = getCoordinates(1.0, i, dimensions.length);
-        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-        line.setAttribute('x1', 0); line.setAttribute('y1', 0);
-        line.setAttribute('x2', x); line.setAttribute('y2', y);
-        axesGroup.appendChild(line);
-        
-        // Offset labels slightly beyond the edge (1.15 multiplier)
-        const { x: lx, y: ly } = getCoordinates(1.15, i, dimensions.length);
-        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-        text.setAttribute('x', lx); text.setAttribute('y', ly);
-        text.setAttribute('text-anchor', 'middle');
-        text.setAttribute('alignment-baseline', 'middle');
-        text.textContent = dim;
-        labelsGroup.appendChild(text);
-    });
-
-    // Initialize stateful point elements
-    const pointEls = [];
-    dimensions.forEach(() => {
-        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        circle.setAttribute('r', 4);
-        circle.style.transition = 'cx 0.8s cubic-bezier(0.16,1,0.3,1), cy 0.8s cubic-bezier(0.16,1,0.3,1), fill 0.8s cubic-bezier(0.16,1,0.3,1)';
-        pointsGroup.appendChild(circle);
-        pointEls.push(circle);
-    });
-
-    // Morph the SVG Data Matrix
-    function updateRadar(dataArray, mode) {
-        let pathD = "";
-        dataArray.forEach((val, i) => {
-            const { x, y } = getCoordinates(val, i, dimensions.length);
-            if(i === 0) pathD += `M ${x} ${y} `;
-            else pathD += `L ${x} ${y} `;
-            
-            pointEls[i].setAttribute('cx', x);
-            pointEls[i].setAttribute('cy', y);
-            pointEls[i].setAttribute('fill', mode === 'distress' ? '#DBA844' : '#4D8CFF');
-        });
-        pathD += "Z";
-        
-        polygon.setAttribute('d', pathD);
-        if (mode === 'distress') {
-            polygon.setAttribute('fill', 'rgba(122, 22, 38, 0.35)'); // Alizarin fill
-            polygon.setAttribute('stroke', '#7A1626');
-        } else {
-            polygon.setAttribute('fill', 'rgba(26, 58, 107, 0.35)'); // Ink Blue fill
-            polygon.setAttribute('stroke', '#4D8CFF');
-        }
-    }
-
-    // Initial state
-    updateRadar(distressData, 'distress');
-
-    document.getElementById('btn-distress').addEventListener('click', function() {
-        this.classList.add('is-active');
-        document.getElementById('btn-baseline').classList.remove('is-active');
-        updateRadar(distressData, 'distress');
-    });
-
-    document.getElementById('btn-baseline').addEventListener('click', function() {
-        this.classList.add('is-active');
-        document.getElementById('btn-distress').classList.remove('is-active');
-        updateRadar(baselineData, 'baseline');
-    });
-
-    /* -- Reveal classes -- */
-    const reveals = document.querySelectorAll('.reveal');
-    const revObs = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if(e.isIntersecting) { e.target.classList.add('is-on'); revObs.unobserve(e.target); }
-      });
-    }, { rootMargin:"0px 0px -10% 0px" });
-    reveals.forEach(r => revObs.observe(r));
-
-    window.addEventListener('scroll', () => {
-      const p = document.documentElement.scrollTop / (document.documentElement.scrollHeight - document.documentElement.clientHeight);
-      document.body.style.setProperty('--p', (p*100)+'%');
-    });
-});
-</script>
-
-
-<script>
-/* ============================================================
-   DYNAMIC SIDENOTE CLEARANCE (Global Portfolio Mandate)
-   ============================================================ */
-document.addEventListener('DOMContentLoaded', () => {
-    const sidenoteParagraphs = document.querySelectorAll('.col-with-sidenotes');
-    sidenoteParagraphs.forEach(p => {
-        const sn = p.querySelector('.sn');
-        if (sn) {
-            const updateHeight = () => {
-                if (window.innerWidth >= 1240) {
-                    // Calculate exact clearance needed based on the sidenote's absolute top position
-                    const neededHeight = sn.offsetTop + sn.offsetHeight + 40;
-                    p.style.minHeight = neededHeight + 'px';
-                } else {
-                    p.style.minHeight = 'auto';
-                }
-            };
-            updateHeight();
-            setTimeout(updateHeight, 250);
-            window.addEventListener('resize', updateHeight);
-        }
-    });
-});
-</script>
-
-
-<!-- ============================================================
-     GLOBAL APP SHELL (BACK MATTER)
-     ============================================================ -->
+<!-- BACK MATTER: Related Works -->
 <section class="band band--dark back-matter" data-spine="Research Graph" data-section="Research Graph">
-  
-  
-
   <div class="back-matter" style="padding-top:0;">
     <h3 style="margin-bottom:22px;">Related Works</h3>
     <div class="related">
       <div class="related-grid" id="recommendation-grid">
-        <!-- Populated by JS -->
+        <!-- Populated by global_chrome.js from projects_index.json -->
       </div>
     </div>
   </div>
@@ -549,11 +234,13 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
     <div class="rt">&rarr;</div>
   </a>
-
 </section>
 
+<!-- INJECTED SCRIPTS -->
+interactive_0.js,interactive_1.js
+
+<!-- GLOBAL CHROME -->
+<!-- Need relative pathing adjustment based on actual file depth, defaulting to root pathing for now -->
 <script src="../design_system/js/global.js" defer></script>
-
-
 </body>
 </html>

@@ -1,0 +1,23 @@
+<svg style="width:100%; height:auto;" viewbox="0 0 600 240" xmlns="http://www.w3.org/2000/svg">
+<g fill="#A1A1A6" font-family="JetBrains Mono" font-size="11">
+<line stroke="#333" stroke-width="1" x1="220" x2="550" y1="210" y2="210"></line>
+<line stroke="#333" stroke-width="1" x1="220" x2="220" y1="20" y2="210"></line>
+<text text-anchor="middle" x="385" y="232">Aggregated Importance Score</text>
+<!-- Bar widths scaled: 0.18 = 297px, 0.16 = 264, 0.14 = 231, 0.13 = 215, 0.12 = 198 -->
+<text fill="#F5F5F7" text-anchor="end" x="210" y="44">Gaze to Face %</text>
+<rect fill="#0F3A6B" height="22" width="297" x="220" y="30"></rect>
+<text fill="#3866A0" x="527" y="46">0.18</text>
+<text fill="#F5F5F7" text-anchor="end" x="210" y="74">Phrase Repetition Rate</text>
+<rect fill="#3866A0" height="22" width="264" x="220" y="60"></rect>
+<text fill="#3866A0" x="494" y="76">0.16</text>
+<text text-anchor="end" x="210" y="104">Joint Attention Bids</text>
+<rect fill="#3866A0" height="22" width="231" x="220" y="90"></rect>
+<text fill="#3866A0" x="461" y="106">0.14</text>
+<text text-anchor="end" x="210" y="134">Response to Name Latency</text>
+<rect fill="#3866A0" height="22" width="215" x="220" y="120"></rect>
+<text fill="#3866A0" x="445" y="136">0.13</text>
+<text text-anchor="end" x="210" y="164">Functional Play %</text>
+<rect fill="#3866A0" height="22" width="198" x="220" y="150"></rect>
+<text fill="#3866A0" x="428" y="166">0.12</text>
+</g>
+</svg>

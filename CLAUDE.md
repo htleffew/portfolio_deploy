@@ -42,10 +42,10 @@ Note: core mechanisms, specific results with numbers, the "why it matters," any 
 - The text following a `## ` heading becomes its own section. The heading text is automatically used for the left-hand chapter spine.
 
 ### Step 3 — Select components
-Use the Visualization Decision Tree (below) for every data element. You can embed raw HTML components (like SVG charts or Plotly blocks) directly inside the Markdown.
+Interactive web components (like Plotly charts or custom WebGL) cannot be embedded directly in the Markdown body, as this breaks LaTeX compilation. If you need a visualization, write a standalone JS script for it, and list it in the YAML frontmatter `scripts` array. The SSG layout will inject it into a designated container outside the article body.
 
 ### Step 4 — Write the Markdown
-Create your `article.md` file. Ensure it begins with the required YAML frontmatter (see below).
+Create your `article.md` file. Ensure it begins with the required YAML frontmatter, immediately followed by the formal LaTeX title block (see below).
 
 ### Step 5 — Compile & Deploy
 Run the SSG compiler (`node build.js`), update the index (`node deploy.js`), and commit to GitHub. Exact commands at the bottom of this file.
@@ -72,16 +72,37 @@ tags:
   - "Tag One"
   - "Tag Two"
 visual: "<svg fill=\"none\" viewBox=\"0 0 600 600\"><!-- thumbnail SVG --></svg>"
-scripts: "<script src=\"custom_script.js\"></script>"
+scripts: ["custom_script.js"]
 ---
 ```
 
+### LaTeX-Compatible Title Block (Mandatory)
+Directly beneath the YAML frontmatter, you MUST include the formal LaTeX title block for `md_to_latex.py` compatibility. The file must look exactly like this:
+```markdown
+---
+[...YAML Frontmatter...]
+---
+# Your Article Title Here
+
+Dr. Heather Leffew
+Obelus Institute
+Month Year
+---
+
+## Abstract
+(Write your abstract here)
+
+## Next Section
+...
+```
+
 ### Body Content
-Write standard Markdown below the frontmatter.
+Write strictly pure Markdown below the abstract.
 - Use `## ` (H2) to separate major sections. The SSG compiler automatically parses `## ` headings to create alternating dark/paper bands and generates the left-hand navigation spine.
-- **DO NOT** use H1 (`# `). The compiler generates the H1 from your frontmatter title.
-- Use standard markdown for paragraphs, lists, and code blocks.
-- **Visualizations**: You can write raw HTML directly inside the Markdown file if you need to embed SVG diagrams or Plotly charts. The markdown parser handles raw HTML gracefully.
+- **DO NOT** use H1 (`# `) anywhere except for the single Title block at the top.
+- **NO RAW HTML**: To remain compatible with academic LaTeX compilation via `md_to_latex.py`, you are strictly forbidden from writing any HTML tags (`<div>`, `<svg>`, `<canvas>`, etc.) inside the markdown body.
+- **Tables**: Use standard pure Markdown tables. Do not use HTML tables.
+- **Visualizations**: If an interactive visualization is required for the web version, do NOT write HTML. Instead, declare the required JS file in the YAML frontmatter (`scripts: ["chart.js"]`). The SSG layout engine will automatically mount the visualization outside of the pristine markdown body.
 
 ---
 
@@ -155,95 +176,25 @@ The bands use `backdrop-filter: blur(10px)` on static elements. Never add additi
 
 ## Section Patterns
 
-### Front Matter (always band--dark)
-```html
-<section class="band band--dark front" data-spine="Front" data-section="Front matter">
-  <canvas id="glCanvas"></canvas>
-  <div class="col-wide">
-    <div class="grid">
-      <div>
-        <div class="meta-row">
-          <span class="bracket">Working note</span>
-          <span class="sep">/</span>
-          <span>Category</span>
-          <span class="sep">/</span>
-          <span>Subcategory</span>
-        </div>
-        <h1>Headline</h1>
-        <p class="abstract">Abstract text.</p>
-        <div class="byline">
-          <div>Subject <strong>Value</strong></div>
-          <div>Architecture <strong>Value</strong></div>
-          <div>Output <strong>Value</strong></div>
-        </div>
-      </div>
-      <div></div>
-    </div>
-  </div>
-</section>
+### Front Matter
+The Front Matter is now handled entirely by the YAML metadata block and the SSG compiler. Do not manually write front matter HTML.
+
+### Content Sections
+Use `## ` (H2) for all top-level sections. Do not use H1 except for the main title.
+
+```markdown
+## 01 / Eyebrow Text Here
+Opening paragraph goes here.
+
+Subsequent paragraphs...
 ```
 
-### Content Section — col-wide pattern
-```html
-<section class="band band--paper" data-spine="Label" data-section="Full Label">
-  <div class="col-wide">
-    <div class="eyebrow reveal">01 / Eyebrow</div>
-    <h2 class="reveal is-chapter">Heading</h2>
-    <p class="has-dropcap reveal">Opening paragraph...</p>
-    <p class="reveal">Subsequent paragraph...</p>
-  </div>
-</section>
-```
+### Figures and Data
+Use standard Markdown formatting for tables and code snippets.
+If a data visualization is required, do NOT write HTML blocks like `<div class="plotly-wrapper">`. Use the `scripts` array in your YAML frontmatter to load external interactive components, or compile static SVG files into the directory and reference them as normal Markdown links if supported by your secondary rendering pipelines.
 
-### Figure (SVG or image) — direct band child, gets wide span
-```html
-<div class="figure reveal">
-  <div class="frame">
-    <!-- SVG or img here -->
-  </div>
-  <div class="cap"><span class="num">FIG. 01</span> Caption text.</div>
-</div>
-```
-
-### Method Box (inside col-wide)
-```html
-<div class="method">
-  <div class="inner">
-    <div class="lab">Label</div>
-    Content text here.
-  </div>
-</div>
-```
-
-### Plotly Chart (direct band child, gets 1080px span)
-```html
-<div class="plotly-wrapper">
-  <div id="chart-id" style="width:100%;height:400px;"></div>
-</div>
-<script>/* Plotly.newPlot call */</script>
-```
-
-### Back Matter (always band--dark, always last)
-```html
-<section class="band band--dark back-matter" data-spine="Research Graph" data-section="Research Graph">
-  <div class="back-matter" style="padding-top:0;">
-    <h3 style="margin-bottom:22px;">Related Works</h3>
-    <div class="related">
-      <div class="related-grid" id="recommendation-grid">
-        <!-- Populated by global.js from projects_index.json -->
-      </div>
-    </div>
-  </div>
-  <a class="next-chap" id="next-chap-link" href="#">
-    <div class="lf">
-      <div class="eb">Next Publication</div>
-      <div class="ti" id="next-chap-title">Loading...</div>
-    </div>
-    <div class="rt">&rarr;</div>
-  </a>
-</section>
-<script src="../design_system/js/global.js" defer></script>
-```
+### Related Works & Next Chapter
+These are automatically injected by the SSG compiler (`build.js`) and `global.js`. You do not need to append back matter to your markdown file.
 
 ---
 
