@@ -118,11 +118,11 @@
   </p>
 
   <p class="reveal">
-    A fascinating hypothesis recently gained traction in the community, sometimes referred to informally as "vibe coding": what if we just tell the agent to do all of its internal reasoning in a highly dense logographic language like Simplified Chinese?
+    A fascinating hypothesis recently gained traction in the community, sometimes referred to informally as "vibe coding": what if we just tell the agent to do all of its internal reasoning in a highly dense logographic language like Simplified Chinese? The strongest version of the claim circulated as a viral assertion that Chinese prompts were roughly forty percent more token-efficient than English ones, a figure that, if true, would meaningfully reshape how production agents are designed.
   </p>
 
   <p class="reveal">
-    At the raw character level, this makes perfect, intuitive sense. A single Chinese logogram can encode a concept that might require an entire phrase in English. If you look at the raw string length of a Chinese reasoning trace, it is undeniably shorter. However, when we deploy this into practical agentic systems, we discover that this perceived efficiency is largely a mirage. It stems from a conflation of character-level density with the mechanical realities of Byte-Pair Encoding (BPE).
+    At the raw character level, the intuition makes perfect sense. A single Chinese logogram can encode a concept that might require an entire phrase in English. If you look at the raw string length of a Chinese reasoning trace, it is undeniably shorter. However, when we deploy this into practical agentic systems, the perceived efficiency turns out to be largely a mirage. It stems from a conflation of character-level density with the mechanical realities of Byte-Pair Encoding (BPE).
   </p>
 </section>
 
@@ -197,7 +197,8 @@ print(len(enc.encode(chinese_text)))
   </p>
   
   <div class="interactive-tokenizer reveal" id="tokenizer-demo">
-      <h4>Interactive Tokenizer Sandbox</h4>
+      <h4>Interactive Tokenizer Sandbox <span style="font-family: var(--mono, monospace); font-size: 0.7rem; font-weight: normal; letter-spacing: 0.18em; color: #aaa; margin-left: 12px;">ILLUSTRATIVE</span></h4>
+      <p style="font-size: 0.85rem; color: #aaa; margin-top: 0; margin-bottom: 16px;">This widget visualizes the fragmentation pattern conceptually rather than running a live tokenizer in your browser. For exact counts on your text, run it through OpenAI's <code style="color:#ddd;">tiktoken</code> with the <code style="color:#ddd;">cl100k_base</code> encoding, or the equivalent tokenizer for whichever model you target.</p>
       <input type="text" id="token-input" value="Algorithm vs 算法">
       <div class="token-display" id="token-output"></div>
   </div>
@@ -246,7 +247,7 @@ print(len(enc.encode(chinese_text)))
   </p>
 
   <p class="reveal">
-    A 2026 study by Ren et al. looked specifically at the "vibe coding" claim. They found that while a heavily Chinese-optimized model like GLM-5 might show a marginal token savings (around 0.98x compared to English), standard commercial models like GPT variants and MiniMax-2.7 actually required up to 1.28x <em>more</em> tokens to process the exact same Chinese reasoning tasks. 
+    A 2026 study by Ren et al. tested the "vibe coding" claim directly using SWE-bench Lite, a software engineering benchmark designed to stress real coding workflows rather than synthetic prompts. They found that while a heavily Chinese-optimized model like GLM-5 might show a marginal token savings (around 0.98x compared to English), standard commercial models like GPT variants and MiniMax-2.7 actually required up to 1.28x <em>more</em> tokens to process the exact same Chinese reasoning tasks. The authors themselves frame the findings as preliminary evidence given the limited model set tested, but the central claim is robust: there is no general language-level efficiency advantage, only a model-by-model tokenizer story.
   </p>
 
   <p class="reveal">
