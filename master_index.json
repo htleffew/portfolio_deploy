@@ -541,8 +541,8 @@
     },
     {
         "id": "Manifestation_Project",
-        "title": "Discourse Clustering on Manifestation Communities",
-        "desc": "By transforming 6,200 non-standard semantic captions into a localized sparse matrix, 7 distinct linguistic sub-clusters emerge on a major short-form video platform. These vectors differentiate core \"Law of Attraction\" ideology from niche esoteric cohorts (e.g. \"Tarot/Spells\").",
+        "title": "Discourse Clustering on TikTok Manifestation Communities",
+        "desc": "By transforming 6,200 non-standard semantic captions from TikTok manifestation and Law-of-Attraction content into a localized sparse matrix, seven distinct linguistic sub-clusters emerge. These vectors differentiate core Law-of-Attraction ideology from niche esoteric cohorts (e.g., Tarot/Spells).",
         "cat": "Research & Architecture",
         "subtype": "TF-IDF CLUSTERING",
         "tags": [

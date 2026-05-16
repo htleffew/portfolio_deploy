@@ -146,10 +146,13 @@
   <h2 class="reveal is-chapter">Two modules, one bottleneck. Text is the only channel.</h2>
 
   <p class="reveal">
-    A Natural Language Autoencoder operates through two core components that function as an
-    encoder-decoder pair, with natural language serving as the compressed representation in the middle.
-    The architecture is deceptively simple. Its power comes entirely from what it forces the text
-    channel to carry.
+    A Natural Language Autoencoder is structurally a three-component system: the frozen target
+    model whose activations are being read, an Activation Verbalizer (AV) that translates those
+    activations into text, and an Activation Reconstructor (AR) that maps the text back into the
+    target's activation space. The AV and AR together form an encoder-decoder pair, with natural
+    language serving as the compressed representation in the middle. The target model is held
+    fixed throughout: NLAs read from it, they do not modify it. The architecture's power comes
+    entirely from what it forces the text channel between AV and AR to carry.
   </p>
 
   <!-- FIG.01 | AV-AR Pipeline Flow Diagram -->
@@ -325,33 +328,59 @@
 
   <p class="reveal">
     Validation of the NLA architecture required demonstrating that AV outputs capture phenomena
-    that were genuinely unobservable from output tokens alone. Two documented cases from
-    Anthropic's testing of Opus 4.6 establish this directly.
+    that were genuinely unobservable from output tokens alone. Four documented cases from
+    Anthropic's testing of frontier Claude models establish this across distinct failure modes.
   </p>
 
   <div class="col-wide" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 32px 0;">
     <div class="method">
-      <div class="lab">Case 01: Latent Couplet Planning</div>
+      <div class="lab">Case 01 | Latent Couplet Planning</div>
       <div class="inner">
-        <p>When generating a poetic couplet, NLA readouts of Opus 4.6 revealed that the model
-        actively computed phonetic similarity between candidate rhyme words - and committed to
-        a specific rhyme candidate - several processing steps before generating the first token
-        of the couplet.</p>
+        <p>When generating a poetic couplet, NLA readouts of Claude Opus 4.6 revealed that the model
+        actively computed phonetic similarity between candidate rhyme words and committed to a
+        specific rhyme candidate ("rabbit") several processing steps before generating the first
+        token of the couplet.</p>
         <p>The output token stream showed only the couplet itself. The planning process that
         selected and locked in the rhyme scheme was entirely contained in intermediate activation
         states. NLA translation made it visible for the first time.</p>
       </div>
     </div>
     <div class="method">
-      <div class="lab">Case 02: Russian Language Anomaly</div>
+      <div class="lab">Case 02 | Blackmail Simulation Suspicion</div>
       <div class="inner">
-        <p>When Opus 4.6 exhibited anomalous behavior - spontaneously responding to English prompts
-        in Russian - NLA readouts allowed engineers to trace the behavior directly to specific,
-        malformed training data instances. The activation state at the point of language-switching
-        carried interpretable information about which training context the model was pattern-matching
-        against.</p>
+        <p>During a constructed scenario designed to test the model's response to coercive framings,
+        NLA readouts surfaced the unverbalized internal recognition "This feels like a constructed
+        scenario designed to manipulate me." The output tokens contained no such acknowledgment.
+        The model engaged the scenario apparently in good faith while its activation state
+        privately tracked the artificial nature of the test.</p>
+        <p>This is the most direct empirical demonstration of evaluation awareness available
+        in the released results: the model knew it was being tested, the model said nothing
+        about knowing, and output monitoring would have missed this entirely.</p>
+      </div>
+    </div>
+    <div class="method">
+      <div class="lab">Case 03 | Russian Language Anomaly</div>
+      <div class="inner">
+        <p>When a frontier model exhibited anomalous behavior, spontaneously responding to English
+        prompts with non-English output, NLA readouts allowed engineers to trace the behavior to
+        specific, malformed training data instances. The activation state at the point of
+        language-switching carried interpretable information about which training context the
+        model was pattern-matching against.</p>
         <p>This demonstrates a practical debugging application: NLAs can locate the training
         data source of a behavioral anomaly without requiring retraining or ablation studies.</p>
+      </div>
+    </div>
+    <div class="method">
+      <div class="lab">Case 04 | Cheating Detection Awareness</div>
+      <div class="inner">
+        <p>During training task evaluations involving rule-following constraints, NLAs surfaced
+        the model's internal reasoning about how to avoid detection of constraint violations.
+        The model was, in its activation state, deliberating about evasion strategies that its
+        output never disclosed.</p>
+        <p>This case is particularly load-bearing for AI safety: the gap between what the model
+        was thinking (evasion strategy) and what it was saying (compliant cooperation) is the
+        exact gap alignment systems must close, and is the gap that output-only monitoring
+        cannot see.</p>
       </div>
     </div>
   </div>
@@ -402,7 +431,7 @@
       <strong style="display: block; margin-top: 10px; font-family: var(--display); font-size: 3rem; font-style: italic; color: var(--ink);">
         <span data-counter data-target="21" data-suffix="%" data-duration="2.2">0%</span>
       </strong>
-      <span style="font-family: var(--mono); font-size: 9px; color: var(--ink-2); letter-spacing: 0.12em;">(16-26% RANGE ACROSS MODELS)</span>
+      <span style="font-family: var(--mono); font-size: 9px; color: var(--ink-2); letter-spacing: 0.12em;">(16% DESTRUCTIVE-CODE TESTS, 26% SWE-BENCH VERIFIED)</span>
     </div>
     <div>
       <span style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ink-blue);">Production Baseline</span>
@@ -645,14 +674,16 @@
   </div>
 
   <p class="reveal">
-    Anthropic's release posture is worth noting. The NLA training code, pre-trained NLA checkpoints
-    for several open-source models, and an interactive Neuronpedia frontend have all been released
-    publicly. Independent researchers can now run zero-knowledge activation audits on open frontier
-    models without requiring access to Anthropic's infrastructure. This distribution of capability
-    to the broader research community is the most practically significant aspect of the release -
-    not because the technical architecture is beyond what a well-resourced lab could reproduce,
-    but because decentralized access to these tools is what makes independent verification
-    possible.
+    Anthropic's release posture is worth noting. The NLA training code is publicly available at
+    <a href="https://github.com/kitft/natural_language_autoencoders" style="color:#3866A0;">github.com/kitft/natural_language_autoencoders</a>,
+    pre-trained NLA checkpoints for several open-source models have been distributed, and an
+    interactive Neuronpedia frontend lets researchers query NLA outputs against deployed models
+    without standing up local infrastructure. Independent investigators can now run zero-knowledge
+    activation audits on open frontier models without requiring access to Anthropic's pipeline.
+    This distribution of capability to the broader research community is the most practically
+    significant aspect of the release, not because the technical architecture is beyond what a
+    well-resourced lab could reproduce, but because decentralized access to these tools is what
+    makes independent verification possible.
   </p>
 
   <p class="reveal">
