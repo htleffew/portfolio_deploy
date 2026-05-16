@@ -70,7 +70,10 @@ def clean_aux(paper_dir: Path, stem: str) -> None:
     for ext in AUX_EXTS:
         f = paper_dir / f"{stem}{ext}"
         if f.exists():
-            f.unlink()
+            try:
+                f.unlink()
+            except PermissionError:
+                pass
 
 
 def build(md_path: Path, pdflatex: str, keep_aux: bool) -> Path:
@@ -87,7 +90,14 @@ def build(md_path: Path, pdflatex: str, keep_aux: bool) -> Path:
         run_pdflatex(pdflatex, tex_path)  # second pass for refs
     finally:
         if vendored_cls.exists():
-            vendored_cls.unlink()
+            try:
+                vendored_cls.unlink()
+            except PermissionError:
+                print(
+                    f"warning: could not remove {vendored_cls} "
+                    "(file is held by another process); leaving in place",
+                    file=sys.stderr,
+                )
         if not keep_aux:
             clean_aux(paper_dir, stem)
 
