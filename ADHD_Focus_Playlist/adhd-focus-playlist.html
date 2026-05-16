@@ -3,194 +3,252 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>How I Accidentally Wrote a Research Paper About My Own Playlist | Dr. Heather Leffew</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <title>Three Mechanisms in an ADHD Focus Playlist | Dr. Heather Leffew</title>
+    <!-- Design System: tokens load via @import inside institutional.css -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js" defer></script>
     <link rel="stylesheet" href="../design_system/css/global.css">
+    <style>
+      /* Ensure Markdown components look correct in the reading column */
+      .markdown-body { margin-top: 1.5rem; }
+      .markdown-body p { margin-bottom: 1.25em; }
+      .markdown-body img { max-width: 100%; height: auto; display: block; margin: 2em auto; }
+      .markdown-body pre { padding: 1.5em; overflow-x: auto; background: var(--obsidian); border: 1px solid var(--charcoal); margin: 2em 0; }
+      .markdown-body code { font-family: var(--mono); font-size: 0.85em; }
+    </style>
 </head>
-<body data-category="Neuroscience" data-title="ADHD Focus">
-<div id="preloader"><div id="preloader-left"></div><div id="preloader-right"></div><div id="preloader-line"></div></div>
 
+<body data-category="ADHD" data-title="ADHD_Focus_Playlist">
 
+<!-- Reading progress -->
 <div id="progress"></div>
+
+<!-- Top nav (injected by global_chrome.js) -->
 <div id="global-nav-container"></div>
+
+<!-- Chapter spine (populated by global_chrome.js) -->
 <aside id="spine"></aside>
 
+<!-- Atmospheric gradient -->
 <div class="atmosphere"></div>
 
 <canvas id="glCanvas"></canvas>
 
-        <section class="band band--dark front" data-spine="Overview" data-section="Front matter">
-            <div class="col-wide">
-                <div class="meta-row">
-                    <span>Neuroscience</span>
-                    <span class="sep">/</span>
-                    <span>ADHD</span>
-                    <span class="sep">/</span>
-                    <span>Auditory Focus</span>
-                </div>
-                <h1>How I Accidentally Wrote a Research Paper About My Own Playlist.</h1>
-                <p class="abstract">
-                    This was supposed to be one line on my About page. I was going to embed a Spotify playlist, write something like "this helps me focus," and move on with my life. But I have ADHD, and I am a psychologist, and I am constitutionally incapable of encountering a behavioral phenomenon without pulling it apart to figure out why it works.
-                </p>
-            </div>
-        </section>
+<!-- FRONT MATTER -->
+<section class="band band--dark front" data-spine="Front" data-section="Front matter">
+  <div class="col-wide">
+    <div class="grid">
+     <div>
+      <div class="meta-row">
+        <span class="bracket">CASE STUDY</span>
+        <span class="sep">/</span>
+        <span>ADHD</span>
+        <span class="sep">/</span>
+        <span>Auditory Focus</span>
+      </div>
 
-        <section class="band band--paper" data-spine="The Playlist" data-section="The Playlist">
-            <div class="eyebrow">01 / Context</div>
-            <h2>The Playlist</h2>
-            <div class="report-prose">
-                <p class="has-dropcap">I have had ADHD my entire life, and I have never once considered it a limitation. The cross-domain pattern recognition, the speed at which I can generate work, the ability to see connections between forensic psychology and AI alignment and psycholinguistics and control theory: that is what a divergent brain looks like when you point it at problems worth solving. But it also means that deep, sustained focus requires very specific conditions, and I have spent years refining what those conditions are for my particular brain.</p>
+      <h1>Three Mechanisms in an ADHD Focus Playlist</h1>
 
-                <p>This playlist is the result of that refinement, and the reason I am sharing it is that I want other ADHD people to have it. It is not what most people would consider good music. It is not something you would put on at a dinner party or play in your car with the windows down. But it is precisely tuned for a very specific purpose: creating the neurological conditions under which an ADHD brain can lock into deep work and stay there. My side hustle during my doctorate was live club DJing, so I came to this with a practical understanding of what specific audio features do to a room full of bodies, and that background turns out to be directly relevant to understanding why certain production choices create focus states rather than just pleasant listening experiences.</p>
+      <p class="abstract">
+        Most 'focus' playlists hover at 70 to 90 BPM. This one runs at 145, with exaggerated stereo panning and dense polyrhythm...
+      </p>
 
-                <p>Here is the playlist. Listen to it, or don't, but if you have ADHD and you have never tried anything like this, it is worth the experiment:</p>
+      <div class="byline">
+        <div>
+          Subject
+          <strong>N/A</strong>
+        </div>
+        <div>
+          Architecture
+          <strong>N/A</strong>
+        </div>
+        <div>
+          Output
+          <strong>N/A</strong>
+        </div>
+      </div>
+     </div>
+     <div></div>
+    </div>
+  </div>
+</section>
 
-                <div class="spotify-container">
-                    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/75ZbuIdCJWXIZRkidseQZN?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                </div>
-            </div>
-        </section>
+<!-- INJECTED MARKDOWN CONTENT -->
 
-        <section class="band band--dark" data-spine="The Model" data-section="Three Mechanisms">
-            <div class="eyebrow">02 / The Model</div>
-            <h2>Three Mechanisms, One State</h2>
-            <div class="report-prose">
-                <p>The playlist works because three auditory features operate simultaneously to address three distinct failure modes of the ADHD attention system. None of them works well in isolation. Together, they produce what I think of as the "high-stimulation, low-anxiety" state: the brain's surplus attentional bandwidth is fully occupied by the auditory stimulus, and the parasympathetic nervous system is simultaneously activated, so you get intense engagement without the restlessness or anxiety that usually accompanies it.</p>
-            </div>
-        </section>
+<!-- SECTION 1: Introduction -->
+<section class="band band--paper" data-spine="Introduction" data-section="Introduction">
+  <div class="col-wide markdown-body">
+    <h1>Three Mechanisms in an ADHD Focus Playlist</h1>
+<div class="eyebrow reveal">01 / Introduction</div>
+<h2 class="reveal is-chapter">Dr. Heather Leffew
+Obelus Institute
+May 2026</h2>
 
-        <section class="band band--paper" data-spine="Tempo" data-section="Mechanism 1: Tempo">
-            <div class="eyebrow">03 / Mechanism 1</div>
-            <h2>Tempo (140 to 150 BPM) and Optimal Stimulation Theory</h2>
-            <div class="report-prose">
-                <p class="has-dropcap">The most common misconception about ADHD is that it involves too much stimulation. The opposite is closer to the truth. Zentall's Optimal Stimulation Theory (Zentall, 1975; 1983) proposes that ADHD brains are chronically under-aroused, and that the hyperactivity, fidgeting, and distractibility that characterize ADHD are compensatory behaviors: the brain is trying to generate enough stimulation to reach its own biologically determined optimal arousal level.</p>
+  </div>
+</section>
 
-                <p>This reframes everything. The fidgeting is not a bug; it is the brain's attempt to fix an arousal deficit. The distraction is not a failure of willpower; it is the attentional system going out to forage for stimulation because the current task is not providing enough. Zentall called this "extra-task stimulation seeking," and the empirical evidence backs it up: when you add external stimulation to the environment (background noise, colored items, music), ADHD task performance improves, while neurotypical performance often degrades (Greenop &amp; Kann, 2007).</p>
+<!-- SECTION 2: Abstract -->
+<section class="band band--dark" data-spine="Abstract" data-section="Abstract">
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">02 / Abstract</div>
+<h2 class="reveal is-chapter">Abstract</h2>
+<p class="reveal">Most &quot;focus&quot; playlists hover at 70 to 90 BPM. This one runs at 145, with exaggerated stereo panning and dense polyrhythmic texture, and that is not an aesthetic choice. ADHD attention is gated by chronic under-arousal, not over-stimulation, and three audio features address the failure mode jointly: tempo at the optimal-stimulation threshold, bilateral stimulation through the vagus nerve, and structured complexity that resists habituation.</p>
+<p class="reveal">01 / Context</p>
 
-                <span class="sidenote">Most lo-fi or ambient "focus" playlists hover around 70 to 90 BPM. For an ADHD brain, that is below the arousal threshold and may be worse than silence.</span>
+  </div>
+</section>
 
-                <p>Most of the tracks in this playlist run between 140 and 150 BPM. That is fast. It is significantly faster than most lo-fi or ambient "focus" playlists, which tend to hover around 70 to 90 BPM. But that is precisely the point: a tempo that would be overstimulating for a neurotypical brain is operating at the arousal threshold that an ADHD brain needs to reach baseline. The fast tempo provides the dopamine hit externally so the brain does not have to go looking for it internally, and once that arousal deficit is addressed, the executive function system can do its job.</p>
-            </div>
-        </section>
+<!-- SECTION 3: The Playlist -->
+<section class="band band--paper" data-spine="The Playlist" data-section="The Playlist">
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">03 / The Playlist</div>
+<h2 class="reveal is-chapter">The Playlist</h2>
+<p class="reveal">Deep, sustained focus in an ADHD brain requires very specific conditions, and those conditions are not the same ones a neurotypical brain needs. The playlist below is built around three audio features, combined deliberately to address how the ADHD attention system actually fails. It is not pleasant background music. It is tuned to create a high-stimulation, low-anxiety state that an ADHD brain can lock into for sustained work, and the production choices that get you there are knowable rather than lucky.</p>
+<p class="reveal">The DJ context matters for what follows. Years of mixing for live rooms taught me what specific audio features do to a body&#39;s arousal state, and those same mechanisms map directly onto the neuroscience of focus. The argument of this note is that the three features below are not three things that happen to work, but a coordinated intervention on three distinct ADHD failure modes.</p>
+<p class="reveal">The playlist:</p>
+<p class="reveal">02 / The Model</p>
 
-        <section class="band band--dark" data-spine="Panning" data-section="Mechanism 2: Bilateral Panning">
-            <div class="eyebrow">04 / Mechanism 2</div>
-            <h2>Bilateral Panning and the Parasympathetic Nervous System</h2>
-            <div class="report-prose">
-                <p>If you listen to this playlist on headphones (which you should), you will notice that the sound moves. It pans from left to right, bounces between ears, and creates a physical sensation of audio traveling through your head. This is not an accident and it is not just a production choice. It is a form of bilateral stimulation.</p>
+  </div>
+</section>
 
-                <p>Bilateral stimulation (BLS) is the core mechanism of EMDR (Eye Movement Desensitization and Reprocessing) therapy, which uses alternating sensory input, whether visual (eye movements), tactile (tapping), or auditory (alternating tones), to activate both hemispheres of the brain simultaneously. BLS activates the parasympathetic nervous system via the vagus nerve (Shapiro, 2001), shifting the body from sympathetic "fight or flight" dominance toward parasympathetic "rest and digest" states.</p>
+<!-- SECTION 4: Three Mechanisms, One State -->
+<section class="band band--dark" data-spine="Three Mechanisms, On" data-section="Three Mechanisms, One State">
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">04 / Three Mechanisms, One State</div>
+<h2 class="reveal is-chapter">Three Mechanisms, One State</h2>
+<p class="reveal">The playlist works because three auditory features operate simultaneously to address three distinct failure modes of the ADHD attention system. None of them works well in isolation. Together, they produce what I think of as the &quot;high-stimulation, low-anxiety&quot; state: the brain&#39;s surplus attentional bandwidth is fully occupied by the auditory stimulus, and the parasympathetic nervous system is simultaneously activated, so you get intense engagement without the restlessness or anxiety that usually accompanies it.</p>
+<p class="reveal">03 / Mechanism 1</p>
 
-                <p>This matters for ADHD focus because of two things happening at once. First, ADHD is frequently comorbid with anxiety, and the fight-or-flight activation that accompanies what many ADHD people experience as "paralysis" (the state where you know exactly what you need to do but cannot make yourself start) is directly mitigated by parasympathetic activation. The panning audio is doing something physiological: it is calming the nervous system down while the high tempo keeps the brain engaged. That is the combination that matters.</p>
+  </div>
+</section>
 
-                <span class="sidenote">The ADHD community adopted "8D Audio" as a focus tool before the research community had a framework for why it worked. Community-driven empirical discovery is real science.</span>
+<!-- SECTION 5: Tempo (140 to 150 BPM) and Optimal Stimulation Theory -->
+<section class="band band--paper" data-spine="Tempo (140 to 150 BP" data-section="Tempo (140 to 150 BPM) and Optimal Stimulation Theory">
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">05 / Tempo (140 to 150 BPM) and Optimal Stimulation Theory</div>
+<h2 class="reveal is-chapter">Tempo (140 to 150 BPM) and Optimal Stimulation Theory</h2>
+<p class="reveal">The most common misconception about ADHD is that it involves too much stimulation. The opposite is closer to the truth. Zentall&#39;s Optimal Stimulation Theory (Zentall, 1975; 1983) proposes that ADHD brains are chronically under-aroused, and that the hyperactivity, fidgeting, and distractibility that characterize ADHD are compensatory behaviors: the brain is trying to generate enough stimulation to reach its own biologically determined optimal arousal level.</p>
+<p class="reveal">This reframes everything. The fidgeting is not a bug; it is the brain&#39;s attempt to fix an arousal deficit. The distraction is not a failure of willpower; it is the attentional system going out to forage for stimulation because the current task is not providing enough. Zentall called this &quot;extra-task stimulation seeking,&quot; and the empirical evidence backs it up: when you add external stimulation to the environment (background noise, colored items, music), ADHD task performance improves, while neurotypical performance often degrades (Greenop &amp; Kann, 2007).</p>
+<p class="reveal">Most lo-fi or ambient &quot;focus&quot; playlists hover around 70 to 90 BPM. For an ADHD brain, that is below the arousal threshold and may be worse than silence.</p>
+<p class="reveal">Most of the tracks in this playlist run between 140 and 150 BPM. That is fast. It is significantly faster than most lo-fi or ambient &quot;focus&quot; playlists, which tend to hover around 70 to 90 BPM. But that is precisely the point: a tempo that would be overstimulating for a neurotypical brain is operating at the arousal threshold that an ADHD brain needs to reach baseline. The fast tempo provides the dopamine hit externally so the brain does not have to go looking for it internally, and once that arousal deficit is addressed, the executive function system can do its job.</p>
+<p class="reveal">04 / Mechanism 2</p>
 
-                <p>Second, there is a resource-competition mechanism at work. Following the movement of sound through space occupies the brain's spatial awareness system. If the auditory spatial system is busy tracking where the sound is coming from and where it is going, that system cannot simultaneously scan the room for visual or contextual distractions. The ADHD community figured this out empirically before the research caught up: the widespread adoption of "8D Audio" (exaggerated stereo panning) as a focus tool among ADHD people is a community-driven discovery of what bilateral stimulation research has been documenting for decades.</p>
-            </div>
-        </section>
+  </div>
+</section>
 
-        <section class="band band--paper" data-spine="Complexity" data-section="Mechanism 3: Polyrhythms">
-            <div class="eyebrow">05 / Mechanism 3</div>
-            <h2>Polyrhythmic Complexity and Stochastic Resonance</h2>
-            <div class="report-prose">
-                <p class="has-dropcap">This is the counterintuitive one. You would think that simpler music would be less distracting and therefore better for focus. For neurotypical brains, that is often true. For ADHD brains, simple music is worse, because the brain predicts the pattern, habituates to it, gets bored, and goes looking for something more interesting.</p>
+<!-- SECTION 6: Bilateral Panning and the Parasympathetic Nervous System -->
+<section class="band band--dark" data-spine="Bilateral Panning an" data-section="Bilateral Panning and the Parasympathetic Nervous System">
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">06 / Bilateral Panning and the Parasympathetic Nervous System</div>
+<h2 class="reveal is-chapter">Bilateral Panning and the Parasympathetic Nervous System</h2>
+<p class="reveal">If you listen to this playlist on headphones (which you should), you will notice that the sound moves. It pans from left to right, bounces between ears, and creates a physical sensation of audio traveling through your head. This is not an accident and it is not just a production choice. It is a form of bilateral stimulation.</p>
+<p class="reveal">Bilateral stimulation (BLS) is the core mechanism of EMDR (Eye Movement Desensitization and Reprocessing) therapy, which uses alternating sensory input, whether visual (eye movements), tactile (tapping), or auditory (alternating tones), to activate both hemispheres of the brain simultaneously. BLS activates the parasympathetic nervous system via the vagus nerve (Shapiro, 2001), shifting the body from sympathetic &quot;fight or flight&quot; dominance toward parasympathetic &quot;rest and digest&quot; states.</p>
+<p class="reveal">This matters for ADHD focus because of two things happening at once. First, ADHD is frequently comorbid with anxiety, and the fight-or-flight activation that accompanies what many ADHD people experience as &quot;paralysis&quot; (the state where you know exactly what you need to do but cannot make yourself start) is directly mitigated by parasympathetic activation. The panning audio is doing something physiological: it is calming the nervous system down while the high tempo keeps the brain engaged. That is the combination that matters.</p>
+<p class="reveal">Second, there is a resource-competition mechanism at work. Following the movement of sound through space occupies the brain&#39;s spatial awareness system. If the auditory spatial system is busy tracking where the sound is coming from and where it is going, that system cannot simultaneously scan the room for visual or contextual distractions. The adoption of &quot;8D Audio&quot; (exaggerated stereo panning) as a focus tool in ADHD communities long predates the research framing offered here, and the convergence is worth noting: the lived report and the bilateral-stimulation literature describe the same mechanism.</p>
+<p class="reveal">05 / Mechanism 3</p>
 
-                <p>The theoretical framework here is stochastic resonance, a phenomenon in which adding noise to a weak signal enhances the detectability of that signal rather than degrading it. The Moderate Brain Arousal model (Soderlund, Sikstrom, &amp; Smart, 2007) applies this to ADHD by proposing that individuals with low tonic dopamine levels (a characteristic of ADHD) require more external noise to reach optimal cortical arousal for cognitive performance. Soderlund et al. demonstrated empirically that white noise improved cognitive performance in children with ADHD while impairing performance in neurotypical children, a finding that has been replicated and confirmed by meta-analysis.</p>
+  </div>
+</section>
 
-                <p>What polyrhythmic music does is provide structured complexity: it is unpredictable enough to keep the novelty-seeking systems engaged, but patterned enough not to be startling or anxiety-inducing. A basic four-on-the-floor beat at 145 BPM will get habituated within minutes. Layer in polyrhythms, syncopation, polyphonic textures, and unexpected rhythmic interactions, and the brain has to keep processing, keep tracking, keep working to follow the structure. That cognitive load is the point: it occupies the "extra" bandwidth that would otherwise redirect itself toward checking your phone or wondering what you should have for lunch.</p>
+<!-- SECTION 7: Polyrhythmic Complexity and Stochastic Resonance -->
+<section class="band band--paper" data-spine="Polyrhythmic Complex" data-section="Polyrhythmic Complexity and Stochastic Resonance">
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">07 / Polyrhythmic Complexity and Stochastic Resonance</div>
+<h2 class="reveal is-chapter">Polyrhythmic Complexity and Stochastic Resonance</h2>
+<p class="reveal">This is the counterintuitive one. You would think that simpler music would be less distracting and therefore better for focus. For neurotypical brains, that is often true. For ADHD brains, simple music is worse, because the brain predicts the pattern, habituates to it, gets bored, and goes looking for something more interesting.</p>
+<p class="reveal">The theoretical framework here is stochastic resonance, a phenomenon in which adding noise to a weak signal enhances the detectability of that signal rather than degrading it. The Moderate Brain Arousal model (Soderlund, Sikstrom, &amp; Smart, 2007) applies this to ADHD by proposing that individuals with low tonic dopamine levels (a characteristic of ADHD) require more external noise to reach optimal cortical arousal for cognitive performance. Soderlund et al. demonstrated empirically that white noise improved cognitive performance in children with ADHD while impairing performance in neurotypical children, a finding that has been replicated and confirmed by meta-analysis.</p>
+<p class="reveal">What polyrhythmic music does is provide structured complexity: it is unpredictable enough to keep the novelty-seeking systems engaged, but patterned enough not to be startling or anxiety-inducing. A basic four-on-the-floor beat at 145 BPM will get habituated within minutes. Layer in polyrhythms, syncopation, polyphonic textures, and unexpected rhythmic interactions, and the brain has to keep processing, keep tracking, keep working to follow the structure. That cognitive load is the point: it occupies the &quot;extra&quot; bandwidth that would otherwise redirect itself toward checking your phone or wondering what you should have for lunch.</p>
+<p class="reveal">Recent research (Van Aswegen et al., 2024) has nuanced this picture by suggesting that stochastic resonance may not be the specific mechanism required for noise to benefit ADHD performance, and that structured, non-random sound may produce similar benefits through a more general arousal regulation pathway. If anything, this strengthens the case for polyrhythmic music over pure white noise: the benefit may come not from randomness per se but from sustained complexity, and music provides that in a form that is more tolerable for extended deep work sessions than raw noise.</p>
+<p class="reveal">06 / Synthesis</p>
 
-                <p>Recent research (Van Aswegen et al., 2024) has nuanced this picture by suggesting that stochastic resonance may not be the specific mechanism required for noise to benefit ADHD performance, and that structured, non-random sound may produce similar benefits through a more general arousal regulation pathway. If anything, this strengthens the case for polyrhythmic music over pure white noise: the benefit may come not from randomness per se but from sustained complexity, and music provides that in a form that is more tolerable for extended deep work sessions than raw noise.</p>
-            </div>
-        </section>
+  </div>
+</section>
 
-        <section class="band band--dark" data-spine="Synthesis" data-section="The Combined System">
-            <div class="eyebrow">06 / Synthesis</div>
-            <h2>The Combined System</h2>
-            <div class="report-prose">
-                <p>None of these mechanisms is sufficient on its own. High tempo without complexity gets habituated. Complexity without tempo does not hit the arousal threshold. Panning without either is pleasant but not functionally different from ambient background. The three features work as a coordinated system:</p>
+<!-- SECTION 8: The Combined System -->
+<section class="band band--dark" data-spine="The Combined System" data-section="The Combined System">
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">08 / The Combined System</div>
+<h2 class="reveal is-chapter">The Combined System</h2>
+<p class="reveal">None of these mechanisms is sufficient on its own. High tempo without complexity gets habituated. Complexity without tempo does not hit the arousal threshold. Panning without either is pleasant but not functionally different from ambient background. The three features work as a coordinated system:</p>
+<table>
+<thead>
+<tr>
+<th>Mechanism</th>
+<th>Theoretical Basis</th>
+<th>ADHD Failure Mode</th>
+<th>Intervention</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>140-150 BPM</td>
+<td>Optimal Stimulation Theory (Zentall, 1975)</td>
+<td>Under-arousal / boredom</td>
+<td>Raises arousal to biologically optimal threshold</td>
+</tr>
+<tr>
+<td>Bilateral panning</td>
+<td>Bilateral Stimulation / EMDR (Shapiro, 2001)</td>
+<td>Anxiety / restlessness / paralysis</td>
+<td>Parasympathetic grounding + spatial resource competition</td>
+</tr>
+<tr>
+<td>Polyrhythmic complexity</td>
+<td>Stochastic Resonance / MBA Model (Soderlund et al., 2007)</td>
+<td>Habituation / tuning out</td>
+<td>Structured cognitive load maintenance</td>
+</tr>
+</tbody></table>
+<p class="reveal">The result is a state where the ADHD brain&#39;s surplus attentional bandwidth is fully occupied, the nervous system is physiologically calm, and the conditions exist for sustained deep work without the constant pull of distraction.</p>
+<p class="reveal">I think of it as bandwidth occupation rather than brainwave entrainment. You are not trying to synchronize the brain to a particular frequency. You are trying to fill the channels that would otherwise go looking for trouble.</p>
+<p class="reveal">07 / Application</p>
 
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Mechanism</th>
-                            <th>Theoretical Basis</th>
-                            <th>ADHD Failure Mode</th>
-                            <th>Intervention</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>140-150 BPM</td>
-                            <td>Optimal Stimulation Theory (Zentall, 1975)</td>
-                            <td>Under-arousal / boredom</td>
-                            <td>Raises arousal to biologically optimal threshold</td>
-                        </tr>
-                        <tr>
-                            <td>Bilateral panning</td>
-                            <td>Bilateral Stimulation / EMDR (Shapiro, 2001)</td>
-                            <td>Anxiety / restlessness / paralysis</td>
-                            <td>Parasympathetic grounding + spatial resource competition</td>
-                        </tr>
-                        <tr>
-                            <td>Polyrhythmic complexity</td>
-                            <td>Stochastic Resonance / MBA Model (Soderlund et al., 2007)</td>
-                            <td>Habituation / tuning out</td>
-                            <td>Structured cognitive load maintenance</td>
-                        </tr>
-                    </tbody>
-                </table>
+  </div>
+</section>
 
-                <p>The result is a state where the ADHD brain's surplus attentional bandwidth is fully occupied, the nervous system is physiologically calm, and the conditions exist for sustained deep work without the constant pull of distraction.</p>
+<!-- SECTION 9: Tuning the System -->
+<section class="band band--paper" data-spine="Tuning the System" data-section="Tuning the System">
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">09 / Tuning the System</div>
+<h2 class="reveal is-chapter">Tuning the System</h2>
+<p class="reveal">Understanding why the playlist works gives you the ability to tune it. A tempo at 145 BPM that feels too intense is trading arousal for comfort, and that is a choice worth making deliberately rather than abandoning the approach. Tracks that feel more effective than others usually have more prominent panning or more complex rhythmic structures, and once you know what to listen for, the playlist stops being a vaguely helpful thing and starts being a diagnostic instrument for your own attention system.</p>
+<p class="reveal">The broader implication: focus is not the absence of stimulation. For an under-aroused attentional system, focus requires structured stimulation, calibrated to the specific deficit. Background music selected for ambient pleasantness optimizes for the wrong constraint.</p>
+<p class="reveal">08 / Bibliography</p>
 
-                <p>I think of it as bandwidth occupation rather than brainwave entrainment. You are not trying to synchronize the brain to a particular frequency. You are trying to fill the channels that would otherwise go looking for trouble.</p>
-            </div>
-        </section>
+  </div>
+</section>
 
-        <section class="band band--paper" data-spine="Sharing" data-section="Why I Am Sharing This">
-            <div class="eyebrow">07 / Application</div>
-            <h2>Why I Am Sharing This</h2>
-            <div class="report-prose">
-                <p>I have been using variants of this playlist for years, and it genuinely changed my ability to sustain deep work. I want other ADHD people to have it, partly because it works and partly because understanding why it works gives you the ability to tune it: if you find the tempo too intense, you now know you are trading arousal for comfort and can make that choice deliberately. If you find certain tracks more effective than others, you can check whether they happen to have more prominent panning or more complex rhythmic structures. The framework turns the playlist from a vaguely helpful thing into a diagnostic instrument for your own attention system.</p>
+<!-- SECTION 10: References -->
+<section class="band band--paper" data-spine="References" data-section="References">
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">010 / References</div>
+<h2 class="reveal is-chapter">References</h2>
+<ul>
+<li>Baijot, S., Slama, H., Soderlund, G., Dan, B., Deltenre, P., Colin, C., &amp; Deconinck, N. (2016). Neuropsychological and neurophysiological benefits from white noise in children with and without ADHD. <em>Journal of Cognitive Enhancement</em>, 1, 31-46.</li>
+<li>Greenop, K., &amp; Kann, L. (2007). Extra-task stimulation on mathematics performance in children with and without ADHD. <em>South African Journal of Psychology</em>, 37(2), 330-341.</li>
+<li>Shapiro, F. (2001). <em>Eye Movement Desensitization and Reprocessing: Basic Principles, Protocols, and Procedures</em> (2nd ed.). Guilford Press.</li>
+<li>Soderlund, G., Sikstrom, S., &amp; Smart, A. (2007). Listen to the noise: Noise is beneficial for cognitive performance in ADHD. <em>Journal of Child Psychology and Psychiatry</em>, 48(8), 840-847.</li>
+<li>Van Aswegen, T., et al. (2024). Stochastic resonance is not required for pink noise to have beneficial effects on ADHD-related performance? The moderate brain arousal model challenged. <em>Neuropsychologia</em>.</li>
+<li>Zentall, S. S. (1975). Optimal stimulation as theoretical basis of hyperactivity. <em>American Journal of Orthopsychiatry</em>, 45(4), 549-563.</li>
+<li>Zentall, S. S. (1983). Optimal stimulation: A model of disordered activity and performance in normal and deviant children. <em>Psychological Bulletin</em>, 94(3), 446-471.</li>
+</ul>
 
-                <p>And yes, the fact that I could not share a playlist without turning it into a research paper is itself a demonstration of the thing I keep trying to explain about how my brain works. The same analytical method I use to measure implicit signals in AI system outputs and forensic linguistic profiles and child safety detection systems is the method I use on everything, including my own listening habits. I do not know how to encounter a behavioral phenomenon without taxonomizing it (it's a feature).</p>
-            </div>
-        </section>
+  </div>
+</section>
 
-        <section class="band band--dark" data-spine="References" data-section="References">
-            <div class="eyebrow">08 / Bibliography</div>
-            <h2>References</h2>
-            <div class="report-prose">
-                <ul style="list-style-type:none; padding:0; margin-top:24px; font-family:var(--body); font-size:16px;">
-                    <li style="margin-bottom:16px; padding-left:36px; text-indent:-36px;">
-                        Baijot, S., Slama, H., Soderlund, G., Dan, B., Deltenre, P., Colin, C., &amp; Deconinck, N. (2016). Neuropsychological and neurophysiological benefits from white noise in children with and without ADHD. <em>Journal of Cognitive Enhancement</em>, 1, 31-46.
-                    </li>
-                    <li style="margin-bottom:16px; padding-left:36px; text-indent:-36px;">
-                        Greenop, K., &amp; Kann, L. (2007). Extra-task stimulation on mathematics performance in children with and without ADHD. <em>South African Journal of Psychology</em>, 37(2), 330-341.
-                    </li>
-                    <li style="margin-bottom:16px; padding-left:36px; text-indent:-36px;">
-                        Shapiro, F. (2001). <em>Eye Movement Desensitization and Reprocessing: Basic Principles, Protocols, and Procedures</em> (2nd ed.). Guilford Press.
-                    </li>
-                    <li style="margin-bottom:16px; padding-left:36px; text-indent:-36px;">
-                        Soderlund, G., Sikstrom, S., &amp; Smart, A. (2007). Listen to the noise: Noise is beneficial for cognitive performance in ADHD. <em>Journal of Child Psychology and Psychiatry</em>, 48(8), 840-847.
-                    </li>
-                    <li style="margin-bottom:16px; padding-left:36px; text-indent:-36px;">
-                        Van Aswegen, T., et al. (2024). Stochastic resonance is not required for pink noise to have beneficial effects on ADHD-related performance? The moderate brain arousal model challenged. <em>Neuropsychologia</em>.
-                    </li>
-                    <li style="margin-bottom:16px; padding-left:36px; text-indent:-36px;">
-                        Zentall, S. S. (1975). Optimal stimulation as theoretical basis of hyperactivity. <em>American Journal of Orthopsychiatry</em>, 45(4), 549-563.
-                    </li>
-                    <li style="margin-bottom:16px; padding-left:36px; text-indent:-36px;">
-                        Zentall, S. S. (1983). Optimal stimulation: A model of disordered activity and performance in normal and deviant children. <em>Psychological Bulletin</em>, 94(3), 446-471.
-                    </li>
-                </ul>
-            </div>
-        </section>
 
-<section class="band band--paper back-matter" data-spine="Research Graph" data-section="Research Graph">
+<!-- BACK MATTER: Related Works -->
+<section class="band band--dark back-matter" data-spine="Research Graph" data-section="Research Graph">
   <div class="back-matter" style="padding-top:0;">
     <h3 style="margin-bottom:22px;">Related Works</h3>
     <div class="related">
       <div class="related-grid" id="recommendation-grid">
+        <!-- Populated by global_chrome.js from projects_index.json -->
       </div>
     </div>
   </div>
@@ -204,10 +262,11 @@
   </a>
 </section>
 
+<!-- INJECTED SCRIPTS -->
+interactive_0.js
+
+<!-- GLOBAL CHROME -->
+<!-- Need relative pathing adjustment based on actual file depth, defaulting to root pathing for now -->
 <script src="../design_system/js/global.js" defer></script>
 </body>
 </html>
-
-
-
-

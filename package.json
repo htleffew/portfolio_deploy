@@ -1,0 +1,25 @@
+{
+  "name": "portfolio_deploy",
+  "version": "1.0.0",
+  "description": "This repository (`portfolio_deploy`) acts as the strict production environment and GitHub Pages host for the `htleffew.github.io/portfolio_deploy/` domain.",
+  "main": "deploy.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/htleffew/portfolio_deploy.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/htleffew/portfolio_deploy/issues"
+  },
+  "homepage": "https://github.com/htleffew/portfolio_deploy#readme",
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "marked": "^18.0.3"
+  }
+}

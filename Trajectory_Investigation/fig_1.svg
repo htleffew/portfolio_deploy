@@ -1,0 +1,32 @@
+<svg height="auto" style="max-width: 900px;" viewbox="0 0 900 380" width="100%" xmlns="http://www.w3.org/2000/svg">
+<!-- Timeline axis -->
+<line opacity="0.5" stroke="#A1A1A6" stroke-width="1" x1="80" x2="820" y1="320" y2="320"></line>
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="9" letter-spacing="2" x="80" y="345">EARLIEST OBSERVATION</text>
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="9" letter-spacing="2" text-anchor="end" x="820" y="345">LATEST OBSERVATION</text>
+<!-- Consolidated -->
+<rect fill="#3866A0" fill-opacity="0.18" height="22" stroke="#3866A0" stroke-width="1" width="740" x="80" y="50"></rect>
+<text fill="#F5F5F7" font-family="'JetBrains Mono', monospace" font-size="11" text-anchor="middle" x="450" y="65">Consolidated  ·  full window</text>
+<!-- Early Tertile -->
+<rect fill="#3866A0" fill-opacity="0.30" height="22" stroke="#3866A0" stroke-width="1" width="247" x="80" y="90"></rect>
+<text fill="#F5F5F7" font-family="'JetBrains Mono', monospace" font-size="11" text-anchor="middle" x="203" y="105">Early Tertile</text>
+<!-- Mid Tertile -->
+<rect fill="#3866A0" fill-opacity="0.30" height="22" stroke="#3866A0" stroke-width="1" width="247" x="327" y="90"></rect>
+<text fill="#F5F5F7" font-family="'JetBrains Mono', monospace" font-size="11" text-anchor="middle" x="450" y="105">Mid Tertile</text>
+<!-- Late Tertile -->
+<rect fill="#7A1626" fill-opacity="0.28" height="22" stroke="#7A1626" stroke-width="1" width="246" x="574" y="90"></rect>
+<text fill="#F5F5F7" font-family="'JetBrains Mono', monospace" font-size="11" text-anchor="middle" x="697" y="105">Late Tertile</text>
+<!-- First 25 -->
+<rect fill="#DBA844" fill-opacity="0.4" height="22" stroke="#DBA844" stroke-width="1" width="50" x="80" y="170"></rect>
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="10" x="148" y="185">First 25</text>
+<!-- Last 25 -->
+<rect fill="#DBA844" fill-opacity="0.4" height="22" stroke="#DBA844" stroke-width="1" width="50" x="770" y="170"></rect>
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="10" text-anchor="end" x="763" y="185">Last 25</text>
+<!-- Annotation pointers -->
+<line opacity="0.6" stroke="#DBA844" stroke-dasharray="2 3" stroke-width="0.5" x1="105" x2="105" y1="200" y2="240"></line>
+<line opacity="0.6" stroke="#DBA844" stroke-dasharray="2 3" stroke-width="0.5" x1="795" x2="795" y1="200" y2="240"></line>
+<text fill="#A1A1A6" font-family="'Lora', serif" font-size="11" font-style="italic" text-anchor="middle" x="105" y="258">arrival behavior</text>
+<text fill="#A1A1A6" font-family="'Lora', serif" font-size="11" font-style="italic" text-anchor="middle" x="795" y="258">behavior pre-flag</text>
+<!-- Center divider lines for tertiles -->
+<line opacity="0.3" stroke="#A1A1A6" stroke-dasharray="2 3" stroke-width="0.5" x1="327" x2="327" y1="115" y2="320"></line>
+<line opacity="0.3" stroke="#A1A1A6" stroke-dasharray="2 3" stroke-width="0.5" x1="574" x2="574" y1="115" y2="320"></line>
+</svg>

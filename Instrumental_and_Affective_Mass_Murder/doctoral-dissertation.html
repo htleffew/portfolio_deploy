@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instrumental and Affective Mass Murder: Establishing a Predictive Typology with Computer-Mediated Linguistic Analysis | Dr. Heather Leffew</title>
+    <!-- Design System: tokens load via @import inside institutional.css -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js" defer></script>
+    <link rel="stylesheet" href="../design_system/css/global.css">
+    <style>
+      /* Ensure Markdown components look correct in the reading column */
+      .markdown-body { margin-top: 1.5rem; }
+      .markdown-body p { margin-bottom: 1.25em; }
+      .markdown-body img { max-width: 100%; height: auto; display: block; margin: 2em auto; }
+      .markdown-body pre { padding: 1.5em; overflow-x: auto; background: var(--obsidian); border: 1px solid var(--charcoal); margin: 2em 0; }
+      .markdown-body code { font-family: var(--mono); font-size: 0.85em; }
+    </style>
+</head>
+
+<body data-category="Fielding Graduate University  ·  Doctor of Philosophy in Psychology" data-title="Instrumental_and_Affective_Mass_Murder">
+
+<!-- Reading progress -->
+<div id="progress"></div>
+
+<!-- Top nav (injected by global_chrome.js) -->
+<div id="global-nav-container"></div>
+
+<!-- Chapter spine (populated by global_chrome.js) -->
+<aside id="spine"></aside>
+
+<!-- Atmospheric gradient -->
+<div class="atmosphere"></div>
+
+<canvas id="glCanvas"></canvas>
+
+<!-- FRONT MATTER -->
+<section class="band band--dark front" data-spine="Front" data-section="Front matter">
+  <div class="col-wide">
+    <div class="grid">
+     <div>
+      <div class="meta-row">
+        <span class="bracket">CASE STUDY</span>
+        <span class="sep">/</span>
+        <span>Fielding Graduate University  ·  Doctor of Philosophy in Psychology</span>
+        <span class="sep">/</span>
+        <span>14 min read</span>
+      </div>
+
+      <h1>Instrumental and Affective Mass Murder: Establishing a Predictive Typology with Computer-Mediated Linguistic Analysis</h1>
+
+      <p class="abstract">
+        The FBI's Behavioral Analysis Unit has held since 2015 that all perpetrators of mass violence are best categorized as in...
+      </p>
+
+      <div class="byline">
+        <div>
+          Subject
+          <strong>N/A</strong>
+        </div>
+        <div>
+          Architecture
+          <strong>N/A</strong>
+        </div>
+        <div>
+          Output
+          <strong>N/A</strong>
+        </div>
+      </div>
+     </div>
+     <div></div>
+    </div>
+  </div>
+</section>
+
+<!-- INJECTED MARKDOWN CONTENT -->
+
+<!-- SECTION 1: Introduction -->
+<section class="band band--paper" data-spine="Introduction" data-section="Introduction">
+  <div class="col-wide markdown-body">
+    <h1>Instrumental and Affective Mass Murder: Establishing a Predictive Typology with Computer-Mediated Linguistic Analysis</h1>
+<div class="eyebrow reveal">01 / Introduction</div>
+<h2 class="reveal is-chapter">Dr. Heather Leffew
+Obelus Institute
+May 2026</h2>
+
+  </div>
+</section>
+
+<!-- SECTION 2: Abstract -->
+<section class="band band--dark" data-spine="Abstract" data-section="Abstract">
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">02 / Abstract</div>
+<h2 class="reveal is-chapter">Abstract</h2>
+<p class="reveal">The FBI&#39;s Behavioral Analysis Unit has held since 2015 that all perpetrators of mass violence are best categorized as instrumental offenders. This dissertation rejects that position. One hundred pre-attack communications were analyzed with LIWC2015 along four summary dimensions (Analytic, Clout, Authentic, Tone); K-means clustering separated the corpus into two psychometrically distinct types, Affective (n=53) and Instrumental (n=47), with linear discriminant analysis correctly classifying 100% of cases. A binary logistic regression on four refined attack-behavior variables (lethality, demographic-based targeting, perpetrator&#39;s home among attack locations, perpetrator killed by another person) recovered cluster membership at McFadden R² = 0.24, with the strongest single predictor (perpetrator killed) carrying an odds ratio of 14.11. The contribution is the first within-groups typology of mass murderers with statistically validated predictive ties to specific attack characteristics, intended as input to threat assessment and risk management for discovered pre-attack communications.</p>
+<p class="reveal">01 / Theoretical Background</p>
+
+  </div>
+</section>
+
+<!-- SECTION 3: The Prediction Problem -->
+<section class="band band--paper" data-spine="The Prediction Probl" data-section="The Prediction Problem">
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">03 / The Prediction Problem</div>
+<h2 class="reveal is-chapter">The Prediction Problem</h2>
+<p class="reveal">Theoretical Background</p>
+<p class="reveal">Existing typologies of mass violence fall into three categories: those that distinguish mass murderers from the general population, those that distinguish them from other violent offenders, and those that distinguish kinds of mass murderers from each other. The first two have produced workable likelihood-of-attack screens (Knoll &amp; Meloy, 2014; Langman, 2009; Verlinden, Hersen, &amp; Thomas, 2000). The third has not. Theoretical proposals from Dietz (1986), Holmes and Holmes (1994), and Kelleher (1997) have not been empirically replicated, and recent attempts at empirical within-groups typology (Langman, 2009; Ioannou, Hammond, &amp; Simpson, 2015) sort attackers ex post facto without predicting how an attack will unfold. The literature has missed a within-groups distinction with statistically validated ties to specific attack behaviors.</p>
+<p class="reveal">In threat assessment, the standard frame separates threat (the probability an event will occur) from risk (the potential impacts if it does). A burglary of an unoccupied home is low-threat and low-risk. A school shooting is low-threat and high-risk: low probability for any given school, catastrophic impact when it happens. An armed individual with credible communicated intent at an accessible location is high-threat and high-risk. The dissertation does not address the threat side of this matrix (whether an attack will occur). It addresses the risk side (what kind of attack is more likely, given that a pre-attack communication has been discovered), by treating that communication as a measurable psychometric signal.</p>
+<p class="reveal">Threat: Probability of Event →</p>
+<p class="reveal">Risk: Impact of Event →</p>
+<p class="reveal">Low Threat / High Risk</p>
+<p class="reveal">Example: A school shooting in the abstract. Dire consequences for any individual school, but low base rate.</p>
+<p class="reveal">High Threat / High Risk</p>
+<p class="reveal">Example: An armed individual with credible communicated intent attacking an accessible location. Mandates immediate tactical intervention.</p>
+<p class="reveal">Low Threat / Low Risk</p>
+<p class="reveal">Example: Burglary of an unoccupied home. Low probability for any given home, limited impact.</p>
+<p class="reveal">High Threat / Low Risk</p>
+<p class="reveal">High-probability events with minimal destructive impact. Procedural deterrence is the standard response.</p>
+<p class="reveal">Separating attackers into affective and instrumental types allows linguistic signals from a discovered pre-attack communication to inform what kind of attack is more likely, rather than waiting on the event itself to disclose its character.</p>
+<p class="reveal">02 / Methodology</p>
+
+  </div>
+</section>
+
+<!-- SECTION 4: Language as Psychological Evidence -->
+<section class="band band--dark" data-spine="Language as Psycholo" data-section="Language as Psychological Evidence">
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">04 / Language as Psychological Evidence</div>
+<h2 class="reveal is-chapter">Language as Psychological Evidence</h2>
+<p class="reveal">Methodology</p>
+<p class="reveal">The methodological premise: as many as 67% of perpetrators of mass violence create meaningful pre-attack communications (Hempel, Meloy, &amp; Richards, 1999; Meloy, Hempel, Mohandie, Shiva, &amp; Gray, 2001; Langman, 2013; Silver, Horgan, &amp; Gill, 2018). Most perpetrators do not survive their attack, but the communications do. Computer-mediated linguistic analysis on those communications is the only route to standardized, posthumous psychological characterization of this population, sidestepping the field&#39;s central methodological constraint.</p>
+<p class="reveal">This dissertation also rejected the FBI&#39;s definition of mass murder (four or more killed without significant cooling-off period) because that definition embeds a success component external to the perpetrator&#39;s psychology. Geddy Kramer, who at a FedEx facility in 2014 fired on six coworkers but killed only himself, was prepared and committed to a mass attack; his victims survived because of emergency response speed, hospital proximity, and his choice of less-lethal ammunition. The FBI definition excludes him. The definition used here, &quot;any perpetrator who presents as prepared and motivated to murder four or more individuals, with insubstantial time passing between violent acts,&quot; includes him and treats lack of success as a typology factor rather than a disqualifier.</p>
+<p class="reveal">100 pre-attack communications were collected from individuals who carried out or attempted mass violence between 1966 and 2019. Sources included SchoolShooters.info (curated by Peter Langman), the Stanford Mass Shootings of America database, the Mother Jones US mass shootings dataset, and the Gun Violence Archive. LIWC2015 (Pennebaker, Booth, Boyd, &amp; Francis, 2015) generated standardized percentile scores along four summary variables: Analytic, Clout, Authentic, and Tone. K-means clustering and binary logistic regression handled the small-sample, mixed-variable structure.</p>
+<p class="reveal">0Communications Analyzed</p>
+<p class="reveal">0Affective Type</p>
+<p class="reveal">0Instrumental Type</p>
+<p class="reveal">0.00McFadden R²</p>
+<p class="reveal">LIWC2015 Summary Variables</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>High Score</th>
+<th>Low Score</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Analytic</td>
+<td>Formal, logical, hierarchical thinking</td>
+<td>Personal, narrative, present-focused</td>
+</tr>
+<tr>
+<td>Clout</td>
+<td>Confident, expert, authoritative</td>
+<td>Tentative, humble, anxious</td>
+</tr>
+<tr>
+<td>Authentic</td>
+<td>Honest, personal, disclosing</td>
+<td>Guarded, distanced, evasive</td>
+</tr>
+<tr>
+<td>Tone</td>
+<td>Positive, upbeat emotional valence</td>
+<td>Anxious, sad, or hostile</td>
+</tr>
+</tbody></table>
+<p class="reveal">03 / Cluster Analysis</p>
+
+  </div>
+</section>
+
+<!-- SECTION 5: A Detectable Divide -->
+<section class="band band--paper" data-spine="A Detectable Divide" data-section="A Detectable Divide">
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">05 / A Detectable Divide</div>
+<h2 class="reveal is-chapter">A Detectable Divide</h2>
+<p class="reveal">Cluster Analysis</p>
+<p class="reveal">K-means cluster analysis of the four LIWC summary variables produced two groups with no fuzzy boundary. Linear discriminant analysis correctly classified 100% of the 100 cases under cross-validation, with Analytic (r = .64), Clout (r = .88), and Authentic (r = -.80) carrying the strongest contributions to component separation and Tone (r = .48) carrying a moderate one.</p>
+<p class="reveal">Cluster 1, the <strong>Affective Type</strong> (n = 53), shows the lower Analytic, lower Clout, lower Tone, and higher Authentic profile. Their writing reads personal, present-tense, narrative, tentative, often saturated with hostility and despair. Cluster 2, the <strong>Instrumental Type</strong> (n = 47), shows the inverse profile: higher Analytic, higher Clout, higher Tone, lower Authentic. Their writing reads formal, logical, hierarchical, confident, guarded; closer to ideological treatise than to personal grievance. The split aligns with the theoretical distinction in the violence literature between emotionally-driven and goal-driven offending (Dodge, 1991; Glenn &amp; Raine, 2009; McEllistrem, 2004; Meloy, 1988), but applies it within the mass-murder population for the first time.</p>
+<p class="reveal">Relative Profile
+Absolute Scale</p>
+<p class="reveal">Analytic</p>
+<p class="reveal">Tone</p>
+<p class="reveal">Clout</p>
+<p class="reveal">Authentic</p>
+<p class="reveal">Affective Type (n=53)</p>
+<p class="reveal">Instrumental Type (n=47)</p>
+<p class="reveal">Analytic</p>
+<p class="reveal">Tone</p>
+<p class="reveal">Clout</p>
+<p class="reveal">Authentic</p>
+<p class="reveal">Affective (LIWC percentile)</p>
+<p class="reveal">Instrumental (LIWC percentile)</p>
+<p class="reveal">04 / Behavioral Predictions</p>
+
+  </div>
+</section>
+
+<!-- SECTION 6: Formulating the Six Hypotheses -->
+<section class="band band--dark" data-spine="Formulating the Six " data-section="Formulating the Six Hypotheses">
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">06 / Formulating the Six Hypotheses</div>
+<h2 class="reveal is-chapter">Formulating the Six Hypotheses</h2>
+<p class="reveal">Behavioral Predictions</p>
+<p class="reveal">Can the words an attacker writes months before an event actually effectively predict the tactical specifics of the attack itself? To answer this, we formulated six hypotheses to map these linguistic clusters directly to physical outcomes. We wanted to see if the language alone could act as a leading indicator for how an attack would unfold.</p>
+<p class="reveal">H1</p>
+<p class="reveal">The text will naturally cluster into two distinct behavioral typologies. (Confirmed via K-means analysis).</p>
+<p class="reveal">H2</p>
+<p class="reveal">The cluster an attacker belongs to will predict the number of victims killed. (True: Instrumental attackers are more lethal. Mann-Whitney U: p = .019).</p>
+<p class="reveal">H3</p>
+<p class="reveal">Membership predicts whether an attacker will target a location they have a personal connection to. (True: Affective attackers are 270% more likely to strike schools or workplaces they know. Fisher&#39;s exact: p = .032).</p>
+<p class="reveal">H4</p>
+<p class="reveal">The cluster will dictate whether specific victim demographics are targeted. (True: Systematic demographic targeting correlates almost exclusively with the Instrumental group).</p>
+<p class="reveal">H5</p>
+<p class="reveal">The cluster predicts how the attack ends. (True: Affective attackers are substantially more likely to end the attack via suicide or apprehension. Fisher&#39;s exact: p = .006).</p>
+<p class="reveal">H6</p>
+<p class="reveal">We can build a unified logistical regression model correlating text clusters with physical lethality, targeting, location, and termination states.</p>
+<p class="reveal">Key Odds Ratios
+Test Statistics</p>
+<p class="reveal">Perpetrator Suicide or Apprehension</p>
+<p class="reveal"><img src="fig_2.svg" alt="Figure 2"></p>
+<p class="reveal">p = .006  ·  Affective vs Instrumental</p>
+<p class="reveal">SCALE: 0 TO 10</p>
+<p class="reveal">Personal Connection to Attack Location</p>
+<p class="reveal"><img src="fig_3.svg" alt="Figure 3"></p>
+<p class="reveal">p = .032  ·  Affective vs Instrumental</p>
+<p class="reveal">SCALE: 0 TO 10</p>
+<table>
+<thead>
+<tr>
+<th>Hypothesis</th>
+<th>Test</th>
+<th>Statistic</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>H2: Victims Killed</td>
+<td>Mann-Whitney U</td>
+<td>U=908, z=-2.35</td>
+<td>p = .019</td>
+</tr>
+<tr>
+<td>H3: Location Connection</td>
+<td>Fisher&#39;s Exact</td>
+<td>OR = 0.37 (inv = 2.7)</td>
+<td>p = .032</td>
+</tr>
+<tr>
+<td>H4: Initial Targeting</td>
+<td>Fisher&#39;s Exact</td>
+<td>OR = 2.09</td>
+<td>p = .075 (n.s.)</td>
+</tr>
+<tr>
+<td>H5: Perpetrator Killed</td>
+<td>Fisher&#39;s Exact</td>
+<td>OR = 7.65</td>
+<td>p = .006</td>
+</tr>
+</tbody></table>
+<p class="reveal">AFFECTIVE TYPE (N=53) VS INSTRUMENTAL TYPE (N=47)  ·  ALPHA = .05</p>
+<p class="reveal">05 / Logistic Regression</p>
+
+  </div>
+</section>
+
+<!-- SECTION 7: Predictive Signal Matrix -->
+<section class="band band--paper" data-spine="Predictive Signal Ma" data-section="Predictive Signal Matrix">
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">07 / Predictive Signal Matrix</div>
+<h2 class="reveal is-chapter">Predictive Signal Matrix</h2>
+<p class="reveal">Logistic Regression</p>
+<p class="reveal">The first binary logistic regression used the raw H1-H5 predictors (lethality, connection, targeting, perpetrator killed) and was significant (χ²(4) = 30.58, p &lt; .001, McFadden R² = 0.22), but two of those variables were too coarse to do their work. &quot;Targeting&quot; was coded as yes/no without distinguishing between specific-individual targeting and demographic targeting; &quot;connection&quot; was coded without distinguishing between the perpetrator&#39;s home and a less intimate site like their school or workplace. A second iteration refined both: targeting became <em>demographic-based</em> targeting specifically, and connection became <em>perpetrator&#39;s home among the attack locations</em> specifically. The refined model improved fit to McFadden R² = 0.24 (χ²(4) = 32.52, p &lt; .001) and produced the odds ratios below. Each of the four predictors is significant when controlling for the others.</p>
+<p class="reveal">Odds Ratio
+% Change in Odds</p>
+<p class="reveal">Perpetrator KilledOR 14.11</p>
+<p class="reveal">Home as Attack LocationOR 5.0 inv.</p>
+<p class="reveal">Demographic TargetingOR 4.83</p>
+<p class="reveal">Per Victim KilledOR 1.14</p>
+<p class="reveal">RUST = PREDICTS AFFECTIVE TYPE  ·  GLACIAL = PREDICTS INSTRUMENTAL TYPE</p>
+<p class="reveal">Perpetrator Killed+1,311%</p>
+<p class="reveal">Home as Attack Location+400%</p>
+<p class="reveal">Demographic Targeting+383%</p>
+<p class="reveal">Per Victim Killed+14%</p>
+<p class="reveal">CHI-SQUARED(4) = 32.52  ·  P &lt; .001  ·  McFADDEN R² = 0.24</p>
+<p class="reveal">06 / Type Exemplars</p>
+
+  </div>
+</section>
+
+<!-- SECTION 8: Operational Manifestations -->
+<section class="band band--dark" data-spine="Operational Manifest" data-section="Operational Manifestations">
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">08 / Operational Manifestations</div>
+<h2 class="reveal is-chapter">Operational Manifestations</h2>
+<p class="reveal">Type Exemplars</p>
+<p class="reveal">The difference between these two clusters is starkest when we look at extreme, real-world examples. Matthew Murray&#39;s pre-attack writings represent the absolute limit of the Affective Type - highly personal, emotionally raw, and deeply focused on his own perceived mistreatment. Conversely, Anders Breivik represents the maximum bound of the Instrumental Type. His 1,500-page manifesto is completely devoid of personal emotional disclosure, reading instead like a cold, algorithmic political document.</p>
+<p class="reveal">Affective Type</p>
+<p class="reveal">Matthew Murray</p>
+<p class="reveal">Arvada and Colorado Springs, 2007. Four killed, five injured. Murray attacked locations where he had personal history. His communications were saturated with first-person emotionality, immediate grievances, and a stated indifference to his own survival.</p>
+<p class="reveal">LIWC Profile
+Attack Outcomes</p>
+<p class="reveal">Analytic18.81</p>
+<p class="reveal">Tone1.00</p>
+<p class="reveal">Clout46.47</p>
+<p class="reveal">Authentic89.35</p>
+<p class="reveal">Victims Killed4</p>
+<p class="reveal">Victims Injured5</p>
+<p class="reveal">Location ConnectionYes</p>
+<p class="reveal">Attack ConclusionSuicide</p>
+<p class="reveal">Instrumental Type</p>
+<p class="reveal">Anders Breivik</p>
+<p class="reveal">Utoya Island and Oslo, 2011. Seventy-seven killed, 319 injured. Breivik generated a 1,500-page manifesto reading as a calculated scholarly treatise. It is structured entirely around rigid ideological argument rather than personal grievance. He was ultimately apprehended alive.</p>
+<p class="reveal">LIWC Profile
+Attack Outcomes</p>
+<p class="reveal">Analytic83.47</p>
+<p class="reveal">Tone23.40</p>
+<p class="reveal">Clout67.32</p>
+<p class="reveal">Authentic26.71</p>
+<p class="reveal">Victims Killed77</p>
+<p class="reveal">Victims Injured319</p>
+<p class="reveal">Location ConnectionNo</p>
+<p class="reveal">Attack ConclusionApprehended</p>
+<p class="reveal">07 / Practical Constraints</p>
+
+  </div>
+</section>
+
+<!-- SECTION 9: Threat Management Efficacy -->
+<section class="band band--paper" data-spine="Threat Management Ef" data-section="Threat Management Efficacy">
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">09 / Threat Management Efficacy</div>
+<h2 class="reveal is-chapter">Threat Management Efficacy</h2>
+<p class="reveal">Practical Constraints</p>
+<p class="reveal">The intended use of this typology is narrow and worth stating precisely. It does not predict whether an attack will occur. It predicts what kind of attack is more likely, conditional on a pre-attack communication being discovered and submitted for analysis. The work belongs to risk management (the impact side of the threat-assessment equation), not threat detection (the probability side).</p>
+<p class="reveal">Institutional Implementation Scenario</p>
+<p class="reveal">A university threat assessment team is presented with what appears to be a pre-attack communication composed by a student. Running the text through the LIWC summary variables and applying the cluster model classifies the author as Affective. The team then knows the author is more likely to attack a location with personal connection (potentially the campus itself), more likely to commit suicide at the conclusion, and likely to be in an acute emotional state. Response shifts accordingly: target hardening of the connected location, mental-health-led de-escalation rather than counter-terror posture.</p>
+<p class="reveal">The same model applied to an Instrumental classification points elsewhere: lower likelihood of personal connection to attack location, higher likelihood of demographic-based targeting, substantially higher likelihood that the attack continues until the perpetrator is apprehended or killed by another person. The two response postures are not interchangeable.</p>
+<p class="reveal">Limitations stated transparently. n = 100 is small for a field with low base rates; power analysis suggests significance may be underestimated for small and moderate effects. Stephen Paddock (Las Vegas, 2017) and other perpetrators who left no pre-attack communications are necessarily excluded. The within-sample classification accuracy of 100% is a property of the sample; out-of-sample validation on new pre-attack communications is the appropriate next step. Earlier work on increased communicated power drives in mass-murder manifestos (Leffew, 2017) was the seed for this dissertation&#39;s variable selection.</p>
+
+  </div>
+</section>
+
+
+<!-- BACK MATTER: Related Works -->
+<section class="band band--dark back-matter" data-spine="Research Graph" data-section="Research Graph">
+  <div class="back-matter" style="padding-top:0;">
+    <h3 style="margin-bottom:22px;">Related Works</h3>
+    <div class="related">
+      <div class="related-grid" id="recommendation-grid">
+        <!-- Populated by global_chrome.js from projects_index.json -->
+      </div>
+    </div>
+  </div>
+
+  <a class="next-chap" id="next-chap-link" href="#">
+    <div class="lf">
+      <div class="eb">Next Publication</div>
+      <div class="ti" id="next-chap-title">Loading...</div>
+    </div>
+    <div class="rt">&rarr;</div>
+  </a>
+</section>
+
+<!-- INJECTED SCRIPTS -->
+interactive_0.js,interactive_1.js,interactive_3.js
+
+<!-- GLOBAL CHROME -->
+<!-- Need relative pathing adjustment based on actual file depth, defaulting to root pathing for now -->
+<script src="../design_system/js/global.js" defer></script>
+</body>
+</html>

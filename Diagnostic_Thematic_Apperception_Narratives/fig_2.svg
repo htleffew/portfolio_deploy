@@ -1,0 +1,13 @@
+<svg height="100%" id="radar-svg" preserveaspectratio="xMidYMid meet" style="max-height:360px; max-width:360px; overflow:visible;" viewbox="-200 -200 400 400" width="100%" xmlns="http://www.w3.org/2000/svg">
+<g fill="none" stroke="var(--graphite)" stroke-width="1">
+<circle r="32"></circle>
+<circle r="64"></circle>
+<circle r="96"></circle>
+<circle r="128"></circle>
+<circle r="160"></circle>
+</g>
+<g id="radar-axes" opacity="0.5" stroke="var(--tungsten)" stroke-dasharray="2,4" stroke-width="1"></g>
+<g fill="var(--platinum)" font-family="var(--mono)" font-size="10px" id="radar-labels" opacity="0.9"></g>
+<path fill="rgba(122, 22, 38, 0.3)" id="radar-polygon" stroke="#7A1626" stroke-width="2" style="transition: d 0.8s var(--ease-out), fill 0.8s var(--ease-out), stroke 0.8s var(--ease-out);"></path>
+<g id="radar-points"></g>
+</svg>

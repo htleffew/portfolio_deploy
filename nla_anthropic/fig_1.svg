@@ -1,0 +1,8 @@
+<svg style="width:100%; max-width:220px; height:auto; display:block; margin:0 auto;" viewbox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+<rect fill="#1a1a1a" height="80" stroke="var(--graphite)" stroke-width="1.5" width="100" x="50" y="20"></rect>
+<text fill="var(--tungsten)" font-family="monospace" font-size="11" text-anchor="middle" x="100" y="65">Neural Net</text>
+<path d="M 10 60 L 44 60" marker-end="url(#arrow)" stroke="var(--platinum)" stroke-width="1.5"></path>
+<path d="M 156 60 L 190 60" marker-end="url(#arrow)" stroke="var(--platinum)" stroke-width="1.5"></path>
+<circle cx="175" cy="88" fill="var(--hookers)" r="14"></circle>
+<path d="M 168 88 L 173 93 L 182 82" fill="none" stroke="#fff" stroke-width="1.5"></path>
+</svg>
