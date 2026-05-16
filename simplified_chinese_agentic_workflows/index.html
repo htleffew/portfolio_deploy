@@ -250,7 +250,7 @@ print(len(enc.encode(chinese_text)))
   </p>
 
   <p class="reveal">
-    But it gets worse. Beyond just raw token counts, asking a model to reason in a secondary language often introduces a severe problem-solving penalty. The models simply fail at the tasks more often. Consequently, the actual "cost efficiency"—the expected token cost you pay per <em>successful</em> task completion—deteriorates significantly. 
+    But it gets worse. Beyond just raw token counts, asking a model to reason in a secondary language often introduces a severe problem-solving penalty. The models simply fail at the tasks more often. Consequently, the actual "cost efficiency" (the expected token cost you pay per <em>successful</em> task completion) deteriorates significantly.
   </p>
 
   <p class="reveal">
@@ -297,11 +297,11 @@ print(len(enc.encode(chinese_text)))
   </p>
 
   <p class="reveal">
-    In the immediate future, we can achieve much more mathematically grounded context reduction through algorithmic prompt compression—techniques like LLMLingua, which calculate conditional perplexity to identify and selectively drop unnecessary tokens without requiring a translation layer. Furthermore, the development of fairer, multilingually trained tokenizers will eventually allow the natural density of logographic languages to translate into genuine compute savings. 
+    In the immediate future, we can achieve much more mathematically grounded context reduction through algorithmic prompt compression: techniques like LLMLingua, which calculate conditional perplexity to identify and selectively drop unnecessary tokens without requiring a translation layer. Furthermore, the development of fairer, multilingually trained tokenizers will eventually allow the natural density of logographic languages to translate into genuine compute savings.
   </p>
 
   <p class="reveal">
-    Looking further ahead, the ultimate solution likely bypasses discrete human languages entirely. Future architectures will likely process intermediate reasoning steps natively in continuous floating-point embeddings or pure token vectors—a true "latent reasoning" that operates without the inefficiencies of human grammar or the fragmentation of BPE. Until then, standardizing on English reasoning remains the most cost-effective and observable engineering choice.
+    Looking further ahead, the ultimate solution likely bypasses discrete human languages entirely. Future architectures will likely process intermediate reasoning steps natively in continuous floating-point embeddings or pure token vectors, a true "latent reasoning" that operates without the inefficiencies of human grammar or the fragmentation of BPE. Until then, standardizing on English reasoning remains the most cost-effective and observable engineering choice.
   </p>
 </section>
 

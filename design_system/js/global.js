@@ -289,7 +289,7 @@ const initCinematicEngine = () => {
     // Let's use a simpler heuristic based on document URI relative to 'portfolio_deploy'
     
     const isRoot = window.location.pathname.endsWith('index.html') && !window.location.pathname.includes('/') || 
-                   window.location.pathname.split('/').pop() === 'index.html' && window.location.pathname.split('/').slice(-2)[0] !== 'ADOS' && window.location.pathname.split('/').slice(-2)[0] !== 'AI_Equity_Framework' ||
+                   window.location.pathname.split('/').pop() === 'index.html' && window.location.pathname.split('/').slice(-2)[0] !== 'ADOS' ||
                    !window.location.pathname.includes('/') ||
                    window.location.pathname.endsWith('projects-repository.html');
                      // Determine the path prefix relative to this script

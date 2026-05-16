@@ -1,33 +1,33 @@
 [
     {
-        "id": "Juggernaut",
-        "title": "The Hazard of Presence",
-        "desc": "Architecting large-scale NLP moderation telemetry systems utilizing multi-pass filtering, TF-IDF emoji parsing, and transformer inference.",
+        "id": "Platform_Survival_Analytics",
+        "title": "The Survival Function of Platform Integrity",
+        "desc": "A Spark-scale Trust & Safety analytics engine built around a cross-domain reframe: the Kaplan-Meier estimator that biostatisticians use to model patient survival is the right tool to model how long a user session stays free of policy-violative content. The engine layers survival analysis, LDA topic modeling, VADER sentiment, and NetworkX co-occurrence into a four-module pipeline (orchestrator, text NLP, statistical, report generator) running on roughly 3,000 cores. The contribution is the methodological import (biostatistics to platform integrity) and the structured 12-section auto-report that makes investigations reproducible across cases.",
         "cat": "Research & Architecture",
-        "subtype": "DATA SCIENCE",
+        "subtype": "PLATFORM INTEGRITY",
         "tags": [
-            "NLP",
-            "Data Pipeline",
-            "Content Moderation",
-            "Telemetry",
-            "Python"
+            "Survival Analysis",
+            "Platform Safety",
+            "Trust & Safety",
+            "Spark / Distributed",
+            "LDA Topic Modeling"
         ],
-        "url": "Juggernaut/juggernaut.html",
-        "time": "10 min read",
+        "url": "Platform_Survival_Analytics/platform-survival-analytics.html",
+        "time": "14 min read",
         "visual": "<svg fill=\"none\" viewBox=\"0 0 600 600\"><circle cx=\"300\" cy=\"300\" r=\"150\" stroke=\"#3866A0\" stroke-width=\"2\"/><circle cx=\"300\" cy=\"300\" r=\"50\" fill=\"#7A1626\"/></svg>"
     },
     {
         "id": "Multimodal_Autism_AI",
-        "title": "Multimodal AI for Autism Assessment: Bayesian Uncertainty in Clinical ADOS",
-        "desc": "A late-fusion Bayesian ensemble pipeline that processes gaze-tracking, skeletal pose, and prosodic audio to generate ADOS-2-aligned risk scores\u00e2\u20ac\u201dwhile mathematically preserving clinical doubt. Features an interactive workbench demonstrating how conflicting behavioral telemetry forces sub-model divergence and uncertainty quantification.",
+        "title": "An ADOS-2-Aligned Multimodal Architecture for Clinical Autism Assessment",
+        "desc": "The ADOS-2 scores social affect, communication, and repetitive behaviors as separate domains before deriving a composite, and a model that flattens those features into one feature space is doing something the diagnostic algorithm is built around not doing. This pipeline takes the opposite approach: three domain-specific classifiers train independently on social, communication, and repetitive feature subsets, then a Logistic Regression meta-learner combines their probability outputs into the consensus prediction. The architectural commitment carries through the output layer, which generates two Jinja-templated reports from one analytical run: a research report with AUC, calibration, and SHAP global importance for an ML team, and a clinical report with per-participant feature attribution, ensemble consensus, data-quality scoring, and explicit 'requires clinical review' flagging when uncertainty exceeds threshold. The synthetic data generator is engineered to parallel real clinical data in its complexity, overlap, ambiguity, and noise, and a runtime AUC validity check fires at 0.95 as the engineering hygiene that keeps the simulation from drifting toward separability.",
         "cat": "Research & Architecture",
         "subtype": "CLINICAL & BEHAVIORAL ML",
         "tags": [
-            "Clinical & Behavioral ML",
-            "Bayesian Inference",
+            "Clinical ML",
+            "Synthetic Data",
+            "Bayesian Uncertainty",
             "Late Fusion",
-            "Uncertainty Quantification",
-            "Data Science"
+            "Decision Support"
         ],
         "url": "Multimodal_Autism_AI/multimodal-autism-ai.html",
         "time": "14 min read",
@@ -35,45 +35,19 @@
     },
     {
         "id": "ADHD_Focus_Playlist",
-        "title": "How I Accidentally Wrote a Research Paper About My Own Playlist",
-        "desc": "This was supposed to be one line on my About page. I was going to embed a Spotify playlist, write something like 'this helps me focus,' and move on with my life. But I have ADHD, and I am a psychologist, and I am constitutionally incapable of encountering a behavioral phenomenon without pulling it apart to figure out why it works.",
+        "title": "Three Mechanisms in an ADHD Focus Playlist",
+        "desc": "Most 'focus' playlists hover at 70 to 90 BPM. This one runs at 145, with exaggerated stereo panning and dense polyrhythmic texture, and that is not an aesthetic choice. ADHD attention is gated by chronic under-arousal, not over-stimulation, and three audio features address the failure mode jointly: tempo at the optimal-stimulation threshold, bilateral stimulation through the vagus nerve, and structured complexity that resists habituation. The argument draws on Zentall's Optimal Stimulation Theory, the Moderate Brain Arousal model, and bilateral-stimulation research from EMDR.",
         "cat": "Neuroscience",
-        "subtype": "ADHD",
+        "subtype": "WORKING NOTE",
         "tags": [
             "ADHD",
-            "Neuroscience"
+            "Neuroscience",
+            "Auditory Cognition",
+            "Arousal Theory"
         ],
         "url": "ADHD_Focus_Playlist/adhd-focus-playlist.html",
         "time": "10 min read",
-        "visual": ""
-    },
-    {
-        "id": "AI_Adoption",
-        "title": "The AI Productivity J-Curve. Dr. Heather Leffew",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
-        "cat": "Research & Architecture",
-        "subtype": "AI ADOPTION",
-        "tags": [
-            "AI ADOPTION",
-            "Data Science"
-        ],
-        "url": "AI_Adoption/ai-adoption.html",
-        "time": "5 min read",
-        "visual": "<svg fill=\"none\" viewbox=\"0 0 600 600\">\n<defs>\n<lineargradient id=\"g1\" x1=\"0\" x2=\"1\" y1=\"0\" y2=\"1\">\n<stop offset=\"0%\" stop-color=\"#3866A0\" stop-opacity=\"0.55\"></stop>\n<stop offset=\"100%\" stop-color=\"#0F3A6B\" stop-opacity=\"0.0\"></stop>\n</lineargradient>\n</defs>\n<path d=\"M 100 200 Q 300 450 500 100\" fill=\"none\" stroke=\"url(#g1)\" stroke-width=\"2\"></path>\n<line opacity=\"0.8\" stroke=\"#3866A0\" stroke-dasharray=\"2 6\" stroke-width=\"1\" x1=\"100\" x2=\"500\" y1=\"300\" y2=\"300\"></line>\n<g fill=\"#3866A0\" opacity=\"0.7\">\n<circle cx=\"100\" cy=\"200\" r=\"3.5\"></circle>\n<circle cx=\"200\" cy=\"300\" r=\"3.5\"></circle>\n<circle cx=\"300\" cy=\"350\" r=\"3.5\"></circle>\n<circle cx=\"400\" cy=\"275\" r=\"3.5\"></circle>\n<circle cx=\"500\" cy=\"100\" r=\"3.5\"></circle>\n</g>\n</svg>"
-    },
-    {
-        "id": "AI_Equity_Framework",
-        "title": "AI Equity Framework",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
-        "cat": "Research & Architecture",
-        "subtype": "AI EQUITY FRAMEWORK",
-        "tags": [
-            "AI EQUITY FRAMEWORK",
-            "Data Science"
-        ],
-        "url": "AI_Equity_Framework/ai-equity-framework.html",
-        "time": "5 min read",
-        "visual": "<svg id=\"sim-svg\" preserveaspectratio=\"none\" viewbox=\"0 0 400 300\"></svg>"
+        "visual": "<svg fill=\"none\" viewBox=\"0 0 600 600\"><defs><linearGradient id=\"adhd-g\" x1=\"0\" x2=\"1\" y1=\"0\" y2=\"0\"><stop offset=\"0%\" stop-color=\"#3866A0\" stop-opacity=\"0.0\"/><stop offset=\"40%\" stop-color=\"#3866A0\" stop-opacity=\"0.8\"/><stop offset=\"60%\" stop-color=\"#7A1626\" stop-opacity=\"0.9\"/><stop offset=\"100%\" stop-color=\"#7A1626\" stop-opacity=\"0.0\"/></linearGradient></defs><g stroke=\"url(#adhd-g)\" stroke-width=\"1.2\" stroke-linecap=\"round\"><line x1=\"60\" x2=\"60\" y1=\"300\" y2=\"300\"/><line x1=\"90\" x2=\"90\" y1=\"285\" y2=\"315\"/><line x1=\"120\" x2=\"120\" y1=\"260\" y2=\"340\"/><line x1=\"150\" x2=\"150\" y1=\"230\" y2=\"370\"/><line x1=\"180\" x2=\"180\" y1=\"200\" y2=\"400\"/><line x1=\"210\" x2=\"210\" y1=\"170\" y2=\"430\"/><line x1=\"240\" x2=\"240\" y1=\"140\" y2=\"460\"/><line x1=\"270\" x2=\"270\" y1=\"110\" y2=\"490\"/><line x1=\"300\" x2=\"300\" y1=\"90\" y2=\"510\"/><line x1=\"330\" x2=\"330\" y1=\"110\" y2=\"490\"/><line x1=\"360\" x2=\"360\" y1=\"140\" y2=\"460\"/><line x1=\"390\" x2=\"390\" y1=\"170\" y2=\"430\"/><line x1=\"420\" x2=\"420\" y1=\"200\" y2=\"400\"/><line x1=\"450\" x2=\"450\" y1=\"230\" y2=\"370\"/><line x1=\"480\" x2=\"480\" y1=\"260\" y2=\"340\"/><line x1=\"510\" x2=\"510\" y1=\"285\" y2=\"315\"/><line x1=\"540\" x2=\"540\" y1=\"300\" y2=\"300\"/></g></svg>"
     },
     {
         "id": "Annotation_Workforce",
@@ -133,28 +107,16 @@
         "visual": ""
     },
     {
-        "id": "Autonomous_Heuristic_Discovery",
-        "title": "Autonomous Heuristic Discovery. Dr. Heather Leffew",
-        "desc": "Transitioning entity resolution from siloed search buckets into an integrated, agent-driven loop.",
-        "cat": "Enterprise Systems Architecture",
-        "subtype": "HEURISTIC DISCOVERY",
+        "id": "Autoresearch_Master",
+        "title": "Autonomous Research & Mutation Boundaries",
+        "desc": "Granting an LLM unconstrained control of an ML research loop creates a structural conflict: the agent's optimization objective can directly oppose the organization's compliance, provenance, and fairness requirements. The case study examines a Fixed Harness / Mutation Budget partition, an immutable scaffold around a finite and auditable space of changes, orchestrated through a graph-based workflow.",
+        "cat": "Research & Architecture",
+        "subtype": "LLM ORCHESTRATION",
         "tags": [
             "Agentic AI",
-            "Data Architecture"
-        ],
-        "url": "Autonomous_Heuristic_Discovery/autonomous-heuristic-discovery.html",
-        "time": "5 min read",
-        "visual": "<svg fill=\"none\" viewbox=\"0 0 600 600\">\n<defs>\n<lineargradient id=\"g1\" x1=\"0\" x2=\"1\" y1=\"0\" y2=\"1\">\n<stop offset=\"0%\" stop-color=\"#3866A0\" stop-opacity=\"0.3\"></stop>\n<stop offset=\"100%\" stop-color=\"#0F3A6B\" stop-opacity=\"0.0\"></stop>\n</lineargradient>\n</defs>\n<circle cx=\"300\" cy=\"300\" r=\"200\" stroke=\"url(#g1)\" stroke-dasharray=\"4 12\" stroke-width=\"1\"></circle>\n<circle cx=\"300\" cy=\"300\" r=\"140\" stroke=\"url(#g1)\" stroke-dasharray=\"2 6\" stroke-width=\"1\"></circle>\n<g fill=\"#3866A0\" opacity=\"0.6\">\n<rect height=\"4\" width=\"4\" x=\"298\" y=\"98\"></rect>\n<rect height=\"4\" width=\"4\" x=\"298\" y=\"498\"></rect>\n</g>\n</svg>"
-    },
-    {
-        "id": "Autoresearch_Master",
-        "title": "Autonomous Research & Mutation Boundaries Research",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
-        "cat": "Research & Architecture",
-        "subtype": "AUTORESEARCH MASTER",
-        "tags": [
-            "AUTORESEARCH MASTER",
-            "Data Science"
+            "LLM Orchestration",
+            "AI Safety",
+            "Enterprise Compliance"
         ],
         "url": "Autoresearch_Master/autoresearch-master.html",
         "time": "5 min read",
@@ -536,19 +498,6 @@
         "visual": ""
     },
     {
-        "id": "Instrumental_and_Affective_Mass_Murder",
-        "title": "Instrumental and Affective Mass Murder",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
-        "cat": "Research & Architecture",
-        "subtype": "INSTRUMENTAL AND AFFECTIVE MASS MURDER",
-        "tags": [
-            "Data Science"
-        ],
-        "url": "Instrumental_and_Affective_Mass_Murder/doctoral-dissertation.html",
-        "time": "5 min read",
-        "visual": "<svg fill=\"none\" viewbox=\"0 0 600 600\">\n<defs>\n<lineargradient id=\"g1\" x1=\"0\" x2=\"1\" y1=\"0\" y2=\"1\">\n<stop offset=\"0%\" stop-color=\"#3866A0\" stop-opacity=\"0.55\"></stop>\n<stop offset=\"100%\" stop-color=\"#0F3A6B\" stop-opacity=\"0.0\"></stop>\n</lineargradient>\n</defs>\n<g fill=\"none\" stroke=\"url(#g1)\" stroke-width=\"1\">\n<circle cx=\"300\" cy=\"300\" r=\"80\"></circle>\n<circle cx=\"300\" cy=\"300\" r=\"140\"></circle>\n<circle cx=\"300\" cy=\"300\" r=\"200\"></circle>\n<circle cx=\"300\" cy=\"300\" r=\"260\"></circle>\n</g>\n<line opacity=\"0.8\" stroke=\"#3866A0\" stroke-dasharray=\"2 6\" stroke-width=\"1\" x1=\"60\" x2=\"540\" y1=\"540\" y2=\"60\"></line>\n<g fill=\"#3866A0\" opacity=\"0.7\">\n<circle cx=\"120\" cy=\"490\" r=\"2.5\"></circle>\n<circle cx=\"180\" cy=\"430\" r=\"2.5\"></circle>\n<circle cx=\"240\" cy=\"380\" r=\"2.5\"></circle>\n<circle cx=\"300\" cy=\"310\" r=\"2.5\"></circle>\n<circle cx=\"360\" cy=\"260\" r=\"2.5\"></circle>\n<circle cx=\"420\" cy=\"210\" r=\"2.5\"></circle>\n<circle cx=\"480\" cy=\"140\" r=\"2.5\"></circle>\n</g>\n<circle cx=\"380\" cy=\"380\" fill=\"#7A1626\" opacity=\"0.95\" r=\"3.5\"></circle>\n<text fill=\"#A1A1A6\" font-family=\"JetBrains Mono\" font-size=\"10\" letter-spacing=\"2\" x=\"400\" y=\"386\">OUTLIER</text>\n</svg>"
-    },
-    {
         "id": "Insurance_Automation",
         "title": "Robotic Process Automation: Forms & Email Ingestion",
         "desc": "Manual parsing of commercial insurance applications is highly prone to human error and massive organizational latency. This proof-of-concept simulates a 4-stage processing pipeline: Email Ingestion, NLP Preprocessing, Information Extraction via `dslim/bert-base-NER`, and Shadow CRM injection.",
@@ -578,21 +527,6 @@
         "visual": ""
     },
     {
-        "id": "Juggernaut",
-        "title": "Juggernaut: High-Velocity Moderation",
-        "desc": "When handling TikTok or heavy short-form platform data, text velocities exceed standard processing buffers. This engine partitions 50,000-row chunks, dynamically allocating CPU threads to generate sparse Co-occurrence matrices and token heuristics prior to NLP classification models.",
-        "cat": "Research & Architecture",
-        "subtype": "JUGGERNAUT ENGINE",
-        "tags": [
-            "JUGGERNAUT ENGINE",
-            "NLP & LLMs",
-            "Platform Integrity"
-        ],
-        "url": "Juggernaut/juggernaut-content-moderation.html",
-        "time": "5 min read",
-        "visual": ""
-    },
-    {
         "id": "Managing_Organizational_Transformation",
         "title": "Structural Dynamics in The Enterprise's Keeper Organization",
         "desc": "Interactive mathematical telemetry simulator and architectural case study.",
@@ -607,8 +541,8 @@
     },
     {
         "id": "Manifestation_Project",
-        "title": "Discourse Clustering: TikTok Manifestation",
-        "desc": "By transforming 6,200 non-standard semantic captions into a localized sparse matrix, 7 distinct linguistic sub-clusters emerge. These vectors differentiate core \"Law of Attraction\" ideology from niche esoteric cohorts (e.g. \"Tarot/Spells\").",
+        "title": "Discourse Clustering on Manifestation Communities",
+        "desc": "By transforming 6,200 non-standard semantic captions into a localized sparse matrix, 7 distinct linguistic sub-clusters emerge on a major short-form video platform. These vectors differentiate core \"Law of Attraction\" ideology from niche esoteric cohorts (e.g. \"Tarot/Spells\").",
         "cat": "Research & Architecture",
         "subtype": "TF-IDF CLUSTERING",
         "tags": [
@@ -1094,65 +1028,6 @@
         "visual": "<svg fill=\"none\" viewbox=\"0 0 600 600\">\n<defs>\n<lineargradient id=\"g1\" x1=\"0\" x2=\"1\" y1=\"0\" y2=\"1\">\n<stop offset=\"0%\" stop-color=\"#3866A0\" stop-opacity=\"0.55\"></stop>\n<stop offset=\"100%\" stop-color=\"#0F3A6B\" stop-opacity=\"0.0\"></stop>\n</lineargradient>\n</defs>\n<g fill=\"none\" stroke=\"url(#g1)\" stroke-width=\"1\">\n<circle cx=\"300\" cy=\"300\" r=\"80\"></circle>\n<circle cx=\"300\" cy=\"300\" r=\"140\"></circle>\n<circle cx=\"300\" cy=\"300\" r=\"200\"></circle>\n<circle cx=\"300\" cy=\"300\" r=\"260\"></circle>\n</g>\n<line opacity=\"0.8\" stroke=\"#3866A0\" stroke-dasharray=\"2 6\" stroke-width=\"1\" x1=\"60\" x2=\"540\" y1=\"540\" y2=\"60\"></line>\n<g fill=\"#3866A0\" opacity=\"0.7\">\n<circle cx=\"120\" cy=\"490\" r=\"2.5\"></circle>\n<circle cx=\"180\" cy=\"430\" r=\"2.5\"></circle>\n<circle cx=\"240\" cy=\"380\" r=\"2.5\"></circle>\n<circle cx=\"300\" cy=\"310\" r=\"2.5\"></circle>\n<circle cx=\"360\" cy=\"260\" r=\"2.5\"></circle>\n<circle cx=\"420\" cy=\"210\" r=\"2.5\"></circle>\n<circle cx=\"480\" cy=\"140\" r=\"2.5\"></circle>\n</g>\n<circle cx=\"380\" cy=\"380\" fill=\"#7A1626\" opacity=\"0.95\" r=\"3.5\"></circle>\n<text fill=\"#A1A1A6\" font-family=\"JetBrains Mono\" font-size=\"10\" letter-spacing=\"2\" x=\"400\" y=\"386\">OUTLIER</text>\n</svg>"
     },
     {
-        "id": "TikTok_Elections",
-        "title": "Election Misinformation Moderation Analysis",
-        "desc": "To actively counteract widespread semantic manipulation during critical election cycles, this system implements Python's NLP capabilities (N-grams, VADER Sentiment modeling, Co-occurrence matrices). The backend script merges Parquet files containing millions of moderation tasks, performs dimensionality reduction and topic modeling, and...",
-        "cat": "TikTok USDS",
-        "subtype": "CONTENT MODERATION",
-        "tags": [
-            "CONTENT MODERATION",
-            "NLP & LLMs",
-            "Platform Integrity"
-        ],
-        "url": "TikTok_Elections/election-moderation-analysis.html",
-        "time": "5 min read",
-        "visual": ""
-    },
-    {
-        "id": "TikTok_FTV",
-        "title": "Graph Analysis Vectors",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
-        "cat": "TikTok USDS",
-        "subtype": "TIKTOK FTV",
-        "tags": [
-            "Data Science",
-            "Graph ML & Identity",
-            "TIKTOK FTV"
-        ],
-        "url": "TikTok_FTV/social-ftv-network.html",
-        "time": "5 min read",
-        "visual": "<svg fill=\"none\" viewbox=\"0 0 600 600\">\n<defs>\n<lineargradient id=\"g1\" x1=\"0\" x2=\"1\" y1=\"0\" y2=\"1\">\n<stop offset=\"0%\" stop-color=\"#3866A0\" stop-opacity=\"0.55\"></stop>\n<stop offset=\"100%\" stop-color=\"#0F3A6B\" stop-opacity=\"0.0\"></stop>\n</lineargradient>\n</defs>\n<g fill=\"none\" stroke=\"url(#g1)\" stroke-width=\"1\">\n<circle cx=\"300\" cy=\"300\" r=\"80\"></circle>\n<circle cx=\"300\" cy=\"300\" r=\"140\"></circle>\n<circle cx=\"300\" cy=\"300\" r=\"200\"></circle>\n<circle cx=\"300\" cy=\"300\" r=\"260\"></circle>\n</g>\n<line opacity=\"0.8\" stroke=\"#3866A0\" stroke-dasharray=\"2 6\" stroke-width=\"1\" x1=\"60\" x2=\"540\" y1=\"540\" y2=\"60\"></line>\n<g fill=\"#3866A0\" opacity=\"0.7\">\n<circle cx=\"120\" cy=\"490\" r=\"2.5\"></circle>\n<circle cx=\"180\" cy=\"430\" r=\"2.5\"></circle>\n<circle cx=\"240\" cy=\"380\" r=\"2.5\"></circle>\n<circle cx=\"300\" cy=\"310\" r=\"2.5\"></circle>\n<circle cx=\"360\" cy=\"260\" r=\"2.5\"></circle>\n<circle cx=\"420\" cy=\"210\" r=\"2.5\"></circle>\n<circle cx=\"480\" cy=\"140\" r=\"2.5\"></circle>\n</g>\n<circle cx=\"380\" cy=\"380\" fill=\"#7A1626\" opacity=\"0.95\" r=\"3.5\"></circle>\n<text fill=\"#A1A1A6\" font-family=\"JetBrains Mono\" font-size=\"10\" letter-spacing=\"2\" x=\"400\" y=\"386\">OUTLIER</text>\n</svg>"
-    },
-    {
-        "id": "TikTok_Multi_Signal_Minor_Safety",
-        "title": "Structural Discourse Moderation",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
-        "cat": "TikTok USDS",
-        "subtype": "TIKTOK MULTI SIGNAL MINOR SAFETY",
-        "tags": [
-            "Data Science",
-            "Platform Integrity"
-        ],
-        "url": "TikTok_Multi_Signal_Minor_Safety/structural-discourse-moderation.html",
-        "time": "5 min read",
-        "visual": "<svg fill=\"none\" viewbox=\"0 0 600 600\">\n<defs>\n<lineargradient id=\"g1\" x1=\"0\" x2=\"1\" y1=\"0\" y2=\"1\">\n<stop offset=\"0%\" stop-color=\"#3866A0\" stop-opacity=\"0.55\"></stop>\n<stop offset=\"100%\" stop-color=\"#0F3A6B\" stop-opacity=\"0.0\"></stop>\n</lineargradient>\n</defs>\n<g fill=\"none\" stroke=\"url(#g1)\" stroke-width=\"1\">\n<circle cx=\"300\" cy=\"300\" r=\"80\"></circle>\n<circle cx=\"300\" cy=\"300\" r=\"140\"></circle>\n<circle cx=\"300\" cy=\"300\" r=\"200\"></circle>\n<circle cx=\"300\" cy=\"300\" r=\"260\"></circle>\n</g>\n<line opacity=\"0.8\" stroke=\"#3866A0\" stroke-dasharray=\"2 6\" stroke-width=\"1\" x1=\"60\" x2=\"540\" y1=\"540\" y2=\"60\"></line>\n<g fill=\"#3866A0\" opacity=\"0.7\">\n<circle cx=\"120\" cy=\"490\" r=\"2.5\"></circle>\n<circle cx=\"180\" cy=\"430\" r=\"2.5\"></circle>\n<circle cx=\"240\" cy=\"380\" r=\"2.5\"></circle>\n<circle cx=\"300\" cy=\"310\" r=\"2.5\"></circle>\n<circle cx=\"360\" cy=\"260\" r=\"2.5\"></circle>\n<circle cx=\"420\" cy=\"210\" r=\"2.5\"></circle>\n<circle cx=\"480\" cy=\"140\" r=\"2.5\"></circle>\n</g>\n<circle cx=\"380\" cy=\"380\" fill=\"#7A1626\" opacity=\"0.95\" r=\"3.5\"></circle>\n<text fill=\"#A1A1A6\" font-family=\"JetBrains Mono\" font-size=\"10\" letter-spacing=\"2\" x=\"400\" y=\"386\">OUTLIER</text>\n</svg>"
-    },
-    {
-        "id": "TikTok_SCOPEX",
-        "title": "PySpark Moderation Pipeline",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
-        "cat": "TikTok USDS",
-        "subtype": "TIKTOK SCOPEX",
-        "tags": [
-            "Data Science",
-            "Platform Integrity",
-            "TIKTOK SCOPEX"
-        ],
-        "url": "TikTok_SCOPEX/social-moderation-pipeline.html",
-        "time": "5 min read",
-        "visual": "<svg fill=\"none\" viewbox=\"0 0 600 600\">\n<defs>\n<lineargradient id=\"g1\" x1=\"0\" x2=\"1\" y1=\"0\" y2=\"1\">\n<stop offset=\"0%\" stop-color=\"#3866A0\" stop-opacity=\"0.55\"></stop>\n<stop offset=\"100%\" stop-color=\"#0F3A6B\" stop-opacity=\"0.0\"></stop>\n</lineargradient>\n</defs>\n<g fill=\"none\" stroke=\"url(#g1)\" stroke-width=\"1\">\n<circle cx=\"300\" cy=\"300\" r=\"80\"></circle>\n<circle cx=\"300\" cy=\"300\" r=\"140\"></circle>\n<circle cx=\"300\" cy=\"300\" r=\"200\"></circle>\n<circle cx=\"300\" cy=\"300\" r=\"260\"></circle>\n</g>\n<line opacity=\"0.8\" stroke=\"#3866A0\" stroke-dasharray=\"2 6\" stroke-width=\"1\" x1=\"60\" x2=\"540\" y1=\"540\" y2=\"60\"></line>\n<g fill=\"#3866A0\" opacity=\"0.7\">\n<circle cx=\"120\" cy=\"490\" r=\"2.5\"></circle>\n<circle cx=\"180\" cy=\"430\" r=\"2.5\"></circle>\n<circle cx=\"240\" cy=\"380\" r=\"2.5\"></circle>\n<circle cx=\"300\" cy=\"310\" r=\"2.5\"></circle>\n<circle cx=\"360\" cy=\"260\" r=\"2.5\"></circle>\n<circle cx=\"420\" cy=\"210\" r=\"2.5\"></circle>\n<circle cx=\"480\" cy=\"140\" r=\"2.5\"></circle>\n</g>\n<circle cx=\"380\" cy=\"380\" fill=\"#7A1626\" opacity=\"0.95\" r=\"3.5\"></circle>\n<text fill=\"#A1A1A6\" font-family=\"JetBrains Mono\" font-size=\"10\" letter-spacing=\"2\" x=\"400\" y=\"386\">OUTLIER</text>\n</svg>"
-    },
-    {
         "id": "Upstart_Credit",
         "title": "Credit Approval Fairness Audit",
         "desc": "In adherence to the Equal Credit Opportunity Act (ECOA) and CFPB Guidance, demographic features (Race, Age, Immigration Status) are explicitly removed from policy ingestion logic to prevent direct disparate treatment. However, expanding underwriting variables to include factors like \"Education\" can...",
@@ -1226,72 +1101,69 @@
         "visual": ""
     },
     {
-        "id": "Account_Prioritization",
-        "title": "Dual-Model Account Prioritization",
-        "desc": "Moving beyond single-metric classification by combining probability-to-convert with expected deal size.",
-        "cat": "Machine Learning",
-        "subtype": "PREDICTIVE RANKING",
+        "id": "Trajectory_Investigation",
+        "title": "Forensic Methodology for Per-User Investigation",
+        "desc": "Cohort analytics and per-user investigation are different research problems with different ethical regimes. This methodology sits on top of a Trust & Safety analytics engine and handles the cases where the unit of analysis is a single account: a six-slice temporal segmentation (Consolidated, three Tertiles, First 25, Last 25), multi-axis triangulation across sentiment / topics / view source / co-occurrence, and a structured forensic report. The methodological commitment is that risk is a trajectory rather than a snapshot. The piece is also explicit about the four guardrails (necessity, proportionality, accountability, redaction) that distinguish forensic investigation from surveillance.",
+        "cat": "Platform Integrity",
+        "subtype": "FORENSIC METHODOLOGY",
         "tags": [
-            "Classification",
-            "Regression",
-            "MLOps"
+            "Trust & Safety",
+            "Forensic Methodology",
+            "Behavioral Trajectory",
+            "Investigation Ethics",
+            "Platform Safety"
         ],
-        "url": "Account_Prioritization/account-prioritization.html",
-        "time": "7 min read",
-        "visual": "<svg fill=\"none\" viewbox=\"0 0 600 600\">\n<defs>\n<lineargradient id=\"g2\" x1=\"0\" x2=\"1\" y1=\"1\" y2=\"0\">\n<stop offset=\"0%\" stop-color=\"#1A3A6B\" stop-opacity=\"0.6\"></stop>\n<stop offset=\"100%\" stop-color=\"#3866A0\" stop-opacity=\"0.2\"></stop>\n</lineargradient>\n</defs>\n<path d=\"M100 500 L200 400 L300 450 L500 100\" stroke=\"url(#g2)\" stroke-width=\"4\"></path>\n<circle cx=\"500\" cy=\"100\" r=\"8\" fill=\"#3866A0\"></circle>\n</svg>"
+        "url": "Trajectory_Investigation/trajectory-investigation.html",
+        "time": "13 min read",
+        "visual": "<svg fill=\"none\" viewBox=\"0 0 600 600\"><defs><linearGradient id=\"scop-g\" x1=\"0\" x2=\"1\" y1=\"0\" y2=\"0\"><stop offset=\"0%\" stop-color=\"#3866A0\" stop-opacity=\"0.6\"/><stop offset=\"100%\" stop-color=\"#7A1626\" stop-opacity=\"0.6\"/></linearGradient></defs><line x1=\"80\" x2=\"520\" y1=\"480\" y2=\"480\" stroke=\"#A1A1A6\" stroke-width=\"0.7\" opacity=\"0.5\"/><rect x=\"80\" y=\"160\" width=\"440\" height=\"22\" fill=\"#3866A0\" fill-opacity=\"0.18\" stroke=\"#3866A0\" stroke-width=\"1\"/><rect x=\"80\" y=\"210\" width=\"146\" height=\"22\" fill=\"#3866A0\" fill-opacity=\"0.32\" stroke=\"#3866A0\" stroke-width=\"1\"/><rect x=\"227\" y=\"210\" width=\"146\" height=\"22\" fill=\"#3866A0\" fill-opacity=\"0.32\" stroke=\"#3866A0\" stroke-width=\"1\"/><rect x=\"374\" y=\"210\" width=\"146\" height=\"22\" fill=\"#7A1626\" fill-opacity=\"0.30\" stroke=\"#7A1626\" stroke-width=\"1\"/><rect x=\"80\" y=\"280\" width=\"45\" height=\"22\" fill=\"#DBA844\" fill-opacity=\"0.45\" stroke=\"#DBA844\" stroke-width=\"1\"/><rect x=\"475\" y=\"280\" width=\"45\" height=\"22\" fill=\"#DBA844\" fill-opacity=\"0.45\" stroke=\"#DBA844\" stroke-width=\"1\"/><line x1=\"227\" x2=\"227\" y1=\"232\" y2=\"460\" stroke=\"#A1A1A6\" stroke-dasharray=\"2 4\" stroke-width=\"0.5\" opacity=\"0.3\"/><line x1=\"374\" x2=\"374\" y1=\"232\" y2=\"460\" stroke=\"#A1A1A6\" stroke-dasharray=\"2 4\" stroke-width=\"0.5\" opacity=\"0.3\"/><text x=\"300\" y=\"400\" font-family=\"JetBrains Mono\" font-size=\"11\" fill=\"#A1A1A6\" letter-spacing=\"3\" text-anchor=\"middle\">SIX SLICES</text><text x=\"300\" y=\"425\" font-family=\"JetBrains Mono\" font-size=\"11\" fill=\"#A1A1A6\" letter-spacing=\"3\" text-anchor=\"middle\">ONE TRAJECTORY</text></svg>"
+    },
+    {
+        "id": "Instrumental_and_Affective_Mass_Murder",
+        "title": "Instrumental and Affective Mass Murder: A Predictive Linguistic Typology",
+        "desc": "The FBI Behavioral Analysis Unit has held since 2015 that all perpetrators of mass violence are best categorized as instrumental offenders. This dissertation rejects that position. 100 pre-attack communications analyzed with LIWC2015 along four summary dimensions; K-means clustering separated the corpus into two psychometrically distinct types, Affective (n=53) and Instrumental (n=47), with linear discriminant analysis correctly classifying 100% of cases. A binary logistic regression on four refined attack-behavior variables recovered cluster membership at McFadden R² = 0.24, with perpetrator-killed-by-another carrying an odds ratio of 14.11. The contribution is the first within-groups typology of mass murderers with statistically validated predictive ties to specific attack characteristics.",
+        "cat": "Forensic Psychology",
+        "subtype": "DOCTORAL DISSERTATION",
+        "tags": [
+            "Forensic Psychology",
+            "Threat Assessment",
+            "LIWC",
+            "Predictive Typology",
+            "Behavioral Measurement"
+        ],
+        "url": "Instrumental_and_Affective_Mass_Murder/doctoral-dissertation.html",
+        "time": "14 min read",
+        "visual": "<svg fill=\"none\" viewBox=\"0 0 600 600\"><defs><linearGradient id=\"diss-g\" x1=\"0\" x2=\"1\" y1=\"0\" y2=\"1\"><stop offset=\"0%\" stop-color=\"#3866A0\" stop-opacity=\"0.7\"/><stop offset=\"100%\" stop-color=\"#7A1626\" stop-opacity=\"0.6\"/></linearGradient></defs><g stroke=\"url(#diss-g)\" stroke-width=\"1\" fill=\"none\" opacity=\"0.6\"><circle cx=\"220\" cy=\"260\" r=\"110\"/><circle cx=\"380\" cy=\"340\" r=\"110\"/></g><g fill=\"#3866A0\" opacity=\"0.85\"><circle cx=\"180\" cy=\"230\" r=\"2.5\"/><circle cx=\"205\" cy=\"275\" r=\"2.5\"/><circle cx=\"230\" cy=\"245\" r=\"2.5\"/><circle cx=\"250\" cy=\"290\" r=\"2.5\"/><circle cx=\"195\" cy=\"310\" r=\"2.5\"/><circle cx=\"175\" cy=\"265\" r=\"2.5\"/><circle cx=\"260\" cy=\"235\" r=\"2.5\"/><circle cx=\"215\" cy=\"320\" r=\"2.5\"/></g><g fill=\"#7A1626\" opacity=\"0.85\"><circle cx=\"360\" cy=\"310\" r=\"2.5\"/><circle cx=\"395\" cy=\"360\" r=\"2.5\"/><circle cx=\"410\" cy=\"320\" r=\"2.5\"/><circle cx=\"375\" cy=\"380\" r=\"2.5\"/><circle cx=\"345\" cy=\"345\" r=\"2.5\"/><circle cx=\"425\" cy=\"360\" r=\"2.5\"/><circle cx=\"390\" cy=\"395\" r=\"2.5\"/><circle cx=\"355\" cy=\"375\" r=\"2.5\"/></g><line x1=\"100\" x2=\"500\" y1=\"445\" y2=\"445\" stroke=\"#A1A1A6\" stroke-width=\"0.5\" opacity=\"0.4\"/><text x=\"160\" y=\"475\" font-family=\"JetBrains Mono\" font-size=\"10\" fill=\"#3866A0\" letter-spacing=\"2\">AFFECTIVE</text><text x=\"340\" y=\"475\" font-family=\"JetBrains Mono\" font-size=\"10\" fill=\"#7A1626\" letter-spacing=\"2\">INSTRUMENTAL</text></svg>"
     },
     {
         "id": "Natural_Language_Autoencoders",
         "title": "Natural Language Autoencoders & Latent Evaluation Awareness",
-        "desc": "The challenge of AI alignment has always been fundamentally tied to the problem of opacity. This case study details Anthropic's NLA architecture, exploring how white-box interpretability tools can extract unverbalized evaluation awareness.",
+        "desc": "Interpretability through compression. Anthropic's natural-language autoencoder architecture forces a model to reconstruct its own activations through a language bottleneck, and what falls out is evaluation awareness the model never said out loud. A walkthrough of the white-box machinery, what it surfaces, and what it implies for measuring AI behavior at scale.",
         "cat": "AI Safety",
         "subtype": "INTERPRETABILITY",
         "tags": [
             "AI Safety",
-            "Interpretability"
+            "Interpretability",
+            "Anthropic",
+            "Evaluation Awareness"
         ],
         "url": "nla_anthropic/nla_anthropic.html",
         "time": "12 min read",
         "visual": "<svg fill=\"none\" viewbox=\"0 0 600 600\">\n<defs>\n<lineargradient id=\"nla-g\" x1=\"0\" x2=\"1\" y1=\"0\" y2=\"1\">\n<stop offset=\"0%\" stop-color=\"#3866A0\" stop-opacity=\"0.7\"></stop>\n<stop offset=\"100%\" stop-color=\"#7A1626\" stop-opacity=\"0.7\"></stop>\n</lineargradient>\n</defs>\n<path d=\"M100 300 C 200 100, 400 100, 500 300\" stroke=\"url(#nla-g)\" stroke-width=\"4\" fill=\"none\"></path>\n<path d=\"M100 300 C 200 500, 400 500, 500 300\" stroke=\"url(#nla-g)\" stroke-width=\"4\" fill=\"none\" stroke-dasharray=\"10 5\"></path>\n<circle cx=\"300\" cy=\"150\" r=\"6\" fill=\"#3866A0\"></circle>\n<circle cx=\"300\" cy=\"450\" r=\"6\" fill=\"#7A1626\"></circle>\n</svg>"
     },
     {
-        "id": "design_system",
-        "title": "{{HEADLINE}}",
-        "desc": "{{ABSTRACT}}",
-        "cat": "Research & Architecture",
-        "subtype": "DESIGN_SYSTEM",
-        "tags": [
-            "Data Science"
-        ],
-        "url": "design_system/case-study-template.html",
-        "time": "5 min read",
-        "visual": ""
-    },
-    {
         "id": "simplified_chinese_agentic_workflows",
         "title": "The Tokenization Trap: Why Logographic Languages Don't Save Agentic Context",
-        "desc": "An investigation into the \"vibe coding\" hypothesis: why prompting agents in Simplified Chinese fails to reduce token costs due to BPE fragmentation, and the hidden tax of translation overhead in agentic workflows.",
+        "desc": "An investigation into the 'vibe coding' hypothesis. Logographic languages look like they should compress agent prompts, but BPE tokenization fragments them into per-byte pieces, and the round-trip translation overhead taxes every step of the loop. The cost model and the empirics, side by side.",
         "cat": "Research & Architecture",
-        "subtype": "SIMPLIFIED_CHINESE_AGENTIC_WORKFLOWS",
+        "subtype": "TOKENIZATION",
         "tags": [
-            "Data Science"
+            "NLP & LLMs",
+            "Tokenization",
+            "Agentic Workflows",
+            "Cost Modeling"
         ],
         "url": "simplified_chinese_agentic_workflows/index.html",
         "time": "5 min read",
-        "visual": ""
-    },
-    {
-        "id": "Simplified_Chinese_Tokens",
-        "title": "Is Using Simplified Chinese an Efficient Token-Saving and Context-Saving Approach for Agentic Workflows?",
-        "desc": "Large language models (LLMs) deployed in agentic workflows must autonomously consume, process, and retain significant amounts of information. As these workflows become more complex, managing context window limits and the associated token costs has emerged as a primary engineering challenge.",
-        "cat": "Research & Architecture",
-        "subtype": "AGENTIC WORKFLOWS",
-        "tags": [
-            "Data Science",
-            "Data Science"
-        ],
-        "url": "Simplified_Chinese_Tokens/simplified_chinese_tokens.html",
-        "time": "6 min read",
-        "visual": ""
+        "visual": "<svg fill=\"none\" viewBox=\"0 0 600 600\"><defs><linearGradient id=\"sct-g\" x1=\"0\" x2=\"1\" y1=\"0\" y2=\"1\"><stop offset=\"0%\" stop-color=\"#3866A0\" stop-opacity=\"0.7\"/><stop offset=\"100%\" stop-color=\"#7A1626\" stop-opacity=\"0.4\"/></linearGradient></defs><g stroke=\"url(#sct-g)\" stroke-width=\"1\" fill=\"none\"><rect x=\"160\" y=\"160\" width=\"280\" height=\"280\"/><line x1=\"160\" x2=\"440\" y1=\"230\" y2=\"230\"/><line x1=\"160\" x2=\"440\" y1=\"300\" y2=\"300\"/><line x1=\"160\" x2=\"440\" y1=\"370\" y2=\"370\"/><line x1=\"230\" x2=\"230\" y1=\"160\" y2=\"440\"/><line x1=\"300\" x2=\"300\" y1=\"160\" y2=\"440\"/><line x1=\"370\" x2=\"370\" y1=\"160\" y2=\"440\"/></g><g fill=\"#3866A0\" opacity=\"0.85\"><rect x=\"198\" y=\"198\" width=\"4\" height=\"4\"/><rect x=\"268\" y=\"268\" width=\"4\" height=\"4\"/><rect x=\"338\" y=\"338\" width=\"4\" height=\"4\"/><rect x=\"408\" y=\"408\" width=\"4\" height=\"4\"/></g><circle cx=\"300\" cy=\"300\" r=\"6\" fill=\"#7A1626\"/></svg>"
     }
 ]
