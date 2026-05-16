@@ -1,0 +1,31 @@
+<svg fill="none" style="width:100%; height:auto;" viewbox="0 0 800 200" xmlns="http://www.w3.org/2000/svg">
+<!-- Chain nodes -->
+<rect fill="var(--hookers)" fill-opacity="0.1" height="80" stroke="var(--hookers)" stroke-width="1.5" width="130" x="20" y="60"></rect>
+<text fill="var(--hookers)" font-family="var(--mono)" font-size="9" letter-spacing="1" text-anchor="middle" x="85" y="92">ORIGINAL</text>
+<text fill="var(--hookers)" font-family="var(--mono)" font-size="9" letter-spacing="1" text-anchor="middle" x="85" y="108">DATASET</text>
+<text fill="var(--hookers)" font-family="var(--mono)" font-size="7" text-anchor="middle" x="85" y="128">(PINNED SOURCE)</text>
+<line marker-end="url(#arrowS)" stroke="var(--phthalo-lift)" stroke-width="1.5" x1="150" x2="190" y1="100" y2="100"></line>
+<rect fill="var(--phthalo-lift)" fill-opacity="0.06" height="60" stroke="var(--phthalo-lift)" stroke-width="1" width="100" x="190" y="70"></rect>
+<text fill="var(--phthalo-lift)" font-family="var(--mono)" font-size="9" text-anchor="middle" x="240" y="96">MUTATION 1</text>
+<text fill="var(--phthalo-lift)" font-family="var(--mono)" font-size="7" text-anchor="middle" x="240" y="112">cost: 10</text>
+<line stroke="var(--phthalo-lift)" stroke-width="1.5" x1="290" x2="330" y1="100" y2="100"></line>
+<rect fill="var(--phthalo-lift)" fill-opacity="0.06" height="60" stroke="var(--phthalo-lift)" stroke-width="1" width="100" x="330" y="70"></rect>
+<text fill="var(--phthalo-lift)" font-family="var(--mono)" font-size="9" text-anchor="middle" x="380" y="96">MUTATION 2</text>
+<text fill="var(--phthalo-lift)" font-family="var(--mono)" font-size="7" text-anchor="middle" x="380" y="112">cost: 20</text>
+<line stroke="var(--phthalo-lift)" stroke-width="1.5" x1="430" x2="450" y1="100" y2="100"></line>
+<text fill="var(--tungsten)" font-family="var(--mono)" font-size="14" x="460" y="104">Â·Â·Â·</text>
+<line stroke="var(--phthalo-lift)" stroke-width="1.5" x1="480" x2="500" y1="100" y2="100"></line>
+<rect fill="var(--phthalo-lift)" fill-opacity="0.06" height="60" stroke="var(--phthalo-lift)" stroke-width="1" width="100" x="500" y="70"></rect>
+<text fill="var(--phthalo-lift)" font-family="var(--mono)" font-size="9" text-anchor="middle" x="550" y="96">MUTATION N</text>
+<text fill="var(--phthalo-lift)" font-family="var(--mono)" font-size="7" text-anchor="middle" x="550" y="112">cost: 10</text>
+<line stroke="var(--phthalo-lift)" stroke-width="1.5" x1="600" x2="640" y1="100" y2="100"></line>
+<!-- Decision diamond -->
+<polygon fill="var(--hansa)" fill-opacity="0.08" points="700,60 760,100 700,140 640,100" stroke="var(--hansa)" stroke-width="1.5"></polygon>
+<text fill="var(--hansa)" font-family="var(--mono)" font-size="8" letter-spacing="1" text-anchor="middle" x="700" y="96">PROVENANCE</text>
+<text fill="var(--hansa)" font-family="var(--mono)" font-size="8" letter-spacing="1" text-anchor="middle" x="700" y="110">VERIFIER</text>
+<!-- Outcomes -->
+<line stroke="var(--hookers)" stroke-width="1.5" x1="700" x2="700" y1="60" y2="24"></line>
+<text fill="var(--hookers)" font-family="var(--mono)" font-size="9" font-weight="600" letter-spacing="1" text-anchor="middle" x="700" y="18">ACCEPTED</text>
+<line stroke="var(--alizarin)" stroke-width="1.5" x1="700" x2="700" y1="140" y2="176"></line>
+<text fill="var(--alizarin)" font-family="var(--mono)" font-size="9" font-weight="600" letter-spacing="1" text-anchor="middle" x="700" y="190">BLOCKED</text>
+</svg>

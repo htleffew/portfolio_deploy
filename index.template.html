@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dr. Heather Leffew | Implicit Signal Measurement, Human-AI Behavioral Science</title>
+<!-- Preload the two font files that appear first during the cinematic opening -->
+<!-- Playfair Display 600 normal latin (h1) -->
+<link rel="preload" href="https://fonts.gstatic.com/s/playfairdisplay/v40/nuFiD-vYSZviVYUb_rj3ij__anPXDTzYgA.woff2" as="font" type="font/woff2" crossorigin>
+<!-- Lora 400 italic latin (.abstract) -->
+<link rel="preload" href="https://fonts.gstatic.com/s/lora/v37/0QIhMX1D_JOuMw_LIftL.woff2" as="font" type="font/woff2" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<!-- Institutional Design System -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js" defer></script>
+
+<script src="https://unpkg.com/split-type" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js" defer></script>
+
+<link rel="stylesheet" href="design_system/css/global.css">
+</head>
+<body>
+<div id="preloader"><div id="preloader-left"></div><div id="preloader-right"></div><div id="preloader-line"></div></div>
+<header id="topnav">
+  <a href="index.html" class="brand">Dr. Heather Leffew</a>
+  <div class="nav-links">
+    <button id="trigger-search">Search</button>
+    <a href="about.html">About</a>
+    <a href="projects-repository.html">Research Library</a>
+    <a href="resume.pdf" target="_blank" class="nav-btn">Resume -></a>
+  </div>
+</header>
+<div id="progress"></div>
+
+<canvas id="glCanvas"></canvas>
+
+
+
+<section class="hero" data-mode="dark">
+  <div class="ambient" aria-hidden="true">
+    <svg viewBox="0 0 600 600" fill="none">
+      <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3866A0" stop-opacity="0.55"/><stop offset="100%" stop-color="#0F3A6B" stop-opacity="0.0"/></linearGradient></defs>
+      <g stroke="url(#g1)" stroke-width="1" fill="none"><circle cx="300" cy="300" r="80"/><circle cx="300" cy="300" r="140"/><circle cx="300" cy="300" r="200"/><circle cx="300" cy="300" r="260"/></g>
+      <line x1="60" y1="540" x2="540" y2="60" stroke="#3866A0" stroke-width="1" stroke-dasharray="2 6" opacity="0.6"/>
+      <g fill="#3866A0" opacity="0.5"><circle cx="120" cy="490" r="2"/><circle cx="180" cy="430" r="2"/><circle cx="240" cy="380" r="2"/><circle cx="300" cy="310" r="2"/><circle cx="360" cy="260" r="2"/><circle cx="420" cy="210" r="2"/><circle cx="480" cy="140" r="2"/></g>
+    </svg>
+  </div>
+  <div class="col-wide">
+    <div class="hero-text">
+      <div class="meta-row"><span>Implicit Signal Measurement</span><span class="sep">&middot;</span><span>Human-AI Behavioral Science</span><span class="sep">&middot;</span><span>Research Leadership</span></div>
+      <h1>Dr. Heather Leffew</h1>
+      <div class="hero-rule"></div>
+      <p class="abstract">Measuring what machines and humans reveal through language, behavior, and implicit signals to build the science of how they think, interact, and shape each other.</p>
+      <div class="contact-row">
+        <a href="resume.pdf" target="_blank" class="primary">Resume PDF</a>
+        <a href="https://linkedin.com/in/heathertleffew" target="_blank">LinkedIn</a>
+        <a href="projects-repository.html">Research Library</a>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-cue" aria-hidden="true"><span>Scroll</span><div class="scroll-cue-line"></div></div>
+</section>
+
+<!-- BIO (paper) -->
+<section class="band band--paper" id="executive-bio" data-mode="paper">
+  <div class="bio-wrap col-wide">
+    <div class="section-eyebrow">Background</div>
+    <h2 class="section-heading">Biography</h2>
+    <div class="bio-card">
+      <div class="split-grid">
+        <div class="bio-text-col">
+          <div class="bio-preview">
+            <p><strong>Dr. Heather Leffew</strong> is a PhD psychologist and data science executive who has spent twenty years building measurement systems that cut through ambiguity in human and machine behavior. Her career is built on a single obsession: using language, behavior, and implicit signals to produce real measurement in domains defined by ambiguity. From forensic psychiatric evaluation to billion-record platform safety at TikTok to building Spokeo's AI function from the ground up, every role has been a different implementation of the same mission: understand how humans and machines think, interact, and influence each other, and build the infrastructure to make that understanding rigorous, scalable, and actionable.</p>
+            <button id="expandBioBtn" class="bio-expand-btn">Read Full Biography <span>+</span></button>
+          </div>
+          <div class="bio-full" id="bioFullContent" style="display:none;opacity:0;outline:none;" tabindex="-1">
+          <p>Her doctoral research at Fielding Graduate University used computational psycholinguistics to measure implicit power drives in the manifestos of mass murderers, proving that language reveals psychological states that predict behavioral outcomes even when the subject cannot be directly assessed. That work established the method she has applied ever since: take unstructured, chaotic, ambiguous data and use disciplined proxy measurement, statistical rigor, and behavioral science to extract the implicit signals that reveal what is happening beneath the surface.</p>
+          <p>At TikTok, as Principal Data Scientist and Applied Researcher, she built measurement and detection systems processing over one billion records. Her work included statistical safety frameworks for detecting semantic coercion, network analysis that shifted content moderation from chasing individual content to identifying systematic bad actors, multi-signal child safety detection, and an industry-first external IRB methodology for ethical review of global research. At Spokeo, as Director of Data Science, she built the AI function from the ground up: a 49-terabyte knowledge graph with autonomous entity resolution, a 26-research-question behavioral evaluation program, and an FCRA compliance architecture where legal requirements are machine-enforced at the inference layer.</p>
+          <p>As AI becomes increasingly integrated into the systems that judge, measure, and make decisions for humans, and as humans learn to work in partnership with machines, her work focuses on what that integration requires: understanding the states, traits, behaviors, and cognitive processes of both humans and AI systems, how they act on each other through implicit signals, and what the pathway is to using AI to improve human productivity, function, and wellness while identifying potential harms through the same implicit signals before those harms become visible in outcomes.</p>
+          <p>Her Post-Asimovian Framework for AI Alignment formalizes this as architecture: psycholinguistic typology discovery as the observable state variable for adaptive safety governance, treating alignment as a feedback control problem where linguistic features drive threshold adaptation. Her mission is to build the measurement science that the field needs to get human-AI interaction right.</p>
+            <a href="about.html" style="font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:0.10em;color:var(--ink-blue);text-decoration:none;border-bottom:1px solid rgba(0,0,0,0.2);padding-bottom:4px;display:inline-block;margin-top:24px;transition:all 0.3s;">Read the full story -></a>
+            <button id="collapseBioBtn" class="bio-expand-btn">Show Less <span>-</span></button>
+          </div>
+        </div>
+        <div class="headshot-frame"><img src="design_system/assets/Heather_headshot_2.jpg" alt="Dr. Heather Leffew"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS (dark) -->
+<section class="band band--dark" id="featured-projects" data-mode="dark">
+  <div class="col-wide">
+    <div class="section-eyebrow">Featured Work</div>
+    <h2 class="section-heading">Interactive Simulators &amp; Projects</h2>
+    <div class="project-carousel">
+      <div class="carousel-track" id="dynamic-carousel-track">
+        <!-- Built statically by SSG compiler -->
+        <div class="carousel-group" id="carousel-group-1">
+          {{CAROUSEL_INJECT}}
+        </div>
+        <div class="carousel-group" id="carousel-group-2" aria-hidden="true">
+          {{CAROUSEL_INJECT}}
+        </div>
+      </div>
+    </div>
+    <a href="projects-repository.html" class="view-all-link">View All Projects -></a>
+  </div>
+</section>
+
+<!-- EDUCATION (paper) -->
+<section class="band band--paper" id="education" data-mode="paper">
+  <div class="col-wide">
+    <div class="section-eyebrow">Academic Background</div>
+    <h2 class="section-heading">Education</h2>
+    <div class="resume-stack">
+      <div class="edu-card gs-reveal"><h3 class="edu-title">Doctor of Philosophy (PhD), Psychology</h3><p class="edu-school">Fielding Graduate University / APA Accredited</p><div class="edu-row"><div class="edu-label">Specialization</div><div class="edu-value">Quantitative Predictive Linguistics</div></div><div class="edu-row"><div class="edu-label">Dissertation</div><div class="edu-value">Instrumental and Affective Mass Murder: Establishing a Predictive Typology with Computer-Mediated Linguistic Analysis.</div></div><div class="edu-row"><div class="edu-label">Conference Presentation</div><div class="edu-value">Implicit Power Drives in the Manifestos Preceding Autogenic Massacres.</div></div></div>
+      
+      <div style="text-align: left; padding: 16px 48px;">
+        <button id="expandEduBtn" class="bio-expand-btn">View Full Academic History <span>+</span></button>
+      </div>
+      
+      <div id="eduFullContent" style="display:none;opacity:0;">
+        <div class="edu-card gs-reveal"><h3 class="edu-title">Master of Arts (MA), Psychology</h3><p class="edu-school">Fielding Graduate University / WSCUC Accredited / 4.14 GPA</p><div class="edu-row"><div class="edu-label">Specialization</div><div class="edu-value">Advanced Psychometrics</div></div></div>
+        <div class="edu-card gs-reveal"><h3 class="edu-title">Bachelor of Science (BS), Psychology</h3><p class="edu-school">Liberty University / SACSOC Accredited / Summa Cum Laude (4.00 GPA)</p><div class="edu-row"><div class="edu-label">Specialization</div><div class="edu-value">Emergency Management &amp; Public Safety</div></div></div>
+        <div style="text-align: left; padding: 16px 48px;">
+          <button id="collapseEduBtn" class="bio-expand-btn">Show Less <span>-</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE (paper) -->
+<section class="band band--paper" id="experience" data-mode="paper">
+  <div class="col-wide">
+    <div class="section-eyebrow">Organizational Outcomes</div>
+    <h2 class="section-heading">Professional Experience</h2>
+    <div class="resume-stack">
+      <div class="r-card gs-reveal"><div class="r-bg"></div><div class="r-content"><div class="r-header"><div><h3 class="r-title">Director of Data Science</h3><p class="r-company">Spokeo</p></div><div class="r-dates">Sep 2025 - Present</div></div><p class="r-intro">Founding technical leader who built and scaled Spokeo's Data Science and AI function, delivering production ML and NLP systems across search relevance, fraud detection, customer intelligence, and data procurement in partnership with ~80 engineers and product leaders across 8+ cross-functional squads.</p><ul class="r-bullets"><li>Owned the AI operating model with executive leadership, defining an OKR taxonomy and delivery mechanisms to translate strategy into measurable execution.</li><li>Led end-to-end delivery of a proprietary 15-step ML intelligence pipeline combining knowledge graphs, graph ML, and weak supervision for entity resolution and data fusion across ~49TB of multi-vendor data.</li><li>Set production standards for scale and iteration in partnership with engineering, reducing core processing time from 150+ hours to 24-36 hours and establishing A/B testing and model evaluation practices to support reliable, repeatable releases.</li><li>Improved data procurement decisions by implementing source independence and ablation frameworks to quantify vendor redundancy and ROI.</li><li>Delivered NLP-driven schema discovery via a semantic clustering engine that mapped thousands of vendor columns to 75 canonical attribute types, raising schema discovery coverage to 72%.</li><li>Embedded Responsible AI and a 4-tier regulatory compliance system into the ML lifecycle for compliance-ready deployment.</li><li>Developed recruitment strategy and nurtured a high-performing data science team, reinforcing technical rigor and strong cross-functional partnership.</li></ul></div></div>
+      <div class="r-card gs-reveal"><div class="r-bg"></div><div class="r-content"><div class="r-header"><div><h3 class="r-title">Full-Stack Principal Data Scientist &amp; Applied Researcher</h3><p class="r-company">TikTok USDS | ByteDance</p></div><div class="r-dates">Jul 2022 - Jul 2025</div></div><p class="r-intro">Owned the roadmap for ML measurement and detection capabilities and led cross-functional teams up to 25 (data science, engineering, policy), setting evaluation standards for accuracy, safety, and operational readiness.</p><ul class="r-bullets"><li>Launched an analytics product suite (text analysis pipeline + multi-signal detection frameworks) processing 1B+ records, improving brand-safety assurance and enabling data-driven content strategy optimization.</li><li>Delivered measurement products identifying 400K+ violative accounts, enabling enforcement on 15K+ accounts without increasing appeals, and reducing manual review effort by 40%.</li><li>Secured dedicated compute capacity and senior stakeholder alignment enabling scalable processing and improving reliability by reducing query failures.</li><li>Leader for analytics as product initiatives, including resourcing for large initiatives, team allocation, hardware upgrades, and procurement of third-party software through enterprise compliance processes.</li><li>Led collaborative research partnerships with educational institutions and research organizations, leading the creation of an industry first external IRB methodology for ethical review and legal approval of research initiatives.</li><li>Deployed organization-wide automated detection systems with 95% accuracy, addressing highest-harm platform issues and protect brand safety and platform integrity.</li><li>Strengthened technical rigor and enforcement of consistent practices via mentorship and coaching on statistics, measurement, methodology, and research design.</li></ul></div></div>
+      <div class="r-card gs-reveal"><div class="r-bg"></div><div class="r-content"><div class="r-header"><div><h3 class="r-title">Head of Accreditation</h3><p class="r-company">National Emergency Responder and Public Safety Center</p></div><div class="r-dates">Nov 2020 - Jul 2022</div></div><p class="r-intro">Led a team of 8 with end-to-end ownership of product development, market analysis, and accreditation compliance for programs serving 1,000+ agencies, with full P&amp;L responsibility.</p><ul class="r-bullets"><li>Drove B2B client acquisition by authoring winning RFPs, translating agency requirements into clear product scope and partnership strategy.</li><li>Owned vision and roadmap for analytics products, enabling data-driven operational decision workflows targeting retention and expansion.</li><li>Built strategic partnerships with industry-leading organizations to expand reach, strengthen credibility, and scale offerings.</li><li>Presented to government officials and oversight bodies, communicating risk and compliance considerations to guide leadership decisions in regulated environments.</li></ul></div></div>
+      <div class="r-card gs-reveal"><div class="r-bg"></div><div class="r-content"><div class="r-header"><div><h3 class="r-title">Director of Evaluations and Analytics</h3><p class="r-company">Brower Psychological Police and Public Safety Services</p></div><div class="r-dates">Jul 2019 - Jul 2022</div></div><p class="r-intro">Directed three product teams (18 total members), owning delivery of digital psychological assessment products, people analytics platforms, and wellness programs in regulated public safety environments.</p><ul class="r-bullets"><li>Increased operational throughput 5x by leading a digital transformation via cloud-based assessment products, while digitizing end-to-end workflows, improving speed, efficiency, and objectivity.</li><li>Secured $500K+ in grant funding by building data-driven roadmaps and demonstrating measurable DEI outcomes through proposals grounded in behavioral science and digital innovation.</li><li>Built partnerships with the national regulatory bodies, aligned offerings with regulatory expectations to achieve compliance, accreditation, and endorsements.</li><li>Won RFPs to expand a multi-state client portfolio, translating operational requirements into deliverable scope and driving revenue growth and market expansion.</li><li>Developed predictive analytics for mental health service forecasting, applying evidence-based measurement to guide operational improvements to identify and serve the employees of all client agencies fairly and equitably.</li></ul></div></div>
+      <div class="r-card gs-reveal"><div class="r-bg"></div><div class="r-content"><div class="r-header"><div><h3 class="r-title">Doctoral Researcher &amp; Supervisor</h3><p class="r-company">Fielding Graduate University</p></div><div class="r-dates">May 2015 - Jul 2019</div></div><p class="r-intro">Led supervision and training for 12 master's-level clinicians and practicum students across clinical and public safety settings, while conducting research in predictive behavioral analytics and clinically grounded measurement.</p><ul class="r-bullets"><li>Diagnostic Psychological Evaluations: Cedar Springs Psychiatric Hospital.</li><li>Forensic, Occupational, and Clinical Neuropsychological Assessment: Rocky Mountain Behavioral Health.</li><li>Critical Incident Response, Fitness for Duty Evaluations, Psychotherapy: Brower Psychological Police and Public Safety Psychology.</li><li>Assistant Disaster Coordinator: Comprehensive Clinical Services (Aurora Mental Health Center).</li><li>Teaching Assistant: Theories of Psychotherapy.</li><li>Research Assistant: Clinically Predictive Linguistic Analysis of Thematic Apperception Test Narratives.</li></ul></div></div>
+      <div class="r-card gs-reveal"><div class="r-bg"></div><div class="r-content"><div class="r-header"><div><h3 class="r-title">Staff Data Scientist</h3><p class="r-company">QMS Infotech, Inc.</p></div><div class="r-dates">Mar 2008 - Oct 2019</div></div><p class="r-intro">Developed advanced analytics products to audit private-sector hiring practices, identifying systemic bias and establishing psychometric and statistical standards grounded in regulatory compliance for B2B clients.</p><ul class="r-bullets"><li>Delivered defensible analytics and audit frameworks enabling HR partners to implement bias-mitigating policies at scale while maintaining psychometric validity and legal compliance.</li><li>Established repeatable statistical modeling practices for audit workflows, producing auditable analyses and actionable recommendations that improved client hiring strategies and diversity outcomes.</li></ul></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CAPABILITIES (dark) -->
+<section class="band band--dark" id="capabilities" data-mode="dark">
+  <div class="col-wide">
+    <div class="section-eyebrow">Core Competencies</div>
+    <h2 class="section-heading">Technical &amp; Leadership Capabilities</h2>
+    <div class="resume-stack">
+      <div class="tech-block reveal"><div class="tech-title">Leadership &amp; AI Strategy</div><div class="tagrow"><span class="tag">Technical Leadership</span><span class="tag">AI Strategy</span><span class="tag">ML Leadership</span><span class="tag">Product Strategy</span><span class="tag">Cross-Functional Leadership</span><span class="tag">Mentoring &amp; Coaching</span><span class="tag">OKR Taxonomy</span><span class="tag">AI Governance</span><span class="tag">Responsible AI</span><span class="tag">Regulatory Compliance</span><span class="tag">Bias Mitigation</span><span class="tag">Ethical AI</span></div></div>
+      <div class="tech-block reveal"><div class="tech-title">Machine Learning &amp; Modeling</div><div class="tagrow"><span class="tag">Neuro-Symbolic AI</span><span class="tag">Graph ML</span><span class="tag">Knowledge Graphs</span><span class="tag">Entity Resolution</span><span class="tag">Weak Supervision</span><span class="tag">Reinforcement Learning</span><span class="tag">Agentic Systems</span><span class="tag">LLMs</span><span class="tag">NLP</span><span class="tag">Semantic Clustering</span><span class="tag">Predictive Modeling</span><span class="tag">XGBoost</span><span class="tag">Causal Inference</span><span class="tag">Ablation Studies</span></div></div>
+      <div class="tech-block reveal"><div class="tech-title">MLOps &amp; Infrastructure</div><div class="tagrow"><span class="tag">End-to-End Pipeline Architecture</span><span class="tag">Model Lifecycle Mgmt</span><span class="tag">Distributed Computing</span><span class="tag">AWS SageMaker / EMR / EC2 / Glue</span><span class="tag">Databricks</span><span class="tag">Delta Lake</span><span class="tag">Apache Spark</span><span class="tag">Airflow</span><span class="tag">Docker &amp; Kubernetes</span><span class="tag">CI/CD</span></div></div>
+      <div class="tech-block reveal"><div class="tech-title">Research &amp; Measurement</div><div class="tagrow"><span class="tag">Experimental Design</span><span class="tag">A/B Testing</span><span class="tag">Psychometrics</span><span class="tag">Source Independence Analysis</span><span class="tag">Behavioral Typologies</span><span class="tag">Incrementality Testing</span><span class="tag">Media Mix Modeling</span><span class="tag">Lift Studies</span></div></div>
+      <div class="tech-block reveal"><div class="tech-title">Technical Stack &amp; Tools</div><div class="tagrow"><span class="tag">Python</span><span class="tag">Pandas / NumPy</span><span class="tag">Scikit-learn</span><span class="tag">PyTorch</span><span class="tag">TensorFlow</span><span class="tag">Hugging Face</span><span class="tag">PySpark</span><span class="tag">SQL / Hive / Scala</span><span class="tag">Kafka</span><span class="tag">Tableau / Power BI</span></div></div>
+    </div>
+  </div>
+</section>
+
+
+
+<script>
+try {
+  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+  }
+} catch(e) { console.warn("GSAP load failed", e); }
+
+let cachedScrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+window.addEventListener('resize', () => {
+  cachedScrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+});
+window.addEventListener('scroll', () => {
+  const p = cachedScrollHeight > 0 ? (window.scrollY / cachedScrollHeight) * 100 : 0;
+  const progEl = document.getElementById('progress');
+  if(progEl) progEl.style.setProperty('--p', p + '%');
+}, { passive: true });
+
+(function initNavMode() {
+  try {
+    const nav = document.getElementById('topnav');
+    const bands = document.querySelectorAll('[data-mode]');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          nav.classList.toggle('is-paper', entry.target.dataset.mode === 'paper');
+        }
+      });
+    }, { rootMargin: "-15% 0px -84% 0px" });
+    
+    bands.forEach(b => observer.observe(b));
+    
+    // Initial paint check
+    const center = window.innerHeight * 0.15;
+    bands.forEach(b => {
+      const r = b.getBoundingClientRect();
+      if (r.top <= center && r.bottom > center) nav.classList.toggle('is-paper', b.dataset.mode === 'paper');
+    });
+  } catch(e) { console.warn(e); }
+})();
+</script>
+
+<script>
+window.disableGlobalOrchestration = true;
+window.addEventListener('load', () => {
+  try {
+    // ── Initialize Lenis Smooth Scroll ──────────────────────────
+    let lenis;
+    if (typeof Lenis !== 'undefined') {
+      lenis = new Lenis({ duration: 1.4, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
+      if (typeof gsap !== 'undefined') {
+        gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+        gsap.ticker.lagSmoothing(0);
+      } else {
+        const lenisRaf = (time) => { lenis.raf(time); requestAnimationFrame(lenisRaf); };
+        requestAnimationFrame(lenisRaf);
+      }
+    }
+
+    if (typeof gsap !== 'undefined') {
+
+      // ── Theatrical Opening Sequence ─────────────────────────────────
+      const tl = gsap.timeline({
+        onComplete: () => {
+          // Initialize ScrollTriggers ONLY AFTER the hero sequence is complete
+          // This prevents sections like the Bio from abruptly appearing if they are in the viewport
+          initScrollTriggers();
+        }
+      });
+
+      const preloader = document.getElementById('preloader');
+      const preLeft = document.getElementById('preloader-left');
+      const preRight = document.getElementById('preloader-right');
+      const preLine = document.getElementById('preloader-line');
+      if (preloader && preLeft && preRight && preLine) {
+        tl.to(preLine, { height: '28vh', duration: 0.8, ease: 'power2.inOut' });
+        tl.to(preLine, { opacity: 0, height: '50vh', duration: 0.4, ease: 'power2.in' }, '+=0.1');
+        tl.to(preLeft, { xPercent: -100, duration: 0.8, ease: 'power2.inOut' }, '-=0.2');
+        tl.to(preRight, { xPercent: 100, duration: 0.8, ease: 'power2.inOut' }, '<');
+        tl.set(preloader, { display: 'none' });
+      } else if (preloader) {
+        tl.to(preloader, { opacity: 0, duration: 0.8, ease: 'power2.inOut', onComplete: () => { preloader.style.display = 'none'; } });
+      }
+
+      // Fade in the spatial void
+      tl.to(['#deep-space', '#glCanvas'], { opacity: 1, duration: 1.2, ease: 'power2.inOut' }, "-=0.4");
+
+      // Setup Kinetic Text for Hero Header
+      let heroTitle = document.querySelector('.hero h1');
+      let split;
+      if (heroTitle) {
+        heroTitle.style.opacity = 1;
+        split = new SplitType(heroTitle, { types: 'words, chars' });
+      }
+
+      // Nav slides in early during the void reveal
+      tl.to('#topnav', { y: 0, duration: 0.8, ease: 'power2.out' }, "-=0.8");
+
+      // Bring in the ambient SVG halo
+      tl.to('.ambient', { opacity: 0.35, scale: 1, rotation: 0, duration: 1.5, ease: 'power2.out' }, "-=0.8");
+
+      // Executive Profile eyebrow
+      tl.to('.meta-row span', { opacity: 1, x: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out' }, "-=1.0");
+
+      // Cascade the name
+      if (split) {
+        tl.from(split.chars, { opacity: 0, y: 15, rotateX: -45, stagger: 0.015, duration: 0.8, ease: 'power2.out' }, "-=0.8");
+      }
+
+      // Draw the rule
+      tl.to('.hero-rule', { width: 64, opacity: 1, duration: 0.8, ease: 'power2.inOut' }, "-=0.6");
+
+      // Abstract subtitle
+      tl.to('.abstract', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, "-=0.5");
+
+      // Contact links
+      tl.to('.contact-row a', { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out' }, "-=0.4");
+
+      // Scroll cue fades in last
+      tl.to('.scroll-cue', { opacity: 1, duration: 0.6, ease: 'power2.out' }, "-=0.2");
+
+      // Setup Simplex Noise for Ambient SVG independently of the timeline
+      const ambientSvgPaths = document.querySelectorAll('.ambient svg circle');
+      if (ambientSvgPaths.length && typeof SimplexNoise !== 'undefined') {
+        const simplex = new SimplexNoise();
+        let time = 0;
+        function animateAmbient() {
+          time += 0.002;
+          ambientSvgPaths.forEach((path, i) => {
+            const noise = simplex.noise2D(i * 0.1, time);
+            const scale = 1 + (noise * 0.05);
+            path.style.transform = `scale(${scale})`;
+            path.style.transformOrigin = 'center';
+          });
+          requestAnimationFrame(animateAmbient);
+        }
+        animateAmbient();
+      }
+
+      function initScrollTriggers() {
+        if (typeof ScrollTrigger === 'undefined') return;
+
+        if (lenis) lenis.on('scroll', ScrollTrigger.update);
+
+        // Fade out scroll cue as user begins scrolling
+        gsap.to('.scroll-cue', {
+          opacity: 0, y: -10, duration: 0.6, ease: 'power2.in',
+          scrollTrigger: { trigger: '.hero', start: 'top top', end: '+=120', scrub: true }
+        });
+
+        // ── Act I: Executive Biography ───────────────────────────
+        const bioSection = document.querySelector('#executive-bio');
+        if (bioSection) {
+          const bioTl = gsap.timeline({
+            scrollTrigger: { trigger: bioSection, start: 'top 55%', toggleActions: 'play none none none' }
+          });
+          bioTl.fromTo(bioSection.querySelector('.section-eyebrow'),
+            { opacity: 0, x: -20, filter: 'blur(2px)' },
+            { opacity: 1, x: 0, filter: 'blur(0px)', duration: 0.6, ease: 'power2.out' }
+          );
+          bioTl.fromTo(bioSection.querySelector('.section-heading'),
+            { opacity: 0, y: 15, filter: 'blur(3px)' },
+            { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.8, ease: 'power2.out' }, '-=0.4'
+          );
+          bioTl.fromTo('.bio-card',
+            { opacity: 0, y: 30, scale: 0.98 },
+            { opacity: 1, y: 0, scale: 1, duration: 1.0, ease: 'power2.out' }, '-=0.6'
+          );
+          bioTl.fromTo('.headshot-frame',
+            { opacity: 0, scale: 1.04, clipPath: 'inset(100% 0 0 0)' },
+            { opacity: 1, scale: 1, clipPath: 'inset(0% 0 0 0)', duration: 1.0, ease: 'power2.out' }, '-=0.8'
+          );
+          bioTl.fromTo('.bio-preview > p',
+            { opacity: 0, y: 10 },
+            { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out' }, '-=0.6'
+          );
+          bioTl.fromTo('#expandBioBtn',
+            { opacity: 0, y: 5 },
+            { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '-=0.4'
+          );
+        }
+
+        // ── Act II: Featured Projects ────────────────────────────
+        const projSection = document.querySelector('#featured-projects');
+        if (projSection) {
+          const projTl = gsap.timeline({
+            scrollTrigger: { trigger: projSection, start: 'top 65%', toggleActions: 'play none none none' }
+          });
+          projTl.fromTo(projSection.querySelector('.section-eyebrow'),
+            { opacity: 0, x: -20, filter: 'blur(2px)' },
+            { opacity: 1, x: 0, filter: 'blur(0px)', duration: 0.6, ease: 'power2.out' }
+          );
+          projTl.fromTo(projSection.querySelector('.section-heading'),
+            { opacity: 0, y: 15, filter: 'blur(3px)' },
+            { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.8, ease: 'power2.out' }, '-=0.4'
+          );
+          projTl.fromTo('.project-carousel',
+            { opacity: 0, y: 30, x: -10 },
+            { opacity: 1, y: 0, x: 0, duration: 1.0, ease: 'power2.out' }, '-=0.6'
+          );
+          projTl.fromTo('.view-all-link',
+            { opacity: 0, y: 5 },
+            { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.6'
+          );
+        }
+
+        // ── Act III: Education ────────────────────────────────────
+        const eduSection = document.querySelector('#education');
+        if (eduSection) {
+          const eduTl = gsap.timeline({
+            scrollTrigger: { trigger: eduSection, start: 'top 65%', toggleActions: 'play none none none' }
+          });
+          eduTl.fromTo(eduSection.querySelector('.section-eyebrow'),
+            { opacity: 0, x: -20, filter: 'blur(2px)' },
+            { opacity: 1, x: 0, filter: 'blur(0px)', duration: 0.6, ease: 'power2.out' }
+          );
+          eduTl.fromTo(eduSection.querySelector('.section-heading'),
+            { opacity: 0, y: 15, filter: 'blur(3px)' },
+            { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.8, ease: 'power2.out' }, '-=0.4'
+          );
+          eduSection.querySelectorAll('.edu-card').forEach((card, i) => {
+            eduTl.fromTo(card,
+              { opacity: 0, y: 20, scale: 0.98 },
+              { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: 'power2.out' },
+              i === 0 ? '-=0.6' : '-=0.6'
+            );
+          });
+          const expandEduEl = document.querySelector('#expandEduBtn');
+          if (expandEduEl) {
+            const wrapper = expandEduEl.closest('div');
+            gsap.set(wrapper, { opacity: 0 });
+            eduTl.to(wrapper, { opacity: 1, duration: 0.6, ease: 'power2.out' }, '-=0.4');
+          }
+        }
+
+        // ── Act IV: Professional Experience ──────────────────────
+        const expSection = document.querySelector('#experience');
+        if (expSection) {
+          const expHdrTl = gsap.timeline({
+            scrollTrigger: { trigger: expSection, start: 'top 65%', toggleActions: 'play none none none' }
+          });
+          expHdrTl.fromTo(expSection.querySelector('.section-eyebrow'),
+            { opacity: 0, x: -20, filter: 'blur(2px)' },
+            { opacity: 1, x: 0, filter: 'blur(0px)', duration: 0.6, ease: 'power2.out' }
+          );
+          expHdrTl.fromTo(expSection.querySelector('.section-heading'),
+            { opacity: 0, y: 15, filter: 'blur(3px)' },
+            { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.8, ease: 'power2.out' }, '-=0.4'
+          );
+
+          expSection.querySelectorAll('.r-card').forEach((card) => {
+            const cardTl = gsap.timeline({
+              scrollTrigger: { trigger: card, start: 'top 78%', toggleActions: 'play none none none' }
+            });
+            cardTl.fromTo(card,
+              { opacity: 0, y: 25, scale: 0.98 },
+              { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: 'power2.out' }
+            );
+            const header = card.querySelector('.r-header');
+            const intro = card.querySelector('.r-intro');
+            if (header) cardTl.fromTo(header,
+              { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.6'
+            );
+            if (intro) cardTl.fromTo(intro,
+              { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.4'
+            );
+          });
+        }
+
+        // ── Act V: Technical Capabilities ────────────────────────
+        const capSection = document.querySelector('#capabilities');
+        if (capSection) {
+          const capTl = gsap.timeline({
+            scrollTrigger: { trigger: capSection, start: 'top 65%', toggleActions: 'play none none none' }
+          });
+          capTl.fromTo(capSection.querySelector('.section-eyebrow'),
+            { opacity: 0, x: -20, filter: 'blur(2px)' },
+            { opacity: 1, x: 0, filter: 'blur(0px)', duration: 0.6, ease: 'power2.out' }
+          );
+          capTl.fromTo(capSection.querySelector('.section-heading'),
+            { opacity: 0, y: 15, filter: 'blur(3px)' },
+            { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.8, ease: 'power2.out' }, '-=0.4'
+          );
+
+          capSection.querySelectorAll('.tech-block').forEach((block) => {
+            const blockTl = gsap.timeline({
+              scrollTrigger: { trigger: block, start: 'top 78%', toggleActions: 'play none none none' }
+            });
+            blockTl.fromTo(block,
+              { opacity: 0, y: 15 },
+              { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }
+            );
+            const tags = block.querySelectorAll('.tag');
+            if (tags.length) {
+              blockTl.fromTo(tags,
+                { opacity: 0, scale: 0.9, y: 5 },
+                { opacity: 1, scale: 1, y: 0, duration: 0.4, stagger: 0.02, ease: 'back.out(1.2)' }, '-=0.6'
+              );
+            }
+          });
+        }
+
+        // ── Subtle parallax depth on section content ─────────────
+        gsap.utils.toArray('.band').forEach(band => {
+          const inner = band.querySelector('.col-wide') || band.querySelector('.bio-wrap');
+          if (inner) {
+            gsap.fromTo(inner, { yPercent: 2 }, {
+              yPercent: -2, ease: 'none',
+              scrollTrigger: { trigger: band, start: 'top bottom', end: 'bottom top', scrub: true }
+            });
+          }
+        });
+      }
+    } else {
+      // No GSAP — make everything visible immediately so nothing is stuck hidden
+      const preloader = document.getElementById('preloader');
+      if (preloader) preloader.style.display = 'none';
+      document.querySelectorAll('.meta-row span, h1, .hero-rule, .abstract, .contact-row a, .ambient, #glCanvas, #deep-space, .hero-text > *, .headshot-frame, .gs-reveal, .tech-block, .band .section-eyebrow, .band .section-heading, .bio-card, .project-carousel, .view-all-link, .r-card, .edu-card').forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; el.style.filter = 'none'; el.style.clipPath = 'none'; });
+    }
+  } catch(e) {}
+});
+
+const expandBtn=document.getElementById('expandBioBtn');
+const collapseBtn=document.getElementById('collapseBioBtn');
+const fullContent=document.getElementById('bioFullContent');
+if(expandBtn&&fullContent&&collapseBtn){
+  expandBtn.addEventListener('click',()=>{
+    const expand = () => { fullContent.style.display='block'; fullContent.style.opacity=1; expandBtn.style.display='none'; fullContent.focus(); ScrollTrigger.refresh(); };
+    if (document.startViewTransition) { document.startViewTransition(expand); } else { expandBtn.style.display='none'; fullContent.style.display='block'; gsap.to(fullContent,{opacity:1,duration:0.6,ease:'power2.out',onComplete:()=>{fullContent.focus();ScrollTrigger.refresh()}}); }
+  });
+  collapseBtn.addEventListener('click',()=>{
+    const collapse = () => { fullContent.style.display='none'; fullContent.style.opacity=0; expandBtn.style.display='inline-flex'; document.getElementById('executive-bio').scrollIntoView({behavior:'smooth',block:'start'}); ScrollTrigger.refresh(); };
+    if (document.startViewTransition) { document.startViewTransition(collapse); } else { gsap.to(fullContent,{opacity:0,duration:0.4,ease:'power2.in',onComplete:()=>{fullContent.style.display='none';expandBtn.style.display='inline-flex';ScrollTrigger.refresh();document.getElementById('executive-bio').scrollIntoView({behavior:'smooth',block:'start'});}}); }
+  });
+}
+
+// Expandable Education Section
+const expandEdu=document.getElementById('expandEduBtn');
+const collapseEdu=document.getElementById('collapseEduBtn');
+const eduContent=document.getElementById('eduFullContent');
+if(expandEdu&&eduContent&&collapseEdu){
+  expandEdu.addEventListener('click',()=>{
+    const expand = () => { eduContent.style.display='block'; eduContent.style.opacity=1; expandEdu.style.display='none'; ScrollTrigger.refresh(); };
+    if (document.startViewTransition) { document.startViewTransition(expand); } else { expandEdu.style.display='none'; eduContent.style.display='block'; gsap.to(eduContent,{opacity:1,duration:0.6,ease:'power2.out',onComplete:()=>ScrollTrigger.refresh()}); }
+  });
+  collapseEdu.addEventListener('click',()=>{
+    const collapse = () => { eduContent.style.display='none'; eduContent.style.opacity=0; expandEdu.style.display='inline-flex'; document.getElementById('education').scrollIntoView({behavior:'smooth',block:'start'}); ScrollTrigger.refresh(); };
+    if (document.startViewTransition) { document.startViewTransition(collapse); } else { gsap.to(eduContent,{opacity:0,duration:0.4,ease:'power2.in',onComplete:()=>{eduContent.style.display='none';expandEdu.style.display='inline-flex';ScrollTrigger.refresh();document.getElementById('education').scrollIntoView({behavior:'smooth',block:'start'});}}); }
+  });
+}
+
+// Expandable Experience Bullets
+document.querySelectorAll('.r-card').forEach(card => {
+  const intro = card.querySelector('.r-intro');
+  const bullets = card.querySelector('.r-bullets');
+  if (intro && bullets) {
+    // Hide bullets initially
+    bullets.style.display = 'none';
+    bullets.style.opacity = '0';
+    
+    // Create button wrapper
+    const btnWrap = document.createElement('div');
+    btnWrap.style.marginTop = '16px';
+    btnWrap.style.marginBottom = '8px';
+    
+    const toggleBtn = document.createElement('button');
+    toggleBtn.className = 'bio-expand-btn';
+    toggleBtn.innerHTML = 'View Details <span>+</span>';
+    
+    let isOpen = false;
+    toggleBtn.addEventListener('click', () => {
+      if (!isOpen) {
+        bullets.style.display = 'block';
+        toggleBtn.innerHTML = 'Hide Details <span>-</span>';
+        gsap.to(bullets, {opacity: 1, duration: 0.6, ease: 'power2.out', onComplete: () => ScrollTrigger.refresh()});
+      } else {
+        gsap.to(bullets, {opacity: 0, duration: 0.4, ease: 'power2.in', onComplete: () => {
+          bullets.style.display = 'none';
+          toggleBtn.innerHTML = 'View Details <span>+</span>';
+          ScrollTrigger.refresh();
+        }});
+      }
+      isOpen = !isOpen;
+    });
+    
+    btnWrap.appendChild(toggleBtn);
+    // Insert button after intro
+    intro.parentNode.insertBefore(btnWrap, intro.nextSibling);
+  }
+});
+</script>
+
+<!-- Progressive Disclosure (Experience Cards) -->
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.r-card').forEach(card => {
+    const intro   = card.querySelector('.r-intro');
+    const bullets = card.querySelector('.r-bullets');
+    if (!intro || !bullets) return;
+    bullets.style.display = 'none';
+    bullets.style.opacity = '0';
+    
+    const btnWrap = document.createElement('div');
+    btnWrap.style.cssText = 'margin-top:16px;margin-bottom:8px;';
+    const btn = document.createElement('button');
+    btn.className = 'bio-expand-btn';
+    btn.innerHTML = 'View Details <span>+</span>';
+    
+    let open = false;
+    btn.addEventListener('click', () => {
+      if (!open) {
+        bullets.style.display = 'block';
+        btn.innerHTML = 'Hide Details <span>-</span>';
+        if (typeof gsap !== 'undefined') {
+          gsap.to(bullets, { opacity: 1, duration: 0.6, ease: 'power2.out' });
+        } else {
+          bullets.style.opacity = '1';
+        }
+      } else {
+        if (typeof gsap !== 'undefined') {
+          gsap.to(bullets, {
+            opacity: 0,
+            duration: 0.4,
+            ease: 'power2.in',
+            onComplete: () => { bullets.style.display = 'none'; }
+          });
+        } else {
+          bullets.style.display = 'none';
+          bullets.style.opacity = '0';
+        }
+        btn.innerHTML = 'View Details <span>+</span>';
+      }
+      open = !open;
+      if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+    });
+    
+    btnWrap.appendChild(btn);
+    intro.parentNode.insertBefore(btnWrap, intro.nextSibling);
+  });
+});
+</script>
+
+<!-- Global Chrome Injector -->
+<script src="design_system/js/global.js" defer></script>
+</body>
+</html>

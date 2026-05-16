@@ -1,0 +1,38 @@
+<svg fill="none" style="width:100%; height:auto;" viewbox="0 0 800 340" xmlns="http://www.w3.org/2000/svg">
+<!-- Grid -->
+<line stroke="var(--phthalo)" stroke-opacity="0.3" stroke-width="0.5" x1="80" x2="80" y1="40" y2="280"></line>
+<line stroke="var(--phthalo)" stroke-opacity="0.3" stroke-width="0.5" x1="80" x2="760" y1="280" y2="280"></line>
+<!-- Y-axis labels -->
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="9" text-anchor="end" x="70" y="60">1.00</text>
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="9" text-anchor="end" x="70" y="140">0.85</text>
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="9" text-anchor="end" x="70" y="200">0.75</text>
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="9" text-anchor="end" x="70" y="280">0.60</text>
+<!-- X-axis labels -->
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="9" text-anchor="middle" x="80" y="300">0</text>
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="9" text-anchor="middle" x="220" y="300">5</text>
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="9" text-anchor="middle" x="360" y="300">8</text>
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="9" text-anchor="middle" x="500" y="300">11</text>
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="9" text-anchor="middle" x="640" y="300">13</text>
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="9" text-anchor="middle" x="760" y="300">15</text>
+<!-- Axis titles -->
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="10" letter-spacing="2" text-anchor="middle" x="400" y="330">LOOP ITERATION</text>
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="10" letter-spacing="2" text-anchor="middle" transform="rotate(-90,20,160)" x="20" y="160">MODEL FIT</text>
+<!-- Threshold line -->
+<line stroke="var(--alizarin)" stroke-dasharray="6 4" stroke-opacity="0.6" stroke-width="1" x1="80" x2="760" y1="100" y2="100"></line>
+<text fill="var(--alizarin)" fill-opacity="0.8" font-family="var(--mono)" font-size="8" letter-spacing="1" text-anchor="start" x="765" y="98">THRESHOLD</text>
+<!-- Anomaly zone -->
+<rect fill="var(--alizarin)" fill-opacity="0.04" height="60" width="680" x="80" y="40"></rect>
+<!-- Normal performance line (iterations 0â€“10) -->
+<polyline fill="none" points="80,240 120,232 160,225 200,218 240,212 280,206 320,200 360,195 400,190 440,186 480,182" stroke="var(--phthalo)" stroke-linejoin="round" stroke-width="2.5"></polyline>
+<!-- Anomalous spike at iteration 11 -->
+<polyline fill="none" points="480,182 500,72" stroke="var(--alizarin)" stroke-dasharray="4 3" stroke-width="2.5"></polyline>
+<!-- Trigger marker -->
+<line stroke="var(--alizarin)" stroke-dasharray="3 3" stroke-width="1.5" x1="500" x2="500" y1="40" y2="280"></line>
+<circle cx="500" cy="72" fill="var(--alizarin)" fill-opacity="0.9" r="5"></circle>
+<text fill="var(--alizarin)" font-family="var(--mono)" font-size="9" letter-spacing="1" x="510" y="60">CUSUM TRIGGER</text>
+<!-- Revert line -->
+<line stroke="var(--hookers)" stroke-dasharray="4 2" stroke-width="2" x1="500" x2="530" y1="72" y2="182"></line>
+<text fill="var(--hookers)" font-family="var(--mono)" font-size="8" letter-spacing="1" x="540" y="178">REVERT TO STABLE</text>
+<!-- Stable continuation -->
+<polyline fill="none" points="530,182 570,178 610,175 650,172 690,170 730,168 760,166" stroke="var(--hookers)" stroke-linejoin="round" stroke-width="2"></polyline>
+</svg>

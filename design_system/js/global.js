@@ -289,7 +289,7 @@ const initCinematicEngine = () => {
     // Let's use a simpler heuristic based on document URI relative to 'portfolio_deploy'
     
     const isRoot = window.location.pathname.endsWith('index.html') && !window.location.pathname.includes('/') || 
-                   window.location.pathname.split('/').pop() === 'index.html' && window.location.pathname.split('/').slice(-2)[0] !== 'ADOS' && window.location.pathname.split('/').slice(-2)[0] !== 'AI_Equity_Framework' ||
+                   window.location.pathname.split('/').pop() === 'index.html' && window.location.pathname.split('/').slice(-2)[0] !== 'ADOS' ||
                    !window.location.pathname.includes('/') ||
                    window.location.pathname.endsWith('projects-repository.html');
                      // Determine the path prefix relative to this script
@@ -457,30 +457,58 @@ const initCinematicEngine = () => {
         fetch(pathPrefix + 'projects_index.json')
             .then(res => res.json())
             .then(data => {
-                // Determine current project id from URL
+                // Identify current project by matching its url against the current path.
+                // Match the most specific (longest) url that the path contains, so a project
+                // whose url ends in /index.html does not accidentally match a different page.
                 const currentPath = window.location.pathname;
-                const otherProjects = data.filter(p => !currentPath.includes(p.url.split('/').pop()));
-                
+                let currentIdx = -1;
+                let bestMatchLen = -1;
+                data.forEach((p, i) => {
+                    if (p.url && currentPath.indexOf(p.url) !== -1 && p.url.length > bestMatchLen) {
+                        currentIdx = i;
+                        bestMatchLen = p.url.length;
+                    }
+                });
+                const current = currentIdx >= 0 ? data[currentIdx] : null;
+                const otherProjects = data.filter((p, i) => i !== currentIdx);
+
                 if (recGrid) {
                     recGrid.innerHTML = '';
-                    // Pick 3 random or top projects
-                    const shuffled = otherProjects.sort(() => 0.5 - Math.random());
-                    const selected = shuffled.slice(0, 3);
-                    
+                    // Score by tag overlap (+1 per shared tag) plus category match (+0.5).
+                    // Tie-break by index order so the output is stable across reloads.
+                    const scored = otherProjects.map((p, i) => {
+                        let score = 0;
+                        if (current && Array.isArray(current.tags) && Array.isArray(p.tags)) {
+                            const myTags = new Set(current.tags);
+                            p.tags.forEach(t => { if (myTags.has(t)) score += 1; });
+                        }
+                        if (current && current.cat && p.cat && current.cat === p.cat) {
+                            score += 0.5;
+                        }
+                        return { p, score, i };
+                    });
+                    scored.sort((a, b) => b.score - a.score || a.i - b.i);
+                    const selected = scored.slice(0, 3).map(s => s.p);
+
                     selected.forEach(p => {
                         recGrid.innerHTML += `
                             <a class="r-card" href="${pathPrefix}${p.url}">
                                 <div class="eb">${p.cat || 'Research'}</div>
                                 <div class="ti">${p.title}</div>
-                                <div class="ds">${p.desc.substring(0, 80)}...</div>
+                                <div class="ds">${(p.desc || '').substring(0, 80)}...</div>
                             </a>
                         `;
                     });
                 }
 
                 if (nextChapLink && nextChapTitle) {
-                    // Just pick the first from the other projects (or could be next in index)
-                    const nextP = otherProjects[0] || data[0];
+                    // Deterministic rotation: pick the next entry in index order, looping.
+                    let nextP = null;
+                    if (currentIdx >= 0 && data.length > 1) {
+                        nextP = data[(currentIdx + 1) % data.length];
+                    } else {
+                        nextP = otherProjects[0] || data[0];
+                    }
                     if (nextP) {
                         nextChapLink.href = pathPrefix + nextP.url;
                         nextChapTitle.innerText = nextP.title;

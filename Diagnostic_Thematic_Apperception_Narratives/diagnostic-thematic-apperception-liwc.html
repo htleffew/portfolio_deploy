@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIWC and the TAT. | Dr. Heather Leffew</title>
+    <!-- Design System: tokens load via @import inside institutional.css -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js" defer></script>
+    <link rel="stylesheet" href="../design_system/css/global.css">
+    <style>
+      /* Ensure Markdown components look correct in the reading column */
+      .markdown-body { margin-top: 1.5rem; }
+      .markdown-body p { margin-bottom: 1.25em; }
+      .markdown-body img { max-width: 100%; height: auto; display: block; margin: 2em auto; }
+      .markdown-body pre { padding: 1.5em; overflow-x: auto; background: var(--obsidian); border: 1px solid var(--charcoal); margin: 2em 0; }
+      .markdown-body code { font-family: var(--mono); font-size: 0.85em; }
+    </style>
+</head>
+
+<body data-category="Psycholinguistic Measurement" data-title="Diagnostic_Thematic_Apperception_Narratives">
+
+<!-- Reading progress -->
+<div id="progress"></div>
+
+<!-- Top nav (injected by global_chrome.js) -->
+<div id="global-nav-container"></div>
+
+<!-- Chapter spine (populated by global_chrome.js) -->
+<aside id="spine"></aside>
+
+<!-- Atmospheric gradient -->
+<div class="atmosphere"></div>
+
+<canvas id="glCanvas"></canvas>
+
+<!-- FRONT MATTER -->
+<section class="band band--dark front" data-spine="Front" data-section="Front matter">
+  <div class="col-wide">
+    <div class="grid">
+     <div>
+      <div class="meta-row">
+        <span class="bracket">CASE STUDY</span>
+        <span class="sep">/</span>
+        <span>Psycholinguistic Measurement</span>
+        <span class="sep">/</span>
+        <span>Misc</span>
+      </div>
+
+      <h1>LIWC and the TAT.</h1>
+
+      <p class="abstract">
+        A Fielding Graduate University paper makes the case that Linguistic Inquiry and Word Count belongs in Thematic Appercept...
+      </p>
+
+      <div class="byline">
+        <div>
+          Subject
+          <strong>N/A</strong>
+        </div>
+        <div>
+          Architecture
+          <strong>N/A</strong>
+        </div>
+        <div>
+          Output
+          <strong>N/A</strong>
+        </div>
+      </div>
+     </div>
+     <div></div>
+    </div>
+  </div>
+</section>
+
+<!-- INJECTED MARKDOWN CONTENT -->
+
+<!-- SECTION 1: Introduction -->
+<section class="band band--paper" data-spine="Introduction" data-section="Introduction">
+  <div class="col-wide markdown-body">
+    <h1>LIWC and the TAT.</h1>
+<div class="eyebrow reveal">01 / Introduction</div>
+<h2 class="reveal is-chapter">Dr. Heather Leffew
+Obelus Institute
+May 2026</h2>
+
+  </div>
+</section>
+
+<!-- SECTION 2: Abstract -->
+<section class="band band--dark" data-spine="Abstract" data-section="Abstract">
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">02 / Abstract</div>
+<h2 class="reveal is-chapter">Abstract</h2>
+<p class="reveal">A Fielding Graduate University paper makes the case that Linguistic Inquiry and Word Count belongs in Thematic Apperception Test interpretation. An accompanying pipeline scores 677 card responses from 69 participants across 31 TAT cards and tests whether specific cards reliably pull for the themes they were designed to elicit. Together they sketch a path toward continuous, item-level TAT scoring.</p>
+<p class="reveal">01 / The Case</p>
+
+  </div>
+</section>
+
+<!-- SECTION 3: What words give away that stories cannot. -->
+<section class="band band--paper" data-spine="What words give away" data-section="What words give away that stories cannot.">
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">03 / What words give away that stories cannot.</div>
+<h2 class="reveal is-chapter">What words give away that stories cannot.</h2>
+<p class="reveal">The Thematic Apperception Test asks a respondent to look at an ambiguous picture and tell a story about it1<strong>Morgan &amp; Murray (1935).</strong> A method for investigating fantasies: The Thematic Apperception Test. <em>Archives of Neurology &amp; Psychiatry, 34</em>, 289-306. The projective hypothesis: ambiguous stimuli are perceived and organized according to the respondent&#39;s needs, motives, and feelings (Teglasi, 2010).. Traditional interpretation treats those stories as content. A clinician reads the narrative for themes, conflicts, object relations, and the rest. Inter-rater variability has been the recurring weakness of the method since Murray first published it in 1935.</p>
+<p class="reveal">Tausczik and Pennebaker (2010) make a distinction worth bringing into projective assessment. Content words carry the &quot;what&quot; of a message. Function words2<strong>Tausczik &amp; Pennebaker (2010).</strong> The psychological meaning of words: LIWC and computerized text analysis methods. <em>Journal of Language and Social Psychology, 29</em>(1), 24-54. Function words are pronouns, prepositions, articles, conjunctions, and auxiliary verbs - the structural scaffolding of a sentence. carry the &quot;how.&quot; Pronouns, prepositions, articles, conjunctions, auxiliary verbs. These are largely outside conscious management. A respondent can suppress mention of family or money. They cannot easily suppress how often they reach for the word &quot;I.&quot;</p>
+<p class="reveal">LIWC2015 is a deterministic dictionary parser. It scores a text against roughly ninety psychometrically anchored categories: pronoun families, affect categories, social processes, cognitive processes, drives, personal concerns. Pairing it with the TAT does not replace the clinician. It adds a second channel of evidence, one that responds to the parts of language the respondent is not watching.</p>
+<p class="reveal">02 / The Dataset</p>
+
+  </div>
+</section>
+
+<!-- SECTION 4: Six hundred seventy-seven narratives, split four ways. -->
+<section class="band band--dark" data-spine="Six hundred seventy-" data-section="Six hundred seventy-seven narratives, split four ways.">
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">04 / Six hundred seventy-seven narratives, split four ways.</div>
+<h2 class="reveal is-chapter">Six hundred seventy-seven narratives, split four ways.</h2>
+<p class="reveal">The corpus is built from a TAT administration to 69 participants covering 31 card types. Each narrative was cleaned to strip assessor prompts and behavioral observations, then split so the same dataset can be queried at four different grains: each individual response to each individual card, each individual&#39;s full protocol, all responses to a single card, and the whole corpus as a single document. LIWC-published base rates for blogs, expressive writing, novels, and other text genres sit alongside the TAT data so any finding can be sanity-checked against an external reference.</p>
+<p class="reveal">Card responses</p>
+<p class="reveal">677</p>
+<p class="reveal">Independent card-level narratives from 69 participants, after cleaning and exclusion of mislabeled records.</p>
+<p class="reveal">Cards represented</p>
+<p class="reveal">31</p>
+<p class="reveal">Frequencies range from 60 (Card 2) down to 2 (Card 13G); card-level analysis is limited to the higher-frequency cards.</p>
+<p class="reveal">LIWC2015 features</p>
+<p class="reveal">~90</p>
+<p class="reveal">Pronoun families, affect categories, social processes, cognitive processes, drives, personal concerns, temporal focus.</p>
+<p class="reveal">Card-level analysis privileges the cards that produced enough narratives to support inference. The dataset assigns five mutually exclusive types to each row (INDVNARR, INDVCARDALLRESP, INDVRESPALLCARDS, WHOLECORPORA, BASERATE), so the same LIWC variable can be examined at whichever grain the question requires.</p>
+<p class="reveal">03 / The Finding</p>
+
+  </div>
+</section>
+
+<!-- SECTION 5: Cards pull for the themes they were designed to elicit. -->
+<section class="band band--paper" data-spine="Cards pull for the t" data-section="Cards pull for the themes they were designed to elicit.">
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">05 / Cards pull for the themes they were designed to elicit.</div>
+<h2 class="reveal is-chapter">Cards pull for the themes they were designed to elicit.</h2>
+<p class="reveal">A MANOVA across Cards 1, 2, 3BM, 4, and 8BM (the five highest-frequency cards) tests whether LIWC variables differ by card. They do, with significance on every emotion, social, drive, and personal concern category examined. The signature each card produces lines up with what the test&#39;s clinical literature claims it elicits.</p>
+<p class="reveal">Card 1 (boy with violin) pulls 1.88x the corpus baseline for achievement language. Card 2 (farm scene) pulls 1.80x for family and 2.55x for work. Card 3BM (huddled figure) pulls 4.74x for sadness and 2.17x for anxiety. Card 4 (woman restraining a man) pulls 3.38x for anger. Card 8BM (surgical scene) pulls 4.57x for death language. Every contrast across cards reaches p &lt; .05; most reach p &lt; .001.</p>
+<p class="reveal">LIWC Means by Card, normalized to per-axis max</p>
+<p class="reveal">Card 1 / Achievement
+Card 3BM / Sadness
+Card 8BM / Death</p>
+<p class="reveal"><img src="fig_2.svg" alt="Figure 2"></p>
+<p class="reveal">FIG. 01   Six LIWC axes per card: anxiety, anger, sadness, achievement drive, power drive, death. Values are mean LIWC scores from the MANOVA, normalized to the per-axis maximum across the five compared cards.</p>
+<p class="reveal">04 / Style Words</p>
+
+  </div>
+</section>
+
+<!-- SECTION 6: Pronouns and negation as clinical signal. -->
+<section class="band band--dark" data-spine="Pronouns and negatio" data-section="Pronouns and negation as clinical signal.">
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">06 / Pronouns and negation as clinical signal.</div>
+<h2 class="reveal is-chapter">Pronouns and negation as clinical signal.</h2>
+<p class="reveal">Function-word patterns map onto clinical states with surprising consistency. Depressed and suicidal individuals use more first-person singular pronouns, more death-related words, and more negatively valenced language (Bernard et al., 2016). Grief over a romantic loss raises first-person singular and lowers causal words (Boals &amp; Klein, 2005). High rates of negation track with the self-aggression associated with suicidality and substance dependence (Hargitai et al., 2007). The interpretation has to be careful: high first-person singular can mark pain, pathological egocentrism, or simple self-awareness depending on what else is going on in the language.</p>
+<p class="reveal">Psychotic speech leaves a different signature. The open-narrative format of the TAT lets neologisms, tangentiality, and the kind of temporal-proximity word linkage central to the Cloze procedure (Salzinger et al., 1964) surface in a way structured tests cannot capture. Pairing LIWC with TAT narratives helps separate disordered thought form from disordered thought content - a distinction that drives both conceptualization and intervention (Langdon, Coltheart, Ward, &amp; Catts, 2002).</p>
+<p class="reveal">Trait measurement also benefits. Linguistic analysis of narratives can differentiate person-oriented from thing-oriented respondents (McIntyre &amp; Graziano, 2016), and latent semantic analysis recovers Big Five traits from natural speech (Kwantes et al., 2016). For cognitive functioning, the linguistic content of TAT narratives discriminates participants with agenesis of the corpus callosum from age- and intelligence-matched controls (Turk, Brown, Symington, &amp; Paul, 2010), pointing to a use case beyond the affective domain.</p>
+<p class="reveal">05 / Future Direction</p>
+
+  </div>
+</section>
+
+<!-- SECTION 7: Toward continuous item-level TAT scoring. -->
+<section class="band band--paper" data-spine="Toward continuous it" data-section="Toward continuous item-level TAT scoring.">
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">07 / Toward continuous item-level TAT scoring.</div>
+<h2 class="reveal is-chapter">Toward continuous item-level TAT scoring.</h2>
+<p class="reveal">The card-level effects in section 03 suggest a way to put more structure on TAT interpretation. If each card pulls reliably for a known set of LIWC variables, then those variables can function as the card&#39;s measurement axes. A respondent&#39;s score on each axis can be compared against a card-specific norm metric rather than a global one. Is this person&#39;s response to Card 3BM unusually sad compared to other people&#39;s responses to Card 3BM? Does the same elevation show up across their full protocol? Does it line up with a current or historical diagnosis?</p>
+<p class="reveal">The framing is closer to continuous manifest-variable item response than to traditional projective scoring. Each card is treated as its own measure with its own threshold; the whole protocol is treated as a larger measure built from those item-level scores. The clinician stays in the loop, since LIWC cannot read irony, idiom, or the contextual oddness of a narrative that earns clinical attention through its strangeness rather than its frequency counts. But the diagnostic pathway gains a quantitative spine the TAT has not historically had.</p>
+<p class="reveal">06 / Bibliography</p>
+
+  </div>
+</section>
+
+<!-- SECTION 8: References -->
+<section class="band band--paper" data-spine="References" data-section="References">
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">08 / References</div>
+<h2 class="reveal is-chapter">References</h2>
+<ul>
+<li>Aronow, E., Weiss, K. A., &amp; Reznikoff, M. (2001). <em>A practical guide to the Thematic Apperception Test: The TAT in clinical practice</em>. Routledge.</li>
+<li>Bernard, J. D., Baddeley, J. L., Rodriguez, B. F., &amp; Burke, P. A. (2016). Depression, language, and affect: An examination of the influence of baseline depression and affect induction on language. <em>Journal of Language and Social Psychology, 35</em>(3), 317-326.</li>
+<li>Boals, A., &amp; Klein, K. (2005). Word use in emotional narratives about failed romantic relationships and subsequent mental health. <em>Journal of Language and Social Psychology, 24</em>(3), 252-268.</li>
+<li>Cohen, A. S., Minor, K. S., Baillie, L. E., &amp; Dahir, A. M. (2007). Clarifying the linguistic signature: Measuring personality from natural speech. <em>Journal of Personality Assessment, 90</em>(6), 559-563.</li>
+<li>Gruber, N., &amp; Kreuzpointner, L. (2013). Measuring the reliability of picture story exercises like the TAT. <em>PLoS One, 8</em>(11), e79450.</li>
+<li>Hargitai, R., Naszódi, M., Kis, B., Nagy, L., Bóna, A., &amp; László, J. (2007). Linguistic markers of depressive dynamics in self-narratives: Negation and self-reference. <em>Empirical Text and Culture Research, 3</em>, 26-38.</li>
+<li>He, Q., Veldkamp, B. P., Glas, C. A., &amp; de Vries, T. (2015). Automated assessment of patients&#39; self-narratives for posttraumatic stress disorder screening using natural language processing and text mining. <em>Assessment</em>, 1-16.</li>
+<li>Kuperberg, G. R. (2010). Language in schizophrenia part 1: An introduction. <em>Language and Linguistics Compass, 4</em>(8), 576-589.</li>
+<li>Kwantes, P. J., Derbentseva, N., Lam, Q., Vartanian, O., &amp; Marmurek, H. H. (2016). Assessing the Big Five personality traits with latent semantic analysis. <em>Personality and Individual Differences, 102</em>, 229-233.</li>
+<li>Langdon, R., Coltheart, M., Ward, P. B., &amp; Catts, S. V. (2002). Disturbed communication in schizophrenia: The role of poor pragmatics and poor mind-reading. <em>Psychological Medicine, 32</em>, 1273-1284.</li>
+<li>Leffew, H. (2017). <em>Interpretation of the Thematic Apperception Test: A case for the inclusion of linguistic analysis</em>. Fielding Graduate University.</li>
+<li>Marini, A., Spoletini, I., Rubino, I. A., Ciuffa, M., Bria, P., Martinotti, G., ... Spalletta, G. (2008). The language of schizophrenia: An analysis of micro and macrolinguistic abilities and their neuropsychological correlates. <em>Schizophrenia Research, 105</em>(1-3), 144-155.</li>
+<li>McIntyre, M. M., &amp; Graziano, W. G. (2016). Seeing people, seeing things: Individual differences in selective attention. <em>Personality and Social Psychology Bulletin, 42</em>(9), 1258-1271.</li>
+<li>Morgan, C. D., &amp; Murray, H. A. (1935). A method for investigating fantasies: The Thematic Apperception Test. <em>Archives of Neurology &amp; Psychiatry, 34</em>, 289-306.</li>
+<li>Pennebaker, J. W., Booth, R. J., Boyd, R. L., &amp; Francis, M. E. (2015). <em>Linguistic Inquiry and Word Count: LIWC2015</em>. Pennebaker Conglomerates.</li>
+<li>Pennebaker, J. W., &amp; King, L. A. (1999). Linguistic styles: Language use as an individual difference. <em>Journal of Personality and Social Psychology, 77</em>(6), 1296-1312.</li>
+<li>Salzinger, K., Portnoy, S., &amp; Feldman, R. S. (1964). Verbal behavior of schizophrenic and normal subjects. <em>Annals of the New York Academy of Sciences, 105</em>, 845-860.</li>
+<li>Seih, Y. T., Beier, S., &amp; Pennebaker, J. W. (2016). Development and examination of the linguistic category model in a computerized text analysis method. <em>Journal of Language and Social Psychology</em>, 1-13.</li>
+<li>Semin, G. R., &amp; Fiedler, K. (1988). The cognitive functions of linguistic categories in describing persons: Social cognition and language. <em>Journal of Personality and Social Psychology, 54</em>, 558-568.</li>
+<li>Tausczik, Y. R., &amp; Pennebaker, J. W. (2010). The psychological meaning of words: LIWC and computerized text analysis methods. <em>Journal of Language and Social Psychology, 29</em>(1), 24-54.</li>
+<li>Teglasi, H. (2010). <em>Essentials of TAT and other storytelling assessments</em> (2nd ed.). John Wiley &amp; Sons.</li>
+<li>Turk, A. A., Brown, W. S., Symington, M., &amp; Paul, L. K. (2010). Social narratives in agenesis of the corpus callosum: Linguistic analysis of the Thematic Apperception Test. <em>Neuropsychologia, 48</em>(1), 43-50.</li>
+<li>Winter, D. G. (1998). &quot;Toward a science of personality psychology&quot;: David McClelland&#39;s development of empirically derived TAT measures. <em>History of Psychology, 1</em>(2), 130-153.</li>
+</ul>
+
+  </div>
+</section>
+
+
+<!-- BACK MATTER: Related Works -->
+<section class="band band--dark back-matter" data-spine="Research Graph" data-section="Research Graph">
+  <div class="back-matter" style="padding-top:0;">
+    <h3 style="margin-bottom:22px;">Related Works</h3>
+    <div class="related">
+      <div class="related-grid" id="recommendation-grid">
+        <!-- Populated by global_chrome.js from projects_index.json -->
+      </div>
+    </div>
+  </div>
+
+  <a class="next-chap" id="next-chap-link" href="#">
+    <div class="lf">
+      <div class="eb">Next Publication</div>
+      <div class="ti" id="next-chap-title">Loading...</div>
+    </div>
+    <div class="rt">&rarr;</div>
+  </a>
+</section>
+
+<!-- INJECTED SCRIPTS -->
+interactive_0.js,interactive_1.js
+
+<!-- GLOBAL CHROME -->
+<!-- Need relative pathing adjustment based on actual file depth, defaulting to root pathing for now -->
+<script src="../design_system/js/global.js" defer></script>
+</body>
+</html>

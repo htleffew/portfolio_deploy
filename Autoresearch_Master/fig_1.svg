@@ -1,0 +1,40 @@
+<svg fill="none" style="width:100%; height:auto;" viewbox="0 0 800 420" xmlns="http://www.w3.org/2000/svg">
+<!-- Outer boundary: Fixed Harness -->
+<rect fill="none" height="380" stroke="var(--phthalo)" stroke-dasharray="0" stroke-width="3" width="760" x="20" y="20"></rect>
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="10" letter-spacing="3" text-anchor="middle" text-transform="uppercase" x="400" y="16">FIXED HARNESS (IMMUTABLE)</text>
+<!-- Pre-loop gate -->
+<rect fill="var(--phthalo)" fill-opacity="0.15" height="50" stroke="var(--phthalo)" stroke-width="1" width="140" x="40" y="60"></rect>
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="9" letter-spacing="1.5" text-anchor="middle" x="110" y="82">PII REDACTION</text>
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="8" letter-spacing="1" text-anchor="middle" x="110" y="98">(PRE-LOOP)</text>
+<!-- Mid-loop gate -->
+<rect fill="var(--phthalo)" fill-opacity="0.15" height="50" stroke="var(--phthalo)" stroke-width="1" width="140" x="40" y="130"></rect>
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="9" letter-spacing="1.5" text-anchor="middle" x="110" y="152">RBAC FILTER</text>
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="8" letter-spacing="1" text-anchor="middle" x="110" y="168">(MID-LOOP)</text>
+<!-- Post-loop gate -->
+<rect fill="var(--phthalo)" fill-opacity="0.15" height="50" stroke="var(--phthalo)" stroke-width="1" width="140" x="40" y="200"></rect>
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="9" letter-spacing="1.5" text-anchor="middle" x="110" y="222">FAIRNESS GATE</text>
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="8" letter-spacing="1" text-anchor="middle" x="110" y="238">(POST-LOOP)</text>
+<!-- Inner boundary: Mutation Budget -->
+<rect fill="var(--phthalo-lift)" fill-opacity="0.03" height="330" stroke="var(--phthalo-lift)" stroke-dasharray="8 4" stroke-width="2" width="540" x="220" y="50"></rect>
+<text fill="var(--phthalo-lift)" font-family="var(--mono)" font-size="10" letter-spacing="3" text-anchor="middle" x="490" y="72">MUTATION BUDGET (BOUNDED)</text>
+<!-- Four mutation domains -->
+<rect fill="var(--hookers)" fill-opacity="0.12" height="55" stroke="var(--hookers)" stroke-width="1" width="230" x="250" y="95"></rect>
+<text fill="var(--hookers)" font-family="var(--mono)" font-size="9" letter-spacing="1.5" text-anchor="middle" x="365" y="120">HYPOTHESIS SPACE</text>
+<text fill="var(--hookers)" font-family="var(--mono)" font-size="8" text-anchor="middle" x="365" y="138">Cost: 5 units</text>
+<rect fill="var(--hansa)" fill-opacity="0.12" height="55" stroke="var(--hansa)" stroke-width="1" width="230" x="510" y="95"></rect>
+<text fill="var(--hansa)" font-family="var(--mono)" font-size="9" letter-spacing="1.5" text-anchor="middle" x="625" y="120">FEATURE SPACE</text>
+<text fill="var(--hansa)" font-family="var(--mono)" font-size="8" text-anchor="middle" x="625" y="138">Cost: 20 units</text>
+<rect fill="var(--dioxazine)" fill-opacity="0.12" height="55" stroke="var(--dioxazine)" stroke-width="1" width="230" x="250" y="170"></rect>
+<text fill="var(--dioxazine)" font-family="var(--mono)" font-size="9" letter-spacing="1.5" text-anchor="middle" x="365" y="195">MODEL / HYPER SPACE</text>
+<text fill="var(--dioxazine)" font-family="var(--mono)" font-size="8" text-anchor="middle" x="365" y="213">Cost: 10â€“25 units</text>
+<rect fill="var(--phthalo-lift)" fill-opacity="0.12" height="55" stroke="var(--phthalo-lift)" stroke-width="1" width="230" x="510" y="170"></rect>
+<text fill="var(--phthalo-lift)" font-family="var(--mono)" font-size="9" letter-spacing="1.5" text-anchor="middle" x="625" y="195">METRIC SPACE</text>
+<text fill="var(--phthalo-lift)" font-family="var(--mono)" font-size="8" text-anchor="middle" x="625" y="213">Cost: 10 units</text>
+<!-- Budget meter -->
+<rect fill="none" height="30" stroke="var(--brushed)" stroke-width="1" width="490" x="250" y="260"></rect>
+<rect fill="var(--phthalo-lift)" fill-opacity="0.2" height="30" width="490" x="250" y="260"></rect>
+<text fill="var(--phthalo-lift)" font-family="var(--mono)" font-size="11" letter-spacing="2" text-anchor="middle" x="495" y="280">BUDGET: 100 â†’ 0</text>
+<!-- SYSTEM HALT zone -->
+<rect fill="var(--alizarin)" fill-opacity="0.08" height="45" stroke="var(--alizarin)" stroke-dasharray="4 4" stroke-width="1" width="490" x="250" y="320"></rect>
+<text fill="var(--alizarin)" font-family="var(--mono)" font-size="10" letter-spacing="2" text-anchor="middle" x="495" y="348">SYSTEM HALT: BUDGET EXHAUSTED OR HARNESS VIOLATION</text>
+</svg>

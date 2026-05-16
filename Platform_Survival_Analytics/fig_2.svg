@@ -1,0 +1,21 @@
+<svg height="auto" style="max-width: 800px;" viewbox="0 0 800 280" width="100%" xmlns="http://www.w3.org/2000/svg">
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="10" letter-spacing="2" x="60" y="40">EARLY TERTILE</text>
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="10" letter-spacing="2" x="350" y="40">MID TERTILE</text>
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="10" letter-spacing="2" x="640" y="40">LATE TERTILE</text>
+<!-- Early cluster -->
+<circle cx="120" cy="130" fill="#3866A0" fill-opacity="0.18" r="55" stroke="#3866A0" stroke-width="1"></circle>
+<text fill="#F5F5F7" font-family="'Lora', serif" font-size="13" font-style="italic" text-anchor="middle" x="120" y="135">topic A</text>
+<!-- Mid clusters -->
+<circle cx="380" cy="100" fill="#3866A0" fill-opacity="0.18" r="45" stroke="#3866A0" stroke-width="1"></circle>
+<text fill="#F5F5F7" font-family="'Lora', serif" font-size="13" font-style="italic" text-anchor="middle" x="380" y="105">topic A'</text>
+<circle cx="430" cy="180" fill="#7A1626" fill-opacity="0.20" r="50" stroke="#7A1626" stroke-width="1"></circle>
+<text fill="#F5F5F7" font-family="'Lora', serif" font-size="13" font-style="italic" text-anchor="middle" x="430" y="185">topic B</text>
+<!-- Late cluster -->
+<circle cx="690" cy="150" fill="#7A1626" fill-opacity="0.32" r="65" stroke="#7A1626" stroke-width="1.5"></circle>
+<text fill="#F5F5F7" font-family="'Lora', serif" font-size="13" font-style="italic" text-anchor="middle" x="690" y="155">topic B'</text>
+<!-- Drift arrows -->
+<path d="M 175 130 Q 270 110 335 105" fill="none" opacity="0.6" stroke="#A1A1A6" stroke-dasharray="3 4" stroke-width="1"></path>
+<path d="M 175 130 Q 280 170 385 175" fill="none" opacity="0.6" stroke="#A1A1A6" stroke-dasharray="3 4" stroke-width="1"></path>
+<path d="M 480 180 Q 580 165 630 155" fill="none" opacity="0.6" stroke="#A1A1A6" stroke-dasharray="3 4" stroke-width="1"></path>
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="9" letter-spacing="2" text-anchor="middle" x="400" y="250">TOPICAL DRIFT TRAJECTORY ACROSS TEMPORAL TERTILES</text>
+</svg>

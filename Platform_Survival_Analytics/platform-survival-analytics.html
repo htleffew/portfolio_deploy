@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Survival Function of Platform Integrity | Dr. Heather Leffew</title>
+    <!-- Design System: tokens load via @import inside institutional.css -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js" defer></script>
+    <link rel="stylesheet" href="../design_system/css/global.css">
+    <style>
+      /* Ensure Markdown components look correct in the reading column */
+      .markdown-body { margin-top: 1.5rem; }
+      .markdown-body p { margin-bottom: 1.25em; }
+      .markdown-body img { max-width: 100%; height: auto; display: block; margin: 2em auto; }
+      .markdown-body pre { padding: 1.5em; overflow-x: auto; background: var(--obsidian); border: 1px solid var(--charcoal); margin: 2em 0; }
+      .markdown-body code { font-family: var(--mono); font-size: 0.85em; }
+    </style>
+</head>
+
+<body data-category="Platform Integrity" data-title="Platform_Survival_Analytics">
+
+<!-- Reading progress -->
+<div id="progress"></div>
+
+<!-- Top nav (injected by global_chrome.js) -->
+<div id="global-nav-container"></div>
+
+<!-- Chapter spine (populated by global_chrome.js) -->
+<aside id="spine"></aside>
+
+<!-- Atmospheric gradient -->
+<div class="atmosphere"></div>
+
+<canvas id="glCanvas"></canvas>
+
+<!-- FRONT MATTER -->
+<section class="band band--dark front" data-spine="Front" data-section="Front matter">
+  <div class="col-wide">
+    <div class="grid">
+     <div>
+      <div class="meta-row">
+        <span class="bracket">CASE STUDY</span>
+        <span class="sep">/</span>
+        <span>Platform Integrity</span>
+        <span class="sep">/</span>
+        <span>T&S Analytics</span>
+      </div>
+
+      <h1>The Survival Function of Platform Integrity</h1>
+
+      <p class="abstract">
+        Built for a major short-form video platform's Trust & Safety team, this Spark-scale analytics engine imports time-to-eve...
+      </p>
+
+      <div class="byline">
+        <div>
+          Subject
+          <strong>N/A</strong>
+        </div>
+        <div>
+          Architecture
+          <strong>N/A</strong>
+        </div>
+        <div>
+          Output
+          <strong>N/A</strong>
+        </div>
+      </div>
+     </div>
+     <div></div>
+    </div>
+  </div>
+</section>
+
+<!-- INJECTED MARKDOWN CONTENT -->
+
+<!-- SECTION 1: Introduction -->
+<section class="band band--paper" data-spine="Introduction" data-section="Introduction">
+  <div class="col-wide markdown-body">
+    <h1>The Survival Function of Platform Integrity</h1>
+<div class="eyebrow reveal">01 / Introduction</div>
+<h2 class="reveal is-chapter">Dr. Heather Leffew
+Obelus Institute
+May 2026</h2>
+
+  </div>
+</section>
+
+<!-- SECTION 2: Abstract -->
+<section class="band band--dark" data-spine="Abstract" data-section="Abstract">
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">02 / Abstract</div>
+<h2 class="reveal is-chapter">Abstract</h2>
+<p class="reveal">Built for a major short-form video platform&#39;s Trust &amp; Safety team, this Spark-scale analytics engine imports time-to-event analysis from biostatistics and applies it to platform integrity. The central reframe: the same Kaplan-Meier estimator that asks &quot;what is the probability that a patient is still alive at time t after diagnosis?&quot; can ask &quot;what is the probability that a user session is still violation-free at time t after first content interaction?&quot; Both questions involve right-censored observations. Both benefit from non-parametric estimation. The toolkit transfers cleanly. Layered with LDA topic modeling, VADER sentiment, and NetworkX co-occurrence, the engine produces a 12-section auto-generated investigation report that is reproducible across cases and comparable across users.</p>
+<p class="reveal">01 / The Cross-Domain Move</p>
+
+  </div>
+</section>
+
+<!-- SECTION 3: Borrowing a tool from biostatistics -->
+<section class="band band--paper" data-spine="Borrowing a tool fro" data-section="Borrowing a tool from biostatistics">
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">03 / Borrowing a tool from biostatistics</div>
+<h2 class="reveal is-chapter">Borrowing a tool from biostatistics</h2>
+<p class="reveal">In medical research, the Kaplan-Meier estimator answers a specific question: given a cohort of patients diagnosed at time zero, what is the probability that any given patient is still alive at time t? The estimator handles the inconvenient fact that not every patient&#39;s outcome is observed. Some are still alive when the study ends; some leave the study; some die from causes unrelated to the disease. These are right-censored observations, and KM is the non-parametric tool designed to use them honestly rather than throw them out.</p>
+<p class="reveal">Trust &amp; Safety analytics has a structurally identical problem. Given a user&#39;s session beginning at time zero, what is the probability that the session has remained free of policy-violative content at time t? The events of interest (encountering content flagged by a moderation system) occur on the same kind of irregular timeline as patient deaths. The censoring is the same: many sessions end without any violation event, which is not the same as those sessions being violation-free forever. The data structure is the same. The estimator transfers without modification.</p>
+<p class="reveal">The intellectual move that anchors this engine is recognizing that platform integrity decay is well-modeled as a survival problem. Once you accept the reframe, an entire toolkit comes with it: median time to violation as a population-level health metric, comparative survival functions across user segments, hazard rate analysis for identifying high-risk windows. The biostatistics literature has been refining these tools since 1958. T&amp;S analytics had been reinventing weaker versions in isolation.</p>
+<p class="reveal">02 / Engine Architecture</p>
+
+  </div>
+</section>
+
+<!-- SECTION 4: Four modules, one auditable pipeline -->
+<section class="band band--dark" data-spine="Four modules, one au" data-section="Four modules, one auditable pipeline">
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">04 / Four modules, one auditable pipeline</div>
+<h2 class="reveal is-chapter">Four modules, one auditable pipeline</h2>
+<p class="reveal">The engine runs on a YARN-managed Spark cluster sized for petabyte-scale moderation telemetry: roughly 3,000 CPU cores allocated at 2 GB per core for 7.8 TB aggregate execution memory, with shuffle partitions clamped against the cluster&#39;s physical limits to stop data skew when complex cross-metric aggregations hit the executors. The Spark layer exists to make the analytical layer tractable, not to be the contribution.</p>
+<p class="reveal">The contribution is the decomposition. The pipeline splits cleanly into four modules, each with a single responsibility, and the modules communicate through standardized intermediate CSV artifacts rather than in-memory state. Any module can be re-run in isolation when a methodology question demands it.</p>
+<p class="reveal"><img src="fig_1.svg" alt="Figure 1"></p>
+<p class="reveal">FIG. 01 The four-module decomposition. Modules communicate through standardized CSV intermediates rather than in-memory state, so any analytical module can be re-run in isolation without re-running the Spark fetch.</p>
+<p class="reveal">03 / Time-to-Violation as Health Metric</p>
+
+  </div>
+</section>
+
+<!-- SECTION 5: Survival analysis on user sessions -->
+<section class="band band--paper" data-spine="Survival analysis on" data-section="Survival analysis on user sessions">
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">05 / Survival analysis on user sessions</div>
+<h2 class="reveal is-chapter">Survival analysis on user sessions</h2>
+<p class="reveal">The core analytical move is small in code and large in consequence. For each user-segment, the engine computes the temporal difference between consecutive content events as <code>duration</code> in seconds. The event indicator is one if the content interaction was associated with a flagged policy violation and zero otherwise. The pair (duration, event_observed) is what <code>lifelines.KaplanMeierFitter</code> wants. Fit the estimator on the segment&#39;s data, plot the survival function, read off the median time to violation. The function is two dozen lines of Python; the reframing is the work.</p>
+<pre><code># Per-user-segment survival fit
+df[time_column] = pd.to_datetime(df[time_column])
+df.sort_values(by=time_column, inplace=True)
+df[&#39;duration&#39;] = df[time_column].diff().dt.total_seconds()
+df = df.dropna(subset=[&#39;duration&#39;])
+df[&#39;event_observed&#39;] = df[event_column].apply(
+    lambda x: 1 if not pd.isna(x) and x.strip() != &#39;&#39; else 0
+)
+
+kmf = KaplanMeierFitter()
+kmf.fit(df[&#39;duration&#39;], event_observed=df[&#39;event_observed&#39;], label=segment)
+kmf.plot_survival_function()
+median_survival = kmf.median_survival_time_  # seconds to first violation
+</code></pre>
+<p class="reveal">FIG. 02 The survival fit. Duration is the inter-event spacing in seconds; event_observed is one when a policy was triggered. The median survival time is the population-level health metric.</p>
+<p class="reveal">The comparative survival mode is what makes the engine useful for forensic per-user investigation. By segmenting one user&#39;s data into temporal tertiles (early, mid, late), then fitting separate Kaplan-Meier curves on each, the engine reveals whether that user&#39;s median time-to-violation is shrinking, stable, or growing across the observation window. A shrinking median is a measurable signal of acceleration. The same comparison across user cohorts surfaces population-level shifts in platform health.</p>
+<p class="reveal">The interpretive note that matters: a survival time below 3,600 seconds (one hour) means a user encountered violative content within the first hour of platform engagement in that segment. The engine surfaces that threshold automatically in its narrative output, because that interval is where moderation feedback loops are most likely to compound.</p>
+<p class="reveal">04 / Topical Drift as Risk Signal</p>
+
+  </div>
+</section>
+
+<!-- SECTION 6: When did the topic neighborhood change? -->
+<section class="band band--dark" data-spine="When did the topic n" data-section="When did the topic neighborhood change?">
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">06 / When did the topic neighborhood change?</div>
+<h2 class="reveal is-chapter">When did the topic neighborhood change?</h2>
+<p class="reveal">Survival analysis answers when violations happen. It does not answer what topical neighborhood the user was in when the violation occurred, or how that neighborhood evolved. The engine&#39;s text NLP module fills that gap with three layered passes: latent Dirichlet allocation for topic clusters, VADER and TextBlob for sentiment polarity over time, and NetworkX-backed co-occurrence graphs for word-pair structure inside a five-token window.</p>
+<p class="reveal">The triangulation matters because each signal is interpretable on its own and dramatically more useful when read against the others. A drop in the survival curve that coincides with a sentiment polarity shift and a topic-cluster turnover is a different finding than a survival drop while the topical landscape is stable. The first pattern suggests the user moved into new content territory; the second suggests the existing territory became more violative. Different remediations follow.</p>
+<p class="reveal">Co-occurrence analysis is the layer that catches what topic modeling smooths over. LDA gives you topic distributions; the co-occurrence graph gives you the word-pairs that shape the texture inside those topics. When two words that did not previously co-occur start appearing together at high frequency in a user&#39;s consumption window, the engine flags the pair regardless of whether either word is independently policy-relevant. New language patterns precede new behavior.</p>
+<p class="reveal"><img src="fig_2.svg" alt="Figure 2"></p>
+<p class="reveal">FIG. 03 Topic drift across time slices. LDA topic clusters are tracked from early to late tertile; emergent clusters in red signal new topical territory. Read alongside the survival curve, drift in the topical neighborhood gives the analyst a why to attach to the when.</p>
+<p class="reveal">05 / The Auto-Report Engine</p>
+
+  </div>
+</section>
+
+<!-- SECTION 7: Reproducibility through structured output -->
+<section class="band band--paper" data-spine="Reproducibility thro" data-section="Reproducibility through structured output">
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">07 / Reproducibility through structured output</div>
+<h2 class="reveal is-chapter">Reproducibility through structured output</h2>
+<p class="reveal">The fourth module is a Jinja-templated HTML generator that takes the analytical outputs of the prior three and produces a 12-section report with a fixed structure. The structure is the contribution. When every investigation produces the same sections in the same order with the same statistical choices behind each section, two investigations of two different cases become directly comparable in a way that ad-hoc analysis never permits. Reviewers can read the seventh section of any report with a known set of expectations.</p>
+<table>
+<thead>
+<tr>
+<th>SECTION</th>
+<th>CONTENT</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>01</td>
+<td>Executive summary</td>
+</tr>
+<tr>
+<td>02</td>
+<td>Methodology</td>
+</tr>
+<tr>
+<td>03</td>
+<td>N-grams and co-occurrence analysis</td>
+</tr>
+<tr>
+<td>04</td>
+<td>Themes and clusters (LDA topic modeling)</td>
+</tr>
+<tr>
+<td>05</td>
+<td>Caption and hashtag analysis</td>
+</tr>
+<tr>
+<td>06</td>
+<td>Visibility and engagement metrics</td>
+</tr>
+<tr>
+<td>07</td>
+<td>Sentiment analysis (VADER)</td>
+</tr>
+<tr>
+<td>08</td>
+<td>Search term effectiveness</td>
+</tr>
+<tr>
+<td>09</td>
+<td>Cross-metric correlation analysis</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Search term to policy violation mapping</td>
+</tr>
+<tr>
+<td>11</td>
+<td>User engagement analysis</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Conclusion and recommendations</td>
+</tr>
+</tbody></table>
+<p class="reveal">FIG. 04 The fixed 12-section investigation report. Every analysis emits the same structure; every reviewer reads with the same expectations.</p>
+<p class="reveal">The engine generates the survival functions, heatmaps, and topic clusters as image artifacts written to a per-investigation directory. The Jinja template assembles them into the final HTML. A separate FPDF rollup converts the HTML to a print-ready PDF. The whole sequence runs unattended after the analyst points the orchestrator at a new dataset and confirms the column mappings.</p>
+<h3>Limitations</h3>
+<p class="reveal">Survival analysis assumes independence between consecutive events. That assumption is debatable in any system where the recommendation engine shapes the next interaction. The Kaplan-Meier estimator is robust to this in practice, but the median survival time should be read as a population-level summary, not a per-session prediction. Right-censoring assumptions matter equally: a session that ends without a violation is censored, not violation-free in perpetuity.</p>
+<p class="reveal">Topic modeling produces interpretable clusters at the cost of run-to-run reproducibility. LDA&#39;s stochastic initialization means the same data can produce different topic numberings on different runs; the topical drift inference is robust to renumbering, but downstream automation that hard-codes topic IDs is not. The engine sidesteps this by labeling topics by their top-five terms rather than by index.</p>
+<p class="reveal">The engine was built for a major short-form video platform&#39;s Trust &amp; Safety analytics team and is the upstream tool driving the per-user investigation methodology described separately. The contribution is the cross-domain reframe and the reproducibility scaffold; the analytical primitives are standard.</p>
+
+  </div>
+</section>
+
+
+<!-- BACK MATTER: Related Works -->
+<section class="band band--dark back-matter" data-spine="Research Graph" data-section="Research Graph">
+  <div class="back-matter" style="padding-top:0;">
+    <h3 style="margin-bottom:22px;">Related Works</h3>
+    <div class="related">
+      <div class="related-grid" id="recommendation-grid">
+        <!-- Populated by global_chrome.js from projects_index.json -->
+      </div>
+    </div>
+  </div>
+
+  <a class="next-chap" id="next-chap-link" href="#">
+    <div class="lf">
+      <div class="eb">Next Publication</div>
+      <div class="ti" id="next-chap-title">Loading...</div>
+    </div>
+    <div class="rt">&rarr;</div>
+  </a>
+</section>
+
+<!-- INJECTED SCRIPTS -->
+interactive_0.js
+
+<!-- GLOBAL CHROME -->
+<!-- Need relative pathing adjustment based on actual file depth, defaulting to root pathing for now -->
+<script src="../design_system/js/global.js" defer></script>
+</body>
+</html>

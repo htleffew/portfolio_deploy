@@ -31,120 +31,78 @@ Before writing a single line of HTML for a new article:
 
 ---
 
-## The .txt to HTML Workflow
+## The .txt to Markdown Workflow
 
 ### Step 1 — Read source material fully
 Note: core mechanisms, specific results with numbers, the "why it matters," any visualizable data (numbers that become charts or diagrams).
 
 ### Step 2 — Plan section structure
-- Minimum 6 bands, maximum 12
-- Always alternate: `band--dark` / `band--paper` / `band--dark` (never same type twice in a row)
-- Front matter: always `band--dark`
-- References: always `band--paper`
-- Back matter (Related Works + Next Chapter): always `band--dark`
+- Organize the document using `## ` (H2) headings.
+- The SSG Compiler (`build.js`) will automatically split the document at every `## ` heading and wrap it in the proper alternating `band--dark` and `band--paper` HTML layout.
+- The text following a `## ` heading becomes its own section. The heading text is automatically used for the left-hand chapter spine.
 
 ### Step 3 — Select components
-Use the Visualization Decision Tree (below) for every data element.
+Interactive web components (like Plotly charts or custom WebGL) cannot be embedded directly in the Markdown body, as this breaks LaTeX compilation. If you need a visualization, write a standalone JS script for it, and list it in the YAML frontmatter `scripts` array. The SSG layout will inject it into a designated container outside the article body.
 
-### Step 4 — Write the HTML
-Start from `design_system/case-study-template.html`. Replace all `{{PLACEHOLDER}}` values. Copy component HTML from `design_system/source-snippets/`.
+### Step 4 — Write the Markdown
+Create your `article.md` file. Ensure it begins with the required YAML frontmatter, immediately followed by the formal LaTeX title block (see below).
 
-### Step 5 — Update projects_index.json
-Add a new entry. Schema is in this file, below.
-
-### Step 6 — Commit and push
-Exact commands at the bottom of this file.
+### Step 5 — Compile & Deploy
+Run the SSG compiler (`node build.js`), update the index (`node deploy.js`), and commit to GitHub. Exact commands at the bottom of this file.
 
 ---
 
-## HTML Structure — Required Elements
+## Markdown Structure — Required Elements
 
-### Head (in this exact order)
-```html
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>[Article Title] | Dr. Heather Leffew</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
-<!-- Only include Plotly if the article has interactive charts: -->
-<!-- <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script> -->
-<link rel="stylesheet" href="../design_system/css/global.css">
+Every article MUST be a `.md` file containing YAML frontmatter at the very top.
+
+### Frontmatter Schema (Mandatory)
+```yaml
+---
+title: "Article Title as Shown in Search"
+description: "2-3 sentence description. First 80 chars appear in the next-article block."
+category: "Machine Learning"
+subcategory: "Analysis"
+subject: "Deep Learning"
+architecture: "ResNet-50"
+output: "Classification"
+format: "CASE STUDY"
+time: "X min read"
+tags:
+  - "Tag One"
+  - "Tag Two"
+visual: "<svg fill=\"none\" viewBox=\"0 0 600 600\"><!-- thumbnail SVG --></svg>"
+scripts: ["custom_script.js"]
+---
 ```
 
-### Body — required placeholders (empty, global.js populates them)
-```html
-<div id="preloader"><div id="preloader-left"></div><div id="preloader-right"></div><div id="preloader-line"></div></div>
-<canvas id="glCanvas"></canvas>
-<div id="progress"></div>
-<div id="global-nav-container"></div>
-<aside id="spine"></aside>
-<div class="atmosphere"></div>
-```
+### LaTeX-Compatible Title Block (Mandatory)
+Directly beneath the YAML frontmatter, you MUST include the formal LaTeX title block for `md_to_latex.py` compatibility. The file must look exactly like this:
+```markdown
+---
+[...YAML Frontmatter...]
+---
+# Your Article Title Here
 
-### Body attributes
-```html
-<body data-category="Machine Learning" data-title="Short Title">
-```
-
-### Last script before </body>
-```html
-<script src="../design_system/js/global.js" defer></script>
-```
-
-### What global.js auto-injects — do NOT add these manually
-| Element | Do NOT add |
-|---------|-----------|
-| `<header id="topnav">` | Auto-injected |
-| `<footer class="site-foot">` | Auto-injected |
-| `<div id="grain">` | Auto-injected |
-| Any Three.js `<script>` | global.js lazy-loads it |
-| Second `#glCanvas` | Causes black screen |
-| `<nav>` | Auto-injected |
-
+Dr. Heather Leffew
+Obelus Institute
+Month Year
 ---
 
-## Band / Grid System — Critical Rules
+## Abstract
+(Write your abstract here)
 
-`section.band` at viewports >1240px is a CSS grid:
-```
-grid-template-columns: [left-gutter] 680px 400px [right-gutter]
-```
-
-**Direct children of `section.band` default to the 680px reading column.**
-
-These classes span the wider 1080px zone (columns 2+3):
-
-| Class | Grid Span | Use for |
-|-------|-----------|---------|
-| `.col-wide` | 2/4 (1080px) | Main wrapper for all section content |
-| `.bio-wrap` | 2/4 (1080px) | Biography split-grid |
-| `.figure` | 2/4 (1080px) | All SVG diagrams and images |
-| `.plotly-wrapper` | 2/4 (1080px) | Plotly chart containers |
-| `.stat-grid` | 2/4 (1080px) | Stat trios |
-| `.simulator-layout` | 2/4 (1080px) | Interactive simulators |
-| `.dashboard-layout` | 2/4 (1080px) | Dashboard panels |
-
-**`.report-prose` stays at 680px** with `overflow-x: auto` — tables inside scroll horizontally.
-
-### Preferred section pattern (new articles)
-Wrap all section content in `.col-wide`. Elements inside `.col-wide` can use internal spacing.
-```html
-<section class="band band--paper" data-spine="Label" data-section="Full Label">
-  <div class="col-wide">
-    <div class="eyebrow reveal">01 / Section Name</div>
-    <h2 class="reveal is-chapter">Heading</h2>
-    <p class="has-dropcap reveal">...</p>
-  </div>
-</section>
+## Next Section
+...
 ```
 
-Charts that need the wide span: use `.plotly-wrapper` or `.figure` as direct band children (not inside `.col-wide`).
-
-### Every section requires both data attributes
-```html
-<section class="band band--dark" data-spine="Short" data-section="Full Section Name">
-```
-- `data-spine` ≤20 chars — appears in the left chapter spine
-- `data-section` — full name for accessibility and GSAP
+### Body Content
+Write strictly pure Markdown below the abstract.
+- Use `## ` (H2) to separate major sections. The SSG compiler automatically parses `## ` headings to create alternating dark/paper bands and generates the left-hand navigation spine.
+- **DO NOT** use H1 (`# `) anywhere except for the single Title block at the top.
+- **NO RAW HTML**: To remain compatible with academic LaTeX compilation via `md_to_latex.py`, you are strictly forbidden from writing any HTML tags (`<div>`, `<svg>`, `<canvas>`, etc.) inside the markdown body.
+- **Tables**: Use standard pure Markdown tables. Do not use HTML tables.
+- **Visualizations**: If an interactive visualization is required for the web version, do NOT write HTML. Instead, declare the required JS file in the YAML frontmatter (`scripts: ["chart.js"]`). The SSG layout engine will automatically mount the visualization outside of the pristine markdown body.
 
 ---
 
@@ -218,121 +176,35 @@ The bands use `backdrop-filter: blur(10px)` on static elements. Never add additi
 
 ## Section Patterns
 
-### Front Matter (always band--dark)
-```html
-<section class="band band--dark front" data-spine="Front" data-section="Front matter">
-  <canvas id="glCanvas"></canvas>
-  <div class="col-wide">
-    <div class="grid">
-      <div>
-        <div class="meta-row">
-          <span class="bracket">Working note</span>
-          <span class="sep">/</span>
-          <span>Category</span>
-          <span class="sep">/</span>
-          <span>Subcategory</span>
-        </div>
-        <h1>Headline</h1>
-        <p class="abstract">Abstract text.</p>
-        <div class="byline">
-          <div>Subject <strong>Value</strong></div>
-          <div>Architecture <strong>Value</strong></div>
-          <div>Output <strong>Value</strong></div>
-        </div>
-      </div>
-      <div></div>
-    </div>
-  </div>
-</section>
+### Front Matter
+The Front Matter is now handled entirely by the YAML metadata block and the SSG compiler. Do not manually write front matter HTML.
+
+### Content Sections
+Use `## ` (H2) for all top-level sections. Do not use H1 except for the main title.
+
+```markdown
+## 01 / Eyebrow Text Here
+Opening paragraph goes here.
+
+Subsequent paragraphs...
 ```
 
-### Content Section — col-wide pattern
-```html
-<section class="band band--paper" data-spine="Label" data-section="Full Label">
-  <div class="col-wide">
-    <div class="eyebrow reveal">01 / Eyebrow</div>
-    <h2 class="reveal is-chapter">Heading</h2>
-    <p class="has-dropcap reveal">Opening paragraph...</p>
-    <p class="reveal">Subsequent paragraph...</p>
-  </div>
-</section>
-```
+### Figures and Data
+Use standard Markdown formatting for tables and code snippets.
+If a data visualization is required, do NOT write HTML blocks like `<div class="plotly-wrapper">`. Use the `scripts` array in your YAML frontmatter to load external interactive components, or compile static SVG files into the directory and reference them as normal Markdown links if supported by your secondary rendering pipelines.
 
-### Figure (SVG or image) — direct band child, gets wide span
-```html
-<div class="figure reveal">
-  <div class="frame">
-    <!-- SVG or img here -->
-  </div>
-  <div class="cap"><span class="num">FIG. 01</span> Caption text.</div>
-</div>
-```
-
-### Method Box (inside col-wide)
-```html
-<div class="method">
-  <div class="inner">
-    <div class="lab">Label</div>
-    Content text here.
-  </div>
-</div>
-```
-
-### Plotly Chart (direct band child, gets 1080px span)
-```html
-<div class="plotly-wrapper">
-  <div id="chart-id" style="width:100%;height:400px;"></div>
-</div>
-<script>/* Plotly.newPlot call */</script>
-```
-
-### Back Matter (always band--dark, always last)
-```html
-<section class="band band--dark back-matter" data-spine="Research Graph" data-section="Research Graph">
-  <div class="back-matter" style="padding-top:0;">
-    <h3 style="margin-bottom:22px;">Related Works</h3>
-    <div class="related">
-      <div class="related-grid" id="recommendation-grid">
-        <!-- Populated by global.js from projects_index.json -->
-      </div>
-    </div>
-  </div>
-  <a class="next-chap" id="next-chap-link" href="#">
-    <div class="lf">
-      <div class="eb">Next Publication</div>
-      <div class="ti" id="next-chap-title">Loading...</div>
-    </div>
-    <div class="rt">&rarr;</div>
-  </a>
-</section>
-<script src="../design_system/js/global.js" defer></script>
-```
+### Related Works & Next Chapter
+These are automatically injected by the SSG compiler (`build.js`) and `global.js`. You do not need to append back matter to your markdown file.
 
 ---
 
-## projects_index.json — Required Entry for Every New Article
+## projects_index.json — Automated
 
-Add to `projects_index.json` at the repo root. The file is a JSON array — append before the closing `]`.
+You no longer need to manually append to `projects_index.json`. 
+When you run `node deploy.js`, it will automatically parse the YAML frontmatter from your `.md` files and inject the project into `master_index.json` and `projects_index.json`.
 
-```json
-{
-  "id": "Folder_Name",
-  "title": "Full Article Title as Shown in Search",
-  "desc": "2-3 sentence description. First 80 chars appear in the next-article block. First 140 chars appear in search results. Be specific about method and outcome.",
-  "cat": "Machine Learning",
-  "subtype": "CASE STUDY",
-  "tags": ["Tag One", "Tag Two", "Tag Three"],
-  "url": "Folder_Name/filename.html",
-  "time": "X min read",
-  "visual": "<svg fill=\"none\" viewBox=\"0 0 600 600\"><!-- thumbnail SVG --></svg>"
-}
-```
-
-**Rules:**
-- `id` must exactly match the article folder name
-- `url` is relative from the portfolio root
+**Rules for Frontmatter Visuals:**
 - `visual` is an inline SVG used as a thumbnail on the research library page — make it abstract/geometric, reflecting the article's content without literal illustration. Use `var(--phthalo)`, `var(--phthalo-lift)`, `var(--alizarin)`.
-- `cat` must match the `data-category` attribute on the article `<body>`
 
 ---
 
@@ -367,12 +239,14 @@ Add to `projects_index.json` at the repo root. The file is a JSON array — appe
 
 ## GitHub Deploy
 
-After writing the HTML and updating `projects_index.json`:
+After writing your Markdown file:
 
 ```powershell
 cd C:\Users\drhea\repos\Pm_html\portfolio_deploy
+node build.js      # Compiles your Markdown into HTML layouts
+node deploy.js     # Extracts metadata and updates indices
 git add .
-git status   # verify only your new files are staged
+git status         # verify your new files are staged
 git commit -m "feat: add [article title] case study"
 git push origin master
 ```
