@@ -213,7 +213,7 @@ print(len(enc.encode(chinese_text)))
       <table class="data-table">
           <thead>
               <tr>
-                  <th>Model Architecture</th>
+                  <th>Model</th>
                   <th>Language Evaluated</th>
                   <th>Token Multiplier (vs English)</th>
                   <th>Notes</th>
@@ -227,12 +227,6 @@ print(len(enc.encode(chinese_text)))
                   <td>Highly optimized for Chinese</td>
               </tr>
               <tr>
-                  <td>GPT-4 Variants</td>
-                  <td>Simplified Chinese</td>
-                  <td>up to 1.28x</td>
-                  <td>Significant language tax penalty</td>
-              </tr>
-              <tr>
                   <td>MiniMax-2.7</td>
                   <td>Simplified Chinese</td>
                   <td>up to 1.28x</td>
@@ -240,6 +234,7 @@ print(len(enc.encode(chinese_text)))
               </tr>
           </tbody>
       </table>
+      <p style="font-size: 0.85rem; color: var(--ink-3); margin-top: 12px;">Ren et al. (2026) tested these two models on SWE-bench Lite. The general non-English tokenization tax across commercial GPT-style tokenizers is established separately by Petrov et al. (2023) and Ahia et al. (2023), cited above.</p>
   </div>
 
   <p class="reveal col-with-sidenotes">
@@ -247,7 +242,7 @@ print(len(enc.encode(chinese_text)))
   </p>
 
   <p class="reveal">
-    A 2026 study by Ren et al. tested the "vibe coding" claim directly using SWE-bench Lite, a software engineering benchmark designed to stress real coding workflows rather than synthetic prompts. They found that while a heavily Chinese-optimized model like GLM-5 might show a marginal token savings (around 0.98x compared to English), standard commercial models like GPT variants and MiniMax-2.7 actually required up to 1.28x <em>more</em> tokens to process the exact same Chinese reasoning tasks. The authors themselves frame the findings as preliminary evidence given the limited model set tested, but the central claim is robust: there is no general language-level efficiency advantage, only a model-by-model tokenizer story.
+    A 2026 study by Ren et al. tested the "vibe coding" claim directly using SWE-bench Lite, a software engineering benchmark designed to stress real coding workflows rather than synthetic prompts. They found that a heavily Chinese-optimized model like GLM-5 showed marginal token savings (around 0.98x compared to English), while MiniMax-2.7 actually required up to 1.28x <em>more</em> tokens to process the exact same Chinese reasoning tasks. The authors themselves frame the findings as preliminary evidence given the limited model set tested, but the central claim is robust: there is no general language-level efficiency advantage, only a model-by-model tokenizer story. The broader non-English token-cost penalty across commercial GPT-style tokenizers is documented separately by Petrov et al. (2023) and Ahia et al. (2023), both cited above.
   </p>
 
   <p class="reveal">
