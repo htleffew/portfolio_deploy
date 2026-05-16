@@ -198,5 +198,33 @@
         "url": "simplified_chinese_agentic_workflows/index.html",
         "time": "5 min read",
         "visual": "<svg fill=\"none\" viewBox=\"0 0 600 600\"><defs><linearGradient id=\"sct-g\" x1=\"0\" x2=\"1\" y1=\"0\" y2=\"1\"><stop offset=\"0%\" stop-color=\"#3866A0\" stop-opacity=\"0.7\"/><stop offset=\"100%\" stop-color=\"#7A1626\" stop-opacity=\"0.4\"/></linearGradient></defs><g stroke=\"url(#sct-g)\" stroke-width=\"1\" fill=\"none\"><rect x=\"160\" y=\"160\" width=\"280\" height=\"280\"/><line x1=\"160\" x2=\"440\" y1=\"230\" y2=\"230\"/><line x1=\"160\" x2=\"440\" y1=\"300\" y2=\"300\"/><line x1=\"160\" x2=\"440\" y1=\"370\" y2=\"370\"/><line x1=\"230\" x2=\"230\" y1=\"160\" y2=\"440\"/><line x1=\"300\" x2=\"300\" y1=\"160\" y2=\"440\"/><line x1=\"370\" x2=\"370\" y1=\"160\" y2=\"440\"/></g><g fill=\"#3866A0\" opacity=\"0.85\"><rect x=\"198\" y=\"198\" width=\"4\" height=\"4\"/><rect x=\"268\" y=\"268\" width=\"4\" height=\"4\"/><rect x=\"338\" y=\"338\" width=\"4\" height=\"4\"/><rect x=\"408\" y=\"408\" width=\"4\" height=\"4\"/></g><circle cx=\"300\" cy=\"300\" r=\"6\" fill=\"#7A1626\"/></svg>"
+    },
+    {
+        "id": "design_system",
+        "title": "design_system",
+        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "cat": "Research & Architecture",
+        "subtype": "DESIGN_SYSTEM",
+        "tags": [
+            "Data Science"
+        ],
+        "url": "design_system/case-study-template.html",
+        "time": "5 min read",
+        "visual": ""
+    },
+    {
+        "id": "Test_Markdown_Article",
+        "title": "Testing the Markdown SSG",
+        "desc": "This is a test of the new automated SSG pipeline for portfolio deployment.",
+        "cat": "Engineering",
+        "subtype": "TEST",
+        "tags": [
+            "Test",
+            "Node",
+            "Engineering"
+        ],
+        "url": "Test_Markdown_Article/test-ssg.html",
+        "time": "1 min read",
+        "visual": ""
     }
 ]
