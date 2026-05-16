@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me Template</title>
+    <style>
+        :root {
+            --tweak-colors-bg-paper: #f8f6f1;
+            --tweak-colors-text-dark: #1a1a1a;
+            --tweak-typography-body-font-size: 18;
+            --tweak-typography-body-line-height: 1.7;
+            --tweak-typography-section-heading-size: 48;
+            --tweak-spacing-section-padding-top: 80;
+            --tweak-spacing-section-padding-bottom: 80;
+            --tweak-hover-effects-headshot-shadow-opacity: 0.2;
+            --tweak-hover-effects-headshot-border-radius: 8;
+        }
+        body {
+            background-color: var(--tweak-colors-bg-paper);
+            color: var(--tweak-colors-text-dark);
+            font-family: system-ui, sans-serif;
+            font-size: calc(var(--tweak-typography-body-font-size) * 1px);
+            line-height: var(--tweak-typography-body-line-height);
+            margin: 0;
+            padding: calc(var(--tweak-spacing-section-padding-top) * 1px) 20px calc(var(--tweak-spacing-section-padding-bottom) * 1px);
+        }
+        .container { max-width: 800px; margin: 0 auto; display: flex; gap: 40px; }
+        .headshot {
+            width: 200px; height: 250px; background: #ccc;
+            border-radius: calc(var(--tweak-hover-effects-headshot-border-radius) * 1px);
+            box-shadow: 0 10px 30px rgba(0,0,0,var(--tweak-hover-effects-headshot-shadow-opacity));
+        }
+        h1 { font-size: calc(var(--tweak-typography-section-heading-size) * 1px); margin-top: 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="headshot"></div>
+        <div>
+            <h1 class="tweak-text-page-title">About</h1>
+            <p class="tweak-text-bio-excerpt">Biography snippet goes here...</p>
+        </div>
+    </div>
+    <script>
+        window.addEventListener('tweaks-updated', (e) => {
+            if (e.detail.text) {
+                if (e.detail.text.pageTitle) document.querySelector('.tweak-text-page-title').textContent = e.detail.text.pageTitle;
+                if (e.detail.text.bioExcerpt) document.querySelector('.tweak-text-bio-excerpt').textContent = e.detail.text.bioExcerpt;
+            }
+        });
+    </script>
+</body>
+</html>

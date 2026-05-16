@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial Template</title>
+    <style>
+        :root {
+            --tweak-colors-bg-base: #ffffff;
+            --tweak-colors-text-base: #1a1a1a;
+            --tweak-colors-bg-code-block: #1e1e1e;
+            --tweak-colors-text-code-block: #d4d4d4;
+            --tweak-typography-body-font-size: 18;
+            --tweak-typography-code-font-size: 14;
+            --tweak-spacing-content-width: 800;
+            --tweak-spacing-code-padding: 24;
+        }
+        body {
+            background-color: var(--tweak-colors-bg-base);
+            color: var(--tweak-colors-text-base);
+            font-family: system-ui, sans-serif;
+            font-size: calc(var(--tweak-typography-body-font-size) * 1px);
+            margin: 0; padding: 40px 20px;
+        }
+        .container { max-width: calc(var(--tweak-spacing-content-width) * 1px); margin: 0 auto; }
+        pre {
+            background-color: var(--tweak-colors-bg-code-block);
+            color: var(--tweak-colors-text-code-block);
+            padding: calc(var(--tweak-spacing-code-padding) * 1px);
+            font-size: calc(var(--tweak-typography-code-font-size) * 1px);
+            font-family: monospace;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="tweak-text-tutorial-title">Tutorial Title</h1>
+        <p>Follow along to build the visualizer...</p>
+        <pre><code>def compute_latent_space(data):
+    # Initialize the model
+    model = LatentModel()
+    return model.fit(data)</code></pre>
+        <button class="tweak-text-repo-link-text">GitHub</button>
+        <button class="tweak-text-notebook-link-text">Colab</button>
+    </div>
+    <script>
+        window.addEventListener('tweaks-updated', (e) => {
+            if (e.detail.text) {
+                if (e.detail.text.tutorialTitle) document.querySelector('.tweak-text-tutorial-title').textContent = e.detail.text.tutorialTitle;
+                if (e.detail.text.repoLinkText) document.querySelector('.tweak-text-repo-link-text').textContent = e.detail.text.repoLinkText;
+                if (e.detail.text.notebookLinkText) document.querySelector('.tweak-text-notebook-link-text').textContent = e.detail.text.notebookLinkText;
+            }
+        });
+    </script>
+</body>
+</html>
