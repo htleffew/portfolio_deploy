@@ -23,26 +23,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Run Index Sync Script
-        run: node sync_index.js
-
-      - name: Commit and Push Index Changes
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add projects_index.json
-          if git diff --staged --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "chore: auto-sync projects_index.json [skip ci]"
-            git push
-          fi
-
       - name: Inject cache-busting version strings
         run: |
           SHORT_SHA=$(echo "${{ github.sha }}" | cut -c1-7)
