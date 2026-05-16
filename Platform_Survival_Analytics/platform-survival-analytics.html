@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Survival Function of Platform Integrity | Dr. Heather Leffew</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../design_system/css/global.css">
+<style>
+  /* Page-specific hero treatment: banner.png behind the front matter. */
+  .platform-hero {
+    position: relative;
+    overflow: hidden;
+  }
+  .platform-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(3,3,3,0.55) 0%, rgba(3,3,3,0.92) 100%),
+      url('banner.png') center/cover no-repeat;
+    z-index: 0;
+    opacity: 0.85;
+  }
+  .platform-hero > * { position: relative; z-index: 1; }
+</style>
+</head>
+
+<body data-category="Platform Integrity" data-title="The Hazard of Presence">
+<div id="preloader"><div id="preloader-left"></div><div id="preloader-right"></div><div id="preloader-line"></div></div>
+
+<div id="progress"></div>
+<div id="global-nav-container"></div>
+<aside id="spine"></aside>
+<div class="atmosphere"></div>
+<canvas id="glCanvas"></canvas>
+
+<!-- ============================================================
+     FRONT MATTER
+     ============================================================ -->
+<section class="band band--dark front platform-hero" data-spine="Front" data-section="Front matter">
+  <div class="col-wide">
+    <div class="meta-row">
+      <span class="bracket">Working note</span>
+      <span class="sep">/</span>
+      <span>Platform Integrity</span>
+      <span class="sep">/</span>
+      <span>T&amp;S Analytics</span>
+      <span class="sep">/</span>
+      <span>14 min read</span>
+    </div>
+
+    <h1>The Survival Function of Platform Integrity</h1>
+
+    <p class="abstract">
+      Built for a major short-form video platform's Trust &amp; Safety team, this Spark-scale analytics engine imports time-to-event analysis from biostatistics and applies it to platform integrity. The central reframe: the same Kaplan-Meier estimator that asks "what is the probability that a patient is still alive at time t after diagnosis?" can ask "what is the probability that a user session is still violation-free at time t after first content interaction?" Both questions involve right-censored observations. Both benefit from non-parametric estimation. The toolkit transfers cleanly. Layered with LDA topic modeling, VADER sentiment, and NetworkX co-occurrence, the engine produces a 12-section auto-generated investigation report that is reproducible across cases and comparable across users.
+    </p>
+
+    <div class="byline">
+      <div>Subject <strong>Platform integrity telemetry at industry scale</strong></div>
+      <div>Methodology <strong>Survival analysis + LDA + sentiment + co-occurrence</strong></div>
+      <div>Output <strong>Standardized 12-section investigation reports</strong></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     01 / Multi-Pass Architecture
+     ============================================================ -->
+<section class="band band--paper" data-spine="Cross-Domain" data-section="The Cross-Domain Move">
+  <div class="col-wide">
+    <div class="eyebrow reveal">01 / The Cross-Domain Move</div>
+    <h2 class="reveal is-chapter">Borrowing a tool from biostatistics</h2>
+    <div class="report-prose">
+      <p class="has-dropcap reveal">In medical research, the Kaplan-Meier estimator answers a specific question: given a cohort of patients diagnosed at time zero, what is the probability that any given patient is still alive at time t? The estimator handles the inconvenient fact that not every patient's outcome is observed. Some are still alive when the study ends; some leave the study; some die from causes unrelated to the disease. These are right-censored observations, and KM is the non-parametric tool designed to use them honestly rather than throw them out.</p>
+
+      <p class="reveal">Trust &amp; Safety analytics has a structurally identical problem. Given a user's session beginning at time zero, what is the probability that the session has remained free of policy-violative content at time t? The events of interest (encountering content flagged by a moderation system) occur on the same kind of irregular timeline as patient deaths. The censoring is the same: many sessions end without any violation event, which is not the same as those sessions being violation-free forever. The data structure is the same. The estimator transfers without modification.</p>
+
+      <p class="reveal">The intellectual move that anchors this engine is recognizing that platform integrity decay is well-modeled as a survival problem. Once you accept the reframe, an entire toolkit comes with it: median time to violation as a population-level health metric, comparative survival functions across user segments, hazard rate analysis for identifying high-risk windows. The biostatistics literature has been refining these tools since 1958. T&amp;S analytics had been reinventing weaker versions in isolation.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     02 / Telemetry & Drift
+     ============================================================ -->
+<section class="band band--dark" data-spine="Architecture" data-section="Engine Architecture">
+  <div class="col-wide">
+    <div class="eyebrow reveal">02 / Engine Architecture</div>
+    <h2 class="reveal is-chapter">Four modules, one auditable pipeline</h2>
+    <div class="report-prose">
+      <p class="reveal">The engine runs on a YARN-managed Spark cluster sized for petabyte-scale moderation telemetry: roughly 3,000 CPU cores allocated at 2 GB per core for 7.8 TB aggregate execution memory, with shuffle partitions clamped against the cluster's physical limits to stop data skew when complex cross-metric aggregations hit the executors. The Spark layer exists to make the analytical layer tractable, not to be the contribution.</p>
+
+      <p class="reveal">The contribution is the decomposition. The pipeline splits cleanly into four modules, each with a single responsibility, and the modules communicate through standardized intermediate CSV artifacts rather than in-memory state. Any module can be re-run in isolation when a methodology question demands it.</p>
+    </div>
+
+    <div class="figure reveal">
+      <div class="frame" style="background: var(--obsidian); padding: 3rem; display: flex; justify-content: center;">
+        <svg width="100%" height="auto" viewBox="0 0 900 380" xmlns="http://www.w3.org/2000/svg" style="max-width: 900px;">
+          <defs>
+            <linearGradient id="moduleFlow" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#3866A0" stop-opacity="0.0"/>
+              <stop offset="50%" stop-color="#3866A0" stop-opacity="0.8"/>
+              <stop offset="100%" stop-color="#3866A0" stop-opacity="0.0"/>
+            </linearGradient>
+          </defs>
+
+          <!-- Module 1: Orchestrator -->
+          <rect x="20" y="120" width="180" height="140" fill="#1A1A1A" stroke="#3866A0" stroke-width="1.5"/>
+          <text x="110" y="148" font-family="'JetBrains Mono', monospace" font-size="9" fill="#3866A0" text-anchor="middle" letter-spacing="2">MODULE 01</text>
+          <text x="110" y="180" font-family="'Playfair Display', serif" font-size="18" fill="#F5F5F7" text-anchor="middle" font-weight="600">Orchestrator</text>
+          <text x="110" y="208" font-family="'JetBrains Mono', monospace" font-size="9" fill="#A1A1A6" text-anchor="middle">Spark session,</text>
+          <text x="110" y="222" font-family="'JetBrains Mono', monospace" font-size="9" fill="#A1A1A6" text-anchor="middle">SQL fetch,</text>
+          <text x="110" y="236" font-family="'JetBrains Mono', monospace" font-size="9" fill="#A1A1A6" text-anchor="middle">temporal segmentation</text>
+
+          <path d="M 200 190 L 240 190" stroke="url(#moduleFlow)" stroke-width="2" fill="none"/>
+
+          <!-- Module 2: Text NLP -->
+          <rect x="240" y="120" width="180" height="140" fill="#1A1A1A" stroke="#3866A0" stroke-width="1.5"/>
+          <text x="330" y="148" font-family="'JetBrains Mono', monospace" font-size="9" fill="#3866A0" text-anchor="middle" letter-spacing="2">MODULE 02</text>
+          <text x="330" y="180" font-family="'Playfair Display', serif" font-size="18" fill="#F5F5F7" text-anchor="middle" font-weight="600">Text NLP</text>
+          <text x="330" y="208" font-family="'JetBrains Mono', monospace" font-size="9" fill="#A1A1A6" text-anchor="middle">N-grams, themes,</text>
+          <text x="330" y="222" font-family="'JetBrains Mono', monospace" font-size="9" fill="#A1A1A6" text-anchor="middle">collocation,</text>
+          <text x="330" y="236" font-family="'JetBrains Mono', monospace" font-size="9" fill="#A1A1A6" text-anchor="middle">frequency (NLTK)</text>
+
+          <path d="M 420 190 L 460 190" stroke="url(#moduleFlow)" stroke-width="2" fill="none"/>
+
+          <!-- Module 3: Statistical -->
+          <rect x="460" y="120" width="200" height="140" fill="#1A1A1A" stroke="#7A1626" stroke-width="2"/>
+          <text x="560" y="148" font-family="'JetBrains Mono', monospace" font-size="9" fill="#7A1626" text-anchor="middle" letter-spacing="2">MODULE 03</text>
+          <text x="560" y="180" font-family="'Playfair Display', serif" font-size="18" fill="#F5F5F7" text-anchor="middle" font-weight="600">Statistical</text>
+          <text x="560" y="208" font-family="'JetBrains Mono', monospace" font-size="9" fill="#A1A1A6" text-anchor="middle">Kaplan-Meier survival,</text>
+          <text x="560" y="222" font-family="'JetBrains Mono', monospace" font-size="9" fill="#A1A1A6" text-anchor="middle">VADER sentiment,</text>
+          <text x="560" y="236" font-family="'JetBrains Mono', monospace" font-size="9" fill="#A1A1A6" text-anchor="middle">co-occurrence graphs</text>
+
+          <path d="M 660 190 L 700 190" stroke="url(#moduleFlow)" stroke-width="2" fill="none"/>
+
+          <!-- Module 4: Report Generator -->
+          <rect x="700" y="120" width="180" height="140" fill="#1A1A1A" stroke="#3866A0" stroke-width="1.5"/>
+          <text x="790" y="148" font-family="'JetBrains Mono', monospace" font-size="9" fill="#3866A0" text-anchor="middle" letter-spacing="2">MODULE 04</text>
+          <text x="790" y="180" font-family="'Playfair Display', serif" font-size="18" fill="#F5F5F7" text-anchor="middle" font-weight="600">Report Engine</text>
+          <text x="790" y="208" font-family="'JetBrains Mono', monospace" font-size="9" fill="#A1A1A6" text-anchor="middle">Jinja-templated</text>
+          <text x="790" y="222" font-family="'JetBrains Mono', monospace" font-size="9" fill="#A1A1A6" text-anchor="middle">12-section HTML,</text>
+          <text x="790" y="236" font-family="'JetBrains Mono', monospace" font-size="9" fill="#A1A1A6" text-anchor="middle">PDF rollup</text>
+
+          <!-- Cluster sizing labels -->
+          <text x="450" y="320" font-family="'JetBrains Mono', monospace" font-size="10" fill="#A1A1A6" text-anchor="middle" letter-spacing="2">YARN CLUSTER: ~3,000 CORES  ·  ~7.8 TB MEMORY  ·  9,000 SHUFFLE PARTITIONS</text>
+        </svg>
+      </div>
+      <div class="cap"><span class="num">FIG. 01</span> The four-module decomposition. Modules communicate through standardized CSV intermediates rather than in-memory state, so any analytical module can be re-run in isolation without re-running the Spark fetch.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     03 / Emoji Processing
+     ============================================================ -->
+<section class="band band--paper" data-spine="Survival" data-section="Time-to-Violation as Health Metric">
+  <div class="col-wide">
+    <div class="eyebrow reveal">03 / Time-to-Violation as Health Metric</div>
+    <h2 class="reveal is-chapter">Survival analysis on user sessions</h2>
+    <div class="report-prose">
+      <p class="has-dropcap reveal">The core analytical move is small in code and large in consequence. For each user-segment, the engine computes the temporal difference between consecutive content events as <code>duration</code> in seconds. The event indicator is one if the content interaction was associated with a flagged policy violation and zero otherwise. The pair (duration, event_observed) is what <code>lifelines.KaplanMeierFitter</code> wants. Fit the estimator on the segment's data, plot the survival function, read off the median time to violation. The function is two dozen lines of Python; the reframing is the work.</p>
+    </div>
+
+    <div class="figure reveal">
+      <div class="frame" style="background: var(--paper-2); padding: 2.5rem; display: flex; justify-content: center;">
+        <pre style="font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.65; color: var(--ink); margin: 0; max-width: 100%; overflow-x: auto;"><code><span style="color: #6E6E73;"># Per-user-segment survival fit</span>
+df[time_column] = pd.to_datetime(df[time_column])
+df.sort_values(by=time_column, inplace=True)
+df[<span style="color: #7A1626;">'duration'</span>] = df[time_column].diff().dt.total_seconds()
+df = df.dropna(subset=[<span style="color: #7A1626;">'duration'</span>])
+df[<span style="color: #7A1626;">'event_observed'</span>] = df[event_column].apply(
+    <span style="color: #3866A0;">lambda</span> x: 1 <span style="color: #3866A0;">if</span> not pd.isna(x) and x.strip() != <span style="color: #7A1626;">''</span> <span style="color: #3866A0;">else</span> 0
+)
+
+kmf = KaplanMeierFitter()
+kmf.fit(df[<span style="color: #7A1626;">'duration'</span>], event_observed=df[<span style="color: #7A1626;">'event_observed'</span>], label=segment)
+kmf.plot_survival_function()
+median_survival = kmf.median_survival_time_  <span style="color: #6E6E73;"># seconds to first violation</span></code></pre>
+      </div>
+      <div class="cap"><span class="num">FIG. 02</span> The survival fit. Duration is the inter-event spacing in seconds; event_observed is one when a policy was triggered. The median survival time is the population-level health metric.</div>
+    </div>
+
+    <div class="report-prose">
+      <p class="reveal">The comparative survival mode is what makes the engine useful for forensic per-user investigation. By segmenting one user's data into temporal tertiles (early, mid, late), then fitting separate Kaplan-Meier curves on each, the engine reveals whether that user's median time-to-violation is shrinking, stable, or growing across the observation window. A shrinking median is a measurable signal of acceleration. The same comparison across user cohorts surfaces population-level shifts in platform health.</p>
+
+      <p class="reveal">The interpretive note that matters: a survival time below 3,600 seconds (one hour) means a user encountered violative content within the first hour of platform engagement in that segment. The engine surfaces that threshold automatically in its narrative output, because that interval is where moderation feedback loops are most likely to compound.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     04 / The Pipeline
+     ============================================================ -->
+<section class="band band--dark" data-spine="Drift" data-section="Topical Drift as Risk Signal">
+  <div class="col-wide">
+    <div class="eyebrow reveal">04 / Topical Drift as Risk Signal</div>
+    <h2 class="reveal is-chapter">When did the topic neighborhood change?</h2>
+    <div class="report-prose">
+      <p class="reveal">Survival analysis answers when violations happen. It does not answer what topical neighborhood the user was in when the violation occurred, or how that neighborhood evolved. The engine's text NLP module fills that gap with three layered passes: latent Dirichlet allocation for topic clusters, VADER and TextBlob for sentiment polarity over time, and NetworkX-backed co-occurrence graphs for word-pair structure inside a five-token window.</p>
+
+      <p class="reveal">The triangulation matters because each signal is interpretable on its own and dramatically more useful when read against the others. A drop in the survival curve that coincides with a sentiment polarity shift and a topic-cluster turnover is a different finding than a survival drop while the topical landscape is stable. The first pattern suggests the user moved into new content territory; the second suggests the existing territory became more violative. Different remediations follow.</p>
+
+      <p class="reveal">Co-occurrence analysis is the layer that catches what topic modeling smooths over. LDA gives you topic distributions; the co-occurrence graph gives you the word-pairs that shape the texture inside those topics. When two words that did not previously co-occur start appearing together at high frequency in a user's consumption window, the engine flags the pair regardless of whether either word is independently policy-relevant. New language patterns precede new behavior.</p>
+    </div>
+
+    <div class="figure reveal">
+      <div class="frame" style="background: var(--obsidian); padding: 2.5rem; display: flex; justify-content: center;">
+        <svg width="100%" height="auto" viewBox="0 0 800 280" xmlns="http://www.w3.org/2000/svg" style="max-width: 800px;">
+          <text x="60" y="40" font-family="'JetBrains Mono', monospace" font-size="10" fill="#A1A1A6" letter-spacing="2">EARLY TERTILE</text>
+          <text x="350" y="40" font-family="'JetBrains Mono', monospace" font-size="10" fill="#A1A1A6" letter-spacing="2">MID TERTILE</text>
+          <text x="640" y="40" font-family="'JetBrains Mono', monospace" font-size="10" fill="#A1A1A6" letter-spacing="2">LATE TERTILE</text>
+
+          <!-- Early cluster -->
+          <circle cx="120" cy="130" r="55" fill="#3866A0" fill-opacity="0.18" stroke="#3866A0" stroke-width="1"/>
+          <text x="120" y="135" font-family="'Lora', serif" font-size="13" fill="#F5F5F7" text-anchor="middle" font-style="italic">topic A</text>
+
+          <!-- Mid clusters -->
+          <circle cx="380" cy="100" r="45" fill="#3866A0" fill-opacity="0.18" stroke="#3866A0" stroke-width="1"/>
+          <text x="380" y="105" font-family="'Lora', serif" font-size="13" fill="#F5F5F7" text-anchor="middle" font-style="italic">topic A'</text>
+
+          <circle cx="430" cy="180" r="50" fill="#7A1626" fill-opacity="0.20" stroke="#7A1626" stroke-width="1"/>
+          <text x="430" y="185" font-family="'Lora', serif" font-size="13" fill="#F5F5F7" text-anchor="middle" font-style="italic">topic B</text>
+
+          <!-- Late cluster -->
+          <circle cx="690" cy="150" r="65" fill="#7A1626" fill-opacity="0.32" stroke="#7A1626" stroke-width="1.5"/>
+          <text x="690" y="155" font-family="'Lora', serif" font-size="13" fill="#F5F5F7" text-anchor="middle" font-style="italic">topic B'</text>
+
+          <!-- Drift arrows -->
+          <path d="M 175 130 Q 270 110 335 105" stroke="#A1A1A6" stroke-width="1" fill="none" stroke-dasharray="3 4" opacity="0.6"/>
+          <path d="M 175 130 Q 280 170 385 175" stroke="#A1A1A6" stroke-width="1" fill="none" stroke-dasharray="3 4" opacity="0.6"/>
+          <path d="M 480 180 Q 580 165 630 155" stroke="#A1A1A6" stroke-width="1" fill="none" stroke-dasharray="3 4" opacity="0.6"/>
+
+          <text x="400" y="250" font-family="'JetBrains Mono', monospace" font-size="9" fill="#A1A1A6" text-anchor="middle" letter-spacing="2">TOPICAL DRIFT TRAJECTORY ACROSS TEMPORAL TERTILES</text>
+        </svg>
+      </div>
+      <div class="cap"><span class="num">FIG. 03</span> Topic drift across time slices. LDA topic clusters are tracked from early to late tertile; emergent clusters in red signal new topical territory. Read alongside the survival curve, drift in the topical neighborhood gives the analyst a why to attach to the when.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     05 / Conclusion + References
+     ============================================================ -->
+<section class="band band--paper" data-spine="Report Engine" data-section="The Auto-Report Engine">
+  <div class="col-wide">
+    <div class="eyebrow reveal">05 / The Auto-Report Engine</div>
+    <h2 class="reveal is-chapter">Reproducibility through structured output</h2>
+    <div class="report-prose">
+      <p class="has-dropcap reveal">The fourth module is a Jinja-templated HTML generator that takes the analytical outputs of the prior three and produces a 12-section report with a fixed structure. The structure is the contribution. When every investigation produces the same sections in the same order with the same statistical choices behind each section, two investigations of two different cases become directly comparable in a way that ad-hoc analysis never permits. Reviewers can read the seventh section of any report with a known set of expectations.</p>
+    </div>
+
+    <div class="figure reveal">
+      <div class="frame" style="background: var(--paper-2); padding: 2rem;">
+        <table style="width: 100%; border-collapse: collapse; font-family: 'Lora', serif;">
+          <thead>
+            <tr style="border-bottom: 1px solid var(--ink-3);">
+              <th style="text-align: left; padding: 8px 12px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--ink-3); font-weight: 500;">SECTION</th>
+              <th style="text-align: left; padding: 8px 12px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--ink-3); font-weight: 500;">CONTENT</th>
+            </tr>
+          </thead>
+          <tbody style="font-size: 14px; color: var(--ink);">
+            <tr><td style="padding: 6px 12px;">01</td><td style="padding: 6px 12px;">Executive summary</td></tr>
+            <tr><td style="padding: 6px 12px;">02</td><td style="padding: 6px 12px;">Methodology</td></tr>
+            <tr><td style="padding: 6px 12px;">03</td><td style="padding: 6px 12px;">N-grams and co-occurrence analysis</td></tr>
+            <tr><td style="padding: 6px 12px;">04</td><td style="padding: 6px 12px;">Themes and clusters (LDA topic modeling)</td></tr>
+            <tr><td style="padding: 6px 12px;">05</td><td style="padding: 6px 12px;">Caption and hashtag analysis</td></tr>
+            <tr><td style="padding: 6px 12px;">06</td><td style="padding: 6px 12px;">Visibility and engagement metrics</td></tr>
+            <tr><td style="padding: 6px 12px;">07</td><td style="padding: 6px 12px;">Sentiment analysis (VADER)</td></tr>
+            <tr><td style="padding: 6px 12px;">08</td><td style="padding: 6px 12px;">Search term effectiveness</td></tr>
+            <tr><td style="padding: 6px 12px;">09</td><td style="padding: 6px 12px;">Cross-metric correlation analysis</td></tr>
+            <tr><td style="padding: 6px 12px;">10</td><td style="padding: 6px 12px;">Search term to policy violation mapping</td></tr>
+            <tr><td style="padding: 6px 12px;">11</td><td style="padding: 6px 12px;">User engagement analysis</td></tr>
+            <tr><td style="padding: 6px 12px;">12</td><td style="padding: 6px 12px;">Conclusion and recommendations</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="cap"><span class="num">FIG. 04</span> The fixed 12-section investigation report. Every analysis emits the same structure; every reviewer reads with the same expectations.</div>
+    </div>
+
+    <div class="report-prose">
+      <p class="reveal">The engine generates the survival functions, heatmaps, and topic clusters as image artifacts written to a per-investigation directory. The Jinja template assembles them into the final HTML. A separate FPDF rollup converts the HTML to a print-ready PDF. The whole sequence runs unattended after the analyst points the orchestrator at a new dataset and confirms the column mappings.</p>
+
+      <h3 class="reveal" style="margin-top: 3rem;">Limitations</h3>
+      <p class="reveal">Survival analysis assumes independence between consecutive events. That assumption is debatable in any system where the recommendation engine shapes the next interaction. The Kaplan-Meier estimator is robust to this in practice, but the median survival time should be read as a population-level summary, not a per-session prediction. Right-censoring assumptions matter equally: a session that ends without a violation is censored, not violation-free in perpetuity.</p>
+
+      <p class="reveal">Topic modeling produces interpretable clusters at the cost of run-to-run reproducibility. LDA's stochastic initialization means the same data can produce different topic numberings on different runs; the topical drift inference is robust to renumbering, but downstream automation that hard-codes topic IDs is not. The engine sidesteps this by labeling topics by their top-five terms rather than by index.</p>
+
+      <p class="reveal">The engine was built for a major short-form video platform's Trust &amp; Safety analytics team and is the upstream tool driving the per-user investigation methodology described separately. The contribution is the cross-domain reframe and the reproducibility scaffold; the analytical primitives are standard.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     BACK MATTER
+     ============================================================ -->
+<section class="band band--dark back-matter" data-spine="Research Graph" data-section="Research Graph">
+  <div class="back-matter" style="padding-top:0;">
+    <h3 style="margin-bottom:22px;">Related Works</h3>
+    <div class="related">
+      <div class="related-grid" id="recommendation-grid"></div>
+    </div>
+  </div>
+  <a class="next-chap" id="next-chap-link" href="#">
+    <div class="lf">
+      <div class="eb">Next Publication</div>
+      <div class="ti" id="next-chap-title">Loading...</div>
+    </div>
+    <div class="rt">&rarr;</div>
+  </a>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const sections = document.querySelectorAll('section.band');
+    const spine = document.getElementById('spine');
+    const topnav = document.getElementById('topnav');
+    const status = document.getElementById('status');
+    const pctEl = status ? status.querySelector('.pct') : null;
+
+    const updateProgress = () => {
+      const scroll = window.scrollY;
+      const height = document.documentElement.scrollHeight - window.innerHeight;
+      const p = Math.min(100, Math.max(0, (scroll / height) * 100));
+      const progressEl = document.getElementById('progress');
+      if (progressEl) progressEl.style.setProperty('--p', p + '%');
+      if (pctEl) pctEl.innerText = Math.round(p) + '%';
+    };
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+
+    if (spine) {
+      spine.innerHTML = '';
+      sections.forEach((sec, i) => {
+        const label = sec.getAttribute('data-spine');
+        if (!label) return;
+        const row = document.createElement('div');
+        row.className = 'row';
+        if (i === 0) row.classList.add('is-active');
+        row.innerHTML = `<span class="num">0${i + 1}</span><div class="tick"></div><span class="label">${label}</span>`;
+        row.addEventListener('click', () => sec.scrollIntoView({ behavior: 'smooth' }));
+        spine.appendChild(row);
+
+        const observer = new IntersectionObserver(entries => {
+          entries.forEach(e => {
+            if (e.isIntersecting) {
+              [...spine.children].forEach(c => c.classList.remove('is-active', 'is-paper-active'));
+              const isPaper = e.target.classList.contains('band--paper');
+              row.classList.add('is-active');
+              if (isPaper) {
+                spine.classList.add('is-paper');
+                if (topnav) topnav.classList.add('is-paper');
+                if (status) status.classList.add('is-paper');
+              } else {
+                spine.classList.remove('is-paper');
+                if (topnav) topnav.classList.remove('is-paper');
+                if (status) status.classList.remove('is-paper');
+              }
+            }
+          });
+        }, { threshold: 0.3 });
+        observer.observe(sec);
+      });
+    }
+  });
+</script>
+<script src="../design_system/js/global.js" defer></script>
+</body>
+</html>
