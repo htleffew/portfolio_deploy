@@ -1,0 +1,42 @@
+<svg height="auto" style="max-width: 900px;" viewbox="0 0 900 380" width="100%" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<lineargradient id="moduleFlow" x1="0%" x2="100%" y1="0%" y2="0%">
+<stop offset="0%" stop-color="#3866A0" stop-opacity="0.0"></stop>
+<stop offset="50%" stop-color="#3866A0" stop-opacity="0.8"></stop>
+<stop offset="100%" stop-color="#3866A0" stop-opacity="0.0"></stop>
+</lineargradient>
+</defs>
+<!-- Module 1: Orchestrator -->
+<rect fill="#1A1A1A" height="140" stroke="#3866A0" stroke-width="1.5" width="180" x="20" y="120"></rect>
+<text fill="#3866A0" font-family="'JetBrains Mono', monospace" font-size="9" letter-spacing="2" text-anchor="middle" x="110" y="148">MODULE 01</text>
+<text fill="#F5F5F7" font-family="'Playfair Display', serif" font-size="18" font-weight="600" text-anchor="middle" x="110" y="180">Orchestrator</text>
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle" x="110" y="208">Spark session,</text>
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle" x="110" y="222">SQL fetch,</text>
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle" x="110" y="236">temporal segmentation</text>
+<path d="M 200 190 L 240 190" fill="none" stroke="url(#moduleFlow)" stroke-width="2"></path>
+<!-- Module 2: Text NLP -->
+<rect fill="#1A1A1A" height="140" stroke="#3866A0" stroke-width="1.5" width="180" x="240" y="120"></rect>
+<text fill="#3866A0" font-family="'JetBrains Mono', monospace" font-size="9" letter-spacing="2" text-anchor="middle" x="330" y="148">MODULE 02</text>
+<text fill="#F5F5F7" font-family="'Playfair Display', serif" font-size="18" font-weight="600" text-anchor="middle" x="330" y="180">Text NLP</text>
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle" x="330" y="208">N-grams, themes,</text>
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle" x="330" y="222">collocation,</text>
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle" x="330" y="236">frequency (NLTK)</text>
+<path d="M 420 190 L 460 190" fill="none" stroke="url(#moduleFlow)" stroke-width="2"></path>
+<!-- Module 3: Statistical -->
+<rect fill="#1A1A1A" height="140" stroke="#7A1626" stroke-width="2" width="200" x="460" y="120"></rect>
+<text fill="#7A1626" font-family="'JetBrains Mono', monospace" font-size="9" letter-spacing="2" text-anchor="middle" x="560" y="148">MODULE 03</text>
+<text fill="#F5F5F7" font-family="'Playfair Display', serif" font-size="18" font-weight="600" text-anchor="middle" x="560" y="180">Statistical</text>
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle" x="560" y="208">Kaplan-Meier survival,</text>
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle" x="560" y="222">VADER sentiment,</text>
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle" x="560" y="236">co-occurrence graphs</text>
+<path d="M 660 190 L 700 190" fill="none" stroke="url(#moduleFlow)" stroke-width="2"></path>
+<!-- Module 4: Report Generator -->
+<rect fill="#1A1A1A" height="140" stroke="#3866A0" stroke-width="1.5" width="180" x="700" y="120"></rect>
+<text fill="#3866A0" font-family="'JetBrains Mono', monospace" font-size="9" letter-spacing="2" text-anchor="middle" x="790" y="148">MODULE 04</text>
+<text fill="#F5F5F7" font-family="'Playfair Display', serif" font-size="18" font-weight="600" text-anchor="middle" x="790" y="180">Report Engine</text>
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle" x="790" y="208">Jinja-templated</text>
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle" x="790" y="222">12-section HTML,</text>
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle" x="790" y="236">PDF rollup</text>
+<!-- Cluster sizing labels -->
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="10" letter-spacing="2" text-anchor="middle" x="450" y="320">YARN CLUSTER: ~3,000 CORES  ·  ~7.8 TB MEMORY  ·  9,000 SHUFFLE PARTITIONS</text>
+</svg>

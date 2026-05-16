@@ -46,7 +46,7 @@
     <div class="grid">
      <div>
       <div class="meta-row">
-        <span class="bracket">TEST</span>
+        <span class="bracket">CASE STUDY</span>
         <span class="sep">/</span>
         <span>Engineering</span>
         <span class="sep">/</span>
@@ -56,21 +56,21 @@
       <h1>Testing the Markdown SSG</h1>
 
       <p class="abstract">
-        This is a test of the new automated SSG pipeline for portfolio deployment.
+        This is a test of the new automated SSG pipeline for portfolio deployment....
       </p>
 
       <div class="byline">
         <div>
           Subject
-          <strong>Static Site Generation</strong>
+          <strong>N/A</strong>
         </div>
         <div>
           Architecture
-          <strong>Node.js</strong>
+          <strong>N/A</strong>
         </div>
         <div>
           Output
-          <strong>HTML Pipeline</strong>
+          <strong>N/A</strong>
         </div>
       </div>
      </div>
@@ -84,43 +84,57 @@
 <!-- SECTION 1: Introduction -->
 <section class="band band--paper" data-spine="Introduction" data-section="Introduction">
   <div class="col-wide markdown-body">
-    <p class="has-dropcap reveal col-with-sidenotes">This is the introductory text. It should appear in the first band and have a dropcap if I configured <code>build.js</code> correctly.</p>
+    <h1>Testing the Markdown SSG</h1>
+<div class="eyebrow reveal">01 / Introduction</div>
+<h2 class="reveal is-chapter">Dr. Heather Leffew
+Obelus Institute
+May 2026</h2>
 
   </div>
 </section>
 
-<!-- SECTION 2: First Core Section -->
-<section class="band band--dark" data-spine="First Core Section" data-section="First Core Section">
+<!-- SECTION 2: Abstract -->
+<section class="band band--dark" data-spine="Abstract" data-section="Abstract">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">02 / First Core Section</div>
+    <div class="eyebrow reveal">02 / Abstract</div>
+<h2 class="reveal is-chapter">Abstract</h2>
+<p class="reveal">This is a test of the new automated SSG pipeline for portfolio deployment.</p>
+<p class="reveal">This is the introductory text. It should appear in the first band and have a dropcap if I configured <code>build.js</code> correctly.</p>
+<p class="reveal">02 / First Core Section</p>
+
+  </div>
+</section>
+
+<!-- SECTION 3: First Core Section -->
+<section class="band band--paper" data-spine="First Core Section" data-section="First Core Section">
+  <div class="col-wide markdown-body">
+    <div class="eyebrow reveal">03 / First Core Section</div>
 <h2 class="reveal is-chapter">First Core Section</h2>
 <p class="reveal">Here is a standard section under an H2. The SSG compiler should wrap this in <code>band--dark</code> or <code>band--paper</code> automatically.</p>
 <p class="reveal">We can include code blocks:</p>
-<pre><code class="language-javascript">const x = 42;
+<pre><code>const x = 42;
 console.log(x);
 </code></pre>
+<p class="reveal">03 / Interactive Components</p>
 
   </div>
 </section>
 
-<!-- SECTION 3: Interactive Components -->
-<section class="band band--paper" data-spine="Interactive Componen" data-section="Interactive Components">
+<!-- SECTION 4: Interactive Components -->
+<section class="band band--dark" data-spine="Interactive Componen" data-section="Interactive Components">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">03 / Interactive Components</div>
+    <div class="eyebrow reveal">04 / Interactive Components</div>
 <h2 class="reveal is-chapter">Interactive Components</h2>
 <p class="reveal">Here is a raw HTML element embedded directly in the markdown:</p>
-<div class="plotly-wrapper">
-  <div style="background: red; width: 100%; height: 100px; color: white; display: flex; align-items: center; justify-content: center;">
-    <strong>Mock Plotly Chart</strong>
-  </div>
-</div>
+<p class="reveal">04 / References</p>
+
   </div>
 </section>
 
-<!-- SECTION 4: References -->
+<!-- SECTION 5: References -->
 <section class="band band--paper" data-spine="References" data-section="References">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">04 / References</div>
+    <div class="eyebrow reveal">05 / References</div>
 <h2 class="reveal is-chapter">References</h2>
 <ul>
 <li>Leffew, H. (2026). <em>Building an SSG</em>. Journal of Agentic Engineering.</li>

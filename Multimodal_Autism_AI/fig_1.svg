@@ -1,0 +1,36 @@
+<svg style="width:100%; height:auto;" viewbox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<marker id="arrow" markerheight="6" markerwidth="6" orient="auto-start-reverse" refx="5" refy="5" viewbox="0 0 10 10">
+<path d="M 0 0 L 10 5 L 0 10 z" fill="#3866A0"></path>
+</marker>
+</defs>
+<g fill="#A1A1A6" font-family="JetBrains Mono" font-size="12">
+<!-- Root -->
+<rect fill="#161616" height="40" rx="4" stroke="#333333" stroke-width="2" width="200" x="300" y="20"></rect>
+<text fill="#F5F5F7" font-weight="bold" text-anchor="middle" x="400" y="44">MULTIMODAL INPUT</text>
+<!-- Streams -->
+<path d="M 400 60 L 400 90 L 200 90 L 200 120" fill="none" marker-end="url(#arrow)" stroke="#3866A0" stroke-width="2"></path>
+<path d="M 400 60 L 400 90 L 600 90 L 600 120" fill="none" marker-end="url(#arrow)" stroke="#3866A0" stroke-width="2"></path>
+<rect fill="#030303" height="30" rx="4" stroke="#0F3A6B" stroke-width="1" width="160" x="120" y="120"></rect>
+<text fill="#3866A0" text-anchor="middle" x="200" y="140">Video Stream (CV)</text>
+<rect fill="#030303" height="30" rx="4" stroke="#0F3A6B" stroke-width="1" width="160" x="520" y="120"></rect>
+<text fill="#3866A0" text-anchor="middle" x="600" y="140">Audio Stream (NLP)</text>
+<!-- Nodes -->
+<path d="M 200 150 L 200 180 L 100 180 L 100 210" fill="none" marker-end="url(#arrow)" stroke="#333333" stroke-width="1"></path>
+<path d="M 200 150 L 200 180 L 300 180 L 300 210" fill="none" marker-end="url(#arrow)" stroke="#333333" stroke-width="1"></path>
+<path d="M 600 150 L 600 180 L 500 180 L 500 210" fill="none" marker-end="url(#arrow)" stroke="#333333" stroke-width="1"></path>
+<path d="M 600 150 L 600 180 L 700 180 L 700 210" fill="none" marker-end="url(#arrow)" stroke="#333333" stroke-width="1"></path>
+<rect fill="#030303" height="60" rx="2" stroke="#222222" width="140" x="30" y="210"></rect>
+<text font-size="10" text-anchor="middle" x="100" y="235">Gaze/Face Tracking</text>
+<text fill="#0F3A6B" font-size="9" text-anchor="middle" x="100" y="255">A1, A2, A7</text>
+<rect fill="#030303" height="60" rx="2" stroke="#222222" width="140" x="230" y="210"></rect>
+<text font-size="10" text-anchor="middle" x="300" y="235">Pose Estimation</text>
+<text fill="#0F3A6B" font-size="9" text-anchor="middle" x="300" y="255">C1, D1, D4</text>
+<rect fill="#030303" height="60" rx="2" stroke="#222222" width="140" x="430" y="210"></rect>
+<text font-size="10" text-anchor="middle" x="500" y="235">Prosodic Extract</text>
+<text fill="#0F3A6B" font-size="9" text-anchor="middle" x="500" y="255">B1, A4</text>
+<rect fill="#030303" height="60" rx="2" stroke="#222222" width="140" x="630" y="210"></rect>
+<text font-size="10" text-anchor="middle" x="700" y="235">Speech to Text</text>
+<text fill="#0F3A6B" font-size="9" text-anchor="middle" x="700" y="255">B2</text>
+</g>
+</svg>

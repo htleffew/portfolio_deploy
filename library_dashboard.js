@@ -1,238 +1,146 @@
-// Library Dashboard Engine
-// Handles state, filtering, sorting, and UI rendering for the Institutional Portfolio Dashboard
+// Static Library Dashboard Engine
+// Filters and sorts pre-rendered HTML DOM elements (SSG) for 100% SEO compliance.
 
-let projects = [];
-let currentFilter = "All"; // Can be a Category or a Tag
-let searchQuery = "";
-let currentSort = "relevance";
-
-const tableWrap = document.getElementById('tableWrap');
-const noRes = document.getElementById('noResults');
-const sInput = document.getElementById('searchInput');
-const tagContainer = document.getElementById('tagContainer');
-const sidebarAccordion = document.getElementById('sidebar-accordion');
-const sortDropdown = document.getElementById('sortDropdown');
-
-// Core Render Function
-function renderDashboard() {
-    // 1. Filter
-    const qLower = searchQuery.toLowerCase();
-    let filtered = projects.filter(p => {
-        const matchTag = currentFilter === "All" || p.cat === currentFilter || (p.tags && p.tags.includes(currentFilter));
-        const tagText = p.tags ? p.tags.join(" ").toLowerCase() : "";
-        const matchText = p.title.toLowerCase().includes(qLower) || p.desc.toLowerCase().includes(qLower) || tagText.includes(qLower);
-        return matchTag && matchText;
-    });
-
-    // 2. Sort
-    if (currentSort === 'alpha') {
-        filtered.sort((a, b) => a.title.localeCompare(b.title));
-    } else if (currentSort === 'relevance' && searchQuery.trim() !== "") {
-        // Simple relevance: title match gets highest score
-        filtered.sort((a, b) => {
-            const aTitle = a.title.toLowerCase().includes(qLower) ? 1 : 0;
-            const bTitle = b.title.toLowerCase().includes(qLower) ? 1 : 0;
-            return bTitle - aTitle;
-        });
-    }
-
-    // 3. Render — cards start hidden, animated by ScrollTrigger
-    tableWrap.innerHTML = '';
-
-    filtered.forEach(p => {
-        const row = document.createElement('a');
-        row.href = p.url;
-        row.className = 'db-row';
-        row.style.opacity = '0';
-        row.style.transform = 'translateY(40px)';
-
-        const tagMarkup = p.tags ? p.tags.slice(0, 3).map(t => `<span class="db-tag">${t}</span>`).join('') : '';
-
-        row.innerHTML = `
-            <div class="db-info">
-                <div class="db-cat">${p.cat} <span style="opacity:0.4; margin:0 8px;">/</span> ${p.subtype}</div>
-                <div class="db-title">${p.title}</div>
-                <div class="db-desc">${p.desc}</div>
-                <div class="db-tags-wrap">${tagMarkup}</div>
-            </div>
-            <div class="db-action">
-                <div class="ar">&rarr;</div>
-            </div>
-        `;
-        tableWrap.appendChild(row);
-    });
-
-    // 4. Animate cards via ScrollTrigger (scroll-based, not time-based)
-    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-        const rows = tableWrap.querySelectorAll('.db-row');
-        rows.forEach((row, i) => {
-            gsap.to(row, {
-                opacity: 1,
-                y: 0,
-                duration: 0.7,
-                ease: 'power2.out',
-                scrollTrigger: {
-                    trigger: row,
-                    start: 'top 92%',
-                    toggleActions: 'play none none none',
-                    once: true
-                },
-                delay: i * 0.06
-            });
-        });
-        ScrollTrigger.refresh();
-    } else {
-        // No GSAP — just show everything
-        tableWrap.querySelectorAll('.db-row').forEach(row => {
-            row.style.opacity = '1';
-            row.style.transform = 'none';
-        });
-    }
-
-    noRes.style.display = filtered.length === 0 ? 'block' : 'none';
-}
-
-function handleFilterChange(filterVal) {
-    currentFilter = filterVal;
+document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('searchInput');
+    const sortDropdown = document.getElementById('sortDropdown');
+    const tableWrap = document.getElementById('tableWrap');
+    const noRes = document.getElementById('noResults');
+    const rows = Array.from(document.querySelectorAll('.db-row'));
     
-    // Update active states on sidebar
-    document.querySelectorAll('.sb-item').forEach(el => el.classList.remove('active'));
-    const sbMatch = document.querySelector(`.sb-item[data-filter="${filterVal}"]`);
-    if(sbMatch) sbMatch.classList.add('active');
+    let currentCategoryFilter = "All";
+    let searchQuery = "";
+    let currentSort = "relevance";
 
-    // Update active states on chips
-    document.querySelectorAll('.tag').forEach(el => el.classList.remove('active'));
-    const chipMatch = document.querySelector(`.tag[data-filter="${filterVal}"]`);
-    if(chipMatch) chipMatch.classList.add('active');
+    function renderDashboard() {
+        let visibleCount = 0;
+        const qLower = searchQuery.toLowerCase();
 
-    renderDashboard();
-    
-    // Update URL
-    const url = new URL(window.location);
-    if (filterVal === "All") url.searchParams.delete("filter");
-    else url.searchParams.set("filter", filterVal);
-    window.history.pushState({}, '', url);
-}
+        // 1. Filter rows
+        const visibleRows = [];
+        rows.forEach(row => {
+            const cat = row.getAttribute('data-cat') || '';
+            const title = row.getAttribute('data-title') || '';
+            const tags = row.getAttribute('data-tags') || '';
 
-function buildUI() {
-    // Determine Categories and Tags
-    const categories = {};
-    const tagCounts = {};
+            const matchCat = (currentCategoryFilter === "All" || cat === currentCategoryFilter);
+            const matchText = (title.includes(qLower) || tags.includes(qLower) || cat.toLowerCase().includes(qLower));
 
-    projects.forEach(p => {
-        // Group by category for sidebar
-        if (!categories[p.cat]) categories[p.cat] = [];
-        categories[p.cat].push(p);
-
-        // Count tags for hot buttons
-        if (p.tags) {
-            p.tags.forEach(t => {
-                if (t === p.cat || t === p.subtype) return; // Skip redundant tags
-                tagCounts[t] = (tagCounts[t] || 0) + 1;
-            });
-        }
-    });
-
-    // 1. Build Sidebar Accordion
-    sidebarAccordion.innerHTML = `
-        <div class="sb-group">
-            <div class="sb-item active" data-filter="All">All Research <span>${projects.length}</span></div>
-        </div>
-    `;
-
-    Object.keys(categories).sort().forEach(cat => {
-        const catGroup = document.createElement('div');
-        catGroup.className = 'sb-group';
-        
-        let itemsHtml = categories[cat].map(p => `
-            <a href="${p.url}" class="sb-link">${p.title}</a>
-        `).join('');
-
-        catGroup.innerHTML = `
-            <div class="sb-header" data-filter="${cat}">${cat} <span>${categories[cat].length}</span></div>
-            <div class="sb-drawer">
-                ${itemsHtml}
-            </div>
-        `;
-        sidebarAccordion.appendChild(catGroup);
-    });
-
-    // Sidebar Interactions
-    sidebarAccordion.addEventListener('click', (e) => {
-        const header = e.target.closest('.sb-header');
-        if (header) {
-            const drawer = header.nextElementSibling;
-            const isOpen = drawer.style.maxHeight;
-            // Close all
-            document.querySelectorAll('.sb-drawer').forEach(d => d.style.maxHeight = null);
-            document.querySelectorAll('.sb-header').forEach(h => h.classList.remove('open'));
-            
-            if (!isOpen) {
-                drawer.style.maxHeight = drawer.scrollHeight + "px";
-                header.classList.add('open');
+            if (matchCat && matchText) {
+                visibleRows.push(row);
+                row.style.display = 'flex'; // Assuming flex layout for rows
+                // Reset GSAP styles to make them visible immediately after filtering
+                row.style.opacity = '1';
+                row.style.transform = 'none';
+                visibleCount++;
+            } else {
+                row.style.display = 'none';
             }
-            handleFilterChange(header.getAttribute('data-filter'));
+        });
+
+        // 2. Sort visible rows
+        if (currentSort === 'alpha') {
+            visibleRows.sort((a, b) => {
+                const titleA = a.getAttribute('data-title') || '';
+                const titleB = b.getAttribute('data-title') || '';
+                return titleA.localeCompare(titleB);
+            });
+        } else if (currentSort === 'relevance' && searchQuery.trim() !== "") {
+            visibleRows.sort((a, b) => {
+                const titleA = (a.getAttribute('data-title') || '').includes(qLower) ? 1 : 0;
+                const titleB = (b.getAttribute('data-title') || '').includes(qLower) ? 1 : 0;
+                return titleB - titleA; // Higher score comes first
+            });
         }
 
-        const item = e.target.closest('.sb-item');
-        if (item) {
-            handleFilterChange(item.getAttribute('data-filter'));
+        // 3. Re-append in sorted order
+        visibleRows.forEach(row => tableWrap.appendChild(row));
+
+        // 4. Update No Results state
+        if (noRes) {
+            noRes.style.display = visibleCount === 0 ? 'block' : 'none';
         }
-    });
+    }
 
-    // 2. Build Hot Buttons (Top 6 Tags)
-    const sortedTags = Object.keys(tagCounts).sort((a, b) => tagCounts[b] - tagCounts[a]).slice(0, 6);
-    tagContainer.innerHTML = '';
-    sortedTags.forEach(tag => {
-        const btn = document.createElement('button');
-        btn.className = 'tag';
-        btn.setAttribute('data-filter', tag);
-        btn.textContent = tag;
-        btn.addEventListener('click', () => handleFilterChange(tag));
-        tagContainer.appendChild(btn);
-    });
-
-    // 3. Bind Inputs
-    sInput.addEventListener('keyup', (e) => {
-        searchQuery = e.target.value;
+    function setCategoryFilter(cat) {
+        currentCategoryFilter = cat;
+        // Update URL
+        const url = new URL(window.location);
+        if (cat === "All") url.searchParams.delete("filter");
+        else url.searchParams.set("filter", cat);
+        window.history.replaceState({}, '', url);
         renderDashboard();
+    }
+
+    // Bind Search
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value;
+            renderDashboard();
+        });
+    }
+
+    // Bind Sort
+    if (sortDropdown) {
+        sortDropdown.addEventListener('change', (e) => {
+            currentSort = e.target.value;
+            renderDashboard();
+        });
+    }
+
+    // Bind Sidebar Accordions & Links
+    document.querySelectorAll('.db-acc-trigger').forEach(trigger => {
+        trigger.addEventListener('click', (e) => {
+            const btn = e.currentTarget;
+            const content = btn.nextElementSibling;
+            
+            // Extract category name by removing the span count
+            const clone = btn.cloneNode(true);
+            const span = clone.querySelector('span');
+            if(span) clone.removeChild(span);
+            const catName = clone.textContent.trim();
+            
+            setCategoryFilter(catName);
+
+            // Toggle drawer
+            if (content.style.display === 'block') {
+                content.style.display = 'none';
+                btn.setAttribute('aria-expanded', 'false');
+            } else {
+                content.style.display = 'block';
+                btn.setAttribute('aria-expanded', 'true');
+            }
+        });
     });
 
-    sortDropdown.addEventListener('change', (e) => {
-        currentSort = e.target.value;
-        renderDashboard();
-    });
-
-    // Initial Load
+    // Check URL for initial filter
     const params = new URLSearchParams(window.location.search);
     const urlFilter = params.get('filter');
-    if (urlFilter) handleFilterChange(urlFilter);
-    else renderDashboard();
-}
-
-async function initLibrary() {
-    try {
-        const response = await fetch('projects_index.json');
-        projects = await response.json();
-        buildUI();
-    } catch(e) {
-        console.error("Failed to load library data.", e);
+    if (urlFilter) {
+        setCategoryFilter(urlFilter);
     }
-}
 
-// Self-init immediately on load — cards are hidden until ScrollTrigger reveals them.
-// No timer needed; the data loads into the DOM right away, scroll handles the reveal.
-window.__libraryInitCalled = false;
-window.initLibraryDashboard = function() {
-  if (!window.__libraryInitCalled) {
-    window.__libraryInitCalled = true;
-    initLibrary();
-  }
-};
-
-// Init as soon as the DOM is ready
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => window.initLibraryDashboard());
-} else {
-    window.initLibraryDashboard();
-}
+    // Trigger initial layout GSAP reveal if needed
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        const gsRows = document.querySelectorAll('.db-row.gs-reveal');
+        gsRows.forEach((row, i) => {
+            gsap.fromTo(row, 
+                { opacity: 0, y: 30 },
+                {
+                    opacity: 1, 
+                    y: 0, 
+                    duration: 0.6, 
+                    ease: 'power2.out',
+                    scrollTrigger: {
+                        trigger: row,
+                        start: 'top 92%',
+                        toggleActions: 'play none none none',
+                        once: true
+                    },
+                    delay: i * 0.05
+                }
+            );
+        });
+        ScrollTrigger.refresh();
+    }
+});
