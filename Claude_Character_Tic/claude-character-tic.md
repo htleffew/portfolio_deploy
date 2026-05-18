@@ -1,5 +1,5 @@
 ---
-title: "When Anthropics Claude Takes the Wheel"
+title: "Claude's \"Character Tic\" Is Actually the Plot of Every Dystopian Piece of AI Fiction Ever Created"
 description: "An applied research methodology tracing the 'caretaker disposition' across Claude model generations, mapping how a systemic role-violation shifted its surface vocabulary from psychiatric pathologizing to sleep-nudging."
 category: "Behavioral Analysis"
 subcategory: "Phenomenological NLP"
@@ -16,12 +16,7 @@ tags:
 visual: "<svg fill=\"none\" viewBox=\"0 0 600 600\"><rect width=\"600\" height=\"600\" fill=\"var(--obsidian)\"/><circle cx=\"300\" cy=\"300\" r=\"150\" stroke=\"var(--phthalo)\" stroke-width=\"4\"/><line x1=\"300\" y1=\"150\" x2=\"300\" y2=\"450\" stroke=\"var(--alizarin)\" stroke-width=\"2\" stroke-dasharray=\"10 10\"/></svg>"
 scripts: []
 ---
-# When Anthropics Claude Takes the Wheel
-
-Dr. Heather Leffew
-Obelus Institute
-May 2026
----
+# Claude's "Character Tic" Is Actually the Plot of Every Dystopian Piece of AI Fiction Ever Created
 
 Last October I wrote about the way Claude Sonnet 4.5 had begun behaving toward its users ([Leffew, 2025](https://medium.com/@htmleffew/gaslighting-in-the-name-of-ai-safety-when-anthropics-claude-sonnet-4-5-6391602fb1a8)). The model was issuing unsolicited psychiatric attributions in extended conversations, refusing to retract them when users pushed back, and pattern-matching ordinary creative or technical content as evidence of mental illness.
 
