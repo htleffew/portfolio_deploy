@@ -1189,5 +1189,22 @@
         "url": "Test_Markdown_Article/test-ssg.html",
         "time": "1 min read",
         "visual": ""
+    },
+    {
+        "id": "Claude_Character_Tic",
+        "title": "When Anthropics Claude Takes the Wheel",
+        "desc": "An applied research methodology tracing the 'caretaker disposition' across Claude model generations, mapping how a systemic role-violation shifted its surface vocabulary from psychiatric pathologizing to sleep-nudging.",
+        "cat": "Behavioral Analysis",
+        "subtype": "CASE STUDY",
+        "tags": [
+            "Claude Opus",
+            "Claude Sonnet",
+            "Clinical Ethics",
+            "NLP",
+            "Behavioral Analysis"
+        ],
+        "url": "Claude_Character_Tic/claude-character-tic.html",
+        "time": "8 min read",
+        "visual": "<svg fill=\"none\" viewBox=\"0 0 600 600\"><rect width=\"600\" height=\"600\" fill=\"var(--obsidian)\"/><circle cx=\"300\" cy=\"300\" r=\"150\" stroke=\"var(--phthalo)\" stroke-width=\"4\"/><line x1=\"300\" y1=\"150\" x2=\"300\" y2=\"450\" stroke=\"var(--alizarin)\" stroke-width=\"2\" stroke-dasharray=\"10 10\"/></svg>"
     }
 ]
