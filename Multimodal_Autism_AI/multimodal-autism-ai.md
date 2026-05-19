@@ -1,11 +1,15 @@
 ---
-title: "An ADOS-2-Aligned Multimodal Architecture for Clinical Autism Assessment"
-description: "The ADOS-2 scores social communication, communication, play, and repetitive behaviors as separate domains before derivin..."
-category: "Clinical & behavioral ML"
-subcategory: "Autism Assessment"
-format: "CASE STUDY"
-time: "10 min read"
-scripts: ["interactive_0.js"]
+title: An ADOS-2-Aligned Multimodal Architecture for Clinical Autism Assessment
+description: >-
+  The ADOS-2 scores social communication, communication, play, and repetitive
+  behaviors as separate domains before derivin...
+category: Clinical & behavioral ML
+subcategory: Autism Assessment
+format: CASE STUDY
+time: 10 min read
+author: Dr. Heather Leffew
+scripts:
+  - interactive_0.js
 ---
 # An ADOS-2-Aligned Multimodal Architecture for Clinical Autism Assessment
 

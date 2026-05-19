@@ -1,11 +1,17 @@
 ---
-title: "Assessing Risk for Mass Violence From Platform Behaviors"
-description: "The case for why user reports should be prioritized over automated detection. Perpetrators of mass violence are characte..."
-category: "Threat Assessment · Predictive Limitations"
-subcategory: "14 min read"
-format: "CASE STUDY"
-time: "5 min read"
-scripts: ["interactive_0.js", "interactive_1.js", "interactive_3.js"]
+title: Assessing Risk for Mass Violence From Platform Behaviors
+description: >-
+  The case for why user reports should be prioritized over automated detection.
+  Perpetrators of mass violence are characte...
+category: Threat Assessment · Predictive Limitations
+subcategory: 14 min read
+format: CASE STUDY
+time: 5 min read
+author: Dr. Heather Leffew
+scripts:
+  - interactive_0.js
+  - interactive_1.js
+  - interactive_3.js
 ---
 # Assessing Risk for Mass Violence From Platform Behaviors
 

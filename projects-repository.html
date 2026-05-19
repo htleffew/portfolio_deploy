@@ -246,7 +246,10 @@
 
 <script>
 window.disableGlobalOrchestration = true;
-window.addEventListener('load', () => {
+let repoInitialized = false;
+const initRepo = () => {
+  if (repoInitialized) return;
+  repoInitialized = true;
   try {
     // â”€â”€ Initialize Lenis Smooth Scroll â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     let lenis;
@@ -357,7 +360,14 @@ window.addEventListener('load', () => {
       });
     }
   } catch(e) { console.warn('Cinematic init error:', e); }
-});
+};
+
+if (document.readyState === 'complete') {
+  initRepo();
+} else {
+  window.addEventListener('load', initRepo);
+  document.addEventListener('DOMContentLoaded', initRepo);
+}
 
 // Nav mode toggle on scroll
 (function initNavMode() {

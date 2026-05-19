@@ -1,11 +1,15 @@
 ---
-title: "Three Mechanisms in an ADHD Focus Playlist"
-description: "Most 'focus' playlists hover at 70 to 90 BPM. This one runs at 145, with exaggerated stereo panning and dense polyrhythm..."
-category: "ADHD"
-subcategory: "Auditory Focus"
-format: "CASE STUDY"
-time: "5 min read"
-scripts: ["interactive_0.js"]
+title: Three Mechanisms in an ADHD Focus Playlist
+description: >-
+  Most 'focus' playlists hover at 70 to 90 BPM. This one runs at 145, with
+  exaggerated stereo panning and dense polyrhythm...
+category: ADHD
+subcategory: Auditory Focus
+format: CASE STUDY
+time: 5 min read
+author: Dr. Heather Leffew
+scripts:
+  - interactive_0.js
 ---
 # Three Mechanisms in an ADHD Focus Playlist
 

@@ -1,11 +1,19 @@
 ---
-title: "Instrumental and Affective Mass Murder: Establishing a Predictive Typology with Computer-Mediated Linguistic Analysis"
-description: "The FBI's Behavioral Analysis Unit has held since 2015 that all perpetrators of mass violence are best categorized as in..."
-category: "Fielding Graduate University  ·  Doctor of Philosophy in Psychology"
-subcategory: "14 min read"
-format: "CASE STUDY"
-time: "5 min read"
-scripts: ["interactive_0.js", "interactive_1.js", "interactive_3.js"]
+title: >-
+  Instrumental and Affective Mass Murder: Establishing a Predictive Typology
+  with Computer-Mediated Linguistic Analysis
+description: >-
+  The FBI's Behavioral Analysis Unit has held since 2015 that all perpetrators
+  of mass violence are best categorized as in...
+category: "Fielding Graduate University \_·\_ Doctor of Philosophy in Psychology"
+subcategory: 14 min read
+format: CASE STUDY
+time: 5 min read
+author: Dr. Heather Leffew
+scripts:
+  - interactive_0.js
+  - interactive_1.js
+  - interactive_3.js
 ---
 # Instrumental and Affective Mass Murder: Establishing a Predictive Typology with Computer-Mediated Linguistic Analysis
 

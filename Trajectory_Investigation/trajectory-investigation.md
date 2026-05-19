@@ -1,11 +1,15 @@
 ---
-title: "Forensic Methodology for Per-User Investigation"
-description: "Cohort analytics and per-user investigation are different research problems with different ethical regimes. Cohort work ..."
-category: "Platform Integrity"
-subcategory: "Forensic Methodology"
-format: "CASE STUDY"
-time: "13 min read"
-scripts: ["interactive_0.js"]
+title: Forensic Methodology for Per-User Investigation
+description: >-
+  Cohort analytics and per-user investigation are different research problems
+  with different ethical regimes. Cohort work ...
+category: Platform Integrity
+subcategory: Forensic Methodology
+format: CASE STUDY
+time: 13 min read
+author: Dr. Heather Leffew
+scripts:
+  - interactive_0.js
 ---
 # Forensic Methodology for Per-User Investigation
 

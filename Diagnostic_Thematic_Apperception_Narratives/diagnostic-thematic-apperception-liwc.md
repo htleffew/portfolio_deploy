@@ -1,11 +1,16 @@
 ---
-title: "LIWC and the TAT."
-description: "A Fielding Graduate University paper makes the case that Linguistic Inquiry and Word Count belongs in Thematic Appercept..."
-category: "Psycholinguistic Measurement"
-subcategory: "Misc"
-format: "CASE STUDY"
-time: "5 min read"
-scripts: ["interactive_0.js", "interactive_1.js"]
+title: LIWC and the TAT.
+description: >-
+  A Fielding Graduate University paper makes the case that Linguistic Inquiry
+  and Word Count belongs in Thematic Appercept...
+category: Psycholinguistic Measurement
+subcategory: Misc
+format: CASE STUDY
+time: 5 min read
+author: Dr. Heather Leffew
+scripts:
+  - interactive_0.js
+  - interactive_1.js
 ---
 # LIWC and the TAT.
 

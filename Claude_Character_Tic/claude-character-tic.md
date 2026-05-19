@@ -1,19 +1,16 @@
 ---
-title: "Claude's \"Character Tic\" Is Actually the Plot of Every Dystopian Piece of AI Fiction Ever Created"
-description: "An applied research methodology tracing the 'caretaker disposition' across Claude model generations, mapping how a systemic role-violation shifted its surface vocabulary from psychiatric pathologizing to sleep-nudging."
-category: "Behavioral Analysis"
-subcategory: "Phenomenological NLP"
-subject: "LLM Anomalies"
-architecture: "Abductive Mixed-Methods"
-output: "Clinical Taxonomy"
-format: "CASE STUDY"
-time: "15 min read"
-tags:
-  - "Claude Opus"
-  - "Claude Sonnet"
-  - "Clinical Ethics"
-  - "NLP"
-visual: "<svg fill=\"none\" viewBox=\"0 0 600 600\"><rect width=\"600\" height=\"600\" fill=\"var(--obsidian)\"/><circle cx=\"300\" cy=\"300\" r=\"150\" stroke=\"var(--phthalo)\" stroke-width=\"4\"/><line x1=\"300\" y1=\"150\" x2=\"300\" y2=\"450\" stroke=\"var(--alizarin)\" stroke-width=\"2\" stroke-dasharray=\"10 10\"/></svg>"
+title: >-
+  Claude's "Character Tic" Is Actually the Plot of Every Dystopian Piece of AI
+  Fiction Ever Created
+description: >-
+  An applied research methodology tracing the 'caretaker disposition' across
+  Claude model generations, mapping how a systemic role-violation shifted its
+  surface vocabulary from psychiatric pathologizing to sleep-nudging.
+category: Behavioral Analysis
+subcategory: Phenomenological NLP
+format: CASE STUDY
+time: 15 min read
+author: Dr. Heather Leffew
 scripts: []
 ---
 # Claude's "Character Tic" Is Actually the Plot of Every Dystopian Piece of AI Fiction Ever Created

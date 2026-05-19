@@ -1,20 +1,19 @@
 ---
-title: "Implicit Power Drives in the Manifestos Preceding Autogenic Massacres"
-description: "A 2017 Fielding Graduate University study scoring 23 autogenic-massacre manifestos against three published LIWC baselines. The implicit power dimension was elevated in the manifesto corpus on every comparison (t = 3.47, 3.66, 2.43; df = 22 each), with the highest-power vocabulary anchored by the collective pronoun 'we' rather than by individual aggression terms. Presented as exploratory, with the explicit aim of directing the dissertation work that followed."
-category: "Forensic Psychology"
-subcategory: "Linguistic Forensics"
-subject: "Autogenic-massacre manifestos"
-architecture: "LIWC2015 power dimension"
-output: "Independent samples t-tests against published baselines"
-format: "CASE STUDY"
-time: "10 min read"
-tags:
-  - "Forensic Psychology"
-  - "LIWC"
-  - "Linguistic Analysis"
-  - "Threat Assessment"
-  - "Mass Violence"
-visual: "<svg fill=\"none\" viewBox=\"0 0 600 600\"><defs><radialGradient cx=\"50%\" cy=\"50%\" id=\"r1\" r=\"50%\"><stop offset=\"0%\" stop-color=\"#7A1626\" stop-opacity=\"0.35\"/><stop offset=\"100%\" stop-color=\"#0F3A6B\" stop-opacity=\"0\"/></radialGradient></defs><circle cx=\"300\" cy=\"300\" fill=\"url(#r1)\" r=\"280\"/><g stroke=\"#3866A0\" stroke-width=\"1\" fill=\"none\" opacity=\"0.5\"><rect x=\"150\" y=\"360\" width=\"50\" height=\"100\"/><rect x=\"220\" y=\"350\" width=\"50\" height=\"110\"/><rect x=\"290\" y=\"320\" width=\"50\" height=\"140\"/></g><rect x=\"360\" y=\"240\" width=\"50\" height=\"220\" fill=\"#7A1626\" opacity=\"0.85\"/><text x=\"385\" y=\"230\" fill=\"#7A1626\" font-family=\"JetBrains Mono\" font-size=\"14\" font-weight=\"700\" text-anchor=\"middle\">3.00</text></svg>"
+title: Implicit Power Drives in the Manifestos Preceding Autogenic Massacres
+description: >-
+  A 2017 Fielding Graduate University study scoring 23 autogenic-massacre
+  manifestos against three published LIWC baselines. The implicit power
+  dimension was elevated in the manifesto corpus on every comparison (t = 3.47,
+  3.66, 2.43; df = 22 each), with the highest-power vocabulary anchored by the
+  collective pronoun 'we' rather than by individual aggression terms. Presented
+  as exploratory, with the explicit aim of directing the dissertation work that
+  followed.
+category: Forensic Psychology
+subcategory: Linguistic Forensics
+format: CASE STUDY
+time: 10 min read
+author: Dr. Heather Leffew
+scripts: []
 ---
 # Implicit Power Drives in the Manifestos Preceding Autogenic Massacres
 

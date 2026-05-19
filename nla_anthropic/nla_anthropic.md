@@ -1,11 +1,15 @@
 ---
-title: "Natural Language Autoencoders and Latent Evaluation Awareness."
-description: "When a frontier model processes a benchmark task, it may silently recognize the evaluation context           and adjust ..."
-category: "AI Safety & Interpretability"
-subcategory: "Mechanistic Interpretability"
-format: "CASE STUDY"
-time: "5 min read"
-scripts: ["interactive_4.js"]
+title: Natural Language Autoencoders and Latent Evaluation Awareness.
+description: >-
+  When a frontier model processes a benchmark task, it may silently recognize
+  the evaluation context           and adjust ...
+category: AI Safety & Interpretability
+subcategory: Mechanistic Interpretability
+format: CASE STUDY
+time: 5 min read
+author: Dr. Heather Leffew
+scripts:
+  - interactive_4.js
 ---
 # Natural Language Autoencoders and Latent Evaluation Awareness.
 
