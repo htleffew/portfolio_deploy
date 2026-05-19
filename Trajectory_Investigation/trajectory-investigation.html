@@ -15,12 +15,105 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js" defer></script>
     <link rel="stylesheet" href="../design_system/css/global.css">
     <style>
-      /* Ensure Markdown components look correct in the reading column */
-      .markdown-body { margin-top: 1.5rem; }
-      .markdown-body p { margin-bottom: 1.25em; }
-      .markdown-body img { max-width: 100%; height: auto; display: block; margin: 2em auto; }
-      .markdown-body pre { padding: 1.5em; overflow-x: auto; background: var(--obsidian); border: 1px solid var(--charcoal); margin: 2em 0; }
-      .markdown-body code { font-family: var(--mono); font-size: 0.85em; }
+      /* Editorial Grid Layout for reading column */
+      .markdown-body { 
+          display: grid;
+          /* Asymmetric grid: left margin, optimal reading width, right gutter for bleeds */
+          grid-template-columns: 1fr min(65ch, 100%) 1.5fr;
+          column-gap: 3rem;
+          margin-top: 3rem;
+          align-items: baseline;
+      }
+      @media (max-width: 1024px) {
+          .markdown-body {
+              grid-template-columns: 0px min(65ch, 100%) 0px;
+              column-gap: 0;
+          }
+      }
+      .markdown-body > * {
+          grid-column: 2; /* Text sits in the center reading column */
+      }
+      .markdown-body p { margin-bottom: 1.5em; font-size: 1.125rem; line-height: 1.8; color: var(--charcoal); }
+      
+      .markdown-body h2 {
+          grid-column: 1 / 3;
+          margin-top: 4rem;
+          margin-bottom: 1.5rem;
+          font-family: var(--font-display);
+          font-weight: 600;
+          font-size: 2.2rem;
+          border-bottom: 1px solid var(--tungsten);
+          padding-bottom: 0.5rem;
+          color: var(--obsidian);
+      }
+      .markdown-body h3 {
+          grid-column: 2;
+          margin-top: 2.5rem;
+          margin-bottom: 1rem;
+          font-family: var(--font-display);
+          font-size: 1.5rem;
+          color: var(--obsidian);
+      }
+      .markdown-body .eyebrow {
+          grid-column: 1 / 3;
+          color: var(--phthalo-lift);
+          font-family: var(--font-mono);
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          margin-top: 4rem;
+          margin-bottom: -3.5rem; /* pull up near h2 */
+      }
+      
+      /* Media Bleeds into the right gutter for editorial flair */
+      .markdown-body img, .markdown-body figure {
+          grid-column: 2 / 4; 
+          width: 100%;
+          max-width: 100%;
+          height: auto; 
+          display: block; 
+          margin: 3em 0; 
+          border-radius: var(--radius-sm);
+          box-shadow: var(--shadow-card);
+      }
+      .markdown-body pre { 
+          grid-column: 1 / -1; /* Code blocks span full width */
+          padding: 2em; 
+          overflow-x: auto; 
+          background: var(--obsidian); 
+          border: 1px solid var(--brushed); 
+          margin: 3em 0; 
+          border-radius: var(--radius-sm);
+      }
+      .markdown-body code { font-family: var(--font-mono); font-size: 0.85em; color: var(--phthalo-lift); }
+      .markdown-body pre code { color: var(--platinum); }
+      
+      .markdown-body blockquote {
+          grid-column: 2;
+          font-style: italic;
+          font-size: 1.35rem;
+          border-left: 3px solid var(--phthalo-lift);
+          padding-left: 1.5rem;
+          margin: 2.5rem 0;
+          color: var(--charcoal);
+      }
+      .markdown-body ul, .markdown-body ol {
+          grid-column: 2;
+          margin-bottom: 1.5em;
+          padding-left: 1.5rem;
+          color: var(--charcoal);
+      }
+      .markdown-body li {
+          margin-bottom: 0.5em;
+      }
+      .has-dropcap::first-letter {
+          font-family: var(--font-display);
+          float: left;
+          font-size: 4.5rem;
+          line-height: 0.8;
+          padding-top: 6px;
+          padding-right: 12px;
+          color: var(--obsidian);
+      }
     </style>
 </head>
 
@@ -94,7 +187,7 @@ May 2026</h2>
 </section>
 
 <!-- SECTION 2: Abstract -->
-<section class="band band--dark" data-spine="Abstract" data-section="Abstract">
+<section class="band band--paper" data-spine="Abstract" data-section="Abstract">
   <div class="col-wide markdown-body">
     <div class="eyebrow reveal">02 / Abstract</div>
 <h2 class="reveal is-chapter">Abstract</h2>
@@ -118,7 +211,7 @@ May 2026</h2>
 </section>
 
 <!-- SECTION 4: The temporal segmentation -->
-<section class="band band--dark" data-spine="The temporal segment" data-section="The temporal segmentation">
+<section class="band band--paper" data-spine="The temporal segment" data-section="The temporal segmentation">
   <div class="col-wide markdown-body">
     <div class="eyebrow reveal">04 / The temporal segmentation</div>
 <h2 class="reveal is-chapter">The temporal segmentation</h2>
@@ -147,7 +240,7 @@ May 2026</h2>
 </section>
 
 <!-- SECTION 6: When does pattern inference become surveillance? -->
-<section class="band band--dark" data-spine="When does pattern in" data-section="When does pattern inference become surveillance?">
+<section class="band band--paper" data-spine="When does pattern in" data-section="When does pattern inference become surveillance?">
   <div class="col-wide markdown-body">
     <div class="eyebrow reveal">06 / When does pattern inference become surveillance?</div>
 <h2 class="reveal is-chapter">When does pattern inference become surveillance?</h2>
