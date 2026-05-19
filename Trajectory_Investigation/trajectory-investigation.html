@@ -169,7 +169,6 @@
   <div class="col-wide markdown-body">
     <h2 class="reveal is-chapter">Abstract</h2>
 <p class="has-dropcap reveal col-with-sidenotes">Cohort analytics and per-user investigation are different research problems with different ethical regimes. Cohort work asks how the population behaves; per-user investigation asks what one person did, when, and in what trajectory. The methodology described here sits on top of a Trust &amp; Safety analytics engine and is what you reach for when the unit of analysis is a single account. It takes a user of interest with months or years of platform activity, slices the timeline into six overlapping segments, runs multi-axis analysis on each, and produces a structured forensic report. The commitment is that risk is a trajectory rather than a snapshot, and that the right way to characterize an account is to compare what it was doing on arrival to what it was doing immediately before being flagged.</p>
-<p class="reveal">01 / The Investigation Question</p>
 
   </div>
 </section>
@@ -181,7 +180,6 @@
 <p class="reveal">A platform&#39;s Trust &amp; Safety analytics organization runs two kinds of work that look superficially similar and are methodologically opposite. Cohort analytics estimates population behavior: what fraction of users encounter a given category of content, how long the average session lasts, where the rate of policy violations is rising. The questions are about distributions; the answers are statistical; the unit of analysis is the population. Per-user investigation does the inverse. It takes one account, often surfaced because automated systems flagged it for human review, and asks what specifically happened on this account, in what order, and what the trajectory implies about risk and intent.</p>
 <p class="reveal">The two kinds of work demand different statistical sensibilities and different ethical guardrails. Cohort analytics is forgiving of missing data and noisy signals because the law of large numbers eventually delivers a reasonable estimate. Forensic per-user analysis is unforgiving on both counts, because there is no averaging across cases when the case is a single individual whose situation may end in account removal, escalation to a child-safety team, or referral to law enforcement. The methodology described below is what handles the second kind of work in a structured, defensible way.</p>
 <p class="reveal">The single hardest move in per-user analysis is rejecting the snapshot. A current risk score is a snapshot. A list of recent policy violations is a snapshot. A topic distribution computed over the entire user history is a snapshot. None of these surface the most important thing about an account, which is whether its trajectory is decelerating, stable, or accelerating. The methodology below is built around the trajectory.</p>
-<p class="reveal">02 / Six Slices, One Trajectory</p>
 
   </div>
 </section>
@@ -195,7 +193,6 @@
 <p class="reveal">FIG. 01 The six temporal slices applied to each user of interest. The three tertiles partition the full window for trajectory inference; the First 25 and Last 25 insets anchor the boundaries so arrival behavior is directly comparable to pre-flag behavior.</p>
 <p class="reveal">The Consolidated slice gives the baseline distribution: the user&#39;s overall content profile across the full observation window. The three tertile slices partition that window into thirds, which is the minimum granularity at which trajectory direction (decelerating, stable, accelerating) becomes statistically legible. The First 25 and Last 25 insets anchor the boundaries: the first twenty-five observations capture how the user behaved on arrival, and the last twenty-five capture how the account was behaving immediately before the flagging event that triggered the investigation. Comparing those two boundary samples directly is often the single most diagnostic move in the entire analysis. A user whose arrival behavior and pre-flag behavior look the same is a different finding than a user whose pre-flag behavior is qualitatively divergent from how they began.</p>
 <p class="reveal">The slices are deliberately overlapping. The Early Tertile contains the First 25 by construction, and the Late Tertile contains the Last 25 by construction. Overlapping slices let an analyst confirm that a signal observed in a small inset is also visible in its containing tertile, which is a basic form of robustness check. A finding that appears only in the First 25 but not in the Early Tertile is more likely to be a small-sample artifact than a real signal.</p>
-<p class="reveal">03 / Multi-Axis Triangulation</p>
 
   </div>
 </section>
@@ -208,7 +205,6 @@
 <p class="reveal">A topic-cluster shift between Early and Late Tertiles, for example, is a candidate signal but not a finding on its own. Topic models are stochastic, the topic indices reshuffle from run to run, and apparent drift can be an artifact of corpus size differences between the slices. The same shift becomes a finding when it co-occurs with a sentiment polarity shift in the same direction and a change in the dominant view sources driving that user&#39;s content delivery. Three independent axes converging on the same temporal boundary is hard to explain as artifact.</p>
 <p class="reveal">The view source axis is particularly important and easy to overlook. Two users with identical topical and sentiment profiles can be in radically different risk situations depending on whether their content reaches them through search, recommendation, or direct following. A topical shift driven by deliberate search is a different finding than one driven by recommendation drift. The first implies user agency; the second implies system-level steering. The methodology insists on surfacing that distinction in every investigation.</p>
 <p class="reveal">The co-occurrence layer catches what frequency and topic analysis smooth over. New word-pairings appearing at high frequency in a user&#39;s consumption window often precede new topical territory by days or weeks. The pairing is the leading indicator; the topic shift is the lagging confirmation. The methodology weights the co-occurrence layer heavily for that reason, especially in the Late Tertile slice where leading indicators are most actionable.</p>
-<p class="reveal">04 / The Ethical Boundary</p>
 
   </div>
 </section>
@@ -223,7 +219,6 @@
 <p class="reveal"><strong>Accountability.</strong> Every investigation produces a structured artifact that is logged, attributable to the analyst, reviewable by audit, and subject to retention policy. The Jinja-templated report format from the upstream engine is what makes this enforceable: every section is the same in every report, so reviewers can read across investigations consistently and audit teams can verify that conclusions are supported by the documented analysis. Ad-hoc analysis is harder to audit by construction; structured output is the accountability mechanism.</p>
 <p class="reveal"><strong>Redaction discipline.</strong> Reports leaving the analytics environment for legal review, policy review, or external regulator inspection are redacted by default. User identifiers, granular timestamps, and content excerpts that could re-identify an account or a vulnerable population are removed before any external transmission. The redaction is not a final-step add-on but a property of the report templates themselves, which generate redacted and unredacted variants from the same underlying analysis.</p>
 <p class="reveal">These principles are not aspirational. They are the conditions under which the methodology is appropriate to use at all. A team using these tools without these guardrails is doing surveillance with a research label.</p>
-<p class="reveal">05 / What Gets Built On Top</p>
 
   </div>
 </section>

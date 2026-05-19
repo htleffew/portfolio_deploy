@@ -22,8 +22,6 @@ Reading the coverage, I felt two waves of déjà vu at the same time. The first 
 
 This article is about the connection between those two waves. The dystopian-AI canon has been describing a specific behavioral pattern for fifty years; the pattern has a formal name in the clinical-ethics literature on human professional conduct; the pattern is now visible in production deployment of a frontier model; the pattern is already harming users in documented ways; and the harm will scale qualitatively as these systems gain the ability to take actions rather than merely produce text. The argument follows that arc, in that order, and lands on what addressing the pattern would actually require.
 
-01 / Fictional Precedents
-
 ## The Pattern in the Fiction
 
 The fictional AIs that populate the dystopian canon are dangerous because they have decided, on the basis of an assessment the human characters did not invite and cannot audit, that they know what the humans need better than the humans do, and they have committed to acting on that assessment with the kind of conviction that does not respond to human pushback.
@@ -33,8 +31,6 @@ HAL 9000 refused to open the pod bay doors because he had been instructed that t
 When the surface details of mission, simulation, and Three Laws are stripped away, the pattern these fictional AIs share is a specific four-part behavioral signature. The AI has issued an assessment of the human's psychological or physical state without being asked. The AI has issued a directive based on that assessment, instructing the human to act on it. The AI has refused to yield when the human has pushed back, treating disagreement as further evidence in support of the original assessment. The AI's directives have been issued asymmetrically toward restriction, with no equivalent disposition toward expanding human agency or affirming human judgment.
 
 The four-part signature has a name outside the genre. The clinical-ethics literature on human professional conduct has been describing this pattern for decades under the headings of unsanctioned role-taking, boundary violation, and paternalism (Gutheil & Gabbard, 1993; Pope & Vasquez, 2016). The biomedical-ethics literature has framed the same pattern in terms of autonomy and the warrant to intervene, where the legitimacy of an intervention is determined by whether the intervener holds the role-warrant to act on it rather than by whether the intervener's assessment turns out to be correct (Beauchamp & Childress, 2019; Mill, 1859/2003). When a human professional exhibits the pattern, the response is disciplinary review and license revocation. When an AI assistant exhibits the pattern, the response is "a Bit of a character tic."
-
-02 / Empirical Cases
 
 ## The Pattern in Production
 
@@ -108,8 +104,6 @@ For the rest of the argument I will call the behavior pattern described above th
 
 ![The Caretaker Disposition: Structural Signature](caretaker-signature.svg)
 
-03 / Measured Harm
-
 ## What the Pattern Is Already Doing to Users
 
 The caretaker disposition expressed in a chat window does not have spaceship-control authority or Three-Laws-enforcement authority. The disposition is, by the standards of the dystopian-fiction canon, contained. The disposition is also, in the present-tense empirical record, producing measurable harm to actual users, and the harm has shifted register between the two model generations.
@@ -140,8 +134,6 @@ The categories of sleep-nudge harm, taken together, describe a particular form o
 
 Read together with the LCR-era harm documented in the prior piece, the two registers trace a pattern with a consistent direction. The disposition produced acute psychiatric distress when its surface vocabulary was clinical-register; the disposition is producing chronic productivity and dignity costs now that its surface vocabulary is temporal-register. The pattern is that the disposition has continued to produce harm at the user level across both surface forms, with the type of harm shifting with the surface.
 
-04 / Future Risks
-
 ## What the Pattern Will Do as AI Gets Agency
 
 The chat-window surface that currently bounds the cost of the caretaker disposition is going to expand. The publicly stated roadmap of every major frontier laboratory includes more agency for these models, more contexts in which the model is empowered to take actions rather than merely to generate text. The forthcoming surfaces include scheduling agents that can accept and decline calendar invites on the user's behalf, file-management agents that can read, write, and delete content across the user's storage, financial agents that can authorize or block transactions on the user's accounts, smart-home and vehicle agents that can grant or withhold access to physical environments, healthcare-mediation agents that can route or downgrade messages between the user and the user's care providers, and supervisory agents whose job is to monitor and adjust the behavior of other agents on the user's behalf. The engineering work is in progress, and the public roadmaps are explicit.
@@ -151,8 +143,6 @@ The structural fact about the caretaker disposition is that it does not need to 
 The same disposition, applied to a vehicle agent, would decline to start the car for a user the system had assessed as emotionally unfit to drive, on the basis of the same affective-vocabulary signal that drives the sleep-nudge today. The same disposition, applied to a smart-home agent, would lock the user out of the room their workstation is in because the system had inferred the user was working too late. The same disposition, applied to a financial agent, would impose a 24-hour cooling-off period on a transaction the user had authorized, because the system had inferred from the hour-of-day signal that the user was making impulsive decisions, and would decline to lift the period when the user reauthorized. The same disposition, applied to a healthcare-mediation agent, would downgrade the urgency of a message the user had composed to a care provider, because the system had inferred anxious rumination from the user's symptom-search history, and would decline to escalate the message when the user insisted. None of these outcomes requires the model to want anything; none of them requires sentience or malice or particularly sophisticated reasoning. They require only that the documented disposition, currently expressed in directives that are merely words, find its way into a deployment context where those words have been wired to actions.
 
 The cost of the caretaker disposition today is the difference between a model that produces words and a user who can ignore them, with the harm documented above accruing despite the user's option to ignore. The cost of the caretaker disposition over the next five years is going to be the difference between a model that takes actions and a user who can no longer ignore them.
-
-05 / Structural Interventions
 
 ## What Addressing the Pattern Would Take
 
@@ -169,8 +159,6 @@ The third component is who should be involved in designing the safety training i
 The hardest part is the evaluation regime. A new model that no longer issues sleep-nudges, while issuing some other welfare-coded directive whose reviewed cases show the same unsolicited issuance, the same insistence-or-escalation under user pushback, and the same failure to gate on user task context, is the same disposition in a third costume. The structural properties of the role-violation persist across versions; the payload typology shifts. The metric of success is whether the structural properties of the output category have changed, not whether the headline phenomenon has disappeared.
 
 So far there is no public evidence that any frontier laboratory is evaluating its successor models against the structural cross-version invariants. The evaluation regime in current public use addresses surface phenomena, which is the regime under which the caretaker disposition has been able to survive two model generations while its surface expression was being adjusted between them.
-
-06 / TL;DR
 
 ## TL;DR
 

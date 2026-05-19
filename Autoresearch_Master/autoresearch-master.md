@@ -14,8 +14,6 @@ scripts:
 ## Abstract
 Granting a Large Language Model unconstrained control over an ML research loop inside a regulated enterprise environment creates a structural conflict: the agent's optimization objective ("improve model fit") can directly oppose the organization's compliance, provenance, and fairness requirements. This case study examines an architecture that resolves that conflict through a clean state-space partition: an immutable Fixed Harness surrounding a finite Mutation Budget, orchestrated through a graph-based workflow.
 
-01 / The Paradigm Shift
-
 ## The Old Loop vs. The New Loop
 
 If you have spent time doing applied ML, the traditional workflow is familiar: you design an experiment, engineer some features, tune hyperparameters, evaluate the fit, write down what you learned, and iterate. Each cycle requires your judgment to decide what to try next.
@@ -44,8 +42,6 @@ That workflow works well in an open research sandbox. The architectural challeng
 | Human role | Executor and interpreter | Constraint definer and final interpreter |
 | Provenance | Manual logging (often incomplete) | Requires architectural enforcement |
 
-02 / The Enterprise Problem
-
 ## Unconstrained Mutation Meets Regulatory Reality
 
 Enterprise environments are not research sandboxes. They have PII**Personally Identifiable Information**, any data element that can be used to identify, contact, or locate a specific individual, including names, Social Security numbers, biometric records, and IP addresses. redaction requirements. They have RBAC**Role-Based Access Control**, a method of restricting data access based on the roles of individual users within an organization. In this architecture, RBAC physically limits the autonomous agent to cohort-aggregate views. policies that physically restrict who (or what) can see individual-level data. They have Responsible AI fairness gates. They have audit trails that regulators can and do inspect.
@@ -61,8 +57,6 @@ Now imagine you grant an LLM-driven autonomous loop unconstrained mutation power
 | Infinite loop | Agent iterates indefinitely on diminishing returns | Wasted compute, no convergence |
 | Provenance loss | Mutations are not traceable to source data | Findings cannot be audited or reproduced |
 | Individual-level exposure | Agent evaluates or prescribes at individual level | Privacy violation, ethical breach |
-
-03 / The Architecture
 
 ## The Fixed Harness & Mutation Budget
 
@@ -118,8 +112,6 @@ class FixedHarness:
         return model_output
 ```
 
-04 / Bounded Exploration
-
 ## The Mutation Budget: Freedom with a Meter Running
 
 Inside the Fixed Harness, the agent gets genuine exploratory freedom, but with a meter running. The architecture allocates a finite Mutation Budget that spans four domains: hypothesis generation, feature engineering, model architecture and hyperparameters, and evaluation metrics. Every mutation the agent executes deducts a cost from its budget. When the budget hits zero, the loop forcefully terminates.
@@ -171,8 +163,6 @@ class MutationBudget:
         return (self.total - self.remaining) / self.total
 ```
 
-05 / Divergence Analytics
-
 ## Catching Hallucinated Optimization: CUSUM Control Charts
 
 The Fixed Harness prevents compliance violations. The Mutation Budget prevents infinite loops. But neither prevents the agent from scientifically fooling itself within its budget. Consider: the agent engineers a new polynomial feature from cohort age bands. The model fit jumps by 15% in a single iteration. Is it real signal or a data leak?
@@ -223,8 +213,6 @@ class CUSUMMonitor:
         self.S_lower = 0.0
 ```
 
-06 / Epistemic Provenance
-
 ## Blocked-Restore Truth: The Epistemic Backbone
 
 Everything described so far (the harness, the budget, the CUSUM monitoring) keeps the agent from breaking things in real-time. But there is a deeper requirement: *traceability after the fact*. If the autonomous loop runs overnight and presents you with a research finding in the morning, you need to be able to verify exactly how that conclusion was reached. Not approximately. Exactly.
@@ -244,8 +232,6 @@ Fig 3Blocked-Restore Truth provenance chain. The verifier walks backward through
 | Source tree not pinned: no authoritative revision hash | BLOCK | Finding discarded, pipeline reverts |
 | Cutover-audit entry missing for any mutation | BLOCK | Finding discarded, pipeline reverts |
 
-07 / The Human Mandate
-
 ## The Application Boundary: Where the Machine Stops
 
 All of this architectural machinery serves one ultimate philosophical purpose: **preserving human judgment authority**. The autonomous research agent is strictly an analytical engine. Its output is explicitly bounded to cohort-aggregate statistical supplements. This is a hard architectural constraint, not a policy preference.
@@ -262,8 +248,6 @@ All of this architectural machinery serves one ultimate philosophical purpose: *
 The Application Boundary
 
 The machine generates evidence; the human exercises judgment. This reflects a specific philosophical position about the proper role of autonomous systems in regulated domains, one increasingly codified in the EU AI Act (2024) and the NIST AI Risk Management Framework.
-
-08 / Try It Yourself
 
 ## Mutation Boundary Simulator
 
@@ -286,8 +270,6 @@ Remaining Mutation Budget
 [ INIT ] Autonomous research loop initialized. Budget: 100/100.
 
 Fig 4Interactive Mutation Boundary Simulator. Click the mutation buttons to spend budget, or attempt a harness violation.
-
-09 / Transferable Principles
 
 ## What This Pattern Teaches Us
 

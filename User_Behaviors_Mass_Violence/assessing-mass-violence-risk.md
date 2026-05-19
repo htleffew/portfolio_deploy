@@ -16,8 +16,6 @@ scripts:
 ## Abstract
 The case for why user reports should be prioritized over automated detection. Perpetrators of mass violence are characterologically heterogeneous, the warning signs are contextual, and the on-platform signal is thin. A working note on the threat-assessment literature, the eight pre-attack warning behaviors, the six-stage path to intended violence, and where machine detection actually breaks.
 
-01 / The Heterogeneity Problem
-
 ## Perpetrators do not fit a profile.
 
 Mass shootings in the United States rose roughly 250% from one decade to the next, with 57% of all recorded mass shootings in the past ten years (Office for Victims of Crime, 2018). The FBI logged 250 active shooter incidents between 2000 and 2017, producing 2,217 casualties not counting the perpetrators themselves (Silver, Simons, & Craun, 2018). The volume justifies the interest. The literature has not produced a profile.
@@ -29,8 +27,6 @@ Seung-Hui Cho killed 32 people at Virginia Tech in 2007. Anders Breivik killed 7
 Implication for detection
 
 Any classifier built on a single perpetrator template will miss most of the population it is supposed to flag. The heterogeneity is not a measurement error to be cleaned up. It is the data.
-
-02 / Pre-Attack Window
 
 ## Attacks are planned, and the planning leaks.
 
@@ -53,8 +49,6 @@ Median planning-and-preparation window
 Active shooters analyzed in the FBI pre-attack study
 
 The same study and adjacent work (Silver, Horgan, & Gill, 2018) document leakage to third parties as the modal communication. The communication channel matters less than the fact that it happens. Detection logic that requires a respondent to directly address law enforcement will miss most cases. Detection logic that pays attention to what perpetrators tell their friends, their classmates, or the internet has signal to work with.
-
-03 / Warning Behaviors x Stages
 
 ## Eight behaviors, six stages.
 
@@ -98,8 +92,6 @@ Tap a behavior to see where on the pathway it typically surfaces.
 
 **Pathway** behavior is research, planning, preparation, or implementation of an attack (Calhoun & Weston, 2003). **Fixation** is increasingly pathological preoccupation with a person or cause (Mullen et al., 2009). **Identification** is the psychological desire to be a "pseudocommando" (Dietz, 1986), to adopt a warrior mentality, to identify with previous attackers, or to identify as an agent of a cause. **Novel aggression** is an act of violence unrelated to the attack, committed for the first time, testing the subject's capacity for the act. **Energy burst** is an increase in the frequency or variety of activities tied to the target. **Leakage** is communication to a third party of intent to harm. **Direct threat** is communication of a direct threat to the target or to law enforcement beforehand. **Last resort** is increasing desperation expressed in word or deed.
 
-04 / Threats vs Ultimatums
-
 ## Words that alarm, actions that harm.
 
 People often prefer words that alarm over actions that harm. Reading a threatening statement requires separating content from context. The first question is whether the statement is direct (delivered to the potential target) or indirect (delivered to a third party). The second question is whether the statement is a threat or an ultimatum. Ultimatums attach conditions. They are warnings or attempts at manipulation. Threats are non-conditional.
@@ -107,8 +99,6 @@ People often prefer words that alarm over actions that harm. Reading a threateni
 Threats are riskier in principle but often less actionable in practice. A person who directly threatens another is frequently expressing desperation and frustration rather than communicating an actual plan. The anxiety the threat provokes in the target functions as an emotional release for the speaker, and that release can substitute for the act itself. The threat that worries threat-assessment professionals is the one that does not seek a fear pay-out.
 
 Late-appearing threats are more concerning than early ones. Early threats tend to be emotional reactions to an immediate upset. Late threats tend to be the residue of a deliberative process where other alternatives have already been considered and rejected. Indirect threats - delivered to someone other than the intended target - carry elevated risk precisely because they bypass the fear-payout loop that normally drains the speaker's emotional charge.
-
-05 / Risk x Threat
 
 ## Probability against impact.
 
@@ -136,15 +126,11 @@ A well-armed individual who has communicated credible intent to commit a mass sh
 
 The matrix is useful as a decision aid because it forces the assessor to hold two separate estimates: how likely is this, and how bad if it happens. Conflating them produces the two characteristic failures of threat work - panic about everything that could be catastrophic, or complacency about anything that is statistically rare.
 
-06 / Contagion
-
 ## The post-event risk window.
 
 After a highly publicized attack the risk of a copycat attack remains elevated for approximately 13 days. Watershed events - the ones that lodge in cultural memory - can elevate risk for ten years or longer. Mother Jones tracked the Columbine effect and counted 72 plots inspired by the event, 21 carried out, 89 deaths. The contagion does not require the original attacker to have used a platform. The contagion is the cultural artifact, not the dataset.
 
 For platform threat-assessment workflows, the operational implication is asymmetric staffing. Detection volume needs to spike with cultural events, not with calendar quarters. The post-watershed window is also where automated false-positive rates spike, because the volume of users discussing the event surges and discussion is not intent. The cost of pattern-matching on surface features in a contagion window is paid in over-flagging the people who are simply reading the news.
-
-07 / The Thesis
 
 ## User reports outperform automated detection, and the reasons are structural.
 
@@ -157,8 +143,6 @@ Users of a platform with millions of participants bring something an automated s
 Operational stance
 
 Prioritize clear, low-friction reporting channels for users. Use automated systems to support the routing, triage, and analytical surfacing of those reports rather than as the primary detection mechanism. Anticipate elevated reporting volume in the 13-day window after any watershed event, and staff accordingly.
-
-08 / Bibliography
 
 ## References
 

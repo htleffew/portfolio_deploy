@@ -14,8 +14,6 @@ scripts:
 ## Abstract
 The ADOS-2 scores social communication, communication, play, and repetitive behaviors as separate domains before deriving a composite. A model that flattens those features into one feature space is doing something the diagnostic algorithm is built around not doing. This pipeline takes the opposite approach: domain-specific classifiers train independently on social, communication, and repetitive feature subsets, then a Logistic Regression meta-learner combines their probability outputs into the final consensus prediction. The architectural choice is not an ensemble convenience. It is a commitment to the clinical logic the assessment was built on. The same commitment carries through the output layer, which generates two separate Jinja-templated reports from one analytical run: a research report with AUC, calibration, and SHAP global importances for an ML team, and a clinical report with per-participant feature attribution, ensemble consensus, data-quality scoring, and explicit "requires clinical review" flagging when uncertainty exceeds threshold. The synthetic data generator and the runtime AUC validity check (which fires at 0.95 because AUC above that on engineered data is more likely simulation drift than model skill) are the engineering hygiene that lets the architecture and the reporting do their work.
 
-01 / Parameterizing Ambiguity
-
 ## The clinical reality most synthetic pipelines quietly ignore
 
 The ADOS-2 is the gold standard for autism assessment because its features are behaviorally grounded, examiner-administered, and domain-structured. It is also a 45-minute session with a child who may or may not be cooperative, assessed by a clinician whose training may or may not match the clinician who assessed the last child, captured on video with face detection that may or may not hold throughout the session. The feature distributions that result from this process are not clean.
@@ -78,8 +76,6 @@ def generate_clinical_data(n_samples=1200, prevalence=0.22, noise_level=0.30, mi
 X_simulated, y_simulated = generate_clinical_data()
 ```
 
-02 / Feature Extraction
-
 ## Feature Extraction and ADOS-2 Mapping
 
 The system processes simulated video and audio streams to extract 10 core behavioral features. These features are not arbitrary. They are specifically chosen to map directly to the standard ADOS-2 scoring domains, where a score of 0 indicates typical behavior, 1 indicates mild concern, and 2 indicates clear evidence of atypical behavior.
@@ -103,8 +99,6 @@ FIG. 02 Hierarchical extraction tree mapping multimodal data streams to specific
 | Computer Vision | Domain C | Functional Play (C1) | % time using toys functionally |
 | Pose Estimation | Domain D | Hand Mannerisms (D1) | Duration (seconds) |
 | Pose Estimation | Domain D | Sensory Interests (D4) | Duration (seconds) |
-
-03 / ML Architecture
 
 ## The Machine Learning Architecture
 
@@ -148,8 +142,6 @@ The choice has consequences for interpretation. When the meta-learner produces a
 
 The supporting modeling layers around the late fusion exist to justify the architectural choice on more conventional metrics. Supervised baselines (Logistic Regression, Random Forest, XGBoost) run with deliberately conservative hyperparameters: depth-4 trees, learning rate 0.05, aggressive L1/L2 regularization, elastic-net penalty at C=0.1. Semi-supervised augmentation uses self-training at confidence threshold 0.9 and Label Spreading with 10 nearest neighbors at alpha 0.5. A Bayesian ensemble of five independently-seeded Random Forests with 70 percent bootstrap subsampling supplies the uncertainty term that the late fusion's consensus probability is qualified against; cases where ensemble standard deviation exceeds 0.2 are flagged for clinical review rather than classified. None of these are the contribution. They exist so the late fusion has comparison points and so the consensus probability has uncertainty attached.
 
-04 / Results & Validity
-
 ## What realistic performance looks like
 
 In-sample AUCs across the model suite cluster between 0.93 and 0.97. The system's automated realism validator fires on the highest performers with the explicit warning "Performance may be too high, check for data leakage." On synthetic data designed to parallel real clinical data in its complexity, overlap, ambiguity, and noise, the validator's working assumption is that any in-sample AUC above 0.95 is more likely evidence the simulation drifted toward separability somewhere than evidence the model got that good. That assertion, encoded as a runtime check rather than a postmortem note, is a conservative engineering choice that keeps the simulation parallel to the difficulty of the actual problem.
@@ -179,8 +171,6 @@ Aggregated feature importance across the supervised models ranks Gaze-to-Face Pe
 
 FIG. 04 Top-five aggregated feature importance across the supervised models. The ranking mirrors the ADOS-2 algorithm's own weighting of social communication features and aligns with published cross-language biomarker work on prosodic and speech-rhythm features.
 
-05 / The Report Engine
-
 ## One analytical run, two stakeholder-specific reports
 
 The second architectural commitment of this pipeline is that the output layer should not produce a single report that tries to serve everyone. It produces two: a research report for the ML team that owns the model and a clinical report for the clinician who ordered the assessment. Both reports derive from the same underlying analytical run; they differ in what they surface, how they surface it, and what they expect the reader to do with it. A single shared report would have served neither audience well, because the questions an ML reviewer needs answered are not the questions a clinician needs answered, and conflating them produces output that is too technical to be clinically useful and too vague to be technically auditable.
@@ -194,8 +184,6 @@ The report also surfaces data quality alongside the prediction: video clarity, f
 This is what distinguishes a clinical decision support tool from a classification model. The model's job is not to decide. It is to organize the behavioral evidence clearly enough that the clinician, who has the training, the context, and the legal and ethical responsibility for the diagnosis, can make an informed judgment. The two-report architecture is the layer at which that distinction becomes structurally enforceable: the clinician receives output formatted around the questions they have to answer, and the ML team receives output formatted around the questions they have to answer, and neither receives the other's report by accident.
 
 [Interactive Explorer Block - See live site]
-
-06 / Limitations and Extensions
 
 ## What this system is and is not
 

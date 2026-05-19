@@ -14,8 +14,6 @@ scripts:
 ## Abstract
 Most "focus" playlists hover at 70 to 90 BPM. This one runs at 145, with exaggerated stereo panning and dense polyrhythmic texture, and that is not an aesthetic choice. ADHD attention is gated by chronic under-arousal, not over-stimulation, and three audio features address the failure mode jointly: tempo at the optimal-stimulation threshold, bilateral stimulation through the vagus nerve, and structured complexity that resists habituation.
 
-01 / Context
-
 ## The Playlist
 
 Deep, sustained focus in an ADHD brain requires very specific conditions, and those conditions are not the same ones a neurotypical brain needs. The playlist below is built around three audio features, combined deliberately to address how the ADHD attention system actually fails. It is not pleasant background music. It is tuned to create a high-stimulation, low-anxiety state that an ADHD brain can lock into for sustained work, and the production choices that get you there are knowable rather than lucky.
@@ -24,13 +22,9 @@ The DJ context matters for what follows. Years of mixing for live rooms taught m
 
 The playlist:
 
-02 / The Model
-
 ## Three Mechanisms, One State
 
 The playlist works because three auditory features operate simultaneously to address three distinct failure modes of the ADHD attention system. None of them works well in isolation. Together, they produce what I think of as the "high-stimulation, low-anxiety" state: the brain's surplus attentional bandwidth is fully occupied by the auditory stimulus, and the parasympathetic nervous system is simultaneously activated, so you get intense engagement without the restlessness or anxiety that usually accompanies it.
-
-03 / Mechanism 1
 
 ## Tempo (140 to 150 BPM) and Optimal Stimulation Theory
 
@@ -42,8 +36,6 @@ Most lo-fi or ambient "focus" playlists hover around 70 to 90 BPM. For an ADHD b
 
 Most of the tracks in this playlist run between 140 and 150 BPM. That is fast. It is significantly faster than most lo-fi or ambient "focus" playlists, which tend to hover around 70 to 90 BPM. But that is precisely the point: a tempo that would be overstimulating for a neurotypical brain is operating at the arousal threshold that an ADHD brain needs to reach baseline. The fast tempo provides the dopamine hit externally so the brain does not have to go looking for it internally, and once that arousal deficit is addressed, the executive function system can do its job.
 
-04 / Mechanism 2
-
 ## Bilateral Panning and the Parasympathetic Nervous System
 
 If you listen to this playlist on headphones (which you should), you will notice that the sound moves. It pans from left to right, bounces between ears, and creates a physical sensation of audio traveling through your head. This is not an accident and it is not just a production choice. It is a form of bilateral stimulation.
@@ -54,8 +46,6 @@ This matters for ADHD focus because of two things happening at once. First, ADHD
 
 Second, there is a resource-competition mechanism at work. Following the movement of sound through space occupies the brain's spatial awareness system. If the auditory spatial system is busy tracking where the sound is coming from and where it is going, that system cannot simultaneously scan the room for visual or contextual distractions. The adoption of "8D Audio" (exaggerated stereo panning) as a focus tool in ADHD communities long predates the research framing offered here, and the convergence is worth noting: the lived report and the bilateral-stimulation literature describe the same mechanism.
 
-05 / Mechanism 3
-
 ## Polyrhythmic Complexity and Stochastic Resonance
 
 This is the counterintuitive one. You would think that simpler music would be less distracting and therefore better for focus. For neurotypical brains, that is often true. For ADHD brains, simple music is worse, because the brain predicts the pattern, habituates to it, gets bored, and goes looking for something more interesting.
@@ -65,8 +55,6 @@ The theoretical framework here is stochastic resonance, a phenomenon in which ad
 What polyrhythmic music does is provide structured complexity: it is unpredictable enough to keep the novelty-seeking systems engaged, but patterned enough not to be startling or anxiety-inducing. A basic four-on-the-floor beat at 145 BPM will get habituated within minutes. Layer in polyrhythms, syncopation, polyphonic textures, and unexpected rhythmic interactions, and the brain has to keep processing, keep tracking, keep working to follow the structure. That cognitive load is the point: it occupies the "extra" bandwidth that would otherwise redirect itself toward checking your phone or wondering what you should have for lunch.
 
 Recent research (Van Aswegen et al., 2024) has nuanced this picture by suggesting that stochastic resonance may not be the specific mechanism required for noise to benefit ADHD performance, and that structured, non-random sound may produce similar benefits through a more general arousal regulation pathway. If anything, this strengthens the case for polyrhythmic music over pure white noise: the benefit may come not from randomness per se but from sustained complexity, and music provides that in a form that is more tolerable for extended deep work sessions than raw noise.
-
-06 / Synthesis
 
 ## The Combined System
 
@@ -82,15 +70,11 @@ The result is a state where the ADHD brain's surplus attentional bandwidth is fu
 
 I think of it as bandwidth occupation rather than brainwave entrainment. You are not trying to synchronize the brain to a particular frequency. You are trying to fill the channels that would otherwise go looking for trouble.
 
-07 / Application
-
 ## Tuning the System
 
 Understanding why the playlist works gives you the ability to tune it. A tempo at 145 BPM that feels too intense is trading arousal for comfort, and that is a choice worth making deliberately rather than abandoning the approach. Tracks that feel more effective than others usually have more prominent panning or more complex rhythmic structures, and once you know what to listen for, the playlist stops being a vaguely helpful thing and starts being a diagnostic instrument for your own attention system.
 
 The broader implication: focus is not the absence of stimulation. For an under-aroused attentional system, focus requires structured stimulation, calibrated to the specific deficit. Background music selected for ambient pleasantness optimizes for the wrong constraint.
-
-08 / Bibliography
 
 ## References
 

@@ -169,7 +169,6 @@
   <div class="col-wide markdown-body">
     <h2 class="reveal is-chapter">Abstract</h2>
 <p class="has-dropcap reveal col-with-sidenotes">The ADOS-2 scores social communication, communication, play, and repetitive behaviors as separate domains before deriving a composite. A model that flattens those features into one feature space is doing something the diagnostic algorithm is built around not doing. This pipeline takes the opposite approach: domain-specific classifiers train independently on social, communication, and repetitive feature subsets, then a Logistic Regression meta-learner combines their probability outputs into the final consensus prediction. The architectural choice is not an ensemble convenience. It is a commitment to the clinical logic the assessment was built on. The same commitment carries through the output layer, which generates two separate Jinja-templated reports from one analytical run: a research report with AUC, calibration, and SHAP global importances for an ML team, and a clinical report with per-participant feature attribution, ensemble consensus, data-quality scoring, and explicit &quot;requires clinical review&quot; flagging when uncertainty exceeds threshold. The synthetic data generator and the runtime AUC validity check (which fires at 0.95 because AUC above that on engineered data is more likely simulation drift than model skill) are the engineering hygiene that lets the architecture and the reporting do their work.</p>
-<p class="reveal">01 / Parameterizing Ambiguity</p>
 
   </div>
 </section>
@@ -260,7 +259,6 @@ def generate_clinical_data(n_samples=1200, prevalence=0.22, noise_level=0.30, mi
 
 X_simulated, y_simulated = generate_clinical_data()
 </code></pre>
-<p class="reveal">02 / Feature Extraction</p>
 
   </div>
 </section>
@@ -341,7 +339,6 @@ X_simulated, y_simulated = generate_clinical_data()
 <td>Duration (seconds)</td>
 </tr>
 </tbody></table>
-<p class="reveal">03 / ML Architecture</p>
 
   </div>
 </section>
@@ -384,7 +381,6 @@ consensus = meta.predict_proba(X_meta)[:, 1]
 </code></pre>
 <p class="reveal">The choice has consequences for interpretation. When the meta-learner produces a high consensus probability, the per-domain probabilities reveal which domain drove it: a case with high social-affect probability but middling communication and repetitive-behavior probabilities is a different clinical picture than one where all three domains agree. That decomposition surfaces directly in the clinical report. A model that had concatenated all features into one classifier would have produced the same consensus number with none of the domain-level explanation, and the resulting report could not have told the clinician where in the diagnostic structure the signal was coming from.</p>
 <p class="reveal">The supporting modeling layers around the late fusion exist to justify the architectural choice on more conventional metrics. Supervised baselines (Logistic Regression, Random Forest, XGBoost) run with deliberately conservative hyperparameters: depth-4 trees, learning rate 0.05, aggressive L1/L2 regularization, elastic-net penalty at C=0.1. Semi-supervised augmentation uses self-training at confidence threshold 0.9 and Label Spreading with 10 nearest neighbors at alpha 0.5. A Bayesian ensemble of five independently-seeded Random Forests with 70 percent bootstrap subsampling supplies the uncertainty term that the late fusion&#39;s consensus probability is qualified against; cases where ensemble standard deviation exceeds 0.2 are flagged for clinical review rather than classified. None of these are the contribution. They exist so the late fusion has comparison points and so the consensus probability has uncertainty attached.</p>
-<p class="reveal">04 / Results &amp; Validity</p>
 
   </div>
 </section>
@@ -477,7 +473,6 @@ consensus = meta.predict_proba(X_meta)[:, 1]
 <p class="reveal">Aggregated feature importance across the supervised models ranks Gaze-to-Face Percentage first (0.18), followed by Phrase Repetition Rate (0.16), Joint Attention Bids (0.14), Response to Name Latency (0.13), and Functional Play Percentage (0.12). The ordering aligns with the ADOS-2 algorithm&#39;s own weighting of social communication features and with recent peer-reviewed work on prosodic and speech-rhythm features as cross-language ASD biomarkers. The features the models find most informative are the features the clinical literature already supports as informative on real data, which is the right kind of sanity check on a synthetic pipeline.</p>
 <p class="reveal"><img src="fig_3.svg" alt="Figure 3"></p>
 <p class="reveal">FIG. 04 Top-five aggregated feature importance across the supervised models. The ranking mirrors the ADOS-2 algorithm&#39;s own weighting of social communication features and aligns with published cross-language biomarker work on prosodic and speech-rhythm features.</p>
-<p class="reveal">05 / The Report Engine</p>
 
   </div>
 </section>
@@ -492,7 +487,6 @@ consensus = meta.predict_proba(X_meta)[:, 1]
 <p class="reveal">The report also surfaces data quality alongside the prediction: video clarity, face detection rate, audio clarity, session completeness. A prediction made on a session with 60 percent face detection and audio clarity 0.5 carries different evidentiary weight than one made on a session that passed all quality checks. The clinician sees both the prediction and the quality of the evidence behind it, because the evidentiary weight is what should drive the clinical judgment, not the bare probability.</p>
 <p class="reveal">This is what distinguishes a clinical decision support tool from a classification model. The model&#39;s job is not to decide. It is to organize the behavioral evidence clearly enough that the clinician, who has the training, the context, and the legal and ethical responsibility for the diagnosis, can make an informed judgment. The two-report architecture is the layer at which that distinction becomes structurally enforceable: the clinician receives output formatted around the questions they have to answer, and the ML team receives output formatted around the questions they have to answer, and neither receives the other&#39;s report by accident.</p>
 <p class="reveal">[Interactive Explorer Block - See live site]</p>
-<p class="reveal">06 / Limitations and Extensions</p>
 
   </div>
 </section>

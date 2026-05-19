@@ -169,7 +169,6 @@
   <div class="col-wide markdown-body">
     <h2 class="reveal is-chapter">Abstract</h2>
 <p class="has-dropcap reveal col-with-sidenotes">Built for a major short-form video platform&#39;s Trust &amp; Safety team, this Spark-scale analytics engine imports time-to-event analysis from biostatistics and applies it to platform integrity. The central reframe: the same Kaplan-Meier estimator that asks &quot;what is the probability that a patient is still alive at time t after diagnosis?&quot; can ask &quot;what is the probability that a user session is still violation-free at time t after first content interaction?&quot; Both questions involve right-censored observations. Both benefit from non-parametric estimation. The toolkit transfers cleanly. Layered with LDA topic modeling, VADER sentiment, and NetworkX co-occurrence, the engine produces a 12-section auto-generated investigation report that is reproducible across cases and comparable across users.</p>
-<p class="reveal">01 / The Cross-Domain Move</p>
 
   </div>
 </section>
@@ -181,7 +180,6 @@
 <p class="reveal">In medical research, the Kaplan-Meier estimator answers a specific question: given a cohort of patients diagnosed at time zero, what is the probability that any given patient is still alive at time t? The estimator handles the inconvenient fact that not every patient&#39;s outcome is observed. Some are still alive when the study ends; some leave the study; some die from causes unrelated to the disease. These are right-censored observations, and KM is the non-parametric tool designed to use them honestly rather than throw them out.</p>
 <p class="reveal">Trust &amp; Safety analytics has a structurally identical problem. Given a user&#39;s session beginning at time zero, what is the probability that the session has remained free of policy-violative content at time t? The events of interest (encountering content flagged by a moderation system) occur on the same kind of irregular timeline as patient deaths. The censoring is the same: many sessions end without any violation event, which is not the same as those sessions being violation-free forever. The data structure is the same. The estimator transfers without modification.</p>
 <p class="reveal">The intellectual move that anchors this engine is recognizing that platform integrity decay is well-modeled as a survival problem. Once you accept the reframe, an entire toolkit comes with it: median time to violation as a population-level health metric, comparative survival functions across user segments, hazard rate analysis for identifying high-risk windows. The biostatistics literature has been refining these tools since 1958. T&amp;S analytics had been reinventing weaker versions in isolation.</p>
-<p class="reveal">02 / Engine Architecture</p>
 
   </div>
 </section>
@@ -194,7 +192,6 @@
 <p class="reveal">The contribution is the decomposition. The pipeline splits cleanly into four modules, each with a single responsibility, and the modules communicate through standardized intermediate CSV artifacts rather than in-memory state. Any module can be re-run in isolation when a methodology question demands it.</p>
 <p class="reveal"><img src="fig_1.svg" alt="Figure 1"></p>
 <p class="reveal">FIG. 01 The four-module decomposition. Modules communicate through standardized CSV intermediates rather than in-memory state, so any analytical module can be re-run in isolation without re-running the Spark fetch.</p>
-<p class="reveal">03 / Time-to-Violation as Health Metric</p>
 
   </div>
 </section>
@@ -221,7 +218,6 @@ median_survival = kmf.median_survival_time_  # seconds to first violation
 <p class="reveal">FIG. 02 The survival fit. Duration is the inter-event spacing in seconds; event_observed is one when a policy was triggered. The median survival time is the population-level health metric.</p>
 <p class="reveal">The comparative survival mode is what makes the engine useful for forensic per-user investigation. By segmenting one user&#39;s data into temporal tertiles (early, mid, late), then fitting separate Kaplan-Meier curves on each, the engine reveals whether that user&#39;s median time-to-violation is shrinking, stable, or growing across the observation window. A shrinking median is a measurable signal of acceleration. The same comparison across user cohorts surfaces population-level shifts in platform health.</p>
 <p class="reveal">The interpretive note that matters: a survival time below 3,600 seconds (one hour) means a user encountered violative content within the first hour of platform engagement in that segment. The engine surfaces that threshold automatically in its narrative output, because that interval is where moderation feedback loops are most likely to compound.</p>
-<p class="reveal">04 / Topical Drift as Risk Signal</p>
 
   </div>
 </section>
@@ -235,7 +231,6 @@ median_survival = kmf.median_survival_time_  # seconds to first violation
 <p class="reveal">Co-occurrence analysis is the layer that catches what topic modeling smooths over. LDA gives you topic distributions; the co-occurrence graph gives you the word-pairs that shape the texture inside those topics. When two words that did not previously co-occur start appearing together at high frequency in a user&#39;s consumption window, the engine flags the pair regardless of whether either word is independently policy-relevant. New language patterns precede new behavior.</p>
 <p class="reveal"><img src="fig_2.svg" alt="Figure 2"></p>
 <p class="reveal">FIG. 03 Topic drift across time slices. LDA topic clusters are tracked from early to late tertile; emergent clusters in red signal new topical territory. Read alongside the survival curve, drift in the topical neighborhood gives the analyst a why to attach to the when.</p>
-<p class="reveal">05 / The Auto-Report Engine</p>
 
   </div>
 </section>
