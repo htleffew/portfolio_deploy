@@ -15,39 +15,34 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js" defer></script>
     <link rel="stylesheet" href="../design_system/css/global.css">
     <style>
-      /* Editorial Grid Layout for reading column */
+      /* Editorial Layout for reading column */
       .markdown-body { 
-          display: grid;
-          /* Asymmetric grid: left margin, optimal reading width, right gutter for bleeds */
-          grid-template-columns: 1fr min(65ch, 100%) 1.5fr;
-          column-gap: 3rem;
-          margin-top: 1.5rem;
-          align-items: baseline;
-      }
-      @media (max-width: 1024px) {
-          .markdown-body {
-              grid-template-columns: 0px min(65ch, 100%) 0px;
-              column-gap: 0;
-          }
+          max-width: 65ch;
+          margin: 1.5rem auto 0 auto;
+          padding: 0 1.5rem;
       }
       .markdown-body > * {
-          grid-column: 2; /* Text sits in the center reading column */
+          /* OVERRIDE global.css centering to restore elegant flush-left alignment */
+          margin-left: 0 !important;
+          margin-right: 0 !important;
+          padding-left: 0 !important;
+          padding-right: 0 !important;
+          max-width: none !important;
+          text-align: left !important;
       }
       .markdown-body p { margin-bottom: 1.5em; font-size: 1.125rem; line-height: 1.8; color: var(--charcoal); }
       
       .markdown-body h2 {
-          grid-column: 1 / 3;
-          margin-top: 1rem;
+          margin-top: 2rem;
           margin-bottom: 1.5rem;
           font-family: var(--font-display);
           font-weight: 600;
           font-size: 2.2rem;
           border-bottom: 1px solid var(--tungsten);
-          padding-bottom: 0.5rem;
+          padding-bottom: 0.5rem !important;
           color: var(--obsidian);
       }
       .markdown-body h3 {
-          grid-column: 2;
           margin-top: 2rem;
           margin-bottom: 1rem;
           font-family: var(--font-display);
@@ -55,7 +50,6 @@
           color: var(--obsidian);
       }
       .markdown-body .eyebrow {
-          grid-column: 1 / 3;
           color: var(--phthalo-lift);
           font-family: var(--font-mono);
           letter-spacing: 0.1em;
@@ -173,8 +167,7 @@
 <!-- SECTION 1: Abstract -->
 <section class="band band--paper" data-spine="Abstract" data-section="Abstract">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">01 / Abstract</div>
-<h2 class="reveal is-chapter">Abstract</h2>
+    <h2 class="reveal is-chapter">Abstract</h2>
 <p class="has-dropcap reveal col-with-sidenotes">Cohort analytics and per-user investigation are different research problems with different ethical regimes. Cohort work asks how the population behaves; per-user investigation asks what one person did, when, and in what trajectory. The methodology described here sits on top of a Trust &amp; Safety analytics engine and is what you reach for when the unit of analysis is a single account. It takes a user of interest with months or years of platform activity, slices the timeline into six overlapping segments, runs multi-axis analysis on each, and produces a structured forensic report. The commitment is that risk is a trajectory rather than a snapshot, and that the right way to characterize an account is to compare what it was doing on arrival to what it was doing immediately before being flagged.</p>
 <p class="reveal">01 / The Investigation Question</p>
 
@@ -184,8 +177,7 @@
 <!-- SECTION 2: From cohort to case -->
 <section class="band band--paper" data-spine="From cohort to case" data-section="From cohort to case">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">02 / From cohort to case</div>
-<h2 class="reveal is-chapter">From cohort to case</h2>
+    <h2 class="reveal is-chapter">From cohort to case</h2>
 <p class="reveal">A platform&#39;s Trust &amp; Safety analytics organization runs two kinds of work that look superficially similar and are methodologically opposite. Cohort analytics estimates population behavior: what fraction of users encounter a given category of content, how long the average session lasts, where the rate of policy violations is rising. The questions are about distributions; the answers are statistical; the unit of analysis is the population. Per-user investigation does the inverse. It takes one account, often surfaced because automated systems flagged it for human review, and asks what specifically happened on this account, in what order, and what the trajectory implies about risk and intent.</p>
 <p class="reveal">The two kinds of work demand different statistical sensibilities and different ethical guardrails. Cohort analytics is forgiving of missing data and noisy signals because the law of large numbers eventually delivers a reasonable estimate. Forensic per-user analysis is unforgiving on both counts, because there is no averaging across cases when the case is a single individual whose situation may end in account removal, escalation to a child-safety team, or referral to law enforcement. The methodology described below is what handles the second kind of work in a structured, defensible way.</p>
 <p class="reveal">The single hardest move in per-user analysis is rejecting the snapshot. A current risk score is a snapshot. A list of recent policy violations is a snapshot. A topic distribution computed over the entire user history is a snapshot. None of these surface the most important thing about an account, which is whether its trajectory is decelerating, stable, or accelerating. The methodology below is built around the trajectory.</p>
@@ -197,8 +189,7 @@
 <!-- SECTION 3: The temporal segmentation -->
 <section class="band band--paper" data-spine="The temporal segment" data-section="The temporal segmentation">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">03 / The temporal segmentation</div>
-<h2 class="reveal is-chapter">The temporal segmentation</h2>
+    <h2 class="reveal is-chapter">The temporal segmentation</h2>
 <p class="reveal">For each user of interest, the engine slices the timeline six ways and runs the full analytical suite on each slice independently. The slices overlap deliberately, and that overlap is the source of the methodology&#39;s diagnostic power.</p>
 <p class="reveal"><img src="fig_1.svg" alt="Figure 1"></p>
 <p class="reveal">FIG. 01 The six temporal slices applied to each user of interest. The three tertiles partition the full window for trajectory inference; the First 25 and Last 25 insets anchor the boundaries so arrival behavior is directly comparable to pre-flag behavior.</p>
@@ -212,8 +203,7 @@
 <!-- SECTION 4: Why no single signal is enough -->
 <section class="band band--paper" data-spine="Why no single signal" data-section="Why no single signal is enough">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">04 / Why no single signal is enough</div>
-<h2 class="reveal is-chapter">Why no single signal is enough</h2>
+    <h2 class="reveal is-chapter">Why no single signal is enough</h2>
 <p class="reveal">Each slice receives the full analytical suite from the upstream engine: time series of policy events, view source distribution, sentiment polarity, n-gram frequency, topic clusters, collocation graphs, NLTK-derived language features, and word clouds. The reason the engine emits all of these for every slice rather than picking one or two is that each axis has known failure modes, and those failure modes are mostly orthogonal. Two signals from different axes pointing in the same direction is a much stronger inference than either signal alone.</p>
 <p class="reveal">A topic-cluster shift between Early and Late Tertiles, for example, is a candidate signal but not a finding on its own. Topic models are stochastic, the topic indices reshuffle from run to run, and apparent drift can be an artifact of corpus size differences between the slices. The same shift becomes a finding when it co-occurs with a sentiment polarity shift in the same direction and a change in the dominant view sources driving that user&#39;s content delivery. Three independent axes converging on the same temporal boundary is hard to explain as artifact.</p>
 <p class="reveal">The view source axis is particularly important and easy to overlook. Two users with identical topical and sentiment profiles can be in radically different risk situations depending on whether their content reaches them through search, recommendation, or direct following. A topical shift driven by deliberate search is a different finding than one driven by recommendation drift. The first implies user agency; the second implies system-level steering. The methodology insists on surfacing that distinction in every investigation.</p>
@@ -226,8 +216,7 @@
 <!-- SECTION 5: When does pattern inference become surveillance? -->
 <section class="band band--paper" data-spine="When does pattern in" data-section="When does pattern inference become surveillance?">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">05 / When does pattern inference become surveillance?</div>
-<h2 class="reveal is-chapter">When does pattern inference become surveillance?</h2>
+    <h2 class="reveal is-chapter">When does pattern inference become surveillance?</h2>
 <p class="reveal">A methodology that produces forensic-grade trajectory reports on individual users is a methodology that can be misused. The questions worth being explicit about are not whether the analysis can be done (it can) or whether it should ever be done (sometimes it must), but under what specific conditions the work is justified and what guardrails govern it. Four principles shape the methodology.</p>
 <p class="reveal"><strong>Necessity.</strong> The investigation runs only on accounts that have already been flagged by an upstream system, with documented justification for the flag. The methodology is not a discovery tool; it is an interpretation tool for cases that have already cleared a threshold of automated suspicion. Fishing expeditions are rejected on principle, because the methodology&#39;s strength on individual cases is precisely what makes it dangerous if pointed at uninvestigated populations.</p>
 <p class="reveal"><strong>Proportionality.</strong> The depth of analysis applied to a flagged account scales with the severity of the suspected violation and the harm it implicates. A spam-policy flag does not warrant the six-slice trajectory analysis; it warrants a much lighter cohort-level look. The deep methodology is reserved for high-severity categories, which in practice means child safety, credible threat indicators, and coordinated inauthentic behavior. Reaching for the deep methodology on lower-severity cases is a category error that wastes investigator time and creates unnecessary surveillance pressure on accounts that did not earn it.</p>
@@ -242,8 +231,7 @@
 <!-- SECTION 6: The investigation as input -->
 <section class="band band--paper" data-spine="The investigation as" data-section="The investigation as input">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">06 / The investigation as input</div>
-<h2 class="reveal is-chapter">The investigation as input</h2>
+    <h2 class="reveal is-chapter">The investigation as input</h2>
 <p class="reveal">The methodology produces structured reports, not enforcement decisions. The reports feed downstream review processes that combine the analytical output with judgments about context, intent, vulnerability, and proportionate response. An investigation report can support an account-removal decision, an escalation to a child-safety team, a referral to law enforcement, a moderator briefing for a category-level policy adjustment, or a conclusion that the flagged behavior was a false positive that the investigation has now disconfirmed. The methodology is designed to support all five outcomes equally.</p>
 <p class="reveal">The most important downstream use is the false positive disconfirmation. Automated flagging systems have non-trivial false positive rates, and the cost of acting on a false positive at the account level is high. A trajectory analysis that finds no evidence of acceleration, no topic drift toward higher-risk territory, and no co-occurrence shifts that would support the original flag is a finding worth recording explicitly. The methodology produces those findings on the same template as the confirmatory ones, so the disconfirmation has the same evidentiary weight as a confirmation would.</p>
 <p class="reveal">Pairing notes: the analytical engine that drives the per-user investigation is described separately. This piece covers the methodology layer; the companion piece covers the engine that makes it tractable. Either can be discussed independently, but in practice the methodological choices about temporal segmentation and multi-axis triangulation shaped the engine&#39;s output structure, and the engine&#39;s standardized output structure is what makes the methodology auditable. The two artifacts co-evolved.</p>

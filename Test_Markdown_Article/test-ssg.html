@@ -15,39 +15,34 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js" defer></script>
     <link rel="stylesheet" href="../design_system/css/global.css">
     <style>
-      /* Editorial Grid Layout for reading column */
+      /* Editorial Layout for reading column */
       .markdown-body { 
-          display: grid;
-          /* Asymmetric grid: left margin, optimal reading width, right gutter for bleeds */
-          grid-template-columns: 1fr min(65ch, 100%) 1.5fr;
-          column-gap: 3rem;
-          margin-top: 1.5rem;
-          align-items: baseline;
-      }
-      @media (max-width: 1024px) {
-          .markdown-body {
-              grid-template-columns: 0px min(65ch, 100%) 0px;
-              column-gap: 0;
-          }
+          max-width: 65ch;
+          margin: 1.5rem auto 0 auto;
+          padding: 0 1.5rem;
       }
       .markdown-body > * {
-          grid-column: 2; /* Text sits in the center reading column */
+          /* OVERRIDE global.css centering to restore elegant flush-left alignment */
+          margin-left: 0 !important;
+          margin-right: 0 !important;
+          padding-left: 0 !important;
+          padding-right: 0 !important;
+          max-width: none !important;
+          text-align: left !important;
       }
       .markdown-body p { margin-bottom: 1.5em; font-size: 1.125rem; line-height: 1.8; color: var(--charcoal); }
       
       .markdown-body h2 {
-          grid-column: 1 / 3;
-          margin-top: 1rem;
+          margin-top: 2rem;
           margin-bottom: 1.5rem;
           font-family: var(--font-display);
           font-weight: 600;
           font-size: 2.2rem;
           border-bottom: 1px solid var(--tungsten);
-          padding-bottom: 0.5rem;
+          padding-bottom: 0.5rem !important;
           color: var(--obsidian);
       }
       .markdown-body h3 {
-          grid-column: 2;
           margin-top: 2rem;
           margin-bottom: 1rem;
           font-family: var(--font-display);
@@ -55,7 +50,6 @@
           color: var(--obsidian);
       }
       .markdown-body .eyebrow {
-          grid-column: 1 / 3;
           color: var(--phthalo-lift);
           font-family: var(--font-mono);
           letter-spacing: 0.1em;
@@ -173,8 +167,7 @@
 <!-- SECTION 1: Abstract -->
 <section class="band band--paper" data-spine="Abstract" data-section="Abstract">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">01 / Abstract</div>
-<h2 class="reveal is-chapter">Abstract</h2>
+    <h2 class="reveal is-chapter">Abstract</h2>
 <p class="has-dropcap reveal col-with-sidenotes">This is a test of the new automated SSG pipeline for portfolio deployment.</p>
 <p class="reveal">This is the introductory text. It should appear in the first band and have a dropcap if I configured <code>build.js</code> correctly.</p>
 <p class="reveal">02 / First Core Section</p>
@@ -185,8 +178,7 @@
 <!-- SECTION 2: First Core Section -->
 <section class="band band--paper" data-spine="First Core Section" data-section="First Core Section">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">02 / First Core Section</div>
-<h2 class="reveal is-chapter">First Core Section</h2>
+    <h2 class="reveal is-chapter">First Core Section</h2>
 <p class="reveal">Here is a standard section under an H2. The SSG compiler should wrap this in <code>band--dark</code> or <code>band--paper</code> automatically.</p>
 <p class="reveal">We can include code blocks:</p>
 <pre><code>const x = 42;
@@ -200,8 +192,7 @@ console.log(x);
 <!-- SECTION 3: Interactive Components -->
 <section class="band band--paper" data-spine="Interactive Componen" data-section="Interactive Components">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">03 / Interactive Components</div>
-<h2 class="reveal is-chapter">Interactive Components</h2>
+    <h2 class="reveal is-chapter">Interactive Components</h2>
 <p class="reveal">Here is a raw HTML element embedded directly in the markdown:</p>
 <p class="reveal">04 / References</p>
 
@@ -211,8 +202,7 @@ console.log(x);
 <!-- SECTION 4: References -->
 <section class="band band--paper" data-spine="References" data-section="References">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">04 / References</div>
-<h2 class="reveal is-chapter">References</h2>
+    <h2 class="reveal is-chapter">References</h2>
 <ul>
 <li>Leffew, H. (2026). <em>Building an SSG</em>. Journal of Agentic Engineering.</li>
 </ul>

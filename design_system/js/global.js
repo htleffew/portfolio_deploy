@@ -759,17 +759,17 @@ const initCinematicEngine = () => {
             const preRight  = document.getElementById('preloader-right');
             const preLine   = document.getElementById('preloader-line');
             if (preloader && preLeft && preRight && preLine) {
-                tl.to(preLine,  { height: '28vh', duration: 1.1, ease: 'power2.inOut' })
-                  .to(preLine,  { opacity: 0, height: '50vh', duration: 0.6, ease: 'power2.in' }, '+=0.15')
-                  .to(preLeft,  { xPercent: -100, duration: 1.1, ease: 'power3.inOut' }, '-=0.25')
-                  .to(preRight, { xPercent:  100, duration: 1.1, ease: 'power3.inOut' }, '<')
+                tl.to(preLine,  { height: '28vh', duration: 0.55, ease: 'power2.inOut' })
+                  .to(preLine,  { opacity: 0, height: '50vh', duration: 0.3, ease: 'power2.in' }, '+=0.075')
+                  .to(preLeft,  { xPercent: -100, duration: 0.55, ease: 'power3.inOut' }, '-=0.125')
+                  .to(preRight, { xPercent:  100, duration: 0.55, ease: 'power3.inOut' }, '<')
                   .set(preloader, { display: 'none' });
             } else if (preloader) {
-                tl.to(preloader, { opacity: 0, duration: 1.2, ease: 'power2.inOut',
+                tl.to(preloader, { opacity: 0, duration: 0.5, ease: 'power2.inOut',
                                    onComplete: () => { preloader.style.display = 'none'; } });
             }
 
-            tl.to('#glCanvas', { opacity: 1, duration: 3.5, ease: 'power2.inOut' }, '-=0.6');
+            tl.to('#glCanvas', { opacity: 1, duration: 1.5, ease: 'power2.inOut' }, '-=0.3');
 
             let split;
             const heroTitle = document.querySelector('.hero h1');

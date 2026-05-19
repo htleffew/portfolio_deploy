@@ -15,39 +15,34 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js" defer></script>
     <link rel="stylesheet" href="../design_system/css/global.css">
     <style>
-      /* Editorial Grid Layout for reading column */
+      /* Editorial Layout for reading column */
       .markdown-body { 
-          display: grid;
-          /* Asymmetric grid: left margin, optimal reading width, right gutter for bleeds */
-          grid-template-columns: 1fr min(65ch, 100%) 1.5fr;
-          column-gap: 3rem;
-          margin-top: 1.5rem;
-          align-items: baseline;
-      }
-      @media (max-width: 1024px) {
-          .markdown-body {
-              grid-template-columns: 0px min(65ch, 100%) 0px;
-              column-gap: 0;
-          }
+          max-width: 65ch;
+          margin: 1.5rem auto 0 auto;
+          padding: 0 1.5rem;
       }
       .markdown-body > * {
-          grid-column: 2; /* Text sits in the center reading column */
+          /* OVERRIDE global.css centering to restore elegant flush-left alignment */
+          margin-left: 0 !important;
+          margin-right: 0 !important;
+          padding-left: 0 !important;
+          padding-right: 0 !important;
+          max-width: none !important;
+          text-align: left !important;
       }
       .markdown-body p { margin-bottom: 1.5em; font-size: 1.125rem; line-height: 1.8; color: var(--charcoal); }
       
       .markdown-body h2 {
-          grid-column: 1 / 3;
-          margin-top: 1rem;
+          margin-top: 2rem;
           margin-bottom: 1.5rem;
           font-family: var(--font-display);
           font-weight: 600;
           font-size: 2.2rem;
           border-bottom: 1px solid var(--tungsten);
-          padding-bottom: 0.5rem;
+          padding-bottom: 0.5rem !important;
           color: var(--obsidian);
       }
       .markdown-body h3 {
-          grid-column: 2;
           margin-top: 2rem;
           margin-bottom: 1rem;
           font-family: var(--font-display);
@@ -55,7 +50,6 @@
           color: var(--obsidian);
       }
       .markdown-body .eyebrow {
-          grid-column: 1 / 3;
           color: var(--phthalo-lift);
           font-family: var(--font-mono);
           letter-spacing: 0.1em;
@@ -173,8 +167,7 @@
 <!-- SECTION 1: Abstract -->
 <section class="band band--paper" data-spine="Abstract" data-section="Abstract">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">01 / Abstract</div>
-<h2 class="reveal is-chapter">Abstract</h2>
+    <h2 class="reveal is-chapter">Abstract</h2>
 <p class="has-dropcap reveal col-with-sidenotes">The case for why user reports should be prioritized over automated detection. Perpetrators of mass violence are characterologically heterogeneous, the warning signs are contextual, and the on-platform signal is thin. A working note on the threat-assessment literature, the eight pre-attack warning behaviors, the six-stage path to intended violence, and where machine detection actually breaks.</p>
 <p class="reveal">01 / The Heterogeneity Problem</p>
 
@@ -184,8 +177,7 @@
 <!-- SECTION 2: Perpetrators do not fit a profile. -->
 <section class="band band--paper" data-spine="Perpetrators do not " data-section="Perpetrators do not fit a profile.">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">02 / Perpetrators do not fit a profile.</div>
-<h2 class="reveal is-chapter">Perpetrators do not fit a profile.</h2>
+    <h2 class="reveal is-chapter">Perpetrators do not fit a profile.</h2>
 <p class="reveal">Mass shootings in the United States rose roughly 250% from one decade to the next, with 57% of all recorded mass shootings in the past ten years (Office for Victims of Crime, 2018). The FBI logged 250 active shooter incidents between 2000 and 2017, producing 2,217 casualties not counting the perpetrators themselves (Silver, Simons, &amp; Craun, 2018). The volume justifies the interest. The literature has not produced a profile.</p>
 <p class="reveal">Thompson and Kyle (2005) cast these offenders as low-self-esteem. Palermo (1997) reads them as psychopathic. Hempel and Richards (1999) and Virtanen (2013) read them as narcissistic. Bondu and Scheithauer (2015) and Wike and Fraser (2009) document characterological heterogeneity at a scale that defeats single-construct typologies. Lankford (2013) finds that the age and attack-location differences between rampage shooters, workplace shooters, school shooters, and suicide terrorists are mostly superficial. Ferguson, Coulson, and Barnett (2011) find youthful mass murderers resemble adult perpetrators more than they differ from them. Most perpetrators do not survive the event, so traditional post-event psychological assessment cannot be performed.</p>
 <p class="reveal">Seung-Hui Cho killed 32 people at Virginia Tech in 2007. Anders Breivik killed 77 across two locations in Norway in 2011. Both left manifestos. Cho&#39;s reads as raw, affective, personal injury: &quot;Vandalizing my heart wasn&#39;t enough for you. Raping my soul wasn&#39;t enough for you.&quot; Breivik&#39;s runs more than 1,500 pages with chapter headings like &quot;Modern Aftermath of the Crusades&quot; and &quot;US and European Nationalist Rhetorical Differences.&quot; Same outcome class. Almost no shared signature.</p>
@@ -199,8 +191,7 @@
 <!-- SECTION 3: Attacks are planned, and the planning leaks. -->
 <section class="band band--paper" data-spine="Attacks are planned," data-section="Attacks are planned, and the planning leaks.">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">03 / Attacks are planned, and the planning leaks.</div>
-<h2 class="reveal is-chapter">Attacks are planned, and the planning leaks.</h2>
+    <h2 class="reveal is-chapter">Attacks are planned, and the planning leaks.</h2>
 <p class="reveal">Popular framing treats mass violence as a sudden break, an unpredictable snap. Governmental and academic work has converged on the opposite reading. Most perpetrators display identifiable pre-attack behaviors that reflect intent (Fein, Vossekuil, &amp; Holden, 1998; U.S. Secret Service, 2004). Silver, Simons, and Craun (2018) studied 63 active shooters and found that the majority spent a week or longer in planning and preparation. That is the operational window detection has to live in.</p>
 <p class="reveal">88%</p>
 <p class="reveal">Active shooters aged 17 and younger communicated intent</p>
@@ -219,8 +210,7 @@
 <!-- SECTION 4: Eight behaviors, six stages. -->
 <section class="band band--paper" data-spine="Eight behaviors, six" data-section="Eight behaviors, six stages.">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">04 / Eight behaviors, six stages.</div>
-<h2 class="reveal is-chapter">Eight behaviors, six stages.</h2>
+    <h2 class="reveal is-chapter">Eight behaviors, six stages.</h2>
 <p class="reveal">Meloy, Hoffmann, Guldimann, and James (2012) propose eight essential warning behaviors. These are acute, dynamic, particularly toxic changes in behavior that signal accelerating risk and require an operational response. Calhoun and Weston (2003, 2015) propose the path to intended violence as a discrete six-stage sequence: grievance, ideation, research and planning, preparation, breach, attack. The eight behaviors do not occur uniformly across the six stages. Mapping them to where they tend to appear is the structure most threat-assessment work runs on.</p>
 <p class="reveal">Warning Behavior Matrix</p>
 <ol>
@@ -259,8 +249,7 @@
 <!-- SECTION 5: Words that alarm, actions that harm. -->
 <section class="band band--paper" data-spine="Words that alarm, ac" data-section="Words that alarm, actions that harm.">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">05 / Words that alarm, actions that harm.</div>
-<h2 class="reveal is-chapter">Words that alarm, actions that harm.</h2>
+    <h2 class="reveal is-chapter">Words that alarm, actions that harm.</h2>
 <p class="reveal">People often prefer words that alarm over actions that harm. Reading a threatening statement requires separating content from context. The first question is whether the statement is direct (delivered to the potential target) or indirect (delivered to a third party). The second question is whether the statement is a threat or an ultimatum. Ultimatums attach conditions. They are warnings or attempts at manipulation. Threats are non-conditional.</p>
 <p class="reveal">Threats are riskier in principle but often less actionable in practice. A person who directly threatens another is frequently expressing desperation and frustration rather than communicating an actual plan. The anxiety the threat provokes in the target functions as an emotional release for the speaker, and that release can substitute for the act itself. The threat that worries threat-assessment professionals is the one that does not seek a fear pay-out.</p>
 <p class="reveal">Late-appearing threats are more concerning than early ones. Early threats tend to be emotional reactions to an immediate upset. Late threats tend to be the residue of a deliberative process where other alternatives have already been considered and rejected. Indirect threats - delivered to someone other than the intended target - carry elevated risk precisely because they bypass the fear-payout loop that normally drains the speaker&#39;s emotional charge.</p>
@@ -272,8 +261,7 @@
 <!-- SECTION 6: Probability against impact. -->
 <section class="band band--paper" data-spine="Probability against " data-section="Probability against impact.">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">06 / Probability against impact.</div>
-<h2 class="reveal is-chapter">Probability against impact.</h2>
+    <h2 class="reveal is-chapter">Probability against impact.</h2>
 <p class="reveal">Threat assessment risk management is an equation evaluating the probability an event will occur (the threat) against the potential impacts of the event (the risk). The intervention demand for low-probability events rises with the impact magnitude. The combinations produce a familiar 2x2.</p>
 <p class="reveal">Threat (probability)</p>
 <p class="reveal">Risk (impact)</p>
@@ -294,8 +282,7 @@
 <!-- SECTION 7: The post-event risk window. -->
 <section class="band band--paper" data-spine="The post-event risk " data-section="The post-event risk window.">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">07 / The post-event risk window.</div>
-<h2 class="reveal is-chapter">The post-event risk window.</h2>
+    <h2 class="reveal is-chapter">The post-event risk window.</h2>
 <p class="reveal">After a highly publicized attack the risk of a copycat attack remains elevated for approximately 13 days. Watershed events - the ones that lodge in cultural memory - can elevate risk for ten years or longer. Mother Jones tracked the Columbine effect and counted 72 plots inspired by the event, 21 carried out, 89 deaths. The contagion does not require the original attacker to have used a platform. The contagion is the cultural artifact, not the dataset.</p>
 <p class="reveal">For platform threat-assessment workflows, the operational implication is asymmetric staffing. Detection volume needs to spike with cultural events, not with calendar quarters. The post-watershed window is also where automated false-positive rates spike, because the volume of users discussing the event surges and discussion is not intent. The cost of pattern-matching on surface features in a contagion window is paid in over-flagging the people who are simply reading the news.</p>
 <p class="reveal">07 / The Thesis</p>
@@ -306,8 +293,7 @@
 <!-- SECTION 8: User reports outperform automated detection, and the reasons are structural. -->
 <section class="band band--paper" data-spine="User reports outperf" data-section="User reports outperform automated detection, and the reasons are structural.">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">08 / User reports outperform automated detection, and the reasons are structural.</div>
-<h2 class="reveal is-chapter">User reports outperform automated detection, and the reasons are structural.</h2>
+    <h2 class="reveal is-chapter">User reports outperform automated detection, and the reasons are structural.</h2>
 <p class="reveal">Grounded threat assessment is only as good as the data feeding it. Examination of on-platform behavior in isolation cannot reach a defensible determination of actual threat level, because the variables that move the assessment - warning signs, risk factors, stabilizing factors, precipitating events - are almost never all on-platform. Collateral data sources are essential. A platform that builds its threat workflow exclusively around its own telemetry has stipulated to working with an incomplete record.</p>
 <p class="reveal">The characterological heterogeneity that defeats single-profile classifiers also defeats list-based automated detection. Different behaviors represent different positions on the pathway, and a single behavior late in the pathway warrants a more urgent response than several appearances at the early end. Building an automated system around behavior counts rather than behavior positions inverts that logic and dilutes the operational response.</p>
 <p class="reveal">Users of a platform with millions of participants bring something an automated system cannot replicate: contextual interpretation at scale. A user reading a friend&#39;s post understands the prior six months of that person&#39;s behavior, the relationship history, the in-group jokes, the affective baseline. Algorithms see a comment and a numeric vector; humans see a person whose pattern has changed. The recommendation is not to remove automation. It is to position automation as the support layer for the human judgment that has the higher base rate of correct identification.</p>
@@ -321,8 +307,7 @@
 <!-- SECTION 9: References -->
 <section class="band band--paper" data-spine="References" data-section="References">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">09 / References</div>
-<h2 class="reveal is-chapter">References</h2>
+    <h2 class="reveal is-chapter">References</h2>
 <ul>
 <li>Bondu, R., &amp; Scheithauer, H. (2015). Narcissistic symptoms in German school shooters. <em>International Journal of Offender Therapy and Comparative Criminology, 59</em>(14), 1520-1535.</li>
 <li>Calhoun, F. S., &amp; Weston, S. W. (2003). <em>Contemporary threat management: A practical guide for identifying, assessing, and managing individuals of violent intent</em>. Specialized Training Services.</li>

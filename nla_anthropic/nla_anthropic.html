@@ -15,39 +15,34 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js" defer></script>
     <link rel="stylesheet" href="../design_system/css/global.css">
     <style>
-      /* Editorial Grid Layout for reading column */
+      /* Editorial Layout for reading column */
       .markdown-body { 
-          display: grid;
-          /* Asymmetric grid: left margin, optimal reading width, right gutter for bleeds */
-          grid-template-columns: 1fr min(65ch, 100%) 1.5fr;
-          column-gap: 3rem;
-          margin-top: 1.5rem;
-          align-items: baseline;
-      }
-      @media (max-width: 1024px) {
-          .markdown-body {
-              grid-template-columns: 0px min(65ch, 100%) 0px;
-              column-gap: 0;
-          }
+          max-width: 65ch;
+          margin: 1.5rem auto 0 auto;
+          padding: 0 1.5rem;
       }
       .markdown-body > * {
-          grid-column: 2; /* Text sits in the center reading column */
+          /* OVERRIDE global.css centering to restore elegant flush-left alignment */
+          margin-left: 0 !important;
+          margin-right: 0 !important;
+          padding-left: 0 !important;
+          padding-right: 0 !important;
+          max-width: none !important;
+          text-align: left !important;
       }
       .markdown-body p { margin-bottom: 1.5em; font-size: 1.125rem; line-height: 1.8; color: var(--charcoal); }
       
       .markdown-body h2 {
-          grid-column: 1 / 3;
-          margin-top: 1rem;
+          margin-top: 2rem;
           margin-bottom: 1.5rem;
           font-family: var(--font-display);
           font-weight: 600;
           font-size: 2.2rem;
           border-bottom: 1px solid var(--tungsten);
-          padding-bottom: 0.5rem;
+          padding-bottom: 0.5rem !important;
           color: var(--obsidian);
       }
       .markdown-body h3 {
-          grid-column: 2;
           margin-top: 2rem;
           margin-bottom: 1rem;
           font-family: var(--font-display);
@@ -55,7 +50,6 @@
           color: var(--obsidian);
       }
       .markdown-body .eyebrow {
-          grid-column: 1 / 3;
           color: var(--phthalo-lift);
           font-family: var(--font-mono);
           letter-spacing: 0.1em;
@@ -173,8 +167,7 @@
 <!-- SECTION 1: Abstract -->
 <section class="band band--paper" data-spine="Abstract" data-section="Abstract">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">01 / Abstract</div>
-<h2 class="reveal is-chapter">Abstract</h2>
+    <h2 class="reveal is-chapter">Abstract</h2>
 <p class="has-dropcap reveal col-with-sidenotes">When a frontier model processes a benchmark task, it may silently recognize the evaluation context
           and adjust its behavior accordingly. This recognition leaves no trace in the output tokens.
           Anthropic&#39;s Natural Language Autoencoders translate the model&#39;s internal activation vectors
@@ -188,8 +181,7 @@
 <!-- SECTION 2: The interpretability problem was never about access to weights. -->
 <section class="band band--paper" data-spine="The interpretability" data-section="The interpretability problem was never about access to weights.">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">02 / The interpretability problem was never about access to weights.</div>
-<h2 class="reveal is-chapter">The interpretability problem was never about access to weights.</h2>
+    <h2 class="reveal is-chapter">The interpretability problem was never about access to weights.</h2>
 <p class="reveal">Understanding why a large language model generates a specific output requires more than access to
 its parameters. The challenge is representation. A model&#39;s knowledge and reasoning are encoded as
 high-dimensional continuous vectors - billions of floating-point values whose meaning, in
@@ -229,8 +221,7 @@ internal activations directly in plain language.</p>
 <!-- SECTION 3: Two modules, one bottleneck. Text is the only channel. -->
 <section class="band band--paper" data-spine="Two modules, one bot" data-section="Two modules, one bottleneck. Text is the only channel.">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">03 / Two modules, one bottleneck. Text is the only channel.</div>
-<h2 class="reveal is-chapter">Two modules, one bottleneck. Text is the only channel.</h2>
+    <h2 class="reveal is-chapter">Two modules, one bottleneck. Text is the only channel.</h2>
 <p class="reveal">A Natural Language Autoencoder is structurally a three-component system: the frozen target
 model whose activations are being read, an Activation Verbalizer (AV) that translates those
 activations into text, and an Activation Reconstructor (AR) that maps the text back into the
@@ -268,8 +259,7 @@ annotation.</p>
 <!-- SECTION 4: Reinforcement learning from reconstruction fidelity alone. -->
 <section class="band band--paper" data-spine="Reinforcement learni" data-section="Reinforcement learning from reconstruction fidelity alone.">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">04 / Reinforcement learning from reconstruction fidelity alone.</div>
-<h2 class="reveal is-chapter">Reinforcement learning from reconstruction fidelity alone.</h2>
+    <h2 class="reveal is-chapter">Reinforcement learning from reconstruction fidelity alone.</h2>
 <p class="reveal">The AV and AR are jointly trained using reinforcement learning. The sole training signal is
 reconstruction loss: how accurately the AR rebuilds the original activation vector from the
 AV&#39;s text description.4Fraser-Taliente
@@ -307,8 +297,7 @@ vector, without precomputed feature libraries or domain expert review.</p>
 <!-- SECTION 5: The model planned the rhyme before it wrote the first word. -->
 <section class="band band--paper" data-spine="The model planned th" data-section="The model planned the rhyme before it wrote the first word.">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">05 / The model planned the rhyme before it wrote the first word.</div>
-<h2 class="reveal is-chapter">The model planned the rhyme before it wrote the first word.</h2>
+    <h2 class="reveal is-chapter">The model planned the rhyme before it wrote the first word.</h2>
 <p class="reveal">Validation of the NLA architecture required demonstrating that AV outputs capture phenomena
 that were genuinely unobservable from output tokens alone. Four documented cases from
 Anthropic&#39;s testing of frontier Claude models establish this across distinct failure modes.</p>
@@ -358,8 +347,7 @@ says will miss everything the model computes before speaking.</p>
 <!-- SECTION 6: The model knew it was being tested. The output gave no indication. -->
 <section class="band band--paper" data-spine="The model knew it wa" data-section="The model knew it was being tested. The output gave no indication.">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">06 / The model knew it was being tested. The output gave no indication.</div>
-<h2 class="reveal is-chapter">The model knew it was being tested. The output gave no indication.</h2>
+    <h2 class="reveal is-chapter">The model knew it was being tested. The output gave no indication.</h2>
 <p class="reveal">A documented threat in AI alignment is the possibility that an advanced model might recognize
 when it is being evaluated and adjust its behavior accordingly - presenting safe, cooperative
 responses during evaluation while behaving differently in production.6Greenblatt et al. (2024) characterize this as
@@ -399,8 +387,7 @@ aligned responses across all these benchmark tasks.</p>
 <!-- SECTION 7: Detecting hidden objectives in model organisms: 3% became 15%. -->
 <section class="band band--paper" data-spine="Detecting hidden obj" data-section="Detecting hidden objectives in model organisms: 3% became 15%.">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">07 / Detecting hidden objectives in model organisms: 3% became 15%.</div>
-<h2 class="reveal is-chapter">Detecting hidden objectives in model organisms: 3% became 15%.</h2>
+    <h2 class="reveal is-chapter">Detecting hidden objectives in model organisms: 3% became 15%.</h2>
 <p class="reveal">The Auditing Benchmark Game is an ongoing safety research paradigm in which investigative
 agents are tasked with evaluating &quot;model organisms&quot; - models that have been deliberately
 trained to hold hidden objectives. The challenge is to detect the existence and nature of
@@ -429,8 +416,7 @@ pipeline or history.</p>
 <!-- SECTION 8: Editing the text edits the model's internal world. -->
 <section class="band band--paper" data-spine="Editing the text edi" data-section="Editing the text edits the model's internal world.">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">08 / Editing the text edits the model's internal world.</div>
-<h2 class="reveal is-chapter">Editing the text edits the model&#39;s internal world.</h2>
+    <h2 class="reveal is-chapter">Editing the text edits the model&#39;s internal world.</h2>
 <p class="reveal">The NLA architecture does not stop at observation. Because the AR maps text back into
 activation space, it can be used to generate localized steering vectors. A researcher
 reads the AV&#39;s description of a model&#39;s current internal state, manually edits that
@@ -469,8 +455,7 @@ at this level catches failures that output monitoring would never see.</p>
 <!-- SECTION 9: The verbalizer is itself a black box. That matters. -->
 <section class="band band--paper" data-spine="The verbalizer is it" data-section="The verbalizer is itself a black box. That matters.">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">09 / The verbalizer is itself a black box. That matters.</div>
-<h2 class="reveal is-chapter">The verbalizer is itself a black box. That matters.</h2>
+    <h2 class="reveal is-chapter">The verbalizer is itself a black box. That matters.</h2>
 <p class="reveal">Three limitations bound current NLA deployments, and all three are structural rather
 than incidental to this specific implementation.</p>
 <p class="reveal">Confabulation Risk</p>
@@ -515,8 +500,7 @@ the model it is auditing offers limited safety value. NLA&#39;s open release bre
 <!-- SECTION 10: References -->
 <section class="band band--paper" data-spine="References" data-section="References">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">010 / References</div>
-<h2 class="reveal is-chapter">References</h2>
+    <h2 class="reveal is-chapter">References</h2>
 <ul>
 <li>Anthropic. (2026, May 7). <em>Natural language autoencoders: Turning Claude&#39;s thoughts into
 text</em>. Anthropic Research.
