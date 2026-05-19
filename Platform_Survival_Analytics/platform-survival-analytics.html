@@ -15,39 +15,34 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js" defer></script>
     <link rel="stylesheet" href="../design_system/css/global.css">
     <style>
-      /* Editorial Grid Layout for reading column */
+      /* Editorial Layout for reading column */
       .markdown-body { 
-          display: grid;
-          /* Asymmetric grid: left margin, optimal reading width, right gutter for bleeds */
-          grid-template-columns: 1fr min(65ch, 100%) 1.5fr;
-          column-gap: 3rem;
-          margin-top: 1.5rem;
-          align-items: baseline;
-      }
-      @media (max-width: 1024px) {
-          .markdown-body {
-              grid-template-columns: 0px min(65ch, 100%) 0px;
-              column-gap: 0;
-          }
+          max-width: 65ch;
+          margin: 1.5rem auto 0 auto;
+          padding: 0 1.5rem;
       }
       .markdown-body > * {
-          grid-column: 2; /* Text sits in the center reading column */
+          /* OVERRIDE global.css centering to restore elegant flush-left alignment */
+          margin-left: 0 !important;
+          margin-right: 0 !important;
+          padding-left: 0 !important;
+          padding-right: 0 !important;
+          max-width: none !important;
+          text-align: left !important;
       }
       .markdown-body p { margin-bottom: 1.5em; font-size: 1.125rem; line-height: 1.8; color: var(--charcoal); }
       
       .markdown-body h2 {
-          grid-column: 1 / 3;
-          margin-top: 1rem;
+          margin-top: 2rem;
           margin-bottom: 1.5rem;
           font-family: var(--font-display);
           font-weight: 600;
           font-size: 2.2rem;
           border-bottom: 1px solid var(--tungsten);
-          padding-bottom: 0.5rem;
+          padding-bottom: 0.5rem !important;
           color: var(--obsidian);
       }
       .markdown-body h3 {
-          grid-column: 2;
           margin-top: 2rem;
           margin-bottom: 1rem;
           font-family: var(--font-display);
@@ -55,7 +50,6 @@
           color: var(--obsidian);
       }
       .markdown-body .eyebrow {
-          grid-column: 1 / 3;
           color: var(--phthalo-lift);
           font-family: var(--font-mono);
           letter-spacing: 0.1em;
@@ -173,8 +167,7 @@
 <!-- SECTION 1: Abstract -->
 <section class="band band--paper" data-spine="Abstract" data-section="Abstract">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">01 / Abstract</div>
-<h2 class="reveal is-chapter">Abstract</h2>
+    <h2 class="reveal is-chapter">Abstract</h2>
 <p class="has-dropcap reveal col-with-sidenotes">Built for a major short-form video platform&#39;s Trust &amp; Safety team, this Spark-scale analytics engine imports time-to-event analysis from biostatistics and applies it to platform integrity. The central reframe: the same Kaplan-Meier estimator that asks &quot;what is the probability that a patient is still alive at time t after diagnosis?&quot; can ask &quot;what is the probability that a user session is still violation-free at time t after first content interaction?&quot; Both questions involve right-censored observations. Both benefit from non-parametric estimation. The toolkit transfers cleanly. Layered with LDA topic modeling, VADER sentiment, and NetworkX co-occurrence, the engine produces a 12-section auto-generated investigation report that is reproducible across cases and comparable across users.</p>
 <p class="reveal">01 / The Cross-Domain Move</p>
 
@@ -184,8 +177,7 @@
 <!-- SECTION 2: Borrowing a tool from biostatistics -->
 <section class="band band--paper" data-spine="Borrowing a tool fro" data-section="Borrowing a tool from biostatistics">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">02 / Borrowing a tool from biostatistics</div>
-<h2 class="reveal is-chapter">Borrowing a tool from biostatistics</h2>
+    <h2 class="reveal is-chapter">Borrowing a tool from biostatistics</h2>
 <p class="reveal">In medical research, the Kaplan-Meier estimator answers a specific question: given a cohort of patients diagnosed at time zero, what is the probability that any given patient is still alive at time t? The estimator handles the inconvenient fact that not every patient&#39;s outcome is observed. Some are still alive when the study ends; some leave the study; some die from causes unrelated to the disease. These are right-censored observations, and KM is the non-parametric tool designed to use them honestly rather than throw them out.</p>
 <p class="reveal">Trust &amp; Safety analytics has a structurally identical problem. Given a user&#39;s session beginning at time zero, what is the probability that the session has remained free of policy-violative content at time t? The events of interest (encountering content flagged by a moderation system) occur on the same kind of irregular timeline as patient deaths. The censoring is the same: many sessions end without any violation event, which is not the same as those sessions being violation-free forever. The data structure is the same. The estimator transfers without modification.</p>
 <p class="reveal">The intellectual move that anchors this engine is recognizing that platform integrity decay is well-modeled as a survival problem. Once you accept the reframe, an entire toolkit comes with it: median time to violation as a population-level health metric, comparative survival functions across user segments, hazard rate analysis for identifying high-risk windows. The biostatistics literature has been refining these tools since 1958. T&amp;S analytics had been reinventing weaker versions in isolation.</p>
@@ -197,8 +189,7 @@
 <!-- SECTION 3: Four modules, one auditable pipeline -->
 <section class="band band--paper" data-spine="Four modules, one au" data-section="Four modules, one auditable pipeline">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">03 / Four modules, one auditable pipeline</div>
-<h2 class="reveal is-chapter">Four modules, one auditable pipeline</h2>
+    <h2 class="reveal is-chapter">Four modules, one auditable pipeline</h2>
 <p class="reveal">The engine runs on a YARN-managed Spark cluster sized for petabyte-scale moderation telemetry: roughly 3,000 CPU cores allocated at 2 GB per core for 7.8 TB aggregate execution memory, with shuffle partitions clamped against the cluster&#39;s physical limits to stop data skew when complex cross-metric aggregations hit the executors. The Spark layer exists to make the analytical layer tractable, not to be the contribution.</p>
 <p class="reveal">The contribution is the decomposition. The pipeline splits cleanly into four modules, each with a single responsibility, and the modules communicate through standardized intermediate CSV artifacts rather than in-memory state. Any module can be re-run in isolation when a methodology question demands it.</p>
 <p class="reveal"><img src="fig_1.svg" alt="Figure 1"></p>
@@ -211,8 +202,7 @@
 <!-- SECTION 4: Survival analysis on user sessions -->
 <section class="band band--paper" data-spine="Survival analysis on" data-section="Survival analysis on user sessions">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">04 / Survival analysis on user sessions</div>
-<h2 class="reveal is-chapter">Survival analysis on user sessions</h2>
+    <h2 class="reveal is-chapter">Survival analysis on user sessions</h2>
 <p class="reveal">The core analytical move is small in code and large in consequence. For each user-segment, the engine computes the temporal difference between consecutive content events as <code>duration</code> in seconds. The event indicator is one if the content interaction was associated with a flagged policy violation and zero otherwise. The pair (duration, event_observed) is what <code>lifelines.KaplanMeierFitter</code> wants. Fit the estimator on the segment&#39;s data, plot the survival function, read off the median time to violation. The function is two dozen lines of Python; the reframing is the work.</p>
 <pre><code># Per-user-segment survival fit
 df[time_column] = pd.to_datetime(df[time_column])
@@ -239,8 +229,7 @@ median_survival = kmf.median_survival_time_  # seconds to first violation
 <!-- SECTION 5: When did the topic neighborhood change? -->
 <section class="band band--paper" data-spine="When did the topic n" data-section="When did the topic neighborhood change?">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">05 / When did the topic neighborhood change?</div>
-<h2 class="reveal is-chapter">When did the topic neighborhood change?</h2>
+    <h2 class="reveal is-chapter">When did the topic neighborhood change?</h2>
 <p class="reveal">Survival analysis answers when violations happen. It does not answer what topical neighborhood the user was in when the violation occurred, or how that neighborhood evolved. The engine&#39;s text NLP module fills that gap with three layered passes: latent Dirichlet allocation for topic clusters, VADER and TextBlob for sentiment polarity over time, and NetworkX-backed co-occurrence graphs for word-pair structure inside a five-token window.</p>
 <p class="reveal">The triangulation matters because each signal is interpretable on its own and dramatically more useful when read against the others. A drop in the survival curve that coincides with a sentiment polarity shift and a topic-cluster turnover is a different finding than a survival drop while the topical landscape is stable. The first pattern suggests the user moved into new content territory; the second suggests the existing territory became more violative. Different remediations follow.</p>
 <p class="reveal">Co-occurrence analysis is the layer that catches what topic modeling smooths over. LDA gives you topic distributions; the co-occurrence graph gives you the word-pairs that shape the texture inside those topics. When two words that did not previously co-occur start appearing together at high frequency in a user&#39;s consumption window, the engine flags the pair regardless of whether either word is independently policy-relevant. New language patterns precede new behavior.</p>
@@ -254,8 +243,7 @@ median_survival = kmf.median_survival_time_  # seconds to first violation
 <!-- SECTION 6: Reproducibility through structured output -->
 <section class="band band--paper" data-spine="Reproducibility thro" data-section="Reproducibility through structured output">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">06 / Reproducibility through structured output</div>
-<h2 class="reveal is-chapter">Reproducibility through structured output</h2>
+    <h2 class="reveal is-chapter">Reproducibility through structured output</h2>
 <p class="reveal">The fourth module is a Jinja-templated HTML generator that takes the analytical outputs of the prior three and produces a 12-section report with a fixed structure. The structure is the contribution. When every investigation produces the same sections in the same order with the same statistical choices behind each section, two investigations of two different cases become directly comparable in a way that ad-hoc analysis never permits. Reviewers can read the seventh section of any report with a known set of expectations.</p>
 <table>
 <thead>

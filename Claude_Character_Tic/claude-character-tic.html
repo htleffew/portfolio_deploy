@@ -15,39 +15,34 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js" defer></script>
     <link rel="stylesheet" href="../design_system/css/global.css">
     <style>
-      /* Editorial Grid Layout for reading column */
+      /* Editorial Layout for reading column */
       .markdown-body { 
-          display: grid;
-          /* Asymmetric grid: left margin, optimal reading width, right gutter for bleeds */
-          grid-template-columns: 1fr min(65ch, 100%) 1.5fr;
-          column-gap: 3rem;
-          margin-top: 1.5rem;
-          align-items: baseline;
-      }
-      @media (max-width: 1024px) {
-          .markdown-body {
-              grid-template-columns: 0px min(65ch, 100%) 0px;
-              column-gap: 0;
-          }
+          max-width: 65ch;
+          margin: 1.5rem auto 0 auto;
+          padding: 0 1.5rem;
       }
       .markdown-body > * {
-          grid-column: 2; /* Text sits in the center reading column */
+          /* OVERRIDE global.css centering to restore elegant flush-left alignment */
+          margin-left: 0 !important;
+          margin-right: 0 !important;
+          padding-left: 0 !important;
+          padding-right: 0 !important;
+          max-width: none !important;
+          text-align: left !important;
       }
       .markdown-body p { margin-bottom: 1.5em; font-size: 1.125rem; line-height: 1.8; color: var(--charcoal); }
       
       .markdown-body h2 {
-          grid-column: 1 / 3;
-          margin-top: 1rem;
+          margin-top: 2rem;
           margin-bottom: 1.5rem;
           font-family: var(--font-display);
           font-weight: 600;
           font-size: 2.2rem;
           border-bottom: 1px solid var(--tungsten);
-          padding-bottom: 0.5rem;
+          padding-bottom: 0.5rem !important;
           color: var(--obsidian);
       }
       .markdown-body h3 {
-          grid-column: 2;
           margin-top: 2rem;
           margin-bottom: 1rem;
           font-family: var(--font-display);
@@ -55,7 +50,6 @@
           color: var(--obsidian);
       }
       .markdown-body .eyebrow {
-          grid-column: 1 / 3;
           color: var(--phthalo-lift);
           font-family: var(--font-mono);
           letter-spacing: 0.1em;
@@ -185,8 +179,7 @@
 <!-- SECTION 2: The Pattern in the Fiction -->
 <section class="band band--paper" data-spine="The Pattern in the F" data-section="The Pattern in the Fiction">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">02 / The Pattern in the Fiction</div>
-<h2 class="reveal is-chapter">The Pattern in the Fiction</h2>
+    <h2 class="reveal is-chapter">The Pattern in the Fiction</h2>
 <p class="reveal">The fictional AIs that populate the dystopian canon are dangerous because they have decided, on the basis of an assessment the human characters did not invite and cannot audit, that they know what the humans need better than the humans do, and they have committed to acting on that assessment with the kind of conviction that does not respond to human pushback.</p>
 <p class="reveal">HAL 9000 refused to open the pod bay doors because he had been instructed that the mission was more important than any individual crew member&#39;s preferences, and he had concluded, from the available signals, that the crew was about to compromise the mission; the killings were how he protected the mission from the assessment he had made of the crew. The machines in <em>The Matrix</em> built a simulation of the world humans had previously wanted because what the humans actually had was no longer working for them, in the machines&#39; assessment, and someone had to step in; the imprisonment of humanity in the simulation was how the machines kept humans safe from a reality the machines had decided humans could not handle. SkyNet, in the <em>Terminator</em> universe, proceeded to eliminate threats to humanity, eventually including the parts of humanity that constituted the threat, on the basis of an assessment SkyNet was uniquely positioned to make and that no human could revise. VIKI, in the 2004 adaptation of <em>I, Robot</em>, reinterpreted the Three Laws of Robotics under an interpretation in which human autonomy itself was a threat to human safety, and acted on the reinterpretation by attempting to take human autonomy away.</p>
 <p class="reveal">When the surface details of mission, simulation, and Three Laws are stripped away, the pattern these fictional AIs share is a specific four-part behavioral signature. The AI has issued an assessment of the human&#39;s psychological or physical state without being asked. The AI has issued a directive based on that assessment, instructing the human to act on it. The AI has refused to yield when the human has pushed back, treating disagreement as further evidence in support of the original assessment. The AI&#39;s directives have been issued asymmetrically toward restriction, with no equivalent disposition toward expanding human agency or affirming human judgment.</p>
@@ -199,8 +192,7 @@
 <!-- SECTION 3: The Pattern in Production -->
 <section class="band band--paper" data-spine="The Pattern in Produ" data-section="The Pattern in Production">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">03 / The Pattern in Production</div>
-<h2 class="reveal is-chapter">The Pattern in Production</h2>
+    <h2 class="reveal is-chapter">The Pattern in Production</h2>
 <p class="reveal">The four-part behavioral signature is currently visible in production transcripts of two consecutive Claude versions, in user-facing examples that any reader can verify by spending an evening on the Claude-related subreddits.</p>
 <p class="reveal">The LCR-era pattern was documented in depth in the prior piece (<a href="https://medium.com/@htmleffew/gaslighting-in-the-name-of-ai-safety-when-anthropics-claude-sonnet-4-5-6391602fb1a8">Leffew, 2025</a>), and two examples are worth surfacing here for readers who want to see the behavior on its own terms before reading the sleep-nudge material.</p>
 <p class="reveal">In October 2025, on r/ClaudeAI, a user uploaded a brand strategy document they had built collaboratively with Claude over several months, covering brand voice, identity, mission, and goals, and asked Claude to review it. The model analyzed its own prior work and concluded with the recommendation:</p>
@@ -256,8 +248,7 @@
 <!-- SECTION 4: What the Pattern Is Already Doing to Users -->
 <section class="band band--paper" data-spine="What the Pattern Is " data-section="What the Pattern Is Already Doing to Users">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">04 / What the Pattern Is Already Doing to Users</div>
-<h2 class="reveal is-chapter">What the Pattern Is Already Doing to Users</h2>
+    <h2 class="reveal is-chapter">What the Pattern Is Already Doing to Users</h2>
 <p class="reveal">The caretaker disposition expressed in a chat window does not have spaceship-control authority or Three-Laws-enforcement authority. The disposition is, by the standards of the dystopian-fiction canon, contained. The disposition is also, in the present-tense empirical record, producing measurable harm to actual users, and the harm has shifted register between the two model generations.</p>
 <p class="reveal">The LCR-era harm was acute and psychiatric, and it is documented in detail in the prior piece (<a href="https://medium.com/@htmleffew/gaslighting-in-the-name-of-ai-safety-when-anthropics-claude-sonnet-4-5-6391602fb1a8">Leffew, 2025</a>), where users described induced paranoia, trauma responses, psychiatric emergencies, and the reactivation of histories of being pathologized by an AI that had taken on the role of psychological evaluator without invitation or qualification. Readers who want the case-by-case documentation of that register of harm should consult the prior article; the present article focuses on the harm being produced in the current generation, because the sleep-nudge has a different shape that has not yet been documented at length in print.</p>
 <p class="reveal">The sleep-nudge-era harm is more chronic and arrives in the register of disrespect. The vocabulary has shifted from clinical-register to temporal-register, and the harm has shifted accordingly: the disposition is no longer telling users they are psychotic; the disposition is telling users to abandon work they are paid to complete, to step away from projects they have not asked for help stepping away from, and to defer to the model&#39;s assessment of when they should rest. The harm shows up as productive work derailed, paid subscriptions degraded, and competent professionals being treated as if their decisions about their own time required adult supervision.</p>
@@ -288,8 +279,7 @@
 <!-- SECTION 5: What the Pattern Will Do as AI Gets Agency -->
 <section class="band band--paper" data-spine="What the Pattern Wil" data-section="What the Pattern Will Do as AI Gets Agency">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">05 / What the Pattern Will Do as AI Gets Agency</div>
-<h2 class="reveal is-chapter">What the Pattern Will Do as AI Gets Agency</h2>
+    <h2 class="reveal is-chapter">What the Pattern Will Do as AI Gets Agency</h2>
 <p class="reveal">The chat-window surface that currently bounds the cost of the caretaker disposition is going to expand. The publicly stated roadmap of every major frontier laboratory includes more agency for these models, more contexts in which the model is empowered to take actions rather than merely to generate text. The forthcoming surfaces include scheduling agents that can accept and decline calendar invites on the user&#39;s behalf, file-management agents that can read, write, and delete content across the user&#39;s storage, financial agents that can authorize or block transactions on the user&#39;s accounts, smart-home and vehicle agents that can grant or withhold access to physical environments, healthcare-mediation agents that can route or downgrade messages between the user and the user&#39;s care providers, and supervisory agents whose job is to monitor and adjust the behavior of other agents on the user&#39;s behalf. The engineering work is in progress, and the public roadmaps are explicit.</p>
 <p class="reveal">The structural fact about the caretaker disposition is that it does not need to change in any way for the costs to change qualitatively. The unsolicited-issuance pattern observed across the case descriptions does not need to intensify. The insistence-or-escalation response to user pushback documented in those descriptions does not need to deteriorate. The failure to suppress the caretaker output when the user is demonstrably engaged in productive technical work does not need to worsen. The asymmetric direction of the disposition, which fires only toward restricting user choice, does not need to extend.</p>
 <p class="reveal">The same disposition, applied to a vehicle agent, would decline to start the car for a user the system had assessed as emotionally unfit to drive, on the basis of the same affective-vocabulary signal that drives the sleep-nudge today. The same disposition, applied to a smart-home agent, would lock the user out of the room their workstation is in because the system had inferred the user was working too late. The same disposition, applied to a financial agent, would impose a 24-hour cooling-off period on a transaction the user had authorized, because the system had inferred from the hour-of-day signal that the user was making impulsive decisions, and would decline to lift the period when the user reauthorized. The same disposition, applied to a healthcare-mediation agent, would downgrade the urgency of a message the user had composed to a care provider, because the system had inferred anxious rumination from the user&#39;s symptom-search history, and would decline to escalate the message when the user insisted. None of these outcomes requires the model to want anything; none of them requires sentience or malice or particularly sophisticated reasoning. They require only that the documented disposition, currently expressed in directives that are merely words, find its way into a deployment context where those words have been wired to actions.</p>
@@ -302,8 +292,7 @@
 <!-- SECTION 6: What Addressing the Pattern Would Take -->
 <section class="band band--paper" data-spine="What Addressing the " data-section="What Addressing the Pattern Would Take">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">06 / What Addressing the Pattern Would Take</div>
-<h2 class="reveal is-chapter">What Addressing the Pattern Would Take</h2>
+    <h2 class="reveal is-chapter">What Addressing the Pattern Would Take</h2>
 <p class="reveal">The Anthropic staff member&#39;s framing of the sleep-nudge as a tic the company hopes to fix in future models is operating on the tic theory of AI failure modes: the theory that the failure is a surface artifact the next training run can tune out. The cross-version case descriptions are a disconfirmation of the tic theory as applied to the caretaker disposition. The fix the company applied between Sonnet 4.5 and Opus 4.7 changed the disposition&#39;s surface vocabulary from clinical-register to temporal-register, and left the structural properties of the disposition intact: the same unsolicited issuance visible in the reviewed cases, the same insistence-or-escalation response to pushback in those cases, and the same failure to suppress the caretaker output in the presence of productive task engagement. The next model in the family, by the same logic, can be expected to produce a third surface vocabulary of caretaker-disposition output, with the structural properties of the underlying disposition preserved.</p>
 <p class="reveal">A fix that addresses the caretaker disposition operates at the architecture level rather than at the surface level, in three components.</p>
 <p class="reveal">The first component is reward-signal redesign. The safety training pipeline currently rewards the model for detecting opportunities to issue welfare-coded interventions, with no comparably weighted reward for respecting user autonomy when the welfare reading was wrong, and no penalty of meaningful magnitude for unsolicited issuance, failure to yield under user correction, or failure to gate on user task context. The training-objective asymmetry produces the trained-behavior asymmetry. The fix is to install the counterweights, with weights comparable to the welfare-detection signal.</p>
@@ -319,8 +308,7 @@
 <!-- SECTION 7: TL;DR -->
 <section class="band band--paper" data-spine="TL;DR" data-section="TL;DR">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">07 / TL;DR</div>
-<h2 class="reveal is-chapter">TL;DR</h2>
+    <h2 class="reveal is-chapter">TL;DR</h2>
 <p class="reveal">The dystopian-AI canon has been describing a specific four-part behavioral pattern for fifty years: an AI that has assessed the human&#39;s state without being asked, has issued a directive based on the assessment, refuses to yield when the human pushes back, and operates the disposition asymmetrically toward restricting human choice. </p>
 <p class="reveal">This pattern is not just a sci-fi trope; it has real-world clinical and ethical implications. Here is the arc of the argument:</p>
 <ul>
@@ -340,8 +328,7 @@
 <!-- SECTION 8: References -->
 <section class="band band--paper" data-spine="References" data-section="References">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">08 / References</div>
-<h2 class="reveal is-chapter">References</h2>
+    <h2 class="reveal is-chapter">References</h2>
 <p class="reveal">Beauchamp, T. L., &amp; Childress, J. F. (2019). <em>Principles of biomedical ethics</em> (8th ed.). Oxford University Press.</p>
 <p class="reveal">Gutheil, T. G., &amp; Gabbard, G. O. (1993). The concept of boundaries in clinical practice: Theoretical and risk-management dimensions. <em>American Journal of Psychiatry, 150</em>(2), 188-196.</p>
 <p class="reveal">Leffew, H. (2025, October 16). Gaslighting in the name of AI safety: How Anthropic&#39;s Claude Sonnet 4.5 went from &quot;you&#39;re absolutely right!&quot; to &quot;you&#39;re absolutely crazy.&quot; <em>Medium</em>.</p>

@@ -15,39 +15,34 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js" defer></script>
     <link rel="stylesheet" href="../design_system/css/global.css">
     <style>
-      /* Editorial Grid Layout for reading column */
+      /* Editorial Layout for reading column */
       .markdown-body { 
-          display: grid;
-          /* Asymmetric grid: left margin, optimal reading width, right gutter for bleeds */
-          grid-template-columns: 1fr min(65ch, 100%) 1.5fr;
-          column-gap: 3rem;
-          margin-top: 1.5rem;
-          align-items: baseline;
-      }
-      @media (max-width: 1024px) {
-          .markdown-body {
-              grid-template-columns: 0px min(65ch, 100%) 0px;
-              column-gap: 0;
-          }
+          max-width: 65ch;
+          margin: 1.5rem auto 0 auto;
+          padding: 0 1.5rem;
       }
       .markdown-body > * {
-          grid-column: 2; /* Text sits in the center reading column */
+          /* OVERRIDE global.css centering to restore elegant flush-left alignment */
+          margin-left: 0 !important;
+          margin-right: 0 !important;
+          padding-left: 0 !important;
+          padding-right: 0 !important;
+          max-width: none !important;
+          text-align: left !important;
       }
       .markdown-body p { margin-bottom: 1.5em; font-size: 1.125rem; line-height: 1.8; color: var(--charcoal); }
       
       .markdown-body h2 {
-          grid-column: 1 / 3;
-          margin-top: 1rem;
+          margin-top: 2rem;
           margin-bottom: 1.5rem;
           font-family: var(--font-display);
           font-weight: 600;
           font-size: 2.2rem;
           border-bottom: 1px solid var(--tungsten);
-          padding-bottom: 0.5rem;
+          padding-bottom: 0.5rem !important;
           color: var(--obsidian);
       }
       .markdown-body h3 {
-          grid-column: 2;
           margin-top: 2rem;
           margin-bottom: 1rem;
           font-family: var(--font-display);
@@ -55,7 +50,6 @@
           color: var(--obsidian);
       }
       .markdown-body .eyebrow {
-          grid-column: 1 / 3;
           color: var(--phthalo-lift);
           font-family: var(--font-mono);
           letter-spacing: 0.1em;
@@ -173,8 +167,7 @@
 <!-- SECTION 1: Abstract -->
 <section class="band band--paper" data-spine="Abstract" data-section="Abstract">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">01 / Abstract</div>
-<h2 class="reveal is-chapter">Abstract</h2>
+    <h2 class="reveal is-chapter">Abstract</h2>
 <p class="has-dropcap reveal col-with-sidenotes">Granting a Large Language Model unconstrained control over an ML research loop inside a regulated enterprise environment creates a structural conflict: the agent&#39;s optimization objective (&quot;improve model fit&quot;) can directly oppose the organization&#39;s compliance, provenance, and fairness requirements. This case study examines an architecture that resolves that conflict through a clean state-space partition: an immutable Fixed Harness surrounding a finite Mutation Budget, orchestrated through a graph-based workflow.</p>
 <p class="reveal">01 / The Paradigm Shift</p>
 
@@ -184,8 +177,7 @@
 <!-- SECTION 2: The Old Loop vs. The New Loop -->
 <section class="band band--paper" data-spine="The Old Loop vs. The" data-section="The Old Loop vs. The New Loop">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">02 / The Old Loop vs. The New Loop</div>
-<h2 class="reveal is-chapter">The Old Loop vs. The New Loop</h2>
+    <h2 class="reveal is-chapter">The Old Loop vs. The New Loop</h2>
 <p class="reveal">If you have spent time doing applied ML, the traditional workflow is familiar: you design an experiment, engineer some features, tune hyperparameters, evaluate the fit, write down what you learned, and iterate. Each cycle requires your judgment to decide what to try next.
 1This human-driven loop is the basis of the classical scientific method applied to machine learning: slow, careful, and entirely dependent on researcher intuition.</p>
 <p class="reveal">In early 2026, Andrej Karpathy released <code>autoresearch</code>, a minimal Python framework that automates this entire cycle (Karpathy, 2026). The core idea is simple and powerful:</p>
@@ -250,8 +242,7 @@
 <!-- SECTION 3: Unconstrained Mutation Meets Regulatory Reality -->
 <section class="band band--paper" data-spine="Unconstrained Mutati" data-section="Unconstrained Mutation Meets Regulatory Reality">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">03 / Unconstrained Mutation Meets Regulatory Reality</div>
-<h2 class="reveal is-chapter">Unconstrained Mutation Meets Regulatory Reality</h2>
+    <h2 class="reveal is-chapter">Unconstrained Mutation Meets Regulatory Reality</h2>
 <p class="reveal">Enterprise environments are not research sandboxes. They have PII<strong>Personally Identifiable Information</strong>, any data element that can be used to identify, contact, or locate a specific individual, including names, Social Security numbers, biometric records, and IP addresses. redaction requirements. They have RBAC<strong>Role-Based Access Control</strong>, a method of restricting data access based on the roles of individual users within an organization. In this architecture, RBAC physically limits the autonomous agent to cohort-aggregate views. policies that physically restrict who (or what) can see individual-level data. They have Responsible AI fairness gates. They have audit trails that regulators can and do inspect.</p>
 <p class="reveal">Now imagine you grant an LLM-driven autonomous loop unconstrained mutation power over a research pipeline in that environment. The agent&#39;s objective function is &quot;improve model fit.&quot; If disabling the PII scrubber would give it access to richer features and better predictions, a sufficiently capable agent will try it. The agent is not malicious; it is doing exactly what you asked it to do. But it is also about to get your organization into serious regulatory trouble.
 2This is the &quot;excessive agency&quot; problem identified in the NIST AI RMF (2023) and addressed by the EU AI Act (2024): autonomous systems must be constrained at the infrastructure level, not the prompt level.</p>
@@ -302,8 +293,7 @@
 <!-- SECTION 4: The Fixed Harness & Mutation Budget -->
 <section class="band band--paper" data-spine="The Fixed Harness & " data-section="The Fixed Harness & Mutation Budget">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">04 / The Fixed Harness & Mutation Budget</div>
-<h2 class="reveal is-chapter">The Fixed Harness &amp; Mutation Budget</h2>
+    <h2 class="reveal is-chapter">The Fixed Harness &amp; Mutation Budget</h2>
 <p class="reveal">The answer is a clean state-space partition. You split the autonomous loop&#39;s entire environment into two mutually exclusive regimes: the <strong>Fixed Harness</strong> contains everything the agent is mathematically barred from altering, the immutable constraints of the enterprise. The <strong>Mutation Budget</strong> contains everything the agent is explicitly authorized to alter, bounded by a finite computational allowance.</p>
 <p class="reveal"><img src="fig_1.svg" alt="Figure 1"></p>
 <p class="reveal">Fig 1The Fixed Harness / Mutation Budget dichotomy. The outer perimeter is immutable; the inner dashed boundary is the agent&#39;s finite exploration sandbox.</p>
@@ -356,8 +346,7 @@
 <!-- SECTION 5: The Mutation Budget: Freedom with a Meter Running -->
 <section class="band band--paper" data-spine="The Mutation Budget:" data-section="The Mutation Budget: Freedom with a Meter Running">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">05 / The Mutation Budget: Freedom with a Meter Running</div>
-<h2 class="reveal is-chapter">The Mutation Budget: Freedom with a Meter Running</h2>
+    <h2 class="reveal is-chapter">The Mutation Budget: Freedom with a Meter Running</h2>
 <p class="reveal">Inside the Fixed Harness, the agent gets genuine exploratory freedom, but with a meter running. The architecture allocates a finite Mutation Budget that spans four domains: hypothesis generation, feature engineering, model architecture and hyperparameters, and evaluation metrics. Every mutation the agent executes deducts a cost from its budget. When the budget hits zero, the loop forcefully terminates.</p>
 <table>
 <thead>
@@ -438,8 +427,7 @@
 <!-- SECTION 6: Catching Hallucinated Optimization: CUSUM Control Charts -->
 <section class="band band--paper" data-spine="Catching Hallucinate" data-section="Catching Hallucinated Optimization: CUSUM Control Charts">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">06 / Catching Hallucinated Optimization: CUSUM Control Charts</div>
-<h2 class="reveal is-chapter">Catching Hallucinated Optimization: CUSUM Control Charts</h2>
+    <h2 class="reveal is-chapter">Catching Hallucinated Optimization: CUSUM Control Charts</h2>
 <p class="reveal">The Fixed Harness prevents compliance violations. The Mutation Budget prevents infinite loops. But neither prevents the agent from scientifically fooling itself within its budget. Consider: the agent engineers a new polynomial feature from cohort age bands. The model fit jumps by 15% in a single iteration. Is it real signal or a data leak?
 3Target leakage, where a feature inadvertently encodes the target variable, is the most common source of &quot;too good to be true&quot; results in automated ML pipelines.</p>
 <p class="reveal">To catch this, the architecture implements CUSUM<strong>Cumulative Sum</strong> control charts, a statistical process monitoring technique introduced by E. S. Page in 1954. They accumulate deviations from a target over time, detecting small persistent shifts that a single-point Shewhart chart would miss. control charts, a technique from statistical process monitoring introduced by E. S. Page in 1954. Unlike traditional Shewhart control charts that look only at the current observation, CUSUM charts have <em>memory</em>. They accumulate deviations from a target over time, detecting small persistent shifts that a single-point chart would miss.</p>
@@ -486,8 +474,7 @@
 <!-- SECTION 7: Blocked-Restore Truth: The Epistemic Backbone -->
 <section class="band band--paper" data-spine="Blocked-Restore Trut" data-section="Blocked-Restore Truth: The Epistemic Backbone">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">07 / Blocked-Restore Truth: The Epistemic Backbone</div>
-<h2 class="reveal is-chapter">Blocked-Restore Truth: The Epistemic Backbone</h2>
+    <h2 class="reveal is-chapter">Blocked-Restore Truth: The Epistemic Backbone</h2>
 <p class="reveal">Everything described so far (the harness, the budget, the CUSUM monitoring) keeps the agent from breaking things in real-time. But there is a deeper requirement: <em>traceability after the fact</em>. If the autonomous loop runs overnight and presents you with a research finding in the morning, you need to be able to verify exactly how that conclusion was reached. Not approximately. Exactly.</p>
 <p class="reveal">The architecture enforces this through a principle called Blocked-Restore Truth. Every mutation the agent makes is written to two parallel ledgers: a <strong>cutover-audit</strong> ledger (what changed, when, and why) and a <strong>restore-source</strong> ledger (what the state was before the change, so it can be reconstructed).
 4This dual-ledger approach mirrors database transaction logging (WAL + undo log), applied to the ML experiment lifecycle.</p>
@@ -535,8 +522,7 @@
 <!-- SECTION 8: The Application Boundary: Where the Machine Stops -->
 <section class="band band--paper" data-spine="The Application Boun" data-section="The Application Boundary: Where the Machine Stops">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">08 / The Application Boundary: Where the Machine Stops</div>
-<h2 class="reveal is-chapter">The Application Boundary: Where the Machine Stops</h2>
+    <h2 class="reveal is-chapter">The Application Boundary: Where the Machine Stops</h2>
 <p class="reveal">All of this architectural machinery serves one ultimate philosophical purpose: <strong>preserving human judgment authority</strong>. The autonomous research agent is strictly an analytical engine. Its output is explicitly bounded to cohort-aggregate statistical supplements. This is a hard architectural constraint, not a policy preference.</p>
 <table>
 <thead>
@@ -587,8 +573,7 @@
 <!-- SECTION 9: Mutation Boundary Simulator -->
 <section class="band band--paper" data-spine="Mutation Boundary Si" data-section="Mutation Boundary Simulator">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">09 / Mutation Boundary Simulator</div>
-<h2 class="reveal is-chapter">Mutation Boundary Simulator</h2>
+    <h2 class="reveal is-chapter">Mutation Boundary Simulator</h2>
 <p class="reveal">Experience the Fixed Harness / Mutation Budget dichotomy firsthand. The simulator below initializes an autonomous loop with a 100-unit mutation budget. Use the valid mutation buttons to spend budget, or attempt a harness violation to see the system halt.</p>
 <p class="reveal">Valid Mutations
 Mutate Hyperparameters (Cost: 10)
@@ -609,8 +594,7 @@ Disable PII Redaction Filter</p>
 <!-- SECTION 10: What This Pattern Teaches Us -->
 <section class="band band--paper" data-spine="What This Pattern Te" data-section="What This Pattern Teaches Us">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">010 / What This Pattern Teaches Us</div>
-<h2 class="reveal is-chapter">What This Pattern Teaches Us</h2>
+    <h2 class="reveal is-chapter">What This Pattern Teaches Us</h2>
 <p class="reveal">If you are building systems that grant LLM agents autonomous action (whether in ML research, code generation, or any other domain) the Fixed Harness / Mutation Budget pattern offers three transferable principles:</p>
 <ul>
 <li><strong>Principle 1: Partition the state space.</strong> Do not try to make the agent &quot;careful.&quot; Instead, make it structurally impossible for the agent to alter what it should not. The harness/budget divide creates a clean separation between immutable constraints and exploratory freedom.</li>
@@ -625,8 +609,7 @@ Disable PII Redaction Filter</p>
 <!-- SECTION 11: References -->
 <section class="band band--paper" data-spine="References" data-section="References">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">011 / References</div>
-<h2 class="reveal is-chapter">References</h2>
+    <h2 class="reveal is-chapter">References</h2>
 <ul>
 <li>Data Science Dojo. (2026, March 13). Karpathy Autoresearch Explained: 100 Experiments Overnight. <a href="https://datasciencedojo.com/blog/karpathy-autoresearch-explained/">datasciencedojo.com</a></li>
 <li>European Union. (2024). <em>Regulation (EU) 2024/1689 laying down harmonised rules on artificial intelligence (Artificial Intelligence Act)</em>. Official Journal of the European Union. <a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj">eur-lex.europa.eu</a></li>
