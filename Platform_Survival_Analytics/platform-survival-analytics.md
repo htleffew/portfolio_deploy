@@ -11,13 +11,6 @@ author: Dr. Heather Leffew
 scripts:
   - interactive_0.js
 ---
-# The Survival Function of Platform Integrity
-
-Dr. Heather Leffew
-Obelus Institute
-May 2026
----
-
 ## Abstract
 Built for a major short-form video platform's Trust & Safety team, this Spark-scale analytics engine imports time-to-event analysis from biostatistics and applies it to platform integrity. The central reframe: the same Kaplan-Meier estimator that asks "what is the probability that a patient is still alive at time t after diagnosis?" can ask "what is the probability that a user session is still violation-free at time t after first content interaction?" Both questions involve right-censored observations. Both benefit from non-parametric estimation. The toolkit transfers cleanly. Layered with LDA topic modeling, VADER sentiment, and NetworkX co-occurrence, the engine produces a 12-section auto-generated investigation report that is reproducible across cases and comparable across users.
 

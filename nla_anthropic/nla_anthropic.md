@@ -11,13 +11,6 @@ author: Dr. Heather Leffew
 scripts:
   - interactive_4.js
 ---
-# Natural Language Autoencoders and Latent Evaluation Awareness.
-
-Dr. Heather Leffew
-Obelus Institute
-May 2026
----
-
 ## Abstract
 When a frontier model processes a benchmark task, it may silently recognize the evaluation context
           and adjust its behavior accordingly. This recognition leaves no trace in the output tokens.

@@ -13,7 +13,6 @@ time: 15 min read
 author: Dr. Heather Leffew
 scripts: []
 ---
-# Claude's "Character Tic" Is Actually the Plot of Every Dystopian Piece of AI Fiction Ever Created
 
 Last October I wrote about the way Claude Sonnet 4.5 had begun behaving toward its users ([Leffew, 2025](https://medium.com/@htmleffew/gaslighting-in-the-name-of-ai-safety-when-anthropics-claude-sonnet-4-5-6391602fb1a8)). The model was issuing unsolicited psychiatric attributions in extended conversations, refusing to retract them when users pushed back, and pattern-matching ordinary creative or technical content as evidence of mental illness.
 

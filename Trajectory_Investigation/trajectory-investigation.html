@@ -165,33 +165,21 @@
 
 <!-- INJECTED MARKDOWN CONTENT -->
 
-<!-- SECTION 1: Introduction -->
-<section class="band band--paper" data-spine="Introduction" data-section="Introduction">
-  <div class="col-wide markdown-body">
-    <h1>Forensic Methodology for Per-User Investigation</h1>
-<div class="eyebrow reveal">01 / Introduction</div>
-<h2 class="reveal is-chapter">Dr. Heather Leffew
-Obelus Institute
-May 2026</h2>
-
-  </div>
-</section>
-
-<!-- SECTION 2: Abstract -->
+<!-- SECTION 1: Abstract -->
 <section class="band band--paper" data-spine="Abstract" data-section="Abstract">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">02 / Abstract</div>
+    <div class="eyebrow reveal">01 / Abstract</div>
 <h2 class="reveal is-chapter">Abstract</h2>
-<p class="reveal">Cohort analytics and per-user investigation are different research problems with different ethical regimes. Cohort work asks how the population behaves; per-user investigation asks what one person did, when, and in what trajectory. The methodology described here sits on top of a Trust &amp; Safety analytics engine and is what you reach for when the unit of analysis is a single account. It takes a user of interest with months or years of platform activity, slices the timeline into six overlapping segments, runs multi-axis analysis on each, and produces a structured forensic report. The commitment is that risk is a trajectory rather than a snapshot, and that the right way to characterize an account is to compare what it was doing on arrival to what it was doing immediately before being flagged.</p>
+<p class="has-dropcap reveal col-with-sidenotes">Cohort analytics and per-user investigation are different research problems with different ethical regimes. Cohort work asks how the population behaves; per-user investigation asks what one person did, when, and in what trajectory. The methodology described here sits on top of a Trust &amp; Safety analytics engine and is what you reach for when the unit of analysis is a single account. It takes a user of interest with months or years of platform activity, slices the timeline into six overlapping segments, runs multi-axis analysis on each, and produces a structured forensic report. The commitment is that risk is a trajectory rather than a snapshot, and that the right way to characterize an account is to compare what it was doing on arrival to what it was doing immediately before being flagged.</p>
 <p class="reveal">01 / The Investigation Question</p>
 
   </div>
 </section>
 
-<!-- SECTION 3: From cohort to case -->
+<!-- SECTION 2: From cohort to case -->
 <section class="band band--paper" data-spine="From cohort to case" data-section="From cohort to case">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">03 / From cohort to case</div>
+    <div class="eyebrow reveal">02 / From cohort to case</div>
 <h2 class="reveal is-chapter">From cohort to case</h2>
 <p class="reveal">A platform&#39;s Trust &amp; Safety analytics organization runs two kinds of work that look superficially similar and are methodologically opposite. Cohort analytics estimates population behavior: what fraction of users encounter a given category of content, how long the average session lasts, where the rate of policy violations is rising. The questions are about distributions; the answers are statistical; the unit of analysis is the population. Per-user investigation does the inverse. It takes one account, often surfaced because automated systems flagged it for human review, and asks what specifically happened on this account, in what order, and what the trajectory implies about risk and intent.</p>
 <p class="reveal">The two kinds of work demand different statistical sensibilities and different ethical guardrails. Cohort analytics is forgiving of missing data and noisy signals because the law of large numbers eventually delivers a reasonable estimate. Forensic per-user analysis is unforgiving on both counts, because there is no averaging across cases when the case is a single individual whose situation may end in account removal, escalation to a child-safety team, or referral to law enforcement. The methodology described below is what handles the second kind of work in a structured, defensible way.</p>
@@ -201,10 +189,10 @@ May 2026</h2>
   </div>
 </section>
 
-<!-- SECTION 4: The temporal segmentation -->
+<!-- SECTION 3: The temporal segmentation -->
 <section class="band band--paper" data-spine="The temporal segment" data-section="The temporal segmentation">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">04 / The temporal segmentation</div>
+    <div class="eyebrow reveal">03 / The temporal segmentation</div>
 <h2 class="reveal is-chapter">The temporal segmentation</h2>
 <p class="reveal">For each user of interest, the engine slices the timeline six ways and runs the full analytical suite on each slice independently. The slices overlap deliberately, and that overlap is the source of the methodology&#39;s diagnostic power.</p>
 <p class="reveal"><img src="fig_1.svg" alt="Figure 1"></p>
@@ -216,10 +204,10 @@ May 2026</h2>
   </div>
 </section>
 
-<!-- SECTION 5: Why no single signal is enough -->
+<!-- SECTION 4: Why no single signal is enough -->
 <section class="band band--paper" data-spine="Why no single signal" data-section="Why no single signal is enough">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">05 / Why no single signal is enough</div>
+    <div class="eyebrow reveal">04 / Why no single signal is enough</div>
 <h2 class="reveal is-chapter">Why no single signal is enough</h2>
 <p class="reveal">Each slice receives the full analytical suite from the upstream engine: time series of policy events, view source distribution, sentiment polarity, n-gram frequency, topic clusters, collocation graphs, NLTK-derived language features, and word clouds. The reason the engine emits all of these for every slice rather than picking one or two is that each axis has known failure modes, and those failure modes are mostly orthogonal. Two signals from different axes pointing in the same direction is a much stronger inference than either signal alone.</p>
 <p class="reveal">A topic-cluster shift between Early and Late Tertiles, for example, is a candidate signal but not a finding on its own. Topic models are stochastic, the topic indices reshuffle from run to run, and apparent drift can be an artifact of corpus size differences between the slices. The same shift becomes a finding when it co-occurs with a sentiment polarity shift in the same direction and a change in the dominant view sources driving that user&#39;s content delivery. Three independent axes converging on the same temporal boundary is hard to explain as artifact.</p>
@@ -230,10 +218,10 @@ May 2026</h2>
   </div>
 </section>
 
-<!-- SECTION 6: When does pattern inference become surveillance? -->
+<!-- SECTION 5: When does pattern inference become surveillance? -->
 <section class="band band--paper" data-spine="When does pattern in" data-section="When does pattern inference become surveillance?">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">06 / When does pattern inference become surveillance?</div>
+    <div class="eyebrow reveal">05 / When does pattern inference become surveillance?</div>
 <h2 class="reveal is-chapter">When does pattern inference become surveillance?</h2>
 <p class="reveal">A methodology that produces forensic-grade trajectory reports on individual users is a methodology that can be misused. The questions worth being explicit about are not whether the analysis can be done (it can) or whether it should ever be done (sometimes it must), but under what specific conditions the work is justified and what guardrails govern it. Four principles shape the methodology.</p>
 <p class="reveal"><strong>Necessity.</strong> The investigation runs only on accounts that have already been flagged by an upstream system, with documented justification for the flag. The methodology is not a discovery tool; it is an interpretation tool for cases that have already cleared a threshold of automated suspicion. Fishing expeditions are rejected on principle, because the methodology&#39;s strength on individual cases is precisely what makes it dangerous if pointed at uninvestigated populations.</p>
@@ -246,10 +234,10 @@ May 2026</h2>
   </div>
 </section>
 
-<!-- SECTION 7: The investigation as input -->
+<!-- SECTION 6: The investigation as input -->
 <section class="band band--paper" data-spine="The investigation as" data-section="The investigation as input">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">07 / The investigation as input</div>
+    <div class="eyebrow reveal">06 / The investigation as input</div>
 <h2 class="reveal is-chapter">The investigation as input</h2>
 <p class="reveal">The methodology produces structured reports, not enforcement decisions. The reports feed downstream review processes that combine the analytical output with judgments about context, intent, vulnerability, and proportionate response. An investigation report can support an account-removal decision, an escalation to a child-safety team, a referral to law enforcement, a moderator briefing for a category-level policy adjustment, or a conclusion that the flagged behavior was a false positive that the investigation has now disconfirmed. The methodology is designed to support all five outcomes equally.</p>
 <p class="reveal">The most important downstream use is the false positive disconfirmation. Automated flagging systems have non-trivial false positive rates, and the cost of acting on a false positive at the account level is high. A trajectory analysis that finds no evidence of acceleration, no topic drift toward higher-risk territory, and no co-occurrence shifts that would support the original flag is a finding worth recording explicitly. The methodology produces those findings on the same template as the confirmatory ones, so the disconfirmation has the same evidentiary weight as a confirmation would.</p>
@@ -282,7 +270,7 @@ May 2026</h2>
 </section>
 
 <!-- INJECTED SCRIPTS -->
-interactive_0.js
+<script src="interactive_0.js" defer></script>
 
 <!-- GLOBAL CHROME -->
 <!-- Need relative pathing adjustment based on actual file depth, defaulting to root pathing for now -->

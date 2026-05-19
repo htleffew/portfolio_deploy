@@ -11,13 +11,6 @@ author: Dr. Heather Leffew
 scripts:
   - interactive_0.js
 ---
-# Forensic Methodology for Per-User Investigation
-
-Dr. Heather Leffew
-Obelus Institute
-May 2026
----
-
 ## Abstract
 Cohort analytics and per-user investigation are different research problems with different ethical regimes. Cohort work asks how the population behaves; per-user investigation asks what one person did, when, and in what trajectory. The methodology described here sits on top of a Trust & Safety analytics engine and is what you reach for when the unit of analysis is a single account. It takes a user of interest with months or years of platform activity, slices the timeline into six overlapping segments, runs multi-axis analysis on each, and produces a structured forensic report. The commitment is that risk is a trajectory rather than a snapshot, and that the right way to characterize an account is to compare what it was doing on arrival to what it was doing immediately before being flagged.
 
