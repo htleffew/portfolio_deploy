@@ -1,10 +1,11 @@
 ---
-title: "Testing the Markdown SSG"
-description: "This is a test of the new automated SSG pipeline for portfolio deployment...."
-category: "Engineering"
-subcategory: "Tooling"
-format: "CASE STUDY"
-time: "5 min read"
+title: Testing the Markdown SSG
+description: This is a test of the new automated SSG pipeline for portfolio deployment....
+category: Engineering
+subcategory: Tooling
+format: CASE STUDY
+time: 5 min read
+author: Dr. Heather Leffew
 scripts: []
 ---
 # Testing the Markdown SSG

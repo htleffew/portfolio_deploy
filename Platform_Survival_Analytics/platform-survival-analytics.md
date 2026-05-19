@@ -1,11 +1,15 @@
 ---
-title: "The Survival Function of Platform Integrity"
-description: "Built for a major short-form video platform's Trust & Safety team, this Spark-scale analytics engine imports time-to-eve..."
-category: "Platform Integrity"
-subcategory: "T&S Analytics"
-format: "CASE STUDY"
-time: "14 min read"
-scripts: ["interactive_0.js"]
+title: The Survival Function of Platform Integrity
+description: >-
+  Built for a major short-form video platform's Trust & Safety team, this
+  Spark-scale analytics engine imports time-to-eve...
+category: Platform Integrity
+subcategory: T&S Analytics
+format: CASE STUDY
+time: 14 min read
+author: Dr. Heather Leffew
+scripts:
+  - interactive_0.js
 ---
 # The Survival Function of Platform Integrity
 

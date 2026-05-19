@@ -1,20 +1,21 @@
 ---
-title: "Neurobiological Differentiation of Violent Offender Types"
-description: "A Fielding Graduate University paper reviewing the neurobiological correlates of impulsive (ImO) and instrumental (InO) offending, mapped to non-psychopathic and psychopathic antisociality (NPA, PA). The literature converges on a cortical-versus-subcortical distinction: NPA impulsive offending is largely a frontal-lobe and executive-dysfunction story; PA instrumental offending is largely a subcortical, affective-deficit, and learning-impairment story. The paper argues for a dimensional rather than categorical reading of psychopathy and antisociality, and for type-specific intervention design."
-category: "Forensic Neuroscience"
-subcategory: "Literature Review"
-subject: "Violent offender neurobiology"
-architecture: "Cortical (NPA) vs subcortical (PA) profiles"
-output: "Type-specific intervention framework"
-format: "CASE STUDY"
-time: "16 min read"
-tags:
-  - "Forensic Neuroscience"
-  - "Psychopathy"
-  - "Antisocial Behavior"
-  - "Neurobiology"
-  - "Threat Assessment"
-visual: "<svg fill=\"none\" viewBox=\"0 0 600 600\"><defs><radialGradient cx=\"50%\" cy=\"50%\" id=\"r1\" r=\"50%\"><stop offset=\"0%\" stop-color=\"#3866A0\" stop-opacity=\"0.4\"/><stop offset=\"100%\" stop-color=\"#0F3A6B\" stop-opacity=\"0\"/></radialGradient></defs><circle cx=\"300\" cy=\"300\" fill=\"url(#r1)\" r=\"280\"/><g stroke=\"#7A1626\" stroke-width=\"1\" fill=\"none\" opacity=\"0.7\"><path d=\"M 200 220 Q 220 180 280 200 Q 320 220 380 180 Q 410 160 400 220\"/><circle cx=\"260\" cy=\"260\" r=\"24\" fill=\"#7A1626\" opacity=\"0.7\"/><circle cx=\"340\" cy=\"260\" r=\"24\" fill=\"#7A1626\" opacity=\"0.7\"/></g><g stroke=\"#3866A0\" stroke-width=\"1\" fill=\"none\" opacity=\"0.6\"><circle cx=\"300\" cy=\"360\" r=\"60\"/><circle cx=\"260\" cy=\"360\" r=\"14\" fill=\"#3866A0\" opacity=\"0.5\"/><circle cx=\"340\" cy=\"360\" r=\"14\" fill=\"#3866A0\" opacity=\"0.5\"/></g></svg>"
+title: Neurobiological Differentiation of Violent Offender Types
+description: >-
+  A Fielding Graduate University paper reviewing the neurobiological correlates
+  of impulsive (ImO) and instrumental (InO) offending, mapped to
+  non-psychopathic and psychopathic antisociality (NPA, PA). The literature
+  converges on a cortical-versus-subcortical distinction: NPA impulsive
+  offending is largely a frontal-lobe and executive-dysfunction story; PA
+  instrumental offending is largely a subcortical, affective-deficit, and
+  learning-impairment story. The paper argues for a dimensional rather than
+  categorical reading of psychopathy and antisociality, and for type-specific
+  intervention design.
+category: Forensic Neuroscience
+subcategory: Literature Review
+format: CASE STUDY
+time: 16 min read
+author: Dr. Heather Leffew
+scripts: []
 ---
 # Neurobiological Differentiation of Violent Offender Types
 

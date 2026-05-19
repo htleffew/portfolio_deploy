@@ -1,11 +1,15 @@
 ---
-title: "Autonomous Research & Mutation Boundaries."
-description: "Granting a Large Language Model unconstrained control over an ML research loop inside a regulated enterprise environment..."
-category: "Enterprise LLM Orchestration"
-subcategory: "Graph-Based Workflows"
-format: "CASE STUDY"
-time: "5 min read"
-scripts: ["interactive_0.js"]
+title: Autonomous Research & Mutation Boundaries.
+description: >-
+  Granting a Large Language Model unconstrained control over an ML research loop
+  inside a regulated enterprise environment...
+category: Enterprise LLM Orchestration
+subcategory: Graph-Based Workflows
+format: CASE STUDY
+time: 5 min read
+author: Dr. Heather Leffew
+scripts:
+  - interactive_0.js
 ---
 # Autonomous Research & Mutation Boundaries.
 
