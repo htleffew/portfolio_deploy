@@ -15,13 +15,6 @@ scripts:
   - interactive_1.js
   - interactive_3.js
 ---
-# Instrumental and Affective Mass Murder: Establishing a Predictive Typology with Computer-Mediated Linguistic Analysis
-
-Dr. Heather Leffew
-Obelus Institute
-May 2026
----
-
 ## Abstract
 The FBI's Behavioral Analysis Unit has held since 2015 that all perpetrators of mass violence are best categorized as instrumental offenders. This dissertation rejects that position. One hundred pre-attack communications were analyzed with LIWC2015 along four summary dimensions (Analytic, Clout, Authentic, Tone); K-means clustering separated the corpus into two psychometrically distinct types, Affective (n=53) and Instrumental (n=47), with linear discriminant analysis correctly classifying 100% of cases. A binary logistic regression on four refined attack-behavior variables (lethality, demographic-based targeting, perpetrator's home among attack locations, perpetrator killed by another person) recovered cluster membership at McFadden R² = 0.24, with the strongest single predictor (perpetrator killed) carrying an odds ratio of 14.11. The contribution is the first within-groups typology of mass murderers with statistically validated predictive ties to specific attack characteristics, intended as input to threat assessment and risk management for discovered pre-attack communications.
 

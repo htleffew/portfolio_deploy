@@ -13,13 +13,6 @@ scripts:
   - interactive_1.js
   - interactive_3.js
 ---
-# Assessing Risk for Mass Violence From Platform Behaviors
-
-Dr. Heather Leffew
-Obelus Institute
-May 2026
----
-
 ## Abstract
 The case for why user reports should be prioritized over automated detection. Perpetrators of mass violence are characterologically heterogeneous, the warning signs are contextual, and the on-platform signal is thin. A working note on the threat-assessment literature, the eight pre-attack warning behaviors, the six-stage path to intended violence, and where machine detection actually breaks.
 

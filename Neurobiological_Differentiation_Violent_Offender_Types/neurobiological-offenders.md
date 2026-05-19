@@ -17,13 +17,6 @@ time: 16 min read
 author: Dr. Heather Leffew
 scripts: []
 ---
-# Neurobiological Differentiation of Violent Offender Types
-
-Dr. Heather Leffew
-Fielding Graduate University, prepared for PSY 728 with Dr. Daniel Holland
-Originally submitted as a graduate paper
----
-
 ## Abstract
 
 This paper reviews the neurobiological correlates of impulsive and instrumental offending in light of antisocial and psychopathic offender types. The literature reveals that while these two types of offenders are not mutually exclusive, they do each represent certain differentiating neuroanatomical, neurochemical, neuropsychological, and neurological characteristics. The paper expresses the importance of understanding the difference between psychopathy and antisociality and calls for a dimensional approach to these two constructs. The apparently cortical nature of antisocial-impulsive offending and the subcortical nature of psychopathic-instrumental offending suggests the possibility of developing type-specific, neurobiologically informed interventions and treatments for these two groups.

@@ -11,13 +11,6 @@ author: Dr. Heather Leffew
 scripts:
   - interactive_0.js
 ---
-# Three Mechanisms in an ADHD Focus Playlist
-
-Dr. Heather Leffew
-Obelus Institute
-May 2026
----
-
 ## Abstract
 Most "focus" playlists hover at 70 to 90 BPM. This one runs at 145, with exaggerated stereo panning and dense polyrhythmic texture, and that is not an aesthetic choice. ADHD attention is gated by chronic under-arousal, not over-stimulation, and three audio features address the failure mode jointly: tempo at the optimal-stimulation threshold, bilateral stimulation through the vagus nerve, and structured complexity that resists habituation.
 

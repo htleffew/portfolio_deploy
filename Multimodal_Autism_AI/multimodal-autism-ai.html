@@ -165,33 +165,21 @@
 
 <!-- INJECTED MARKDOWN CONTENT -->
 
-<!-- SECTION 1: Introduction -->
-<section class="band band--paper" data-spine="Introduction" data-section="Introduction">
-  <div class="col-wide markdown-body">
-    <h1>An ADOS-2-Aligned Multimodal Architecture for Clinical Autism Assessment</h1>
-<div class="eyebrow reveal">01 / Introduction</div>
-<h2 class="reveal is-chapter">Dr. Heather Leffew
-Obelus Institute
-May 2026</h2>
-
-  </div>
-</section>
-
-<!-- SECTION 2: Abstract -->
+<!-- SECTION 1: Abstract -->
 <section class="band band--paper" data-spine="Abstract" data-section="Abstract">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">02 / Abstract</div>
+    <div class="eyebrow reveal">01 / Abstract</div>
 <h2 class="reveal is-chapter">Abstract</h2>
-<p class="reveal">The ADOS-2 scores social communication, communication, play, and repetitive behaviors as separate domains before deriving a composite. A model that flattens those features into one feature space is doing something the diagnostic algorithm is built around not doing. This pipeline takes the opposite approach: domain-specific classifiers train independently on social, communication, and repetitive feature subsets, then a Logistic Regression meta-learner combines their probability outputs into the final consensus prediction. The architectural choice is not an ensemble convenience. It is a commitment to the clinical logic the assessment was built on. The same commitment carries through the output layer, which generates two separate Jinja-templated reports from one analytical run: a research report with AUC, calibration, and SHAP global importances for an ML team, and a clinical report with per-participant feature attribution, ensemble consensus, data-quality scoring, and explicit &quot;requires clinical review&quot; flagging when uncertainty exceeds threshold. The synthetic data generator and the runtime AUC validity check (which fires at 0.95 because AUC above that on engineered data is more likely simulation drift than model skill) are the engineering hygiene that lets the architecture and the reporting do their work.</p>
+<p class="has-dropcap reveal col-with-sidenotes">The ADOS-2 scores social communication, communication, play, and repetitive behaviors as separate domains before deriving a composite. A model that flattens those features into one feature space is doing something the diagnostic algorithm is built around not doing. This pipeline takes the opposite approach: domain-specific classifiers train independently on social, communication, and repetitive feature subsets, then a Logistic Regression meta-learner combines their probability outputs into the final consensus prediction. The architectural choice is not an ensemble convenience. It is a commitment to the clinical logic the assessment was built on. The same commitment carries through the output layer, which generates two separate Jinja-templated reports from one analytical run: a research report with AUC, calibration, and SHAP global importances for an ML team, and a clinical report with per-participant feature attribution, ensemble consensus, data-quality scoring, and explicit &quot;requires clinical review&quot; flagging when uncertainty exceeds threshold. The synthetic data generator and the runtime AUC validity check (which fires at 0.95 because AUC above that on engineered data is more likely simulation drift than model skill) are the engineering hygiene that lets the architecture and the reporting do their work.</p>
 <p class="reveal">01 / Parameterizing Ambiguity</p>
 
   </div>
 </section>
 
-<!-- SECTION 3: The clinical reality most synthetic pipelines quietly ignore -->
+<!-- SECTION 2: The clinical reality most synthetic pipelines quietly ignore -->
 <section class="band band--paper" data-spine="The clinical reality" data-section="The clinical reality most synthetic pipelines quietly ignore">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">03 / The clinical reality most synthetic pipelines quietly ignore</div>
+    <div class="eyebrow reveal">02 / The clinical reality most synthetic pipelines quietly ignore</div>
 <h2 class="reveal is-chapter">The clinical reality most synthetic pipelines quietly ignore</h2>
 <p class="reveal">The ADOS-2 is the gold standard for autism assessment because its features are behaviorally grounded, examiner-administered, and domain-structured. It is also a 45-minute session with a child who may or may not be cooperative, assessed by a clinician whose training may or may not match the clinician who assessed the last child, captured on video with face detection that may or may not hold throughout the session. The feature distributions that result from this process are not clean.</p>
 <p class="reveal"><img src="point_cloud.png" alt="Split-screen showing real clinical room vs glowing 3D point cloud"></p>
@@ -280,10 +268,10 @@ X_simulated, y_simulated = generate_clinical_data()
   </div>
 </section>
 
-<!-- SECTION 4: Feature Extraction and ADOS-2 Mapping -->
+<!-- SECTION 3: Feature Extraction and ADOS-2 Mapping -->
 <section class="band band--paper" data-spine="Feature Extraction a" data-section="Feature Extraction and ADOS-2 Mapping">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">04 / Feature Extraction and ADOS-2 Mapping</div>
+    <div class="eyebrow reveal">03 / Feature Extraction and ADOS-2 Mapping</div>
 <h2 class="reveal is-chapter">Feature Extraction and ADOS-2 Mapping</h2>
 <p class="reveal">The system processes simulated video and audio streams to extract 10 core behavioral features. These features are not arbitrary. They are specifically chosen to map directly to the standard ADOS-2 scoring domains, where a score of 0 indicates typical behavior, 1 indicates mild concern, and 2 indicates clear evidence of atypical behavior.</p>
 <p class="reveal"><img src="fig_1.svg" alt="Figure 1"></p>
@@ -362,10 +350,10 @@ X_simulated, y_simulated = generate_clinical_data()
   </div>
 </section>
 
-<!-- SECTION 5: The Machine Learning Architecture -->
+<!-- SECTION 4: The Machine Learning Architecture -->
 <section class="band band--paper" data-spine="The Machine Learning" data-section="The Machine Learning Architecture">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">05 / The Machine Learning Architecture</div>
+    <div class="eyebrow reveal">04 / The Machine Learning Architecture</div>
 <h2 class="reveal is-chapter">The Machine Learning Architecture</h2>
 <p class="reveal">The ADOS-2 algorithm scores three behavioral domains independently before combining them: social affect (eye contact, facial expressions, joint attention, response to name), communication (vocalizations, repetitive language), and restricted-and-repetitive behaviors (functional play, hand mannerisms, sensory interests). The clinician fills out subscores for each domain, the algorithm derives a composite, and the cutoff thresholds applied to the composite are calibrated against the domain structure rather than against an undifferentiated feature pool. The diagnostic logic is built around the domains, not on top of them.</p>
 <p class="reveal">The architectural commitment of this pipeline is that the model should mirror that structure rather than flatten it. Three domain-specific classifiers train independently: a Random Forest on the social affect features, an XGBoost on the communication features, and a regularized Logistic Regression on the repetitive-behavior features. Each emits a probability of ASD class membership conditional on its own domain alone. A Logistic Regression meta-learner then takes those three probabilities as input and produces the consensus prediction. The base models never see each other&#39;s feature subsets; the meta-learner never sees the raw features. The diagnostic algorithm and the ML architecture have the same shape.</p>
@@ -406,10 +394,10 @@ consensus = meta.predict_proba(X_meta)[:, 1]
   </div>
 </section>
 
-<!-- SECTION 6: What realistic performance looks like -->
+<!-- SECTION 5: What realistic performance looks like -->
 <section class="band band--paper" data-spine="What realistic perfo" data-section="What realistic performance looks like">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">06 / What realistic performance looks like</div>
+    <div class="eyebrow reveal">05 / What realistic performance looks like</div>
 <h2 class="reveal is-chapter">What realistic performance looks like</h2>
 <p class="reveal">In-sample AUCs across the model suite cluster between 0.93 and 0.97. The system&#39;s automated realism validator fires on the highest performers with the explicit warning &quot;Performance may be too high, check for data leakage.&quot; On synthetic data designed to parallel real clinical data in its complexity, overlap, ambiguity, and noise, the validator&#39;s working assumption is that any in-sample AUC above 0.95 is more likely evidence the simulation drifted toward separability somewhere than evidence the model got that good. That assertion, encoded as a runtime check rather than a postmortem note, is a conservative engineering choice that keeps the simulation parallel to the difficulty of the actual problem.</p>
 <p class="reveal">Five-fold cross-validation pulls the picture closer to real clinical performance. The interpretable Label Spreading model cross-validates to AUC 0.891 plus or minus 0.022, and XGBoost to 0.953 plus or minus 0.017. The 0.891 number is the one to read against the literature: Wall et al. (2012) reported AUC between 0.78 and 0.88 across multiple model families on real ADOS data; Duda et al. (2016) reached 0.85 to 0.92 under favorable conditions. Landing inside that range on synthetic data engineered for 60 to 80 percent feature-level group overlap is the right kind of result, because the performance the pipeline produces is parallel to the performance the literature documents on real patients.</p>
@@ -500,10 +488,10 @@ consensus = meta.predict_proba(X_meta)[:, 1]
   </div>
 </section>
 
-<!-- SECTION 7: One analytical run, two stakeholder-specific reports -->
+<!-- SECTION 6: One analytical run, two stakeholder-specific reports -->
 <section class="band band--paper" data-spine="One analytical run, " data-section="One analytical run, two stakeholder-specific reports">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">07 / One analytical run, two stakeholder-specific reports</div>
+    <div class="eyebrow reveal">06 / One analytical run, two stakeholder-specific reports</div>
 <h2 class="reveal is-chapter">One analytical run, two stakeholder-specific reports</h2>
 <p class="reveal">The second architectural commitment of this pipeline is that the output layer should not produce a single report that tries to serve everyone. It produces two: a research report for the ML team that owns the model and a clinical report for the clinician who ordered the assessment. Both reports derive from the same underlying analytical run; they differ in what they surface, how they surface it, and what they expect the reader to do with it. A single shared report would have served neither audience well, because the questions an ML reviewer needs answered are not the questions a clinician needs answered, and conflating them produces output that is too technical to be clinically useful and too vague to be technically auditable.</p>
 <p class="reveal">The research report renders cross-validated AUC, F1, sensitivity, specificity, calibration curves, SHAP global feature importance, ensemble agreement statistics, and the realism validator&#39;s verdict on whether the in-sample performance crossed the 0.95 threshold. It is the report that lets an ML team decide whether the model is doing what it should and whether the simulation is still parallel to the clinical situation it is supposed to represent. It is generated from a Jinja template with a fixed section structure, which makes successive runs directly comparable rather than ad-hoc.</p>
@@ -516,10 +504,10 @@ consensus = meta.predict_proba(X_meta)[:, 1]
   </div>
 </section>
 
-<!-- SECTION 8: What this system is and is not -->
+<!-- SECTION 7: What this system is and is not -->
 <section class="band band--paper" data-spine="What this system is " data-section="What this system is and is not">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">08 / What this system is and is not</div>
+    <div class="eyebrow reveal">07 / What this system is and is not</div>
 <h2 class="reveal is-chapter">What this system is and is not</h2>
 <p class="reveal">This is a synthetic-data pipeline. Real ADOS-2 data is protected, scarce, and not appropriate for a portfolio demonstration. Every claim about model performance in this article is a claim about the model&#39;s behavior on data deliberately engineered to parallel the complexity, overlap, ambiguity, and noise of real clinical observations, and the validator&#39;s job is to keep that parallelism intact when the simulation tries to drift toward separability. The cross-validated 0.891 number lands in published clinical ranges, which is the right kind of evidence that the simulation reflects the difficulty of the actual problem; it is not evidence that the system would generalize to real patients. Out-of-sample validation on real ADOS-2 data is the work that has to happen before any conclusion about clinical utility, and that work is not in scope here.</p>
 <p class="reveal">The system also reduces each session to a vector of aggregate behavioral counts. Total social smiles, average response latency, percent time gaze-on-face. Aggregates lose temporal sequence, and temporal sequence is where a lot of clinical signal lives. A social smile that occurs one second after a clinician initiates a joint attention bid is clinically different from a smile that occurs at random. The ADOS-2 itself is built around the timing of behavioral contingencies, not just their frequencies. A temporally-aware version of this pipeline would extract event sequences rather than aggregate counts, and the architecture would have to change to handle that.</p>
@@ -534,10 +522,10 @@ consensus = meta.predict_proba(X_meta)[:, 1]
   </div>
 </section>
 
-<!-- SECTION 9: References -->
+<!-- SECTION 8: References -->
 <section class="band band--paper" data-spine="References" data-section="References">
   <div class="col-wide markdown-body">
-    <div class="eyebrow reveal">09 / References</div>
+    <div class="eyebrow reveal">08 / References</div>
 <h2 class="reveal is-chapter">References</h2>
 <ul>
 <li>Lord, C., Rutter, M., DiLavore, P. C., Risi, S., Gotham, K., &amp; Bishop, S. L. (2012). <em>Autism Diagnostic Observation Schedule, Second Edition (ADOS-2) manual</em>. Western Psychological Services.</li>
@@ -573,7 +561,7 @@ consensus = meta.predict_proba(X_meta)[:, 1]
 </section>
 
 <!-- INJECTED SCRIPTS -->
-interactive_0.js
+<script src="interactive_0.js" defer></script>
 
 <!-- GLOBAL CHROME -->
 <!-- Need relative pathing adjustment based on actual file depth, defaulting to root pathing for now -->

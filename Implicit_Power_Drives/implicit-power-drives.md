@@ -15,13 +15,6 @@ time: 10 min read
 author: Dr. Heather Leffew
 scripts: []
 ---
-# Implicit Power Drives in the Manifestos Preceding Autogenic Massacres
-
-Dr. Heather Leffew
-Fielding Graduate University, School of Psychology
-Originally presented 2017
----
-
 ## Abstract
 
 Twenty-three manifestos written by perpetrators of autogenic massacre, scored with Linguistic Inquiry and Word Count 2015 on a single dimension: implicit power language. The manifesto mean of 3.00 was tested against three published LIWC baseline rates. Personal blogs, expressive writing, and a multi-source composite. Independent samples t-tests returned t = 3.47, p < .001 vs blogs; t = 3.66, p < .001 vs expressive writing; t = 2.43, p = .02 vs the composite, df = 22 on each. The elevation held across all three comparison genres. Presented at Fielding Graduate University in 2017 as an exploratory study with the explicit aim of directing future research, not generating a predictive model.

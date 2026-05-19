@@ -8,13 +8,6 @@ time: 5 min read
 author: Dr. Heather Leffew
 scripts: []
 ---
-# Testing the Markdown SSG
-
-Dr. Heather Leffew
-Obelus Institute
-May 2026
----
-
 ## Abstract
 This is a test of the new automated SSG pipeline for portfolio deployment.
 

@@ -12,13 +12,6 @@ scripts:
   - interactive_0.js
   - interactive_1.js
 ---
-# LIWC and the TAT.
-
-Dr. Heather Leffew
-Obelus Institute
-May 2026
----
-
 ## Abstract
 A Fielding Graduate University paper makes the case that Linguistic Inquiry and Word Count belongs in Thematic Apperception Test interpretation. An accompanying pipeline scores 677 card responses from 69 participants across 31 TAT cards and tests whether specific cards reliably pull for the themes they were designed to elicit. Together they sketch a path toward continuous, item-level TAT scoring.
 

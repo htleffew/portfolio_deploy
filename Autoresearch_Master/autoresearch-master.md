@@ -11,13 +11,6 @@ author: Dr. Heather Leffew
 scripts:
   - interactive_0.js
 ---
-# Autonomous Research & Mutation Boundaries.
-
-Dr. Heather Leffew
-Obelus Institute
-May 2026
----
-
 ## Abstract
 Granting a Large Language Model unconstrained control over an ML research loop inside a regulated enterprise environment creates a structural conflict: the agent's optimization objective ("improve model fit") can directly oppose the organization's compliance, provenance, and fairness requirements. This case study examines an architecture that resolves that conflict through a clean state-space partition: an immutable Fixed Harness surrounding a finite Mutation Budget, orchestrated through a graph-based workflow.
 
