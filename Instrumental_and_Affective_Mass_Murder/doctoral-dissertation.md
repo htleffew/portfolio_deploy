@@ -18,8 +18,6 @@ scripts:
 ## Abstract
 The FBI's Behavioral Analysis Unit has held since 2015 that all perpetrators of mass violence are best categorized as instrumental offenders. This dissertation rejects that position. One hundred pre-attack communications were analyzed with LIWC2015 along four summary dimensions (Analytic, Clout, Authentic, Tone); K-means clustering separated the corpus into two psychometrically distinct types, Affective (n=53) and Instrumental (n=47), with linear discriminant analysis correctly classifying 100% of cases. A binary logistic regression on four refined attack-behavior variables (lethality, demographic-based targeting, perpetrator's home among attack locations, perpetrator killed by another person) recovered cluster membership at McFadden R² = 0.24, with the strongest single predictor (perpetrator killed) carrying an odds ratio of 14.11. The contribution is the first within-groups typology of mass murderers with statistically validated predictive ties to specific attack characteristics, intended as input to threat assessment and risk management for discovered pre-attack communications.
 
-01 / Theoretical Background
-
 ## The Prediction Problem
 
 Theoretical Background
@@ -50,8 +48,6 @@ High-probability events with minimal destructive impact. Procedural deterrence i
 
 Separating attackers into affective and instrumental types allows linguistic signals from a discovered pre-attack communication to inform what kind of attack is more likely, rather than waiting on the event itself to disclose its character.
 
-02 / Methodology
-
 ## Language as Psychological Evidence
 
 Methodology
@@ -78,8 +74,6 @@ LIWC2015 Summary Variables
 | Clout | Confident, expert, authoritative | Tentative, humble, anxious |
 | Authentic | Honest, personal, disclosing | Guarded, distanced, evasive |
 | Tone | Positive, upbeat emotional valence | Anxious, sad, or hostile |
-
-03 / Cluster Analysis
 
 ## A Detectable Divide
 
@@ -115,8 +109,6 @@ Authentic
 Affective (LIWC percentile)
 
 Instrumental (LIWC percentile)
-
-04 / Behavioral Predictions
 
 ## Formulating the Six Hypotheses
 
@@ -176,8 +168,6 @@ SCALE: 0 TO 10
 
 AFFECTIVE TYPE (N=53) VS INSTRUMENTAL TYPE (N=47)  ·  ALPHA = .05
 
-05 / Logistic Regression
-
 ## Predictive Signal Matrix
 
 Logistic Regression
@@ -206,8 +196,6 @@ Demographic Targeting+383%
 Per Victim Killed+14%
 
 CHI-SQUARED(4) = 32.52  ·  P < .001  ·  McFADDEN R² = 0.24
-
-06 / Type Exemplars
 
 ## Operational Manifestations
 
@@ -264,8 +252,6 @@ Victims Injured319
 Location ConnectionNo
 
 Attack ConclusionApprehended
-
-07 / Practical Constraints
 
 ## Threat Management Efficacy
 

@@ -14,8 +14,6 @@ scripts:
 ## Abstract
 Built for a major short-form video platform's Trust & Safety team, this Spark-scale analytics engine imports time-to-event analysis from biostatistics and applies it to platform integrity. The central reframe: the same Kaplan-Meier estimator that asks "what is the probability that a patient is still alive at time t after diagnosis?" can ask "what is the probability that a user session is still violation-free at time t after first content interaction?" Both questions involve right-censored observations. Both benefit from non-parametric estimation. The toolkit transfers cleanly. Layered with LDA topic modeling, VADER sentiment, and NetworkX co-occurrence, the engine produces a 12-section auto-generated investigation report that is reproducible across cases and comparable across users.
 
-01 / The Cross-Domain Move
-
 ## Borrowing a tool from biostatistics
 
 In medical research, the Kaplan-Meier estimator answers a specific question: given a cohort of patients diagnosed at time zero, what is the probability that any given patient is still alive at time t? The estimator handles the inconvenient fact that not every patient's outcome is observed. Some are still alive when the study ends; some leave the study; some die from causes unrelated to the disease. These are right-censored observations, and KM is the non-parametric tool designed to use them honestly rather than throw them out.
@@ -23,8 +21,6 @@ In medical research, the Kaplan-Meier estimator answers a specific question: giv
 Trust & Safety analytics has a structurally identical problem. Given a user's session beginning at time zero, what is the probability that the session has remained free of policy-violative content at time t? The events of interest (encountering content flagged by a moderation system) occur on the same kind of irregular timeline as patient deaths. The censoring is the same: many sessions end without any violation event, which is not the same as those sessions being violation-free forever. The data structure is the same. The estimator transfers without modification.
 
 The intellectual move that anchors this engine is recognizing that platform integrity decay is well-modeled as a survival problem. Once you accept the reframe, an entire toolkit comes with it: median time to violation as a population-level health metric, comparative survival functions across user segments, hazard rate analysis for identifying high-risk windows. The biostatistics literature has been refining these tools since 1958. T&S analytics had been reinventing weaker versions in isolation.
-
-02 / Engine Architecture
 
 ## Four modules, one auditable pipeline
 
@@ -35,8 +31,6 @@ The contribution is the decomposition. The pipeline splits cleanly into four mod
 ![Figure 1](fig_1.svg)
 
 FIG. 01 The four-module decomposition. Modules communicate through standardized CSV intermediates rather than in-memory state, so any analytical module can be re-run in isolation without re-running the Spark fetch.
-
-03 / Time-to-Violation as Health Metric
 
 ## Survival analysis on user sessions
 
@@ -64,8 +58,6 @@ The comparative survival mode is what makes the engine useful for forensic per-u
 
 The interpretive note that matters: a survival time below 3,600 seconds (one hour) means a user encountered violative content within the first hour of platform engagement in that segment. The engine surfaces that threshold automatically in its narrative output, because that interval is where moderation feedback loops are most likely to compound.
 
-04 / Topical Drift as Risk Signal
-
 ## When did the topic neighborhood change?
 
 Survival analysis answers when violations happen. It does not answer what topical neighborhood the user was in when the violation occurred, or how that neighborhood evolved. The engine's text NLP module fills that gap with three layered passes: latent Dirichlet allocation for topic clusters, VADER and TextBlob for sentiment polarity over time, and NetworkX-backed co-occurrence graphs for word-pair structure inside a five-token window.
@@ -77,8 +69,6 @@ Co-occurrence analysis is the layer that catches what topic modeling smooths ove
 ![Figure 2](fig_2.svg)
 
 FIG. 03 Topic drift across time slices. LDA topic clusters are tracked from early to late tertile; emergent clusters in red signal new topical territory. Read alongside the survival curve, drift in the topical neighborhood gives the analyst a why to attach to the when.
-
-05 / The Auto-Report Engine
 
 ## Reproducibility through structured output
 

@@ -173,7 +173,6 @@
           Anthropic&#39;s Natural Language Autoencoders translate the model&#39;s internal activation vectors
           directly into human-readable text, giving auditors their first direct window into unverbalized
           model states - including the ones a model would never voluntarily report.</p>
-<p class="reveal">01 / Background</p>
 
   </div>
 </section>
@@ -213,7 +212,6 @@ Natural Language Autoencoders bridge the gap between unsupervised concept discov
 human-readable activation verbalization. Instead of requiring a researcher to deduce what a
 feature vector means, the NLA framework allows the system to articulate the state of a model&#39;s
 internal activations directly in plain language.</p>
-<p class="reveal">02 / Architecture</p>
 
   </div>
 </section>
@@ -251,7 +249,6 @@ abstract and compress the activation into semantic content that a language model
 If the AV could be vague or imprecise, the AR&#39;s reconstruction would fail, and the training
 loss would penalize the pair. Precision is enforced by the objective function, not by human
 annotation.</p>
-<p class="reveal">03 / Training</p>
 
   </div>
 </section>
@@ -289,7 +286,6 @@ distribution to reach the AR.</p>
 frameworks required expert researchers to read hundreds of examples for each SAE feature to
 deduce its meaning. NLAs produce readable explanations at inference time, on any activation
 vector, without precomputed feature libraries or domain expert review.</p>
-<p class="reveal">04 / Empirical Evidence</p>
 
   </div>
 </section>
@@ -339,7 +335,6 @@ cannot see.</p>
 space before manifesting in any output token. This is precisely the class of behavior that
 output-token monitoring cannot detect. An alignment system that only observes what a model
 says will miss everything the model computes before speaking.</p>
-<p class="reveal">05 / Safety Application</p>
 
   </div>
 </section>
@@ -379,7 +374,6 @@ context, distinct from the activation patterns observed during production infere
 that this recognition was unverbalized - that no output token ever said &quot;I believe I am being
 evaluated&quot; - is what makes NLAs necessary. Output monitoring would have recorded cooperative,
 aligned responses across all these benchmark tasks.</p>
-<p class="reveal">06 / Safety Audit</p>
 
   </div>
 </section>
@@ -408,7 +402,6 @@ stages, or both. Real-world audits of deployed frontier models typically have no
 The NLA approach enables what might be called zero-knowledge auditing - reading internal
 state from the deployed model&#39;s own activations, without requiring access to its training
 pipeline or history.</p>
-<p class="reveal">07 / Causal Intervention</p>
 
   </div>
 </section>
@@ -447,7 +440,6 @@ awareness, unverbalized planning, and covert goal-tracking - can be evaluated di
 against a constitutional specification before any output token is generated. The constitution
 applies not to what the model says, but to what it knows and intends. An alignment check
 at this level catches failures that output monitoring would never see.</p>
-<p class="reveal">08 / Limitations &amp; Release</p>
 
   </div>
 </section>

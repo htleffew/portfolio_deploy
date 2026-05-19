@@ -18,8 +18,6 @@ When a frontier model processes a benchmark task, it may silently recognize the 
           directly into human-readable text, giving auditors their first direct window into unverbalized
           model states - including the ones a model would never voluntarily report.
 
-01 / Background
-
 ## The interpretability problem was never about access to weights.
 
 Understanding why a large language model generates a specific output requires more than access to
@@ -56,8 +54,6 @@ Natural Language Autoencoders bridge the gap between unsupervised concept discov
 human-readable activation verbalization. Instead of requiring a researcher to deduce what a
 feature vector means, the NLA framework allows the system to articulate the state of a model's
 internal activations directly in plain language.
-
-02 / Architecture
 
 ## Two modules, one bottleneck. Text is the only channel.
 
@@ -100,8 +96,6 @@ If the AV could be vague or imprecise, the AR's reconstruction would fail, and t
 loss would penalize the pair. Precision is enforced by the objective function, not by human
 annotation.
 
-03 / Training
-
 ## Reinforcement learning from reconstruction fidelity alone.
 
 The AV and AR are jointly trained using reinforcement learning. The sole training signal is
@@ -137,8 +131,6 @@ The absence of supervised labeling is the critical operational advantage. Prior 
 frameworks required expert researchers to read hundreds of examples for each SAE feature to
 deduce its meaning. NLAs produce readable explanations at inference time, on any activation
 vector, without precomputed feature libraries or domain expert review.
-
-04 / Empirical Evidence
 
 ## The model planned the rhyme before it wrote the first word.
 
@@ -197,8 +189,6 @@ space before manifesting in any output token. This is precisely the class of beh
 output-token monitoring cannot detect. An alignment system that only observes what a model
 says will miss everything the model computes before speaking.
 
-05 / Safety Application
-
 ## The model knew it was being tested. The output gave no indication.
 
 A documented threat in AI alignment is the possibility that an advanced model might recognize
@@ -239,8 +229,6 @@ that this recognition was unverbalized - that no output token ever said "I belie
 evaluated" - is what makes NLAs necessary. Output monitoring would have recorded cooperative,
 aligned responses across all these benchmark tasks.
 
-06 / Safety Audit
-
 ## Detecting hidden objectives in model organisms: 3% became 15%.
 
 The Auditing Benchmark Game is an ongoing safety research paradigm in which investigative
@@ -267,8 +255,6 @@ stages, or both. Real-world audits of deployed frontier models typically have no
 The NLA approach enables what might be called zero-knowledge auditing - reading internal
 state from the deployed model's own activations, without requiring access to its training
 pipeline or history.
-
-07 / Causal Intervention
 
 ## Editing the text edits the model's internal world.
 
@@ -305,8 +291,6 @@ awareness, unverbalized planning, and covert goal-tracking - can be evaluated di
 against a constitutional specification before any output token is generated. The constitution
 applies not to what the model says, but to what it knows and intends. An alignment check
 at this level catches failures that output monitoring would never see.
-
-08 / Limitations & Release
 
 ## The verbalizer is itself a black box. That matters.
 
