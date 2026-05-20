@@ -1,4 +1,4 @@
-<svg height="auto" style="max-width: 900px;" viewbox="0 0 900 380" width="100%" xmlns="http://www.w3.org/2000/svg">
+<svg height="auto" style="max-width: 900px;" viewBox="0 0 900 380" width="100%" xmlns="http://www.w3.org/2000/svg">
 <!-- Timeline axis -->
 <line opacity="0.5" stroke="#A1A1A6" stroke-width="1" x1="80" x2="820" y1="320" y2="320"></line>
 <text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="9" letter-spacing="2" x="80" y="345">EARLIEST OBSERVATION</text>

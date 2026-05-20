@@ -1,6 +1,6 @@
-<svg style="width:100%; height:auto; max-height: 120px;" viewbox="0 0 600 120" xmlns="http://www.w3.org/2000/svg">
+<svg style="width:100%; height:auto; max-height: 120px;" viewBox="0 0 600 120" xmlns="http://www.w3.org/2000/svg">
 <defs>
-<marker id="arr" markerheight="6" markerwidth="8" orient="auto" refx="6" refy="3">
+<marker id="arr" markerHeight="6" markerWidth="8" orient="auto" refX="6" refY="3">
 <polygon fill="var(--tungsten)" points="0 0, 8 3, 0 6"></polygon>
 </marker>
 </defs>

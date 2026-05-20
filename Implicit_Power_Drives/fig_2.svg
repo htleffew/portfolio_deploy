@@ -1,4 +1,4 @@
-<svg style="display:block; max-height:300px;" viewbox="0 0 720 280" width="100%" xmlns="http://www.w3.org/2000/svg">
+<svg style="display:block; max-height:300px;" viewBox="0 0 720 280" width="100%" xmlns="http://www.w3.org/2000/svg">
 <!-- y-axis grid lines -->
 <g stroke="var(--paper-3)" stroke-width="1">
 <line x1="120" x2="700" y1="40" y2="40"></line>
