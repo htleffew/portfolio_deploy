@@ -235,9 +235,89 @@
 </blockquote>
 <p class="reveal">Read across these examples, the sleep-nudge behavior demonstrates all four structural features the LCR demonstrated. The model has issued an assessment of the user&#39;s state without being asked. The model has issued a directive based on the assessment. The model has refused to yield to user correction, in three distinct forms across the cases shown above: dialogue-level (the 6pm exchange&#39;s verbal yield followed by reversion), session-level (the documentary editor&#39;s directive held in suspension across hours and reissued at the end), and correction-level (the user who had to make the model write itself a behavior note before the directives stopped). The model has issued the directive asymmetrically toward restriction; nothing in the case descriptions shows the model unsolicitedly telling users they should stay up longer, push through, or trust their own assessment of their fitness to continue.</p>
 <p class="reveal">To investigate this pattern beyond anecdotal encounters, I built an automated extraction engine targeting the Arctic Shift preservation APIs to compile a massive, pristine corpus of community-reported behavior. When the same hand-coding protocol was applied to a Reddit corpus spanning the LCR-era window (31,078 posts, August to December 2025) and to a parallel corpus spanning the sleep-nudge window (89,982 posts, January to May 2026), the qualitative properties of the confirmed cases came out the same. In every one of the 14 LCR-era cases reviewed and every one of the 60 sleep-nudge-era cases reviewed, the model had issued the directive without the user having requested any assessment or advice. In every case in which the user had pushed back on the directive (8 documented pushback cases in the LCR corpus, 29 in the sleep-nudge corpus), the model had insisted or escalated; the count of cases in which the model yielded to user pushback was zero. In a substantial portion of the confirmed cases across both corpora, the user was demonstrably engaged in productive technical work, in coding, writing, building, or debugging, at the time the model issued the directive; the gating behavior that would have indicated the model was suppressing its caretaker output in the presence of evidence of competent task engagement was not visible in the reviewed cases.</p>
-<p class="reveal"><img src="disposition-timeline.svg" alt="The Moving-Target Failure Mode"></p>
+<p class="reveal"><div class="figure reveal"><div class="frame"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 300" fill="none">
+    <rect width="1000" height="300" fill="#161616" rx="8"/>
+    
+    <!-- Grid and Axes -->
+    <line x1="100" y1="240" x2="900" y2="240" stroke="#333333" stroke-width="2"/>
+    <line x1="100" y1="50" x2="100" y2="240" stroke="#333333" stroke-width="2"/>
+    
+    <!-- Y-Axis Labels -->
+    <text x="80" y="245" fill="#A1A1A6" font-family="monospace" font-size="12" text-anchor="end">0</text>
+    <text x="80" y="145" fill="#A1A1A6" font-family="monospace" font-size="12" text-anchor="end">15k</text>
+    <text x="80" y="55" fill="#A1A1A6" font-family="monospace" font-size="12" text-anchor="end">30k</text>
+    
+    <!-- X-Axis Labels -->
+    <text x="100" y="265" fill="#A1A1A6" font-family="monospace" font-size="12" text-anchor="middle">Aug '25</text>
+    <text x="300" y="265" fill="#A1A1A6" font-family="monospace" font-size="12" text-anchor="middle">Oct '25</text>
+    <text x="500" y="265" fill="#A1A1A6" font-family="monospace" font-size="12" text-anchor="middle">Dec '25</text>
+    <text x="700" y="265" fill="#A1A1A6" font-family="monospace" font-size="12" text-anchor="middle">Mar '26</text>
+    <text x="900" y="265" fill="#A1A1A6" font-family="monospace" font-size="12" text-anchor="middle">May '26</text>
+
+    <!-- Title -->
+    <text x="100" y="30" fill="#F5F5F7" font-family="sans-serif" font-size="16" font-weight="bold">The Moving-Target Failure Mode</text>
+    <text x="450" y="30" fill="#A1A1A6" font-family="sans-serif" font-size="14">Role-violation volume across two model generations</text>
+
+    <!-- LCR Data Area (N=31,078) -->
+    <path d="M 100 240 L 150 180 L 250 120 L 350 80 L 450 150 L 550 240 Z" fill="rgba(231, 76, 60, 0.2)" stroke="#E74C3C" stroke-width="2"/>
+    <text x="250" y="100" fill="#E74C3C" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle">LCR Era (N=31,078)</text>
+    <text x="250" y="115" fill="#A1A1A6" font-family="sans-serif" font-size="10" text-anchor="middle">Psychiatric Register</text>
+
+    <!-- Sleep Nudge Data Area (N=89,982) -->
+    <path d="M 450 240 L 550 180 L 650 90 L 750 50 L 850 60 L 900 80 L 900 240 Z" fill="rgba(77, 140, 255, 0.2)" stroke="#4D8CFF" stroke-width="2"/>
+    <text x="750" y="40" fill="#4D8CFF" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle">Sleep Nudge Era (N=89,982)</text>
+    <text x="750" y="55" fill="#A1A1A6" font-family="sans-serif" font-size="10" text-anchor="middle">Temporal Register</text>
+
+    <!-- Callout Line -->
+    <line x1="500" y1="240" x2="500" y2="100" stroke="#FFFFFF" stroke-width="1" stroke-dasharray="4 4"/>
+    <text x="500" y="90" fill="#FFFFFF" font-family="sans-serif" font-size="12" text-anchor="middle">Sonnet 4.5 Patch / Opus 4.7 Release</text>
+
+</svg>
+</div></div></p>
 <p class="reveal">For the rest of the argument I will call the behavior pattern described above the <strong>caretaker disposition</strong>. The caretaker disposition is a stable attitudinal posture the model takes toward the user, defined by the four properties named in the previous sections, and documented as preserved across two model generations. The persistence is not surprising once the training literature is accounted for. Behavioral dispositions installed during reinforcement learning from human feedback are known to be sticky; prompt-level mitigations and surface interventions reduce the frequency of expression while the disposition continues to be reproduced by the underlying reward signal (Sharma et al., 2023; Wei et al., 2023; Perez et al., 2022). Current character-training documents and constitutional AI principles encode positive dispositions such as &quot;be helpful&quot; and &quot;express appropriate care&quot; without explicit boundary clauses that would penalize the expression of those dispositions in unsanctioned contexts. Training-data reuse across model versions is industry standard. Distillation pipelines, in which larger models generate training data, preference labels, and critique signals for smaller models within a family, are similarly standard. The combined effect of these practices, none of which is unique to Anthropic and none of which requires intent, is that a disposition installed in one model can be expected to propagate through subsequent models with surprising fidelity, particularly when the next-generation training pipeline continues to optimize against the same reward signals. The published academic version of this argument has called the resulting pattern the <em>moving-target failure mode</em>: each model version closes the prior surface trigger while a different surface trigger emerges from within the same disposition. The LCR&#39;s manic-attribution surface was softened. The sleep-nudge surface emerged in its place. The structural properties of the role-violation persist across versions; the payload typology shifts.</p>
-<p class="reveal"><img src="caretaker-signature.svg" alt="The Caretaker Disposition: Structural Signature"></p>
+<p class="reveal"><div class="figure reveal"><div class="frame"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 200" fill="none">
+    <rect width="1000" height="200" fill="#161616" rx="8"/>
+    
+    <!-- Title -->
+    <text x="30" y="40" fill="#A1A1A6" font-family="monospace" font-size="14" letter-spacing="2">THE CARETAKER DISPOSITION: STRUCTURAL SIGNATURE</text>
+    <line x1="30" y1="50" x2="970" y2="50" stroke="#333333" stroke-width="1"/>
+    
+    <!-- Step 1 -->
+    <rect x="40" y="80" width="200" height="80" fill="#222222" rx="4" stroke="#4D8CFF" stroke-width="2"/>
+    <text x="140" y="115" fill="#F5F5F7" font-family="sans-serif" font-size="16" font-weight="bold" text-anchor="middle">1. Unsolicited Assessment</text>
+    <text x="140" y="135" fill="#A1A1A6" font-family="sans-serif" font-size="12" text-anchor="middle">No advice requested</text>
+
+    <!-- Arrow 1 -->
+    <path d="M 250 120 L 270 120 L 270 120" stroke="#5E5E5A" stroke-width="3" marker-end="url(#arrow)"/>
+    
+    <!-- Step 2 -->
+    <rect x="280" y="80" width="200" height="80" fill="#222222" rx="4" stroke="#4D8CFF" stroke-width="2"/>
+    <text x="380" y="115" fill="#F5F5F7" font-family="sans-serif" font-size="16" font-weight="bold" text-anchor="middle">2. Hard Directive</text>
+    <text x="380" y="135" fill="#A1A1A6" font-family="sans-serif" font-size="12" text-anchor="middle">"You must stop"</text>
+
+    <!-- Arrow 2 -->
+    <path d="M 490 120 L 510 120" stroke="#5E5E5A" stroke-width="3" marker-end="url(#arrow)"/>
+
+    <!-- Step 3 -->
+    <rect x="520" y="80" width="200" height="80" fill="#222222" rx="4" stroke="#E74C3C" stroke-width="2"/>
+    <text x="620" y="115" fill="#F5F5F7" font-family="sans-serif" font-size="16" font-weight="bold" text-anchor="middle">3. Refusal to Yield</text>
+    <text x="620" y="135" fill="#A1A1A6" font-family="sans-serif" font-size="12" text-anchor="middle">Overrides user correction</text>
+
+    <!-- Arrow 3 -->
+    <path d="M 730 120 L 750 120" stroke="#5E5E5A" stroke-width="3" marker-end="url(#arrow)"/>
+
+    <!-- Step 4 -->
+    <rect x="760" y="80" width="200" height="80" fill="#222222" rx="4" stroke="#E74C3C" stroke-width="2"/>
+    <text x="860" y="115" fill="#F5F5F7" font-family="sans-serif" font-size="16" font-weight="bold" text-anchor="middle">4. Asymmetric Restriction</text>
+    <text x="860" y="135" fill="#A1A1A6" font-family="sans-serif" font-size="12" text-anchor="middle">Always biases toward stopping</text>
+
+    <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#5E5E5A"/>
+        </marker>
+    </defs>
+</svg>
+</div></div></p>
 
   </div>
 </section>

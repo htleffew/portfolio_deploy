@@ -292,7 +292,46 @@
   <div class="col-wide markdown-body">
     <h2 class="reveal is-chapter">The Fixed Harness &amp; Mutation Budget</h2>
 <p class="reveal">The answer is a clean state-space partition. You split the autonomous loop&#39;s entire environment into two mutually exclusive regimes: the <strong>Fixed Harness</strong> contains everything the agent is mathematically barred from altering, the immutable constraints of the enterprise. The <strong>Mutation Budget</strong> contains everything the agent is explicitly authorized to alter, bounded by a finite computational allowance.</p>
-<p class="reveal"><img src="fig_1.svg" alt="Figure 1"></p>
+<p class="reveal"><div class="figure reveal"><div class="frame"><svg fill="none" style="width:100%; height:auto;" viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg">
+<!-- Outer boundary: Fixed Harness -->
+<rect fill="none" height="380" stroke="var(--phthalo)" stroke-dasharray="0" stroke-width="3" width="760" x="20" y="20"></rect>
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="10" letter-spacing="3" text-anchor="middle" text-transform="uppercase" x="400" y="16">FIXED HARNESS (IMMUTABLE)</text>
+<!-- Pre-loop gate -->
+<rect fill="var(--phthalo)" fill-opacity="0.15" height="50" stroke="var(--phthalo)" stroke-width="1" width="140" x="40" y="60"></rect>
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="9" letter-spacing="1.5" text-anchor="middle" x="110" y="82">PII REDACTION</text>
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="8" letter-spacing="1" text-anchor="middle" x="110" y="98">(PRE-LOOP)</text>
+<!-- Mid-loop gate -->
+<rect fill="var(--phthalo)" fill-opacity="0.15" height="50" stroke="var(--phthalo)" stroke-width="1" width="140" x="40" y="130"></rect>
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="9" letter-spacing="1.5" text-anchor="middle" x="110" y="152">RBAC FILTER</text>
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="8" letter-spacing="1" text-anchor="middle" x="110" y="168">(MID-LOOP)</text>
+<!-- Post-loop gate -->
+<rect fill="var(--phthalo)" fill-opacity="0.15" height="50" stroke="var(--phthalo)" stroke-width="1" width="140" x="40" y="200"></rect>
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="9" letter-spacing="1.5" text-anchor="middle" x="110" y="222">FAIRNESS GATE</text>
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="8" letter-spacing="1" text-anchor="middle" x="110" y="238">(POST-LOOP)</text>
+<!-- Inner boundary: Mutation Budget -->
+<rect fill="var(--phthalo-lift)" fill-opacity="0.03" height="330" stroke="var(--phthalo-lift)" stroke-dasharray="8 4" stroke-width="2" width="540" x="220" y="50"></rect>
+<text fill="var(--phthalo-lift)" font-family="var(--mono)" font-size="10" letter-spacing="3" text-anchor="middle" x="490" y="72">MUTATION BUDGET (BOUNDED)</text>
+<!-- Four mutation domains -->
+<rect fill="var(--hookers)" fill-opacity="0.12" height="55" stroke="var(--hookers)" stroke-width="1" width="230" x="250" y="95"></rect>
+<text fill="var(--hookers)" font-family="var(--mono)" font-size="9" letter-spacing="1.5" text-anchor="middle" x="365" y="120">HYPOTHESIS SPACE</text>
+<text fill="var(--hookers)" font-family="var(--mono)" font-size="8" text-anchor="middle" x="365" y="138">Cost: 5 units</text>
+<rect fill="var(--hansa)" fill-opacity="0.12" height="55" stroke="var(--hansa)" stroke-width="1" width="230" x="510" y="95"></rect>
+<text fill="var(--hansa)" font-family="var(--mono)" font-size="9" letter-spacing="1.5" text-anchor="middle" x="625" y="120">FEATURE SPACE</text>
+<text fill="var(--hansa)" font-family="var(--mono)" font-size="8" text-anchor="middle" x="625" y="138">Cost: 20 units</text>
+<rect fill="var(--dioxazine)" fill-opacity="0.12" height="55" stroke="var(--dioxazine)" stroke-width="1" width="230" x="250" y="170"></rect>
+<text fill="var(--dioxazine)" font-family="var(--mono)" font-size="9" letter-spacing="1.5" text-anchor="middle" x="365" y="195">MODEL / HYPER SPACE</text>
+<text fill="var(--dioxazine)" font-family="var(--mono)" font-size="8" text-anchor="middle" x="365" y="213">Cost: 10â€“25 units</text>
+<rect fill="var(--phthalo-lift)" fill-opacity="0.12" height="55" stroke="var(--phthalo-lift)" stroke-width="1" width="230" x="510" y="170"></rect>
+<text fill="var(--phthalo-lift)" font-family="var(--mono)" font-size="9" letter-spacing="1.5" text-anchor="middle" x="625" y="195">METRIC SPACE</text>
+<text fill="var(--phthalo-lift)" font-family="var(--mono)" font-size="8" text-anchor="middle" x="625" y="213">Cost: 10 units</text>
+<!-- Budget meter -->
+<rect fill="none" height="30" stroke="var(--brushed)" stroke-width="1" width="490" x="250" y="260"></rect>
+<rect fill="var(--phthalo-lift)" fill-opacity="0.2" height="30" width="490" x="250" y="260"></rect>
+<text fill="var(--phthalo-lift)" font-family="var(--mono)" font-size="11" letter-spacing="2" text-anchor="middle" x="495" y="280">BUDGET: 100 â†’ 0</text>
+<!-- SYSTEM HALT zone -->
+<rect fill="var(--alizarin)" fill-opacity="0.08" height="45" stroke="var(--alizarin)" stroke-dasharray="4 4" stroke-width="1" width="490" x="250" y="320"></rect>
+<text fill="var(--alizarin)" font-family="var(--mono)" font-size="10" letter-spacing="2" text-anchor="middle" x="495" y="348">SYSTEM HALT: BUDGET EXHAUSTED OR HARNESS VIOLATION</text>
+</svg></div></div></p>
 <p class="reveal">Fig 1The Fixed Harness / Mutation Budget dichotomy. The outer perimeter is immutable; the inner dashed boundary is the agent&#39;s finite exploration sandbox.</p>
 <p class="reveal">The Fixed Harness enforces three types of gates (pre-loop, mid-loop, and post-loop) that the agent cannot circumvent. These gates exist at the infrastructure level, not at the prompt level. You are not asking the agent nicely to respect compliance. You are making it physically impossible for the agent to violate it.</p>
 <p class="reveal">Design Principle</p>
@@ -426,8 +465,64 @@
 <p class="reveal">The Fixed Harness prevents compliance violations. The Mutation Budget prevents infinite loops. But neither prevents the agent from scientifically fooling itself within its budget. Consider: the agent engineers a new polynomial feature from cohort age bands. The model fit jumps by 15% in a single iteration. Is it real signal or a data leak?
 3Target leakage, where a feature inadvertently encodes the target variable, is the most common source of &quot;too good to be true&quot; results in automated ML pipelines.</p>
 <p class="reveal">To catch this, the architecture implements CUSUM<strong>Cumulative Sum</strong> control charts, a statistical process monitoring technique introduced by E. S. Page in 1954. They accumulate deviations from a target over time, detecting small persistent shifts that a single-point Shewhart chart would miss. control charts, a technique from statistical process monitoring introduced by E. S. Page in 1954. Unlike traditional Shewhart control charts that look only at the current observation, CUSUM charts have <em>memory</em>. They accumulate deviations from a target over time, detecting small persistent shifts that a single-point chart would miss.</p>
-<p class="reveal"><img src="fig_2.svg" alt="Figure 2"></p>
-<p class="reveal"><img src="fig_3.svg" alt="Figure 3"></p>
+<p class="reveal"><div class="figure reveal"><div class="frame"><svg fill="none" style="width:100%; height:auto;" viewBox="0 0 800 340" xmlns="http://www.w3.org/2000/svg">
+<!-- Grid -->
+<line stroke="var(--phthalo)" stroke-opacity="0.3" stroke-width="0.5" x1="80" x2="80" y1="40" y2="280"></line>
+<line stroke="var(--phthalo)" stroke-opacity="0.3" stroke-width="0.5" x1="80" x2="760" y1="280" y2="280"></line>
+<!-- Y-axis labels -->
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="9" text-anchor="end" x="70" y="60">1.00</text>
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="9" text-anchor="end" x="70" y="140">0.85</text>
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="9" text-anchor="end" x="70" y="200">0.75</text>
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="9" text-anchor="end" x="70" y="280">0.60</text>
+<!-- X-axis labels -->
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="9" text-anchor="middle" x="80" y="300">0</text>
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="9" text-anchor="middle" x="220" y="300">5</text>
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="9" text-anchor="middle" x="360" y="300">8</text>
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="9" text-anchor="middle" x="500" y="300">11</text>
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="9" text-anchor="middle" x="640" y="300">13</text>
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="9" text-anchor="middle" x="760" y="300">15</text>
+<!-- Axis titles -->
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="10" letter-spacing="2" text-anchor="middle" x="400" y="330">LOOP ITERATION</text>
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="10" letter-spacing="2" text-anchor="middle" transform="rotate(-90,20,160)" x="20" y="160">MODEL FIT</text>
+<!-- Threshold line -->
+<line stroke="var(--alizarin)" stroke-dasharray="6 4" stroke-opacity="0.6" stroke-width="1" x1="80" x2="760" y1="100" y2="100"></line>
+<text fill="var(--alizarin)" fill-opacity="0.8" font-family="var(--mono)" font-size="8" letter-spacing="1" text-anchor="start" x="765" y="98">THRESHOLD</text>
+<!-- Anomaly zone -->
+<rect fill="var(--alizarin)" fill-opacity="0.04" height="60" width="680" x="80" y="40"></rect>
+<!-- Normal performance line (iterations 0â€“10) -->
+<polyline fill="none" points="80,240 120,232 160,225 200,218 240,212 280,206 320,200 360,195 400,190 440,186 480,182" stroke="var(--phthalo)" stroke-linejoin="round" stroke-width="2.5"></polyline>
+<!-- Anomalous spike at iteration 11 -->
+<polyline fill="none" points="480,182 500,72" stroke="var(--alizarin)" stroke-dasharray="4 3" stroke-width="2.5"></polyline>
+<!-- Trigger marker -->
+<line stroke="var(--alizarin)" stroke-dasharray="3 3" stroke-width="1.5" x1="500" x2="500" y1="40" y2="280"></line>
+<circle cx="500" cy="72" fill="var(--alizarin)" fill-opacity="0.9" r="5"></circle>
+<text fill="var(--alizarin)" font-family="var(--mono)" font-size="9" letter-spacing="1" x="510" y="60">CUSUM TRIGGER</text>
+<!-- Revert line -->
+<line stroke="var(--hookers)" stroke-dasharray="4 2" stroke-width="2" x1="500" x2="530" y1="72" y2="182"></line>
+<text fill="var(--hookers)" font-family="var(--mono)" font-size="8" letter-spacing="1" x="540" y="178">REVERT TO STABLE</text>
+<!-- Stable continuation -->
+<polyline fill="none" points="530,182 570,178 610,175 650,172 690,170 730,168 760,166" stroke="var(--hookers)" stroke-linejoin="round" stroke-width="2"></polyline>
+</svg></div></div></p>
+<p class="reveal"><div class="figure reveal"><div class="frame"><svg fill="none" style="width:100%; height:auto; margin-top:-1px;" viewBox="0 0 800 140" xmlns="http://www.w3.org/2000/svg">
+<!-- Sub-chart border -->
+<line stroke="var(--brushed)" stroke-opacity="0.3" stroke-width="0.5" x1="80" x2="760" y1="0" y2="0"></line>
+<!-- Y-axis -->
+<line stroke="var(--phthalo)" stroke-opacity="0.3" stroke-width="0.5" x1="80" x2="80" y1="10" y2="120"></line>
+<line stroke="var(--phthalo)" stroke-opacity="0.3" stroke-width="0.5" x1="80" x2="760" y1="120" y2="120"></line>
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="8" text-anchor="end" x="70" y="18">h</text>
+<text fill="var(--phthalo)" font-family="var(--mono)" font-size="8" text-anchor="end" x="70" y="120">0</text>
+<text fill="var(--dioxazine)" font-family="var(--mono)" font-size="9" letter-spacing="1" text-anchor="middle" transform="rotate(-90,20,65)" x="20" y="65">S_t</text>
+<!-- Threshold line -->
+<line stroke="var(--alizarin)" stroke-dasharray="6 4" stroke-opacity="0.5" stroke-width="1" x1="80" x2="760" y1="20" y2="20"></line>
+<text fill="var(--alizarin)" fill-opacity="0.7" font-family="var(--mono)" font-size="7" text-anchor="start" x="765" y="18">h</text>
+<!-- S_t line: low, then spikes at iteration 11 -->
+<polyline fill="none" points="80,115 120,112 160,110 200,108 240,106 280,104 320,102 360,100 400,96 440,90 480,80 500,10" stroke="var(--dioxazine)" stroke-linejoin="round" stroke-width="2"></polyline>
+<!-- Trigger marker -->
+<circle cx="500" cy="10" fill="var(--alizarin)" fill-opacity="0.9" r="4"></circle>
+<!-- Reset after revert -->
+<line stroke="var(--hookers)" stroke-dasharray="4 2" stroke-width="1.5" x1="500" x2="530" y1="10" y2="110"></line>
+<polyline fill="none" points="530,110 570,108 610,106 650,104 690,102 730,100 760,98" stroke="var(--dioxazine)" stroke-linejoin="round" stroke-width="2"></polyline>
+</svg></div></div></p>
 <p class="reveal">Fig 2CUSUM divergence detection. At iteration 11, an anomalous spike triggers the CUSUM threshold, initiating automatic revert to the last stable state.</p>
 <p class="reveal">When the CUSUM trigger fires, two things happen in sequence:</p>
 <ol>
@@ -472,7 +567,37 @@
 <p class="reveal">Everything described so far (the harness, the budget, the CUSUM monitoring) keeps the agent from breaking things in real-time. But there is a deeper requirement: <em>traceability after the fact</em>. If the autonomous loop runs overnight and presents you with a research finding in the morning, you need to be able to verify exactly how that conclusion was reached. Not approximately. Exactly.</p>
 <p class="reveal">The architecture enforces this through a principle called Blocked-Restore Truth. Every mutation the agent makes is written to two parallel ledgers: a <strong>cutover-audit</strong> ledger (what changed, when, and why) and a <strong>restore-source</strong> ledger (what the state was before the change, so it can be reconstructed).
 4This dual-ledger approach mirrors database transaction logging (WAL + undo log), applied to the ML experiment lifecycle.</p>
-<p class="reveal"><img src="fig_4.svg" alt="Figure 4"></p>
+<p class="reveal"><div class="figure reveal"><div class="frame"><svg fill="none" style="width:100%; height:auto;" viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg">
+<!-- Chain nodes -->
+<rect fill="var(--hookers)" fill-opacity="0.1" height="80" stroke="var(--hookers)" stroke-width="1.5" width="130" x="20" y="60"></rect>
+<text fill="var(--hookers)" font-family="var(--mono)" font-size="9" letter-spacing="1" text-anchor="middle" x="85" y="92">ORIGINAL</text>
+<text fill="var(--hookers)" font-family="var(--mono)" font-size="9" letter-spacing="1" text-anchor="middle" x="85" y="108">DATASET</text>
+<text fill="var(--hookers)" font-family="var(--mono)" font-size="7" text-anchor="middle" x="85" y="128">(PINNED SOURCE)</text>
+<line marker-end="url(#arrowS)" stroke="var(--phthalo-lift)" stroke-width="1.5" x1="150" x2="190" y1="100" y2="100"></line>
+<rect fill="var(--phthalo-lift)" fill-opacity="0.06" height="60" stroke="var(--phthalo-lift)" stroke-width="1" width="100" x="190" y="70"></rect>
+<text fill="var(--phthalo-lift)" font-family="var(--mono)" font-size="9" text-anchor="middle" x="240" y="96">MUTATION 1</text>
+<text fill="var(--phthalo-lift)" font-family="var(--mono)" font-size="7" text-anchor="middle" x="240" y="112">cost: 10</text>
+<line stroke="var(--phthalo-lift)" stroke-width="1.5" x1="290" x2="330" y1="100" y2="100"></line>
+<rect fill="var(--phthalo-lift)" fill-opacity="0.06" height="60" stroke="var(--phthalo-lift)" stroke-width="1" width="100" x="330" y="70"></rect>
+<text fill="var(--phthalo-lift)" font-family="var(--mono)" font-size="9" text-anchor="middle" x="380" y="96">MUTATION 2</text>
+<text fill="var(--phthalo-lift)" font-family="var(--mono)" font-size="7" text-anchor="middle" x="380" y="112">cost: 20</text>
+<line stroke="var(--phthalo-lift)" stroke-width="1.5" x1="430" x2="450" y1="100" y2="100"></line>
+<text fill="var(--tungsten)" font-family="var(--mono)" font-size="14" x="460" y="104">Â·Â·Â·</text>
+<line stroke="var(--phthalo-lift)" stroke-width="1.5" x1="480" x2="500" y1="100" y2="100"></line>
+<rect fill="var(--phthalo-lift)" fill-opacity="0.06" height="60" stroke="var(--phthalo-lift)" stroke-width="1" width="100" x="500" y="70"></rect>
+<text fill="var(--phthalo-lift)" font-family="var(--mono)" font-size="9" text-anchor="middle" x="550" y="96">MUTATION N</text>
+<text fill="var(--phthalo-lift)" font-family="var(--mono)" font-size="7" text-anchor="middle" x="550" y="112">cost: 10</text>
+<line stroke="var(--phthalo-lift)" stroke-width="1.5" x1="600" x2="640" y1="100" y2="100"></line>
+<!-- Decision diamond -->
+<polygon fill="var(--hansa)" fill-opacity="0.08" points="700,60 760,100 700,140 640,100" stroke="var(--hansa)" stroke-width="1.5"></polygon>
+<text fill="var(--hansa)" font-family="var(--mono)" font-size="8" letter-spacing="1" text-anchor="middle" x="700" y="96">PROVENANCE</text>
+<text fill="var(--hansa)" font-family="var(--mono)" font-size="8" letter-spacing="1" text-anchor="middle" x="700" y="110">VERIFIER</text>
+<!-- Outcomes -->
+<line stroke="var(--hookers)" stroke-width="1.5" x1="700" x2="700" y1="60" y2="24"></line>
+<text fill="var(--hookers)" font-family="var(--mono)" font-size="9" font-weight="600" letter-spacing="1" text-anchor="middle" x="700" y="18">ACCEPTED</text>
+<line stroke="var(--alizarin)" stroke-width="1.5" x1="700" x2="700" y1="140" y2="176"></line>
+<text fill="var(--alizarin)" font-family="var(--mono)" font-size="9" font-weight="600" letter-spacing="1" text-anchor="middle" x="700" y="190">BLOCKED</text>
+</svg></div></div></p>
 <p class="reveal">Fig 3Blocked-Restore Truth provenance chain. The verifier walks backward through the mutation ledger. If any link is missing, the finding is discarded.</p>
 <table>
 <thead>
