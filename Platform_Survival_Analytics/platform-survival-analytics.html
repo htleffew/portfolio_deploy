@@ -190,7 +190,48 @@
     <h2 class="reveal is-chapter">Four modules, one auditable pipeline</h2>
 <p class="reveal">The engine runs on a YARN-managed Spark cluster sized for petabyte-scale moderation telemetry: roughly 3,000 CPU cores allocated at 2 GB per core for 7.8 TB aggregate execution memory, with shuffle partitions clamped against the cluster&#39;s physical limits to stop data skew when complex cross-metric aggregations hit the executors. The Spark layer exists to make the analytical layer tractable, not to be the contribution.</p>
 <p class="reveal">The contribution is the decomposition. The pipeline splits cleanly into four modules, each with a single responsibility, and the modules communicate through standardized intermediate CSV artifacts rather than in-memory state. Any module can be re-run in isolation when a methodology question demands it.</p>
-<p class="reveal"><img src="fig_1.svg" alt="Figure 1"></p>
+<p class="reveal"><div class="figure reveal"><div class="frame"><svg height="auto" style="max-width: 900px;" viewBox="0 0 900 380" width="100%" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<lineargradient id="moduleFlow" x1="0%" x2="100%" y1="0%" y2="0%">
+<stop offset="0%" stop-color="#3866A0" stop-opacity="0.0"></stop>
+<stop offset="50%" stop-color="#3866A0" stop-opacity="0.8"></stop>
+<stop offset="100%" stop-color="#3866A0" stop-opacity="0.0"></stop>
+</lineargradient>
+</defs>
+<!-- Module 1: Orchestrator -->
+<rect fill="#1A1A1A" height="140" stroke="#3866A0" stroke-width="1.5" width="180" x="20" y="120"></rect>
+<text fill="#3866A0" font-family="'JetBrains Mono', monospace" font-size="9" letter-spacing="2" text-anchor="middle" x="110" y="148">MODULE 01</text>
+<text fill="#F5F5F7" font-family="'Playfair Display', serif" font-size="18" font-weight="600" text-anchor="middle" x="110" y="180">Orchestrator</text>
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle" x="110" y="208">Spark session,</text>
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle" x="110" y="222">SQL fetch,</text>
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle" x="110" y="236">temporal segmentation</text>
+<path d="M 200 190 L 240 190" fill="none" stroke="url(#moduleFlow)" stroke-width="2"></path>
+<!-- Module 2: Text NLP -->
+<rect fill="#1A1A1A" height="140" stroke="#3866A0" stroke-width="1.5" width="180" x="240" y="120"></rect>
+<text fill="#3866A0" font-family="'JetBrains Mono', monospace" font-size="9" letter-spacing="2" text-anchor="middle" x="330" y="148">MODULE 02</text>
+<text fill="#F5F5F7" font-family="'Playfair Display', serif" font-size="18" font-weight="600" text-anchor="middle" x="330" y="180">Text NLP</text>
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle" x="330" y="208">N-grams, themes,</text>
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle" x="330" y="222">collocation,</text>
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle" x="330" y="236">frequency (NLTK)</text>
+<path d="M 420 190 L 460 190" fill="none" stroke="url(#moduleFlow)" stroke-width="2"></path>
+<!-- Module 3: Statistical -->
+<rect fill="#1A1A1A" height="140" stroke="#7A1626" stroke-width="2" width="200" x="460" y="120"></rect>
+<text fill="#7A1626" font-family="'JetBrains Mono', monospace" font-size="9" letter-spacing="2" text-anchor="middle" x="560" y="148">MODULE 03</text>
+<text fill="#F5F5F7" font-family="'Playfair Display', serif" font-size="18" font-weight="600" text-anchor="middle" x="560" y="180">Statistical</text>
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle" x="560" y="208">Kaplan-Meier survival,</text>
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle" x="560" y="222">VADER sentiment,</text>
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle" x="560" y="236">co-occurrence graphs</text>
+<path d="M 660 190 L 700 190" fill="none" stroke="url(#moduleFlow)" stroke-width="2"></path>
+<!-- Module 4: Report Generator -->
+<rect fill="#1A1A1A" height="140" stroke="#3866A0" stroke-width="1.5" width="180" x="700" y="120"></rect>
+<text fill="#3866A0" font-family="'JetBrains Mono', monospace" font-size="9" letter-spacing="2" text-anchor="middle" x="790" y="148">MODULE 04</text>
+<text fill="#F5F5F7" font-family="'Playfair Display', serif" font-size="18" font-weight="600" text-anchor="middle" x="790" y="180">Report Engine</text>
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle" x="790" y="208">Jinja-templated</text>
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle" x="790" y="222">12-section HTML,</text>
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle" x="790" y="236">PDF rollup</text>
+<!-- Cluster sizing labels -->
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="10" letter-spacing="2" text-anchor="middle" x="450" y="320">YARN CLUSTER: ~3,000 CORES  ·  ~7.8 TB MEMORY  ·  9,000 SHUFFLE PARTITIONS</text>
+</svg></div></div></p>
 <p class="reveal">FIG. 01 The four-module decomposition. Modules communicate through standardized CSV intermediates rather than in-memory state, so any analytical module can be re-run in isolation without re-running the Spark fetch.</p>
 
   </div>
@@ -229,7 +270,27 @@ median_survival = kmf.median_survival_time_  # seconds to first violation
 <p class="reveal">Survival analysis answers when violations happen. It does not answer what topical neighborhood the user was in when the violation occurred, or how that neighborhood evolved. The engine&#39;s text NLP module fills that gap with three layered passes: latent Dirichlet allocation for topic clusters, VADER and TextBlob for sentiment polarity over time, and NetworkX-backed co-occurrence graphs for word-pair structure inside a five-token window.</p>
 <p class="reveal">The triangulation matters because each signal is interpretable on its own and dramatically more useful when read against the others. A drop in the survival curve that coincides with a sentiment polarity shift and a topic-cluster turnover is a different finding than a survival drop while the topical landscape is stable. The first pattern suggests the user moved into new content territory; the second suggests the existing territory became more violative. Different remediations follow.</p>
 <p class="reveal">Co-occurrence analysis is the layer that catches what topic modeling smooths over. LDA gives you topic distributions; the co-occurrence graph gives you the word-pairs that shape the texture inside those topics. When two words that did not previously co-occur start appearing together at high frequency in a user&#39;s consumption window, the engine flags the pair regardless of whether either word is independently policy-relevant. New language patterns precede new behavior.</p>
-<p class="reveal"><img src="fig_2.svg" alt="Figure 2"></p>
+<p class="reveal"><div class="figure reveal"><div class="frame"><svg height="auto" style="max-width: 800px;" viewBox="0 0 800 280" width="100%" xmlns="http://www.w3.org/2000/svg">
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="10" letter-spacing="2" x="60" y="40">EARLY TERTILE</text>
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="10" letter-spacing="2" x="350" y="40">MID TERTILE</text>
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="10" letter-spacing="2" x="640" y="40">LATE TERTILE</text>
+<!-- Early cluster -->
+<circle cx="120" cy="130" fill="#3866A0" fill-opacity="0.18" r="55" stroke="#3866A0" stroke-width="1"></circle>
+<text fill="#F5F5F7" font-family="'Lora', serif" font-size="13" font-style="italic" text-anchor="middle" x="120" y="135">topic A</text>
+<!-- Mid clusters -->
+<circle cx="380" cy="100" fill="#3866A0" fill-opacity="0.18" r="45" stroke="#3866A0" stroke-width="1"></circle>
+<text fill="#F5F5F7" font-family="'Lora', serif" font-size="13" font-style="italic" text-anchor="middle" x="380" y="105">topic A'</text>
+<circle cx="430" cy="180" fill="#7A1626" fill-opacity="0.20" r="50" stroke="#7A1626" stroke-width="1"></circle>
+<text fill="#F5F5F7" font-family="'Lora', serif" font-size="13" font-style="italic" text-anchor="middle" x="430" y="185">topic B</text>
+<!-- Late cluster -->
+<circle cx="690" cy="150" fill="#7A1626" fill-opacity="0.32" r="65" stroke="#7A1626" stroke-width="1.5"></circle>
+<text fill="#F5F5F7" font-family="'Lora', serif" font-size="13" font-style="italic" text-anchor="middle" x="690" y="155">topic B'</text>
+<!-- Drift arrows -->
+<path d="M 175 130 Q 270 110 335 105" fill="none" opacity="0.6" stroke="#A1A1A6" stroke-dasharray="3 4" stroke-width="1"></path>
+<path d="M 175 130 Q 280 170 385 175" fill="none" opacity="0.6" stroke="#A1A1A6" stroke-dasharray="3 4" stroke-width="1"></path>
+<path d="M 480 180 Q 580 165 630 155" fill="none" opacity="0.6" stroke="#A1A1A6" stroke-dasharray="3 4" stroke-width="1"></path>
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="9" letter-spacing="2" text-anchor="middle" x="400" y="250">TOPICAL DRIFT TRAJECTORY ACROSS TEMPORAL TERTILES</text>
+</svg></div></div></p>
 <p class="reveal">FIG. 03 Topic drift across time slices. LDA topic clusters are tracked from early to late tertile; emergent clusters in red signal new topical territory. Read alongside the survival curve, drift in the topical neighborhood gives the analyst a why to attach to the when.</p>
 
   </div>
