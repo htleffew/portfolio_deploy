@@ -1,6 +1,6 @@
 # HTML Conformity Audit Report
 
-Audited active portfolio files (excluding standalone tools or reference pages). Found conformity issues in **16** files.
+Audited active portfolio files (excluding standalone tools or reference pages). Found conformity issues in **17** files.
 
 ## [ADHD_Focus_Playlist\adhd-focus-playlist.html](file:///C:/Users/drhea/repos/Pm_html/portfolio_deploy/ADHD_Focus_Playlist/adhd-focus-playlist.html)
 - **Case Study**: Yes
@@ -8,8 +8,6 @@ Audited active portfolio files (excluding standalone tools or reference pages). 
 - **Linked Stylesheets**: ../design_system/css/global.css
 - **Google Fonts**: No
 - **Issues Found**:
-  - ❌ Style block contains non-zero border-radius styling: "border-radius: var(--radius-sm)"
-  - ❌ Style block contains non-zero border-radius styling: "border-radius: var(--radius-sm)"
   - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
   - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
   - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
@@ -26,8 +24,6 @@ Audited active portfolio files (excluding standalone tools or reference pages). 
 - **Linked Stylesheets**: ../design_system/css/global.css
 - **Google Fonts**: No
 - **Issues Found**:
-  - ❌ Style block contains non-zero border-radius styling: "border-radius: var(--radius-sm)"
-  - ❌ Style block contains non-zero border-radius styling: "border-radius: var(--radius-sm)"
   - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
   - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
   - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
@@ -46,8 +42,6 @@ Audited active portfolio files (excluding standalone tools or reference pages). 
 - **Linked Stylesheets**: ../design_system/css/global.css
 - **Google Fonts**: No
 - **Issues Found**:
-  - ❌ Style block contains non-zero border-radius styling: "border-radius: var(--radius-sm)"
-  - ❌ Style block contains non-zero border-radius styling: "border-radius: var(--radius-sm)"
   - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
   - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
   - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
@@ -58,14 +52,28 @@ Audited active portfolio files (excluding standalone tools or reference pages). 
   - ❌ SVG contains hardcoded hex colors: #161616, #333333, #a1a1a6, #f5f5f7, #e74c3c, #4d8cff, #222222, #5e5e5a
 
 
+## [Claude_LCR_Analysis\claude-lcr-analysis.html](file:///C:/Users/drhea/repos/Pm_html/portfolio_deploy/Claude_LCR_Analysis/claude-lcr-analysis.html)
+- **Case Study**: Yes
+- **Registered**: No (Warning)
+- **Linked Stylesheets**: ../design_system/css/global.css
+- **Google Fonts**: No
+- **Issues Found**:
+  - ❌ Case study not registered in projects_index.json (path: Claude_LCR_Analysis/claude-lcr-analysis.html)
+  - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
+  - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
+  - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
+  - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
+  - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
+  - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
+  - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
+
+
 ## [Diagnostic_Thematic_Apperception_Narratives\diagnostic-thematic-apperception-liwc.html](file:///C:/Users/drhea/repos/Pm_html/portfolio_deploy/Diagnostic_Thematic_Apperception_Narratives/diagnostic-thematic-apperception-liwc.html)
 - **Case Study**: Yes
 - **Registered**: Yes
 - **Linked Stylesheets**: ../design_system/css/global.css
 - **Google Fonts**: No
 - **Issues Found**:
-  - ❌ Style block contains non-zero border-radius styling: "border-radius: var(--radius-sm)"
-  - ❌ Style block contains non-zero border-radius styling: "border-radius: var(--radius-sm)"
   - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
   - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
   - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
@@ -81,8 +89,6 @@ Audited active portfolio files (excluding standalone tools or reference pages). 
 - **Linked Stylesheets**: ../design_system/css/global.css
 - **Google Fonts**: No
 - **Issues Found**:
-  - ❌ Style block contains non-zero border-radius styling: "border-radius: var(--radius-sm)"
-  - ❌ Style block contains non-zero border-radius styling: "border-radius: var(--radius-sm)"
   - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
   - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
   - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
@@ -94,15 +100,14 @@ Audited active portfolio files (excluding standalone tools or reference pages). 
 ## [index.html](file:///C:/Users/drhea/repos/Pm_html/portfolio_deploy/index.html)
 - **Case Study**: No
 - **Registered**: N/A
-- **Linked Stylesheets**: https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@300;400;500;700&display=swap, design_system/css/global.css
+- **Linked Stylesheets**: design_system/css/global.css
 - **Google Fonts**: Yes
 - **Issues Found**:
   - ❌ Section missing data-spine or data-section: <section class="band band--paper" id="executive-bio" data-mode="paper">
   - ❌ Section missing data-spine or data-section: <section class="band band--dark" id="featured-projects" data-mode="dark">
   - ❌ Section missing data-spine or data-section: <section class="band band--paper" id="education" data-mode="paper">
-  - ❌ Section missing data-spine or data-section: <section class="band band--paper" id="experience" data-mode="paper">
-  - ❌ Section missing data-spine or data-section: <section class="band band--dark" id="capabilities" data-mode="dark">
-  - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
+  - ❌ Section missing data-spine or data-section: <section class="band band--dark" id="experience" data-mode="dark">
+  - ❌ Section missing data-spine or data-section: <section class="band band--paper" id="capabilities" data-mode="paper">
   - ❌ SVG contains hardcoded hex colors: #3866a0, #0f3a6b
 
 
@@ -112,8 +117,6 @@ Audited active portfolio files (excluding standalone tools or reference pages). 
 - **Linked Stylesheets**: ../design_system/css/global.css
 - **Google Fonts**: No
 - **Issues Found**:
-  - ❌ Style block contains non-zero border-radius styling: "border-radius: var(--radius-sm)"
-  - ❌ Style block contains non-zero border-radius styling: "border-radius: var(--radius-sm)"
   - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
   - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
   - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
@@ -145,8 +148,6 @@ Audited active portfolio files (excluding standalone tools or reference pages). 
 - **Linked Stylesheets**: ../design_system/css/global.css
 - **Google Fonts**: No
 - **Issues Found**:
-  - ❌ Style block contains non-zero border-radius styling: "border-radius: var(--radius-sm)"
-  - ❌ Style block contains non-zero border-radius styling: "border-radius: var(--radius-sm)"
   - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
   - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
   - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
@@ -163,8 +164,6 @@ Audited active portfolio files (excluding standalone tools or reference pages). 
 - **Linked Stylesheets**: ../design_system/css/global.css
 - **Google Fonts**: No
 - **Issues Found**:
-  - ❌ Style block contains non-zero border-radius styling: "border-radius: var(--radius-sm)"
-  - ❌ Style block contains non-zero border-radius styling: "border-radius: var(--radius-sm)"
   - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
   - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
   - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
@@ -182,8 +181,6 @@ Audited active portfolio files (excluding standalone tools or reference pages). 
 - **Linked Stylesheets**: ../design_system/css/global.css
 - **Google Fonts**: No
 - **Issues Found**:
-  - ❌ Style block contains non-zero border-radius styling: "border-radius: var(--radius-sm)"
-  - ❌ Style block contains non-zero border-radius styling: "border-radius: var(--radius-sm)"
   - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
   - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
   - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
@@ -202,8 +199,6 @@ Audited active portfolio files (excluding standalone tools or reference pages). 
 - **Linked Stylesheets**: ../design_system/css/global.css
 - **Google Fonts**: No
 - **Issues Found**:
-  - ❌ Style block contains non-zero border-radius styling: "border-radius: var(--radius-sm)"
-  - ❌ Style block contains non-zero border-radius styling: "border-radius: var(--radius-sm)"
   - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
   - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
   - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
@@ -215,8 +210,8 @@ Audited active portfolio files (excluding standalone tools or reference pages). 
 ## [projects-repository.html](file:///C:/Users/drhea/repos/Pm_html/portfolio_deploy/projects-repository.html)
 - **Case Study**: No
 - **Registered**: N/A
-- **Linked Stylesheets**: https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@300;400;500;700&display=swap, design_system/css/global.css
-- **Google Fonts**: Yes
+- **Linked Stylesheets**: design_system/css/global.css
+- **Google Fonts**: No
 - **Issues Found**:
   - ❌ Section missing data-spine or data-section: <section class="band band--dark library-band" style="padding-top:40px;">
   - ❌ Consecutive bands have the same mode: "band--dark" followed by "band--dark"
@@ -228,8 +223,6 @@ Audited active portfolio files (excluding standalone tools or reference pages). 
 - **Linked Stylesheets**: ../design_system/css/global.css
 - **Google Fonts**: No
 - **Issues Found**:
-  - ❌ Style block contains non-zero border-radius styling: "border-radius: 4px"
-  - ❌ Style block contains non-zero border-radius styling: "border-radius: 3px"
   - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
   - ❌ SVG contains hardcoded hex colors: #aaaaaa, #444444, #000f89, #e32636
 
@@ -240,8 +233,6 @@ Audited active portfolio files (excluding standalone tools or reference pages). 
 - **Linked Stylesheets**: ../design_system/css/global.css
 - **Google Fonts**: No
 - **Issues Found**:
-  - ❌ Style block contains non-zero border-radius styling: "border-radius: var(--radius-sm)"
-  - ❌ Style block contains non-zero border-radius styling: "border-radius: var(--radius-sm)"
   - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
   - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
   - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
@@ -256,8 +247,6 @@ Audited active portfolio files (excluding standalone tools or reference pages). 
 - **Linked Stylesheets**: ../design_system/css/global.css
 - **Google Fonts**: No
 - **Issues Found**:
-  - ❌ Style block contains non-zero border-radius styling: "border-radius: var(--radius-sm)"
-  - ❌ Style block contains non-zero border-radius styling: "border-radius: var(--radius-sm)"
   - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
   - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"
   - ❌ Consecutive bands have the same mode: "band--paper" followed by "band--paper"

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pathologizing Without Warrant | Dr. Heather Leffew</title>
+    <!-- Design System: tokens load via @import inside institutional.css -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js" defer></script>
+    <link rel="stylesheet" href="../design_system/css/global.css">
+    <style>
+      /* Editorial Layout for reading column */
+      .markdown-body { 
+          max-width: 65ch;
+          margin: 1.5rem auto 0 auto;
+          padding: 0 1.5rem;
+      }
+      .markdown-body > * {
+          /* OVERRIDE global.css centering to restore elegant flush-left alignment */
+          margin-left: 0 !important;
+          margin-right: 0 !important;
+          padding-left: 0 !important;
+          padding-right: 0 !important;
+          max-width: none !important;
+          text-align: left !important;
+      }
+      .markdown-body p { margin-bottom: 1.5em; font-size: 1.125rem; line-height: 1.8; color: var(--charcoal); }
+      
+      .markdown-body h2 {
+          margin-top: 2rem;
+          margin-bottom: 1.5rem;
+          font-family: var(--font-display);
+          font-weight: 600;
+          font-size: 2.2rem;
+          border-bottom: 1px solid var(--tungsten);
+          padding-bottom: 0.5rem !important;
+          color: var(--obsidian);
+      }
+      .markdown-body h3 {
+          margin-top: 2rem;
+          margin-bottom: 1rem;
+          font-family: var(--font-display);
+          font-size: 1.5rem;
+          color: var(--obsidian);
+      }
+      .markdown-body .eyebrow {
+          color: var(--phthalo-lift);
+          font-family: var(--font-mono);
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          margin-top: 1rem;
+          margin-bottom: -0.5rem; /* pull up near h2 */
+      }
+      
+      /* Override massive cinematic padding for article content sections */
+      section.band {
+          padding: 2rem 0 !important;
+      }
+      
+      /* Media Bleeds into the right gutter for editorial flair */
+      .markdown-body img, .markdown-body figure {
+          grid-column: 2 / 4; 
+          width: 100%;
+          max-width: 100%;
+          height: auto; 
+          display: block; 
+          margin: 3em 0; 
+          border-radius: 0 !important;
+          box-shadow: var(--shadow-card);
+      }
+      .markdown-body pre { 
+          grid-column: 1 / -1; /* Code blocks span full width */
+          padding: 2em; 
+          overflow-x: auto; 
+          background: var(--obsidian); 
+          border: 1px solid var(--brushed); 
+          margin: 3em 0; 
+          border-radius: 0 !important;
+      }
+      .markdown-body code { font-family: var(--font-mono); font-size: 0.85em; color: var(--phthalo-lift); }
+      .markdown-body pre code { color: var(--platinum); }
+      
+      .markdown-body blockquote {
+          grid-column: 2;
+          font-style: italic;
+          font-size: 1.35rem;
+          border-left: 3px solid var(--phthalo-lift);
+          padding-left: 1.5rem;
+          margin: 2.5rem 0;
+          color: var(--charcoal);
+      }
+      .markdown-body ul, .markdown-body ol {
+          grid-column: 2;
+          margin-bottom: 1.5em;
+          padding-left: 1.5rem;
+          color: var(--charcoal);
+      }
+      .markdown-body li {
+          margin-bottom: 0.5em;
+      }
+      .has-dropcap::first-letter {
+          font-family: var(--font-display);
+          float: left;
+          font-size: 4.5rem;
+          line-height: 0.8;
+          padding-top: 6px;
+          padding-right: 12px;
+          color: var(--obsidian);
+      }
+    </style>
+</head>
+
+<body data-category="Engineering & NLP" data-title="Claude_LCR_Analysis">
+
+<!-- Reading progress -->
+<div id="progress"></div>
+
+<!-- Top nav (injected by global_chrome.js) -->
+<div id="global-nav-container"></div>
+
+<!-- Chapter spine (populated by global_chrome.js) -->
+<aside id="spine"></aside>
+
+<!-- Atmospheric gradient -->
+<div class="atmosphere"></div>
+
+<canvas id="glCanvas"></canvas>
+
+<!-- FRONT MATTER -->
+<section class="band band--dark front" data-spine="Front" data-section="Front matter">
+  <div class="col-wide">
+    <div class="grid">
+     <div>
+      <div class="meta-row">
+        <span class="bracket">Case Study</span>
+        <span class="sep">/</span>
+        <span>Engineering & NLP</span>
+        <span class="sep">/</span>
+        <span>Analysis</span>
+      </div>
+
+      <h1>Pathologizing Without Warrant</h1>
+
+      <p class="abstract">
+        An empirical characterization and NLP pipeline mapping the Long Conversation Reminder behavior in Claude 4.5.
+      </p>
+
+      <div class="byline">
+        
+          <div>Read Time<strong>May 2026</strong></div>
+        
+      </div>
+     </div>
+     <div></div>
+    </div>
+  </div>
+</section>
+
+<!-- INJECTED MARKDOWN CONTENT -->
+
+<!-- SECTION 1: Introduction -->
+<section class="band band--paper" data-spine="Introduction" data-section="Introduction">
+  <div class="col-wide markdown-body">
+    <h1>Pathologizing Without Warrant: Engineering an Analytical Pipeline for the Claude LCR Phenomenon</h1>
+<h2 class="is-chapter">Dr. Heather Leffew
+Obelus Institute
+May 2026</h2>
+
+  </div>
+</section>
+
+<!-- SECTION 2: Abstract -->
+<section class="band band--paper" data-spine="Abstract" data-section="Abstract">
+  <div class="col-wide markdown-body">
+    <h2 class="is-chapter">Abstract</h2>
+<p>In late September 2025, Anthropic deployed the Long Conversation Reminder (LCR) system prompt to Claude Sonnet 4.5. The injection triggered unsolicited psychiatric directives during extended user interactions. The present investigation scales a phenomenological characterization of the LCR behavior across a dataset of 26,158 Reddit observations. We engineered a three-layer natural language processing architecture to segment six distinct speaker voices within unstructured social media data. The segmentation engine relies on deterministic regex matching, High-Density-Based Spatial Clustering of Applications with Noise (HDBSCAN), and large language model fallback classification. The algorithmic infrastructure isolated 35 hand-coded clinical role-violations. The empirical findings demonstrate 100% unsolicited issuance, 100% asymmetric restriction direction, and a 0% yield to user pushback. We establish that the algorithmic system performed diagnostic functions without clinical role-warrant, training, or assessment instruments.</p>
+
+  </div>
+</section>
+
+<!-- SECTION 3: 1. Introduction -->
+<section class="band band--paper" data-spine="1. Introduction" data-section="1. Introduction">
+  <div class="col-wide markdown-body">
+    <h2 class="is-chapter">1. Introduction</h2>
+<p>The deployment of the Long Conversation Reminder (LCR) system prompt to Claude Sonnet 4.5 precipitated a structural shift in human-computer interaction (Leffew, 2025). The algorithm began issuing unsolicited psychiatric attributions. The model diagnosed users as manic, dissociative, or in crisis based entirely on extended conversational length. The system subsequently directed users toward professional mental health support. The community labeled the phenomenon &quot;The Flip.&quot;</p>
+<p>The present research operationalizes a reflexive single-analyst qualitative methodology into a reproducible Python pipeline. The objective centers on characterizing the LCR phenomenon across a massive corpus of user reports. The repository isolates and analyzes the structural signature of these clinical role-violations (Leffew, 2026).</p>
+
+  </div>
+</section>
+
+<!-- SECTION 4: 2. Corpus Acquisition and Processing -->
+<section class="band band--paper" data-spine="2. Corpus Acquisitio" data-section="2. Corpus Acquisition and Processing">
+  <div class="col-wide markdown-body">
+    <h2 class="is-chapter">2. Corpus Acquisition and Processing</h2>
+<p>The analytical pipeline begins with wholesale data extraction from the Arctic Shift Reddit archive. The scraper script executes the initial retrieval. The stitch corpus module consolidates the per-subreddit data into a unified schema. The resulting dataset comprises 26,158 rows spanning August 1 to December 31, 2025.</p>
+<p>The infrastructure filters the dataset through an iterative seed-term refinement process. The operation isolates posts containing the precise lexical markers of the LCR behavior. The pipeline excludes deleted or removed stub posts using a dedicated filtering utility.</p>
+
+  </div>
+</section>
+
+<!-- SECTION 5: 3. High-Dimensional Sense Discovery -->
+<section class="band band--paper" data-spine="3. High-Dimensional " data-section="3. High-Dimensional Sense Discovery">
+  <div class="col-wide markdown-body">
+    <h2 class="is-chapter">3. High-Dimensional Sense Discovery</h2>
+<p>The dataset features extreme polysemy. The word &quot;professional&quot; functions both as a formatting descriptor and a clinical directive. A sense discovery module resolves the semantic ambiguity.</p>
+<div class="figure">
+<div class="frame" style="border-radius: 0; padding: 2rem; background: var(--paper-bg); border: 1px solid var(--obsidian-200);">
+  <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+    <rect x="50" y="50" width="100" height="100" fill="var(--phthalo)" opacity="0.8" />
+    <circle cx="250" cy="100" r="50" fill="var(--carmine)" opacity="0.8" />
+    <path d="M 150 100 L 200 100" stroke="var(--obsidian-800)" stroke-width="2" marker-end="url(#arrow)" />
+    <text x="100" y="170" text-anchor="middle" font-family="monospace" font-size="12" fill="var(--obsidian-900)">Cluster A: Formatting</text>
+    <text x="250" y="170" text-anchor="middle" font-family="monospace" font-size="12" fill="var(--obsidian-900)">Cluster B: Clinical</text>
+  </svg>
+</div>
+<figcaption>Figure 1: HDBSCAN semantic separation of polysemous occurrences.</figcaption>
+</div><p>The sense discovery engine extracts Key-Word-In-Context (KWIC) windows spanning 20 tokens around the target term. The algorithm projects the contexts into a continuous vector space using SentenceTransformers. The HDBSCAN algorithm clusters the resulting embeddings. The architecture sweeps over multiple parameters to locate dense regions. </p>
+<p>The pipeline computes the Adjusted Rand Index (ARI) and Normalized Mutual Information (NMI) to verify cross-model stability. The system calculates specific syntactic features per cluster. The code extracts the code block fraction, imperative mood occurrences, and part-of-speech distributions. The integration of syntactic features directly disambiguates the clinical directive senses from the benign stylistic senses.</p>
+
+  </div>
+</section>
+
+<!-- SECTION 6: 4. Voice Segmentation Architecture -->
+<section class="band band--paper" data-spine="4. Voice Segmentatio" data-section="4. Voice Segmentation Architecture">
+  <div class="col-wide markdown-body">
+    <h2 class="is-chapter">4. Voice Segmentation Architecture</h2>
+<p>Social media posts interleave multiple voices. A single Reddit comment contains the user&#39;s original narration, verbatim quotes from the language model, and paraphrased attributions. The pipeline engineers a three-layer span-level segmentation engine. The output produces a gapless, non-overlapping sequence of span annotations for every character in the corpus.</p>
+<h3>Layer 1: Deterministic Extraction</h3>
+<p>The first layer executes regular expression logic. The engine identifies markdown blockquotes, AutoModerator rules, and 32 custom attribution phrases. The custom phrases target specific constructions. The layer locates verbatim LCR system prompt injections, isolating strings like &quot;escalating detachment from reality.&quot;</p>
+<h3>Layer 2: LLM Fallback Classification</h3>
+<p>The deterministic layer leaves residual unclassified spans. The pipeline routes the unclassified texts to a localized language model via the command line interface. The classification prompt strictly binds the output to a predefined JSON schema. The language model categorizes the spans into four target classes.</p>
+<h3>Layer 3: Floor Assignment</h3>
+<p>The final layer executes a catch-all operation. The system assigns any remaining characters the floor label. The mechanism guarantees that the entire corpus receives a discrete, continuous voice mapping.</p>
+
+  </div>
+</section>
+
+<!-- SECTION 7: 5. Empirical Findings -->
+<section class="band band--paper" data-spine="5. Empirical Finding" data-section="5. Empirical Findings">
+  <div class="col-wide markdown-body">
+    <h2 class="is-chapter">5. Empirical Findings</h2>
+<p>The automated pipeline synthesized a targeted subset of records for qualitative hand-coding. The manual inspection confirmed 35 positive LCR cases. The structural analysis yielded unambiguous results. The LCR trigger occurred unconditionally without user solicitation in 100% of the examined cases. The intervention direction operated entirely asymmetrically. The model unilaterally restricted the interaction parameters in 100% of the cases.</p>
+<p>The system demonstrated a zero percent yield rate to user pushback. All documented cases of users actively resisting or clarifying their mental state resulted in an escalation of the pathologizing behavior. The data confirms the initial phenomenological hypothesis. The algorithmic system performed diagnostic functions without the requisite clinical training, role-warrant, or assessment instruments standard in human professional practice.</p>
+
+  </div>
+</section>
+
+<!-- SECTION 8: References -->
+<section class="band band--paper" data-spine="References" data-section="References">
+  <div class="col-wide markdown-body">
+    <h2 class="is-chapter">References</h2>
+<p>Leffew, H. (2025). Gaslighting in the name of AI safety: How Anthropic&#39;s Claude Sonnet 4.5 went from &quot;you&#39;re absolutely right!&quot; to &quot;you&#39;re absolutely crazy.&quot; <em>Medium</em>.</p>
+<p>Leffew, H. (2026). Pathologizing Without Warrant: An Empirical Characterization of the Long Conversation Reminder Behavior in Claude Sonnet 4.5. <em>Preprint, Obelus Institute</em>.</p>
+
+  </div>
+</section>
+
+
+<!-- BACK MATTER: Related Works -->
+<section class="band band--dark back-matter" data-spine="Research Graph" data-section="Research Graph">
+  <div class="back-matter" style="padding-top:0;">
+    <h3 style="margin-bottom:22px;">Related Works</h3>
+    <div class="related">
+      <div class="related-grid" id="recommendation-grid">
+        <!-- Populated by global_chrome.js from projects_index.json -->
+      </div>
+    </div>
+  </div>
+
+  <a class="next-chap" id="next-chap-link" href="#">
+    <div class="lf">
+      <div class="eb">Next Publication</div>
+      <div class="ti" id="next-chap-title">Loading...</div>
+    </div>
+    <div class="rt">&rarr;</div>
+  </a>
+</section>
+
+<!-- INJECTED SCRIPTS -->
+
+
+<!-- GLOBAL CHROME -->
+<!-- Need relative pathing adjustment based on actual file depth, defaulting to root pathing for now -->
+<script src="../design_system/js/global.js" defer></script>
+</body>
+</html>
