@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Bind Sidebar Accordions & Links
-    document.querySelectorAll('.db-acc-trigger').forEach(trigger => {
+    document.querySelectorAll('.sb-header').forEach(trigger => {
         trigger.addEventListener('click', (e) => {
             const btn = e.currentTarget;
             const content = btn.nextElementSibling;
@@ -102,13 +102,14 @@ document.addEventListener('DOMContentLoaded', () => {
             
             setCategoryFilter(catName);
 
-            // Toggle drawer
-            if (content.style.display === 'block') {
-                content.style.display = 'none';
-                btn.setAttribute('aria-expanded', 'false');
-            } else {
-                content.style.display = 'block';
+            // Toggle drawer using CSS transition max-height
+            const isClosed = content.style.maxHeight === '0px' || (content.style.maxHeight === '' && window.getComputedStyle(content).maxHeight === '0px');
+            if (isClosed) {
+                content.style.maxHeight = '1000px';
                 btn.setAttribute('aria-expanded', 'true');
+            } else {
+                content.style.maxHeight = '0px';
+                btn.setAttribute('aria-expanded', 'false');
             }
         });
     });
