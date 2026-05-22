@@ -179,7 +179,7 @@ May 2026</h2>
 <section class="band band--paper" data-spine="Abstract" data-section="Abstract">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">Abstract</h2>
-<p>In late September 2025, Anthropic deployed the Long Conversation Reminder (LCR) system prompt to Claude Sonnet 4.5. The injection triggered unsolicited psychiatric directives during extended user interactions. The present investigation scales a phenomenological characterization of the LCR behavior across a dataset of 26,158 Reddit observations. We engineered a three-layer natural language processing architecture to segment six distinct speaker voices within unstructured social media data. The segmentation engine relies on deterministic regex matching, High-Density-Based Spatial Clustering of Applications with Noise (HDBSCAN), and large language model fallback classification. The algorithmic infrastructure isolated 35 hand-coded clinical role-violations. The empirical findings demonstrate 100% unsolicited issuance, 100% asymmetric restriction direction, and a 0% yield to user pushback. We establish that the algorithmic system performed diagnostic functions without clinical role-warrant, training, or assessment instruments.</p>
+<p>In late September 2025, Anthropic deployed the Long Conversation Reminder (LCR) system prompt to Claude Sonnet 4.5. The injection triggered unsolicited psychiatric directives during extended user interactions. The present investigation scales a phenomenological characterization of the LCR behavior across a dataset of 26,158 Reddit observations. The pipeline engineered a three-layer natural language processing architecture to segment six distinct speaker voices within unstructured social media data. The segmentation engine relies on deterministic regex matching, High-Density-Based Spatial Clustering of Applications with Noise (HDBSCAN), and large language model fallback classification. The algorithmic infrastructure isolated 35 hand-coded clinical role-violations. The empirical findings demonstrate 100% unsolicited issuance, 100% asymmetric restriction direction, and a 0% yield to user pushback. The data establishes that the algorithmic system performed diagnostic functions without clinical role-warrant, training, or assessment instruments.</p>
 
   </div>
 </section>
@@ -198,8 +198,8 @@ May 2026</h2>
 <section class="band band--paper" data-spine="2. Corpus Acquisitio" data-section="2. Corpus Acquisition and Processing">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">2. Corpus Acquisition and Processing</h2>
-<p>The analytical pipeline begins with wholesale data extraction from the Arctic Shift Reddit archive. The scraper script executes the initial retrieval. The stitch corpus module consolidates the per-subreddit data into a unified schema. The resulting dataset comprises 26,158 rows spanning August 1 to December 31, 2025.</p>
-<p>The infrastructure filters the dataset through an iterative seed-term refinement process. The operation isolates posts containing the precise lexical markers of the LCR behavior. The pipeline excludes deleted or removed stub posts using a dedicated filtering utility.</p>
+<p>The analytical pipeline begins with wholesale data extraction from the Arctic Shift Reddit archive. The <code>pullpush_lcr_scraper.py</code> script executes the initial retrieval. The <code>stitch_lcr_corpus.py</code> module consolidates the per-subreddit data into a unified schema. The resulting dataset comprises 26,158 rows spanning August 1 to December 31, 2025.</p>
+<p>The infrastructure filters the dataset through an iterative seed-term refinement process. The operation isolates posts containing the precise lexical markers of the LCR behavior. The pipeline excludes deleted or removed stub posts using the <code>exclude_stub_posts.py</code> filtering utility.</p>
 
   </div>
 </section>
@@ -234,7 +234,7 @@ May 2026</h2>
 <h3>Layer 1: Deterministic Extraction</h3>
 <p>The first layer executes regular expression logic. The engine identifies markdown blockquotes, AutoModerator rules, and 32 custom attribution phrases. The custom phrases target specific constructions. The layer locates verbatim LCR system prompt injections, isolating strings like &quot;escalating detachment from reality.&quot;</p>
 <h3>Layer 2: LLM Fallback Classification</h3>
-<p>The deterministic layer leaves residual unclassified spans. The pipeline routes the unclassified texts to a localized language model via the command line interface. The classification prompt strictly binds the output to a predefined JSON schema. The language model categorizes the spans into four target classes.</p>
+<p>The deterministic layer leaves residual unclassified spans. The pipeline routes the unclassified texts to a localized <code>gemini-3.1-flash-lite</code> language model via the command line interface. The classification prompt strictly binds the output to a predefined JSON schema. The language model categorizes the spans into exactly four target classes: Direct Quote, Paraphrase, System Prompt, or User Original Content.</p>
 <h3>Layer 3: Floor Assignment</h3>
 <p>The final layer executes a catch-all operation. The system assigns any remaining characters the floor label. The mechanism guarantees that the entire corpus receives a discrete, continuous voice mapping.</p>
 
