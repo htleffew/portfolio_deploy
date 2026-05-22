@@ -277,6 +277,12 @@ const initCinematicEngine = () => {
  */
 
 (function initGlobalChrome() {
+    // Force scroll to top on every load or refresh
+    if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+
     // Override addEventListener to execute DOMContentLoaded and load callbacks immediately if readyState is complete/interactive
     if (!window._addEventListenerOverridden) {
         const originalAddEventListener = EventTarget.prototype.addEventListener;
@@ -678,14 +684,13 @@ const initCinematicEngine = () => {
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
         osc.type = 'sine';
-        osc.frequency.setValueAtTime(200, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(80, audioCtx.currentTime + 0.08);
-        gain.gain.setValueAtTime(0.02, audioCtx.currentTime); // subtle
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+        osc.frequency.setValueAtTime(800, audioCtx.currentTime); // higher, gentler frequency
+        gain.gain.setValueAtTime(0.015, audioCtx.currentTime); // very subtle tap
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.04); // shorter envelope
         osc.connect(gain);
         gain.connect(audioCtx.destination);
         osc.start();
-        osc.stop(audioCtx.currentTime + 0.08);
+        osc.stop(audioCtx.currentTime + 0.04);
     };
     document.addEventListener('click', (e) => {
         if (e.target.closest('button, a, .p-card, .bio-expand-btn, .r-card, .db-row')) playClick();
