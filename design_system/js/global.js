@@ -277,32 +277,153 @@ const initCinematicEngine = () => {
  */
 
 (function initGlobalChrome() {
-    // 0. Scroll restoration is handled by Lenis + GSAP preloader sequence.
-    //    Do NOT force scrollTo(0,0) here — it fights with the cinematic
-    //    loading timeline and causes visible page jumps.
+    // Override addEventListener to execute DOMContentLoaded and load callbacks immediately if readyState is complete/interactive
+    if (!window._addEventListenerOverridden) {
+        const originalAddEventListener = EventTarget.prototype.addEventListener;
+        EventTarget.prototype.addEventListener = function(type, listener, options) {
+            if (this === document && type === 'DOMContentLoaded') {
+                if (document.readyState === 'complete' || document.readyState === 'interactive') {
+                    setTimeout(() => {
+                        try {
+                            if (typeof listener === 'function') {
+                                listener.call(this, new Event('DOMContentLoaded'));
+                            } else if (listener && typeof listener.handleEvent === 'function') {
+                                listener.handleEvent(new Event('DOMContentLoaded'));
+                            }
+                        } catch (e) {
+                            console.error("Error in deferred DOMContentLoaded listener:", e);
+                        }
+                    }, 0);
+                    return;
+                }
+            }
+            if (this === window && type === 'load') {
+                if (document.readyState === 'complete') {
+                    setTimeout(() => {
+                        try {
+                            if (typeof listener === 'function') {
+                                listener.call(this, new Event('load'));
+                            } else if (listener && typeof listener.handleEvent === 'function') {
+                                listener.handleEvent(new Event('load'));
+                            }
+                        } catch (e) {
+                            console.error("Error in deferred load listener:", e);
+                        }
+                    }, 0);
+                    return;
+                }
+            }
+            return originalAddEventListener.call(this, type, listener, options);
+        };
+        window._addEventListenerOverridden = true;
+    }
 
-    // 1. Determine relative depth to root (portfolio_deploy/)
-    const pathDepth = window.location.pathname.split('/').length - 2; // Rough heuristic
-    // A better heuristic is to check if we are in a subdirectory by looking for index.html or known root files.
-    // However, if we assume any page in a subdirectory is exactly 1 level deep (e.g. ADOS/clinical-validation.html),
-    // and root pages are 0 levels deep.
-    // Let's use a simpler heuristic based on document URI relative to 'portfolio_deploy'
-    
-    const isRoot = window.location.pathname.endsWith('index.html') && !window.location.pathname.includes('/') || 
-                   window.location.pathname.split('/').pop() === 'index.html' && window.location.pathname.split('/').slice(-2)[0] !== 'ADOS' ||
-                   !window.location.pathname.includes('/') ||
-                   window.location.pathname.endsWith('projects-repository.html');
-                     // Determine the path prefix relative to this script
-    let pathPrefix = './';
+    // Calculate rootPathname robustly on initial load
+    let rootPathname = '/';
     const gsScript = document.querySelector('script[src*="global.js"]');
     if (gsScript) {
         const src = gsScript.getAttribute('src');
-        const dsIndex = src.indexOf('design_system/js/global.js');
+        const tempAnchor = document.createElement('a');
+        tempAnchor.href = src;
+        const scriptAbsPath = tempAnchor.pathname;
+        const dsIndex = scriptAbsPath.indexOf('design_system/js/global.js');
         if (dsIndex !== -1) {
-            pathPrefix = src.substring(0, dsIndex);
+            rootPathname = scriptAbsPath.substring(0, dsIndex);
         }
     }
-    if (!pathPrefix) pathPrefix = './';
+    window.rootPathname = rootPathname;
+
+    const getPathPrefixForUrl = (url) => {
+        const tempAnchor = document.createElement('a');
+        tempAnchor.href = url;
+        const targetPathname = tempAnchor.pathname;
+        if (targetPathname.startsWith(window.rootPathname)) {
+            const relativePart = targetPathname.substring(window.rootPathname.length);
+            const parts = relativePart.split('/');
+            const depth = parts.length - 1;
+            if (depth > 0) {
+                return '../'.repeat(depth);
+            }
+        }
+        return './';
+    };
+
+    const updateChromeHrefs = (prefix) => {
+        const topnav = document.getElementById('topnav');
+        if (topnav) {
+            const brandLink = topnav.querySelector('.brand');
+            if (brandLink) brandLink.setAttribute('href', prefix + 'index.html');
+            
+            const navLinks = topnav.querySelectorAll('.nav-links a');
+            navLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href) {
+                    if (href.includes('about.html')) link.setAttribute('href', prefix + 'about.html');
+                    else if (href.includes('projects-repository.html')) link.setAttribute('href', prefix + 'projects-repository.html');
+                    else if (href.includes('resume.pdf')) link.setAttribute('href', prefix + 'resume.pdf');
+                }
+            });
+        }
+        
+        const footer = document.querySelector('footer.site-foot');
+        if (footer) {
+            const footerLinks = footer.querySelectorAll('a');
+            footerLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href && href.includes('projects-repository.html')) {
+                    link.setAttribute('href', prefix + 'projects-repository.html');
+                }
+            });
+        }
+        window.currentPathPrefix = prefix;
+    };
+
+    const executeScriptsQueue = async (scripts) => {
+        for (const script of scripts) {
+            const src = script.getAttribute('src');
+            if (src) {
+                const isGlobalOrLibrary = [
+                    'global.js', 'global_chrome.js', 'three.min.js', 'three.js',
+                    'gsap.min.js', 'gsap.js', 'ScrollTrigger.min.js', 'lenis.min.js',
+                    'split-type', 'shader-transitions', 'simplex-noise'
+                ].some(lib => src.includes(lib));
+                if (isGlobalOrLibrary) {
+                    continue;
+                }
+            }
+            
+            await new Promise((resolve) => {
+                const newScript = document.createElement('script');
+                Array.from(script.attributes).forEach(attr => {
+                    newScript.setAttribute(attr.name, attr.value);
+                });
+                
+                if (script.textContent.trim()) {
+                    newScript.textContent = `(function(){\n${script.textContent}\n})();`;
+                    document.body.appendChild(newScript);
+                    newScript.parentNode?.removeChild(newScript);
+                    resolve();
+                } else if (src) {
+                    newScript.onload = () => {
+                        newScript.parentNode?.removeChild(newScript);
+                        resolve();
+                    };
+                    newScript.onerror = () => {
+                        newScript.parentNode?.removeChild(newScript);
+                        resolve();
+                    };
+                    document.body.appendChild(newScript);
+                } else {
+                    resolve();
+                }
+            });
+        }
+    };
+
+    // Determine the path prefix relative to this script
+    const initialPrefix = getPathPrefixForUrl(window.location.href);
+    let pathPrefix = initialPrefix;
+    window.currentPathPrefix = initialPrefix;
 
     // 2.5 Inject Film Grain Overlay
     if (!document.getElementById('grain')) {
@@ -381,7 +502,7 @@ const initCinematicEngine = () => {
             // Lazy load the projects index
             if (!isDataLoaded) {
                 try {
-                    const res = await fetch(pathPrefix + 'projects_index.json');
+                    const res = await fetch(window.currentPathPrefix + 'projects_index.json');
                     if (res.ok) {
                         projectsData = await res.json();
                         isDataLoaded = true;
@@ -407,7 +528,7 @@ const initCinematicEngine = () => {
             
             results.forEach(p => {
                 const a = document.createElement('a');
-                a.href = pathPrefix + p.url;
+                a.href = window.currentPathPrefix + p.url;
                 a.className = 'search-result-item';
                 a.innerHTML = `
                     <div class="search-result-cat">${p.cat || 'Research'}</div>
@@ -449,17 +570,18 @@ const initCinematicEngine = () => {
     }
 
     // 6. Populate Related Works and Next Publication
-    const recGrid = document.getElementById('recommendation-grid');
-    const nextChapLink = document.getElementById('next-chap-link');
-    const nextChapTitle = document.getElementById('next-chap-title');
+    window.populateRelatedWorks = () => {
+        const recGrid = document.getElementById('recommendation-grid');
+        const nextChapLink = document.getElementById('next-chap-link');
+        const nextChapTitle = document.getElementById('next-chap-title');
 
-    if (recGrid || nextChapLink) {
-        fetch(pathPrefix + 'projects_index.json')
+        if (!recGrid && !nextChapLink) return;
+
+        const currentPrefix = window.currentPathPrefix || pathPrefix;
+        fetch(currentPrefix + 'projects_index.json')
             .then(res => res.json())
             .then(data => {
                 // Identify current project by matching its url against the current path.
-                // Match the most specific (longest) url that the path contains, so a project
-                // whose url ends in /index.html does not accidentally match a different page.
                 const currentPath = window.location.pathname;
                 let currentIdx = -1;
                 let bestMatchLen = -1;
@@ -474,8 +596,6 @@ const initCinematicEngine = () => {
 
                 if (recGrid) {
                     recGrid.innerHTML = '';
-                    // Score by tag overlap (+1 per shared tag) plus category match (+0.5).
-                    // Tie-break by index order so the output is stable across reloads.
                     const scored = otherProjects.map((p, i) => {
                         let score = 0;
                         if (current && Array.isArray(current.tags) && Array.isArray(p.tags)) {
@@ -492,7 +612,7 @@ const initCinematicEngine = () => {
 
                     selected.forEach(p => {
                         recGrid.innerHTML += `
-                            <a class="r-card" href="${pathPrefix}${p.url}">
+                            <a class="r-card" href="${currentPrefix}${p.url}">
                                 <div class="eb">${p.cat || 'Research'}</div>
                                 <div class="ti">${p.title}</div>
                                 <div class="ds">${(p.desc || '').substring(0, 80)}...</div>
@@ -502,7 +622,6 @@ const initCinematicEngine = () => {
                 }
 
                 if (nextChapLink && nextChapTitle) {
-                    // Deterministic rotation: pick the next entry in index order, looping.
                     let nextP = null;
                     if (currentIdx >= 0 && data.length > 1) {
                         nextP = data[(currentIdx + 1) % data.length];
@@ -510,7 +629,7 @@ const initCinematicEngine = () => {
                         nextP = otherProjects[0] || data[0];
                     }
                     if (nextP) {
-                        nextChapLink.href = pathPrefix + nextP.url;
+                        nextChapLink.href = currentPrefix + nextP.url;
                         nextChapTitle.innerText = nextP.title;
                         const eb = nextChapLink.querySelector('.eb');
                         if (eb) eb.innerText = 'Next Publication / ' + (nextP.cat || 'Research');
@@ -518,7 +637,8 @@ const initCinematicEngine = () => {
                 }
             })
             .catch(err => console.error("Failed to load related works", err));
-    }
+    };
+    window.populateRelatedWorks();
 
     // 7. Custom Magnetic Cursor removed per user request
 
@@ -572,16 +692,9 @@ const initCinematicEngine = () => {
     });
 
     // 10. SPA Router with WebGL Shader Transitions
-    document.addEventListener('click', async (e) => {
-        const link = e.target.closest('a');
-        if (!link) return;
-        
-        const href = link.getAttribute('href');
-        if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('http') || link.target === '_blank') return;
-        
-        // Prevent default navigation to trigger WebGL transition
-        e.preventDefault();
+    let lastPathname = window.location.pathname;
 
+    const transitionTo = async (href, pushState = true) => {
         // Check for Tweaker config
         const tweakerConfig = window.__TWEAKER_CONFIG || {};
         const shaderName = tweakerConfig.transitions?.shader || 'cinematic-zoom';
@@ -599,13 +712,19 @@ const initCinematicEngine = () => {
             currentScene = document.createElement('div');
             currentScene.id = 'scene-current';
             currentScene.className = 'scene';
-            // Move everything EXCEPT scripts/styles/canvases/grain into currentScene
+            // Move everything EXCEPT scripts/styles/canvases/grain/topnav/footer/search-overlay/progress into currentScene
             const children = Array.from(document.body.childNodes);
             children.forEach(child => {
-                if (child.tagName === 'SCRIPT' || child.tagName === 'CANVAS' || child.id === 'grain' || child.id === 'glCanvas' || child.id === 'search-overlay') return;
+                if (child.tagName === 'SCRIPT' || child.tagName === 'CANVAS' || child.id === 'grain' || child.id === 'glCanvas' || child.id === 'search-overlay' || child.id === 'topnav' || (child.classList && child.classList.contains('site-foot')) || child.tagName === 'FOOTER' || child.id === 'progress') return;
                 currentScene.appendChild(child);
             });
             document.body.appendChild(currentScene);
+        }
+
+        // Clean up any existing next-scene to prevent duplicate overlap bugs
+        const existingNext = document.getElementById('scene-next');
+        if (existingNext) {
+            existingNext.parentNode?.removeChild(existingNext);
         }
 
         const nextScene = document.createElement('div');
@@ -633,7 +752,7 @@ const initCinematicEngine = () => {
             // Extract body content
             const nextChildren = Array.from(doc.body.childNodes);
             nextChildren.forEach(child => {
-                if (child.tagName === 'SCRIPT' || child.tagName === 'CANVAS' || child.id === 'grain' || child.id === 'glCanvas') return;
+                if (child.tagName === 'SCRIPT' || child.tagName === 'CANVAS' || child.id === 'grain' || child.id === 'glCanvas' || child.id === 'search-overlay' || child.id === 'topnav' || (child.classList && child.classList.contains('site-foot')) || child.tagName === 'FOOTER' || child.id === 'progress') return;
                 nextScene.appendChild(document.importNode(child, true));
             });
 
@@ -649,7 +768,18 @@ const initCinematicEngine = () => {
                 }]
             });
 
-            tl.eventCallback('onComplete', () => {
+            tl.eventCallback('onComplete', async () => {
+                // Kill active ScrollTriggers
+                if (typeof ScrollTrigger !== 'undefined') {
+                    ScrollTrigger.getAll().forEach(t => t.kill());
+                }
+                
+                // Destroy active Lenis
+                if (window.activeLenis && typeof window.activeLenis.destroy === 'function') {
+                    window.activeLenis.destroy();
+                    window.activeLenis = null;
+                }
+
                 // Swap DOM
                 if (currentScene.parentNode) {
                     currentScene.parentNode.removeChild(currentScene);
@@ -659,16 +789,71 @@ const initCinematicEngine = () => {
                 nextScene.style.opacity = '1';
                 nextScene.style.zIndex = '';
                 nextScene.style.pointerEvents = '';
-                
-                // Update URL
-                window.history.pushState({}, '', href);
-                window.scrollTo(0, 0);
 
-                // Run orchestration manually
+                // Hide preloader on SPA transition
+                const nextPreloader = nextScene.querySelector('#preloader');
+                if (nextPreloader) {
+                    nextPreloader.style.display = 'none';
+                }
+                
+                // Update URL & document title
+                if (pushState) {
+                    window.history.pushState({}, '', href);
+                }
+                document.title = doc.title;
+                window.scrollTo(0, 0);
+                lastPathname = window.location.pathname;
+
+                // Update depth pathing on chrome elements
+                const newPrefix = getPathPrefixForUrl(href);
+                updateChromeHrefs(newPrefix);
+
+                // Copy Page-Specific Styles from doc.head
+                // Clean up previous dynamic styles first
+                document.querySelectorAll('[data-spa-injected]').forEach(el => el.remove());
+
+                // Find style/link tags in doc.head and append them to document.head
+                const headStyles = Array.from(doc.head.querySelectorAll('style, link[rel="stylesheet"]'));
+                headStyles.forEach(style => {
+                    const hrefAttr = style.getAttribute('href');
+                    if (hrefAttr && hrefAttr.includes('global.css')) {
+                        return;
+                    }
+                    const newStyle = document.importNode(style, true);
+                    newStyle.setAttribute('data-spa-injected', 'true');
+                    document.head.appendChild(newStyle);
+                });
+
+                // Repopulate related works for the new page
+                if (typeof window.populateRelatedWorks === 'function') {
+                    window.populateRelatedWorks();
+                }
+
+                // Reset global orchestration default to allow target page's scripts to override it
+                window.disableGlobalOrchestration = false;
+
+                // Extract and execute page-specific scripts sequentially
+                const scripts = Array.from(doc.body.querySelectorAll('script'));
+                await executeScriptsQueue(scripts);
+
+                // Re-run cinematic engine if needed
                 if (typeof initCinematicEngine !== 'undefined') initCinematicEngine();
-                // We don't re-run mountOrchestration as it's an IIFE, but we can trigger DOMContentLoaded
-                const event = new Event('DOMContentLoaded');
-                document.dispatchEvent(event);
+
+                // Re-trigger global orchestration if not disabled by target scripts
+                if (!window.disableGlobalOrchestration) {
+                    if (typeof window.initGlobalLenis === 'function') {
+                        window.initGlobalLenis();
+                    }
+                    if (typeof window.initScrollProgress === 'function') {
+                        window.initScrollProgress();
+                    }
+                    if (typeof window.initNavMode === 'function') {
+                        window.initNavMode();
+                    }
+                    if (typeof window.initPageAnimations === 'function') {
+                        window.initPageAnimations();
+                    }
+                }
             });
 
             tl.play();
@@ -677,6 +862,25 @@ const initCinematicEngine = () => {
             console.error("SPA Fetch Error:", err);
             window.location.href = href;
         }
+    };
+
+    document.addEventListener('click', async (e) => {
+        const link = e.target.closest('a');
+        if (!link) return;
+        
+        const href = link.getAttribute('href');
+        if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('http') || link.target === '_blank') return;
+        
+        // Prevent default navigation to trigger WebGL transition
+        e.preventDefault();
+        transitionTo(href, true);
+    });
+
+    window.addEventListener('popstate', () => {
+        if (window.location.pathname === lastPathname) {
+            return;
+        }
+        transitionTo(window.location.href, false);
     });
 
 })();
@@ -691,8 +895,6 @@ const initCinematicEngine = () => {
 // Pages need ZERO additional script tags beyond global.js.
 // ==========================================
 (function mountOrchestration() {
-    if (window.disableGlobalOrchestration) return;
-
     const gsapDeps = [
         'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js',
         'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js',
@@ -720,12 +922,119 @@ const initCinematicEngine = () => {
         document.head.appendChild(s);
     };
 
-    const runOrchestration = () => {
-        // Guard against the timing race: if GSAP loaded dynamically and
-        // window.load already fired, addEventListener('load') will never
-        // trigger. Run the timeline immediately in that case.
-        const doTimeline = () => {
+    window.ensureDependenciesLoaded = (cb) => {
+        loadSeq(gsapDeps, cb);
+    };
 
+    window.initGlobalLenis = () => {
+        window.ensureDependenciesLoaded(() => {
+            if (window.activeLenis) {
+                if (typeof window.activeLenis.destroy === 'function') {
+                    window.activeLenis.destroy();
+                }
+                window.activeLenis = null;
+            }
+            
+            if (typeof Lenis !== 'undefined') {
+                const lenis = new Lenis({
+                    duration: 1.4,
+                    easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                    smoothWheel: true
+                });
+                window.activeLenis = lenis;
+                
+                if (typeof gsap !== 'undefined') {
+                    if (!window._gsapTickerAdded) {
+                        gsap.ticker.add((time) => {
+                            if (window.activeLenis && typeof window.activeLenis.raf === 'function') {
+                                window.activeLenis.raf(time * 1000);
+                            }
+                        });
+                        gsap.ticker.lagSmoothing(0);
+                        window._gsapTickerAdded = true;
+                    }
+                } else {
+                    const raf = (time) => {
+                        if (window.activeLenis === lenis) {
+                            lenis.raf(time);
+                            requestAnimationFrame(raf);
+                        }
+                    };
+                    requestAnimationFrame(raf);
+                }
+            }
+        });
+    };
+
+    window.initScrollProgress = () => {
+        if (window._scrollProgressInitialized) {
+            if (typeof window.recalculateScrollProgress === 'function') {
+                window.recalculateScrollProgress();
+            }
+            return;
+        }
+        window._scrollProgressInitialized = true;
+
+        let cachedScrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+
+        window.recalculateScrollProgress = () => {
+            setTimeout(() => {
+                cachedScrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const p = cachedScrollHeight > 0 ? (window.scrollY / cachedScrollHeight) * 100 : 0;
+                const progEl = document.getElementById('progress');
+                if (progEl) progEl.style.setProperty('--p', p + '%');
+            }, 100);
+        };
+
+        window.addEventListener('resize', () => {
+            cachedScrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+        });
+        window.addEventListener('scroll', () => {
+            const p = cachedScrollHeight > 0 ? (window.scrollY / cachedScrollHeight) * 100 : 0;
+            const progEl = document.getElementById('progress');
+            if (progEl) progEl.style.setProperty('--p', p + '%');
+        }, { passive: true });
+
+        window.recalculateScrollProgress();
+    };
+
+    window.initNavMode = () => {
+        if (window.navModeObserver) {
+            window.navModeObserver.disconnect();
+        }
+
+        try {
+            const nav = document.getElementById('topnav');
+            if (!nav) return;
+            const bands = document.querySelectorAll('[data-mode], .band--paper, .band--dark');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const isPaper = entry.target.classList.contains('band--paper') || entry.target.dataset.mode === 'paper';
+                        nav.classList.toggle('is-paper', isPaper);
+                    }
+                });
+            }, { rootMargin: "-15% 0px -84% 0px" });
+            
+            bands.forEach(b => observer.observe(b));
+            window.navModeObserver = observer;
+            
+            // Initial paint check
+            const center = window.innerHeight * 0.15;
+            bands.forEach(b => {
+                const r = b.getBoundingClientRect();
+                if (r.top <= center && r.bottom > center) {
+                    const isPaper = b.classList.contains('band--paper') || b.dataset.mode === 'paper';
+                    nav.classList.toggle('is-paper', isPaper);
+                }
+            });
+        } catch(e) {
+            console.warn("initNavMode error:", e);
+        }
+    };
+
+    window.initPageAnimations = () => {
+        window.ensureDependenciesLoaded(() => {
             if (typeof gsap === 'undefined') {
                 const pre = document.getElementById('preloader');
                 if (pre) pre.style.display = 'none';
@@ -737,12 +1046,9 @@ const initCinematicEngine = () => {
                 return;
             }
 
-            if (typeof ScrollTrigger !== 'undefined') gsap.registerPlugin(ScrollTrigger);
-
-            if (typeof Lenis !== 'undefined') {
-                const lenis = new Lenis({ duration: 1.4, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
-                gsap.ticker.add(time => lenis.raf(time * 1000));
-                gsap.ticker.lagSmoothing(0);
+            if (typeof ScrollTrigger !== 'undefined') {
+                gsap.registerPlugin(ScrollTrigger);
+                ScrollTrigger.refresh();
             }
 
             const tl = gsap.timeline({
@@ -758,15 +1064,12 @@ const initCinematicEngine = () => {
             const preLeft   = document.getElementById('preloader-left');
             const preRight  = document.getElementById('preloader-right');
             const preLine   = document.getElementById('preloader-line');
-            if (preloader && preLeft && preRight && preLine) {
+            if (preloader && preloader.style.display !== 'none') {
                 tl.to(preLine,  { height: '28vh', duration: 0.55, ease: 'power2.inOut' })
                   .to(preLine,  { opacity: 0, height: '50vh', duration: 0.3, ease: 'power2.in' }, '+=0.075')
                   .to(preLeft,  { xPercent: -100, duration: 0.55, ease: 'power3.inOut' }, '-=0.125')
                   .to(preRight, { xPercent:  100, duration: 0.55, ease: 'power3.inOut' }, '<')
                   .set(preloader, { display: 'none' });
-            } else if (preloader) {
-                tl.to(preloader, { opacity: 0, duration: 0.5, ease: 'power2.inOut',
-                                   onComplete: () => { preloader.style.display = 'none'; } });
             }
 
             tl.to('#glCanvas', { opacity: 1, duration: 1.5, ease: 'power2.inOut' }, '-=0.3');
@@ -778,10 +1081,8 @@ const initCinematicEngine = () => {
                 split = new SplitType(heroTitle, { types: 'words, chars' });
             }
 
-            // All targets below are optional — null-guarded so missing elements
-            // on any page never stall or warn in the GSAP timeline.
             tl.to('#topnav', { y: 0, duration: 1.4, ease: 'power3.out' }, '-=2.8');
-            // .ambient SVG removed from design system — no tween needed.
+
             const metaSpans = gsap.utils.toArray('.meta-row span');
             if (metaSpans.length) tl.to(metaSpans, { opacity: 1, x: 0, duration: 1.0, stagger: 0.2, ease: 'power2.out' }, '-=2.2');
             if (split) {
@@ -790,24 +1091,17 @@ const initCinematicEngine = () => {
             const heroRule = document.querySelector('.hero-rule');
             if (heroRule) tl.to(heroRule,   { width: 64, opacity: 1, duration: 1.3, ease: 'power3.inOut' }, '-=1.0');
 
-            // ── Article pages use .front h1 (not .hero h1) ──────────────────
-            // The bare `h1 { opacity: 0 }` CSS rule hides all h1s site-wide.
-            // For article pages, reveal .front h1 with a simpler fade+lift.
             const frontTitle = document.querySelector('.front h1');
             if (frontTitle && !heroTitle) {
-                // No .hero on this page — it's an article page.
                 tl.fromTo(frontTitle,
                     { opacity: 0, y: 28 },
                     { opacity: 1, y: 0, duration: 1.4, ease: 'power3.out' },
                     '-=2.0'
                 );
             } else if (frontTitle && heroTitle) {
-                // Both exist (edge case) — reveal the front title too.
                 tl.to(frontTitle, { opacity: 1, duration: 1.0, ease: 'power2.out' }, '-=0.5');
             }
 
-            // ── .abstract reveal ─────────────────────────────────────────────
-            // Works for both .hero .abstract (index) and .front .abstract (articles).
             const abstractEl = document.querySelector('.abstract');
             if (abstractEl) tl.to(abstractEl, { opacity: 1, y: 0, duration: 1.3, ease: 'power2.out' }, '-=0.9');
             const scrollCue = document.querySelector('.scroll-cue');
@@ -817,7 +1111,7 @@ const initCinematicEngine = () => {
             function initScrollTriggers() {
                 gsap.to('.scroll-cue', {
                     opacity: 0, y: -10, duration: 0.6, ease: 'power2.in',
-                    scrollTrigger: { trigger: '.hero', start: 'top top', end: '+=120', scrub: true }
+                    scrollTrigger: { trigger: '.hero, .front', start: 'top top', end: '+=120', scrub: true }
                 });
                 gsap.utils.toArray('.band').forEach(band => {
                     const tlBand = gsap.timeline({
@@ -827,7 +1121,7 @@ const initCinematicEngine = () => {
                     const heading = band.querySelector('.section-heading');
                     if (eyebrow) tlBand.fromTo(eyebrow, { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 1.2, ease: 'power3.out' });
                     if (heading) tlBand.fromTo(heading, { opacity: 0, y: 25  }, { opacity: 1, y: 0, duration: 1.4, ease: 'power3.out' }, '-=0.6');
-                    const reveals = band.querySelectorAll('.type-block, .swatch-grid, .tagrow, .p-card, .r-card, .demo-box, .dashboard-layout');
+                    const reveals = band.querySelectorAll('.type-block, .swatch-grid, .tagrow, .p-card, .r-card, .demo-box, .dashboard-layout, .reveal, .ds-prose, .bio-card, .project-carousel, .view-all-link, .edu-card, .headshot-frame');
                     if (reveals.length) {
                         tlBand.fromTo(reveals, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 1.5, stagger: 0.15, ease: 'expo.out' }, '-=0.8');
                     }
@@ -838,15 +1132,35 @@ const initCinematicEngine = () => {
                         scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
                     });
                 });
+                
+                // Centralized parallax scroll effect
+                gsap.utils.toArray('.band').forEach(band => {
+                  const inner = band.querySelector('.col-wide') || band.querySelector('.bio-wrap') || band.querySelector('.dashboard-layout');
+                  if (inner) {
+                    gsap.fromTo(inner, { yPercent: 2 }, {
+                      yPercent: -2, ease: 'none',
+                      scrollTrigger: { trigger: band, start: 'top bottom', end: 'bottom top', scrub: true }
+                    });
+                  }
+                });
             }
-        }; // end doTimeline
+        });
+    };
 
+    // Self-bootstrapping call for normal pages
+    if (!window.disableGlobalOrchestration) {
         if (document.readyState === 'complete') {
-            doTimeline(); // window already loaded — run now
+            window.initGlobalLenis();
+            window.initScrollProgress();
+            window.initNavMode();
+            window.initPageAnimations();
         } else {
-            window.addEventListener('load', doTimeline);
+            window.addEventListener('load', () => {
+                window.initGlobalLenis();
+                window.initScrollProgress();
+                window.initNavMode();
+                window.initPageAnimations();
+            });
         }
-    }; // end runOrchestration
-
-    loadSeq(gsapDeps, runOrchestration);
-})(); // end mountOrchestration IIFE
+    }
+})();

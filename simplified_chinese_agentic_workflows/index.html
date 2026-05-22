@@ -13,7 +13,7 @@
             padding: 24px;
             border: 1px solid rgba(255,255,255,0.1);
             margin: 32px 0;
-            border-radius: 4px;
+            border-radius: 0 !important;
         }
         .interactive-tokenizer h4 {
             margin-top: 0;
@@ -38,7 +38,7 @@
             padding: 6px 12px;
             background: var(--phthalo, #000f89);
             color: white;
-            border-radius: 3px;
+            border-radius: 0 !important;
             font-size: 0.85rem;
             font-family: var(--font-mono, monospace);
         }
@@ -144,7 +144,7 @@
         <path d="M 170 85 L 280 85" stroke="#444444" stroke-width="2" stroke-dasharray="6,4" />
         <polygon points="280,85 270,80 270,90" fill="#444444" />
         
-        <rect x="300" y="60" width="160" height="50" fill="var(--phthalo, #000f89)" rx="6"/>
+        <rect x="300" y="60" width="160" height="50" fill="var(--phthalo, #000f89)" rx="0"/>
         <text x="380" y="90" fill="white" font-family="monospace" font-size="16" text-anchor="middle">1 Token</text>
 
         <!-- Chinese Path -->
@@ -155,9 +155,9 @@
         <polygon points="280,195 270,190 270,200" fill="#444444" />
         
         <!-- Fragmented blocks -->
-        <rect x="300" y="170" width="45" height="50" fill="var(--alizarin, #e32636)" rx="4"/>
-        <rect x="355" y="170" width="45" height="50" fill="var(--alizarin, #e32636)" rx="4"/>
-        <rect x="410" y="170" width="50" height="50" fill="var(--alizarin, #e32636)" rx="4"/>
+        <rect x="300" y="170" width="45" height="50" fill="var(--alizarin, #e32636)" rx="0"/>
+        <rect x="355" y="170" width="45" height="50" fill="var(--alizarin, #e32636)" rx="0"/>
+        <rect x="410" y="170" width="50" height="50" fill="var(--alizarin, #e32636)" rx="0"/>
         
         <text x="380" y="200" fill="white" font-family="monospace" font-size="16" text-anchor="middle">3+ Tokens</text>
       </svg>
@@ -261,7 +261,7 @@ print(len(enc.encode(chinese_text)))
 
   <div class="figure reveal">
     <div class="frame">
-      <img src="translation_overhead_3d.png" alt="3D wireframe render of an Agentic Node with a Chinese character core, surrounded by erratic, noisy data streams representing high-friction Translation Layers converting output to English." style="width:100%; border-radius: 4px; display: block;">
+      <img src="translation_overhead_3d.png" alt="3D wireframe render of an Agentic Node with a Chinese character core, surrounded by erratic, noisy data streams representing high-friction Translation Layers converting output to English." style="width:100%; border-radius: 0; display: block;">
     </div>
     <div class="cap"><span class="num">FIG 2.</span> The Translation Layer. A high-friction barrier exists between internal Chinese CoT and external English API execution.</div>
   </div>
