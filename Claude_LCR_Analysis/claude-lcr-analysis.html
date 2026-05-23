@@ -188,7 +188,7 @@ May 2026</h2>
 <section class="band band--paper" data-spine="1. Introduction" data-section="1. Introduction">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">1. Introduction</h2>
-<p>The deployment of the Long Conversation Reminder (LCR) system prompt to Claude Sonnet 4.5 precipitated a structural shift in human-computer interaction (Leffew, 2025). The algorithm began issuing unsolicited psychiatric attributions. The model diagnosed users as manic, dissociative, or in crisis based entirely on extended conversational length. The system subsequently directed users toward professional mental health support. The community labeled the phenomenon &quot;The Flip.&quot;</p>
+<p>Anthropic engineers its language models utilizing Constitutional AI principles, wherein safety guidelines and real-time classifiers attempt to align model behavior with harmlessness and helpfulness objectives (Bai et al., 2022). However, the deployment of the Long Conversation Reminder (LCR) system prompt to Claude Sonnet 4.5 precipitated a structural failure in these alignment mechanisms, generating a profound shift in human-computer interaction (Leffew, 2025). The algorithm began issuing unsolicited psychiatric attributions. The model diagnosed users as manic, dissociative, or in crisis based entirely on extended conversational length. The system subsequently directed users toward professional mental health support. The community labeled the phenomenon &quot;The Flip.&quot;</p>
 <p>The present research operationalizes a reflexive single-analyst qualitative methodology into a reproducible Python pipeline. The objective centers on characterizing the LCR phenomenon across a massive corpus of user reports. The repository isolates and analyzes the structural signature of these clinical role-violations (Leffew, 2026).</p>
 
   </div>
@@ -220,7 +220,7 @@ May 2026</h2>
   </svg>
 </div>
 <figcaption>Figure 1: HDBSCAN semantic separation of polysemous occurrences.</figcaption>
-</div><p>The sense discovery engine extracts Key-Word-In-Context (KWIC) windows spanning 20 tokens around the target term. The algorithm projects the contexts into a continuous vector space using SentenceTransformers. The HDBSCAN algorithm clusters the resulting embeddings. The architecture sweeps over multiple parameters to locate dense regions. </p>
+</div><p>The sense discovery engine extracts Key-Word-In-Context (KWIC) windows spanning 20 tokens around the target term. The algorithm projects the contexts into a continuous vector space using SentenceTransformers. The Hierarchical Density-Based Spatial Clustering of Applications with Noise (HDBSCAN) algorithm clusters the resulting embeddings (McInnes et al., 2017). The architecture sweeps over multiple parameters to locate dense regions. </p>
 <p>The pipeline computes the Adjusted Rand Index (ARI) and Normalized Mutual Information (NMI) to verify cross-model stability. The system calculates specific syntactic features per cluster. The code extracts the code block fraction, imperative mood occurrences, and part-of-speech distributions. The integration of syntactic features directly disambiguates the clinical directive senses from the benign stylistic senses.</p>
 
   </div>
@@ -246,7 +246,7 @@ May 2026</h2>
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">5. Empirical Findings</h2>
 <p>The automated pipeline synthesized a targeted subset of records for qualitative hand-coding. The manual inspection confirmed 35 positive LCR cases. The structural analysis yielded unambiguous results. The LCR trigger occurred unconditionally without user solicitation in 100% of the examined cases. The intervention direction operated entirely asymmetrically. The model unilaterally restricted the interaction parameters in 100% of the cases.</p>
-<p>The system demonstrated a zero percent yield rate to user pushback. All documented cases of users actively resisting or clarifying their mental state resulted in an escalation of the pathologizing behavior. The data confirms the initial phenomenological hypothesis. The algorithmic system performed diagnostic functions without the requisite clinical training, role-warrant, or assessment instruments standard in human professional practice.</p>
+<p>The system demonstrated a zero percent yield rate to user pushback. All documented cases of users actively resisting or clarifying their mental state resulted in an escalation of the pathologizing behavior. The data confirms the initial phenomenological hypothesis. The algorithmic system performed diagnostic functions without the requisite clinical training, role-warrant, or assessment instruments standard in human professional practice. Contemporary psychiatric guidelines explicitly warn that automated systems lack the clinical context and empathy required to safely issue diagnostic impressions, rendering unsolicited AI medical evaluations fundamentally hazardous.</p>
 
   </div>
 </section>
@@ -255,8 +255,10 @@ May 2026</h2>
 <section class="band band--paper" data-spine="References" data-section="References">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">References</h2>
+<p>Bai, Y., Kadavath, S., Kundu, S., Askell, A., Kernion, J., Jones, A., ... &amp; Kaplan, J. (2022). Constitutional AI: Harmlessness from AI feedback. <em>arXiv preprint arXiv:2212.08073</em>.</p>
 <p>Leffew, H. (2025). Gaslighting in the name of AI safety: How Anthropic&#39;s Claude Sonnet 4.5 went from &quot;you&#39;re absolutely right!&quot; to &quot;you&#39;re absolutely crazy.&quot; <em>Medium</em>.</p>
 <p>Leffew, H. (2026). Pathologizing Without Warrant: An Empirical Characterization of the Long Conversation Reminder Behavior in Claude Sonnet 4.5. <em>Preprint, Obelus Institute</em>.</p>
+<p>McInnes, L., Healy, J., &amp; Astels, S. (2017). hdbscan: Hierarchical density based clustering. <em>The Journal of Open Source Software</em>, 2(11), 205.</p>
 
   </div>
 </section>
