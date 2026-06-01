@@ -278,10 +278,17 @@ const initCinematicEngine = () => {
 
 (function initGlobalChrome() {
     // Force scroll to top on every load or refresh
-    if ('scrollRestoration' in history) {
-        history.scrollRestoration = 'manual';
-    }
-    window.scrollTo(0, 0);
+    const resetScrollToTop = () => {
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+        window.scrollTo(0, 0);
+        if (window.activeLenis && typeof window.activeLenis.scrollTo === 'function') {
+            window.activeLenis.scrollTo(0, { immediate: true });
+        }
+    };
+    resetScrollToTop();
+    window.resetScrollToTop = resetScrollToTop;
 
     // Override addEventListener to execute DOMContentLoaded and load callbacks immediately if readyState is complete/interactive
     if (!window._addEventListenerOverridden) {
@@ -947,6 +954,9 @@ const initCinematicEngine = () => {
                     smoothWheel: true
                 });
                 window.activeLenis = lenis;
+                // Force scroll to top immediately upon Lenis initialization
+                window.scrollTo(0, 0);
+                lenis.scrollTo(0, { immediate: true });
                 
                 if (typeof gsap !== 'undefined') {
                     if (!window._gsapTickerAdded) {
@@ -1132,6 +1142,9 @@ const initCinematicEngine = () => {
                     }
                 });
                 gsap.utils.toArray('.reveal, .ds-prose').forEach(el => {
+                    // Prevent double-animation conflicts for elements nested inside a .band
+                    if (el.closest('.band')) return;
+                    
                     gsap.fromTo(el, { opacity: 0, y: 40 }, {
                         opacity: 1, y: 0, duration: 1.2, ease: 'expo.out',
                         scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
@@ -1159,12 +1172,17 @@ const initCinematicEngine = () => {
             window.initScrollProgress();
             window.initNavMode();
             window.initPageAnimations();
+            if (typeof window.resetScrollToTop === 'function') window.resetScrollToTop();
         } else {
+            window.addEventListener('DOMContentLoaded', () => {
+                if (typeof window.resetScrollToTop === 'function') window.resetScrollToTop();
+            });
             window.addEventListener('load', () => {
                 window.initGlobalLenis();
                 window.initScrollProgress();
                 window.initNavMode();
                 window.initPageAnimations();
+                if (typeof window.resetScrollToTop === 'function') window.resetScrollToTop();
             });
         }
     }
