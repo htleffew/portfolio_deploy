@@ -336,8 +336,10 @@
         fetch(currentPrefix + 'projects_index.json')
             .then(res => res.json())
             .then(data => {
-                // Identify current project by matching its url against the current path.
+                // Identify the current project by URL (longest match) and by visible title.
                 const currentPath = window.location.pathname;
+                const h1El = document.querySelector('h1');
+                const currentTitle = ((h1El && h1El.textContent) || document.title || '').trim();
                 let currentIdx = -1;
                 let bestMatchLen = -1;
                 data.forEach((p, i) => {
@@ -347,25 +349,34 @@
                     }
                 });
                 const current = currentIdx >= 0 ? data[currentIdx] : null;
-                const otherProjects = data.filter((p, i) => i !== currentIdx);
+
+                // Exclude the page being viewed robustly: by index, by url, and by title.
+                const isCurrent = (p, i) => {
+                    if (i === currentIdx) return true;
+                    if (current && p.url && current.url && p.url === current.url) return true;
+                    if (currentTitle && p.title && (currentTitle === p.title || currentTitle.indexOf(p.title) !== -1)) return true;
+                    return false;
+                };
+                const otherProjects = data.filter((p, i) => !isCurrent(p, i));
+
+                // Score by tag and category overlap; a random tiebreak keeps suggestions
+                // dynamic rather than always surfacing the same neighbors.
+                const scored = otherProjects.map((p) => {
+                    let score = 0;
+                    if (current && Array.isArray(current.tags) && Array.isArray(p.tags)) {
+                        const myTags = new Set(current.tags);
+                        p.tags.forEach(t => { if (myTags.has(t)) score += 1; });
+                    }
+                    if (current && current.cat && p.cat && current.cat === p.cat) {
+                        score += 0.5;
+                    }
+                    return { p, score, r: Math.random() };
+                });
+                scored.sort((a, b) => b.score - a.score || a.r - b.r);
 
                 if (recGrid) {
                     recGrid.innerHTML = '';
-                    const scored = otherProjects.map((p, i) => {
-                        let score = 0;
-                        if (current && Array.isArray(current.tags) && Array.isArray(p.tags)) {
-                            const myTags = new Set(current.tags);
-                            p.tags.forEach(t => { if (myTags.has(t)) score += 1; });
-                        }
-                        if (current && current.cat && p.cat && current.cat === p.cat) {
-                            score += 0.5;
-                        }
-                        return { p, score, i };
-                    });
-                    scored.sort((a, b) => b.score - a.score || a.i - b.i);
-                    const selected = scored.slice(0, 3).map(s => s.p);
-
-                    selected.forEach(p => {
+                    scored.slice(0, 3).forEach(({ p }) => {
                         recGrid.innerHTML += `
                             <a class="r-card" href="${currentPrefix}${p.url}">
                                 <div class="eb">${p.cat || 'Research'}</div>
@@ -377,12 +388,10 @@
                 }
 
                 if (nextChapLink && nextChapTitle) {
-                    let nextP = null;
-                    if (currentIdx >= 0 && data.length > 1) {
-                        nextP = data[(currentIdx + 1) % data.length];
-                    } else {
-                        nextP = otherProjects[0] || data[0];
-                    }
+                    // Dynamic and never the current page: prefer a relevant project beyond the
+                    // three shown above, else the most relevant, else any other project.
+                    const nextEntry = scored[3] || scored[0] || null;
+                    const nextP = nextEntry ? nextEntry.p : null;
                     if (nextP) {
                         nextChapLink.href = currentPrefix + nextP.url;
                         nextChapTitle.innerText = nextP.title;
