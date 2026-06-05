@@ -67,17 +67,23 @@
         window._onReadyHelper = true;
     }
 
-    // Calculate rootPathname robustly on initial load
+    // Calculate rootPathname robustly on initial load.
+    // Detect this script's own location (global_chrome.js after the architecture
+    // split; falls back to legacy global.js for any page that still links the
+    // pre-split single file).
     let rootPathname = '/';
-    const gsScript = document.querySelector('script[src*="global.js"]');
+    const gsScript = document.querySelector('script[src*="global_chrome.js"]') ||
+                     document.querySelector('script[src*="global.js"]');
     if (gsScript) {
         const src = gsScript.getAttribute('src');
         const tempAnchor = document.createElement('a');
         tempAnchor.href = src;
         const scriptAbsPath = tempAnchor.pathname;
-        const dsIndex = scriptAbsPath.indexOf('design_system/js/global.js');
-        if (dsIndex !== -1) {
-            rootPathname = scriptAbsPath.substring(0, dsIndex);
+        const dsIndex = scriptAbsPath.indexOf('design_system/js/global_chrome.js');
+        const fallbackIdx = scriptAbsPath.indexOf('design_system/js/global.js');
+        const idx = dsIndex !== -1 ? dsIndex : fallbackIdx;
+        if (idx !== -1) {
+            rootPathname = scriptAbsPath.substring(0, idx);
         }
     }
     window.rootPathname = rootPathname;

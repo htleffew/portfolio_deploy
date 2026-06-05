@@ -51,9 +51,9 @@ design_system/
 
 Case-study pages prefix every path with `../`. Tokens cascade automatically through the `@import` chain inside `institutional.css`; Google Fonts load via that chain too — no separate `<link>` tag required. GSAP, ScrollTrigger, Lenis, SplitType, simplex-noise, and HyperShader are loaded on demand by `institutional.js` and `global_chrome.js`; pages may add them as `<script defer>` tags but are not required to.
 
-## Legacy files
+## History
 
-`design_system/css/global.css` and `design_system/js/global.js` are the predecessors of the current architecture. They contain the same logical content combined into single files. The current architecture splits them by responsibility for maintainability; no page links them anymore. Delete after one deploy cycle of stable behavior on the new files.
+`design_system/css/global.css` and `design_system/js/global.js` were the pre-split single-file predecessors of the current architecture. They were removed on 2026-06-05 after the split files had been verified live on `drheatherleffew.com` on both index and case-study pages. The legacy documents under `design_system/docs/components/` (`global-js-contract.md`, `global-nav.md`) carry historical-status banners and remain as a record of the unified-file design.
 
 ## Adding a New Case Study
 

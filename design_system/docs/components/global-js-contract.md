@@ -1,15 +1,25 @@
-# global.js Contract
-> Complete documentation of what global.js does. The most critical system file — agents must understand this to avoid breaking the site.
+# global.js Contract (HISTORICAL)
+
+> **STATUS**: This document describes the pre-split single-file architecture. As of 2026-06-05, `global.js` was split into three files by responsibility: `cinematic_engine_v3.js`, `global_chrome.js`, and `institutional.js`. See `../../README.md` for the current architecture. The behavior described below now lives across those three files (chrome injector + SPA router in `global_chrome.js`; Three.js engine in `cinematic_engine_v3.js`; GSAP orchestration + spine + sidenotes in `institutional.js`).
+>
+> Kept as historical reference for understanding the unified design. Do not link `global.js` from new pages.
 
 ---
 
-## Overview
+## Overview (historical)
 
-`design_system/js/global.js` is a single self-bootstrapping file containing three engines that run on every page. It has zero external dependencies that need to be manually loaded — it lazy-loads everything it needs.
+`design_system/js/global.js` was a single self-bootstrapping file containing three engines that ran on every page. It had zero external dependencies that needed to be manually loaded — it lazy-loaded everything it needed.
 
-**Load it exactly once, as the last script before `</body>`:**
+**Originally loaded as the last script before `</body>`:**
 ```html
 <script src="../design_system/js/global.js" defer></script>
+```
+
+**Current replacement (three tags in this order):**
+```html
+<script src="../design_system/js/cinematic_engine_v3.js" defer></script>
+<script src="../design_system/js/global_chrome.js" defer></script>
+<script src="../design_system/js/institutional.js" defer></script>
 ```
 
 ---
