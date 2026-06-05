@@ -281,10 +281,16 @@
 
 
             function initScrollTriggers() {
-                gsap.to('.scroll-cue', {
-                    opacity: 0, y: -10, duration: 0.6, ease: 'power2.in',
-                    scrollTrigger: { trigger: '.hero, .front', start: 'top top', end: '+=120', scrub: true }
-                });
+                // Guard: .scroll-cue only exists on the homepage hero. Case-study
+                // and library pages have no .scroll-cue, so calling gsap.to on it
+                // unconditionally logged "GSAP target .scroll-cue not found" and
+                // created a pointless ScrollTrigger on every such page.
+                if (document.querySelector('.scroll-cue')) {
+                    gsap.to('.scroll-cue', {
+                        opacity: 0, y: -10, duration: 0.6, ease: 'power2.in',
+                        scrollTrigger: { trigger: '.hero, .front', start: 'top top', end: '+=120', scrub: true }
+                    });
+                }
                 gsap.utils.toArray('.band').forEach(band => {
                     const tlBand = gsap.timeline({
                         scrollTrigger: { trigger: band, start: 'top 75%', toggleActions: 'play none none none' }
