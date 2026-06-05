@@ -35,10 +35,14 @@ Required `<body>` attributes:
 <body data-category="[Category]" data-title="[Article Title]">
 ```
 
-Required last element before `</body>`:
+Required last element before `</body>` (three script tags in order; pages link them, no single-file entry):
 ```html
-<script src="../design_system/js/global.js" defer></script>
+<script src="../design_system/js/cinematic_engine_v3.js" defer></script>
+<script src="../design_system/js/global_chrome.js" defer></script>
+<script src="../design_system/js/institutional.js" defer></script>
 ```
+
+Legacy: pre-2026-06-05, every page linked a single `../design_system/js/global.js`. Both files are gone from the deployed architecture; do not reintroduce them.
 
 ### b. Mandatory HTML Placeholders
 

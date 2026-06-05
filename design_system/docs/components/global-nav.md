@@ -1,10 +1,12 @@
+> **STATUS**: References to `global.js` below are historical. Since 2026-06-05 the chrome injector lives in `global_chrome.js`; the same path-prefix detection logic now keys off `global_chrome.js` instead of `global.js`. Treat this document as the SAME contract, just renamed.
+
 ---
 component: Global Nav
 id: CHR-01
 status: stable
 category: chrome
 interactivity: injected
-source: global.js — initGlobalChrome() section 3
+source: global.js â€” initGlobalChrome() section 3
 ---
 
 ## What It Does
@@ -35,7 +37,7 @@ if (!document.getElementById('topnav')) { /* inject */ }
 
 ## pathPrefix Resolution
 
-The nav uses `pathPrefix` — a root-relative path calculated from the global.js `<script>` src attribute:
+The nav uses `pathPrefix` â€” a root-relative path calculated from the global.js `<script>` src attribute:
 ```js
 const src = gsScript.getAttribute('src');
 // e.g. "../design_system/js/global.js"
@@ -49,10 +51,10 @@ All nav links prepend `pathPrefix`. For root pages: `pathPrefix = "./"`. For sub
 
 The nav switches appearance when a `.band--paper` section becomes active (via IntersectionObserver in article JS):
 ```js
-// Paper band active → nav goes light
+// Paper band active â†’ nav goes light
 topnav.classList.add('is-paper');
 
-// Dark band active → nav goes dark
+// Dark band active â†’ nav goes dark
 topnav.classList.remove('is-paper');
 ```
 
@@ -72,10 +74,10 @@ topnav.classList.remove('is-paper');
 
 ## Nav Anatomy
 ```
-┌──────────────────────────────────────────────────────────────────────┐
-│  Dr. Heather Leffew          Search   About   Research Library   Resume → │
-│  ←brand (display font)       ←──────────── mono 11px 0.18em ───────────→ │
-└──────────────────────────────────────────────────────────────────────┘
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚  Dr. Heather Leffew          Search   About   Research Library   Resume â†’ â”‚
+â”‚  â†brand (display font)       â†â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ mono 11px 0.18em â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â†’ â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
   height: 60px | padding: 0 48px | z-index: 9999
 ```
 
@@ -96,4 +98,4 @@ The nav starts off-screen and slides down after the preloader curtain opens.
 | Resume btn border | `rgba(255,255,255,0.2)` | `rgba(0,0,0,0.2)` |
 
 ## Source Reference
-`global.js` → `initGlobalChrome()` → section 3 "Construct and Inject Top Navigation".
+`global.js` â†’ `initGlobalChrome()` â†’ section 3 "Construct and Inject Top Navigation".
