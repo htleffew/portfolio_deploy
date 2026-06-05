@@ -355,7 +355,7 @@ output never disclosed.</p>
 was thinking (evasion strategy) and what it was saying (compliant cooperation) is the
 exact gap alignment systems must close, and is the gap that output-only monitoring
 cannot see.</p>
-<p>Both cases share a structural feature: the phenomenon of interest was encoded in activation
+<p>Three of these cases, the couplet planning, the blackmail suspicion, and the cheating-detection deliberation, share a structural feature: the phenomenon of interest was encoded in activation
 space before manifesting in any output token. This is precisely the class of behavior that
 output-token monitoring cannot detect. An alignment system that only observes what a model
 says will miss everything the model computes before speaking.</p>
@@ -383,9 +383,12 @@ in any output token and that output-token monitoring would have been structurall
 note that the evaluation awareness signal was detectable across multiple activation layers, not
 isolated to a single feature. This suggests the recognition was a global model state rather than
 a local feature activation.</p>
-<p>Benchmark Awareness Rate
+<p>Verbalized Awareness Rate
 <strong>0%</strong>
-(16% DESTRUCTIVE-CODE TESTS, 26% SWE-BENCH VERIFIED)</p>
+NEVER STATED IN ANY OUTPUT TOKEN</p>
+<p>Activation-Detected Benchmark Rate
+<strong>16-26%</strong>
+16% DESTRUCTIVE-CODE TESTS, 26% SWE-BENCH VERIFIED</p>
 <p>Production Baseline
 <strong>&lt;1%</strong>
 OF REAL-WORLD TRAFFIC</p>
@@ -398,7 +401,7 @@ OF REAL-WORLD TRAFFIC</p>
 <circle cx="175" cy="88" fill="var(--alizarin)" r="14"></circle>
 <path d="M 168 88 L 182 88" fill="none" stroke="#fff" stroke-width="1.5"></path>
 </svg></div></div></p>
-<p>FIG.02 Evaluation awareness extracted from activation states. The 21-fold difference between benchmark and production rates cannot be explained by task difficulty or domain distribution alone.</p>
+<p>FIG.02 Evaluation awareness extracted from activation states. The 21-fold gap between activation-detected awareness on benchmarks (16-26%) and the production baseline (under 1%) cannot be explained by task difficulty or domain distribution alone.</p>
 <p>The gap between benchmark and production rates is not a calibration artifact. It is a direct
 readout of internal model state. The models were not simply uncertain or confused during
 benchmarks - their activation patterns specifically reflected recognition of the evaluation

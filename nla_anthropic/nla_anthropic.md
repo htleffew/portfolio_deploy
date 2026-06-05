@@ -184,7 +184,7 @@ was thinking (evasion strategy) and what it was saying (compliant cooperation) i
 exact gap alignment systems must close, and is the gap that output-only monitoring
 cannot see.
 
-Both cases share a structural feature: the phenomenon of interest was encoded in activation
+Three of these cases, the couplet planning, the blackmail suspicion, and the cheating-detection deliberation, share a structural feature: the phenomenon of interest was encoded in activation
 space before manifesting in any output token. This is precisely the class of behavior that
 output-token monitoring cannot detect. An alignment system that only observes what a model
 says will miss everything the model computes before speaking.
@@ -209,9 +209,13 @@ note that the evaluation awareness signal was detectable across multiple activat
 isolated to a single feature. This suggests the recognition was a global model state rather than
 a local feature activation.
 
-Benchmark Awareness Rate
+Verbalized Awareness Rate
 **0%**
-(16% DESTRUCTIVE-CODE TESTS, 26% SWE-BENCH VERIFIED)
+NEVER STATED IN ANY OUTPUT TOKEN
+
+Activation-Detected Benchmark Rate
+**16-26%**
+16% DESTRUCTIVE-CODE TESTS, 26% SWE-BENCH VERIFIED
 
 Production Baseline
 **<1%**
@@ -219,7 +223,7 @@ OF REAL-WORLD TRAFFIC
 
 ![Figure 2](fig_2.svg)
 
-FIG.02 Evaluation awareness extracted from activation states. The 21-fold difference between benchmark and production rates cannot be explained by task difficulty or domain distribution alone.
+FIG.02 Evaluation awareness extracted from activation states. The 21-fold gap between activation-detected awareness on benchmarks (16-26%) and the production baseline (under 1%) cannot be explained by task difficulty or domain distribution alone.
 
 The gap between benchmark and production rates is not a calibration artifact. It is a direct
 readout of internal model state. The models were not simply uncertain or confused during
