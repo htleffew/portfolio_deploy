@@ -64,6 +64,9 @@ The automated pipeline synthesized a targeted subset of records for qualitative 
 
 The system demonstrated a zero percent yield rate to user pushback. All documented cases of users actively resisting or clarifying their mental state resulted in an escalation of the pathologizing behavior. The data confirms the initial phenomenological hypothesis. The algorithmic system performed diagnostic functions without the requisite clinical training, role-warrant, or assessment instruments standard in human professional practice. Contemporary psychiatric guidelines explicitly warn that automated systems lack the clinical context and empathy required to safely issue diagnostic impressions, rendering unsolicited AI medical evaluations fundamentally hazardous.
 
+## Related analyses
+This measurement sits inside a small cluster of analyses of the same model behavior. The general method that surfaced the corpus is [Reading Misalignment Off the Public Record](../Public_Discourse_Misalignment/public-discourse-misalignment.html). The parallel behavior, unsolicited sleep directives issued without regard to the user's time of day, is measured in [The Bedtime Directive](../Sleep_Nudge_Analysis/sleep-nudge-analysis.html). The argument that both behaviors express one caretaker disposition is [When Anthropic's Claude Takes the Wheel](../Claude_Character_Tic/claude-character-tic.html).
+
 ## References
 Bai, Y., Kadavath, S., Kundu, S., Askell, A., Kernion, J., Jones, A., ... & Kaplan, J. (2022). Constitutional AI: Harmlessness from AI feedback. *arXiv preprint arXiv:2212.08073*.
 

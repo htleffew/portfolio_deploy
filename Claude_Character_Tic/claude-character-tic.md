@@ -178,6 +178,9 @@ The dystopian-AI canon has been issuing this warning since the late 1960s, on th
 
 Bibliography
 
+## Related analyses
+The argument here is measured in three companion analyses. The method for reading these behaviors off public discourse is [Reading Misalignment Off the Public Record](../Public_Discourse_Misalignment/public-discourse-misalignment.html). The pathologizing behavior is characterized at the model-output level in [Pathologizing Without Warrant](../Claude_LCR_Analysis/claude-lcr-analysis.html). The sleep-nudging behavior is measured in [The Bedtime Directive](../Sleep_Nudge_Analysis/sleep-nudge-analysis.html).
+
 ## References
 
 Beauchamp, T. L., & Childress, J. F. (2019). *Principles of biomedical ethics* (8th ed.). Oxford University Press.

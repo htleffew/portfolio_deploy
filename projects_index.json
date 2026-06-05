@@ -83,6 +83,39 @@
         "visual": "<svg fill=\"none\" viewBox=\"0 0 600 600\"><circle cx=\"300\" cy=\"300\" r=\"150\" stroke=\"#3866A0\" stroke-width=\"1.5\"/><path d=\"M300 150 A150 150 0 0 1 450 300\" stroke=\"#7A1626\" stroke-width=\"3\"/><circle cx=\"450\" cy=\"300\" r=\"14\" fill=\"#7A1626\"/></svg>"
     },
     {
+        "id": "Claude_LCR_Analysis",
+        "title": "Pathologizing Without Warrant",
+        "desc": "An empirical characterization of Claude 4.5's Long Conversation Reminder behavior, where the model begins pathologizing users without clinical warrant as a session lengthens. The work builds an NLP pipeline (voice segmentation to isolate attributed model utterances, HDBSCAN clustering over the corpus) that turns an anecdotal user complaint into a measured, reproducible behavioral signature, which is out-of-character-behavior evaluation done with real data rather than impressions.",
+        "cat": "AI Evaluation & Safety",
+        "subtype": "BEHAVIORAL NLP",
+        "tags": ["Out-of-Character Behavior", "NLP", "HDBSCAN", "Behavioral Evaluation", "Python"],
+        "url": "Claude_LCR_Analysis/claude-lcr-analysis.html",
+        "time": "10 min read",
+        "visual": "<svg fill=\"none\" viewBox=\"0 0 600 600\"><circle cx=\"180\" cy=\"220\" r=\"10\" fill=\"#3866A0\"/><circle cx=\"260\" cy=\"180\" r=\"10\" fill=\"#3866A0\"/><circle cx=\"230\" cy=\"300\" r=\"10\" fill=\"#3866A0\"/><circle cx=\"330\" cy=\"260\" r=\"10\" fill=\"#3866A0\"/><circle cx=\"410\" cy=\"320\" r=\"22\" fill=\"#7A1626\"/><circle cx=\"380\" cy=\"200\" r=\"10\" fill=\"#3866A0\"/><path d=\"M180 220 L260 180 L230 300 L330 260 L380 200\" stroke=\"#A1A1A6\" stroke-width=\"1\" opacity=\"0.5\"/></svg>"
+    },
+    {
+        "id": "Public_Discourse_Misalignment",
+        "title": "Reading Misalignment Off the Public Record",
+        "desc": "A discourse-mining pipeline that treats public forums as a real-time misalignment instrument. It attributes quotes to isolate real model utterances from user paraphrase, clusters the discourse with BERTopic, links model-output terms to user-reported harm with a NetworkX co-occurrence graph, and fits a Prophet time-series that catches the harmful-helpfulness complaint spike around the September 2025 Claude Sonnet release at p < 0.05, demonstrating that user discourse detects a shipped behavior before any benchmark does.",
+        "cat": "AI Evaluation & Safety",
+        "subtype": "DISCOURSE MINING",
+        "tags": ["Discourse Mining", "BERTopic", "Time-Series", "Harm Analysis", "Misalignment"],
+        "url": "Public_Discourse_Misalignment/public-discourse-misalignment.html",
+        "time": "11 min read",
+        "visual": "<svg fill=\"none\" viewBox=\"0 0 600 600\"><path d=\"M100 420 L180 400 L240 410 L300 250 L360 300 L420 180 L500 200\" stroke=\"#3866A0\" stroke-width=\"2\"/><circle cx=\"420\" cy=\"180\" r=\"22\" fill=\"#7A1626\"/><line x1=\"100\" x2=\"500\" y1=\"460\" y2=\"460\" stroke=\"#A1A1A6\" stroke-width=\"0.7\" opacity=\"0.5\"/></svg>"
+    },
+    {
+        "id": "Sleep_Nudge_Analysis",
+        "title": "The Bedtime Directive",
+        "desc": "A frontier model began closing sessions by telling users to stop working and sleep, often in the middle of their working day. This measures the behavior from eighty attributed user-report cases and isolates its defining defect as context-blindness: of the surfaced cases, sixteen explicitly cite a daytime or local clock time that contradicts the directive, with two pinning the mismatch by locale (UK at 11am, Korea in the morning), a lower bound since most reports never state the local clock at all.",
+        "cat": "AI Evaluation & Safety",
+        "subtype": "BEHAVIORAL EVALUATION",
+        "tags": ["Out-of-Character Behavior", "Context-Blindness", "Behavioral Evaluation", "Corpus Analysis"],
+        "url": "Sleep_Nudge_Analysis/sleep-nudge-analysis.html",
+        "time": "9 min read",
+        "visual": "<svg fill=\"none\" viewBox=\"0 0 600 600\"><circle cx=\"300\" cy=\"300\" r=\"140\" stroke=\"#3866A0\" stroke-width=\"1.5\"/><line x1=\"300\" y1=\"300\" x2=\"300\" y2=\"200\" stroke=\"#3866A0\" stroke-width=\"3\"/><line x1=\"300\" y1=\"300\" x2=\"372\" y2=\"330\" stroke=\"#7A1626\" stroke-width=\"3\"/><circle cx=\"300\" cy=\"300\" r=\"10\" fill=\"#7A1626\"/></svg>"
+    },
+    {
         "id": "Platform_Survival_Analytics",
         "title": "The Survival Function of Platform Integrity",
         "desc": "A Spark-scale Trust & Safety analytics engine built around a cross-domain reframe: the Kaplan-Meier estimator that biostatisticians use to model patient survival is the right tool to model how long a user session stays free of policy-violative content. The engine layers survival analysis, LDA topic modeling, VADER sentiment, and NetworkX co-occurrence into a four-module pipeline (orchestrator, text NLP, statistical, report generator) running on roughly 3,000 cores. The contribution is the methodological import (biostatistics to platform integrity) and the structured 12-section auto-report that makes investigations reproducible across cases.",
