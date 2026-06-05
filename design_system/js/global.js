@@ -656,31 +656,33 @@ const initCinematicEngine = () => {
     // 7. Custom Magnetic Cursor removed per user request
 
     // 8. 3D Tilt Parallax for Cards Globally
+    //    Implemented via event delegation rather than per-card listeners plus a
+    //    body-wide MutationObserver: the previous version re-ran
+    //    querySelectorAll('.p-card, .r-card, .edu-card, .bio-card') on every DOM
+    //    mutation under document.body, which fired constantly during SPA scene
+    //    swaps and reveal animations and compounded with the Three.js render
+    //    loop into measurable scroll stutter.
     if (window.innerWidth > 768) {
-        const attachTilt = () => {
-            document.querySelectorAll('.p-card, .r-card, .edu-card, .bio-card').forEach(card => {
-                if(card.dataset.tiltBound) return;
-                card.dataset.tiltBound = "1";
-                card.addEventListener('mousemove', (e) => {
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
-                    const rotateX = ((y - centerY) / centerY) * -3; 
-                    const rotateY = ((x - centerX) / centerX) * 3;
-                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.01, 1.01, 1.01)`;
-                    card.style.transition = 'transform 0.1s ease-out';
-                });
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
-                    card.style.transition = 'transform 0.6s ease-out';
-                });
-            });
-        };
-        attachTilt();
-        const tiltObserver = new MutationObserver(attachTilt);
-        tiltObserver.observe(document.body, { childList: true, subtree: true });
+        const TILT_SELECTOR = '.p-card, .r-card, .edu-card, .bio-card';
+        document.body.addEventListener('mousemove', (e) => {
+            const card = e.target && e.target.closest ? e.target.closest(TILT_SELECTOR) : null;
+            if (!card) return;
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const rotateX = ((y - rect.height / 2) / (rect.height / 2)) * -3;
+            const rotateY = ((x - rect.width  / 2) / (rect.width  / 2)) *  3;
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.01, 1.01, 1.01)`;
+            card.style.transition = 'transform 0.1s ease-out';
+        }, { passive: true });
+        document.body.addEventListener('mouseout', (e) => {
+            const card = e.target && e.target.closest ? e.target.closest(TILT_SELECTOR) : null;
+            if (!card) return;
+            // Only reset when the pointer is actually leaving the card (not moving between children).
+            if (card.contains(e.relatedTarget)) return;
+            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+            card.style.transition = 'transform 0.6s ease-out';
+        }, { passive: true });
     }
 
     // 9. Generative UI Audio Feedback
@@ -1049,6 +1051,22 @@ const initCinematicEngine = () => {
     };
 
     window.initPageAnimations = () => {
+        // Respect the OS-level "reduce motion" setting before doing any animation work.
+        // When set, reveal every animated element immediately and skip the cascade
+        // (matches the GSAP-missing fallback below, but runs even when GSAP is present).
+        const prefersReducedMotion =
+            typeof window.matchMedia === 'function' &&
+            window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReducedMotion) {
+            const pre = document.getElementById('preloader');
+            if (pre) pre.style.display = 'none';
+            document.querySelectorAll(
+                '.meta-row span, h1, .hero-rule, .abstract, #glCanvas, ' +
+                '.scroll-cue, .band .section-eyebrow, .band .section-heading, .type-block, ' +
+                '.swatch-grid, .tagrow, .p-card, .r-card, .demo-box, .dashboard-layout, .reveal, .ds-prose'
+            ).forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
+            return;
+        }
         window.ensureDependenciesLoaded(() => {
             if (typeof gsap === 'undefined') {
                 const pre = document.getElementById('preloader');
@@ -1063,7 +1081,10 @@ const initCinematicEngine = () => {
 
             if (typeof ScrollTrigger !== 'undefined') {
                 gsap.registerPlugin(ScrollTrigger);
-                ScrollTrigger.refresh();
+                // No eager ScrollTrigger.refresh() here: triggers haven't been created
+                // yet at this point. The single refresh + initScrollTriggers() runs
+                // inside the timeline's onComplete, which is the correct ordering
+                // per STYLE.md §5.3 ("ScrollTrigger Refresh Caution").
             }
 
             const tl = gsap.timeline({
@@ -1087,40 +1108,65 @@ const initCinematicEngine = () => {
                   .set(preloader, { display: 'none' });
             }
 
-            tl.to('#glCanvas', { opacity: 1, duration: 1.5, ease: 'power2.inOut' }, '-=0.3');
+            // ----------------------------------------------------------------
+            // Hero reveal cascade.
+            //
+            // The previous implementation positioned every reveal with relative
+            // negative offsets (-=2.8, -=2.2, -=1.6, -=2.0, -=0.5, -=0.9, -=0.3)
+            // measured from the end of the preloader chain. The preloader chain
+            // total runs ~1.95s, so every position with magnitude >1.95 clamped
+            // to t=0 inside GSAP, collapsing the cascade into a single
+            // simultaneous reveal. Position labels keep the ordering
+            // deterministic regardless of the preloader's presence or length.
+            //
+            // Hero title note: the .hero h1 is pre-hidden via global.css line
+            // 1820 (.hero .meta-row span, .hero h1, .hero .hero-rule, .hero
+            // .abstract { opacity: 0 }). The previous code set
+            // heroTitle.style.opacity = 1 inline BEFORE SplitType, briefly
+            // exposing the full title; gsap.from(split.chars, { opacity: 0 })
+            // then snapped the chars invisible and animated them back, which
+            // read as a "restart". We let CSS hold the parent at opacity:0
+            // until the chars animation begins; a tl.set at the chars label
+            // raises parent opacity:1 at the same beat so children become
+            // visible only as their stagger plays.
+            // ----------------------------------------------------------------
+            tl.addLabel('heroIn');
+
+            tl.to('#glCanvas', { opacity: 1, duration: 1.5, ease: 'power2.inOut' }, 'heroIn');
+            tl.to('#topnav',   { y: 0,       duration: 1.4, ease: 'power3.out'   }, 'heroIn');
 
             let split;
             const heroTitle = document.querySelector('.hero h1');
             if (heroTitle && typeof SplitType !== 'undefined') {
-                heroTitle.style.opacity = 1;
                 split = new SplitType(heroTitle, { types: 'words, chars' });
             }
 
-            tl.to('#topnav', { y: 0, duration: 1.4, ease: 'power3.out' }, '-=2.8');
-
             const metaSpans = gsap.utils.toArray('.meta-row span');
-            if (metaSpans.length) tl.to(metaSpans, { opacity: 1, x: 0, duration: 1.0, stagger: 0.2, ease: 'power2.out' }, '-=2.2');
+            if (metaSpans.length) tl.to(metaSpans, { opacity: 1, x: 0, duration: 1.0, stagger: 0.2, ease: 'power2.out' }, 'heroIn+=0.30');
+
             if (split) {
-                tl.from(split.chars, { opacity: 0, y: 20, rotateX: -90, stagger: 0.04, duration: 1.5, ease: 'back.out(1.5)' }, '-=1.6');
+                tl.set(heroTitle, { opacity: 1 }, 'heroIn+=0.50');
+                tl.from(split.chars, { opacity: 0, y: 20, rotateX: -90, stagger: 0.04, duration: 1.5, ease: 'back.out(1.5)' }, 'heroIn+=0.50');
             }
+
             const heroRule = document.querySelector('.hero-rule');
-            if (heroRule) tl.to(heroRule,   { width: 64, opacity: 1, duration: 1.3, ease: 'power3.inOut' }, '-=1.0');
+            if (heroRule) tl.to(heroRule, { width: 64, opacity: 1, duration: 1.3, ease: 'power3.inOut' }, 'heroIn+=1.10');
 
             const frontTitle = document.querySelector('.front h1');
             if (frontTitle && !heroTitle) {
                 tl.fromTo(frontTitle,
                     { opacity: 0, y: 28 },
                     { opacity: 1, y: 0, duration: 1.4, ease: 'power3.out' },
-                    '-=2.0'
+                    'heroIn+=0.20'
                 );
             } else if (frontTitle && heroTitle) {
-                tl.to(frontTitle, { opacity: 1, duration: 1.0, ease: 'power2.out' }, '-=0.5');
+                tl.to(frontTitle, { opacity: 1, duration: 1.0, ease: 'power2.out' }, 'heroIn+=0.40');
             }
 
             const abstractEl = document.querySelector('.abstract');
-            if (abstractEl) tl.to(abstractEl, { opacity: 1, y: 0, duration: 1.3, ease: 'power2.out' }, '-=0.9');
+            if (abstractEl) tl.to(abstractEl, { opacity: 1, y: 0, duration: 1.3, ease: 'power2.out' }, 'heroIn+=0.70');
             const scrollCue = document.querySelector('.scroll-cue');
-            if (scrollCue) tl.to(scrollCue,  { opacity: 1, duration: 1.2, ease: 'power2.out' }, '-=0.3');
+            if (scrollCue) tl.to(scrollCue,   { opacity: 1, duration: 1.2, ease: 'power2.out' }, 'heroIn+=1.40');
 
 
             function initScrollTriggers() {

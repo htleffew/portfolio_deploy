@@ -5,26 +5,41 @@ This repository (`portfolio_deploy`) acts as the strict production environment a
 ## Live Domain
 **[https://htleffew.github.io/portfolio_deploy/](https://htleffew.github.io/portfolio_deploy/)**
 
-## CSS Architecture
+## Deployed Architecture (current ground truth)
+
+Every HTML page in this repository links exactly two files from `design_system/`:
 
 ```
 design_system/
-├── tokens.css                    ← SINGLE SOURCE OF TRUTH for all design variables
-│                                    Colors, fonts, spacing, motion, borders, shadows
-│                                    Every CSS file @imports from here
-│
-├── assets/css/
-│   └── institutional.css         ← @import url('../../tokens.css')
-│                                    Case study components: .band, .col-wide, tables,
-│                                    sidenotes, sandboxes, spine nav, reading typography
-│
-└── css/
-    └── global_chrome.css         ← @import url('../tokens.css')
-                                     App shell: #topnav, footer, preloader, grain,
-                                     search modal, Lenis, scroll-cue, tilt effects
+├── tokens.css                    ← Design tokens (colors, fonts, spacing, motion).
+│                                    @imported from global.css; do not link directly.
+├── css/
+│   └── global.css                ← Single deployed stylesheet (linked by every page).
+│                                    Contains every component rule, band system,
+│                                    typography, preloader, search overlay, etc.
+└── js/
+    └── global.js                 ← Single deployed runtime. Hosts:
+                                     • Cinematic WebGL engine (Three.js starfield + nodes)
+                                     • Global chrome injector (topnav, footer, search, grain)
+                                     • Lenis smooth scroll bootstrap
+                                     • GSAP hero reveal cascade + ScrollTriggers
+                                     • SPA router (WebGL shader transitions between pages)
+                                     • Related-works engine
+                                     • 3D tilt parallax (delegated)
 ```
 
-**Every HTML page needs exactly ONE stylesheet link:** `institutional.css`. Tokens cascade automatically through the `@import` chain. Google Fonts also load through `tokens.css` — no separate `<link>` tag required.
+**Every HTML page needs exactly two links:**
+
+```html
+<link rel="stylesheet" href="design_system/css/global.css">
+<script src="design_system/js/global.js" defer></script>
+```
+
+GSAP, ScrollTrigger, Lenis, SplitType, simplex-noise, and HyperShader are loaded on demand by `global.js` itself; pages may add them as `<script defer>` tags but are not required to. Google Fonts load via `@import` inside `tokens.css`, which is `@import`ed by `global.css`; no separate `<link>` tag required.
+
+## Planned (not yet deployed) refactor
+
+The directories `design_system/assets/css/` and `design_system/assets/js/institutional.js` reflect a planned migration to a thinner `institutional.css` / `institutional.js` split. That refactor was scoped but never deployed: the `institutional.css` file does not exist on disk, and no page in the repository links `institutional.js`. The README previously documented the planned state as if it were current; this section now reconciles the two. Reactivate the refactor only by building `institutional.css` from scratch and migrating every page link in one batch.
 
 ## Adding a New Case Study
 
