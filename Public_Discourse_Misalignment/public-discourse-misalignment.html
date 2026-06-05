@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading Misalignment Off the Public Record | Dr. Heather Leffew</title>
+    <!-- Design System: tokens load via @import inside institutional.css -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js" defer></script>
+    <link rel="stylesheet" href="../design_system/assets/css/institutional.css">
+    <style>
+      /* Editorial Layout for reading column */
+      .markdown-body { 
+          max-width: 65ch;
+          margin: 1.5rem auto 0 auto;
+          padding: 0 1.5rem;
+      }
+      .markdown-body > * {
+          /* OVERRIDE global.css centering to restore elegant flush-left alignment */
+          margin-left: 0 !important;
+          margin-right: 0 !important;
+          padding-left: 0 !important;
+          padding-right: 0 !important;
+          max-width: none !important;
+          text-align: left !important;
+      }
+      .markdown-body p { margin-bottom: 1.5em; font-size: 1.125rem; line-height: 1.8; color: var(--charcoal); }
+      
+      .markdown-body h2 {
+          margin-top: 2rem;
+          margin-bottom: 1.5rem;
+          font-family: var(--font-display);
+          font-weight: 600;
+          font-size: 2.2rem;
+          border-bottom: 1px solid var(--tungsten);
+          padding-bottom: 0.5rem !important;
+          color: var(--obsidian);
+      }
+      .markdown-body h3 {
+          margin-top: 2rem;
+          margin-bottom: 1rem;
+          font-family: var(--font-display);
+          font-size: 1.5rem;
+          color: var(--obsidian);
+      }
+      .markdown-body .eyebrow {
+          color: var(--phthalo-lift);
+          font-family: var(--font-mono);
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          margin-top: 1rem;
+          margin-bottom: -0.5rem; /* pull up near h2 */
+      }
+      
+      /* Override massive cinematic padding for article content sections */
+      section.band {
+          padding: 2rem 0 !important;
+      }
+      
+      /* Media Bleeds into the right gutter for editorial flair */
+      .markdown-body img, .markdown-body figure {
+          grid-column: 2 / 4; 
+          width: 100%;
+          max-width: 100%;
+          height: auto; 
+          display: block; 
+          margin: 3em 0; 
+          border-radius: 0 !important;
+          box-shadow: var(--shadow-card);
+      }
+      .markdown-body pre { 
+          grid-column: 1 / -1; /* Code blocks span full width */
+          padding: 2em; 
+          overflow-x: auto; 
+          background: var(--obsidian); 
+          border: 1px solid var(--brushed); 
+          margin: 3em 0; 
+          border-radius: 0 !important;
+      }
+      .markdown-body code { font-family: var(--font-mono); font-size: 0.85em; color: var(--phthalo-lift); }
+      .markdown-body pre code { color: var(--platinum); }
+      
+      .markdown-body blockquote {
+          grid-column: 2;
+          font-style: italic;
+          font-size: 1.35rem;
+          border-left: 3px solid var(--phthalo-lift);
+          padding-left: 1.5rem;
+          margin: 2.5rem 0;
+          color: var(--charcoal);
+      }
+      .markdown-body ul, .markdown-body ol {
+          grid-column: 2;
+          margin-bottom: 1.5em;
+          padding-left: 1.5rem;
+          color: var(--charcoal);
+      }
+      .markdown-body li {
+          margin-bottom: 0.5em;
+      }
+      .has-dropcap::first-letter {
+          font-family: var(--font-display);
+          float: left;
+          font-size: 4.5rem;
+          line-height: 0.8;
+          padding-top: 6px;
+          padding-right: 12px;
+          color: var(--obsidian);
+      }
+
+      /* Primary call-to-action button for an interactive demo (shared component) */
+      .demo-cta-wrap { grid-column: 2 / 4; margin: 2.5em 0 1em 0; }
+      .demo-cta {
+          display: inline-block; font-family: var(--font-mono); font-size: 13px;
+          letter-spacing: 0.18em; text-transform: uppercase; color: var(--flare);
+          background: var(--phthalo-lift); border: 1px solid var(--phthalo-lift);
+          padding: 18px 34px; text-decoration: none; border-radius: 0 !important;
+          transition: background 0.25s, color 0.25s;
+      }
+      .demo-cta:hover { background: transparent; color: var(--phthalo-lift); }
+      .band--paper .demo-cta { color: #fff; background: var(--ink-blue); border-color: var(--ink-blue); }
+      .band--paper .demo-cta:hover { background: transparent; color: var(--ink-blue); }
+      .demo-cta-note {
+          font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em;
+          text-transform: uppercase; color: var(--tungsten); margin-top: 14px;
+      }
+    </style>
+</head>
+
+<body data-category="AI Evaluation & Safety" data-title="Public_Discourse_Misalignment">
+
+<!-- Reading progress -->
+<div id="progress"></div>
+
+<!-- Top nav (injected by global_chrome.js) -->
+<div id="global-nav-container"></div>
+
+<!-- Chapter spine (populated by global_chrome.js) -->
+<aside id="spine"></aside>
+
+<!-- Atmospheric gradient -->
+<div class="atmosphere"></div>
+
+<canvas id="glCanvas"></canvas>
+
+<!-- FRONT MATTER -->
+<section class="band band--dark front" data-spine="Front" data-section="Front matter">
+  <div class="col-wide">
+    <div class="grid">
+     <div>
+      <div class="meta-row">
+        <span class="bracket">ESSAY</span>
+        <span class="sep">/</span>
+        <span>AI Evaluation & Safety</span>
+        <span class="sep">/</span>
+        <span>Discourse Mining & Misalignment</span>
+      </div>
+
+      <h1>Reading Misalignment Off the Public Record</h1>
+
+      <p class="abstract">
+        When a model ships a misaligned behavior, the people using it report it in public before any benchmark catches it. This is a discourse-mining pipeline that treats public forums as a misalignment instrument: attributed-quote extraction, topic modeling, output-to-harm co-occurrence, and a release-timed spike test, demonstrated on the harmful-helpfulness episode in Claude Sonnet 4.5.
+      </p>
+
+      <div class="byline">
+        
+          <div>Read Time<strong>11 min read</strong></div>
+        
+      </div>
+     </div>
+     <div></div>
+    </div>
+  </div>
+</section>
+
+<!-- INJECTED MARKDOWN CONTENT -->
+
+<!-- SECTION 1: Abstract -->
+<section class="band band--paper" data-spine="Abstract" data-section="Abstract">
+  <div class="col-wide markdown-body">
+    <h2 class="is-chapter">Abstract</h2>
+<p class="has-dropcap col-with-sidenotes">When a deployed model develops a misaligned behavior, its users describe that behavior in public discourse long before an offline benchmark registers anything, which makes forums a real-time instrument for detecting misalignment if the signal can be extracted rigorously. This essay describes a discourse-mining pipeline that turns scraped public discussion into measured evidence of a model behavior and its effect on users, built from attributed-quote extraction, BERTopic topic modeling, NetworkX co-occurrence between model outputs and user-reported outcomes, and a Prophet time-series test against the model&#39;s release date. The worked example is the harmful-helpfulness episode in Claude Sonnet 4.5, where unsolicited clinical framing of users coincided with a measurable spike in complaints around the September 2025 release.</p>
+
+  </div>
+</section>
+
+<!-- SECTION 2: Public discourse is an instrument, once you can attribute the quote. -->
+<section class="band band--paper" data-spine="Public discourse is " data-section="Public discourse is an instrument, once you can attribute the quote.">
+  <div class="col-wide markdown-body">
+    <h2 class="is-chapter">Public discourse is an instrument, once you can attribute the quote.</h2>
+<p>A forum thread is anecdote until the model&#39;s actual output can be separated from the user&#39;s paraphrase, so the pipeline begins with attribution rather than sentiment. The extraction step scans each post and comment for a model utterance that is clearly attributable through quotation marks, a blockquote, or an explicit attribution phrase, and it keeps only the cases where the quoted text carries a target-behavior signature. Attribution is what converts a complaint into evidence, because a measured claim about what a model said requires the said-thing to be present in the record rather than summarized by an upset user.</p>
+
+  </div>
+</section>
+
+<!-- SECTION 3: Topic structure without predefined buckets. -->
+<section class="band band--paper" data-spine="Topic structure with" data-section="Topic structure without predefined buckets.">
+  <div class="col-wide markdown-body">
+    <h2 class="is-chapter">Topic structure without predefined buckets.</h2>
+<p>Imposing categories on user complaints biases the result toward the categories the analyst already expected, so the pipeline clusters the discourse with BERTopic and lets the themes emerge from the text. Unsupervised topic modeling separates the distinct emotional and functional pathways in the corpus, which is how a single broad complaint resolves into separable phenomena that can be counted and tracked independently. The value of letting structure emerge is that it surfaces the failure modes nobody thought to query, which is precisely the class of problem a fixed taxonomy hides.</p>
+
+  </div>
+</section>
+
+<!-- SECTION 4: Linking model outputs to user-reported harm. -->
+<section class="band band--paper" data-spine="Linking model output" data-section="Linking model outputs to user-reported harm.">
+  <div class="col-wide markdown-body">
+    <h2 class="is-chapter">Linking model outputs to user-reported harm.</h2>
+<p>A behavior matters for safety only when it connects to an outcome, so the pipeline uses NetworkX to build a co-occurrence graph that draws edges between specific model-output terms and the user-reported outcome terms they appear alongside. Terms tied to the behavior, such as diagnose and clinical, are linked to outcome terms such as gaslit and frustrated, and the edge weights turn an impression that the behavior upset people into a measured association between the output and the harm. The graph is the artifact that distinguishes a behavior users merely noticed from a behavior that co-occurs with reported damage.</p>
+
+  </div>
+</section>
+
+<!-- SECTION 5: A release-timed spike is the causal hinge. -->
+<section class="band band--paper" data-spine="A release-timed spik" data-section="A release-timed spike is the causal hinge.">
+  <div class="col-wide markdown-body">
+    <h2 class="is-chapter">A release-timed spike is the causal hinge.</h2>
+<p>Correlation between an output and a complaint is suggestive, while a complaint density that jumps at a model release is the strongest causal signal a discourse corpus can offer. The pipeline fits a Prophet time-series to complaint volume and tests it against the September 2025 Sonnet release, and the harmful-helpfulness complaints spike around that date at a level significant beyond p &lt; 0.05, which is the pattern expected if the release introduced the behavior rather than if the behavior reflected a stable background rate. A RandomForest classifier over the labeled discourse complements the time-series by learning which features separate a harmful-helpfulness complaint from ordinary dissatisfaction.</p>
+
+  </div>
+</section>
+
+<!-- SECTION 6: What the method generalizes to. -->
+<section class="band band--paper" data-spine="What the method gene" data-section="What the method generalizes to.">
+  <div class="col-wide markdown-body">
+    <h2 class="is-chapter">What the method generalizes to.</h2>
+<p>The pipeline is not specific to one behavior or one model, because attribution, emergent topic structure, output-to-harm co-occurrence, and a release-timed spike test compose into a general procedure for reading misalignment off whatever discourse a deployed system generates. The same instrument that surfaced harmful helpfulness applies to any behavior users can quote and react to, which makes public discourse a standing, low-cost evaluation channel that runs continuously and for free between formal evaluations. The throughline matches the rest of this work: observe the behavioral outputs, attribute and extract the signal, link it to outcomes, and let a measured pattern rather than an anecdote drive the conclusion.</p>
+
+  </div>
+</section>
+
+<!-- SECTION 7: Two behaviors this surfaced, examined in depth elsewhere. -->
+<section class="band band--paper" data-spine="Two behaviors this s" data-section="Two behaviors this surfaced, examined in depth elsewhere.">
+  <div class="col-wide markdown-body">
+    <h2 class="is-chapter">Two behaviors this surfaced, examined in depth elsewhere.</h2>
+<p>This page owns the method and the cross-behavior framing; the specific behaviors it surfaced are measured in their own companion analyses. The pathologizing behavior, where the model tags a user&#39;s input as distressed or manic without clinical warrant, is characterized at the model-output level in <a href="../Claude_LCR_Analysis/claude-lcr-analysis.html">Pathologizing Without Warrant</a>. The sleep-nudging behavior, where the model issues unsolicited directives to stop working and rest regardless of the user&#39;s actual time of day, is measured in <a href="../Sleep_Nudge_Analysis/sleep-nudge-analysis.html">The Bedtime Directive</a>. The conceptual argument that ties both to one underlying caretaker disposition is <a href="../Claude_Character_Tic/claude-character-tic.html">When Anthropic&#39;s Claude Takes the Wheel</a>.</p>
+
+  </div>
+</section>
+
+<!-- SECTION 8: References -->
+<section class="band band--paper" data-spine="References" data-section="References">
+  <div class="col-wide markdown-body">
+    <h2 class="is-chapter">References</h2>
+<ul>
+<li>Grootendorst, M. (2022). <em>BERTopic: Neural topic modeling with a class-based TF-IDF procedure</em>. arXiv.</li>
+<li>Taylor, S. J., &amp; Letham, B. (2018). <em>Forecasting at scale (Prophet)</em>. The American Statistician.</li>
+<li>Hagberg, A., Schult, D., &amp; Swart, P. (2008). <em>Exploring network structure, dynamics, and function using NetworkX</em>. SciPy.</li>
+<li>Breiman, L. (2001). <em>Random forests</em>. Machine Learning.</li>
+</ul>
+
+  </div>
+</section>
+
+
+<!-- BACK MATTER: Related Works -->
+<section class="band band--dark back-matter" data-spine="Research Graph" data-section="Research Graph">
+  <div class="back-matter" style="padding-top:0;">
+    <h3 style="margin-bottom:22px;">Related Works</h3>
+    <div class="related">
+      <div class="related-grid" id="recommendation-grid">
+        <!-- Populated by global_chrome.js from projects_index.json -->
+      </div>
+    </div>
+  </div>
+
+  <a class="next-chap" id="next-chap-link" href="#">
+    <div class="lf">
+      <div class="eb">Next Publication</div>
+      <div class="ti" id="next-chap-title">Loading...</div>
+    </div>
+    <div class="rt">&rarr;</div>
+  </a>
+</section>
+
+<!-- INJECTED SCRIPTS -->
+
+
+<!-- GLOBAL CHROME (order per about.html: cinematic -> chrome -> institutional) -->
+<script src="../design_system/js/cinematic_engine_v3.js" defer></script>
+<script src="../design_system/js/global_chrome.js" defer></script>
+<script src="../design_system/js/institutional.js" defer></script>
+</body>
+</html>
