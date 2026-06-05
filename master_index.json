@@ -1,5 +1,107 @@
 [
     {
+        "id": "Constitutional_AI_Defense",
+        "title": "Constitutional Defense for High-Stakes Generative AI",
+        "desc": "A walkthrough of a constitutional defense architecture for regulated generative systems: an explicit written specification, defense layered by when it acts relative to generation, automated red-teaming measured by attack-success-rate, query-efficiency, and refusal-rate, LLM-as-a-Judge grading with its position and order biases mathematically constrained, and a 4x4 safety-refusal confusion matrix. The argument is that a safety property no instrument can measure after deployment is not a control.",
+        "cat": "AI Evaluation & Safety",
+        "subtype": "ADVERSARIAL DEFENSE",
+        "tags": [
+            "LLM-as-Judge",
+            "Red-Teaming",
+            "Jailbreak Defense",
+            "Prompt Injection",
+            "Safety Evals"
+        ],
+        "url": "Constitutional_AI_Defense/constitutional-ai-defense.html",
+        "time": "12 min read",
+        "visual": "<svg fill=\"none\" viewBox=\"0 0 600 600\"><rect x=\"150\" y=\"150\" width=\"300\" height=\"300\" stroke=\"#3866A0\" stroke-width=\"2\"/><rect x=\"215\" y=\"215\" width=\"170\" height=\"170\" stroke=\"#3866A0\" stroke-width=\"1\" opacity=\"0.6\"/><circle cx=\"300\" cy=\"300\" r=\"28\" fill=\"#7A1626\"/></svg>"
+    },
+    {
+        "id": "Agentic_Experience_Evaluation",
+        "title": "Evaluating an Agentic Assistant as a User Experience",
+        "desc": "A six-part evaluation suite that treats agent quality as a measurable user experience built from the system's own conversation logs: a defensible task-success baseline, a grounding review that separates a real answer from a confident guess, tool-path efficiency with a cost on failed calls, linguistic signals of dissatisfaction and abandonment, latency as an experience budget, and per-segment regression that locates where the experience degrades.",
+        "cat": "AI Evaluation & Safety",
+        "subtype": "AGENTIC EVALS",
+        "tags": [
+            "Agentic Evals",
+            "Tool-Use Evaluation",
+            "Grounding",
+            "Golden Datasets",
+            "UX Metrics"
+        ],
+        "url": "Agentic_Experience_Evaluation/agentic-experience-evaluation.html",
+        "time": "11 min read",
+        "visual": "<svg fill=\"none\" viewBox=\"0 0 600 600\"><circle cx=\"150\" cy=\"300\" r=\"22\" fill=\"#3866A0\"/><circle cx=\"300\" cy=\"200\" r=\"22\" fill=\"#3866A0\"/><circle cx=\"300\" cy=\"400\" r=\"22\" fill=\"#3866A0\"/><circle cx=\"450\" cy=\"300\" r=\"28\" fill=\"#7A1626\"/><path d=\"M150 300 L300 200 L450 300 M150 300 L300 400 L450 300\" stroke=\"#A1A1A6\" stroke-width=\"1.5\" opacity=\"0.6\"/></svg>"
+    },
+    {
+        "id": "AI_Safety_Audit_Framework",
+        "title": "When Measurement Is the Compliance Artifact",
+        "desc": "An audit framework for generative systems that interpret and synthesize information about people, built on the premise that a belief in safety is not evidence. It treats the measurement itself as the deliverable: a mapped threat landscape, defense layered by when it acts, an audit of real production conversation history, and privacy-preserving telemetry bounded to aggregate signals, so the documented record of tests, results, and enforced thresholds becomes the governance.",
+        "cat": "AI Evaluation & Safety",
+        "subtype": "SAFETY AUDITING",
+        "tags": [
+            "Safety Evals",
+            "Red-Teaming",
+            "Observability",
+            "Governance",
+            "Auditing"
+        ],
+        "url": "AI_Safety_Audit_Framework/ai-safety-audit-framework.html",
+        "time": "10 min read",
+        "visual": "<svg fill=\"none\" viewBox=\"0 0 600 600\"><rect x=\"140\" y=\"160\" width=\"320\" height=\"60\" stroke=\"#3866A0\" stroke-width=\"1.5\"/><rect x=\"140\" y=\"270\" width=\"320\" height=\"60\" stroke=\"#3866A0\" stroke-width=\"1.5\"/><rect x=\"140\" y=\"380\" width=\"320\" height=\"60\" stroke=\"#7A1626\" stroke-width=\"2\"/></svg>"
+    },
+    {
+        "id": "Post_Asimovian_Alignment",
+        "title": "A Post-Asimovian Framework for Adaptive Alignment",
+        "desc": "An alignment framework that reframes the swing between dangerous permissiveness and harmful over-restriction as a control problem rather than a fixed threshold. It decouples the safety constraint from preference optimization, conditions the constraint's strength on a linguistic read of the context, and proposes psycholinguistic typology discovery as the observable state variable for the controller, stating the whole proposal in quantities a team can plot, train, and score.",
+        "cat": "AI Evaluation & Safety",
+        "subtype": "ALIGNMENT GOVERNANCE",
+        "tags": [
+            "Alignment",
+            "Adaptive Thresholds",
+            "CMDP",
+            "Uncertainty",
+            "Safety Governance"
+        ],
+        "url": "Post_Asimovian_Alignment/post-asimovian-alignment.html",
+        "time": "13 min read",
+        "visual": "<svg fill=\"none\" viewBox=\"0 0 600 600\"><path d=\"M120 440 C 220 440, 240 180, 300 180 C 360 180, 380 440, 480 440\" stroke=\"#3866A0\" stroke-width=\"2\"/><circle cx=\"300\" cy=\"180\" r=\"26\" fill=\"#7A1626\"/><line x1=\"120\" x2=\"480\" y1=\"440\" y2=\"440\" stroke=\"#A1A1A6\" stroke-width=\"0.7\" opacity=\"0.5\"/></svg>"
+    },
+    {
+        "id": "Multi_Signal_Safety_Detection",
+        "title": "Multi-Signal Safety Detection at Platform Scale",
+        "desc": "A corroboration architecture for safety detection that addresses both failure directions: missing real harm, and firing on behavior that resembles harm but is not. It runs concurrent analysis streams over the same content, scores their agreement rather than trusting a single fragile signal, and maps detection confidence to enforcement scope through a three-scenario decision frame, so every action carries known precision rather than an assumed threshold.",
+        "cat": "AI Evaluation & Safety",
+        "subtype": "DETECTION",
+        "tags": [
+            "Toxicity Detection",
+            "Trust & Safety",
+            "Multi-Signal",
+            "Precision/Recall",
+            "Enforcement"
+        ],
+        "url": "Multi_Signal_Safety_Detection/multi-signal-safety-detection.html",
+        "time": "10 min read",
+        "visual": "<svg fill=\"none\" viewBox=\"0 0 600 600\"><circle cx=\"240\" cy=\"240\" r=\"90\" stroke=\"#3866A0\" stroke-width=\"1.5\" opacity=\"0.8\"/><circle cx=\"360\" cy=\"240\" r=\"90\" stroke=\"#3866A0\" stroke-width=\"1.5\" opacity=\"0.8\"/><circle cx=\"300\" cy=\"340\" r=\"90\" stroke=\"#3866A0\" stroke-width=\"1.5\" opacity=\"0.8\"/><circle cx=\"300\" cy=\"275\" r=\"22\" fill=\"#7A1626\"/></svg>"
+    },
+    {
+        "id": "Bounded_Autonomous_Research",
+        "title": "Evaluation-Gated Autonomous Heuristic Discovery",
+        "desc": "A bounded discovery loop where an agent improves a retrieval system only through changes an automated evaluation approves. Skill-based routing keeps token cost proportional to the task, unified entity evidence replaces siloed lookups so resolution draws on joint signal, and learning-to-rank versioning gates each deployment on a held-out metric, which turns open-ended optimization into a controlled experiment inside a fixed, auditable change space.",
+        "cat": "AI Evaluation & Safety",
+        "subtype": "AGENTIC EVALS",
+        "tags": [
+            "Agentic Evals",
+            "Learning-to-Rank",
+            "Long-Horizon",
+            "Entity Resolution",
+            "Evaluation Gating"
+        ],
+        "url": "Bounded_Autonomous_Research/bounded-autonomous-research.html",
+        "time": "10 min read",
+        "visual": "<svg fill=\"none\" viewBox=\"0 0 600 600\"><circle cx=\"300\" cy=\"300\" r=\"150\" stroke=\"#3866A0\" stroke-width=\"1.5\"/><path d=\"M300 150 A150 150 0 0 1 450 300\" stroke=\"#7A1626\" stroke-width=\"3\"/><circle cx=\"450\" cy=\"300\" r=\"14\" fill=\"#7A1626\"/></svg>"
+    },
+    {
         "id": "Platform_Survival_Analytics",
         "title": "The Survival Function of Platform Integrity",
         "desc": "A Spark-scale Trust & Safety analytics engine built around a cross-domain reframe: the Kaplan-Meier estimator that biostatisticians use to model patient survival is the right tool to model how long a user session stays free of policy-violative content. The engine layers survival analysis, LDA topic modeling, VADER sentiment, and NetworkX co-occurrence into a four-module pipeline (orchestrator, text NLP, statistical, report generator) running on roughly 3,000 cores. The contribution is the methodological import (biostatistics to platform integrity) and the structured 12-section auto-report that makes investigations reproducible across cases.",
@@ -52,7 +154,7 @@
     {
         "id": "Annotation_Workforce",
         "title": "Greenfield vs. Ecosystem Research",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "A comparative analysis of two strategies for standing up a data-annotation workforce, weighing a greenfield build against integration with an existing ecosystem platform.",
         "cat": "Research & Architecture",
         "subtype": "ANNOTATION WORKFORCE",
         "tags": [
@@ -66,7 +168,7 @@
     {
         "id": "Atlas",
         "title": "Epistemic Architecture Research",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "A capability-organized inventory that maps a large portfolio of data-science deliverables to the business outcomes each one enables, used as the epistemic architecture for the function.",
         "cat": "Research & Architecture",
         "subtype": "ATLAS",
         "tags": [
@@ -80,7 +182,7 @@
     {
         "id": "Autobiographical",
         "title": "The Architect of Investigative Intelligence",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "A structured account of trust-and-safety analytics work, organized around a modular text-analysis framework for moderation and operations.",
         "cat": "Research & Architecture",
         "subtype": "AUTOBIOGRAPHICAL",
         "tags": [
@@ -95,7 +197,7 @@
     {
         "id": "Automated_Preemployment_Reports",
         "title": "Clinical-Grade Narrative Automation Research",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "Automation of clinical-grade pre-employment psychological evaluation narratives, generating structured reports from standardized assessment inputs.",
         "cat": "Research & Architecture",
         "subtype": "AUTOMATED PREEMPLOYMENT REPORTS",
         "tags": [
@@ -125,7 +227,7 @@
     {
         "id": "Building_Data_Products",
         "title": "From Service to Scale: Architecting Data Products Research",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "A case study in moving a data function from bespoke services to scalable, productized data offerings, and the revenue shift that followed.",
         "cat": "Research & Architecture",
         "subtype": "BUILDING DATA PRODUCTS",
         "tags": [
@@ -139,7 +241,7 @@
     {
         "id": "Buyer_Intent",
         "title": "Imbalanced Classification & Confound Detection Research",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "A study in imbalanced classification and confound detection for predicting B2B account conversion, where the positive class is rare and easily confounded.",
         "cat": "Research & Architecture",
         "subtype": "BUYER INTENT",
         "tags": [
@@ -153,7 +255,7 @@
     {
         "id": "Buyer_Intent",
         "title": "Predicting Buyer Intent Case Study",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "A worked case study predicting B2B buyer intent, framing account conversion as a supervised learning problem over behavioral signals.",
         "cat": "Research & Architecture",
         "subtype": "BUYER INTENT",
         "tags": [
@@ -167,7 +269,7 @@
     {
         "id": "Buyer_Intent",
         "title": "Predicting Buyer Intent with XGBoost and Hive Data - Heather T. Leffew",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "A gradient-boosted model predicting B2B account conversion likelihood from large-scale behavioral data on a distributed query backend.",
         "cat": "Research & Architecture",
         "subtype": "BUYER INTENT",
         "tags": [
@@ -182,7 +284,7 @@
     {
         "id": "CASP",
         "title": "Quantifying Domain Expertise in AI Workflows Research",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "A study quantifying how much domain expertise contributes to AI workflow quality, isolating the marginal value of specialist input.",
         "cat": "Research & Architecture",
         "subtype": "CASP",
         "tags": [
@@ -196,7 +298,7 @@
     {
         "id": "CASP",
         "title": "AlphaFold2 CASP14 Inference Research",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "An ablation study quantifying the marginal contribution of biology-focused work streams to protein-structure prediction performance.",
         "cat": "Research & Architecture",
         "subtype": "CASP",
         "tags": [
@@ -210,7 +312,7 @@
     {
         "id": "Claude_Gaslighting",
         "title": "Claude Sonnet Analysis Research",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "A discourse analysis of a frontier model’s shift toward unsolicited clinical framing across versions, measured from its own outputs.",
         "cat": "Research & Architecture",
         "subtype": "CLAUDE GASLIGHTING",
         "tags": [
@@ -224,7 +326,7 @@
     {
         "id": "Claude_Gaslighting",
         "title": "NLP Evaluation of AI Safety Guardrails Research",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "An NLP evaluation of AI safety guardrails, measuring how a model’s well-intended interventions can themselves produce user harm.",
         "cat": "Research & Architecture",
         "subtype": "CLAUDE GASLIGHTING",
         "tags": [
@@ -240,7 +342,7 @@
     {
         "id": "Credit_Fairness",
         "title": "Credit Fairness Audit",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "A fair-lending simulation that audits a credit-approval policy for disparate impact, with an explainability framework over each decision.",
         "cat": "Research & Architecture",
         "subtype": "CREDIT FAIRNESS",
         "tags": [
@@ -254,7 +356,7 @@
     {
         "id": "Dasher_Test_Simulation",
         "title": "Agent-Based RL for Gig Adaptations Research",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "An agent-based reinforcement-learning simulation of how gig workers adapt their behavior to different incentive structures and conditions.",
         "cat": "Research & Architecture",
         "subtype": "DASHER TEST SIMULATION",
         "tags": [
@@ -269,7 +371,7 @@
     {
         "id": "Dasher_Test_Simulation",
         "title": "Worker Adaptation Simulation",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "A simulation of gig-worker adaptation, modeling behavioral response to changing incentives and environmental factors.",
         "cat": "Research & Architecture",
         "subtype": "DASHER TEST SIMULATION",
         "tags": [
@@ -300,7 +402,7 @@
     {
         "id": "Dimensionality_of_Psychopathy",
         "title": "Dimensionality of Psychopathy Research",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "A clinical research argument for treating psychopathy as a dimensional construct, accounting for individual heterogeneity and prognostic variation.",
         "cat": "Research & Architecture",
         "subtype": "DIMENSIONALITY OF PSYCHOPATHY",
         "tags": [
@@ -314,7 +416,7 @@
     {
         "id": "Email_Personalization",
         "title": "AI-Driven Email Personalization Pipeline Research",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "A pipeline for tailoring AI-generated outbound email to each recipient using behavioral and profile signals.",
         "cat": "Research & Architecture",
         "subtype": "EMAIL PERSONALIZATION",
         "tags": [
@@ -328,7 +430,7 @@
     {
         "id": "Evolutionary_Bases_of_Emotion",
         "title": "Evolutionary Bases of Emotion Research",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "Theoretical clinical research on the evolutionary foundations of emotional and cognitive processing.",
         "cat": "Research & Architecture",
         "subtype": "EVOLUTIONARY BASES OF EMOTION",
         "tags": [
@@ -342,7 +444,7 @@
     {
         "id": "False_Memories",
         "title": "Cognitive Malleability & False Memories Research",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "Clinical and theoretical research on false memories and the reconstructive nature of human recall.",
         "cat": "Research & Architecture",
         "subtype": "FALSE MEMORIES",
         "tags": [
@@ -356,7 +458,7 @@
     {
         "id": "Feature_Impact_Analysis",
         "title": "A/B Feature Impact Analysis Research",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "An experimental-design walkthrough for measuring the impact of a product feature, covering A/B structure, metrics, and inference.",
         "cat": "Research & Architecture",
         "subtype": "FEATURE IMPACT ANALYSIS",
         "tags": [
@@ -371,7 +473,7 @@
     {
         "id": "Feature_Impact_Analysis",
         "title": "Statistical Power Analysis",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "A statistical power analysis for feature experiments, sizing tests to detect a meaningful effect with controlled error rates.",
         "cat": "Research & Architecture",
         "subtype": "FEATURE IMPACT ANALYSIS",
         "tags": [
@@ -386,7 +488,7 @@
     {
         "id": "Financial_Data_Collection",
         "title": "Financial Data Collection Logistics Research",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "A data-collection protocol assembling question-answer pairs from SEC filings across graded complexity tiers for financial NLP.",
         "cat": "Research & Architecture",
         "subtype": "FINANCIAL DATA COLLECTION",
         "tags": [
@@ -400,7 +502,7 @@
     {
         "id": "Forevue",
         "title": "Forevue Platform Architecture Research",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "A business and architecture plan for a behavioral-intelligence layer that surfaces risk patterns earlier in law-enforcement hiring.",
         "cat": "Research & Architecture",
         "subtype": "FOREVUE",
         "tags": [
@@ -535,7 +637,7 @@
     {
         "id": "Managing_Organizational_Transformation",
         "title": "Structural Dynamics in The Enterprise's Keeper Organization",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "A case study in product-led organizational transformation, tracing how a data-product strategy drove outsized revenue growth.",
         "cat": "Research & Architecture",
         "subtype": "MANAGING ORGANIZATIONAL TRANSFORMATION",
         "tags": [
@@ -562,7 +664,7 @@
     {
         "id": "MCA_Account_Analysis",
         "title": "MCA Multi-Modal Threat Telemetry",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "A multi-modal telemetry analysis of account behavior for early threat and risk detection.",
         "cat": "Research & Architecture",
         "subtype": "MCA ACCOUNT ANALYSIS",
         "tags": [
@@ -577,7 +679,7 @@
     {
         "id": "Meta_Minor_Safety",
         "title": "Multi-Signal Safety Detection | portfolio",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "Multi-signal minor-safety detection that corroborates behavioral, network, and linguistic signals before enforcement, mapping detection confidence to the scope of action.",
         "cat": "Research & Architecture",
         "subtype": "META MINOR SAFETY",
         "tags": [
@@ -609,7 +711,7 @@
     {
         "id": "Payment_Retries",
         "title": "Payment Retry Optimization - Heather T. Leffew",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "A payment-retry optimization framework combining historical analysis, simulation, and production-ready fallback logic to recover failed transactions.",
         "cat": "Research & Architecture",
         "subtype": "PAYMENT RETRIES",
         "tags": [
@@ -636,7 +738,7 @@
     {
         "id": "Phone_LTR",
         "title": "Ordinal Learning to Rank",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "An ordinal learning-to-rank approach to selecting the best contact phone number, treating reachability as a ranking rather than a binary label.",
         "cat": "Research & Architecture",
         "subtype": "PHONE LTR",
         "tags": [
@@ -651,7 +753,7 @@
     {
         "id": "Phone_LTR",
         "title": "Measuring Reachability - Heather T. Leffew",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "A psychometrics-informed framework for measuring contact reachability, ranking candidate phone numbers by likelihood of a successful connection.",
         "cat": "Research & Architecture",
         "subtype": "PHONE LTR",
         "tags": [
@@ -665,7 +767,7 @@
     {
         "id": "Police_Hiring",
         "title": "Clinical Documentation Automation Research",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "An adverse-impact audit of pre-employment psychological evaluation practices, testing for racially or ethnically disparate outcomes in hiring.",
         "cat": "Research & Architecture",
         "subtype": "POLICE HIRING",
         "tags": [
@@ -680,7 +782,7 @@
     {
         "id": "Post-Asimovian_Framework",
         "title": "Post-Asimovian Framework: CMDP Alignment",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "An alignment framework that decouples safety constraints from preference optimization and conditions constraint strength on a linguistic read of context, formalized as a constrained Markov decision process.",
         "cat": "Research & Architecture",
         "subtype": "POST-ASIMOVIAN FRAMEWORK",
         "tags": [
@@ -695,7 +797,7 @@
     {
         "id": "Proprietary_Talent_Intelligence",
         "title": "Macroeconomic Talent Intelligence",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "A strategic recommendation to replace a third-party talent platform with a proprietary talent-intelligence system built on recommendation-system methods.",
         "cat": "Research & Architecture",
         "subtype": "PROPRIETARY TALENT INTELLIGENCE",
         "tags": [
@@ -780,7 +882,7 @@
     {
         "id": "Social-Emotional_Islamist_Radicalization",
         "title": "AI Anthropology & Policy Execution",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "An analysis of the social-emotional and socialization dynamics that underlie radicalization, framed for policy application.",
         "cat": "Research & Architecture",
         "subtype": "SOCIAL-EMOTIONAL ISLAMIST RADICALIZATION",
         "tags": [
@@ -794,7 +896,7 @@
     {
         "id": "Spokeo_Agentic_Mesh",
         "title": "Agentic Routing: DEAD SIGNAL Architecture",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "An autonomous agentic-mesh architecture that replaces fixed multi-layer pipelines with cooperating agents for entity discovery and resolution.",
         "cat": "Spokeo",
         "subtype": "SPOKEO AGENTIC MESH",
         "tags": [
@@ -825,7 +927,7 @@
     {
         "id": "Spokeo_Constitutional_AI",
         "title": "Compliance Architecture for High-Stakes AI Products | portfolio",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "A compliance architecture for high-stakes AI products that enforces constitutional constraints and measurement at the inference layer rather than through disclaimers.",
         "cat": "Spokeo",
         "subtype": "SPOKEO CONSTITUTIONAL AI",
         "tags": [
@@ -853,7 +955,7 @@
     {
         "id": "Spokeo_ER_Persistence_vs_Retrieval_for_Resolution",
         "title": "Enterprise Entity Resolution Pipeline â€” Heather Leffew, PhD",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "A technical and economic comparison of persistence-based and retrieval-based architectures for large-scale entity resolution.",
         "cat": "Spokeo",
         "subtype": "SPOKEO ER PERSISTENCE VS RETRIEVAL FOR RESOLUTION",
         "tags": [
@@ -909,7 +1011,7 @@
     {
         "id": "Spokeo_Social_Identity_Layer",
         "title": "Identity Attribute Quality Scoring | Heather Leffew",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "An identity-attribute quality-scoring layer with exploratory analysis and batch constraints, built on a columnar compute environment over object storage.",
         "cat": "Spokeo",
         "subtype": "SPOKEO SOCIAL IDENTITY LAYER",
         "tags": [
@@ -982,7 +1084,7 @@
     {
         "id": "Talent_Intelligence",
         "title": "Netflix Enterprise Talent Intelligence",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "An enterprise talent-intelligence dashboard that synthesizes labor-market and skills signals into a single decision surface.",
         "cat": "Research & Architecture",
         "subtype": "TALENT INTELLIGENCE",
         "tags": [
@@ -996,7 +1098,7 @@
     {
         "id": "Talent_Intelligence",
         "title": "Synthetic Talent Pipeline Case Study",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "A synthetic talent-pipeline case study, generating realistic candidate data to prototype talent-intelligence models without exposing real records.",
         "cat": "Research & Architecture",
         "subtype": "TALENT INTELLIGENCE",
         "tags": [
@@ -1010,7 +1112,7 @@
     {
         "id": "Talent_Intelligence",
         "title": "Talent Market Intelligence | portfolio",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "A talent-market-intelligence analysis that turns external labor-market signals into hiring and workforce strategy.",
         "cat": "Research & Architecture",
         "subtype": "TALENT INTELLIGENCE",
         "tags": [
@@ -1024,7 +1126,7 @@
     {
         "id": "Telecom_Chatbot",
         "title": "Telecom NLP & RAG Architecture",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "An enterprise-scale design guide for a telecom support chatbot built on NLP and retrieval-augmented generation.",
         "cat": "Research & Architecture",
         "subtype": "TELECOM CHATBOT",
         "tags": [
@@ -1071,7 +1173,7 @@
     {
         "id": "UX_Principles_LiveStreamed_Violence",
         "title": "Cognitive Engineering & UX",
-        "desc": "Interactive mathematical telemetry simulator and architectural case study.",
+        "desc": "An analysis of UX and platform-design principles for preventing the livestreaming of mass-violence attacks.",
         "cat": "Research & Architecture",
         "subtype": "UX PRINCIPLES LIVESTREAMED VIOLENCE",
         "tags": [

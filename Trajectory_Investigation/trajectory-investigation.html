@@ -113,6 +113,23 @@
           padding-right: 12px;
           color: var(--obsidian);
       }
+
+      /* Primary call-to-action button for an interactive demo (shared component) */
+      .demo-cta-wrap { grid-column: 2 / 4; margin: 2.5em 0 1em 0; }
+      .demo-cta {
+          display: inline-block; font-family: var(--font-mono); font-size: 13px;
+          letter-spacing: 0.18em; text-transform: uppercase; color: var(--flare);
+          background: var(--phthalo-lift); border: 1px solid var(--phthalo-lift);
+          padding: 18px 34px; text-decoration: none; border-radius: 0 !important;
+          transition: background 0.25s, color 0.25s;
+      }
+      .demo-cta:hover { background: transparent; color: var(--phthalo-lift); }
+      .band--paper .demo-cta { color: #fff; background: var(--ink-blue); border-color: var(--ink-blue); }
+      .band--paper .demo-cta:hover { background: transparent; color: var(--ink-blue); }
+      .demo-cta-note {
+          font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em;
+          text-transform: uppercase; color: var(--tungsten); margin-top: 14px;
+      }
     </style>
 </head>
 
@@ -174,7 +191,7 @@
 </section>
 
 <!-- SECTION 2: From cohort to case -->
-<section class="band band--dark" data-spine="From cohort to case" data-section="From cohort to case">
+<section class="band band--paper" data-spine="From cohort to case" data-section="From cohort to case">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">From cohort to case</h2>
 <p>A platform&#39;s Trust &amp; Safety analytics organization runs two kinds of work that look superficially similar and are methodologically opposite. Cohort analytics estimates population behavior: what fraction of users encounter a given category of content, how long the average session lasts, where the rate of policy violations is rising. The questions are about distributions; the answers are statistical; the unit of analysis is the population. Per-user investigation does the inverse. It takes one account, often surfaced because automated systems flagged it for human review, and asks what specifically happened on this account, in what order, and what the trajectory implies about risk and intent.</p>
@@ -191,35 +208,35 @@
 <p>For each user of interest, the engine slices the timeline six ways and runs the full analytical suite on each slice independently. The slices overlap deliberately, and that overlap is the source of the methodology&#39;s diagnostic power.</p>
 <p><div class="figure reveal"><div class="frame"><svg height="auto" style="max-width: 900px;" viewBox="0 0 900 380" width="100%" xmlns="http://www.w3.org/2000/svg">
 <!-- Timeline axis -->
-<line opacity="0.5" stroke="var(--tungsten)" stroke-width="1" x1="80" x2="820" y1="320" y2="320"></line>
-<text fill="var(--tungsten)" font-family="'JetBrains Mono', monospace" font-size="9" letter-spacing="2" x="80" y="345">EARLIEST OBSERVATION</text>
-<text fill="var(--tungsten)" font-family="'JetBrains Mono', monospace" font-size="9" letter-spacing="2" text-anchor="end" x="820" y="345">LATEST OBSERVATION</text>
+<line opacity="0.5" stroke="#A1A1A6" stroke-width="1" x1="80" x2="820" y1="320" y2="320"></line>
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="9" letter-spacing="2" x="80" y="345">EARLIEST OBSERVATION</text>
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="9" letter-spacing="2" text-anchor="end" x="820" y="345">LATEST OBSERVATION</text>
 <!-- Consolidated -->
-<rect fill="var(--phthalo-lift)" fill-opacity="0.18" height="22" stroke="var(--phthalo-lift)" stroke-width="1" width="740" x="80" y="50"></rect>
-<text fill="var(--platinum)" font-family="'JetBrains Mono', monospace" font-size="11" text-anchor="middle" x="450" y="65">Consolidated  ·  full window</text>
+<rect fill="#3866A0" fill-opacity="0.18" height="22" stroke="#3866A0" stroke-width="1" width="740" x="80" y="50"></rect>
+<text fill="#F5F5F7" font-family="'JetBrains Mono', monospace" font-size="11" text-anchor="middle" x="450" y="65">Consolidated  ·  full window</text>
 <!-- Early Tertile -->
-<rect fill="var(--phthalo-lift)" fill-opacity="0.30" height="22" stroke="var(--phthalo-lift)" stroke-width="1" width="247" x="80" y="90"></rect>
-<text fill="var(--platinum)" font-family="'JetBrains Mono', monospace" font-size="11" text-anchor="middle" x="203" y="105">Early Tertile</text>
+<rect fill="#3866A0" fill-opacity="0.30" height="22" stroke="#3866A0" stroke-width="1" width="247" x="80" y="90"></rect>
+<text fill="#F5F5F7" font-family="'JetBrains Mono', monospace" font-size="11" text-anchor="middle" x="203" y="105">Early Tertile</text>
 <!-- Mid Tertile -->
-<rect fill="var(--phthalo-lift)" fill-opacity="0.30" height="22" stroke="var(--phthalo-lift)" stroke-width="1" width="247" x="327" y="90"></rect>
-<text fill="var(--platinum)" font-family="'JetBrains Mono', monospace" font-size="11" text-anchor="middle" x="450" y="105">Mid Tertile</text>
+<rect fill="#3866A0" fill-opacity="0.30" height="22" stroke="#3866A0" stroke-width="1" width="247" x="327" y="90"></rect>
+<text fill="#F5F5F7" font-family="'JetBrains Mono', monospace" font-size="11" text-anchor="middle" x="450" y="105">Mid Tertile</text>
 <!-- Late Tertile -->
-<rect fill="var(--alizarin)" fill-opacity="0.28" height="22" stroke="var(--alizarin)" stroke-width="1" width="246" x="574" y="90"></rect>
-<text fill="var(--platinum)" font-family="'JetBrains Mono', monospace" font-size="11" text-anchor="middle" x="697" y="105">Late Tertile</text>
+<rect fill="#7A1626" fill-opacity="0.28" height="22" stroke="#7A1626" stroke-width="1" width="246" x="574" y="90"></rect>
+<text fill="#F5F5F7" font-family="'JetBrains Mono', monospace" font-size="11" text-anchor="middle" x="697" y="105">Late Tertile</text>
 <!-- First 25 -->
-<rect fill="var(--hansa)" fill-opacity="0.4" height="22" stroke="var(--hansa)" stroke-width="1" width="50" x="80" y="170"></rect>
-<text fill="var(--tungsten)" font-family="'JetBrains Mono', monospace" font-size="10" x="148" y="185">First 25</text>
+<rect fill="#DBA844" fill-opacity="0.4" height="22" stroke="#DBA844" stroke-width="1" width="50" x="80" y="170"></rect>
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="10" x="148" y="185">First 25</text>
 <!-- Last 25 -->
-<rect fill="var(--hansa)" fill-opacity="0.4" height="22" stroke="var(--hansa)" stroke-width="1" width="50" x="770" y="170"></rect>
-<text fill="var(--tungsten)" font-family="'JetBrains Mono', monospace" font-size="10" text-anchor="end" x="763" y="185">Last 25</text>
+<rect fill="#DBA844" fill-opacity="0.4" height="22" stroke="#DBA844" stroke-width="1" width="50" x="770" y="170"></rect>
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="10" text-anchor="end" x="763" y="185">Last 25</text>
 <!-- Annotation pointers -->
-<line opacity="0.6" stroke="var(--hansa)" stroke-dasharray="2 3" stroke-width="0.5" x1="105" x2="105" y1="200" y2="240"></line>
-<line opacity="0.6" stroke="var(--hansa)" stroke-dasharray="2 3" stroke-width="0.5" x1="795" x2="795" y1="200" y2="240"></line>
-<text fill="var(--tungsten)" font-family="'Lora', serif" font-size="11" font-style="italic" text-anchor="middle" x="105" y="258">arrival behavior</text>
-<text fill="var(--tungsten)" font-family="'Lora', serif" font-size="11" font-style="italic" text-anchor="middle" x="795" y="258">behavior pre-flag</text>
+<line opacity="0.6" stroke="#DBA844" stroke-dasharray="2 3" stroke-width="0.5" x1="105" x2="105" y1="200" y2="240"></line>
+<line opacity="0.6" stroke="#DBA844" stroke-dasharray="2 3" stroke-width="0.5" x1="795" x2="795" y1="200" y2="240"></line>
+<text fill="#A1A1A6" font-family="'Lora', serif" font-size="11" font-style="italic" text-anchor="middle" x="105" y="258">arrival behavior</text>
+<text fill="#A1A1A6" font-family="'Lora', serif" font-size="11" font-style="italic" text-anchor="middle" x="795" y="258">behavior pre-flag</text>
 <!-- Center divider lines for tertiles -->
-<line opacity="0.3" stroke="var(--tungsten)" stroke-dasharray="2 3" stroke-width="0.5" x1="327" x2="327" y1="115" y2="320"></line>
-<line opacity="0.3" stroke="var(--tungsten)" stroke-dasharray="2 3" stroke-width="0.5" x1="574" x2="574" y1="115" y2="320"></line>
+<line opacity="0.3" stroke="#A1A1A6" stroke-dasharray="2 3" stroke-width="0.5" x1="327" x2="327" y1="115" y2="320"></line>
+<line opacity="0.3" stroke="#A1A1A6" stroke-dasharray="2 3" stroke-width="0.5" x1="574" x2="574" y1="115" y2="320"></line>
 </svg></div></div></p>
 <p>FIG. 01 The six temporal slices applied to each user of interest. The three tertiles partition the full window for trajectory inference; the First 25 and Last 25 insets anchor the boundaries so arrival behavior is directly comparable to pre-flag behavior.</p>
 <p>The Consolidated slice gives the baseline distribution: the user&#39;s overall content profile across the full observation window. The three tertile slices partition that window into thirds, which is the minimum granularity at which trajectory direction (decelerating, stable, accelerating) becomes statistically legible. The First 25 and Last 25 insets anchor the boundaries: the first twenty-five observations capture how the user behaved on arrival, and the last twenty-five capture how the account was behaving immediately before the flagging event that triggered the investigation. Comparing those two boundary samples directly is often the single most diagnostic move in the entire analysis. A user whose arrival behavior and pre-flag behavior look the same is a different finding than a user whose pre-flag behavior is qualitatively divergent from how they began.</p>
@@ -229,7 +246,7 @@
 </section>
 
 <!-- SECTION 4: Why no single signal is enough -->
-<section class="band band--dark" data-spine="Why no single signal" data-section="Why no single signal is enough">
+<section class="band band--paper" data-spine="Why no single signal" data-section="Why no single signal is enough">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">Why no single signal is enough</h2>
 <p>Each slice receives the full analytical suite from the upstream engine: time series of policy events, view source distribution, sentiment polarity, n-gram frequency, topic clusters, collocation graphs, NLTK-derived language features, and word clouds. The reason the engine emits all of these for every slice rather than picking one or two is that each axis has known failure modes, and those failure modes are mostly orthogonal. Two signals from different axes pointing in the same direction is a much stronger inference than either signal alone.</p>
@@ -255,7 +272,7 @@
 </section>
 
 <!-- SECTION 6: The investigation as input -->
-<section class="band band--ink" data-spine="The investigation as" data-section="The investigation as input">
+<section class="band band--paper" data-spine="The investigation as" data-section="The investigation as input">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">The investigation as input</h2>
 <p>The methodology produces structured reports, not enforcement decisions. The reports feed downstream review processes that combine the analytical output with judgments about context, intent, vulnerability, and proportionate response. An investigation report can support an account-removal decision, an escalation to a child-safety team, a referral to law enforcement, a moderator briefing for a category-level policy adjustment, or a conclusion that the flagged behavior was a false positive that the investigation has now disconfirmed. The methodology is designed to support all five outcomes equally.</p>
@@ -291,8 +308,7 @@
 <!-- INJECTED SCRIPTS -->
 <script src="interactive_0.js" defer></script>
 
-<!-- GLOBAL CHROME -->
-<!-- Need relative pathing adjustment based on actual file depth, defaulting to root pathing for now -->
+<!-- GLOBAL CHROME (order per about.html: cinematic -> chrome -> institutional) -->
 <script src="../design_system/js/cinematic_engine_v3.js" defer></script>
 <script src="../design_system/js/global_chrome.js" defer></script>
 <script src="../design_system/js/institutional.js" defer></script>

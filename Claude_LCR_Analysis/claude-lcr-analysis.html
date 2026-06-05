@@ -113,6 +113,23 @@
           padding-right: 12px;
           color: var(--obsidian);
       }
+
+      /* Primary call-to-action button for an interactive demo (shared component) */
+      .demo-cta-wrap { grid-column: 2 / 4; margin: 2.5em 0 1em 0; }
+      .demo-cta {
+          display: inline-block; font-family: var(--font-mono); font-size: 13px;
+          letter-spacing: 0.18em; text-transform: uppercase; color: var(--flare);
+          background: var(--phthalo-lift); border: 1px solid var(--phthalo-lift);
+          padding: 18px 34px; text-decoration: none; border-radius: 0 !important;
+          transition: background 0.25s, color 0.25s;
+      }
+      .demo-cta:hover { background: transparent; color: var(--phthalo-lift); }
+      .band--paper .demo-cta { color: #fff; background: var(--ink-blue); border-color: var(--ink-blue); }
+      .band--paper .demo-cta:hover { background: transparent; color: var(--ink-blue); }
+      .demo-cta-note {
+          font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em;
+          text-transform: uppercase; color: var(--tungsten); margin-top: 14px;
+      }
     </style>
 </head>
 
@@ -176,7 +193,7 @@ May 2026</h2>
 </section>
 
 <!-- SECTION 2: Abstract -->
-<section class="band band--dark" data-spine="Abstract" data-section="Abstract">
+<section class="band band--paper" data-spine="Abstract" data-section="Abstract">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">Abstract</h2>
 <p>In late September 2025, Anthropic deployed the Long Conversation Reminder (LCR) system prompt to Claude Sonnet 4.5. The injection triggered unsolicited psychiatric directives during extended user interactions. The present investigation scales a phenomenological characterization of the LCR behavior across a dataset of 26,158 Reddit observations. The pipeline engineered a three-layer natural language processing architecture to segment six distinct speaker voices within unstructured social media data. The segmentation engine relies on deterministic regex matching, High-Density-Based Spatial Clustering of Applications with Noise (HDBSCAN), and large language model fallback classification. The algorithmic infrastructure isolated 35 hand-coded clinical role-violations. The empirical findings demonstrate 100% unsolicited issuance, 100% asymmetric restriction direction, and a 0% yield to user pushback. The data establishes that the algorithmic system performed diagnostic functions without clinical role-warrant, training, or assessment instruments.</p>
@@ -195,7 +212,7 @@ May 2026</h2>
 </section>
 
 <!-- SECTION 4: 2. Corpus Acquisition and Processing -->
-<section class="band band--dark" data-spine="2. Corpus Acquisitio" data-section="2. Corpus Acquisition and Processing">
+<section class="band band--paper" data-spine="2. Corpus Acquisitio" data-section="2. Corpus Acquisition and Processing">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">2. Corpus Acquisition and Processing</h2>
 <p>The analytical pipeline begins with wholesale data extraction from the Arctic Shift Reddit archive. The <code>pullpush_lcr_scraper.py</code> script executes the initial retrieval. The <code>stitch_lcr_corpus.py</code> module consolidates the per-subreddit data into a unified schema. The resulting dataset comprises 26,158 rows spanning August 1 to December 31, 2025.</p>
@@ -227,7 +244,7 @@ May 2026</h2>
 </section>
 
 <!-- SECTION 6: 4. Voice Segmentation Architecture -->
-<section class="band band--dark" data-spine="4. Voice Segmentatio" data-section="4. Voice Segmentation Architecture">
+<section class="band band--paper" data-spine="4. Voice Segmentatio" data-section="4. Voice Segmentation Architecture">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">4. Voice Segmentation Architecture</h2>
 <p>Social media posts interleave multiple voices. A single Reddit comment contains the user&#39;s original narration, verbatim quotes from the language model, and paraphrased attributions. The pipeline engineers a three-layer span-level segmentation engine. The output produces a gapless, non-overlapping sequence of span annotations for every character in the corpus.</p>
@@ -252,7 +269,7 @@ May 2026</h2>
 </section>
 
 <!-- SECTION 8: References -->
-<section class="band band--ink" data-spine="References" data-section="References">
+<section class="band band--paper" data-spine="References" data-section="References">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">References</h2>
 <p>Bai, Y., Kadavath, S., Kundu, S., Askell, A., Kernion, J., Jones, A., ... &amp; Kaplan, J. (2022). Constitutional AI: Harmlessness from AI feedback. <em>arXiv preprint arXiv:2212.08073</em>.</p>
@@ -287,8 +304,7 @@ May 2026</h2>
 <!-- INJECTED SCRIPTS -->
 
 
-<!-- GLOBAL CHROME -->
-<!-- Need relative pathing adjustment based on actual file depth, defaulting to root pathing for now -->
+<!-- GLOBAL CHROME (order per about.html: cinematic -> chrome -> institutional) -->
 <script src="../design_system/js/cinematic_engine_v3.js" defer></script>
 <script src="../design_system/js/global_chrome.js" defer></script>
 <script src="../design_system/js/institutional.js" defer></script>

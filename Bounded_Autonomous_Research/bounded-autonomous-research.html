@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{TITLE}} | Dr. Heather Leffew</title>
+    <title>Evaluation-Gated Autonomous Heuristic Discovery | Dr. Heather Leffew</title>
     <!-- Design System: tokens load via @import inside institutional.css -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js" defer></script>
@@ -13,7 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js" defer></script>
-    <link rel="stylesheet" href="../portfolio_deploy/design_system/assets/css/institutional.css">
+    <link rel="stylesheet" href="../design_system/assets/css/institutional.css">
     <style>
       /* Editorial Layout for reading column */
       .markdown-body { 
@@ -133,7 +133,7 @@
     </style>
 </head>
 
-<body data-category="{{CATEGORY}}" data-title="{{SHORT_TITLE}}">
+<body data-category="AI Evaluation & Safety" data-title="Bounded_Autonomous_Research">
 
 <!-- Reading progress -->
 <div id="progress"></div>
@@ -155,21 +155,23 @@
     <div class="grid">
      <div>
       <div class="meta-row">
-        <span class="bracket">{{FORMAT}}</span>
+        <span class="bracket">ESSAY</span>
         <span class="sep">/</span>
-        <span>{{CATEGORY}}</span>
+        <span>AI Evaluation & Safety</span>
         <span class="sep">/</span>
-        <span>{{SUBCATEGORY}}</span>
+        <span>Agentic & Experience Evaluation</span>
       </div>
 
-      <h1>{{HEADLINE}}</h1>
+      <h1>Evaluation-Gated Autonomous Heuristic Discovery</h1>
 
       <p class="abstract">
-        {{ABSTRACT}}
+        Letting an agent improve a retrieval system is only safe when every change it proposes is scored against a held-out metric before it ships. This is a bounded discovery loop: skill-based routing for token efficiency, unified entity evidence instead of siloed lookups, and learning-to-rank versioning where automated evaluation gates each deployment.
       </p>
 
       <div class="byline">
-        {{BYLINE}}
+        
+          <div>Read Time<strong>10 min read</strong></div>
+        
       </div>
      </div>
      <div></div>
@@ -178,7 +180,65 @@
 </section>
 
 <!-- INJECTED MARKDOWN CONTENT -->
-{{CONTENT}}
+
+<!-- SECTION 1: Abstract -->
+<section class="band band--paper" data-spine="Abstract" data-section="Abstract">
+  <div class="col-wide markdown-body">
+    <h2 class="is-chapter">Abstract</h2>
+<p class="has-dropcap col-with-sidenotes">An agent that can rewrite the ranking logic of a retrieval system is useful and dangerous in the same breath, because the change it proposes might improve the metric it optimizes while degrading a property no one was watching. The discipline that makes the loop safe is evaluation gating, where every candidate heuristic is scored against a held-out metric before it is allowed to ship. This essay describes a bounded autonomous heuristic-discovery loop with three properties: skill-based routing that keeps token cost proportional to the task, unified entity evidence that replaces siloed lookups, and learning-to-rank versioning where an automated evaluation decides whether a new version advances or is rejected.</p>
+
+  </div>
+</section>
+
+<!-- SECTION 2: Token efficiency through skill-based routing. -->
+<section class="band band--paper" data-spine="Token efficiency thr" data-section="Token efficiency through skill-based routing.">
+  <div class="col-wide markdown-body">
+    <h2 class="is-chapter">Token efficiency through skill-based routing.</h2>
+<p>An agent that loads every available tool schema on every pass pays a token cost that scales with the size of the system rather than with the difficulty of the task, which makes the loop expensive precisely as it grows. Skill-based routing constrains the agent to consume only the tool schemas required for the immediate pass, so the cost of a step tracks what the step actually needs. Routing by skill is also an evaluation convenience, because a step with a known tool surface produces a trace that is far easier to score for efficiency and failure than a step with the whole arsenal in context.</p>
+
+  </div>
+</section>
+
+<!-- SECTION 3: Unified entity evidence instead of siloed lookups. -->
+<section class="band band--paper" data-spine="Unified entity evide" data-section="Unified entity evidence instead of siloed lookups.">
+  <div class="col-wide markdown-body">
+    <h2 class="is-chapter">Unified entity evidence instead of siloed lookups.</h2>
+<p>A retrieval system that keeps each identifier in its own legacy bucket treats name, phone, email, and location as separate search lanes, which fragments the evidence that a person-centric query should combine. The loop transitions to a unified person-centric search that treats those identifiers as joint evidence about a single entity, so resolution draws on the full signal rather than one lane at a time. Unifying the evidence raises retrieval quality and, more to the point here, gives the evaluation a coherent target, since a resolution decision over joint evidence can be scored against a ground-truth identity in a way that a single-lane lookup cannot.</p>
+
+  </div>
+</section>
+
+<!-- SECTION 4: Learning-to-rank versioning, gated by automated evaluation. -->
+<section class="band band--paper" data-spine="Learning-to-rank ver" data-section="Learning-to-rank versioning, gated by automated evaluation.">
+  <div class="col-wide markdown-body">
+    <h2 class="is-chapter">Learning-to-rank versioning, gated by automated evaluation.</h2>
+<p>The heart of the loop is a learning-to-rank versioning history, where each iteration of the entity-resolution logic is a tracked version with measured outcomes rather than an untracked edit. A version advances only when an automated evaluation shows it improving the ranking metric on held-out data, and the history records the failures alongside the wins so that a regression in a later version can be traced to the decision that introduced it. The earliest version is a synthetic smoke test that confirms the pipeline mechanics end to end on a bounded sample, which establishes the harness before any real ranking quality is claimed, and automated threshold selection is carried forward from that baseline so later versions inherit a measured cutoff rather than a guessed one.</p>
+
+  </div>
+</section>
+
+<!-- SECTION 5: The boundary is what makes autonomy auditable. -->
+<section class="band band--paper" data-spine="The boundary is what" data-section="The boundary is what makes autonomy auditable.">
+  <div class="col-wide markdown-body">
+    <h2 class="is-chapter">The boundary is what makes autonomy auditable.</h2>
+<p>Autonomy is acceptable here only because the agent operates inside a fixed harness with a finite, auditable space of changes, so the loop can search aggressively while the set of things it can alter stays bounded and reviewable. Pairing a bounded change space with an automated evaluation on every version is what converts an open-ended optimization into a controlled experiment, where the agent proposes and the metric disposes. The throughline matches the rest of this body of work, since the move is to let the system act, observe the outputs each action produces, score them against a held-out measure, and allow only the changes the measurement justifies.</p>
+
+  </div>
+</section>
+
+<!-- SECTION 6: References -->
+<section class="band band--paper" data-spine="References" data-section="References">
+  <div class="col-wide markdown-body">
+    <h2 class="is-chapter">References</h2>
+<ul>
+<li>Liu, T.-Y. (2009). <em>Learning to rank for information retrieval</em>. Foundations and Trends in Information Retrieval.</li>
+<li>Schick, T., et al. (2023). <em>Toolformer: Language models can teach themselves to use tools</em>. arXiv.</li>
+<li>Yao, S., et al. (2023). <em>ReAct: Synergizing reasoning and acting in language models</em>. arXiv.</li>
+</ul>
+
+  </div>
+</section>
+
 
 <!-- BACK MATTER: Related Works -->
 <section class="band band--dark back-matter" data-spine="Research Graph" data-section="Research Graph">
@@ -201,11 +261,11 @@
 </section>
 
 <!-- INJECTED SCRIPTS -->
-{{SCRIPTS}}
+
 
 <!-- GLOBAL CHROME (order per about.html: cinematic -> chrome -> institutional) -->
-<script src="../portfolio_deploy/design_system/js/cinematic_engine_v3.js" defer></script>
-<script src="../portfolio_deploy/design_system/js/global_chrome.js" defer></script>
-<script src="../portfolio_deploy/design_system/js/institutional.js" defer></script>
+<script src="../design_system/js/cinematic_engine_v3.js" defer></script>
+<script src="../design_system/js/global_chrome.js" defer></script>
+<script src="../design_system/js/institutional.js" defer></script>
 </body>
 </html>
