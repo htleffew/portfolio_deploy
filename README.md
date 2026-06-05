@@ -5,41 +5,55 @@ This repository (`portfolio_deploy`) acts as the strict production environment a
 ## Live Domain
 **[https://htleffew.github.io/portfolio_deploy/](https://htleffew.github.io/portfolio_deploy/)**
 
-## Deployed Architecture (current ground truth)
-
-Every HTML page in this repository links exactly two files from `design_system/`:
+## Deployed Architecture
 
 ```
 design_system/
-├── tokens.css                    ← Design tokens (colors, fonts, spacing, motion).
-│                                    @imported from global.css; do not link directly.
+├── tokens.css                          ← Design tokens (colors, fonts, spacing, motion).
+│                                         @imported by institutional.css + global_chrome.css;
+│                                         do not link directly.
 ├── css/
-│   └── global.css                ← Single deployed stylesheet (linked by every page).
-│                                    Contains every component rule, band system,
-│                                    typography, preloader, search overlay, etc.
+│   └── global_chrome.css               ← App shell stylesheet. @imports tokens.css. Defines
+│                                         #topnav, #progress, .site-foot, #search-overlay,
+│                                         #grain film grain, #preloader, #glCanvas, .scroll-cue,
+│                                         .ambient, .atmosphere fixed-position chrome.
+├── assets/
+│   └── css/
+│       └── institutional.css           ← Single stylesheet linked by every page.
+│                                         @imports tokens.css and global_chrome.css.
+│                                         Defines .band mode system, .col-wide grid, .reveal
+│                                         scroll transitions, .figure, .data-table, .sn
+│                                         sidenotes, .has-dropcap, plus page-specific extracts
+│                                         kept for widget compatibility.
 └── js/
-    └── global.js                 ← Single deployed runtime. Hosts:
-                                     • Cinematic WebGL engine (Three.js starfield + nodes)
-                                     • Global chrome injector (topnav, footer, search, grain)
-                                     • Lenis smooth scroll bootstrap
-                                     • GSAP hero reveal cascade + ScrollTriggers
-                                     • SPA router (WebGL shader transitions between pages)
-                                     • Related-works engine
-                                     • 3D tilt parallax (delegated)
+    ├── cinematic_engine_v3.js          ← Three.js starfield + interactive node network behind
+    │                                     every page. Self-bootstrapping: injects #glCanvas,
+    │                                     dynamically loads three.min.js if needed.
+    ├── global_chrome.js                ← App shell injector + SPA router. Injects topnav,
+    │                                     footer, search overlay, film grain. Owns the
+    │                                     HyperShader WebGL page-transition router. Provides
+    │                                     scoped window.onReady / window.onLoad helpers and
+    │                                     the 3D tilt parallax via event delegation.
+    └── institutional.js                ← Reveal orchestration + reading engine. Lenis smooth
+                                          scroll, GSAP hero reveal cascade, ScrollTrigger band
+                                          reveals, scroll-progress bar, nav-mode toggle, spine
+                                          row generation, sidenotes Tufte layout.
 ```
 
-**Every HTML page needs exactly two links:**
+**Every HTML page needs exactly one stylesheet link and three script tags (in this order):**
 
 ```html
-<link rel="stylesheet" href="design_system/css/global.css">
-<script src="design_system/js/global.js" defer></script>
+<link rel="stylesheet" href="design_system/assets/css/institutional.css">
+<script src="design_system/js/cinematic_engine_v3.js" defer></script>
+<script src="design_system/js/global_chrome.js" defer></script>
+<script src="design_system/js/institutional.js" defer></script>
 ```
 
-GSAP, ScrollTrigger, Lenis, SplitType, simplex-noise, and HyperShader are loaded on demand by `global.js` itself; pages may add them as `<script defer>` tags but are not required to. Google Fonts load via `@import` inside `tokens.css`, which is `@import`ed by `global.css`; no separate `<link>` tag required.
+Case-study pages prefix every path with `../`. Tokens cascade automatically through the `@import` chain inside `institutional.css`; Google Fonts load via that chain too — no separate `<link>` tag required. GSAP, ScrollTrigger, Lenis, SplitType, simplex-noise, and HyperShader are loaded on demand by `institutional.js` and `global_chrome.js`; pages may add them as `<script defer>` tags but are not required to.
 
-## Planned (not yet deployed) refactor
+## Legacy files
 
-The directories `design_system/assets/css/` and `design_system/assets/js/institutional.js` reflect a planned migration to a thinner `institutional.css` / `institutional.js` split. That refactor was scoped but never deployed: the `institutional.css` file does not exist on disk, and no page in the repository links `institutional.js`. The README previously documented the planned state as if it were current; this section now reconciles the two. Reactivate the refactor only by building `institutional.css` from scratch and migrating every page link in one batch.
+`design_system/css/global.css` and `design_system/js/global.js` are the predecessors of the current architecture. They contain the same logical content combined into single files. The current architecture splits them by responsibility for maintainability; no page links them anymore. Delete after one deploy cycle of stable behavior on the new files.
 
 ## Adding a New Case Study
 
