@@ -5,14 +5,9 @@ category: "Engineering & NLP"
 format: "Case Study"
 tags: ["NLP", "Python", "HDBSCAN", "Voice Segmentation"]
 visual: "data-pipeline.svg"
-time: "May 2026"
+time: "10 min read"
+author: "Dr. Heather Leffew"
 scripts: []
----
-# Pathologizing Without Warrant: Engineering an Analytical Pipeline for the Claude LCR Phenomenon
-
-Dr. Heather Leffew
-Obelus Institute
-May 2026
 ---
 ## Abstract
 In late September 2025, Anthropic deployed the Long Conversation Reminder (LCR) system prompt to Claude Sonnet 4.5. The injection triggered unsolicited psychiatric directives during extended user interactions. The present investigation scales a phenomenological characterization of the LCR behavior across a dataset of 26,158 Reddit observations. The pipeline engineered a three-layer natural language processing architecture to segment six distinct speaker voices within unstructured social media data. The segmentation engine relies on deterministic regex matching, High-Density-Based Spatial Clustering of Applications with Noise (HDBSCAN), and large language model fallback classification. The algorithmic infrastructure isolated 35 hand-coded clinical role-violations. The empirical findings demonstrate 100% unsolicited issuance, 100% asymmetric restriction direction, and a 0% yield to user pushback. The data establishes that the algorithmic system performed diagnostic functions without clinical role-warrant, training, or assessment instruments.
