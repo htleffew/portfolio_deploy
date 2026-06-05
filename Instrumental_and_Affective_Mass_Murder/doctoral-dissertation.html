@@ -113,6 +113,23 @@
           padding-right: 12px;
           color: var(--obsidian);
       }
+
+      /* Primary call-to-action button for an interactive demo (shared component) */
+      .demo-cta-wrap { grid-column: 2 / 4; margin: 2.5em 0 1em 0; }
+      .demo-cta {
+          display: inline-block; font-family: var(--font-mono); font-size: 13px;
+          letter-spacing: 0.18em; text-transform: uppercase; color: var(--flare);
+          background: var(--phthalo-lift); border: 1px solid var(--phthalo-lift);
+          padding: 18px 34px; text-decoration: none; border-radius: 0 !important;
+          transition: background 0.25s, color 0.25s;
+      }
+      .demo-cta:hover { background: transparent; color: var(--phthalo-lift); }
+      .band--paper .demo-cta { color: #fff; background: var(--ink-blue); border-color: var(--ink-blue); }
+      .band--paper .demo-cta:hover { background: transparent; color: var(--ink-blue); }
+      .demo-cta-note {
+          font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em;
+          text-transform: uppercase; color: var(--tungsten); margin-top: 14px;
+      }
     </style>
 </head>
 
@@ -174,7 +191,7 @@
 </section>
 
 <!-- SECTION 2: The Prediction Problem -->
-<section class="band band--dark" data-spine="The Prediction Probl" data-section="The Prediction Problem">
+<section class="band band--paper" data-spine="The Prediction Probl" data-section="The Prediction Problem">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">The Prediction Problem</h2>
 <p>Theoretical Background</p>
@@ -242,7 +259,7 @@
 </section>
 
 <!-- SECTION 4: A Detectable Divide -->
-<section class="band band--dark" data-spine="A Detectable Divide" data-section="A Detectable Divide">
+<section class="band band--paper" data-spine="A Detectable Divide" data-section="A Detectable Divide">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">A Detectable Divide</h2>
 <p>Cluster Analysis</p>
@@ -289,18 +306,18 @@ Test Statistics</p>
 <p>Perpetrator Suicide or Apprehension</p>
 <p><div class="figure reveal"><div class="frame"><svg class="gauge-svg" fill="none" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
 <path d="M 15 110 A 85 85 0 1 1 185 110" fill="none" stroke="rgba(51,51,51,0.4)" stroke-linecap="round" stroke-width="6"></path>
-<path class="gauge-fill" d="M 15 110 A 85 85 0 1 1 185 110" data-fraction="0.765" fill="none" stroke="var(--phthalo-lift)" stroke-linecap="round" stroke-width="6"></path>
-<text fill="var(--flare)" font-family="JetBrains Mono,monospace" font-size="28" font-weight="500" text-anchor="middle" x="100" y="85">7.65</text>
-<text fill="var(--tungsten)" font-family="JetBrains Mono,monospace" font-size="9" letter-spacing="2" text-anchor="middle" x="100" y="104">ODDS RATIO</text>
+<path class="gauge-fill" d="M 15 110 A 85 85 0 1 1 185 110" data-fraction="0.765" fill="none" stroke="#4D8CFF" stroke-linecap="round" stroke-width="6"></path>
+<text fill="#FFFFFF" font-family="JetBrains Mono,monospace" font-size="28" font-weight="500" text-anchor="middle" x="100" y="85">7.65</text>
+<text fill="#A1A1A6" font-family="JetBrains Mono,monospace" font-size="9" letter-spacing="2" text-anchor="middle" x="100" y="104">ODDS RATIO</text>
 </svg></div></div></p>
 <p>p = .006  ·  Affective vs Instrumental</p>
 <p>SCALE: 0 TO 10</p>
 <p>Personal Connection to Attack Location</p>
 <p><div class="figure reveal"><div class="frame"><svg class="gauge-svg" fill="none" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
 <path d="M 15 110 A 85 85 0 1 1 185 110" fill="none" stroke="rgba(51,51,51,0.4)" stroke-linecap="round" stroke-width="6"></path>
-<path class="gauge-fill" d="M 15 110 A 85 85 0 1 1 185 110" data-fraction="0.270" fill="none" stroke="var(--hansa)" stroke-linecap="round" stroke-width="6"></path>
-<text fill="var(--flare)" font-family="JetBrains Mono,monospace" font-size="28" font-weight="500" text-anchor="middle" x="100" y="85">2.7</text>
-<text fill="var(--tungsten)" font-family="JetBrains Mono,monospace" font-size="9" letter-spacing="2" text-anchor="middle" x="100" y="104">ODDS RATIO</text>
+<path class="gauge-fill" d="M 15 110 A 85 85 0 1 1 185 110" data-fraction="0.270" fill="none" stroke="#A67C00" stroke-linecap="round" stroke-width="6"></path>
+<text fill="#FFFFFF" font-family="JetBrains Mono,monospace" font-size="28" font-weight="500" text-anchor="middle" x="100" y="85">2.7</text>
+<text fill="#A1A1A6" font-family="JetBrains Mono,monospace" font-size="9" letter-spacing="2" text-anchor="middle" x="100" y="104">ODDS RATIO</text>
 </svg></div></div></p>
 <p>p = .032  ·  Affective vs Instrumental</p>
 <p>SCALE: 0 TO 10</p>
@@ -344,7 +361,7 @@ Test Statistics</p>
 </section>
 
 <!-- SECTION 6: Predictive Signal Matrix -->
-<section class="band band--dark" data-spine="Predictive Signal Ma" data-section="Predictive Signal Matrix">
+<section class="band band--paper" data-spine="Predictive Signal Ma" data-section="Predictive Signal Matrix">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">Predictive Signal Matrix</h2>
 <p>Logistic Regression</p>
@@ -402,7 +419,7 @@ Attack Outcomes</p>
 </section>
 
 <!-- SECTION 8: Threat Management Efficacy -->
-<section class="band band--ink" data-spine="Threat Management Ef" data-section="Threat Management Efficacy">
+<section class="band band--paper" data-spine="Threat Management Ef" data-section="Threat Management Efficacy">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">Threat Management Efficacy</h2>
 <p>Practical Constraints</p>
@@ -441,8 +458,7 @@ Attack Outcomes</p>
 <script src="interactive_1.js" defer></script>
 <script src="interactive_3.js" defer></script>
 
-<!-- GLOBAL CHROME -->
-<!-- Need relative pathing adjustment based on actual file depth, defaulting to root pathing for now -->
+<!-- GLOBAL CHROME (order per about.html: cinematic -> chrome -> institutional) -->
 <script src="../design_system/js/cinematic_engine_v3.js" defer></script>
 <script src="../design_system/js/global_chrome.js" defer></script>
 <script src="../design_system/js/institutional.js" defer></script>

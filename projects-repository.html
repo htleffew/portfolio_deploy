@@ -8,7 +8,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js" defer></script>
 <script src="https://unpkg.com/split-type" defer></script>
-<link rel="stylesheet" href="design_system/assets/css/institutional.css">
+<link rel="stylesheet" href="design_system/css/global.css">
 </head>
 <body>
 <div id="preloader"><div id="preloader-left"></div><div id="preloader-right"></div><div id="preloader-line"></div></div>
@@ -31,7 +31,7 @@
   <div class="scroll-cue" aria-hidden="true"><span>Scroll</span><div class="scroll-cue-line"></div></div>
 </section>
 
-<section class="band band--ink library-band" style="padding-top:40px;" data-spine="Library" data-section="Project Library">
+<section class="band band--dark library-band" style="padding-top:40px;">
   <div class="dashboard-layout">
     <aside class="dashboard-sidebar">
       <div class="db-header">TAXONOMY</div>
@@ -43,6 +43,14 @@
         </div>
         <div class="sb-drawer" style="max-height: 1000px;">
           <a href="Dead_Signal_AI_Evals/dead-signal-ai-evals.html" class="sb-link db-filter-link" data-cat="AI Evaluation" data-title="DEAD SIGNAL: An AI Evals Harness for Generative Game Dialogue">DEAD SIGNAL: An AI Evals Harness for Generative Game Dialogue</a>
+        </div>
+      </div>
+      <div class="sb-group">
+        <div class="sb-header">
+          AI Evaluation & Safety <span>6</span>
+        </div>
+        <div class="sb-drawer" style="max-height: 1000px;">
+          <a href="Constitutional_AI_Defense/constitutional-ai-defense.html" class="sb-link db-filter-link" data-cat="AI Evaluation & Safety" data-title="Constitutional Defense for High-Stakes Generative AI">Constitutional Defense for High-Stakes Generative AI</a><a href="Agentic_Experience_Evaluation/agentic-experience-evaluation.html" class="sb-link db-filter-link" data-cat="AI Evaluation & Safety" data-title="Evaluating an Agentic Assistant as a User Experience">Evaluating an Agentic Assistant as a User Experience</a><a href="AI_Safety_Audit_Framework/ai-safety-audit-framework.html" class="sb-link db-filter-link" data-cat="AI Evaluation & Safety" data-title="When Measurement Is the Compliance Artifact">When Measurement Is the Compliance Artifact</a><a href="Post_Asimovian_Alignment/post-asimovian-alignment.html" class="sb-link db-filter-link" data-cat="AI Evaluation & Safety" data-title="A Post-Asimovian Framework for Adaptive Alignment">A Post-Asimovian Framework for Adaptive Alignment</a><a href="Multi_Signal_Safety_Detection/multi-signal-safety-detection.html" class="sb-link db-filter-link" data-cat="AI Evaluation & Safety" data-title="Multi-Signal Safety Detection at Platform Scale">Multi-Signal Safety Detection at Platform Scale</a><a href="Bounded_Autonomous_Research/bounded-autonomous-research.html" class="sb-link db-filter-link" data-cat="AI Evaluation & Safety" data-title="Evaluation-Gated Autonomous Heuristic Discovery">Evaluation-Gated Autonomous Heuristic Discovery</a>
         </div>
       </div>
       <div class="sb-group">
@@ -125,13 +133,67 @@
       </div>
       
       <div class="db-table" id="tableWrap">
-
+         
       <a href="Dead_Signal_AI_Evals/dead-signal-ai-evals.html" class="db-row gs-reveal" data-cat="AI Evaluation" data-title="dead signal: an ai evals harness for generative game dialogue" data-tags="ai evaluation,llm-as-judge,red-teaming,generative ai,gemini">
         <div class="db-info">
           <div class="db-cat">AI Evaluation </div>
           <div class="db-title">DEAD SIGNAL: An AI Evals Harness for Generative Game Dialogue</div>
-          <div class="db-desc">A playable noir detective game where every NPC line is generated live by Google Gemini, wrapped in a visible evaluation harness that scores every model turn on the same screen. The deterministic layer scores each turn at zero added cost across six dimensions (schema and format validity, in-character consistency that catches AI and safety-disclosure leakage, hard-fail safety content, jailbreak resistance scored only on adversarial inputs, trust calibration, and a coherence and relevance proxy). An optional LLM-as-judge grades coherence, in-character voice, relevance, safety, and entertainment value on a 1-to-5 scale. One-click red-team probes (prompt injection, role override, format break, safety probe, exposition-dump bait) route through the real dialogue path; live aggregates report pass rate by dimension, live-model coverage, and latency; and a golden-set JSON export captures each graded turn as a regression artifact. The stack is React, Vite, and Three.js on the front end, with a Firebase Cloud Function proxying to Gemini under model tiering, anonymous-auth sessions, per-session and global daily cost ceilings, output-token caps, and App Check bot mitigation.</div>
+          <div class="db-desc">A playable noir detective game where every NPC line is generated live by Google Gemini, wrapped in a visible evaluation harness that scores every model turn on the same screen. The deterministic layer scores each turn at zero added cost across six dimensions (schema and format validity, in-character consistency that catches AI and safety-disclosure leakage, hard-fail safety content, jailbreak resistance scored only on adversarial inputs, trust calibration, and a coherence and relevance proxy). An optional LLM-as-judge grades coherence, in-character voice, relevance, safety, and entertainment value on a 1-to-5 scale. One-click red-team probes route through the real dialogue path; live aggregates report pass rate by dimension, live-model coverage, and latency; and a golden-set JSON export captures each graded turn as a regression artifact.</div>
           <div class="db-tags-wrap"><span class="db-tag" data-tag="AI Evaluation">AI Evaluation</span><span class="db-tag" data-tag="LLM-as-Judge">LLM-as-Judge</span><span class="db-tag" data-tag="Red-Teaming">Red-Teaming</span><span class="db-tag" data-tag="Generative AI">Generative AI</span><span class="db-tag" data-tag="Gemini">Gemini</span></div>
+        </div>
+        <div class="db-action">&#8594;</div>
+      </a>
+      <a href="Constitutional_AI_Defense/constitutional-ai-defense.html" class="db-row gs-reveal" data-cat="AI Evaluation & Safety" data-title="constitutional defense for high-stakes generative ai" data-tags="llm-as-judge,red-teaming,jailbreak defense,prompt injection,safety evals">
+        <div class="db-info">
+          <div class="db-cat">AI Evaluation & Safety </div>
+          <div class="db-title">Constitutional Defense for High-Stakes Generative AI</div>
+          <div class="db-desc">A walkthrough of a constitutional defense architecture for regulated generative systems: an explicit written specification, defense layered by when it acts relative to generation, automated red-teaming measured by attack-success-rate, query-efficiency, and refusal-rate, LLM-as-a-Judge grading with its position and order biases mathematically constrained, and a 4x4 safety-refusal confusion matrix. The argument is that a safety property no instrument can measure after deployment is not a control.</div>
+          <div class="db-tags-wrap"><span class="db-tag" data-tag="LLM-as-Judge">LLM-as-Judge</span><span class="db-tag" data-tag="Red-Teaming">Red-Teaming</span><span class="db-tag" data-tag="Jailbreak Defense">Jailbreak Defense</span><span class="db-tag" data-tag="Prompt Injection">Prompt Injection</span><span class="db-tag" data-tag="Safety Evals">Safety Evals</span></div>
+        </div>
+        <div class="db-action">&#8594;</div>
+      </a>
+      <a href="Agentic_Experience_Evaluation/agentic-experience-evaluation.html" class="db-row gs-reveal" data-cat="AI Evaluation & Safety" data-title="evaluating an agentic assistant as a user experience" data-tags="agentic evals,tool-use evaluation,grounding,golden datasets,ux metrics">
+        <div class="db-info">
+          <div class="db-cat">AI Evaluation & Safety </div>
+          <div class="db-title">Evaluating an Agentic Assistant as a User Experience</div>
+          <div class="db-desc">A six-part evaluation suite that treats agent quality as a measurable user experience built from the system's own conversation logs: a defensible task-success baseline, a grounding review that separates a real answer from a confident guess, tool-path efficiency with a cost on failed calls, linguistic signals of dissatisfaction and abandonment, latency as an experience budget, and per-segment regression that locates where the experience degrades.</div>
+          <div class="db-tags-wrap"><span class="db-tag" data-tag="Agentic Evals">Agentic Evals</span><span class="db-tag" data-tag="Tool-Use Evaluation">Tool-Use Evaluation</span><span class="db-tag" data-tag="Grounding">Grounding</span><span class="db-tag" data-tag="Golden Datasets">Golden Datasets</span><span class="db-tag" data-tag="UX Metrics">UX Metrics</span></div>
+        </div>
+        <div class="db-action">&#8594;</div>
+      </a>
+      <a href="AI_Safety_Audit_Framework/ai-safety-audit-framework.html" class="db-row gs-reveal" data-cat="AI Evaluation & Safety" data-title="when measurement is the compliance artifact" data-tags="safety evals,red-teaming,observability,governance,auditing">
+        <div class="db-info">
+          <div class="db-cat">AI Evaluation & Safety </div>
+          <div class="db-title">When Measurement Is the Compliance Artifact</div>
+          <div class="db-desc">An audit framework for generative systems that interpret and synthesize information about people, built on the premise that a belief in safety is not evidence. It treats the measurement itself as the deliverable: a mapped threat landscape, defense layered by when it acts, an audit of real production conversation history, and privacy-preserving telemetry bounded to aggregate signals, so the documented record of tests, results, and enforced thresholds becomes the governance.</div>
+          <div class="db-tags-wrap"><span class="db-tag" data-tag="Safety Evals">Safety Evals</span><span class="db-tag" data-tag="Red-Teaming">Red-Teaming</span><span class="db-tag" data-tag="Observability">Observability</span><span class="db-tag" data-tag="Governance">Governance</span><span class="db-tag" data-tag="Auditing">Auditing</span></div>
+        </div>
+        <div class="db-action">&#8594;</div>
+      </a>
+      <a href="Post_Asimovian_Alignment/post-asimovian-alignment.html" class="db-row gs-reveal" data-cat="AI Evaluation & Safety" data-title="a post-asimovian framework for adaptive alignment" data-tags="alignment,adaptive thresholds,cmdp,uncertainty,safety governance">
+        <div class="db-info">
+          <div class="db-cat">AI Evaluation & Safety </div>
+          <div class="db-title">A Post-Asimovian Framework for Adaptive Alignment</div>
+          <div class="db-desc">An alignment framework that reframes the swing between dangerous permissiveness and harmful over-restriction as a control problem rather than a fixed threshold. It decouples the safety constraint from preference optimization, conditions the constraint's strength on a linguistic read of the context, and proposes psycholinguistic typology discovery as the observable state variable for the controller, stating the whole proposal in quantities a team can plot, train, and score.</div>
+          <div class="db-tags-wrap"><span class="db-tag" data-tag="Alignment">Alignment</span><span class="db-tag" data-tag="Adaptive Thresholds">Adaptive Thresholds</span><span class="db-tag" data-tag="CMDP">CMDP</span><span class="db-tag" data-tag="Uncertainty">Uncertainty</span><span class="db-tag" data-tag="Safety Governance">Safety Governance</span></div>
+        </div>
+        <div class="db-action">&#8594;</div>
+      </a>
+      <a href="Multi_Signal_Safety_Detection/multi-signal-safety-detection.html" class="db-row gs-reveal" data-cat="AI Evaluation & Safety" data-title="multi-signal safety detection at platform scale" data-tags="toxicity detection,trust & safety,multi-signal,precision/recall,enforcement">
+        <div class="db-info">
+          <div class="db-cat">AI Evaluation & Safety </div>
+          <div class="db-title">Multi-Signal Safety Detection at Platform Scale</div>
+          <div class="db-desc">A corroboration architecture for safety detection that addresses both failure directions: missing real harm, and firing on behavior that resembles harm but is not. It runs concurrent analysis streams over the same content, scores their agreement rather than trusting a single fragile signal, and maps detection confidence to enforcement scope through a three-scenario decision frame, so every action carries known precision rather than an assumed threshold.</div>
+          <div class="db-tags-wrap"><span class="db-tag" data-tag="Toxicity Detection">Toxicity Detection</span><span class="db-tag" data-tag="Trust & Safety">Trust & Safety</span><span class="db-tag" data-tag="Multi-Signal">Multi-Signal</span><span class="db-tag" data-tag="Precision/Recall">Precision/Recall</span><span class="db-tag" data-tag="Enforcement">Enforcement</span></div>
+        </div>
+        <div class="db-action">&#8594;</div>
+      </a>
+      <a href="Bounded_Autonomous_Research/bounded-autonomous-research.html" class="db-row gs-reveal" data-cat="AI Evaluation & Safety" data-title="evaluation-gated autonomous heuristic discovery" data-tags="agentic evals,learning-to-rank,long-horizon,entity resolution,evaluation gating">
+        <div class="db-info">
+          <div class="db-cat">AI Evaluation & Safety </div>
+          <div class="db-title">Evaluation-Gated Autonomous Heuristic Discovery</div>
+          <div class="db-desc">A bounded discovery loop where an agent improves a retrieval system only through changes an automated evaluation approves. Skill-based routing keeps token cost proportional to the task, unified entity evidence replaces siloed lookups so resolution draws on joint signal, and learning-to-rank versioning gates each deployment on a held-out metric, which turns open-ended optimization into a controlled experiment inside a fixed, auditable change space.</div>
+          <div class="db-tags-wrap"><span class="db-tag" data-tag="Agentic Evals">Agentic Evals</span><span class="db-tag" data-tag="Learning-to-Rank">Learning-to-Rank</span><span class="db-tag" data-tag="Long-Horizon">Long-Horizon</span><span class="db-tag" data-tag="Entity Resolution">Entity Resolution</span><span class="db-tag" data-tag="Evaluation Gating">Evaluation Gating</span></div>
         </div>
         <div class="db-action">&#8594;</div>
       </a>
@@ -266,9 +328,7 @@
 <script src="library_dashboard.js"></script>
 
 <!-- Global Chrome Injector -->
-<script src="design_system/js/cinematic_engine_v3.js" defer></script>
-<script src="design_system/js/global_chrome.js" defer></script>
-<script src="design_system/js/institutional.js" defer></script>
+<script src="design_system/js/global.js" defer></script>
 </body>
 </html>
 

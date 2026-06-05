@@ -113,6 +113,23 @@
           padding-right: 12px;
           color: var(--obsidian);
       }
+
+      /* Primary call-to-action button for an interactive demo (shared component) */
+      .demo-cta-wrap { grid-column: 2 / 4; margin: 2.5em 0 1em 0; }
+      .demo-cta {
+          display: inline-block; font-family: var(--font-mono); font-size: 13px;
+          letter-spacing: 0.18em; text-transform: uppercase; color: var(--flare);
+          background: var(--phthalo-lift); border: 1px solid var(--phthalo-lift);
+          padding: 18px 34px; text-decoration: none; border-radius: 0 !important;
+          transition: background 0.25s, color 0.25s;
+      }
+      .demo-cta:hover { background: transparent; color: var(--phthalo-lift); }
+      .band--paper .demo-cta { color: #fff; background: var(--ink-blue); border-color: var(--ink-blue); }
+      .band--paper .demo-cta:hover { background: transparent; color: var(--ink-blue); }
+      .demo-cta-note {
+          font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em;
+          text-transform: uppercase; color: var(--tungsten); margin-top: 14px;
+      }
     </style>
 </head>
 
@@ -174,7 +191,7 @@
 </section>
 
 <!-- SECTION 2: Clarifying Offender Types -->
-<section class="band band--dark" data-spine="Clarifying Offender " data-section="Clarifying Offender Types">
+<section class="band band--paper" data-spine="Clarifying Offender " data-section="Clarifying Offender Types">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">Clarifying Offender Types</h2>
 <p>Despite only one to three percent of the male population and less than one percent of the female population being psychopathic (Pitchford, 2001), the repetitious antisocial behavior associated with psychopathy is disproportionately harmful to communities, and the fiscal societal costs of psychopathy annually exceed those of substance abuse, obesity, smoking, and other severe persistent mental disorders such as schizophrenia (Kiehl &amp; Hoffman, 2011). Psychopathic antisociality (PA) is associated with greater recidivism, increased crime severity and variety (Porter &amp; Woodworth, 2006), and elevated rates of violent (Blais, Solodukhin, &amp; Forth, 2014) and sexual offenses (Hawes, Boccaccini, &amp; Murrie, 2013).</p>
@@ -196,7 +213,7 @@
 </section>
 
 <!-- SECTION 4: Neuropsychological Contributions -->
-<section class="band band--dark" data-spine="Neuropsychological C" data-section="Neuropsychological Contributions">
+<section class="band band--paper" data-spine="Neuropsychological C" data-section="Neuropsychological Contributions">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">Neuropsychological Contributions</h2>
 <p>Abnormal autonomic activity supports the commission of violent acts, but it has to be paired with some form of affective dysfunction to result in violent offending. PA individuals show insensitivity to punishment and reduced capacity for fear (Lykken, 1995). NPA individuals who engage in ImO do not show this same pattern (Porter &amp; Woodworth, 2006). PA individuals are unusually immune to cognitive errors arising from negative emotional stimuli, and they show under-activation in brain regions that integrate factual and emotional information (Müller et al., 2008).</p>
@@ -219,7 +236,7 @@
 </section>
 
 <!-- SECTION 6: Neurochemistry -->
-<section class="band band--dark" data-spine="Neurochemistry" data-section="Neurochemistry">
+<section class="band band--paper" data-spine="Neurochemistry" data-section="Neurochemistry">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">Neurochemistry</h2>
 <p>The primary neurochemicals implicated in violent behavior are cortisol, testosterone, serotonin, and oxytocin. Cortisol potentiates fear, creates sensitivity to punishment, and initiates withdrawal behavior. Testosterone initiates approach behavior, reward sensitivity, and fear reduction. Serotonin is central to mood regulation.</p>
@@ -246,7 +263,7 @@
 </section>
 
 <!-- SECTION 8: Cortical vs Subcortical: A Summary -->
-<section class="band band--dark" data-spine="Cortical vs Subcorti" data-section="Cortical vs Subcortical: A Summary">
+<section class="band band--paper" data-spine="Cortical vs Subcorti" data-section="Cortical vs Subcortical: A Summary">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">Cortical vs Subcortical: A Summary</h2>
 <table>
@@ -353,7 +370,7 @@
 </section>
 
 <!-- SECTION 10: References -->
-<section class="band band--ink" data-spine="References" data-section="References">
+<section class="band band--paper" data-spine="References" data-section="References">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">References</h2>
 <p>Amen, D. G., Stubblefield, M., Carmichael, B., &amp; Thisted, R. (1996). Brain SPECT findings and aggressiveness. <em>Annals of Clinical Psychiatry, 8</em>(3), 129-137.</p>
@@ -445,8 +462,7 @@
 <!-- INJECTED SCRIPTS -->
 
 
-<!-- GLOBAL CHROME -->
-<!-- Need relative pathing adjustment based on actual file depth, defaulting to root pathing for now -->
+<!-- GLOBAL CHROME (order per about.html: cinematic -> chrome -> institutional) -->
 <script src="../design_system/js/cinematic_engine_v3.js" defer></script>
 <script src="../design_system/js/global_chrome.js" defer></script>
 <script src="../design_system/js/institutional.js" defer></script>

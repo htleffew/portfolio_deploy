@@ -17,6 +17,72 @@
         "visual": "<svg fill=\"none\" viewBox=\"0 0 600 600\"><defs><linearGradient id=\"ds-g\" x1=\"0\" x2=\"1\" y1=\"0\" y2=\"1\"><stop offset=\"0%\" stop-color=\"#3866A0\" stop-opacity=\"0.7\"/><stop offset=\"100%\" stop-color=\"#7A1626\" stop-opacity=\"0.5\"/></linearGradient></defs><line x1=\"110\" x2=\"110\" y1=\"420\" y2=\"300\" stroke=\"url(#ds-g)\" stroke-width=\"20\"/><line x1=\"180\" x2=\"180\" y1=\"420\" y2=\"220\" stroke=\"url(#ds-g)\" stroke-width=\"20\"/><line x1=\"250\" x2=\"250\" y1=\"420\" y2=\"160\" stroke=\"url(#ds-g)\" stroke-width=\"20\"/><line x1=\"320\" x2=\"320\" y1=\"420\" y2=\"260\" stroke=\"url(#ds-g)\" stroke-width=\"20\"/><line x1=\"390\" x2=\"390\" y1=\"420\" y2=\"190\" stroke=\"url(#ds-g)\" stroke-width=\"20\"/><line x1=\"460\" x2=\"460\" y1=\"420\" y2=\"140\" stroke=\"url(#ds-g)\" stroke-width=\"20\"/><line x1=\"80\" x2=\"500\" y1=\"420\" y2=\"420\" stroke=\"#A1A1A6\" stroke-width=\"0.7\" opacity=\"0.5\"/><circle cx=\"460\" cy=\"140\" r=\"6\" fill=\"#7A1626\"/></svg>"
     },
     {
+        "id": "Constitutional_AI_Defense",
+        "title": "Constitutional Defense for High-Stakes Generative AI",
+        "desc": "A walkthrough of a constitutional defense architecture for regulated generative systems: an explicit written specification, defense layered by when it acts relative to generation, automated red-teaming measured by attack-success-rate, query-efficiency, and refusal-rate, LLM-as-a-Judge grading with its position and order biases mathematically constrained, and a 4x4 safety-refusal confusion matrix. The argument is that a safety property no instrument can measure after deployment is not a control.",
+        "cat": "AI Evaluation & Safety",
+        "subtype": "ADVERSARIAL DEFENSE",
+        "tags": ["LLM-as-Judge", "Red-Teaming", "Jailbreak Defense", "Prompt Injection", "Safety Evals"],
+        "url": "Constitutional_AI_Defense/constitutional-ai-defense.html",
+        "time": "12 min read",
+        "visual": "<svg fill=\"none\" viewBox=\"0 0 600 600\"><rect x=\"150\" y=\"150\" width=\"300\" height=\"300\" stroke=\"#3866A0\" stroke-width=\"2\"/><rect x=\"215\" y=\"215\" width=\"170\" height=\"170\" stroke=\"#3866A0\" stroke-width=\"1\" opacity=\"0.6\"/><circle cx=\"300\" cy=\"300\" r=\"28\" fill=\"#7A1626\"/></svg>"
+    },
+    {
+        "id": "Agentic_Experience_Evaluation",
+        "title": "Evaluating an Agentic Assistant as a User Experience",
+        "desc": "A six-part evaluation suite that treats agent quality as a measurable user experience built from the system's own conversation logs: a defensible task-success baseline, a grounding review that separates a real answer from a confident guess, tool-path efficiency with a cost on failed calls, linguistic signals of dissatisfaction and abandonment, latency as an experience budget, and per-segment regression that locates where the experience degrades.",
+        "cat": "AI Evaluation & Safety",
+        "subtype": "AGENTIC EVALS",
+        "tags": ["Agentic Evals", "Tool-Use Evaluation", "Grounding", "Golden Datasets", "UX Metrics"],
+        "url": "Agentic_Experience_Evaluation/agentic-experience-evaluation.html",
+        "time": "11 min read",
+        "visual": "<svg fill=\"none\" viewBox=\"0 0 600 600\"><circle cx=\"150\" cy=\"300\" r=\"22\" fill=\"#3866A0\"/><circle cx=\"300\" cy=\"200\" r=\"22\" fill=\"#3866A0\"/><circle cx=\"300\" cy=\"400\" r=\"22\" fill=\"#3866A0\"/><circle cx=\"450\" cy=\"300\" r=\"28\" fill=\"#7A1626\"/><path d=\"M150 300 L300 200 L450 300 M150 300 L300 400 L450 300\" stroke=\"#A1A1A6\" stroke-width=\"1.5\" opacity=\"0.6\"/></svg>"
+    },
+    {
+        "id": "AI_Safety_Audit_Framework",
+        "title": "When Measurement Is the Compliance Artifact",
+        "desc": "An audit framework for generative systems that interpret and synthesize information about people, built on the premise that a belief in safety is not evidence. It treats the measurement itself as the deliverable: a mapped threat landscape, defense layered by when it acts, an audit of real production conversation history, and privacy-preserving telemetry bounded to aggregate signals, so the documented record of tests, results, and enforced thresholds becomes the governance.",
+        "cat": "AI Evaluation & Safety",
+        "subtype": "SAFETY AUDITING",
+        "tags": ["Safety Evals", "Red-Teaming", "Observability", "Governance", "Auditing"],
+        "url": "AI_Safety_Audit_Framework/ai-safety-audit-framework.html",
+        "time": "10 min read",
+        "visual": "<svg fill=\"none\" viewBox=\"0 0 600 600\"><rect x=\"140\" y=\"160\" width=\"320\" height=\"60\" stroke=\"#3866A0\" stroke-width=\"1.5\"/><rect x=\"140\" y=\"270\" width=\"320\" height=\"60\" stroke=\"#3866A0\" stroke-width=\"1.5\"/><rect x=\"140\" y=\"380\" width=\"320\" height=\"60\" stroke=\"#7A1626\" stroke-width=\"2\"/></svg>"
+    },
+    {
+        "id": "Post_Asimovian_Alignment",
+        "title": "A Post-Asimovian Framework for Adaptive Alignment",
+        "desc": "An alignment framework that reframes the swing between dangerous permissiveness and harmful over-restriction as a control problem rather than a fixed threshold. It decouples the safety constraint from preference optimization, conditions the constraint's strength on a linguistic read of the context, and proposes psycholinguistic typology discovery as the observable state variable for the controller, stating the whole proposal in quantities a team can plot, train, and score.",
+        "cat": "AI Evaluation & Safety",
+        "subtype": "ALIGNMENT GOVERNANCE",
+        "tags": ["Alignment", "Adaptive Thresholds", "CMDP", "Uncertainty", "Safety Governance"],
+        "url": "Post_Asimovian_Alignment/post-asimovian-alignment.html",
+        "time": "13 min read",
+        "visual": "<svg fill=\"none\" viewBox=\"0 0 600 600\"><path d=\"M120 440 C 220 440, 240 180, 300 180 C 360 180, 380 440, 480 440\" stroke=\"#3866A0\" stroke-width=\"2\"/><circle cx=\"300\" cy=\"180\" r=\"26\" fill=\"#7A1626\"/><line x1=\"120\" x2=\"480\" y1=\"440\" y2=\"440\" stroke=\"#A1A1A6\" stroke-width=\"0.7\" opacity=\"0.5\"/></svg>"
+    },
+    {
+        "id": "Multi_Signal_Safety_Detection",
+        "title": "Multi-Signal Safety Detection at Platform Scale",
+        "desc": "A corroboration architecture for safety detection that addresses both failure directions: missing real harm, and firing on behavior that resembles harm but is not. It runs concurrent analysis streams over the same content, scores their agreement rather than trusting a single fragile signal, and maps detection confidence to enforcement scope through a three-scenario decision frame, so every action carries known precision rather than an assumed threshold.",
+        "cat": "AI Evaluation & Safety",
+        "subtype": "DETECTION",
+        "tags": ["Toxicity Detection", "Trust & Safety", "Multi-Signal", "Precision/Recall", "Enforcement"],
+        "url": "Multi_Signal_Safety_Detection/multi-signal-safety-detection.html",
+        "time": "10 min read",
+        "visual": "<svg fill=\"none\" viewBox=\"0 0 600 600\"><circle cx=\"240\" cy=\"240\" r=\"90\" stroke=\"#3866A0\" stroke-width=\"1.5\" opacity=\"0.8\"/><circle cx=\"360\" cy=\"240\" r=\"90\" stroke=\"#3866A0\" stroke-width=\"1.5\" opacity=\"0.8\"/><circle cx=\"300\" cy=\"340\" r=\"90\" stroke=\"#3866A0\" stroke-width=\"1.5\" opacity=\"0.8\"/><circle cx=\"300\" cy=\"275\" r=\"22\" fill=\"#7A1626\"/></svg>"
+    },
+    {
+        "id": "Bounded_Autonomous_Research",
+        "title": "Evaluation-Gated Autonomous Heuristic Discovery",
+        "desc": "A bounded discovery loop where an agent improves a retrieval system only through changes an automated evaluation approves. Skill-based routing keeps token cost proportional to the task, unified entity evidence replaces siloed lookups so resolution draws on joint signal, and learning-to-rank versioning gates each deployment on a held-out metric, which turns open-ended optimization into a controlled experiment inside a fixed, auditable change space.",
+        "cat": "AI Evaluation & Safety",
+        "subtype": "AGENTIC EVALS",
+        "tags": ["Agentic Evals", "Learning-to-Rank", "Long-Horizon", "Entity Resolution", "Evaluation Gating"],
+        "url": "Bounded_Autonomous_Research/bounded-autonomous-research.html",
+        "time": "10 min read",
+        "visual": "<svg fill=\"none\" viewBox=\"0 0 600 600\"><circle cx=\"300\" cy=\"300\" r=\"150\" stroke=\"#3866A0\" stroke-width=\"1.5\"/><path d=\"M300 150 A150 150 0 0 1 450 300\" stroke=\"#7A1626\" stroke-width=\"3\"/><circle cx=\"450\" cy=\"300\" r=\"14\" fill=\"#7A1626\"/></svg>"
+    },
+    {
         "id": "Platform_Survival_Analytics",
         "title": "The Survival Function of Platform Integrity",
         "desc": "A Spark-scale Trust & Safety analytics engine built around a cross-domain reframe: the Kaplan-Meier estimator that biostatisticians use to model patient survival is the right tool to model how long a user session stays free of policy-violative content. The engine layers survival analysis, LDA topic modeling, VADER sentiment, and NetworkX co-occurrence into a four-module pipeline (orchestrator, text NLP, statistical, report generator) running on roughly 3,000 cores. The contribution is the methodological import (biostatistics to platform integrity) and the structured 12-section auto-report that makes investigations reproducible across cases.",

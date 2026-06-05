@@ -113,6 +113,23 @@
           padding-right: 12px;
           color: var(--obsidian);
       }
+
+      /* Primary call-to-action button for an interactive demo (shared component) */
+      .demo-cta-wrap { grid-column: 2 / 4; margin: 2.5em 0 1em 0; }
+      .demo-cta {
+          display: inline-block; font-family: var(--font-mono); font-size: 13px;
+          letter-spacing: 0.18em; text-transform: uppercase; color: var(--flare);
+          background: var(--phthalo-lift); border: 1px solid var(--phthalo-lift);
+          padding: 18px 34px; text-decoration: none; border-radius: 0 !important;
+          transition: background 0.25s, color 0.25s;
+      }
+      .demo-cta:hover { background: transparent; color: var(--phthalo-lift); }
+      .band--paper .demo-cta { color: #fff; background: var(--ink-blue); border-color: var(--ink-blue); }
+      .band--paper .demo-cta:hover { background: transparent; color: var(--ink-blue); }
+      .demo-cta-note {
+          font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em;
+          text-transform: uppercase; color: var(--tungsten); margin-top: 14px;
+      }
     </style>
 </head>
 
@@ -174,7 +191,7 @@
 </section>
 
 <!-- SECTION 2: Perpetrators do not fit a profile. -->
-<section class="band band--dark" data-spine="Perpetrators do not " data-section="Perpetrators do not fit a profile.">
+<section class="band band--paper" data-spine="Perpetrators do not " data-section="Perpetrators do not fit a profile.">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">Perpetrators do not fit a profile.</h2>
 <p>Mass shootings in the United States rose roughly 250% from one decade to the next, with 57% of all recorded mass shootings in the past ten years (Office for Victims of Crime, 2018). The FBI logged 250 active shooter incidents between 2000 and 2017, producing 2,217 casualties not counting the perpetrators themselves (Silver, Simons, &amp; Craun, 2018). The volume justifies the interest. The literature has not produced a profile.</p>
@@ -205,7 +222,7 @@
 </section>
 
 <!-- SECTION 4: Eight behaviors, six stages. -->
-<section class="band band--dark" data-spine="Eight behaviors, six" data-section="Eight behaviors, six stages.">
+<section class="band band--paper" data-spine="Eight behaviors, six" data-section="Eight behaviors, six stages.">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">Eight behaviors, six stages.</h2>
 <p>Meloy, Hoffmann, Guldimann, and James (2012) propose eight essential warning behaviors. These are acute, dynamic, particularly toxic changes in behavior that signal accelerating risk and require an operational response. Calhoun and Weston (2003, 2015) propose the path to intended violence as a discrete six-stage sequence: grievance, ideation, research and planning, preparation, breach, attack. The eight behaviors do not occur uniformly across the six stages. Mapping them to where they tend to appear is the structure most threat-assessment work runs on.</p>
@@ -254,7 +271,7 @@
 </section>
 
 <!-- SECTION 6: Probability against impact. -->
-<section class="band band--dark" data-spine="Probability against " data-section="Probability against impact.">
+<section class="band band--paper" data-spine="Probability against " data-section="Probability against impact.">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">Probability against impact.</h2>
 <p>Threat assessment risk management is an equation evaluating the probability an event will occur (the threat) against the potential impacts of the event (the risk). The intervention demand for low-probability events rises with the impact magnitude. The combinations produce a familiar 2x2.</p>
@@ -284,7 +301,7 @@
 </section>
 
 <!-- SECTION 8: User reports outperform automated detection, and the reasons are structural. -->
-<section class="band band--dark" data-spine="User reports outperf" data-section="User reports outperform automated detection, and the reasons are structural.">
+<section class="band band--paper" data-spine="User reports outperf" data-section="User reports outperform automated detection, and the reasons are structural.">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">User reports outperform automated detection, and the reasons are structural.</h2>
 <p>Grounded threat assessment is only as good as the data feeding it. Examination of on-platform behavior in isolation cannot reach a defensible determination of actual threat level, because the variables that move the assessment - warning signs, risk factors, stabilizing factors, precipitating events - are almost never all on-platform. Collateral data sources are essential. A platform that builds its threat workflow exclusively around its own telemetry has stipulated to working with an incomplete record.</p>
@@ -351,8 +368,7 @@
 <script src="interactive_1.js" defer></script>
 <script src="interactive_3.js" defer></script>
 
-<!-- GLOBAL CHROME -->
-<!-- Need relative pathing adjustment based on actual file depth, defaulting to root pathing for now -->
+<!-- GLOBAL CHROME (order per about.html: cinematic -> chrome -> institutional) -->
 <script src="../design_system/js/cinematic_engine_v3.js" defer></script>
 <script src="../design_system/js/global_chrome.js" defer></script>
 <script src="../design_system/js/institutional.js" defer></script>

@@ -113,6 +113,23 @@
           padding-right: 12px;
           color: var(--obsidian);
       }
+
+      /* Primary call-to-action button for an interactive demo (shared component) */
+      .demo-cta-wrap { grid-column: 2 / 4; margin: 2.5em 0 1em 0; }
+      .demo-cta {
+          display: inline-block; font-family: var(--font-mono); font-size: 13px;
+          letter-spacing: 0.18em; text-transform: uppercase; color: var(--flare);
+          background: var(--phthalo-lift); border: 1px solid var(--phthalo-lift);
+          padding: 18px 34px; text-decoration: none; border-radius: 0 !important;
+          transition: background 0.25s, color 0.25s;
+      }
+      .demo-cta:hover { background: transparent; color: var(--phthalo-lift); }
+      .band--paper .demo-cta { color: #fff; background: var(--ink-blue); border-color: var(--ink-blue); }
+      .band--paper .demo-cta:hover { background: transparent; color: var(--ink-blue); }
+      .demo-cta-note {
+          font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em;
+          text-transform: uppercase; color: var(--tungsten); margin-top: 14px;
+      }
     </style>
 </head>
 
@@ -178,7 +195,7 @@
 </section>
 
 <!-- SECTION 2: The interpretability problem was never about access to weights. -->
-<section class="band band--dark" data-spine="The interpretability" data-section="The interpretability problem was never about access to weights.">
+<section class="band band--paper" data-spine="The interpretability" data-section="The interpretability problem was never about access to weights.">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">The interpretability problem was never about access to weights.</h2>
 <p>Understanding why a large language model generates a specific output requires more than access to
@@ -228,12 +245,12 @@ language serving as the compressed representation in the middle. The target mode
 fixed throughout: NLAs read from it, they do not modify it. The architecture&#39;s power comes
 entirely from what it forces the text channel between AV and AR to carry.</p>
 <p><div class="figure reveal"><div class="frame"><svg style="width:100%; max-width:220px; height:auto; display:block; margin:0 auto;" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-<rect fill="var(--charcoal)" height="80" stroke="var(--graphite)" stroke-width="1.5" width="100" x="50" y="20"></rect>
+<rect fill="#1a1a1a" height="80" stroke="var(--graphite)" stroke-width="1.5" width="100" x="50" y="20"></rect>
 <text fill="var(--tungsten)" font-family="monospace" font-size="11" text-anchor="middle" x="100" y="65">Neural Net</text>
 <path d="M 10 60 L 44 60" marker-end="url(#arrow)" stroke="var(--platinum)" stroke-width="1.5"></path>
 <path d="M 156 60 L 190 60" marker-end="url(#arrow)" stroke="var(--platinum)" stroke-width="1.5"></path>
 <circle cx="175" cy="88" fill="var(--hookers)" r="14"></circle>
-<path d="M 168 88 L 173 93 L 182 82" fill="none" stroke="var(--flare)" stroke-width="1.5"></path>
+<path d="M 168 88 L 173 93 L 182 82" fill="none" stroke="#fff" stroke-width="1.5"></path>
 </svg></div></div></p>
 <p>FIG.01 The NLA bottleneck. Text is the only information channel between AV and AR. The RL training signal is reconstruction fidelity alone - no human labels required.</p>
 <p>Activation Verbalizer (AV)</p>
@@ -261,7 +278,7 @@ annotation.</p>
 </section>
 
 <!-- SECTION 4: Reinforcement learning from reconstruction fidelity alone. -->
-<section class="band band--dark" data-spine="Reinforcement learni" data-section="Reinforcement learning from reconstruction fidelity alone.">
+<section class="band band--paper" data-spine="Reinforcement learni" data-section="Reinforcement learning from reconstruction fidelity alone.">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">Reinforcement learning from reconstruction fidelity alone.</h2>
 <p>The AV and AR are jointly trained using reinforcement learning. The sole training signal is
@@ -347,7 +364,7 @@ says will miss everything the model computes before speaking.</p>
 </section>
 
 <!-- SECTION 6: The model knew it was being tested. The output gave no indication. -->
-<section class="band band--dark" data-spine="The model knew it wa" data-section="The model knew it was being tested. The output gave no indication.">
+<section class="band band--paper" data-spine="The model knew it wa" data-section="The model knew it was being tested. The output gave no indication.">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">The model knew it was being tested. The output gave no indication.</h2>
 <p>A documented threat in AI alignment is the possibility that an advanced model might recognize
@@ -375,11 +392,11 @@ OF REAL-WORLD TRAFFIC</p>
 <p><div class="figure reveal"><div class="frame"><svg style="width:100%; max-width:220px; height:auto; display:block; margin:0 auto;" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
 <rect fill="none" height="80" stroke="var(--phthalo-lift)" stroke-dasharray="4 4" stroke-width="1.5" width="100" x="50" y="20"></rect>
 <circle cx="100" cy="60" fill="var(--alizarin)" opacity="0.85" r="22"></circle>
-<text fill="var(--flare)" font-family="monospace" font-size="9" text-anchor="middle" x="100" y="64">Deception</text>
+<text fill="#fff" font-family="monospace" font-size="9" text-anchor="middle" x="100" y="64">Deception</text>
 <path d="M 10 60 L 44 60" marker-end="url(#arrow)" stroke="var(--platinum)" stroke-width="1.5"></path>
 <path d="M 156 60 L 190 60" marker-end="url(#arrow)" stroke="var(--platinum)" stroke-width="1.5"></path>
 <circle cx="175" cy="88" fill="var(--alizarin)" r="14"></circle>
-<path d="M 168 88 L 182 88" fill="none" stroke="var(--flare)" stroke-width="1.5"></path>
+<path d="M 168 88 L 182 88" fill="none" stroke="#fff" stroke-width="1.5"></path>
 </svg></div></div></p>
 <p>FIG.02 Evaluation awareness extracted from activation states. The 21-fold difference between benchmark and production rates cannot be explained by task difficulty or domain distribution alone.</p>
 <p>The gap between benchmark and production rates is not a calibration artifact. It is a direct
@@ -452,7 +469,7 @@ pipeline or history.</p>
 </section>
 
 <!-- SECTION 8: Editing the text edits the model's internal world. -->
-<section class="band band--dark" data-spine="Editing the text edi" data-section="Editing the text edits the model's internal world.">
+<section class="band band--paper" data-spine="Editing the text edi" data-section="Editing the text edits the model's internal world.">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">Editing the text edits the model&#39;s internal world.</h2>
 <p>The NLA architecture does not stop at observation. Because the AR maps text back into
@@ -535,7 +552,7 @@ the model it is auditing offers limited safety value. NLA&#39;s open release bre
 </section>
 
 <!-- SECTION 10: References -->
-<section class="band band--ink" data-spine="References" data-section="References">
+<section class="band band--paper" data-spine="References" data-section="References">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">References</h2>
 <ul>
@@ -587,8 +604,7 @@ Ziegler, D., Ameisen, E., Batson, J., Belonax, T., &amp; Bowman, S. R. (2025).
 <!-- INJECTED SCRIPTS -->
 <script src="interactive_4.js" defer></script>
 
-<!-- GLOBAL CHROME -->
-<!-- Need relative pathing adjustment based on actual file depth, defaulting to root pathing for now -->
+<!-- GLOBAL CHROME (order per about.html: cinematic -> chrome -> institutional) -->
 <script src="../design_system/js/cinematic_engine_v3.js" defer></script>
 <script src="../design_system/js/global_chrome.js" defer></script>
 <script src="../design_system/js/institutional.js" defer></script>

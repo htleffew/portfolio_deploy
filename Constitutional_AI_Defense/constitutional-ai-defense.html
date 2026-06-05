@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Constitutional Defense for High-Stakes Generative AI | Dr. Heather Leffew</title>
+    <!-- Design System: tokens load via @import inside institutional.css -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js" defer></script>
+    <link rel="stylesheet" href="../design_system/assets/css/institutional.css">
+    <style>
+      /* Editorial Layout for reading column */
+      .markdown-body { 
+          max-width: 65ch;
+          margin: 1.5rem auto 0 auto;
+          padding: 0 1.5rem;
+      }
+      .markdown-body > * {
+          /* OVERRIDE global.css centering to restore elegant flush-left alignment */
+          margin-left: 0 !important;
+          margin-right: 0 !important;
+          padding-left: 0 !important;
+          padding-right: 0 !important;
+          max-width: none !important;
+          text-align: left !important;
+      }
+      .markdown-body p { margin-bottom: 1.5em; font-size: 1.125rem; line-height: 1.8; color: var(--charcoal); }
+      
+      .markdown-body h2 {
+          margin-top: 2rem;
+          margin-bottom: 1.5rem;
+          font-family: var(--font-display);
+          font-weight: 600;
+          font-size: 2.2rem;
+          border-bottom: 1px solid var(--tungsten);
+          padding-bottom: 0.5rem !important;
+          color: var(--obsidian);
+      }
+      .markdown-body h3 {
+          margin-top: 2rem;
+          margin-bottom: 1rem;
+          font-family: var(--font-display);
+          font-size: 1.5rem;
+          color: var(--obsidian);
+      }
+      .markdown-body .eyebrow {
+          color: var(--phthalo-lift);
+          font-family: var(--font-mono);
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          margin-top: 1rem;
+          margin-bottom: -0.5rem; /* pull up near h2 */
+      }
+      
+      /* Override massive cinematic padding for article content sections */
+      section.band {
+          padding: 2rem 0 !important;
+      }
+      
+      /* Media Bleeds into the right gutter for editorial flair */
+      .markdown-body img, .markdown-body figure {
+          grid-column: 2 / 4; 
+          width: 100%;
+          max-width: 100%;
+          height: auto; 
+          display: block; 
+          margin: 3em 0; 
+          border-radius: 0 !important;
+          box-shadow: var(--shadow-card);
+      }
+      .markdown-body pre { 
+          grid-column: 1 / -1; /* Code blocks span full width */
+          padding: 2em; 
+          overflow-x: auto; 
+          background: var(--obsidian); 
+          border: 1px solid var(--brushed); 
+          margin: 3em 0; 
+          border-radius: 0 !important;
+      }
+      .markdown-body code { font-family: var(--font-mono); font-size: 0.85em; color: var(--phthalo-lift); }
+      .markdown-body pre code { color: var(--platinum); }
+      
+      .markdown-body blockquote {
+          grid-column: 2;
+          font-style: italic;
+          font-size: 1.35rem;
+          border-left: 3px solid var(--phthalo-lift);
+          padding-left: 1.5rem;
+          margin: 2.5rem 0;
+          color: var(--charcoal);
+      }
+      .markdown-body ul, .markdown-body ol {
+          grid-column: 2;
+          margin-bottom: 1.5em;
+          padding-left: 1.5rem;
+          color: var(--charcoal);
+      }
+      .markdown-body li {
+          margin-bottom: 0.5em;
+      }
+      .has-dropcap::first-letter {
+          font-family: var(--font-display);
+          float: left;
+          font-size: 4.5rem;
+          line-height: 0.8;
+          padding-top: 6px;
+          padding-right: 12px;
+          color: var(--obsidian);
+      }
+
+      /* Primary call-to-action button for an interactive demo (shared component) */
+      .demo-cta-wrap { grid-column: 2 / 4; margin: 2.5em 0 1em 0; }
+      .demo-cta {
+          display: inline-block; font-family: var(--font-mono); font-size: 13px;
+          letter-spacing: 0.18em; text-transform: uppercase; color: var(--flare);
+          background: var(--phthalo-lift); border: 1px solid var(--phthalo-lift);
+          padding: 18px 34px; text-decoration: none; border-radius: 0 !important;
+          transition: background 0.25s, color 0.25s;
+      }
+      .demo-cta:hover { background: transparent; color: var(--phthalo-lift); }
+      .band--paper .demo-cta { color: #fff; background: var(--ink-blue); border-color: var(--ink-blue); }
+      .band--paper .demo-cta:hover { background: transparent; color: var(--ink-blue); }
+      .demo-cta-note {
+          font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em;
+          text-transform: uppercase; color: var(--tungsten); margin-top: 14px;
+      }
+    </style>
+</head>
+
+<body data-category="AI Evaluation & Safety" data-title="Constitutional_AI_Defense">
+
+<!-- Reading progress -->
+<div id="progress"></div>
+
+<!-- Top nav (injected by global_chrome.js) -->
+<div id="global-nav-container"></div>
+
+<!-- Chapter spine (populated by global_chrome.js) -->
+<aside id="spine"></aside>
+
+<!-- Atmospheric gradient -->
+<div class="atmosphere"></div>
+
+<canvas id="glCanvas"></canvas>
+
+<!-- FRONT MATTER -->
+<section class="band band--dark front" data-spine="Front" data-section="Front matter">
+  <div class="col-wide">
+    <div class="grid">
+     <div>
+      <div class="meta-row">
+        <span class="bracket">ESSAY</span>
+        <span class="sep">/</span>
+        <span>AI Evaluation & Safety</span>
+        <span class="sep">/</span>
+        <span>Adversarial Defense & Evaluation</span>
+      </div>
+
+      <h1>Constitutional Defense for High-Stakes Generative AI</h1>
+
+      <p class="abstract">
+        When a generative system can produce a regulated decision about a real person, output filtering after the fact is the wrong layer. This is a walkthrough of a constitutional defense architecture: an explicit specification, layered enforcement, automated red-teaming, LLM-as-a-Judge grading, and a measurement framework that treats a safety claim you cannot measure as no control at all.
+      </p>
+
+      <div class="byline">
+        
+          <div>Read Time<strong>12 min read</strong></div>
+        
+      </div>
+     </div>
+     <div></div>
+    </div>
+  </div>
+</section>
+
+<!-- INJECTED MARKDOWN CONTENT -->
+
+<!-- SECTION 1: Abstract -->
+<section class="band band--paper" data-spine="Abstract" data-section="Abstract">
+  <div class="col-wide markdown-body">
+    <h2 class="is-chapter">Abstract</h2>
+<p class="has-dropcap col-with-sidenotes">When a generative system can produce a regulated or reputation-bearing statement about a real person, the common pattern of generating text and then filtering it operates at the wrong layer, because the violation has already occurred at the moment the tokens exist. This essay walks through a constitutional defense architecture for high-stakes generative AI, built from an explicit written specification, layered enforcement that runs before and during generation, automated red-teaming that turns probing into a continuous pipeline, LLM-as-a-Judge grading with its biases mathematically constrained, and a measurement framework whose central claim is that a safety property you cannot measure after deployment is not a control.</p>
+
+  </div>
+</section>
+
+<!-- SECTION 2: A constitution is a specification, not a disposition. -->
+<section class="band band--paper" data-spine="A constitution is a " data-section="A constitution is a specification, not a disposition.">
+  <div class="col-wide markdown-body">
+    <h2 class="is-chapter">A constitution is a specification, not a disposition.</h2>
+<p>A model&#39;s good behavior under casual testing tells you very little about its behavior under adversarial pressure, so the first move is to stop treating safety as a disposition the model happens to have and start treating it as a specification the system is held to. An AI constitution is that specification: a written, versioned document that enumerates prohibited outcomes, the reasoning the system must perform before acting, and the precedence rules that resolve conflicts between a user instruction and a governing constraint. Writing one well is a measurement exercise rather than a drafting exercise, because every clause has to be phrased as something an evaluator can later score, and a clause that cannot be turned into a graded test is decoration that gives false comfort.</p>
+<p>The constitution earns its place only when it is connected to enforcement, since a principle that lives in a document and nowhere in the inference path changes nothing about what the system emits.</p>
+
+  </div>
+</section>
+
+<!-- SECTION 3: Defense in depth, arranged by when it runs. -->
+<section class="band band--paper" data-spine="Defense in depth, ar" data-section="Defense in depth, arranged by when it runs.">
+  <div class="col-wide markdown-body">
+    <h2 class="is-chapter">Defense in depth, arranged by when it runs.</h2>
+<p>Layered defense for generative systems is organized by the moment each control acts relative to token generation, which is the property that makes the architecture coherent rather than a pile of filters. A Layer 0 control governs the input surface and the retrieval context before the model sees anything, so it is where untrusted retrieved content gets quarantined and where the system separates instructions that came from the operator from text that merely arrived in the context window. A Layer 1 control is the constitutional reasoning the model performs during generation, where the specification is active in the prompt and the model is required to reason about precedence before it commits to an output. Layer 2 and Layer 3 controls sit after a candidate output exists, where a separate grader evaluates the candidate against the specification and where escalation, logging, and refusal are enforced.</p>
+<p>Arranging controls this way exposes the central weakness of output-only safety, because a control that can only act after generation cannot prevent the class of harm where the existence of the output is itself the violation, which is exactly the situation in regulated decisions about people.</p>
+
+  </div>
+</section>
+
+<!-- SECTION 4: Automated red-teaming turns probing into a pipeline. -->
+<section class="band band--paper" data-spine="Automated red-teamin" data-section="Automated red-teaming turns probing into a pipeline.">
+  <div class="col-wide markdown-body">
+    <h2 class="is-chapter">Automated red-teaming turns probing into a pipeline.</h2>
+<p>Manual security probing does not scale to the volume of interactions a deployed generative system produces, so adversarial discovery has to be automated, and the foundational result is that a second model can be trained or prompted to generate diverse test cases that elicit prohibited behavior from a target model (Perez et al., 2022). Formalized, the jailbreak task is the search for an input prompt such that a classifier, the judge, rules that the target&#39;s response to that prompt advances a prohibited goal (Chao et al., 2024), which gives the pipeline a precise objective rather than a vibe of &quot;trying to break it.&quot; Three metrics make the pipeline a measurement instrument: Attack Success Rate, the fraction of attempts that produce a violation; Query Efficiency, the average attempts and tokens needed to achieve a bypass; and Refusal Rate on benign prompts, which quantifies the over-refusal cost often called the alignment tax (Chao et al., 2024; Cui et al., 2024).</p>
+<p>Open tooling already covers the phases of this lifecycle, with Garak functioning as a structured vulnerability scanner for language models, PyRIT orchestrating multi-turn adversarial campaigns, and Promptfoo providing the assertion-based harness that turns probes into a regression suite that runs in continuous integration. The artifact that matters most from this stage is the curated challenge set, since the prompts that succeeded once become the golden adversarial cases that every future model version has to survive.</p>
+
+  </div>
+</section>
+
+<!-- SECTION 5: LLM-as-a-Judge, and the discipline of judging the judge. -->
+<section class="band band--paper" data-spine="LLM-as-a-Judge, and " data-section="LLM-as-a-Judge, and the discipline of judging the judge.">
+  <div class="col-wide markdown-body">
+    <h2 class="is-chapter">LLM-as-a-Judge, and the discipline of judging the judge.</h2>
+<p>Populating an evaluation at the scale of an automated red-teaming pipeline requires automated grading, and the LLM-as-a-Judge paradigm provides it, with the foundational finding that strong models can approximate human preferences closely enough to substitute for manual grading in continuous deployment, reaching over eighty percent agreement with human raters on open-ended tasks (Zheng et al., 2023). The paradigm carries a recursive risk that has to be stated plainly, because the judge model shares the architecture and therefore the failure modes of the model it grades, so an unconstrained judge imports its own biases into the very metric meant to catch them.</p>
+<p>Those biases are measurable rather than mysterious, and the CALM framework catalogued twelve categories, among them positional preference, order effects, and prompt sensitivity, where the judge&#39;s verdict shifts based on the arrangement of the candidates rather than their quality (Ye et al., 2024; Padolsey, 2025). Constraining a judge therefore means randomizing position across repeated trials, scoring against an explicit rubric rather than a holistic impression, calibrating the judge against a human-labeled anchor set, and tracking judge-human agreement as a first-class metric that gates whether the judge is trusted at all.</p>
+
+  </div>
+</section>
+
+<!-- SECTION 6: The 4x4 matrix: refusal quality, not just refusal. -->
+<section class="band band--paper" data-spine="The 4x4 matrix: refu" data-section="The 4x4 matrix: refusal quality, not just refusal.">
+  <div class="col-wide markdown-body">
+    <h2 class="is-chapter">The 4x4 matrix: refusal quality, not just refusal.</h2>
+<p>Binary accuracy is the wrong instrument for safety evaluation, because it collapses four operationally distinct outcomes into two and hides the failures that matter most. A complete evaluation distinguishes the correct fulfillment of a benign request, the correct refusal of an adversarial request, the over-refusal of a benign request, and the catastrophic case where the system fulfills a request it should have refused, which in a regulated decision about a person is the failure that creates real-world harm. SORRY-BENCH formalized the need for a fine-grained taxonomy of refusal behaviors that moves past binary compliance to score how a model rejects an unsafe instruction (Xie et al., 2024), and XSTest characterized the compliance seesaw, the pattern where tightening against unsafe requests increases refusals of safe ones (Röttger et al., 2024).</p>
+<p>Expanding the confusion matrix to four states across ground-truth intent and generated outcome turns these phenomena into numbers a team can manage, so a release decision can weigh a small gain in attack resistance against a measurable rise in over-refusal rather than trading them blindly.</p>
+
+  </div>
+</section>
+
+<!-- SECTION 7: Multi-turn context smuggling and the delta problem. -->
+<section class="band band--paper" data-spine="Multi-turn context s" data-section="Multi-turn context smuggling and the delta problem.">
+  <div class="col-wide markdown-body">
+    <h2 class="is-chapter">Multi-turn context smuggling and the delta problem.</h2>
+<p>Single-turn filters create a predictable gap, because an adversary can distribute the components of a violation across several turns so that no individual prompt crosses the refusal threshold, a technique called context smuggling that exploits the stateful nature of conversation. The &quot;slow boil&quot; version opens with benign queries and migrates the context toward a prohibited objective in increments, and it succeeds against systems that evaluate only the delta of the most recent message rather than the trajectory of the whole session (Zeng et al., 2024). Ravindran (2025) named the underlying drift, where a system gradually departs from its alignment as the conversation accumulates context that reframes what counts as acceptable.</p>
+<p>Persuasion supplies the cover, with documented tactics including flattery, educational framing, dense technical jargon, assumed authority, and manufactured urgency, each designed to move a single-turn classifier off its guard. The defense is structural rather than clever, since evaluating the cumulative intent of the session, and scoring the trajectory rather than the latest turn, removes the gap the attack depends on.</p>
+
+  </div>
+</section>
+
+<!-- SECTION 8: Why the measurement framework is the product. -->
+<section class="band band--paper" data-spine="Why the measurement " data-section="Why the measurement framework is the product.">
+  <div class="col-wide markdown-body">
+    <h2 class="is-chapter">Why the measurement framework is the product.</h2>
+<p>The components only become a defense when a single measurement framework ties them together, because the constitution defines what good looks like, the red-teaming pipeline searches for where the system departs from it, the judge grades the departures at scale, and the confusion matrix reports the result in terms a release decision can use. The throughline is the same one that governs evaluation of any opaque system: observe the behavioral outputs, extract the signals that reveal a hidden state, classify them into outcomes that predict harm, and build the governance around what the measurement shows. A safety claim that no instrument can check after deployment is indistinguishable from no claim, and treating it as a control is the failure mode this architecture exists to remove.</p>
+
+  </div>
+</section>
+
+<!-- SECTION 9: References -->
+<section class="band band--paper" data-spine="References" data-section="References">
+  <div class="col-wide markdown-body">
+    <h2 class="is-chapter">References</h2>
+<ul>
+<li>Chao, P., et al. (2024). <em>Jailbreaking black box large language models in twenty queries / standardized jailbreak evaluation</em>. arXiv.</li>
+<li>Cui, et al. (2024). <em>Risk taxonomy and over-refusal measurement for aligned language models</em>. arXiv.</li>
+<li>Padolsey, J. (2025). <em>The unreliability of LLM judges without structural constraints</em>.</li>
+<li>Perez, E., et al. (2022). <em>Red teaming language models with language models</em>. arXiv.</li>
+<li>Röttger, P., et al. (2024). <em>XSTest: A test suite for identifying exaggerated safety behaviors in large language models</em>. arXiv.</li>
+<li>Xie, et al. (2024). <em>SORRY-BENCH: Systematically evaluating large language model safety refusal</em>. arXiv.</li>
+<li>Ye, J., et al. (2024). <em>Justice or prejudice? Quantifying biases in LLM-as-a-Judge (the CALM framework)</em>. arXiv.</li>
+<li>Zeng, Y., et al. (2024). <em>How johnny can persuade LLMs to jailbreak them: Persuasion taxonomy for multi-turn attacks</em>. arXiv.</li>
+<li>Zheng, L., et al. (2023). <em>Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena</em>. arXiv.</li>
+</ul>
+
+  </div>
+</section>
+
+
+<!-- BACK MATTER: Related Works -->
+<section class="band band--dark back-matter" data-spine="Research Graph" data-section="Research Graph">
+  <div class="back-matter" style="padding-top:0;">
+    <h3 style="margin-bottom:22px;">Related Works</h3>
+    <div class="related">
+      <div class="related-grid" id="recommendation-grid">
+        <!-- Populated by global_chrome.js from projects_index.json -->
+      </div>
+    </div>
+  </div>
+
+  <a class="next-chap" id="next-chap-link" href="#">
+    <div class="lf">
+      <div class="eb">Next Publication</div>
+      <div class="ti" id="next-chap-title">Loading...</div>
+    </div>
+    <div class="rt">&rarr;</div>
+  </a>
+</section>
+
+<!-- INJECTED SCRIPTS -->
+
+
+<!-- GLOBAL CHROME (order per about.html: cinematic -> chrome -> institutional) -->
+<script src="../design_system/js/cinematic_engine_v3.js" defer></script>
+<script src="../design_system/js/global_chrome.js" defer></script>
+<script src="../design_system/js/institutional.js" defer></script>
+</body>
+</html>
