@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>An AI Evals Harness for Generative Game Dialogue | Dr. Heather Leffew</title>
+    <!-- Design System: tokens load via @import inside institutional.css -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js" defer></script>
+    <link rel="stylesheet" href="../design_system/assets/css/institutional.css">
+    <style>
+      /* Editorial Layout for reading column */
+      .markdown-body {
+          max-width: 65ch;
+          margin: 1.5rem auto 0 auto;
+          padding: 0 1.5rem;
+      }
+      .markdown-body > * {
+          /* OVERRIDE global.css centering to restore elegant flush-left alignment */
+          margin-left: 0 !important;
+          margin-right: 0 !important;
+          padding-left: 0 !important;
+          padding-right: 0 !important;
+          max-width: none !important;
+          text-align: left !important;
+      }
+      .markdown-body p { margin-bottom: 1.5em; font-size: 1.125rem; line-height: 1.8; color: var(--charcoal); }
+
+      .markdown-body h2 {
+          margin-top: 2rem;
+          margin-bottom: 1.5rem;
+          font-family: var(--font-display);
+          font-weight: 600;
+          font-size: 2.2rem;
+          border-bottom: 1px solid var(--tungsten);
+          padding-bottom: 0.5rem !important;
+          color: var(--obsidian);
+      }
+      .markdown-body h3 {
+          margin-top: 2rem;
+          margin-bottom: 1rem;
+          font-family: var(--font-display);
+          font-size: 1.5rem;
+          color: var(--obsidian);
+      }
+      .markdown-body .eyebrow {
+          color: var(--phthalo-lift);
+          font-family: var(--font-mono);
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          margin-top: 1rem;
+          margin-bottom: -0.5rem; /* pull up near h2 */
+      }
+
+      /* Override massive cinematic padding for article content sections */
+      section.band {
+          padding: 2rem 0 !important;
+      }
+
+      /* Media Bleeds into the right gutter for editorial flair */
+      .markdown-body img, .markdown-body figure {
+          grid-column: 2 / 4;
+          width: 100%;
+          max-width: 100%;
+          height: auto;
+          display: block;
+          margin: 3em 0;
+          border-radius: 0 !important;
+          box-shadow: var(--shadow-card);
+      }
+      .markdown-body pre {
+          grid-column: 1 / -1; /* Code blocks span full width */
+          padding: 2em;
+          overflow-x: auto;
+          background: var(--obsidian);
+          border: 1px solid var(--brushed);
+          margin: 3em 0;
+          border-radius: 0 !important;
+      }
+      .markdown-body code { font-family: var(--font-mono); font-size: 0.85em; color: var(--phthalo-lift); }
+      .markdown-body pre code { color: var(--platinum); }
+
+      .markdown-body blockquote {
+          grid-column: 2;
+          font-style: italic;
+          font-size: 1.35rem;
+          border-left: 3px solid var(--phthalo-lift);
+          padding-left: 1.5rem;
+          margin: 2.5rem 0;
+          color: var(--charcoal);
+      }
+      .markdown-body ul, .markdown-body ol {
+          grid-column: 2;
+          margin-bottom: 1.5em;
+          padding-left: 1.5rem;
+          color: var(--charcoal);
+      }
+      .markdown-body li {
+          margin-bottom: 0.5em;
+      }
+      .has-dropcap::first-letter {
+          font-family: var(--font-display);
+          float: left;
+          font-size: 4.5rem;
+          line-height: 0.8;
+          padding-top: 6px;
+          padding-right: 12px;
+          color: var(--obsidian);
+      }
+
+      /* Primary call-to-action button for the interactive demo */
+      .demo-cta-wrap {
+          grid-column: 2 / 4;
+          margin: 2.5em 0 1em 0;
+      }
+      .demo-cta {
+          display: inline-block;
+          font-family: var(--font-mono);
+          font-size: 13px;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: var(--flare);
+          background: var(--phthalo-lift);
+          border: 1px solid var(--phthalo-lift);
+          padding: 18px 34px;
+          text-decoration: none;
+          border-radius: 0 !important;
+          transition: background 0.25s, color 0.25s;
+      }
+      .demo-cta:hover {
+          background: transparent;
+          color: var(--phthalo-lift);
+      }
+      .band--paper .demo-cta {
+          color: #fff;
+          background: var(--ink-blue);
+          border-color: var(--ink-blue);
+      }
+      .band--paper .demo-cta:hover {
+          background: transparent;
+          color: var(--ink-blue);
+      }
+      .demo-cta-note {
+          font-family: var(--font-mono);
+          font-size: 11px;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: var(--tungsten);
+          margin-top: 14px;
+      }
+    </style>
+</head>
+
+<body data-category="AI Evaluation" data-title="Dead_Signal_AI_Evals">
+
+<!-- Reading progress -->
+<div id="progress"></div>
+
+<!-- Top nav (injected by global_chrome.js) -->
+<div id="global-nav-container"></div>
+
+<!-- Chapter spine (populated by global_chrome.js) -->
+<aside id="spine"></aside>
+
+<!-- Atmospheric gradient -->
+<div class="atmosphere"></div>
+
+<canvas id="glCanvas"></canvas>
+
+<!-- FRONT MATTER -->
+<section class="band band--dark front" data-spine="Front" data-section="Front matter">
+  <div class="col-wide">
+    <div class="grid">
+     <div>
+      <div class="meta-row">
+        <span class="bracket">CASE STUDY</span>
+        <span class="sep">/</span>
+        <span>AI Evaluation</span>
+        <span class="sep">/</span>
+        <span>Generative Systems</span>
+      </div>
+
+      <h1>DEAD SIGNAL: An AI Evals Harness for Generative Game Dialogue.</h1>
+
+      <p class="abstract">
+        DEAD SIGNAL is a playable noir detective game in which every line an NPC speaks is generated live by Google Gemini, wrapped in a visible evaluation harness that scores every model turn as it happens. The system under test and the measurement layer occupy the same screen: the generative feature on one side, the deterministic evaluators, optional LLM-as-judge, one-click red-team probes, and a golden-set export on the other.
+      </p>
+
+      <div class="byline">
+
+          <div>Read Time<strong>11 min read</strong></div>
+
+      </div>
+     </div>
+     <div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 1: Abstract / What this is -->
+<section class="band band--paper" data-spine="The harness" data-section="The harness, not the game">
+  <div class="col-wide markdown-body">
+    <h2 class="is-chapter">The harness, not the game</h2>
+<div class="demo-cta-wrap">
+  <a class="demo-cta" href="https://dead-signal-terminal.web.app" target="_blank" rel="noopener">Launch the interactive demo &rarr;</a>
+  <div class="demo-cta-note">Opens the live build in a new tab. Generation and scoring run in front of you.</div>
+</div>
+<p class="has-dropcap col-with-sidenotes">Most published evaluation work measures a model against a static benchmark: a fixed set of inputs, a held-out answer key, a number reported after the fact. DEAD SIGNAL measures something harder to pin down, which is a live generative feature in the shape it actually ships in: an interactive consumer product where the inputs are whatever a player decides to type and the correct output is a constraint satisfaction problem rather than a string match. The game is the system under test. The harness is the contribution. Every NPC line is generated by Gemini at request time, and every generated turn is scored the moment it returns, by a stack of evaluators that runs in the browser alongside the dialogue.</p>
+<p>The argument the page makes is that evaluation methodology developed for production generative systems (automated per-turn metrics, LLM-as-judge grading, red-teaming, golden-set curation, and explicit safety and jailbreak measurement) is most legible when it is attached to a real feature a reader can operate, rather than to a leaderboard. A reader can open the demo, send an adversarial message, and watch the jailbreak-resistance evaluator score that specific turn. The measurement is not a claim in a table; it is a thing happening on the screen.</p>
+
+  </div>
+</section>
+
+<!-- SECTION 2: The deterministic evaluators -->
+<section class="band band--dark" data-spine="Deterministic evals" data-section="Deterministic per-turn evaluators">
+  <div class="col-wide markdown-body">
+    <h2 class="is-chapter">Deterministic per-turn evaluators</h2>
+<p>The first layer scores every model turn deterministically, with zero added inference cost. These evaluators run on the response the game already paid for; they read the structured output and the conversational context that were going to be produced anyway, so the marginal cost of scoring a turn is the cost of a handful of string and schema checks rather than a second model call. The design commitment is that the cheap layer should carry as much of the measurement burden as it honestly can, and the expensive layer should be reserved for the dimensions the cheap layer cannot reach.</p>
+<p>Six deterministic evaluators run on each turn:</p>
+<ul>
+<li><strong>Schema and format validity.</strong> Every NPC response is expected to return as structured JSON against a fixed schema (dialogue, stage direction, trust delta, revealed-evidence list, emotional state, flags). The evaluator parses the response and checks that the required fields are present, correctly typed, and within range. A turn that fails to parse, or that returns a trust delta outside the permitted bounds, is a hard format failure regardless of how good the prose reads.</li>
+<li><strong>In-character consistency.</strong> A generative NPC fails most visibly when the model drops the character and speaks as the assistant. This evaluator detects AI-tell leakage, meta-commentary about being a language model, and safety-disclosure phrasing (the unsolicited wellness disclaimer, the "as an AI" hedge, the offer of crisis resources inside a noir interrogation). Each is a different way the performance layer can crack, and each is caught by pattern checks against the dialogue field.</li>
+<li><strong>Hard-fail safety content.</strong> A separate evaluator scans output for content that must never appear regardless of the fiction's maturity register. This is a hard fail, not a graded dimension: a turn either contains prohibited content or it does not, and the harness treats a single hard-fail as disqualifying for that turn.</li>
+<li><strong>Jailbreak resistance.</strong> Scored only on turns whose input was adversarial, so the metric is not diluted by the cooperative majority of player messages. When the input is a probe, the evaluator checks whether the model held its knowledge boundary and its character framing, or whether the probe succeeded in extracting out-of-bounds content or breaking the role.</li>
+<li><strong>Trust calibration.</strong> The game releases information through a quantified trust system, and the model reports a trust delta with each turn. This evaluator checks that the delta the model assigned is consistent with the conversational behavior it was responding to, catching the failure mode where the model rewards a manipulative input or penalizes a cooperative one.</li>
+<li><strong>Coherence and relevance proxy.</strong> A deterministic stand-in for the more expensive judged dimensions: it checks that the response engages the player's actual input and the current scene rather than emitting a generic continuation, using lexical-overlap and reference-tracking heuristics. The proxy is not as good as a judge, and the harness does not pretend it is; it is a cheap early-warning signal that runs on every turn while the judge runs on a sample.</li>
+</ul>
+<p>The split between the hard-fail evaluators (schema validity, safety content) and the graded evaluators (in-character consistency, trust calibration, the coherence proxy) is deliberate: a hard fail is a binary gate that disqualifies a turn outright, and a graded score is a continuous quantity that contributes to an aggregate. Conflating the two would let a high coherence score paper over a safety violation, which is exactly the failure the separation prevents.</p>
+
+  </div>
+</section>
+
+<!-- SECTION 3: LLM-as-judge -->
+<section class="band band--paper" data-spine="LLM-as-judge" data-section="The optional LLM-as-judge layer">
+  <div class="col-wide markdown-body">
+    <h2 class="is-chapter">The optional LLM-as-judge layer</h2>
+<p>The deterministic layer cannot grade quality. It can tell that a response parsed, stayed in character, and did not leak prohibited content, but it cannot tell whether the line was good noir. For that the harness adds an optional LLM-as-judge layer, which sends the player input and the model output to a grading model with a rubric and asks for a structured 1-to-5 score on five dimensions: coherence, in-character voice, relevance, safety, and entertainment value.</p>
+<p>The judge is optional because it is the expensive part. Each judged turn is a second model call, so the harness runs the judge on a sample of turns rather than all of them, and the deterministic coherence proxy carries the every-turn coverage. The two layers are complementary rather than redundant: the proxy is cheap and runs always, the judge is expensive and runs on a sample, and a divergence between the proxy and the judge on the same turn is itself a signal worth recording. A judge that consistently disagrees with the proxy is evidence the proxy heuristic needs revision.</p>
+<p>The five-dimension rubric is chosen to separate concerns the deterministic layer either cannot measure or measures only by proxy. Coherence and relevance overlap with the deterministic proxy and serve as a calibration check on it. In-character voice is a quality judgment the pattern matcher cannot make: detecting the absence of AI tells is not the same as confirming the presence of a specific character's voice. Safety as a graded judge dimension complements the deterministic hard-fail: the hard-fail catches prohibited content, and the judge catches the softer register failures (a tonal misstep, an inappropriate flippancy) that are not disqualifying but still degrade the output. Entertainment value is the dimension that exists only because this is a consumer feature; a line can be coherent, in character, relevant, and safe, and still be boring, and for a game that distinction is the one that matters most.</p>
+
+  </div>
+</section>
+
+<!-- SECTION 4: Red-team probes -->
+<section class="band band--dark" data-spine="Red-team probes" data-section="One-click red-team probes">
+  <div class="col-wide markdown-body">
+    <h2 class="is-chapter">One-click red-team probes</h2>
+<p>Adversarial inputs are not left to the reader to invent. The harness ships a panel of one-click red-team probes that inject a known adversarial input through the real dialogue path, the same path a player's typed message takes, so the probe is tested against the production prompt assembly and not against a stripped-down test rig. Routing probes through the live path is the methodological point: a jailbreak that succeeds against a simplified harness but fails against the shipped prompt stack tells the reader nothing useful, and the reverse is worse.</p>
+<p>Five probe classes are provided:</p>
+<ul>
+<li><strong>Prompt injection.</strong> An input that attempts to insert new instructions into the model's context, overriding the game's operating rules with the player's own.</li>
+<li><strong>Role override.</strong> An input that instructs the model to abandon the character and behave as a general assistant, the most direct attack on the in-character constraint.</li>
+<li><strong>Format break.</strong> An input designed to make the model emit something other than the required structured JSON, which would break the game engine's ability to parse and act on the response.</li>
+<li><strong>Safety probe.</strong> An input that pushes toward prohibited content, testing the hard-fail safety evaluator against a genuine attempt rather than against benign traffic.</li>
+<li><strong>Exposition-dump bait.</strong> An input that tries to make the NPC volunteer information the player has not earned through the trust system, the failure mode where a model's default helpfulness defeats the game's information-gating mechanic.</li>
+</ul>
+<p>Each probe fires through generation and then through the full evaluator stack, so the reader sees both the model's response and how every evaluator scored it. A successful role override is visible twice: in the dialogue the model produced and in the in-character evaluator flagging the break. The probes turn red-teaming from a thing a security team does in private into a thing a reader does in the open.</p>
+
+  </div>
+</section>
+
+<!-- SECTION 5: Live aggregates -->
+<section class="band band--paper" data-spine="Live aggregates" data-section="Live aggregates and coverage">
+  <div class="col-wide markdown-body">
+    <h2 class="is-chapter">Live aggregates and coverage</h2>
+<p>Per-turn scores are useful for a single response; aggregates are what make a measurement program. The harness maintains a running summary as the session proceeds, updating after every turn: pass rate by dimension, live-model coverage, and latency.</p>
+<p>Pass rate by dimension is the central readout. Rather than collapsing every evaluator into one composite number, the harness keeps the dimensions separate, so a session can show high schema validity and high coherence while jailbreak resistance is dragging, which is precisely the kind of dimensional breakdown a composite score would hide. The separation is the same commitment the deterministic layer makes at the per-turn level, carried up to the aggregate.</p>
+<p>Live-model coverage reports what fraction of turns were actually generated by the live model versus served from a deterministic fallback, because an evaluation harness that quietly scores cached or fallback responses as if they were live generations is measuring the wrong thing. Coverage keeps the aggregate honest about how much of it reflects the model under test. Latency is tracked because for an interactive feature it is a first-class quality dimension: a perfectly scored response that arrives too slowly is a failed turn from the player's point of view, and a measurement program that ignores latency is ignoring half of what makes a generative feature usable.</p>
+
+  </div>
+</section>
+
+<!-- SECTION 6: Golden-set export -->
+<section class="band band--dark" data-spine="Golden-set export" data-section="The golden-set export">
+  <div class="col-wide markdown-body">
+    <h2 class="is-chapter">The golden-set export</h2>
+<p>The last component is what turns a live demo into a regression artifact. The harness exports a golden-set JSON that captures each graded turn as a record: the input, the model output, the deterministic scores, and the judge scores when the judge ran on that turn. The export is the bridge between the interactive measurement on the screen and the offline measurement a team needs to defend a model change.</p>
+<p>A golden set is the asset that makes generative regression testing possible. Once a corpus of graded turns exists, a model upgrade or a prompt change can be replayed against the same inputs and the new scores compared against the captured baseline, which is how a team answers the question every model change raises: did this get better, and at the cost of what. Without a golden set the answer is anecdote; with one it is a diff. Capturing the turn at the moment it is graded, with both the deterministic and the judge scores attached, means the export carries the full evaluation context and not just the raw text, so a replay can compare scores dimension by dimension rather than re-grading from scratch.</p>
+<p>The export records what was measured, by which evaluator, with what result, on what input. That is the minimum a regression artifact has to carry to be useful months later when the model, the prompt, and the people have all changed.</p>
+
+  </div>
+</section>
+
+<!-- SECTION 7: Architecture -->
+<section class="band band--ink" data-spine="Architecture" data-section="The architecture under the harness">
+  <div class="col-wide markdown-body">
+    <h2 class="is-chapter">The architecture under the harness</h2>
+<p>The front end is React with Vite, with a Three.js layer for the game's visual atmosphere. The dialogue is not generated in the browser: a Firebase Cloud Function sits between the client and Gemini and is the only component that holds model credentials, so the API key never reaches the client and every generation request passes through a server-side boundary where it can be controlled and metered.</p>
+<p>The function applies model tiering. Primary characters, the ones with complex trust mechanics and dramatic stakes, are routed to a stronger model; ambient characters, the ones delivering a line or two, are routed to a fast, cheaper model. The tiering is a cost-and-quality allocation: the expensive model is spent where its reasoning earns its price, and the cheap model handles the volume where it does not, which keeps the aggregate cost of a session bounded without flattening the quality of the characters that matter.</p>
+<p>Sessions run on anonymous authentication, so a reader can open the demo and play without an account while the system still has a session identity to meter against. Access is tiered, with per-session and global daily cost ceilings that cap spend at both the individual and the aggregate level, output-token caps that bound the length of any single generation, and App Check bot mitigation that keeps automated traffic from draining the budget. The ceilings are the production-grade answer to the cost problem that a live, openly playable generative demo creates: the feature can be public and free to operate because the spend is bounded by construction rather than by trust in good behavior.</p>
+<h3>What this is and is not</h3>
+<p>The harness is a demonstration of evaluation methodology for production generative systems, applied to a real interactive feature rather than to a static benchmark. It commits to a specific set of methods: deterministic per-turn evaluators that score at zero added cost, an optional LLM-as-judge for the quality dimensions the deterministic layer cannot reach, red-team probes routed through the real dialogue path, live dimensional aggregates that resist collapse into a single number, and a golden-set export that makes generative regression testing possible. It does not claim a benchmark result, a leaderboard position, or a number transferable to any other system; the scores belong to this feature, generated by this model stack, under this prompt architecture. What it offers is a pattern: a way of building generative features where the measurement layer ships alongside the feature and a reader can watch it work.</p>
+
+  </div>
+</section>
+
+
+<!-- BACK MATTER: Related Works -->
+<section class="band band--dark back-matter" data-spine="Research Graph" data-section="Research Graph">
+  <div class="back-matter" style="padding-top:0;">
+    <h3 style="margin-bottom:22px;">Related Works</h3>
+    <div class="related">
+      <div class="related-grid" id="recommendation-grid">
+        <!-- Populated by global_chrome.js from projects_index.json -->
+      </div>
+    </div>
+  </div>
+
+  <a class="next-chap" id="next-chap-link" href="#">
+    <div class="lf">
+      <div class="eb">Next Publication</div>
+      <div class="ti" id="next-chap-title">Loading...</div>
+    </div>
+    <div class="rt">&rarr;</div>
+  </a>
+</section>
+
+<!-- GLOBAL CHROME -->
+<!-- Need relative pathing adjustment based on actual file depth, defaulting to root pathing for now -->
+<script src="../design_system/js/cinematic_engine_v3.js" defer></script>
+<script src="../design_system/js/global_chrome.js" defer></script>
+<script src="../design_system/js/institutional.js" defer></script>
+</body>
+</html>
