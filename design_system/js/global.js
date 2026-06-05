@@ -290,45 +290,45 @@ const initCinematicEngine = () => {
     resetScrollToTop();
     window.resetScrollToTop = resetScrollToTop;
 
-    // Override addEventListener to execute DOMContentLoaded and load callbacks immediately if readyState is complete/interactive
-    if (!window._addEventListenerOverridden) {
-        const originalAddEventListener = EventTarget.prototype.addEventListener;
-        EventTarget.prototype.addEventListener = function(type, listener, options) {
-            if (this === document && type === 'DOMContentLoaded') {
-                if (document.readyState === 'complete' || document.readyState === 'interactive') {
-                    setTimeout(() => {
-                        try {
-                            if (typeof listener === 'function') {
-                                listener.call(this, new Event('DOMContentLoaded'));
-                            } else if (listener && typeof listener.handleEvent === 'function') {
-                                listener.handleEvent(new Event('DOMContentLoaded'));
-                            }
-                        } catch (e) {
-                            console.error("Error in deferred DOMContentLoaded listener:", e);
-                        }
-                    }, 0);
-                    return;
-                }
+    // Scoped helpers that handle the "listener registered after the event already
+    // fired" case without monkey-patching EventTarget.prototype.addEventListener.
+    //
+    // The previous implementation globally rewrote addEventListener so that any
+    // DOMContentLoaded or load handler registered on document/window after
+    // readyState reached 'interactive'/'complete' was invoked via setTimeout(0)
+    // with a synthetic event. That changed the semantics of addEventListener for
+    // every consumer on the page (third-party scripts, page-specific widgets,
+    // future code), which is risky and surprising. We replace the override with
+    // two named helpers used internally by this file. External code that needs
+    // the same behavior should call these directly rather than relying on a
+    // hidden global side effect.
+    if (!window._onReadyHelper) {
+        const invokeWith = (listener, eventName, target) => {
+            try {
+                const evt = new Event(eventName);
+                if (typeof listener === 'function')                listener.call(target, evt);
+                else if (listener && typeof listener.handleEvent === 'function') listener.handleEvent(evt);
+            } catch (e) {
+                console.error('Error in deferred ' + eventName + ' listener:', e);
             }
-            if (this === window && type === 'load') {
-                if (document.readyState === 'complete') {
-                    setTimeout(() => {
-                        try {
-                            if (typeof listener === 'function') {
-                                listener.call(this, new Event('load'));
-                            } else if (listener && typeof listener.handleEvent === 'function') {
-                                listener.handleEvent(new Event('load'));
-                            }
-                        } catch (e) {
-                            console.error("Error in deferred load listener:", e);
-                        }
-                    }, 0);
-                    return;
-                }
-            }
-            return originalAddEventListener.call(this, type, listener, options);
         };
-        window._addEventListenerOverridden = true;
+        // Fires once DOM is parsed; runs immediately if already ready.
+        window.onReady = (listener) => {
+            if (document.readyState === 'complete' || document.readyState === 'interactive') {
+                setTimeout(() => invokeWith(listener, 'DOMContentLoaded', document), 0);
+            } else {
+                document.addEventListener('DOMContentLoaded', listener);
+            }
+        };
+        // Fires once page is fully loaded (images, fonts); runs immediately if already loaded.
+        window.onLoad = (listener) => {
+            if (document.readyState === 'complete') {
+                setTimeout(() => invokeWith(listener, 'load', window), 0);
+            } else {
+                window.addEventListener('load', listener);
+            }
+        };
+        window._onReadyHelper = true;
     }
 
     // Calculate rootPathname robustly on initial load
@@ -1211,25 +1211,22 @@ const initCinematicEngine = () => {
         });
     };
 
-    // Self-bootstrapping call for normal pages
+    // Self-bootstrapping call for normal pages.
+    // Uses the scoped window.onReady / window.onLoad helpers defined above; they
+    // collapse the "register or run-now" check into a single call, and avoid the
+    // earlier bug where DOMContentLoaded was incorrectly registered on `window`
+    // (DOMContentLoaded only fires on `document`) and thus never fired without
+    // the prototype override compensating.
     if (!window.disableGlobalOrchestration) {
-        if (document.readyState === 'complete') {
+        window.onReady(() => {
+            if (typeof window.resetScrollToTop === 'function') window.resetScrollToTop();
+        });
+        window.onLoad(() => {
             window.initGlobalLenis();
             window.initScrollProgress();
             window.initNavMode();
             window.initPageAnimations();
             if (typeof window.resetScrollToTop === 'function') window.resetScrollToTop();
-        } else {
-            window.addEventListener('DOMContentLoaded', () => {
-                if (typeof window.resetScrollToTop === 'function') window.resetScrollToTop();
-            });
-            window.addEventListener('load', () => {
-                window.initGlobalLenis();
-                window.initScrollProgress();
-                window.initNavMode();
-                window.initPageAnimations();
-                if (typeof window.resetScrollToTop === 'function') window.resetScrollToTop();
-            });
-        }
+        });
     }
 })();

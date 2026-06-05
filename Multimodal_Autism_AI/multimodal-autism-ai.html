@@ -174,7 +174,7 @@
 </section>
 
 <!-- SECTION 2: The clinical reality most synthetic pipelines quietly ignore -->
-<section class="band band--paper" data-spine="The clinical reality" data-section="The clinical reality most synthetic pipelines quietly ignore">
+<section class="band band--dark" data-spine="The clinical reality" data-section="The clinical reality most synthetic pipelines quietly ignore">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">The clinical reality most synthetic pipelines quietly ignore</h2>
 <p>The ADOS-2 is the gold standard for autism assessment because its features are behaviorally grounded, examiner-administered, and domain-structured. It is also a 45-minute session with a child who may or may not be cooperative, assessed by a clinician whose training may or may not match the clinician who assessed the last child, captured on video with face detection that may or may not hold throughout the session. The feature distributions that result from this process are not clean.</p>
@@ -271,37 +271,37 @@ X_simulated, y_simulated = generate_clinical_data()
 <p><div class="figure reveal"><div class="frame"><svg style="width:100%; height:auto;" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
 <defs>
 <marker id="arrow" markerHeight="6" markerWidth="6" orient="auto-start-reverse" refX="5" refY="5" viewBox="0 0 10 10">
-<path d="M 0 0 L 10 5 L 0 10 z" fill="#3866A0"></path>
+<path d="M 0 0 L 10 5 L 0 10 z" fill="var(--phthalo-lift)"></path>
 </marker>
 </defs>
-<g fill="#A1A1A6" font-family="JetBrains Mono" font-size="12">
+<g fill="var(--tungsten)" font-family="JetBrains Mono" font-size="12">
 <!-- Root -->
-<rect fill="#161616" height="40" rx="4" stroke="#333333" stroke-width="2" width="200" x="300" y="20"></rect>
-<text fill="#F5F5F7" font-weight="bold" text-anchor="middle" x="400" y="44">MULTIMODAL INPUT</text>
+<rect fill="var(--charcoal)" height="40" rx="4" stroke="var(--brushed)" stroke-width="2" width="200" x="300" y="20"></rect>
+<text fill="var(--platinum)" font-weight="bold" text-anchor="middle" x="400" y="44">MULTIMODAL INPUT</text>
 <!-- Streams -->
-<path d="M 400 60 L 400 90 L 200 90 L 200 120" fill="none" marker-end="url(#arrow)" stroke="#3866A0" stroke-width="2"></path>
-<path d="M 400 60 L 400 90 L 600 90 L 600 120" fill="none" marker-end="url(#arrow)" stroke="#3866A0" stroke-width="2"></path>
-<rect fill="#030303" height="30" rx="4" stroke="#0F3A6B" stroke-width="1" width="160" x="120" y="120"></rect>
-<text fill="#3866A0" text-anchor="middle" x="200" y="140">Video Stream (CV)</text>
-<rect fill="#030303" height="30" rx="4" stroke="#0F3A6B" stroke-width="1" width="160" x="520" y="120"></rect>
-<text fill="#3866A0" text-anchor="middle" x="600" y="140">Audio Stream (NLP)</text>
+<path d="M 400 60 L 400 90 L 200 90 L 200 120" fill="none" marker-end="url(#arrow)" stroke="var(--phthalo-lift)" stroke-width="2"></path>
+<path d="M 400 60 L 400 90 L 600 90 L 600 120" fill="none" marker-end="url(#arrow)" stroke="var(--phthalo-lift)" stroke-width="2"></path>
+<rect fill="var(--obsidian)" height="30" rx="4" stroke="var(--phthalo)" stroke-width="1" width="160" x="120" y="120"></rect>
+<text fill="var(--phthalo-lift)" text-anchor="middle" x="200" y="140">Video Stream (CV)</text>
+<rect fill="var(--obsidian)" height="30" rx="4" stroke="var(--phthalo)" stroke-width="1" width="160" x="520" y="120"></rect>
+<text fill="var(--phthalo-lift)" text-anchor="middle" x="600" y="140">Audio Stream (NLP)</text>
 <!-- Nodes -->
-<path d="M 200 150 L 200 180 L 100 180 L 100 210" fill="none" marker-end="url(#arrow)" stroke="#333333" stroke-width="1"></path>
-<path d="M 200 150 L 200 180 L 300 180 L 300 210" fill="none" marker-end="url(#arrow)" stroke="#333333" stroke-width="1"></path>
-<path d="M 600 150 L 600 180 L 500 180 L 500 210" fill="none" marker-end="url(#arrow)" stroke="#333333" stroke-width="1"></path>
-<path d="M 600 150 L 600 180 L 700 180 L 700 210" fill="none" marker-end="url(#arrow)" stroke="#333333" stroke-width="1"></path>
-<rect fill="#030303" height="60" rx="2" stroke="#222222" width="140" x="30" y="210"></rect>
+<path d="M 200 150 L 200 180 L 100 180 L 100 210" fill="none" marker-end="url(#arrow)" stroke="var(--brushed)" stroke-width="1"></path>
+<path d="M 200 150 L 200 180 L 300 180 L 300 210" fill="none" marker-end="url(#arrow)" stroke="var(--brushed)" stroke-width="1"></path>
+<path d="M 600 150 L 600 180 L 500 180 L 500 210" fill="none" marker-end="url(#arrow)" stroke="var(--brushed)" stroke-width="1"></path>
+<path d="M 600 150 L 600 180 L 700 180 L 700 210" fill="none" marker-end="url(#arrow)" stroke="var(--brushed)" stroke-width="1"></path>
+<rect fill="var(--obsidian)" height="60" rx="2" stroke="var(--graphite)" width="140" x="30" y="210"></rect>
 <text font-size="10" text-anchor="middle" x="100" y="235">Gaze/Face Tracking</text>
-<text fill="#0F3A6B" font-size="9" text-anchor="middle" x="100" y="255">A1, A2, A7</text>
-<rect fill="#030303" height="60" rx="2" stroke="#222222" width="140" x="230" y="210"></rect>
+<text fill="var(--phthalo)" font-size="9" text-anchor="middle" x="100" y="255">A1, A2, A7</text>
+<rect fill="var(--obsidian)" height="60" rx="2" stroke="var(--graphite)" width="140" x="230" y="210"></rect>
 <text font-size="10" text-anchor="middle" x="300" y="235">Pose Estimation</text>
-<text fill="#0F3A6B" font-size="9" text-anchor="middle" x="300" y="255">C1, D1, D4</text>
-<rect fill="#030303" height="60" rx="2" stroke="#222222" width="140" x="430" y="210"></rect>
+<text fill="var(--phthalo)" font-size="9" text-anchor="middle" x="300" y="255">C1, D1, D4</text>
+<rect fill="var(--obsidian)" height="60" rx="2" stroke="var(--graphite)" width="140" x="430" y="210"></rect>
 <text font-size="10" text-anchor="middle" x="500" y="235">Prosodic Extract</text>
-<text fill="#0F3A6B" font-size="9" text-anchor="middle" x="500" y="255">B1, A4</text>
-<rect fill="#030303" height="60" rx="2" stroke="#222222" width="140" x="630" y="210"></rect>
+<text fill="var(--phthalo)" font-size="9" text-anchor="middle" x="500" y="255">B1, A4</text>
+<rect fill="var(--obsidian)" height="60" rx="2" stroke="var(--graphite)" width="140" x="630" y="210"></rect>
 <text font-size="10" text-anchor="middle" x="700" y="235">Speech to Text</text>
-<text fill="#0F3A6B" font-size="9" text-anchor="middle" x="700" y="255">B2</text>
+<text fill="var(--phthalo)" font-size="9" text-anchor="middle" x="700" y="255">B2</text>
 </g>
 </svg></div></div></p>
 <p>FIG. 02 Hierarchical extraction tree mapping multimodal data streams to specific ADOS-2 behavioral domains.</p>
@@ -379,7 +379,7 @@ X_simulated, y_simulated = generate_clinical_data()
 </section>
 
 <!-- SECTION 4: The Machine Learning Architecture -->
-<section class="band band--paper" data-spine="The Machine Learning" data-section="The Machine Learning Architecture">
+<section class="band band--dark" data-spine="The Machine Learning" data-section="The Machine Learning Architecture">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">The Machine Learning Architecture</h2>
 <p>The ADOS-2 algorithm scores three behavioral domains independently before combining them: social affect (eye contact, facial expressions, joint attention, response to name), communication (vocalizations, repetitive language), and restricted-and-repetitive behaviors (functional play, hand mannerisms, sensory interests). The clinician fills out subscores for each domain, the algorithm derives a composite, and the cutoff thresholds applied to the composite are calibrated against the domain structure rather than against an undifferentiated feature pool. The diagnostic logic is built around the domains, not on top of them.</p>
@@ -427,22 +427,22 @@ consensus = meta.predict_proba(X_meta)[:, 1]
 <p>In-sample AUCs across the model suite cluster between 0.93 and 0.97. The system&#39;s automated realism validator fires on the highest performers with the explicit warning &quot;Performance may be too high, check for data leakage.&quot; On synthetic data designed to parallel real clinical data in its complexity, overlap, ambiguity, and noise, the validator&#39;s working assumption is that any in-sample AUC above 0.95 is more likely evidence the simulation drifted toward separability somewhere than evidence the model got that good. That assertion, encoded as a runtime check rather than a postmortem note, is a conservative engineering choice that keeps the simulation parallel to the difficulty of the actual problem.</p>
 <p>Five-fold cross-validation pulls the picture closer to real clinical performance. The interpretable Label Spreading model cross-validates to AUC 0.891 plus or minus 0.022, and XGBoost to 0.953 plus or minus 0.017. The 0.891 number is the one to read against the literature: Wall et al. (2012) reported AUC between 0.78 and 0.88 across multiple model families on real ADOS data; Duda et al. (2016) reached 0.85 to 0.92 under favorable conditions. Landing inside that range on synthetic data engineered for 60 to 80 percent feature-level group overlap is the right kind of result, because the performance the pipeline produces is parallel to the performance the literature documents on real patients.</p>
 <p><div class="figure reveal"><div class="frame"><svg style="width:100%; height:auto;" viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg">
-<g fill="#A1A1A6" font-family="JetBrains Mono" font-size="10">
+<g fill="var(--tungsten)" font-family="JetBrains Mono" font-size="10">
 <!-- Axes -->
-<line stroke="#333" stroke-width="2" x1="50" x2="550" y1="250" y2="250"></line>
-<line stroke="#333" stroke-width="2" x1="50" x2="50" y1="250" y2="20"></line>
+<line stroke="var(--brushed)" stroke-width="2" x1="50" x2="550" y1="250" y2="250"></line>
+<line stroke="var(--brushed)" stroke-width="2" x1="50" x2="50" y1="250" y2="20"></line>
 <text text-anchor="middle" x="300" y="280">False Positive Rate</text>
 <text text-anchor="middle" transform="rotate(-90 20,135)" x="20" y="135">True Positive Rate</text>
 <!-- Random Baseline -->
-<line stroke="#444" stroke-dasharray="4 4" stroke-width="1" x1="50" x2="550" y1="250" y2="20"></line>
+<line stroke="var(--brushed)" stroke-dasharray="4 4" stroke-width="1" x1="50" x2="550" y1="250" y2="20"></line>
 <!-- Warning Zone -->
-<rect fill="#7A1626" height="35" opacity="0.1" width="500" x="50" y="20"></rect>
-<line stroke="#7A1626" stroke-dasharray="2 4" stroke-width="1" x1="50" x2="550" y1="55" y2="55"></line>
-<text fill="#7A1626" font-weight="bold" text-anchor="middle" x="300" y="42">OVERFITTING RISK ZONE (AUC &gt; 0.95)</text>
+<rect fill="var(--alizarin)" height="35" opacity="0.1" width="500" x="50" y="20"></rect>
+<line stroke="var(--alizarin)" stroke-dasharray="2 4" stroke-width="1" x1="50" x2="550" y1="55" y2="55"></line>
+<text fill="var(--alizarin)" font-weight="bold" text-anchor="middle" x="300" y="42">OVERFITTING RISK ZONE (AUC &gt; 0.95)</text>
 <!-- ROC Curve -->
-<path d="M 50 250 Q 80 40 550 20" fill="none" stroke="#3866A0" stroke-width="3"></path>
-<circle cx="160" cy="50" fill="#F5F5F7" r="4"></circle>
-<text fill="#F5F5F7" x="175" y="55">AUC: 0.974</text>
+<path d="M 50 250 Q 80 40 550 20" fill="none" stroke="var(--phthalo-lift)" stroke-width="3"></path>
+<circle cx="160" cy="50" fill="var(--platinum)" r="4"></circle>
+<text fill="var(--platinum)" x="175" y="55">AUC: 0.974</text>
 </g>
 </svg></div></div></p>
 <p>FIG. 03 ROC curve for an ablation run that triggered the validity check. The arch arrives in the warning zone above AUC 0.95, which is what the runtime assertion is designed to catch. The deployed system reports AUC 0.89, in the published clinical literature&#39;s realistic range.</p>
@@ -525,26 +525,26 @@ consensus = meta.predict_proba(X_meta)[:, 1]
 <p>In-sample AUCs from a single run of the realistic pipeline. The validator&#39;s &quot;fires&quot; column flags the two models above the 0.95 threshold. Cross-validation on Label Spreading produces AUC 0.891 plus or minus 0.022, which is the number that meaningfully compares to the clinical literature.</p>
 <p>Aggregated feature importance across the supervised models ranks Gaze-to-Face Percentage first (0.18), followed by Phrase Repetition Rate (0.16), Joint Attention Bids (0.14), Response to Name Latency (0.13), and Functional Play Percentage (0.12). The ordering aligns with the ADOS-2 algorithm&#39;s own weighting of social communication features and with recent peer-reviewed work on prosodic and speech-rhythm features as cross-language ASD biomarkers. The features the models find most informative are the features the clinical literature already supports as informative on real data, which is the right kind of sanity check on a synthetic pipeline.</p>
 <p><div class="figure reveal"><div class="frame"><svg style="width:100%; height:auto;" viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg">
-<g fill="#A1A1A6" font-family="JetBrains Mono" font-size="11">
-<line stroke="#333" stroke-width="1" x1="220" x2="550" y1="210" y2="210"></line>
-<line stroke="#333" stroke-width="1" x1="220" x2="220" y1="20" y2="210"></line>
+<g fill="var(--tungsten)" font-family="JetBrains Mono" font-size="11">
+<line stroke="var(--brushed)" stroke-width="1" x1="220" x2="550" y1="210" y2="210"></line>
+<line stroke="var(--brushed)" stroke-width="1" x1="220" x2="220" y1="20" y2="210"></line>
 <text text-anchor="middle" x="385" y="232">Aggregated Importance Score</text>
 <!-- Bar widths scaled: 0.18 = 297px, 0.16 = 264, 0.14 = 231, 0.13 = 215, 0.12 = 198 -->
-<text fill="#F5F5F7" text-anchor="end" x="210" y="44">Gaze to Face %</text>
-<rect fill="#0F3A6B" height="22" width="297" x="220" y="30"></rect>
-<text fill="#3866A0" x="527" y="46">0.18</text>
-<text fill="#F5F5F7" text-anchor="end" x="210" y="74">Phrase Repetition Rate</text>
-<rect fill="#3866A0" height="22" width="264" x="220" y="60"></rect>
-<text fill="#3866A0" x="494" y="76">0.16</text>
+<text fill="var(--platinum)" text-anchor="end" x="210" y="44">Gaze to Face %</text>
+<rect fill="var(--phthalo)" height="22" width="297" x="220" y="30"></rect>
+<text fill="var(--phthalo-lift)" x="527" y="46">0.18</text>
+<text fill="var(--platinum)" text-anchor="end" x="210" y="74">Phrase Repetition Rate</text>
+<rect fill="var(--phthalo-lift)" height="22" width="264" x="220" y="60"></rect>
+<text fill="var(--phthalo-lift)" x="494" y="76">0.16</text>
 <text text-anchor="end" x="210" y="104">Joint Attention Bids</text>
-<rect fill="#3866A0" height="22" width="231" x="220" y="90"></rect>
-<text fill="#3866A0" x="461" y="106">0.14</text>
+<rect fill="var(--phthalo-lift)" height="22" width="231" x="220" y="90"></rect>
+<text fill="var(--phthalo-lift)" x="461" y="106">0.14</text>
 <text text-anchor="end" x="210" y="134">Response to Name Latency</text>
-<rect fill="#3866A0" height="22" width="215" x="220" y="120"></rect>
-<text fill="#3866A0" x="445" y="136">0.13</text>
+<rect fill="var(--phthalo-lift)" height="22" width="215" x="220" y="120"></rect>
+<text fill="var(--phthalo-lift)" x="445" y="136">0.13</text>
 <text text-anchor="end" x="210" y="164">Functional Play %</text>
-<rect fill="#3866A0" height="22" width="198" x="220" y="150"></rect>
-<text fill="#3866A0" x="428" y="166">0.12</text>
+<rect fill="var(--phthalo-lift)" height="22" width="198" x="220" y="150"></rect>
+<text fill="var(--phthalo-lift)" x="428" y="166">0.12</text>
 </g>
 </svg></div></div></p>
 <p>FIG. 04 Top-five aggregated feature importance across the supervised models. The ranking mirrors the ADOS-2 algorithm&#39;s own weighting of social communication features and aligns with published cross-language biomarker work on prosodic and speech-rhythm features.</p>
@@ -553,7 +553,7 @@ consensus = meta.predict_proba(X_meta)[:, 1]
 </section>
 
 <!-- SECTION 6: One analytical run, two stakeholder-specific reports -->
-<section class="band band--paper" data-spine="One analytical run, " data-section="One analytical run, two stakeholder-specific reports">
+<section class="band band--dark" data-spine="One analytical run, " data-section="One analytical run, two stakeholder-specific reports">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">One analytical run, two stakeholder-specific reports</h2>
 <p>The second architectural commitment of this pipeline is that the output layer should not produce a single report that tries to serve everyone. It produces two: a research report for the ML team that owns the model and a clinical report for the clinician who ordered the assessment. Both reports derive from the same underlying analytical run; they differ in what they surface, how they surface it, and what they expect the reader to do with it. A single shared report would have served neither audience well, because the questions an ML reviewer needs answered are not the questions a clinician needs answered, and conflating them produces output that is too technical to be clinically useful and too vague to be technically auditable.</p>
@@ -573,43 +573,43 @@ consensus = meta.predict_proba(X_meta)[:, 1]
 <p>This is a synthetic-data pipeline. Real ADOS-2 data is protected, scarce, and not appropriate for a portfolio demonstration. Every claim about model performance in this article is a claim about the model&#39;s behavior on data deliberately engineered to parallel the complexity, overlap, ambiguity, and noise of real clinical observations, and the validator&#39;s job is to keep that parallelism intact when the simulation tries to drift toward separability. The cross-validated 0.891 number lands in published clinical ranges, which is the right kind of evidence that the simulation reflects the difficulty of the actual problem; it is not evidence that the system would generalize to real patients. Out-of-sample validation on real ADOS-2 data is the work that has to happen before any conclusion about clinical utility, and that work is not in scope here.</p>
 <p>The system also reduces each session to a vector of aggregate behavioral counts. Total social smiles, average response latency, percent time gaze-on-face. Aggregates lose temporal sequence, and temporal sequence is where a lot of clinical signal lives. A social smile that occurs one second after a clinician initiates a joint attention bid is clinically different from a smile that occurs at random. The ADOS-2 itself is built around the timing of behavioral contingencies, not just their frequencies. A temporally-aware version of this pipeline would extract event sequences rather than aggregate counts, and the architecture would have to change to handle that.</p>
 <p><div class="figure reveal"><div class="frame"><svg style="width:100%; height:auto;" viewBox="0 0 800 180" xmlns="http://www.w3.org/2000/svg">
-<g fill="#A1A1A6" font-family="JetBrains Mono" font-size="11">
-<line stroke="#333" stroke-width="2" x1="50" x2="750" y1="140" y2="140"></line>
+<g fill="var(--tungsten)" font-family="JetBrains Mono" font-size="11">
+<line stroke="var(--brushed)" stroke-width="2" x1="50" x2="750" y1="140" y2="140"></line>
 <text text-anchor="middle" x="400" y="165">Time (Seconds)</text>
-<text fill="#F5F5F7" font-weight="bold" x="50" y="45">Clinician Actions</text>
-<line stroke="#222" stroke-linecap="round" stroke-width="20" x1="200" x2="750" y1="40" y2="40"></line>
-<text fill="#F5F5F7" font-weight="bold" x="50" y="105">Patient Responses</text>
-<line stroke="#222" stroke-linecap="round" stroke-width="20" x1="200" x2="750" y1="100" y2="100"></line>
-<circle cx="300" cy="40" fill="#0F3A6B" r="6"></circle>
-<text fill="#3866A0" text-anchor="middle" x="300" y="20">Joint Attention Bid</text>
-<circle cx="450" cy="100" fill="#DBA844" r="6"></circle>
-<text fill="#DBA844" text-anchor="middle" x="450" y="125">Social Smile</text>
-<path d="M 300 46 C 300 80, 450 60, 450 94" fill="none" stroke="#DBA844" stroke-dasharray="4 4" stroke-width="2"></path>
-<rect fill="#161616" height="20" rx="2" stroke="#333" width="60" x="345" y="60"></rect>
-<text fill="#F5F5F7" font-size="10" text-anchor="middle" x="375" y="74">1.2 sec</text>
+<text fill="var(--platinum)" font-weight="bold" x="50" y="45">Clinician Actions</text>
+<line stroke="var(--graphite)" stroke-linecap="round" stroke-width="20" x1="200" x2="750" y1="40" y2="40"></line>
+<text fill="var(--platinum)" font-weight="bold" x="50" y="105">Patient Responses</text>
+<line stroke="var(--graphite)" stroke-linecap="round" stroke-width="20" x1="200" x2="750" y1="100" y2="100"></line>
+<circle cx="300" cy="40" fill="var(--phthalo)" r="6"></circle>
+<text fill="var(--phthalo-lift)" text-anchor="middle" x="300" y="20">Joint Attention Bid</text>
+<circle cx="450" cy="100" fill="var(--hansa)" r="6"></circle>
+<text fill="var(--hansa)" text-anchor="middle" x="450" y="125">Social Smile</text>
+<path d="M 300 46 C 300 80, 450 60, 450 94" fill="none" stroke="var(--hansa)" stroke-dasharray="4 4" stroke-width="2"></path>
+<rect fill="var(--charcoal)" height="20" rx="2" stroke="var(--brushed)" width="60" x="345" y="60"></rect>
+<text fill="var(--platinum)" font-size="10" text-anchor="middle" x="375" y="74">1.2 sec</text>
 </g>
 </svg></div></div></p>
 <p>FIG. 05 The temporal contingency the current aggregate-count features cannot see. Frequencies preserve how often a behavior occurs but not whether it occurs in response to a clinician&#39;s bid, which is the relationship the ADOS-2 administration was designed to elicit.</p>
 <p>Other constraints that come with the synthetic frame: the simulator&#39;s session-quality confound is parameterized to match clinically plausible failure modes, but it cannot capture every kind of real-world noise (examiner bias, cultural variation in expressive behavior, comorbid presentations that the literature has not yet characterized statistically). The model treats ASD as a binary label, while the clinical category is a spectrum with substructure the binary loses. And the dataset is 22% ASD by construction, which matches a specialty clinic referral rate but not population prevalence; in a general screening context the precision and specificity tradeoffs look different.</p>
 <p>None of these are reasons not to build the system. They are reasons to be precise about what the system is doing and what it is not. A model trained on synthetic data parallel to clinical reality, validated by an automated check that fires when the synthesis drifts toward separability, and reported with explicit uncertainty intervals next to data-quality scores is the right kind of demonstration that decision support, not decision automation, is the achievable goal in this space.</p>
 <p><div class="figure reveal"><div class="frame"><svg style="width:100%; height:auto;" viewBox="0 0 800 180" xmlns="http://www.w3.org/2000/svg">
-<g fill="#A1A1A6" font-family="JetBrains Mono" font-size="11">
-<line stroke="#333" stroke-width="2" x1="50" x2="750" y1="140" y2="140"></line>
+<g fill="var(--tungsten)" font-family="JetBrains Mono" font-size="11">
+<line stroke="var(--brushed)" stroke-width="2" x1="50" x2="750" y1="140" y2="140"></line>
 <text text-anchor="middle" x="400" y="165">Time (Seconds)</text>
 <!-- Tracks -->
-<text fill="#F5F5F7" font-weight="bold" x="50" y="45">Clinician Actions</text>
-<line stroke="#222" stroke-linecap="round" stroke-width="20" x1="200" x2="750" y1="40" y2="40"></line>
-<text fill="#F5F5F7" font-weight="bold" x="50" y="105">Patient Responses</text>
-<line stroke="#222" stroke-linecap="round" stroke-width="20" x1="200" x2="750" y1="100" y2="100"></line>
+<text fill="var(--platinum)" font-weight="bold" x="50" y="45">Clinician Actions</text>
+<line stroke="var(--graphite)" stroke-linecap="round" stroke-width="20" x1="200" x2="750" y1="40" y2="40"></line>
+<text fill="var(--platinum)" font-weight="bold" x="50" y="105">Patient Responses</text>
+<line stroke="var(--graphite)" stroke-linecap="round" stroke-width="20" x1="200" x2="750" y1="100" y2="100"></line>
 <!-- Markers -->
-<circle cx="300" cy="40" fill="#0F3A6B" r="6"></circle>
-<text fill="#3866A0" text-anchor="middle" x="300" y="20">Joint Attention Bid</text>
-<circle cx="450" cy="100" fill="#DBA844" r="6"></circle>
-<text fill="#DBA844" text-anchor="middle" x="450" y="125">Social Smile</text>
+<circle cx="300" cy="40" fill="var(--phthalo)" r="6"></circle>
+<text fill="var(--phthalo-lift)" text-anchor="middle" x="300" y="20">Joint Attention Bid</text>
+<circle cx="450" cy="100" fill="var(--hansa)" r="6"></circle>
+<text fill="var(--hansa)" text-anchor="middle" x="450" y="125">Social Smile</text>
 <!-- Connection -->
-<path d="M 300 46 C 300 80, 450 60, 450 94" fill="none" stroke="#DBA844" stroke-dasharray="4 4" stroke-width="2"></path>
-<rect fill="#161616" height="20" rx="2" stroke="#333" width="60" x="345" y="60"></rect>
-<text fill="#F5F5F7" font-size="10" text-anchor="middle" x="375" y="74">1.2 sec</text>
+<path d="M 300 46 C 300 80, 450 60, 450 94" fill="none" stroke="var(--hansa)" stroke-dasharray="4 4" stroke-width="2"></path>
+<rect fill="var(--charcoal)" height="20" rx="2" stroke="var(--brushed)" width="60" x="345" y="60"></rect>
+<text fill="var(--platinum)" font-size="10" text-anchor="middle" x="375" y="74">1.2 sec</text>
 </g>
 </svg></div></div></p>
 <p>FIG. 05 Temporal sequencing graph. Simple aggregate counts fail to capture the critical clinical latency between a clinician&#39;s bid and a child&#39;s response.</p>
@@ -619,7 +619,7 @@ consensus = meta.predict_proba(X_meta)[:, 1]
 </section>
 
 <!-- SECTION 8: References -->
-<section class="band band--paper" data-spine="References" data-section="References">
+<section class="band band--ink" data-spine="References" data-section="References">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">References</h2>
 <ul>
