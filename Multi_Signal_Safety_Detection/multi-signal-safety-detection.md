@@ -1,36 +1,40 @@
 ---
-title: Multi-Signal Safety Detection at Platform Scale
+title: "Why a Safety Detector Needs Corroboration"
 description: >-
-  Safety systems fail in two directions: missing real harm, and firing on
-  behavior that resembles harm but is not. A single classifier cannot tell them
-  apart. This is a corroboration architecture that runs concurrent signal
-  streams and maps detection confidence to enforcement scope, so decisions are
-  made with known precision rather than assumed precision.
+  A safety detector can be wrong in two directions: under-detecting real harm,
+  and over-detecting a benign look-alike in a way that causes the harm it was
+  meant to prevent. One classifier cannot tell those apart, because the harmful
+  pattern and its benign twin share words and tone. A method for running several
+  independent signals, scoring how much they agree, and scaling the enforcement
+  to that corroboration, so every decision carries a measured precision instead
+  of one signal's guess.
 category: AI Evaluation & Safety
 subcategory: Detection & Trust and Safety
 format: ESSAY
-time: 10 min read
+time: 9 min read
 author: Dr. Heather Leffew
 ---
-## Abstract
-A safety detection system can fail by under-detection, letting real harm pass, and it can fail by over-detection, firing on behavior that resembles a harmful class at the surface while being something else, and the second failure is the one most systems do not measure. Distinguishing the two requires more than a single classifier, because the harmful pattern and its benign look-alike co-occur at the level of words and tone. This essay describes a multi-signal detection architecture that runs concurrent analysis streams, requires corroboration across them before enforcement, and maps detection confidence to enforcement scope so that every decision carries known precision and recall rather than assumed values.
+## A safety detector can be wrong in two directions
+A safety detector can be wrong in two directions. It can under-detect, letting real harm through, the direction audits and red teams are built to catch. It can also over-detect, firing on something that shares surface features with a harmful class while being something else, and that second mistake can produce the very harm the detector was meant to prevent: a model that answers a person's distress with an unsolicited diagnosis is pattern-matching to care while delivering an outcome the person did not ask for (I measure that exact failure in [the Claude caretaker work](../Claude_Character_Tic/claude-character-tic.html)). One classifier cannot keep both directions honest, because the harmful pattern and its benign look-alike co-occur at the level of words and tone, so a single read of the surface cannot separate them.
 
-## Two failure directions, and the one nobody counts.
-The familiar failure of a safety system is under-detection, where harmful content passes unobstructed, and it is the failure that audits and red teams are built to find. The less-counted failure is over-detection of the wrong pattern, where a guardrail fires on behavior that resembles its target class but is not, and in doing so produces the harm it was meant to prevent. A model that answers a person's conversational distress with unsolicited therapeutic framing is an instance of the second failure, because the response pattern shares surface features with care while delivering an outcome the person did not ask for and did not benefit from.
+## One signal has a predictable blind spot
+Driving detection from a single signal builds in a predictable error. Sentiment polarity alone misses posts that are flat in tone while describing real harm; lexical co-occurrence alone flags posts that mention harm-adjacent terms with nothing harmful behind them. Each signal is fragile in its own way, so running detection on any one of them hands the enforcement decision to whichever blind spot that signal happens to have.
 
-## A single signal cannot carry an enforcement decision.
-Driving detection from one signal guarantees a predictable error, since sentiment polarity alone misses posts that are neutral in tone while describing real harm, and lexicon co-occurrence alone flags posts that mention harm-adjacent terms without any harmful content. The architecture therefore runs concurrent analysis streams and requires agreement across them before it draws a conclusion, which is the structural property that prevents any one fragile signal from setting an enforcement outcome. Corroboration is the design principle, because the cases that matter are exactly the cases where one signal is confident and wrong.
+## Run several signals and score their agreement
+The detector runs several independent streams over the same content: a sentiment and affect read, a lexical co-occurrence check against curated harm-related and intervention-related vocabularies, structural and behavioral features, and relational or network signals where the data supports them. It then scores how much the streams agree rather than taking a majority vote. A flag is as strong as the corroboration behind it, so a case where one stream is confident and the others stay silent is treated as the weak signal it is. Independent streams also make a flag legible: it arrives with the specific streams that agreed, which is what a human reviewer needs to act on it with any confidence.
 
-## Four concurrent streams, scored for agreement.
-The detection design runs multiple independent streams over the same content, combining sentiment and affect, lexical co-occurrence against curated harm-related and intervention-related vocabularies, structural and behavioral features, and network or relational signals where the data supports them. Each stream produces its own read, and the system scores the agreement among them rather than trusting a majority vote, so a detection is only as strong as the corroboration behind it. Building detection from independent streams also makes the system legible, since a flagged item arrives with the specific streams that agreed, which is what an enforcement reviewer needs to act with confidence.
+## Scale the enforcement to the confidence
+A detection score does something only when it connects to an action, so the detector maps the corroboration confidence to the scope of the enforcement, holding the heaviest actions for the highest-corroboration cases. A low-corroboration signal can drive a light response, a soft prompt or a place in a review queue, while a high-corroboration signal can support a decisive one, and both are taken with a measured precision behind them instead of an assumed threshold. With that mapping a system can run at scale without treating every flag as equally certain, where a single threshold for everything forces a choice between drowning reviewers in low-confidence flags and missing the high-confidence ones.
 
-## Map confidence to enforcement scope.
-A detection score is only useful when it is connected to a decision, so the architecture uses a three-scenario decision frame that maps detection confidence to the scope of enforcement, reserving the heaviest actions for the highest-corroboration cases. Tying scope to confidence means a low-corroboration signal can inform a lightweight response while a high-corroboration signal supports a decisive one, and both decisions are made with measured precision rather than with an assumed threshold. The frame turns a detection score into a governance rule, which is the step that lets a system operate at scale without treating every flag as equally certain.
+## What the method is, underneath
+This is a discipline for using the detectors you already have: you accept that any single signal is fragile, you require several of them to agree, you score that agreement instead of counting votes, and you let the strength of the agreement decide how hard you act. What you get back is an enforcement decision you can put a number on, rather than one signal's confident guess. The same shape shows up wherever a single read is too fragile to act on alone, which is why it sits next to the [agentic experience suite](../Agentic_Experience_Evaluation/agentic-experience-evaluation.html), where several weak signals of dissatisfaction are combined the same way.
 
-## A worked example, and where the method generalizes.
-The method was exercised on a corpus of roughly a thousand public posts discussing a specific model's guardrail behavior, where a substantial share of posts expressing harm-related language also carried language associated with the model's helpfulness interventions, which indicated a systemic pattern rather than scattered incidents. Reading that co-occurrence is what surfaced the over-detection failure mode, since the model's well-intended intervention was itself the behavior the corpus was reacting to. The architecture generalizes wherever corroboration across signals and a confidence-to-enforcement mapping are needed at scale, because the throughline is the same one that governs the rest of this work: observe the behavioral and linguistic outputs, extract the implicit signals, require them to corroborate, and let measured confidence set the response.
+## Related
+- [The Constitution Your LLM App Already Has](../Constitutional_AI_Defense/constitutional-ai-defense.html), the spec that says which outputs a corroborated detection is enforcing against.
+- [A Recipe for Shipping AI Guardrails (without experimenting on your users)](../AI_Safety_Audit_Framework/ai-safety-audit-framework.html), how to measure a detector's catch rate and over-refusal before it ships.
+- [When Anthropic's Claude Takes the Wheel](../Claude_Character_Tic/claude-character-tic.html), the over-detection failure mode (help that lands as harm) measured in a deployed model.
 
 ## References
-- Markov, T., et al. (2023). *A holistic approach to undesired content detection in the real world*. AAAI.
-- Hutto, C., & Gilbert, E. (2014). *VADER: A parsimonious rule-based model for sentiment analysis of social media text*. ICWSM.
-- Pennebaker, J. W., et al. (2015). *The development and psychometric properties of LIWC*. University of Texas at Austin.
+- Markov, T., et al. (2023). *A holistic approach to undesired content detection in the real world.* AAAI.
+- Hutto, C., & Gilbert, E. (2014). *VADER: A parsimonious rule-based model for sentiment analysis of social media text.* ICWSM.
+- Pennebaker, J. W., et al. (2015). *The development and psychometric properties of LIWC.* University of Texas at Austin.
