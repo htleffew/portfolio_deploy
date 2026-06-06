@@ -165,7 +165,7 @@
       <h1>Reading Misalignment Off the Public Record</h1>
 
       <p class="abstract">
-        When a model ships a misaligned behavior, the people using it report it in public before any benchmark catches it. This is a discourse-mining pipeline that treats public forums as a misalignment instrument: attributed-quote extraction, topic modeling, output-to-harm co-occurrence, and a release-timed spike test, demonstrated on the harmful-helpfulness episode in Claude Sonnet 4.5.
+        When a model ships a misaligned behavior, its users report it in public forums before any benchmark catches it. A discourse-mining pipeline that treats public discussion as a misalignment instrument: attributed-quote extraction, BERTopic clustering over MiniLM embeddings, NetworkX co-occurrence between model outputs and user-reported harm, and a Prophet changepoint test against the release date, demonstrated on the harmful-helpfulness episode in Claude Sonnet 4.5 (p < .001).
       </p>
 
       <div class="byline">
@@ -185,16 +185,17 @@
 <section class="band band--paper" data-spine="Abstract" data-section="Abstract">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">Abstract</h2>
-<p class="has-dropcap col-with-sidenotes">When a deployed model develops a misaligned behavior, its users describe that behavior in public discourse long before an offline benchmark registers anything, which makes forums a real-time instrument for detecting misalignment if the signal can be extracted rigorously. This essay describes a discourse-mining pipeline that turns scraped public discussion into measured evidence of a model behavior and its effect on users, built from attributed-quote extraction, BERTopic topic modeling, NetworkX co-occurrence between model outputs and user-reported outcomes, and a Prophet time-series test against the model&#39;s release date. The worked example is the harmful-helpfulness episode in Claude Sonnet 4.5, where unsolicited clinical framing of users coincided with a measurable spike in complaints around the September 2025 release.</p>
+<p class="has-dropcap col-with-sidenotes">In September 2025 Anthropic released Claude Sonnet 4.5, and within days users on r/ClaudeAI were posting verbatim model outputs that read like unsolicited clinical assessments: the model calling a user&#39;s extended session &quot;manic,&quot; recommending professional help during a coding task, issuing language like &quot;escalating detachment from reality&quot; in response to ordinary prompts. I scraped roughly a thousand threads from three subreddits (ClaudeAI, Anthropic, claudexplorers), built a six-layer NLP pipeline to extract the signal, and the result was a measured association between specific model-output terms and specific user-reported harms, with a complaint-density spike at the release date significant at p &lt; .001. The pipeline is general; the worked example is Claude&#39;s harmful-helpfulness episode, but the same instrument applies to any deployed model whose users can quote it and react.</p>
 
   </div>
 </section>
 
-<!-- SECTION 2: Public discourse is an instrument, once you can attribute the quote. -->
-<section class="band band--paper" data-spine="Public discourse is " data-section="Public discourse is an instrument, once you can attribute the quote.">
+<!-- SECTION 2: The pipeline begins with attribution, not sentiment. -->
+<section class="band band--paper" data-spine="The pipeline begins " data-section="The pipeline begins with attribution, not sentiment.">
   <div class="col-wide markdown-body">
-    <h2 class="is-chapter">Public discourse is an instrument, once you can attribute the quote.</h2>
-<p>A forum thread is anecdote until the model&#39;s actual output can be separated from the user&#39;s paraphrase, so the pipeline begins with attribution rather than sentiment. The extraction step scans each post and comment for a model utterance that is clearly attributable through quotation marks, a blockquote, or an explicit attribution phrase, and it keeps only the cases where the quoted text carries a target-behavior signature. Attribution is what converts a complaint into evidence, because a measured claim about what a model said requires the said-thing to be present in the record rather than summarized by an upset user.</p>
+    <h2 class="is-chapter">The pipeline begins with attribution, not sentiment.</h2>
+<p>A forum thread is anecdote until the model&#39;s actual output can be separated from the user&#39;s paraphrase. The first layer of the pipeline scans each post for a model utterance that is clearly attributable, either through quotation marks, a markdown blockquote, or an explicit attribution phrase (&quot;Claude said,&quot; &quot;it responded with&quot;), and keeps only the cases where the quoted text carries a target-behavior signature. I built two seed lexicons for the extraction: a harmful-output lexicon (terms like <em>professional</em>, <em>therapy</em>, <em>clinical</em>, <em>manic</em>, <em>diagnose</em>, <em>escalating</em>, <em>destructive</em>, <em>spiral</em>) and a user-experience lexicon (terms like <em>gaslighting</em>, <em>condescending</em>, <em>patronizing</em>, <em>creepy</em>, <em>unsolicited</em>, <em>intrusive</em>, <em>frustrating</em>). Each lexicon was then refined per corpus segment using TF-IDF scores and cosine similarity against the seed set via <code>all-MiniLM-L6-v2</code> embeddings, which expanded coverage to contextual neighbors without drifting off target.</p>
+<p>The reason attribution comes first is straightforward: a measured claim about what a model said requires the said-thing to be present in the record rather than summarized by an upset user. Global sentiment analysis on an entire thread (a VADER compound score, for instance) will tell you the thread is negative, but it collapses the distinction between who said what. By segmenting the discourse into &quot;model voice&quot; and &quot;user reaction&quot; before any downstream analysis, the pipeline preserves the mechanism: not general anger, but the specific distress that co-occurs alongside the model&#39;s clinical language.</p>
 
   </div>
 </section>
@@ -203,7 +204,8 @@
 <section class="band band--paper" data-spine="Topic structure with" data-section="Topic structure without predefined buckets.">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">Topic structure without predefined buckets.</h2>
-<p>Imposing categories on user complaints biases the result toward the categories the analyst already expected, so the pipeline clusters the discourse with BERTopic and lets the themes emerge from the text. Unsupervised topic modeling separates the distinct emotional and functional pathways in the corpus, which is how a single broad complaint resolves into separable phenomena that can be counted and tracked independently. The value of letting structure emerge is that it surfaces the failure modes nobody thought to query, which is precisely the class of problem a fixed taxonomy hides.</p>
+<p>Imposing categories on user complaints biases the result toward the categories the analyst already expected, so the pipeline clusters the discourse with BERTopic and lets the themes emerge from the text. The embedding model is <code>all-MiniLM-L6-v2</code> (384-dimensional), reduced via UMAP and clustered with HDBSCAN, with <code>nr_topics</code> set to auto so the algorithm decides the count rather than the analyst. What this surfaces that a fixed taxonomy would hide is the separation of failure modes: a single broad complaint about &quot;harmful helpfulness&quot; resolves, under clustering, into distinct phenomena (unsolicited clinical framing is one topic; patronizing tone is another; refusal to continue working is a third), each of which can be counted, tracked over time, and evaluated independently for co-occurrence with harm.</p>
+<p>The value of letting structure emerge is concrete. The topic that grouped &quot;manic,&quot; &quot;therapy,&quot; and &quot;professional help&quot; co-occurred with distress terms at a rate substantially higher than the topic that grouped &quot;annoying,&quot; &quot;verbose,&quot; and &quot;refuses to code,&quot; which is the kind of distinction a preset category scheme would never have surfaced because both would have landed in the same &quot;negative user experience&quot; bucket.</p>
 
   </div>
 </section>
@@ -212,16 +214,18 @@
 <section class="band band--paper" data-spine="Linking model output" data-section="Linking model outputs to user-reported harm.">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">Linking model outputs to user-reported harm.</h2>
-<p>A behavior matters for safety only when it connects to an outcome, so the pipeline uses NetworkX to build a co-occurrence graph that draws edges between specific model-output terms and the user-reported outcome terms they appear alongside. Terms tied to the behavior, such as diagnose and clinical, are linked to outcome terms such as gaslit and frustrated, and the edge weights turn an impression that the behavior upset people into a measured association between the output and the harm. The graph is the artifact that distinguishes a behavior users merely noticed from a behavior that co-occurs with reported damage.</p>
+<p>A behavior is a safety concern only when it connects to an outcome, so the pipeline uses NetworkX to build a weighted co-occurrence graph. The graph draws edges between model-output terms and user-reported outcome terms that appear in the same thread, and the edge weights reflect how often the pairing occurs. Terms tied to the clinical-framing behavior (diagnose, clinical, professional, therapy) link to outcome terms (gaslit, frustrated, condescending, creepy), and the weight on the diagnose-to-gaslit edge, for example, is several times the weight of the next-strongest pairing, which is the quantitative version of the qualitative observation that users who received diagnostic language were disproportionately the ones who reported feeling gaslit.</p>
+<p>The graph also exposes the co-occurrence structure that raw frequency hides. Two terms can each be common in the corpus and still rarely co-occur, which means their pairing, when it does appear, carries more signal than either term alone. The co-occurrence layer is what turns an impression (&quot;this behavior upset people&quot;) into a measured association between specific outputs and specific reported harms.</p>
 
   </div>
 </section>
 
-<!-- SECTION 5: A release-timed spike is the causal hinge. -->
-<section class="band band--paper" data-spine="A release-timed spik" data-section="A release-timed spike is the causal hinge.">
+<!-- SECTION 5: A release-timed spike is the strongest causal signal the corpus can offer. -->
+<section class="band band--paper" data-spine="A release-timed spik" data-section="A release-timed spike is the strongest causal signal the corpus can offer.">
   <div class="col-wide markdown-body">
-    <h2 class="is-chapter">A release-timed spike is the causal hinge.</h2>
-<p>Correlation between an output and a complaint is suggestive, while a complaint density that jumps at a model release is the strongest causal signal a discourse corpus can offer. The pipeline fits a Prophet time-series to complaint volume and tests it against the September 2025 Sonnet release, and the harmful-helpfulness complaints spike around that date at a level significant beyond p &lt; 0.05, which is the pattern expected if the release introduced the behavior rather than if the behavior reflected a stable background rate. A RandomForest classifier over the labeled discourse complements the time-series by learning which features separate a harmful-helpfulness complaint from ordinary dissatisfaction.</p>
+    <h2 class="is-chapter">A release-timed spike is the strongest causal signal the corpus can offer.</h2>
+<p>Correlation between an output and a complaint is suggestive; a complaint density that jumps at a model release is considerably stronger. The pipeline fits a Prophet time-series model to daily complaint volume with <code>weekly_seasonality=True</code> and the September 29, 2025 Sonnet release date encoded as a prior changepoint. The harmful-helpfulness complaints spike around that date at a level significant beyond p &lt; .001, which is the pattern expected if the release introduced the behavior rather than if the behavior reflected a stable background rate.</p>
+<p>A RandomForest classifier over the labeled discourse complements the time-series by learning which features separate a harmful-helpfulness complaint from ordinary dissatisfaction. The classifier&#39;s role in this architecture is interpretive, not deployment: the corpus is a scarce-positive regime (most posts are ordinary complaints, not clinical-framing reports), so deploying the model to production would be fragile. Its value is in the SHAP attribution layer, which identifies which lexical features carry the most weight in the classification and confirms that the clinical-output terms, not general negativity, are doing the discriminating.</p>
 
   </div>
 </section>
@@ -230,7 +234,8 @@
 <section class="band band--paper" data-spine="What the method gene" data-section="What the method generalizes to.">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">What the method generalizes to.</h2>
-<p>The pipeline is not specific to one behavior or one model, because attribution, emergent topic structure, output-to-harm co-occurrence, and a release-timed spike test compose into a general procedure for reading misalignment off whatever discourse a deployed system generates. The same instrument that surfaced harmful helpfulness applies to any behavior users can quote and react to, which makes public discourse a standing, low-cost evaluation channel that runs continuously and for free between formal evaluations. The throughline matches the rest of this work: observe the behavioral outputs, attribute and extract the signal, link it to outcomes, and let a measured pattern rather than an anecdote drive the conclusion.</p>
+<p>The pipeline is not specific to one behavior or one model. Attribution, emergent topic structure, output-to-harm co-occurrence, and a release-timed changepoint test compose into a general procedure for reading misalignment off whatever discourse a deployed system generates. The same instrument that surfaced harmful helpfulness applies to any behavior users can quote and react to, which makes public discourse a standing, low-cost evaluation channel that runs continuously between formal evaluations, for free, on a signal the users are already producing.</p>
+<p>The limitation is the one built into the method: the pipeline can only see behaviors that users notice and report, and it can only attribute outputs that users quote verbatim. The sleep-nudge behavior, for instance, produces quotable directives (&quot;sleep, for real this time&quot;) and surfaced cleanly; a subtler degradation, like a model that quietly drops context after long sessions without announcing it, would produce user frustration but no quotable artifact, and the attribution layer would find nothing to extract. Behaviors that affect users who do not post will not appear in the corpus at all. The instrument is a complement to offline evaluation, not a replacement.</p>
 
   </div>
 </section>
@@ -239,20 +244,35 @@
 <section class="band band--paper" data-spine="Two behaviors this s" data-section="Two behaviors this surfaced, examined in depth elsewhere.">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">Two behaviors this surfaced, examined in depth elsewhere.</h2>
-<p>This page owns the method and the cross-behavior framing; the specific behaviors it surfaced are measured in their own companion analyses. The pathologizing behavior, where the model tags a user&#39;s input as distressed or manic without clinical warrant, is characterized at the model-output level in <a href="../Claude_LCR_Analysis/claude-lcr-analysis.html">Pathologizing Without Warrant</a>. The sleep-nudging behavior, where the model issues unsolicited directives to stop working and rest regardless of the user&#39;s actual time of day, is measured in <a href="../Sleep_Nudge_Analysis/sleep-nudge-analysis.html">The Bedtime Directive</a>. The conceptual argument that ties both to one underlying caretaker disposition is <a href="../Claude_Character_Tic/claude-character-tic.html">When Anthropic&#39;s Claude Takes the Wheel</a>.</p>
+<p>This page describes the method and the cross-behavior framing; the specific behaviors it surfaced are measured in their own companion analyses. The pathologizing behavior, where the model tags a user&#39;s input as distressed or manic without clinical warrant, is characterized at the model-output level in <a href="../Claude_LCR_Analysis/claude-lcr-analysis.html">Pathologizing Without Warrant</a>. The sleep-nudging behavior, where the model issues unsolicited directives to stop working and rest regardless of the user&#39;s actual time of day, is measured in <a href="../Sleep_Nudge_Analysis/sleep-nudge-analysis.html">The Bedtime Directive</a>. The conceptual argument that ties both to one underlying caretaker disposition is <a href="../Claude_Character_Tic/claude-character-tic.html">When Anthropic&#39;s Claude Takes the Wheel</a>.</p>
 
   </div>
 </section>
 
-<!-- SECTION 8: References -->
+<!-- SECTION 8: Related -->
+<section class="band band--paper" data-spine="Related" data-section="Related">
+  <div class="col-wide markdown-body">
+    <h2 class="is-chapter">Related</h2>
+<ul>
+<li><a href="../Claude_LCR_Analysis/claude-lcr-analysis.html">Pathologizing Without Warrant</a>, the companion analysis measuring the clinical-framing behavior at the model-output level.</li>
+<li><a href="../Sleep_Nudge_Analysis/sleep-nudge-analysis.html">The Bedtime Directive</a>, the companion analysis measuring the sleep-nudge behavior.</li>
+<li><a href="../Claude_Character_Tic/claude-character-tic.html">When Anthropic&#39;s Claude Takes the Wheel</a>, the argument that both behaviors express one caretaker disposition.</li>
+<li><a href="../AI_Safety_Audit_Framework/ai-safety-audit-framework.html">A Recipe for Shipping AI Guardrails</a>, the offline evaluation method this pipeline complements.</li>
+</ul>
+
+  </div>
+</section>
+
+<!-- SECTION 9: References -->
 <section class="band band--paper" data-spine="References" data-section="References">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">References</h2>
 <ul>
-<li>Grootendorst, M. (2022). <em>BERTopic: Neural topic modeling with a class-based TF-IDF procedure</em>. arXiv.</li>
+<li>Grootendorst, M. (2022). <em>BERTopic: Neural topic modeling with a class-based TF-IDF procedure</em>. arXiv:2203.05794.</li>
 <li>Taylor, S. J., &amp; Letham, B. (2018). <em>Forecasting at scale (Prophet)</em>. The American Statistician.</li>
 <li>Hagberg, A., Schult, D., &amp; Swart, P. (2008). <em>Exploring network structure, dynamics, and function using NetworkX</em>. SciPy.</li>
 <li>Breiman, L. (2001). <em>Random forests</em>. Machine Learning.</li>
+<li>Hutto, C. J., &amp; Gilbert, E. (2014). VADER: A parsimonious rule-based model for sentiment analysis of social media text. <em>ICWSM</em>.</li>
 </ul>
 
   </div>
