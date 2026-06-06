@@ -100,6 +100,9 @@ NPA and PA can be neurobiologically differentiated from each other and from the 
 
 Treating both NPA and PA as dimensional rather than categorical conditions has a clinical consequence: neither group represents persons who are wholly, fundamentally, and unchangeably different from the rest of the population, and group-specific protocols become a coherent design goal. The implication for future research is the development of NPA interventions aimed at improving executive functioning and neural connectivity while down-regulating affective reactivity, and PA interventions aimed at addressing affective deficits, impaired aversive learning, and limited receptivity to conditioning. The cost basis of psychopathy alone justifies the work.
 
+## Related
+- [Instrumental and Affective Mass Murder](../Instrumental_and_Affective_Mass_Murder/doctoral-dissertation.html), the same impulsive/instrumental dichotomy applied to pre-attack linguistic data, with K-means clustering that recovers the two types behaviorally.
+
 ## References
 
 Amen, D. G., Stubblefield, M., Carmichael, B., & Thisted, R. (1996). Brain SPECT findings and aggressiveness. *Annals of Clinical Psychiatry, 8*(3), 129-137.

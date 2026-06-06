@@ -75,7 +75,10 @@ Trait measurement also benefits. Linguistic analysis of narratives can different
 
 The card-level effects in section 03 suggest a way to put more structure on TAT interpretation. If each card pulls reliably for a known set of LIWC variables, then those variables can function as the card's measurement axes. A respondent's score on each axis can be compared against a card-specific norm metric rather than a global one. Is this person's response to Card 3BM unusually sad compared to other people's responses to Card 3BM? Does the same elevation show up across their full protocol? Does it line up with a current or historical diagnosis?
 
-The framing is closer to continuous manifest-variable item response than to traditional projective scoring. Each card is treated as its own measure with its own threshold; the whole protocol is treated as a larger measure built from those item-level scores. The clinician stays in the loop, since LIWC cannot read irony, idiom, or the contextual oddness of a narrative that earns clinical attention through its strangeness rather than its frequency counts. But the diagnostic pathway gains a quantitative spine the TAT has not historically had.
+The framing is closer to continuous manifest-variable item response than to traditional projective scoring. Each card is treated as its own measure with its own threshold; the whole protocol is treated as a larger measure built from those item-level scores. The clinician stays in the loop, since LIWC cannot read irony, idiom, or the contextual oddness of a narrative that draws clinical attention through its strangeness rather than its frequency counts. But the diagnostic pathway gains a quantitative spine the TAT has not historically had.
+
+## Related
+- [Implicit Power Drives in the Manifestos Preceding Autogenic Massacres](../Implicit_Power_Drives/implicit-power-drives.html), the same LIWC methodology applied to forensic text, scoring manifestos against published baseline rates on the power dimension.
 
 ## References
 

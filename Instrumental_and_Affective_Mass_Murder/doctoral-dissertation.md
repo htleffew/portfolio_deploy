@@ -114,7 +114,7 @@ Instrumental (LIWC percentile)
 
 Behavioral Predictions
 
-Can the words an attacker writes months before an event actually effectively predict the tactical specifics of the attack itself? To answer this, we formulated six hypotheses to map these linguistic clusters directly to physical outcomes. We wanted to see if the language alone could act as a leading indicator for how an attack would unfold.
+Six hypotheses mapped the linguistic clusters to physical attack outcomes, testing whether the language in a pre-attack communication predicts how the event unfolds.
 
 H1
 
@@ -201,7 +201,7 @@ CHI-SQUARED(4) = 32.52  ·  P < .001  ·  McFADDEN R² = 0.24
 
 Type Exemplars
 
-The difference between these two clusters is starkest when we look at extreme, real-world examples. Matthew Murray's pre-attack writings represent the absolute limit of the Affective Type - highly personal, emotionally raw, and deeply focused on his own perceived mistreatment. Conversely, Anders Breivik represents the maximum bound of the Instrumental Type. His 1,500-page manifesto is completely devoid of personal emotional disclosure, reading instead like a cold, algorithmic political document.
+Matthew Murray and Anders Breivik sit at opposite poles of the two clusters. Murray's pre-attack writings represent the limit of the Affective Type: highly personal, emotionally raw, focused on his own perceived mistreatment. Breivik's 1,500-page manifesto is the Instrumental limit: no personal emotional disclosure, structured as a political treatise with chapter headings and citation conventions.
 
 Affective Type
 
@@ -263,6 +263,13 @@ Institutional Implementation Scenario
 
 A university threat assessment team is presented with what appears to be a pre-attack communication composed by a student. Running the text through the LIWC summary variables and applying the cluster model classifies the author as Affective. The team then knows the author is more likely to attack a location with personal connection (potentially the campus itself), more likely to commit suicide at the conclusion, and likely to be in an acute emotional state. Response shifts accordingly: target hardening of the connected location, mental-health-led de-escalation rather than counter-terror posture.
 
-The same model applied to an Instrumental classification points elsewhere: lower likelihood of personal connection to attack location, higher likelihood of demographic-based targeting, substantially higher likelihood that the attack continues until the perpetrator is apprehended or killed by another person. The two response postures are not interchangeable.
+The same model applied to an Instrumental classification points elsewhere: lower likelihood of personal connection to attack location, higher likelihood of demographic-based targeting, substantially higher likelihood that the attack continues until the perpetrator is apprehended or killed by another person. The two response postures require different resources, different personnel, and different timelines.
+
+## Related
+- [Implicit Power Drives in the Manifestos Preceding Autogenic Massacres](../Implicit_Power_Drives/implicit-power-drives.html), the 2017 exploratory study on LIWC power language in manifestos that seeded this dissertation's variable selection.
+- [Neurobiological Differentiation of Violent Offender Types](../Neurobiological_Differentiation_Violent_Offender_Types/neurobiological-offenders.html), the same impulsive/instrumental dichotomy traced through the neuroanatomical literature rather than the linguistic one.
+- [Assessing Risk for Mass Violence From Platform Behaviors](../User_Behaviors_Mass_Violence/assessing-mass-violence-risk.html), the threat-assessment literature and warning-behavior framework that this typology feeds into operationally.
+
+## Limitations
 
 Limitations stated transparently. n = 100 is small for a field with low base rates; power analysis suggests significance may be underestimated for small and moderate effects. Stephen Paddock (Las Vegas, 2017) and other perpetrators who left no pre-attack communications are necessarily excluded. The within-sample classification accuracy of 100% is a property of the sample; out-of-sample validation on new pre-attack communications is the appropriate next step. Earlier work on increased communicated power drives in mass-murder manifestos (Leffew, 2017) was the seed for this dissertation's variable selection.
