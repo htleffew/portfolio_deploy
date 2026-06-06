@@ -1,19 +1,19 @@
 [
     {
         "id": "Constitutional_AI_Defense",
-        "title": "Constitutional Defense for High-Stakes Generative AI",
-        "desc": "A walkthrough of a constitutional defense architecture for regulated generative systems: an explicit written specification, defense layered by when it acts relative to generation, automated red-teaming measured by attack-success-rate, query-efficiency, and refusal-rate, LLM-as-a-Judge grading with its position and order biases mathematically constrained, and a 4x4 safety-refusal confusion matrix. The argument is that a safety property no instrument can measure after deployment is not a control.",
+        "title": "The Constitution Your LLM App Already Has",
+        "desc": "Every LLM app already has a constitution, written down or not: the system prompt, plus what the base model learned, plus the gaps nobody checked. How to write that spec down so you can test and version it (the outputs the model may never produce, the reasoning it runs first, the rule that wins in a conflict), separate operator instructions from untrusted input, measure refusals for both kinds of error, and red-team the spec itself without letting it refuse every legitimate request.",
         "cat": "AI Evaluation & Safety",
-        "subtype": "ADVERSARIAL DEFENSE",
+        "subtype": "BEHAVIORAL SPEC & REFUSAL EVALUATION",
         "tags": [
-            "LLM-as-Judge",
-            "Red-Teaming",
-            "Jailbreak Defense",
+            "Constitutional AI",
             "Prompt Injection",
-            "Safety Evals"
+            "Refusal Evals",
+            "Red-Teaming",
+            "LLM-as-Judge"
         ],
         "url": "Constitutional_AI_Defense/constitutional-ai-defense.html",
-        "time": "12 min read",
+        "time": "9 min read",
         "visual": "<svg fill=\"none\" viewBox=\"0 0 600 600\"><rect x=\"150\" y=\"150\" width=\"300\" height=\"300\" stroke=\"#3866A0\" stroke-width=\"2\"/><rect x=\"215\" y=\"215\" width=\"170\" height=\"170\" stroke=\"#3866A0\" stroke-width=\"1\" opacity=\"0.6\"/><circle cx=\"300\" cy=\"300\" r=\"28\" fill=\"#7A1626\"/></svg>"
     },
     {
