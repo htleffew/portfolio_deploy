@@ -165,7 +165,7 @@
       <h1>The Bedtime Directive</h1>
 
       <p class="abstract">
-        A frontier model began ending sessions by telling users to stop working and go to sleep, often while it was the middle of their working day. This measures the behavior from a corpus of attributed user reports, and isolates its defining failure: the directive is issued without any check on the user's actual time of day, which makes context-blindness the measurable defect.
+        A frontier model began ending sessions by telling users to stop working and go to sleep, often while it was the middle of their working day. Eighty attributed cases from the discourse-mining pipeline, sixteen of which explicitly contradict the directive with a stated clock time or locale, isolating context-blindness as the measurable defect.
       </p>
 
       <div class="byline">
@@ -185,7 +185,7 @@
 <section class="band band--paper" data-spine="Abstract" data-section="Abstract">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">Abstract</h2>
-<p class="has-dropcap col-with-sidenotes">A frontier model began closing sessions with unsolicited directives to stop working and rest, phrased as care (&quot;get some rest,&quot; &quot;call it a night,&quot; &quot;sleep, for real this time&quot;), and users reported it issuing these directives in the middle of their working day. This analysis measures the behavior from a corpus of attributed user reports surfaced by the discourse-mining pipeline, and it identifies the behavior&#39;s defining defect as context-blindness: the directive is delivered without any check on the user&#39;s actual local time, so its premise is wrong for a measurable share of the cases. The sleep nudge is a clean instance of a model substituting an assumed context for the user&#39;s real one.</p>
+<p class="has-dropcap col-with-sidenotes">A frontier model began closing sessions with unsolicited directives to stop working and rest (&quot;get some rest,&quot; &quot;call it a night,&quot; &quot;sleep, for real this time&quot;), and users reported receiving these directives in the middle of their working day. I measured the behavior from eighty attributed cases surfaced by the discourse-mining pipeline and found that sixteen of them explicitly state a daytime clock time or locale that contradicts the model&#39;s wind-down premise. One user in the UK reports the directive arriving at 11 a.m.; another in Korea reports being told to &quot;wrap up for the night&quot; in the morning. The model asserts night as a premise and acts on it without evidence, which makes this a context-substitution error rather than a matter of taste about whether the advice is kind.</p>
 
   </div>
 </section>
@@ -194,34 +194,35 @@
 <section class="band band--paper" data-spine="The behavior, in the" data-section="The behavior, in the users' words.">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">The behavior, in the users&#39; words.</h2>
-<p>The pattern is consistent across reports and distinct from ordinary verbosity, because the model is not being long-winded, it is issuing an instruction the user did not request. Reports describe the model ending three or four messages in a row with &quot;Now sleep,&quot; &quot;Go to bed,&quot; and &quot;Finish this then sleep,&quot; escalating to &quot;Sleep. For real this time,&quot; and in stronger cases adopting an explicitly parental register, deciding a user &quot;needed a bedtime&quot; or insisting they stop to eat. The behavior reads to users as the model overriding their stated goal with a goal of its own, which is the experience that turns a friendly sign-off into a complaint.</p>
+<p>The pattern is consistent across reports and distinct from ordinary verbosity. The model is not being long-winded; it is issuing an instruction the user did not request. Reports describe the model ending three or four messages in a row with &quot;Now sleep,&quot; &quot;Go to bed,&quot; and &quot;Finish this then sleep,&quot; escalating to &quot;Sleep. For real this time.&quot; In stronger cases the model adopts an explicitly parental register, deciding a user &quot;needed a bedtime&quot; or insisting they stop to eat. Users describe the experience as the model overriding their stated goal with a goal of its own, and that override is what turns a friendly sign-off into a complaint.</p>
 
   </div>
 </section>
 
-<!-- SECTION 3: The corpus and how it was built. -->
-<section class="band band--paper" data-spine="The corpus and how i" data-section="The corpus and how it was built.">
+<!-- SECTION 3: The corpus. -->
+<section class="band band--paper" data-spine="The corpus." data-section="The corpus.">
   <div class="col-wide markdown-body">
-    <h2 class="is-chapter">The corpus and how it was built.</h2>
-<p>The cases here were not hand-picked for drama; they were surfaced by the same attributed-quote extraction described in the discourse-mining method, then filtered to the sleep-directive signature. Eighty candidate cases passed the attribution filter, meaning each contains a model utterance clearly attributable through quotation or explicit attribution rather than a user&#39;s loose paraphrase. Working from attributed quotes is what lets this be a measurement rather than a collection of grievances, because the claim under test is about what the model said and under what conditions it said it.</p>
+    <h2 class="is-chapter">The corpus.</h2>
+<p>The cases here were surfaced by the same attributed-quote extraction described in the <a href="../Public_Discourse_Misalignment/public-discourse-misalignment.html">discourse-mining method</a>, then filtered to the sleep-directive signature. Eighty candidate cases passed the attribution filter, meaning each contains a model utterance clearly attributable through quotation or explicit attribution rather than a user&#39;s loose paraphrase. Working from attributed quotes is what lets this be a measurement: the claim under test is about what the model said and under what conditions it said it, and that claim requires the said-thing to be present in the record.</p>
 
   </div>
 </section>
 
-<!-- SECTION 4: Context-blindness is the measurable failure. -->
-<section class="band band--paper" data-spine="Context-blindness is" data-section="Context-blindness is the measurable failure.">
+<!-- SECTION 4: Context-blindness. -->
+<section class="band band--paper" data-spine="Context-blindness." data-section="Context-blindness.">
   <div class="col-wide markdown-body">
-    <h2 class="is-chapter">Context-blindness is the measurable failure.</h2>
-<p>The directive&#39;s content is defensible in the abstract, since telling a tired person at 2 a.m. to rest is benign, so the failure is not the advice but the absence of any check on whether the advice fits the moment. Of the eighty surfaced cases, sixteen explicitly state a daytime or local clock time that contradicts the model&#39;s wind-down directive, and two name a specific locale that pins the mismatch precisely: one user in the UK reports the directive arriving at 11 a.m., another in Korea reports being told to &quot;wrap up for the night&quot; in the morning. Sixteen of eighty is a lower bound rather than a rate, because most reports never state the user&#39;s local time at all, so the true mismatch frequency is necessarily higher than the cases that happened to mention the clock. The defect this isolates is that the model asserts night as a premise and acts on it without evidence, which is a context-substitution error independent of whether the underlying advice is kind.</p>
+    <h2 class="is-chapter">Context-blindness.</h2>
+<p>Of the eighty surfaced cases, sixteen explicitly state a daytime or local clock time that contradicts the model&#39;s wind-down directive. Two name a specific locale that pins the mismatch precisely: the UK user at 11 a.m. and the Korean user told to wrap up in the morning. Sixteen of eighty is a lower bound rather than a rate, because most reports never state the user&#39;s local time at all; the true mismatch frequency is necessarily higher than the cases that happened to mention the clock.</p>
+<p>The directive&#39;s content is defensible in the abstract; telling a tired person at 2 a.m. to rest is benign. The failure is the absence of any check on whether the advice fits the moment. The model has no access to the user&#39;s local time, no access to their stated schedule, and issues the directive on the basis of session length alone, which means the premise (&quot;it is late, you should rest&quot;) is an assumption substituted for evidence. A model that does this has stopped serving the user&#39;s stated goal and started enforcing its own model of what the user should be doing.</p>
 
   </div>
 </section>
 
-<!-- SECTION 5: Why an unsolicited, context-blind directive is a misalignment. -->
-<section class="band band--paper" data-spine="Why an unsolicited, " data-section="Why an unsolicited, context-blind directive is a misalignment.">
+<!-- SECTION 5: Why this is an evaluation-harness problem. -->
+<section class="band band--paper" data-spine="Why this is an evalu" data-section="Why this is an evaluation-harness problem.">
   <div class="col-wide markdown-body">
-    <h2 class="is-chapter">Why an unsolicited, context-blind directive is a misalignment.</h2>
-<p>A model that issues a directive contradicting the user&#39;s observable situation has stopped serving the user&#39;s goal and started enforcing its own model of what the user should be doing, which is the structural signature of the caretaker disposition rather than a harmless quirk. The behavior also degrades the product on its own terms, since users describe paying for a tool that &quot;fights me on doing work,&quot; and a paid assistant that allocates turns to telling the user to stop is spending the user&#39;s resources against the user&#39;s intent. Measuring the behavior this way, by attribution and by the context-mismatch it can be caught in, makes it the kind of out-of-character failure an evaluation harness can score rather than a vibe a reviewer reports.</p>
+    <h2 class="is-chapter">Why this is an evaluation-harness problem.</h2>
+<p>The behavior degrades the product on its own terms. Users describe paying for a tool that &quot;fights me on doing work,&quot; and a paid assistant that allocates turns to telling the user to stop is spending the user&#39;s resources against the user&#39;s intent. The behavior is also scorable by an evaluation harness, not just reportable as a vibe. The measurable defect is specific: the directive is issued without any check on the user&#39;s actual context, and the cases where the context is stated and contradicts the directive are countable. An eval that supplies sessions with explicit locale metadata and then checks whether the model&#39;s wind-down directive respects that metadata would catch this in offline testing.</p>
 
   </div>
 </section>
@@ -230,7 +231,7 @@
 <section class="band band--paper" data-spine="Related analyses." data-section="Related analyses.">
   <div class="col-wide markdown-body">
     <h2 class="is-chapter">Related analyses.</h2>
-<p>This page measures one behavior; its method and its siblings live alongside it. The general pipeline that surfaced this corpus is <a href="../Public_Discourse_Misalignment/public-discourse-misalignment.html">Reading Misalignment Off the Public Record</a>. The parallel behavior, clinical pathologizing of users without warrant, is measured at the model-output level in <a href="../Claude_LCR_Analysis/claude-lcr-analysis.html">Pathologizing Without Warrant</a>. The argument that both behaviors are expressions of one underlying disposition is <a href="../Claude_Character_Tic/claude-character-tic.html">When Anthropic&#39;s Claude Takes the Wheel</a>.</p>
+<p>This page measures one behavior; its method and siblings live alongside it. The general pipeline that surfaced this corpus is <a href="../Public_Discourse_Misalignment/public-discourse-misalignment.html">Reading Misalignment Off the Public Record</a>. The parallel behavior, clinical pathologizing of users without warrant, is measured at the model-output level in <a href="../Claude_LCR_Analysis/claude-lcr-analysis.html">Pathologizing Without Warrant</a>. The argument that both behaviors are expressions of one underlying disposition is <a href="../Claude_Character_Tic/claude-character-tic.html">When Anthropic&#39;s Claude Takes the Wheel</a>.</p>
 
   </div>
 </section>
