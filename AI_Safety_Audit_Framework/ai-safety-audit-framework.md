@@ -52,6 +52,11 @@ There is a real reason to keep all of this offline, beyond convenience: when the
 
 What we have gone over here is a really simple approach, which I think is the nicest thing about it, because it is patient and slightly paranoid, but that is what good model training looks like: you look at your data, you get a baseline, you stay defensive, and you never trust a green dashboard.
 
+## Related
+- [The Constitution Your LLM App Already Has](../Constitutional_AI_Defense/constitutional-ai-defense.html), the authoring side of the same problem: writing the behavioral spec this recipe then validates.
+- [Multi-Signal Safety Detection](../Multi_Signal_Safety_Detection/multi-signal-safety-detection.html), what to do when one detector is not enough to call an output a violation.
+- [Agentic Experience Evaluation](../Agentic_Experience_Evaluation/agentic-experience-evaluation.html), the same validation discipline applied to a tool-using agent.
+
 ## References
 - Perez, E., et al. (2022). *Red teaming language models with language models.* arXiv:2202.03286.
 - Chao, P., et al. (2024). *JailbreakBench: An open robustness benchmark for jailbreaking large language models.* arXiv:2404.01318.
