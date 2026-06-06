@@ -18,7 +18,7 @@
     },
     {
         "id": "Agentic_Experience_Evaluation",
-        "title": "Evaluating an Agentic Assistant as a User Experience",
+        "title": "Grading an Agent as a User Experience",
         "desc": "A six-part evaluation suite that treats agent quality as a measurable user experience built from the system's own conversation logs: a defensible task-success baseline, a grounding review that separates a real answer from a confident guess, tool-path efficiency with a cost on failed calls, linguistic signals of dissatisfaction and abandonment, latency as an experience budget, and per-segment regression that locates where the experience degrades.",
         "cat": "AI Evaluation & Safety",
         "subtype": "AGENTIC EVALS",
@@ -52,7 +52,7 @@
     },
     {
         "id": "Post_Asimovian_Alignment",
-        "title": "A Post-Asimovian Framework for Adaptive Alignment",
+        "title": "A Safety Threshold That Moves With the Context",
         "desc": "An alignment framework that reframes the swing between dangerous permissiveness and harmful over-restriction as a control problem rather than a fixed threshold. It decouples the safety constraint from preference optimization, conditions the constraint's strength on a linguistic read of the context, and proposes psycholinguistic typology discovery as the observable state variable for the controller, stating the whole proposal in quantities a team can plot, train, and score.",
         "cat": "AI Evaluation & Safety",
         "subtype": "ALIGNMENT GOVERNANCE",
@@ -69,7 +69,7 @@
     },
     {
         "id": "Multi_Signal_Safety_Detection",
-        "title": "Multi-Signal Safety Detection at Platform Scale",
+        "title": "Why a Safety Detector Needs Corroboration",
         "desc": "A corroboration architecture for safety detection that addresses both failure directions: missing real harm, and firing on behavior that resembles harm but is not. It runs concurrent analysis streams over the same content, scores their agreement rather than trusting a single fragile signal, and maps detection confidence to enforcement scope through a three-scenario decision frame, so every action carries known precision rather than an assumed threshold.",
         "cat": "AI Evaluation & Safety",
         "subtype": "DETECTION",
@@ -86,7 +86,7 @@
     },
     {
         "id": "Bounded_Autonomous_Research",
-        "title": "Evaluation-Gated Autonomous Heuristic Discovery",
+        "title": "Letting an Agent Improve Your System, Gated by Evaluation",
         "desc": "A bounded discovery loop where an agent improves a retrieval system only through changes an automated evaluation approves. Skill-based routing keeps token cost proportional to the task, unified entity evidence replaces siloed lookups so resolution draws on joint signal, and learning-to-rank versioning gates each deployment on a held-out metric, which turns open-ended optimization into a controlled experiment inside a fixed, auditable change space.",
         "cat": "AI Evaluation & Safety",
         "subtype": "AGENTIC EVALS",

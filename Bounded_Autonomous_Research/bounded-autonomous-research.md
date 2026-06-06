@@ -1,33 +1,41 @@
 ---
-title: Evaluation-Gated Autonomous Heuristic Discovery
+title: "Letting an Agent Improve Your System, Gated by Evaluation"
 description: >-
-  Letting an agent improve a retrieval system is only safe when every change it
-  proposes is scored against a held-out metric before it ships. This is a
-  bounded discovery loop: skill-based routing for token efficiency, unified
-  entity evidence instead of siloed lookups, and learning-to-rank versioning
-  where automated evaluation gates each deployment.
+  An agent that can rewrite your ranking logic is powerful and risky at the same
+  time, because a change can improve the metric it was told to optimize while
+  quietly degrading something nobody was watching. You get the power without the
+  risk by gating the autonomy on measurement, every proposed change scored
+  against a held-out metric before it ships, and by bounding what the agent is
+  allowed to touch: skill-based routing so cost tracks the task, unified
+  evidence so the evaluation has a target, and a tracked versioning history where
+  automated evaluation decides what advances.
 category: AI Evaluation & Safety
 subcategory: Agentic & Experience Evaluation
 format: ESSAY
-time: 10 min read
+time: 9 min read
 author: Dr. Heather Leffew
 ---
-## Abstract
-An agent that can rewrite the ranking logic of a retrieval system is useful and dangerous in the same breath, because the change it proposes might improve the metric it optimizes while degrading a property no one was watching. The discipline that makes the loop safe is evaluation gating, where every candidate heuristic is scored against a held-out metric before it is allowed to ship. This essay describes a bounded autonomous heuristic-discovery loop with three properties: skill-based routing that keeps token cost proportional to the task, unified entity evidence that replaces siloed lookups, and learning-to-rank versioning where an automated evaluation decides whether a new version advances or is rejected.
+## Powerful and risky at the same time
+An agent that can rewrite the ranking logic of your retrieval system is powerful and risky at the same time, because the change it proposes can improve the metric it was told to optimize while quietly degrading some property nobody was watching. You get the power without the risk by gating the autonomy on measurement: every change the agent proposes is scored against a held-out metric before it is allowed to ship, and the agent is only ever allowed to alter a finite, auditable set of things. The rest of this is what that loop looks like in practice, and it leans on the same held-out, offline evaluation as [the guardrail recipe](../AI_Safety_Audit_Framework/ai-safety-audit-framework.html) and [the agentic experience suite](../Agentic_Experience_Evaluation/agentic-experience-evaluation.html): the agent acts, the evaluation judges, and only the changes the measurement supports go live.
 
-## Token efficiency through skill-based routing.
-An agent that loads every available tool schema on every pass pays a token cost that scales with the size of the system rather than with the difficulty of the task, which makes the loop expensive precisely as it grows. Skill-based routing constrains the agent to consume only the tool schemas required for the immediate pass, so the cost of a step tracks what the step actually needs. Routing by skill is also an evaluation convenience, because a step with a known tool surface produces a trace that is far easier to score for efficiency and failure than a step with the whole arsenal in context.
+## Route by skill so cost tracks the task
+An agent that loads every tool schema on every pass pays a token cost that grows with the size of the system instead of the difficulty of the task, so the loop gets more expensive exactly as it gets more capable. Skill-based routing hands the agent only the tool schemas a given pass needs, so the cost of a step tracks what the step is actually doing. The routing pays off twice, because a step with a known, narrow tool surface leaves a trace that is far easier to score for efficiency and failure than a step that had the whole arsenal loaded.
 
-## Unified entity evidence instead of siloed lookups.
-A retrieval system that keeps each identifier in its own legacy bucket treats name, phone, email, and location as separate search lanes, which fragments the evidence that a person-centric query should combine. The loop transitions to a unified person-centric search that treats those identifiers as joint evidence about a single entity, so resolution draws on the full signal rather than one lane at a time. Unifying the evidence raises retrieval quality and, more to the point here, gives the evaluation a coherent target, since a resolution decision over joint evidence can be scored against a ground-truth identity in a way that a single-lane lookup cannot.
+## Combine the evidence so the evaluation has a target
+A retrieval system that keeps each identifier in its own legacy bucket treats name, phone, email, and location as separate search lanes, which fragments the evidence that a single query should be combining. Moving to a unified search that treats those identifiers as joint evidence about one entity lets resolution draw on the whole signal at once, and it gives the evaluation a coherent target, because a decision made over joint evidence can be scored against a ground-truth identity in a way a single-lane lookup cannot.
 
-## Learning-to-rank versioning, gated by automated evaluation.
-The heart of the loop is a learning-to-rank versioning history, where each iteration of the entity-resolution logic is a tracked version with measured outcomes rather than an untracked edit. A version advances only when an automated evaluation shows it improving the ranking metric on held-out data, and the history records the failures alongside the wins so that a regression in a later version can be traced to the decision that introduced it. The earliest version is a synthetic smoke test that confirms the pipeline mechanics end to end on a bounded sample, which establishes the harness before any real ranking quality is claimed, and automated threshold selection is carried forward from that baseline so later versions inherit a measured cutoff rather than a guessed one.
+## Track every version and let the evaluation gate it
+The core of the loop is a versioning history, where each iteration of the resolution logic is a tracked version with measured outcomes instead of an untracked edit. A version advances only when an automated evaluation shows it improving the ranking metric on held-out data, and the history keeps the failures next to the wins, so a regression that surfaces three versions later can be traced back to the change that introduced it. The first version is deliberately a synthetic smoke test that confirms the pipeline runs end to end on a bounded sample, which gets the harness working before anyone claims a real quality number, and the threshold the evaluation uses is carried forward from that baseline so later versions inherit a measured cutoff rather than a guessed one.
 
-## The boundary is what makes autonomy auditable.
-Autonomy is acceptable here only because the agent operates inside a fixed harness with a finite, auditable space of changes, so the loop can search aggressively while the set of things it can alter stays bounded and reviewable. Pairing a bounded change space with an automated evaluation on every version is what converts an open-ended optimization into a controlled experiment, where the agent proposes and the metric disposes. The throughline matches the rest of this body of work, since the move is to let the system act, observe the outputs each action produces, score them against a held-out measure, and allow only the changes the measurement justifies.
+## Keep the change space bounded and auditable
+Autonomy is acceptable here because the agent works inside a fixed harness with a finite, auditable space of changes, so the loop can search aggressively while the set of things it can touch stays small and reviewable. A bounded change space paired with an automated evaluation on every version turns an open-ended optimization into a controlled experiment, one where the agent generates candidates and the held-out metric decides which of them survive. The agent can search as creatively as it likes inside the fixed harness, and no version it produces goes live until the held-out evaluation has scored it and let it through.
+
+## Related
+- [A Recipe for Shipping AI Guardrails (without experimenting on your users)](../AI_Safety_Audit_Framework/ai-safety-audit-framework.html), the same held-out evaluation discipline aimed at safety instead of ranking quality.
+- [Grading an Agent as a User Experience](../Agentic_Experience_Evaluation/agentic-experience-evaluation.html), how to measure what the agent's changes do to the person on the other end.
+- [The Constitution Your LLM App Already Has](../Constitutional_AI_Defense/constitutional-ai-defense.html), the written limits an autonomous agent's changes still have to stay inside.
 
 ## References
-- Liu, T.-Y. (2009). *Learning to rank for information retrieval*. Foundations and Trends in Information Retrieval.
-- Schick, T., et al. (2023). *Toolformer: Language models can teach themselves to use tools*. arXiv.
-- Yao, S., et al. (2023). *ReAct: Synergizing reasoning and acting in language models*. arXiv.
+- Liu, T.-Y. (2009). *Learning to rank for information retrieval.* Foundations and Trends in Information Retrieval, 3(3), 225-331.
+- Schick, T., et al. (2023). *Toolformer: Language models can teach themselves to use tools.* arXiv:2302.04761.
+- Yao, S., et al. (2023). *ReAct: Synergizing reasoning and acting in language models.* arXiv:2210.03629.

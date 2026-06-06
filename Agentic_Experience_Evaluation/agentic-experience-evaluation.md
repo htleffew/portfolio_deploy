@@ -1,40 +1,49 @@
 ---
-title: Evaluating an Agentic Assistant as a User Experience
+title: "Grading an Agent as a User Experience"
 description: >-
-  Offline accuracy does not tell you whether an agentic product is good for the
-  person using it. This is a six-part evaluation suite that grades task success,
-  grounding, tool-path efficiency, satisfaction and abandonment signals, latency
-  as an experience budget, and per-segment regression, built from the system's
-  own conversation logs.
+  An agent can ace an offline benchmark and still frustrate the people using it,
+  because the user lives the whole trajectory: the tool calls, the dead ends,
+  the waiting, and the reformulations behind the final answer. Six measurements
+  read from the agent's own conversation logs, a task-success baseline, a
+  grounding check, tool-path efficiency, the linguistic signals of
+  dissatisfaction and abandonment, latency as an experience budget, and a
+  per-segment regression that finds the group the average is hiding.
 category: AI Evaluation & Safety
 subcategory: Agentic & Experience Evaluation
 format: ESSAY
-time: 11 min read
+time: 9 min read
 author: Dr. Heather Leffew
 ---
-## Abstract
-An agentic assistant can score well on an offline benchmark and still fail the people using it, because the benchmark measures answer correctness while the user experiences a trajectory of tool calls, latency, dead ends, and reformulations. This essay describes a six-part evaluation suite that treats agent quality as a measurable user experience, built entirely from the system's own conversation logs and bounded to aggregate behavioral signals. The suite establishes a task-success baseline, reviews grounding, scores tool-path efficiency and the cost of failed calls, extracts linguistic signals of dissatisfaction and abandonment, sets a latency experience budget, and regresses every result by user segment.
+## The agent's logs already hold its experience
+An agent leaves a complete record of everything it did to answer a request: the tools it called, the order it called them in, how long each step took, and how the user reacted to the result. That record is where the user's actual experience lives, because the person who asked lives the whole trajectory that produced the answer: the dead ends, the waiting, and the moments where they had to rephrase because the agent misread them. Six measurements, all drawn from those logs and all kept at the level of aggregate behavioral signals rather than individual transcripts, turn that record into a read on whether the agent served the person who asked, and they borrow the same offline discipline as [A Recipe for Shipping AI Guardrails](../AI_Safety_Audit_Framework/ai-safety-audit-framework.html): the agent already produced the evidence, so you score what it did instead of running a live experiment to find out.
 
-## Start with a task-success baseline you can defend.
-Any claim that a new model version improved the product requires a prior number to improve on, so the first notebook establishes a historical task-success baseline inferred from the existing conversation corpus using bounded aggregate signals. The baseline avoids per-user content inspection and works from structural signals such as whether a session reached a resolved state, how many turns it took, and whether the user returned to reformulate, which keeps the measurement privacy-preserving while still capturing completion. The value of the baseline is comparative rather than absolute, since a task-success rate is only meaningful against the version that preceded it and the segment it was measured on.
+## Start with a task-success baseline
+A claim that a new version improved the product needs an earlier number to improve on, so the first measurement is a task-success baseline read from the conversations the agent already had. You infer success from structural signals, whether the session reached a resolved state, how many turns it took, whether the user came back to rephrase, so the baseline stays aggregate and never reads individual content. The number is comparative: a task-success rate tells you something only against the version before it and the segment it came from, so it comes first, and every later measurement is read against it.
 
-## Grounding separates a real answer from a confident guess.
-An agentic system that returns an answer can do so by reading the evidence its tools surfaced or by drifting into plausible inference that the available evidence does not support, and those two cases look identical at the surface. The grounding review scores how often a returned answer is anchored in the tool responses and evidence payloads present in the session rather than in weak inference, using the recorded tool-call metadata as the ground for the check. A grounding rate is the agentic analogue of a hallucination rate, and it is the metric that tells you whether the tools are doing the work or whether the model is improvising around them.
+## Grounding: is the answer anchored in the evidence
+Grounding measures how often a returned answer is actually anchored in the tool responses recorded in the session, using the tool-call metadata as the thing you check against, because an answer built from the evidence and an answer improvised past it can read the same on the surface. It is the agentic version of a hallucination rate: when grounding drops, the tools are still in the loop but the model is talking past what they returned.
 
-## Tool-path efficiency, and the cost of a wrong turn.
-The path an agent takes to an answer is itself a quality signal, because a session that reaches the right result after redundant, circular, or failed tool calls spent more of the user's patience and more compute than it needed to. The efficiency notebook scores how often the tool path becomes unnecessarily long or redundant before the user reaches the likely answer, and it attaches a cost to failed calls so that a graceful path and a thrashing path are scored differently even when both eventually succeed. Tool-path efficiency is the metric that exposes long-horizon agent behavior, where the failure is not a wrong final answer but an expensive route to a right one.
+## Tool-path efficiency: the cost of a wrong turn
+The route an agent takes to an answer is its own quality signal, because a session that lands on the right result after redundant or failed tool calls spent more of the user's patience and more compute than it needed. This measurement scores how long and how circuitous the path got before the agent reached the answer, and it puts a cost on failed calls so a session that goes straight to the answer and one that wanders to it score differently even when both eventually succeed. Long-horizon behavior shows up here: a session can end on a correct answer and still have reached it through an expensive, circuitous path that cost the user time and the system compute.
 
-## Dissatisfaction leaves linguistic fingerprints.
-Users rarely file a complaint, so the signal that a session went badly lives in how they write, in the reformulations, the corrections, the rising terseness, and the abandonment that follow a bad turn. The satisfaction notebook extracts bounded behavioral signals of dissatisfaction, reformulation pressure, and abandonment, and a supplementary pass adds linguistic analysis with part-of-speech and sentiment tooling to detect confusion and interaction failure in the text itself. Reading dissatisfaction from language rather than from a survey is the same implicit-signal method that behavioral measurement has always used, applied to the transcript an agent leaves behind.
+## Dissatisfaction leaves fingerprints in the text
+Users rarely file a complaint, so the sign that a session went badly lives in how they write: the reformulations, the corrections, the sentences getting shorter and sharper, the quiet abandonment after a bad turn. This measurement reads those behavioral signals of reformulation pressure and abandonment, and a second pass adds part-of-speech and sentiment analysis to catch confusion in the language itself. It is the same implicit-signal approach behavioral measurement has always used, a reading of what people do and how they phrase it rather than what they report on a survey, applied here to the transcript an agent leaves behind (the [LIWC narrative work](../Diagnostic_Thematic_Apperception_Narratives/diagnostic-thematic-apperception-liwc.html) is the same method on clinical text).
 
-## Latency is an experience budget, not a backend stat.
-Responsiveness shapes whether a correct answer feels usable, so latency belongs in the experience evaluation rather than only in the systems dashboard. The latency notebook sets a responsiveness budget and measures the session against it, which lets a slow-but-correct path and a fast-but-correct path be scored as the different experiences they are. Treating latency as a budget makes the tradeoff explicit when a more capable model costs more time, so the decision to ship it weighs the capability gain against the responsiveness it spends.
+## Latency is an experience budget
+Responsiveness decides whether a correct answer feels usable, so latency belongs inside the experience evaluation and not only on the systems dashboard. This measurement sets a responsiveness budget and scores each session against it, which lets a slow-but-correct path and a fast-but-correct path register as the different experiences they are. Holding latency as a budget makes the tradeoff visible when a more capable model costs more time, so the decision to ship it weighs the capability you gain against the responsiveness you spend.
 
-## Regress by segment, because the average hides the failures.
-A single aggregate number averages away the segments where a system performs worst, so the final notebook regresses every preceding metric by user segment to surface where experience degrades. Segment regression is what turns the suite from a scorecard into a diagnostic, because it locates the population for which grounding dropped or the tool path lengthened, which is where the next iteration should be aimed. The throughline across all six parts is consistent: observe the behavioral outputs the agent leaves in its logs, extract the signals that reveal whether the experience succeeded, classify them into measurable outcomes, and build the release decision on what the measurement shows rather than on an offline score.
+## Break every metric down by user segment
+The last measurement breaks every preceding metric down by user segment, so grounding, tool-path efficiency, latency, and the rest are read per population instead of as one blended number. A per-segment view points you at the group whose grounding dropped or whose tool path ballooned, which is where the next iteration should aim, because an average reports one result for a set of users the agent may be serving very unevenly.
+
+None of these six is exotic. You read the agent's own logs, you set a baseline before you change anything, you check that answers come from evidence, you watch the path and the latency and the language, and you break every number down by who was on the other end. Do that, and you can answer the question an agent's benchmark score leaves open, which is whether the person who asked got what they came for.
+
+## Related
+- [A Recipe for Shipping AI Guardrails (without experimenting on your users)](../AI_Safety_Audit_Framework/ai-safety-audit-framework.html), the same offline, log-based discipline aimed at safety instead of experience.
+- [The Constitution Your LLM App Already Has](../Constitutional_AI_Defense/constitutional-ai-defense.html), the spec an agent's tool use is supposed to stay inside.
+- [Multi-Signal Safety Detection](../Multi_Signal_Safety_Detection/multi-signal-safety-detection.html), how to combine these signals when no single one is enough to call a session good or bad.
 
 ## References
-- Es, S., et al. (2024). *RAGAS: Automated evaluation of retrieval augmented generation*. arXiv.
-- Liu, N. F., et al. (2023). *Lost in the middle: How language models use long contexts*. arXiv.
-- Yao, S., et al. (2023). *ReAct: Synergizing reasoning and acting in language models*. arXiv.
-- Zheng, L., et al. (2023). *Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena*. arXiv.
+- Es, S., et al. (2024). *RAGAS: Automated evaluation of retrieval augmented generation.* arXiv:2309.15217.
+- Liu, N. F., et al. (2023). *Lost in the middle: How language models use long contexts.* arXiv:2307.03172.
+- Yao, S., et al. (2023). *ReAct: Synergizing reasoning and acting in language models.* arXiv:2210.03629.
+- Zheng, L., et al. (2024). *Judging LLM-as-a-judge with MT-Bench and Chatbot Arena.* arXiv:2306.05685.
