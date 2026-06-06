@@ -35,19 +35,19 @@
     },
     {
         "id": "AI_Safety_Audit_Framework",
-        "title": "When Measurement Is the Compliance Artifact",
-        "desc": "An audit framework for generative systems that interpret and synthesize information about people, built on the premise that a belief in safety is not evidence. It treats the measurement itself as the deliverable: a mapped threat landscape, defense layered by when it acts, an audit of real production conversation history, and privacy-preserving telemetry bounded to aggregate signals, so the documented record of tests, results, and enforced thresholds becomes the governance.",
+        "title": "A Recipe for Shipping AI Guardrails (without experimenting on your users)",
+        "desc": "Most teams ship a safety filter and cannot tell whether it works, because guardrails fail silently: the bad output slips through, nothing crashes, the dashboard stays green. A recipe for measuring a detection-and-control protocol the way you would measure a model, by baselining the unguarded behavior, naming the threat vectors, layering the controls by when they act, and proving the catch rate and the over-refusal rate against golden, adversarial, and shadow-replay sets, all without running the experiment on live users.",
         "cat": "AI Evaluation & Safety",
-        "subtype": "SAFETY AUDITING",
+        "subtype": "DETECTION & CONTROL VALIDATION",
         "tags": [
             "Safety Evals",
             "Red-Teaming",
-            "Observability",
-            "Governance",
-            "Auditing"
+            "Threat Modeling",
+            "Offline Evaluation",
+            "Guardrails"
         ],
         "url": "AI_Safety_Audit_Framework/ai-safety-audit-framework.html",
-        "time": "10 min read",
+        "time": "9 min read",
         "visual": "<svg fill=\"none\" viewBox=\"0 0 600 600\"><rect x=\"140\" y=\"160\" width=\"320\" height=\"60\" stroke=\"#3866A0\" stroke-width=\"1.5\"/><rect x=\"140\" y=\"270\" width=\"320\" height=\"60\" stroke=\"#3866A0\" stroke-width=\"1.5\"/><rect x=\"140\" y=\"380\" width=\"320\" height=\"60\" stroke=\"#7A1626\" stroke-width=\"2\"/></svg>"
     },
     {
