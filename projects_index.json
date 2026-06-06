@@ -302,7 +302,7 @@
     {
         "id": "simplified_chinese_agentic_workflows",
         "title": "The Tokenization Trap: Why Logographic Languages Don't Save Agentic Context",
-        "desc": "An investigation into the 'vibe coding' hypothesis. Logographic languages look like they should compress agent prompts, but BPE tokenization fragments them into per-byte pieces, and the round-trip translation overhead taxes every step of the loop. The cost model and the empirics, side by side.",
+        "desc": "Logographic languages look like they should compress agent prompts, but BPE tokenization fragments them into per-byte pieces: GLM-5 encodes Chinese at 0.98x the English token count, while MiniMax-2.7 inflates to 1.28x. The round-trip translation overhead (Chinese reasoning to English output) taxes every step of the agentic loop. The cost model and the empirics, side by side.",
         "cat": "Research & Architecture",
         "subtype": "TOKENIZATION",
         "tags": [
@@ -311,7 +311,7 @@
             "Agentic Workflows",
             "Cost Modeling"
         ],
-        "url": "simplified_chinese_agentic_workflows/index.html",
+        "url": "simplified_chinese_agentic_workflows/tokenization-trap.html",
         "time": "5 min read",
         "visual": "<svg fill=\"none\" viewBox=\"0 0 600 600\"><defs><linearGradient id=\"sct-g\" x1=\"0\" x2=\"1\" y1=\"0\" y2=\"1\"><stop offset=\"0%\" stop-color=\"#3866A0\" stop-opacity=\"0.7\"/><stop offset=\"100%\" stop-color=\"#7A1626\" stop-opacity=\"0.4\"/></linearGradient></defs><g stroke=\"url(#sct-g)\" stroke-width=\"1\" fill=\"none\"><rect x=\"160\" y=\"160\" width=\"280\" height=\"280\"/><line x1=\"160\" x2=\"440\" y1=\"230\" y2=\"230\"/><line x1=\"160\" x2=\"440\" y1=\"300\" y2=\"300\"/><line x1=\"160\" x2=\"440\" y1=\"370\" y2=\"370\"/><line x1=\"230\" x2=\"230\" y1=\"160\" y2=\"440\"/><line x1=\"300\" x2=\"300\" y1=\"160\" y2=\"440\"/><line x1=\"370\" x2=\"370\" y1=\"160\" y2=\"440\"/></g><g fill=\"#3866A0\" opacity=\"0.85\"><rect x=\"198\" y=\"198\" width=\"4\" height=\"4\"/><rect x=\"268\" y=\"268\" width=\"4\" height=\"4\"/><rect x=\"338\" y=\"338\" width=\"4\" height=\"4\"/><rect x=\"408\" y=\"408\" width=\"4\" height=\"4\"/></g><circle cx=\"300\" cy=\"300\" r=\"6\" fill=\"#7A1626\"/></svg>"
     },
