@@ -57,6 +57,10 @@ The poster's own conclusion was deliberately narrow. From the limitations sectio
 
 Elevation on one LIWC dimension across 23 documents is not a tool for identifying future perpetrators. It is an observation about a text class whose membership is already known. The interpretive direction it points toward, group affiliation and collective positioning rather than individual aggression, is consistent with the warning-behavior literature on identification and pathway warning behaviors (Meloy et al., 2012), and that connection is what made the dissertation step worth taking.
 
+## Related
+- [Instrumental and Affective Mass Murder](../Instrumental_and_Affective_Mass_Murder/doctoral-dissertation.html), the doctoral dissertation that picked up this study's thread and ran the typological work across 100 pre-attack communications.
+- [Assessing Risk for Mass Violence From Platform Behaviors](../User_Behaviors_Mass_Violence/assessing-mass-violence-risk.html), the threat-assessment and warning-behavior framework that contextualizes what elevated power language might signal operationally.
+
 ## References
 
 American Psychological Association. (2002). *Ethical principles of psychologists and code of conduct*. Washington, DC: Author.

@@ -26,7 +26,7 @@ Seung-Hui Cho killed 32 people at Virginia Tech in 2007. Anders Breivik killed 7
 
 Implication for detection
 
-Any classifier built on a single perpetrator template will miss most of the population it is supposed to flag. The heterogeneity is not a measurement error to be cleaned up. It is the data.
+Any classifier built on a single perpetrator template will miss most of the population it is supposed to flag.
 
 ## Attacks are planned, and the planning leaks.
 
@@ -48,7 +48,7 @@ Median planning-and-preparation window
 
 Active shooters analyzed in the FBI pre-attack study
 
-The same study and adjacent work (Silver, Horgan, & Gill, 2018) document leakage to third parties as the modal communication. The communication channel matters less than the fact that it happens. Detection logic that requires a respondent to directly address law enforcement will miss most cases. Detection logic that pays attention to what perpetrators tell their friends, their classmates, or the internet has signal to work with.
+The same study and adjacent work (Silver, Horgan, & Gill, 2018) document leakage to third parties as the modal communication. The communication channel is less relevant than the fact that it happens. Detection logic that requires a respondent to directly address law enforcement will miss most cases. Detection logic that pays attention to what perpetrators tell their friends, their classmates, or the internet has signal to work with.
 
 ## Eight behaviors, six stages.
 
@@ -128,7 +128,7 @@ The matrix is useful as a decision aid because it forces the assessor to hold tw
 
 ## The post-event risk window.
 
-After a highly publicized attack the risk of a copycat attack remains elevated for approximately 13 days. Watershed events - the ones that lodge in cultural memory - can elevate risk for ten years or longer. Mother Jones tracked the Columbine effect and counted 72 plots inspired by the event, 21 carried out, 89 deaths. The contagion does not require the original attacker to have used a platform. The contagion is the cultural artifact, not the dataset.
+After a highly publicized attack the risk of a copycat attack remains elevated for approximately 13 days. Watershed events - the ones that lodge in cultural memory - can elevate risk for ten years or longer. Mother Jones tracked the Columbine effect and counted 72 plots inspired by the event, 21 carried out, 89 deaths. The contagion does not require the original attacker to have used a platform. The contagion vector is the cultural event itself, independent of any particular dataset.
 
 For platform threat-assessment workflows, the operational implication is asymmetric staffing. Detection volume needs to spike with cultural events, not with calendar quarters. The post-watershed window is also where automated false-positive rates spike, because the volume of users discussing the event surges and discussion is not intent. The cost of pattern-matching on surface features in a contagion window is paid in over-flagging the people who are simply reading the news.
 
@@ -143,6 +143,11 @@ Users of a platform with millions of participants bring something an automated s
 Operational stance
 
 Prioritize clear, low-friction reporting channels for users. Use automated systems to support the routing, triage, and analytical surfacing of those reports rather than as the primary detection mechanism. Anticipate elevated reporting volume in the 13-day window after any watershed event, and staff accordingly.
+
+## Related
+- [Instrumental and Affective Mass Murder](../Instrumental_and_Affective_Mass_Murder/doctoral-dissertation.html), the typological work that separates the population this page treats as heterogeneous into two empirically distinct groups, with predictive ties to specific attack behaviors.
+- [Implicit Power Drives in the Manifestos Preceding Autogenic Massacres](../Implicit_Power_Drives/implicit-power-drives.html), the LIWC-based study of the same manifesto corpus that found elevated power language across all comparison baselines.
+- [Time-to-Event Analysis for Platform Integrity](../Platform_Survival_Analytics/platform-survival-analytics.html), the survival-analysis and investigation pipeline for operationalizing the kind of platform-level behavioral assessment this page describes.
 
 ## References
 
