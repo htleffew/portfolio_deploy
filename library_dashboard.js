@@ -60,6 +60,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (noRes) {
             noRes.style.display = visibleCount === 0 ? 'block' : 'none';
         }
+
+        // 5. Refresh ScrollTrigger geometry after DOM reorder
+        if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
     }
 
     function setCategoryFilter(cat) {

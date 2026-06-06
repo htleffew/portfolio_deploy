@@ -292,6 +292,11 @@
                     });
                 }
                 gsap.utils.toArray('.band').forEach(band => {
+                    // Skip bands owned by other animation controllers
+                    if (band.classList.contains('library-band') || band.classList.contains('front') || band.classList.contains('back-matter')) return;
+                    // Skip article content bands (markdown-body sections have no reveal targets)
+                    if (band.querySelector('.markdown-body')) return;
+
                     const tlBand = gsap.timeline({
                         scrollTrigger: { trigger: band, start: 'top 75%', toggleActions: 'play none none none' }
                     });
@@ -299,24 +304,25 @@
                     const heading = band.querySelector('.section-heading');
                     if (eyebrow) tlBand.fromTo(eyebrow, { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 1.2, ease: 'power3.out' });
                     if (heading) tlBand.fromTo(heading, { opacity: 0, y: 25  }, { opacity: 1, y: 0, duration: 1.4, ease: 'power3.out' }, '-=0.6');
-                    const reveals = band.querySelectorAll('.type-block, .swatch-grid, .tagrow, .p-card, .r-card, .demo-box, .dashboard-layout, .reveal, .ds-prose, .bio-card, .project-carousel, .view-all-link, .edu-card, .headshot-frame');
+                    const reveals = band.querySelectorAll('.type-block, .swatch-grid, .tagrow, .p-card, .r-card, .demo-box, .reveal, .ds-prose, .bio-card, .project-carousel, .view-all-link, .edu-card, .headshot-frame');
                     if (reveals.length) {
                         tlBand.fromTo(reveals, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 1.5, stagger: 0.15, ease: 'expo.out' }, '-=0.8');
                     }
                 });
                 gsap.utils.toArray('.reveal, .ds-prose').forEach(el => {
-                    // Prevent double-animation conflicts for elements nested inside a .band
                     if (el.closest('.band')) return;
-                    
+
                     gsap.fromTo(el, { opacity: 0, y: 40 }, {
                         opacity: 1, y: 0, duration: 1.2, ease: 'expo.out',
                         scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
                     });
                 });
-                
-                // Centralized parallax scroll effect
+
+                // Parallax scroll: only on homepage structural bands
                 gsap.utils.toArray('.band').forEach(band => {
-                  const inner = band.querySelector('.col-wide') || band.querySelector('.bio-wrap') || band.querySelector('.dashboard-layout');
+                  if (band.classList.contains('library-band') || band.classList.contains('front') || band.classList.contains('back-matter')) return;
+                  if (band.querySelector('.markdown-body')) return;
+                  const inner = band.querySelector('.col-wide') || band.querySelector('.bio-wrap');
                   if (inner) {
                     gsap.fromTo(inner, { yPercent: 2 }, {
                       yPercent: -2, ease: 'none',
