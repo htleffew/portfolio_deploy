@@ -321,6 +321,7 @@
                 // Parallax scroll: only on homepage structural bands
                 gsap.utils.toArray('.band').forEach(band => {
                   if (band.classList.contains('library-band') || band.classList.contains('front') || band.classList.contains('back-matter')) return;
+                  if (band.id === 'executive-bio' || band.querySelector('.bio-wrap')) return; // no parallax drift on the homepage biography box
                   if (band.querySelector('.markdown-body')) return;
                   const inner = band.querySelector('.col-wide') || band.querySelector('.bio-wrap');
                   if (inner) {
