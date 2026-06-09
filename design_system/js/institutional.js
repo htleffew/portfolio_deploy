@@ -247,12 +247,12 @@
             tl.to('#topnav',   { y: 0,       duration: 1.4, ease: 'power3.out'   }, 'heroIn');
 
             let split;
-            const heroTitle = document.querySelector('.hero h1');
+            const heroTitle = document.querySelector('.hero h1, .about-hero h1');
             if (heroTitle && typeof SplitType !== 'undefined') {
                 split = new SplitType(heroTitle, { types: 'words, chars' });
             }
 
-            const metaSpans = gsap.utils.toArray('.meta-row span');
+            const metaSpans = gsap.utils.toArray('.meta-row span, .about-hero .eyebrow');
             if (metaSpans.length) tl.to(metaSpans, { opacity: 1, x: 0, duration: 1.0, stagger: 0.2, ease: 'power2.out' }, 'heroIn+=0.30');
 
             if (split) {
@@ -274,7 +274,7 @@
                 tl.to(frontTitle, { opacity: 1, duration: 1.0, ease: 'power2.out' }, 'heroIn+=0.40');
             }
 
-            const abstractEl = document.querySelector('.abstract');
+            const abstractEl = document.querySelector('.abstract, .about-hero .lede');
             if (abstractEl) tl.to(abstractEl, { opacity: 1, y: 0, duration: 1.3, ease: 'power2.out' }, 'heroIn+=0.70');
             const scrollCue = document.querySelector('.scroll-cue');
             if (scrollCue) tl.to(scrollCue,   { opacity: 1, duration: 1.2, ease: 'power2.out' }, 'heroIn+=1.40');

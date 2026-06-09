@@ -1096,7 +1096,7 @@ html{scroll-behavior:smooth}
 .scroll-cue-line{width:1px;height:48px;position:relative;overflow:hidden}
 .scroll-cue-line::after{content:'';position:absolute;top:-100%;left:0;width:100%;height:100%;background:linear-gradient(to bottom,transparent,var(--phthalo-lift));animation:scrollDrip 2s ease-in-out infinite}
 @keyframes scrollDrip{0%{top:-100%;opacity:0}30%{opacity:1}100%{top:100%;opacity:0}}
-.hero .meta-row span, .hero h1, .hero .hero-rule, .hero .abstract { opacity: 0; }
+.hero .meta-row span, .hero h1, .hero .hero-rule, .hero .abstract, .about-hero .eyebrow, .about-hero h1, .about-hero .lede { opacity: 0; }
 .band .section-eyebrow, .band .section-heading, .type-block, .swatch-grid, .tagrow, .p-card, .r-card, .demo-box { opacity: 0; }
 
 /* Extracted from account-prioritization.html */
