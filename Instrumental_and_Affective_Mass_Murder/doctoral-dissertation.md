@@ -46,7 +46,7 @@ High Threat / Low Risk
 
 High-probability events with minimal destructive impact. Procedural deterrence is the standard response.
 
-Separating attackers into affective and instrumental types allows linguistic signals from a discovered pre-attack communication to inform what kind of attack is more likely, rather than waiting on the event itself to disclose its character.
+Separating attackers into affective and instrumental types allows linguistic signals from a discovered pre-attack communication to inform what kind of attack is more likely, instead of waiting on the event itself to disclose its character.
 
 ## Language as Psychological Evidence
 
@@ -54,7 +54,7 @@ Methodology
 
 The methodological premise: as many as 67% of perpetrators of mass violence create meaningful pre-attack communications (Hempel, Meloy, & Richards, 1999; Meloy, Hempel, Mohandie, Shiva, & Gray, 2001; Langman, 2013; Silver, Horgan, & Gill, 2018). Most perpetrators do not survive their attack, but the communications do. Computer-mediated linguistic analysis on those communications is the only route to standardized, posthumous psychological characterization of this population, sidestepping the field's central methodological constraint.
 
-This dissertation also rejected the FBI's definition of mass murder (four or more killed without significant cooling-off period) because that definition embeds a success component external to the perpetrator's psychology. Geddy Kramer, who at a FedEx facility in 2014 fired on six coworkers but killed only himself, was prepared and committed to a mass attack; his victims survived because of emergency response speed, hospital proximity, and his choice of less-lethal ammunition. The FBI definition excludes him. The definition used here, "any perpetrator who presents as prepared and motivated to murder four or more individuals, with insubstantial time passing between violent acts," includes him and treats lack of success as a typology factor rather than a disqualifier.
+I also rejected the FBI's definition of mass murder (four or more killed without significant cooling-off period) because that definition embeds a success component external to the perpetrator's psychology. Geddy Kramer, who at a FedEx facility in 2014 fired on six coworkers but killed only himself, was prepared and committed to a mass attack; his victims survived because of emergency response speed, hospital proximity, and his choice of less-lethal ammunition. The FBI definition excludes him. The definition used here, "any perpetrator who presents as prepared and motivated to murder four or more individuals, with insubstantial time passing between violent acts," includes him and treats lack of success as a typology factor rather than a disqualifier.
 
 100 pre-attack communications were collected from individuals who carried out or attempted mass violence between 1966 and 2019. Sources included SchoolShooters.info (curated by Peter Langman), the Stanford Mass Shootings of America database, the Mother Jones US mass shootings dataset, and the Gun Violence Archive. LIWC2015 (Pennebaker, Booth, Boyd, & Francis, 2015) generated standardized percentile scores along four summary variables: Analytic, Clout, Authentic, and Tone. K-means clustering and binary logistic regression handled the small-sample, mixed-variable structure.
 
@@ -172,7 +172,7 @@ AFFECTIVE TYPE (N=53) VS INSTRUMENTAL TYPE (N=47)  ·  ALPHA = .05
 
 Logistic Regression
 
-The first binary logistic regression used the raw H1-H5 predictors (lethality, connection, targeting, perpetrator killed) and was significant (χ²(4) = 30.58, p < .001, McFadden R² = 0.22), but two of those variables were too coarse to do their work. "Targeting" was coded as yes/no without distinguishing between specific-individual targeting and demographic targeting; "connection" was coded without distinguishing between the perpetrator's home and a less intimate site like their school or workplace. A second iteration refined both: targeting became *demographic-based* targeting specifically, and connection became *perpetrator's home among the attack locations* specifically. The refined model improved fit to McFadden R² = 0.24 (χ²(4) = 32.52, p < .001) and produced the odds ratios below. Each of the four predictors is significant when controlling for the others.
+The first binary logistic regression used the raw H1-H5 predictors (lethality, connection, targeting, perpetrator killed) and was significant (χ²(4) = 30.58, p < .001, McFadden R² = 0.22), but targeting and connection were too coarse to do their work. Targeting was coded as yes/no without distinguishing between specific-individual targeting and demographic targeting; connection was coded without distinguishing between the perpetrator's home and a less intimate site like their school or workplace. A second iteration refined both: targeting became *demographic-based* targeting specifically, and connection became *perpetrator's home among the attack locations* specifically. The refined model improved fit to McFadden R² = 0.24 (χ²(4) = 32.52, p < .001) and produced the odds ratios below. Each of the four predictors is significant when controlling for the others.
 
 Odds Ratio
 % Change in Odds
@@ -232,7 +232,7 @@ Instrumental Type
 
 Anders Breivik
 
-Utoya Island and Oslo, 2011. Seventy-seven killed, 319 injured. Breivik generated a 1,500-page manifesto reading as a calculated scholarly treatise. It is structured entirely around rigid ideological argument rather than personal grievance. He was ultimately apprehended alive.
+Utoya Island and Oslo, 2011. Seventy-seven killed, 319 injured. Breivik generated a 1,500-page manifesto reading as a calculated scholarly treatise. It is structured entirely around rigid ideological argument with no personal grievance. He was ultimately apprehended alive.
 
 LIWC Profile
 Attack Outcomes
@@ -257,7 +257,7 @@ Attack ConclusionApprehended
 
 Practical Constraints
 
-The intended use of this typology is narrow and worth stating precisely. It does not predict whether an attack will occur. It predicts what kind of attack is more likely, conditional on a pre-attack communication being discovered and submitted for analysis. The work belongs to risk management (the impact side of the threat-assessment equation), not threat detection (the probability side).
+The intended use of this typology is narrow. It does not predict whether an attack will occur. It predicts what kind of attack is more likely, conditional on a pre-attack communication being discovered and submitted for analysis. The work belongs to risk management (the impact side of the threat-assessment equation), not threat detection (the probability side).
 
 Institutional Implementation Scenario
 
@@ -267,9 +267,9 @@ The same model applied to an Instrumental classification points elsewhere: lower
 
 ## Related
 - [Implicit Power Drives in the Manifestos Preceding Autogenic Massacres](../Implicit_Power_Drives/implicit-power-drives.html), the 2017 exploratory study on LIWC power language in manifestos that seeded this dissertation's variable selection.
-- [Neurobiological Differentiation of Violent Offender Types](../Neurobiological_Differentiation_Violent_Offender_Types/neurobiological-offenders.html), the same impulsive/instrumental dichotomy traced through the neuroanatomical literature rather than the linguistic one.
+- [Neurobiological Differentiation of Violent Offender Types](../Neurobiological_Differentiation_Violent_Offender_Types/neurobiological-offenders.html), the same impulsive/instrumental dichotomy traced through the neuroanatomical literature instead of the linguistic one.
 - [Assessing Risk for Mass Violence From Platform Behaviors](../User_Behaviors_Mass_Violence/assessing-mass-violence-risk.html), the threat-assessment literature and warning-behavior framework that this typology feeds into operationally.
 
 ## Limitations
 
-Limitations stated transparently. n = 100 is small for a field with low base rates; power analysis suggests significance may be underestimated for small and moderate effects. Stephen Paddock (Las Vegas, 2017) and other perpetrators who left no pre-attack communications are necessarily excluded. The within-sample classification accuracy of 100% is a property of the sample; out-of-sample validation on new pre-attack communications is the appropriate next step. Earlier work on increased communicated power drives in mass-murder manifestos (Leffew, 2017) was the seed for this dissertation's variable selection.
+n = 100 is small for a field with low base rates; power analysis suggests significance may be underestimated for small and moderate effects. Stephen Paddock (Las Vegas, 2017) and other perpetrators who left no pre-attack communications are necessarily excluded. The within-sample classification accuracy of 100% is a property of the sample; out-of-sample validation on new pre-attack communications is the appropriate next step. Earlier work on increased communicated power drives in mass-murder manifestos (Leffew, 2017) was the seed for this dissertation's variable selection.

@@ -30,7 +30,7 @@ The playlist works because three auditory features operate simultaneously to add
 
 The most common misconception about ADHD is that it involves too much stimulation. The opposite is closer to the truth. Zentall's Optimal Stimulation Theory (Zentall, 1975; 1983) proposes that ADHD brains are chronically under-aroused, and that the hyperactivity, fidgeting, and distractibility that characterize ADHD are compensatory behaviors: the brain is trying to generate enough stimulation to reach its own biologically determined optimal arousal level.
 
-The fidgeting is not a bug; it is the brain's attempt to fix an arousal deficit. The distraction is not a failure of willpower; it is the attentional system going out to forage for stimulation because the current task is not providing enough. Zentall called this "extra-task stimulation seeking," and the empirical evidence backs it up: when you add external stimulation to the environment (background noise, colored items, music), ADHD task performance improves, while neurotypical performance often degrades (Greenop & Kann, 2007).
+The fidgeting is the brain's attempt to fix an arousal deficit. The distraction is the attentional system going out to forage for stimulation because the current task is not providing enough. Zentall called this "extra-task stimulation seeking," and the empirical evidence backs it up: when you add external stimulation to the environment (background noise, colored items, music), ADHD task performance improves, while neurotypical performance often degrades (Greenop & Kann, 2007).
 
 Most lo-fi or ambient "focus" playlists hover around 70 to 90 BPM. For an ADHD brain, that is below the arousal threshold and may be worse than silence.
 
@@ -44,7 +44,7 @@ Bilateral stimulation (BLS) is the core mechanism of EMDR (Eye Movement Desensit
 
 The effect on ADHD focus comes from two things happening at once. First, ADHD is frequently comorbid with anxiety, and the fight-or-flight activation that accompanies what many ADHD people experience as "paralysis" (the state where you know exactly what you need to do but cannot make yourself start) is directly mitigated by parasympathetic activation. The panning audio is doing something physiological: it is calming the nervous system down while the high tempo keeps the brain engaged. That combination is what the playlist is built on.
 
-Second, there is a resource-competition mechanism at work. Following the movement of sound through space occupies the brain's spatial awareness system. If the auditory spatial system is busy tracking where the sound is coming from and where it is going, that system cannot simultaneously scan the room for visual or contextual distractions. The adoption of "8D Audio" (exaggerated stereo panning) as a focus tool in ADHD communities long predates the research framing offered here, and the convergence is worth noting: the lived report and the bilateral-stimulation literature describe the same mechanism.
+Second, there is a resource-competition mechanism at work. Following the movement of sound through space occupies the brain's spatial awareness system. If the auditory spatial system is busy tracking where the sound is coming from and where it is going, that system cannot simultaneously scan the room for visual or contextual distractions. The adoption of "8D Audio" (exaggerated stereo panning) as a focus tool in ADHD communities long predates the research framing offered here, and the convergence is direct: the lived report and the bilateral-stimulation literature describe the same mechanism.
 
 ## Polyrhythmic Complexity and Stochastic Resonance
 
@@ -68,13 +68,13 @@ None of these mechanisms is sufficient on its own. High tempo without complexity
 
 The result is a state where the ADHD brain's surplus attentional bandwidth is fully occupied, the nervous system is physiologically calm, and the conditions exist for sustained deep work without the constant pull of distraction.
 
-I think of it as bandwidth occupation rather than brainwave entrainment. You are not trying to synchronize the brain to a particular frequency. You are trying to fill the channels that would otherwise go looking for trouble.
+I think of it as bandwidth occupation, not brainwave entrainment. You are not trying to synchronize the brain to a particular frequency. You are trying to fill the spatial and rhythmic channels with enough structured input that they stop scanning for distractions.
 
 ## Tuning the System
 
-Understanding why the playlist works gives you the ability to tune it. A tempo at 145 BPM that feels too intense is trading arousal for comfort, and that is a choice worth making deliberately rather than abandoning the approach. Tracks that feel more effective than others usually have more prominent panning or more complex rhythmic structures, and once you know what to listen for, the playlist becomes a diagnostic instrument for your own attention system.
+Understanding why the playlist works gives you the ability to tune it. A tempo at 145 BPM that feels too intense is trading arousal for comfort, and that is a choice worth making deliberately instead of abandoning the approach. Tracks that feel more effective than others usually have more prominent panning or more complex rhythmic structures, and once you know what to listen for, you can start tuning the playlist to your own attention system.
 
-The broader implication: focus is not the absence of stimulation. For an under-aroused attentional system, focus requires structured stimulation, calibrated to the specific deficit. Background music chosen for pleasantness is solving a different problem.
+For an under-aroused attentional system, focus requires structured stimulation, calibrated to the specific deficit. Background music chosen for pleasantness is solving a different problem.
 
 ## References
 

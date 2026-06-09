@@ -22,11 +22,11 @@ Mass shootings in the United States rose roughly 250% from one decade to the nex
 
 Thompson and Kyle (2005) cast these offenders as low-self-esteem. Palermo (1997) reads them as psychopathic. Hempel and Richards (1999) and Virtanen (2013) read them as narcissistic. Bondu and Scheithauer (2015) and Wike and Fraser (2009) document characterological heterogeneity at a scale that defeats single-construct typologies. Lankford (2013) finds that the age and attack-location differences between rampage shooters, workplace shooters, school shooters, and suicide terrorists are mostly superficial. Ferguson, Coulson, and Barnett (2011) find youthful mass murderers resemble adult perpetrators more than they differ from them. Most perpetrators do not survive the event, so traditional post-event psychological assessment cannot be performed.
 
-Seung-Hui Cho killed 32 people at Virginia Tech in 2007. Anders Breivik killed 77 across two locations in Norway in 2011. Both left manifestos. Cho's reads as raw, affective, personal injury: "Vandalizing my heart wasn't enough for you. Raping my soul wasn't enough for you." Breivik's runs more than 1,500 pages with chapter headings like "Modern Aftermath of the Crusades" and "US and European Nationalist Rhetorical Differences." Same outcome class. Almost no shared signature.
+Seung-Hui Cho killed 32 people at Virginia Tech in 2007. Anders Breivik killed 77 across two locations in Norway in 2011. Both left manifestos. Cho's reads as raw, affective, personal injury: "Vandalizing my heart wasn't enough for you. Raping my soul wasn't enough for you." Breivik's runs more than 1,500 pages with chapter headings like "Modern Aftermath of the Crusades" and "US and European Nationalist Rhetorical Differences." The two attacks share an outcome and almost nothing else.
 
 Implication for detection
 
-Any classifier built on a single perpetrator template will miss most of the population it is supposed to flag.
+I kept finding that any classifier built on a single perpetrator template will miss most of the population it is supposed to flag.
 
 ## Attacks are planned, and the planning leaks.
 
@@ -92,7 +92,7 @@ Tap a behavior to see where on the pathway it typically surfaces.
 
 **Pathway** behavior is research, planning, preparation, or implementation of an attack (Calhoun & Weston, 2003). **Fixation** is increasingly pathological preoccupation with a person or cause (Mullen et al., 2009). **Identification** is the psychological desire to be a "pseudocommando" (Dietz, 1986), to adopt a warrior mentality, to identify with previous attackers, or to identify as an agent of a cause. **Novel aggression** is an act of violence unrelated to the attack, committed for the first time, testing the subject's capacity for the act. **Energy burst** is an increase in the frequency or variety of activities tied to the target. **Leakage** is communication to a third party of intent to harm. **Direct threat** is communication of a direct threat to the target or to law enforcement beforehand. **Last resort** is increasing desperation expressed in word or deed.
 
-## Words that alarm, actions that harm.
+## Threats as emotional release.
 
 People often prefer words that alarm over actions that harm. Reading a threatening statement requires separating content from context. The first question is whether the statement is direct (delivered to the potential target) or indirect (delivered to a third party). The second question is whether the statement is a threat or an ultimatum. Ultimatums attach conditions. They are warnings or attempts at manipulation. Threats are non-conditional.
 
@@ -124,7 +124,7 @@ High risk · High threat
 
 A well-armed individual who has communicated credible intent to commit a mass shooting at a specific, accessible elementary school. Both axes are pegged. The response demand is immediate.
 
-The matrix is useful as a decision aid because it forces the assessor to hold two separate estimates: how likely is this, and how bad if it happens. Conflating them produces the two characteristic failures of threat work - panic about everything that could be catastrophic, or complacency about anything that is statistically rare.
+The matrix is useful as a decision aid because it forces the assessor to hold two separate estimates: how likely is this, and how bad if it happens. Conflating them produces the two characteristic failures of threat work: treating every catastrophic scenario as imminent, or dismissing every statistically rare scenario as negligible.
 
 ## The post-event risk window.
 
@@ -142,7 +142,7 @@ Users of a platform with millions of participants bring something an automated s
 
 Operational stance
 
-Prioritize clear, low-friction reporting channels for users. Use automated systems to support the routing, triage, and analytical surfacing of those reports rather than as the primary detection mechanism. Anticipate elevated reporting volume in the 13-day window after any watershed event, and staff accordingly.
+Prioritize clear, low-friction reporting channels for users. Use automated systems to support the routing, triage, and analytical surfacing of those reports, not as the primary detection mechanism. Anticipate elevated reporting volume in the 13-day window after any watershed event, and staff accordingly.
 
 ## Related
 - [Instrumental and Affective Mass Murder](../Instrumental_and_Affective_Mass_Murder/doctoral-dissertation.html), the typological work that separates the population this page treats as heterogeneous into two empirically distinct groups, with predictive ties to specific attack behaviors.
