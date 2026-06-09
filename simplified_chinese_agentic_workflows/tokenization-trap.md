@@ -16,7 +16,7 @@ author: Dr. Heather Leffew
 
 A Simplified Chinese character can encode an entire semantic concept in a single logogram. English spreads the same concept across multiple characters, spaces, and grammatical particles. The arithmetic looks obvious: instruct an agentic LLM to conduct its chain-of-thought reasoning in Chinese, and the context window holds more reasoning per token.
 
-Practitioners call this "vibe coding." The tokenizer does not cooperate.
+Practitioners call this "vibe coding." I ran through the arithmetic myself when planning a multilingual agentic pipeline, and the tokenizer does not cooperate.
 
 ## Semantic density is not token density
 

@@ -31,7 +31,7 @@ The pipeline splits cleanly into four modules, each with a single responsibility
 
 ![Figure 1](fig_1.svg)
 
-FIG. 01 The four-module decomposition. Modules communicate through standardized CSV intermediates rather than in-memory state, so any analytical module can be re-run in isolation without re-running the Spark fetch.
+FIG. 01 The four-module decomposition. Modules communicate through standardized CSV intermediates instead of in-memory state, so any analytical module can be re-run in isolation without re-running the Spark fetch.
 
 ## Survival analysis on user sessions
 The core analytical move is small in code. For each user-segment, the engine computes the temporal difference between consecutive content events as `duration` in seconds. The event indicator is one if the content interaction was associated with a flagged policy violation and zero otherwise. The pair (duration, event\_observed) is what `lifelines.KaplanMeierFitter` wants. Fit the estimator on the segment's data, plot the survival function, read off the median time to violation.
@@ -61,9 +61,9 @@ A survival time below 3,600 seconds (one hour) means a user encountered violativ
 ## When did the topic neighborhood change?
 Survival analysis answers *when* violations happen. It does not answer what topical neighborhood the user was in when the violation occurred, or how that neighborhood evolved. The engine's text NLP module fills that gap with three layered passes: latent Dirichlet allocation for topic clusters, VADER and TextBlob for sentiment polarity over time, and NetworkX-backed co-occurrence graphs for word-pair structure inside a five-token window.
 
-None of these signals is conclusive on its own, which is why the engine runs all three on every slice rather than letting the analyst pick. A drop in the survival curve that coincides with a sentiment polarity shift and a topic-cluster turnover is a different finding than a survival drop while the topical landscape is stable. The first pattern suggests the user moved into new content territory; the second suggests the existing territory became more violative. Different remediations follow from each, and I have seen analysts reach the wrong conclusion when they had only one axis to look at.
+None of these signals is conclusive on its own, which is why the engine runs all three on every slice instead of letting the analyst pick. A drop in the survival curve that coincides with a sentiment polarity shift and a topic-cluster turnover is a different finding than a survival drop while the topical landscape is stable. The first pattern suggests the user moved into new content territory; the second suggests the existing territory became more violative. Different remediations follow from each, and I have seen analysts reach the wrong conclusion when they had only one axis to look at.
 
-Co-occurrence analysis catches what topic modeling smooths over. LDA gives you topic distributions; the co-occurrence graph gives you the word-pairs that shape the texture inside those topics. When two words that did not previously co-occur start appearing together at high frequency in a user's consumption window, the engine flags the pair regardless of whether either word is independently policy-relevant. The engine sidesteps LDA's stochastic renumbering problem (the same data can produce different topic indices on different runs) by labeling topics by their top-five terms rather than by index, which makes the topical drift inference robust to renumbering even though downstream automation that hard-codes topic IDs would not be.
+Co-occurrence analysis catches what topic modeling smooths over. LDA gives you topic distributions; the co-occurrence graph gives you the word-pairs that shape the texture inside those topics. When two words that did not previously co-occur start appearing together at high frequency in a user's consumption window, the engine flags the pair regardless of whether either word is independently policy-relevant. The engine sidesteps LDA's stochastic renumbering problem (the same data can produce different topic indices on different runs) by labeling topics by their top-five terms instead of by index, which makes the topical drift inference robust to renumbering even though downstream automation that hard-codes topic IDs would not be.
 
 ![Figure 2](fig_2.svg)
 
@@ -98,4 +98,4 @@ Topic modeling produces interpretable clusters at the cost of run-to-run reprodu
 
 ## Related
 - [Forensic Methodology for Per-User Investigation](../Trajectory_Investigation/trajectory-investigation.html), the companion methodology that sits on top of this engine for individual-account analysis.
-- [A Recipe for Shipping AI Guardrails](../AI_Safety_Audit_Framework/ai-safety-audit-framework.html), the offline evaluation approach applied to a different domain (safety controls rather than platform integrity).
+- [A Recipe for Shipping AI Guardrails](../AI_Safety_Audit_Framework/ai-safety-audit-framework.html), the offline evaluation approach applied to a different domain (safety controls, not platform integrity).

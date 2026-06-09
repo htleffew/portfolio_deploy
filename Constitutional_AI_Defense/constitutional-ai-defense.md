@@ -36,7 +36,7 @@ What we have gone over here is the unglamorous version of AI safety: you write t
 ## Related
 - [A Recipe for Shipping AI Guardrails (without experimenting on your users)](../AI_Safety_Audit_Framework/ai-safety-audit-framework.html), the validation side of the same problem: proving a control works before it meets a user.
 - [Multi-Signal Safety Detection](../Multi_Signal_Safety_Detection/multi-signal-safety-detection.html), what to do once a single classifier is not enough to decide that an output crossed the line.
-- [Agentic Experience Evaluation](../Agentic_Experience_Evaluation/agentic-experience-evaluation.html), the same measurement discipline applied to a tool-using agent rather than a single response.
+- [Agentic Experience Evaluation](../Agentic_Experience_Evaluation/agentic-experience-evaluation.html), the same measurement discipline applied to a tool-using agent instead of a single response.
 
 ## References
 - Bai, Y., et al. (2022). *Constitutional AI: Harmlessness from AI feedback.* arXiv:2212.08073.

@@ -35,7 +35,7 @@ Responsiveness decides whether a correct answer feels usable, so latency belongs
 ## Break every metric down by user segment
 The last measurement breaks every preceding metric down by user segment, so grounding, tool-path efficiency, latency, and the rest are read per population instead of as one blended number. A per-segment view points you at the group whose grounding dropped or whose tool path ballooned, which is where the next iteration should aim, because an average reports one result for a set of users the agent may be serving very unevenly.
 
-None of these six is exotic. You read the agent's own logs, you set a baseline before you change anything, you check that answers come from evidence, you watch the path and the latency and the language, and you break every number down by who was on the other end. Do that, and you can answer the question an agent's benchmark score leaves open, which is whether the person who asked got what they came for.
+None of these six is exotic. You read the agent's own logs, you set a baseline before you change anything, you check that answers come from evidence, you watch the path and the latency and the language, and you break every number down by who was on the other end. Together they answer the question a benchmark score leaves open: did each user segment actually get a working result, and if not, where did the agent lose them?
 
 ## Related
 - [A Recipe for Shipping AI Guardrails (without experimenting on your users)](../AI_Safety_Audit_Framework/ai-safety-audit-framework.html), the same offline, log-based discipline aimed at safety instead of experience.
