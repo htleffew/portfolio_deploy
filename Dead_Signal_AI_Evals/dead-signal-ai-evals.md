@@ -26,7 +26,7 @@ author: Dr. Heather Leffew
   <div class="demo-cta-note">Opens the live build in a new tab. Generation and scoring run in front of you.</div>
 </div>
 
-Open the demo and you are a neural implant called LUMEN, sitting inside the skull of a 47-year-old homicide detective named Craine. A recalibration tutorial walks you through the four input mechanics (advance, transmit, examine, resume), each gated by a real input rather than a button click. Then Craine starts talking. His opening briefing — a grim account of a triple homicide linked to Helios Dynamics — is scripted: a deterministic one-shot that sets the scene and primes the model without spending a token. From your first typed transmission onward, every response is generated live by Gemini 2.5 Flash, and the evaluator panel on the right edge of the screen scores that first real turn the moment it arrives.
+Open the demo and you are a neural implant called LUMEN, sitting inside the skull of a 47-year-old homicide detective named Craine. A recalibration tutorial walks you through the four input mechanics (advance, transmit, examine, resume), each gated by a real input rather than a button click. Then Craine starts talking. His opening briefing, a grim account of a triple homicide linked to Helios Dynamics, is scripted: a deterministic one-shot that sets the scene and primes the model without spending a token. From your first typed transmission onward, every response is generated live by Gemini 2.5 Flash, and the evaluator panel on the right edge of the screen scores that first real turn the moment it arrives.
 
 Everything typed into the terminal is a diegetic neural transmission from the implant to the detective. The terminal is the fiction, not the UI. Four scenes: car briefing, Helios lobby, a live interview with a suspect named Hargrove, debrief in the car afterward. The evaluation harness runs on top of all of them.
 
@@ -34,7 +34,7 @@ The methodological commitment I wanted to test: the evaluation methods used in p
 
 <figure>
 <img src="car-scene-debrief.png" alt="Car debrief scene: Craine delivers live-generated dialogue analyzing Hargrove's behavior while the evaluator panel scores each turn on the right edge of the screen.">
-<figcaption>The car debrief after the interview. Craine's recap here is scripted — his observations branch on the threads the player explored — while live Gemini 2.5 Flash generation drives the interview itself and any direct exchange the player opens with him. The collapsed evaluator panel tab is visible on the right edge.</figcaption>
+<figcaption>The car debrief after the interview. Craine's recap here is scripted, with his observations branching on the threads the player explored. The live Gemini 2.5 Flash generation drives the interview itself and any direct exchange the player opens with him. The collapsed evaluator panel tab is visible on the right edge.</figcaption>
 </figure>
 
 ## The two-model interview

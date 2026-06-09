@@ -68,17 +68,21 @@
     <div class="section-eyebrow">Background</div>
     <h2 class="section-heading">Biography</h2>
     <div class="bio-card">
-      <div class="bio-text-col">
-        <div class="bio-preview">
-          <p><strong>Dr. Heather Leffew</strong> grew up in a house where both parents were software engineers, so computing was structural logic before it was a career. She was equally drawn to psychology, but not the clinical kind: the gap between what a person says and what their language is actually communicating. She spent thirteen years in emergency communications at a sheriff's office in south Florida, processing 911 calls and dispatching response units, and the work left a permanent habit of tracing every downstream consequence of a decision before committing to it.</p>
-          <button id="expandBioBtn" class="bio-expand-btn">Read Full Biography <span>+</span></button>
+      <div class="split-grid">
+        <div class="bio-text-col">
+          <div class="bio-preview">
+            <p><strong>Dr. Heather Leffew</strong> is a PhD psychologist and data science executive who has spent twenty years measuring what humans and machines reveal through language and behavior. Her doctoral research at Fielding Graduate University used computational psycholinguistics to derive behavioral typologies of mass murderers from their written manifestos, with the quantitative structure of the language predicting real-world attack behaviors across both typologies. She has applied that measurement approach at increasing scale since: platform safety at TikTok, a production knowledge graph at Spokeo, and now AI evaluation frameworks that treat model outputs the way her dissertation treated manifesto language.</p>
+            <button id="expandBioBtn" class="bio-expand-btn">Read Full Biography <span>+</span></button>
+          </div>
+          <div class="bio-full" id="bioFullContent" style="display:none;opacity:0;outline:none;" tabindex="-1">
+          <p>Her doctoral work at Fielding analyzed pre-attack manifestos from perpetrators of autogenic massacre, scored on implicit power language using LIWC 2015. K-means clustering separated the corpus into two behavioral typologies, and binary logistic regression confirmed that attack behaviors predicted cluster membership. The perpetrators could not be interviewed, so the analysis relied entirely on their written output.</p>
+          <p>At TikTok, as Principal Data Scientist and Applied Researcher, she built measurement and detection systems at platform scale: statistical safety frameworks for detecting semantic coercion, network analysis that shifted content moderation from chasing individual posts to identifying systematic bad actors, multi-signal child safety detection, and an industry-first external IRB methodology for ethical review of global research. At Spokeo, as Director of Data Science, she built the AI function from scratch: a production knowledge graph with autonomous entity resolution, a behavioral evaluation program with named research questions and phase gates, and an FCRA compliance architecture where legal requirements are machine-enforced at the inference layer.</p>
+          <p>Her current work applies clinical behavioral assessment methods to AI systems: a Post-Asimovian alignment framework that uses psycholinguistic typology discovery as the state variable for adaptive safety governance, empirical analyses of frontier model behavior (including a published characterization of Claude's unsolicited clinical diagnostics and their measurable user impact), and a playable evaluation harness where the core mechanic is red-teaming a content filter through natural language paraphrasing.</p>
+            <a href="about.html" style="font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:0.10em;color:var(--ink-blue);text-decoration:none;border-bottom:1px solid rgba(0,0,0,0.2);padding-bottom:4px;display:inline-block;margin-top:24px;transition:all 0.3s;">Read the full story -></a>
+            <button id="collapseBioBtn" class="bio-expand-btn">Show Less <span>-</span></button>
+          </div>
         </div>
-        <div class="bio-full" id="bioFullContent" style="display:none;opacity:0;outline:none;" tabindex="-1">
-        <p>The dissertation she eventually wrote grew out of that obsession with implicit language. The perpetrators of mass murder cannot be interviewed after the fact, so she worked with the only data available: their pre-attack writings. The quantitative structure of that language, scored independently of its content, predicted how they would act. Two distinct behavioral typologies emerged from the clustering, and real-world attack characteristics confirmed the groupings.</p>
-        <p>She came to AI research through a realization she kept bumping into while building measurement systems at production scale: the methods she built to extract what a person is doing beneath what they are saying transfer almost directly to language models. The substrate changed, but the measurement problem did not. She calls herself a robopsychologist because it is the closest single word for what she does: measuring the gap between how a system uses language and what is actually happening underneath, whether the system is a person or a model.</p>
-          <a href="about.html" style="font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:0.10em;color:var(--ink-blue);text-decoration:none;border-bottom:1px solid rgba(0,0,0,0.2);padding-bottom:4px;display:inline-block;margin-top:24px;transition:all 0.3s;">Read the full story -></a>
-          <button id="collapseBioBtn" class="bio-expand-btn">Show Less <span>-</span></button>
-        </div>
+        <div class="headshot-frame"><img src="design_system/assets/Heather_headshot_2.jpg" alt="Dr. Heather Leffew"></div>
       </div>
     </div>
   </div>
@@ -98,7 +102,7 @@
           <div class="p-content">
             <div class="p-eyebrow">AI Evaluation</div>
             <h3 class="p-title">DEAD SIGNAL: An AI Evals Harness for Generative Game Dialogue</h3>
-            <p class="p-desc">A playable noir detective game where NPC dialogue is generated live by Gemini 2.5, wrapped in a visible evalua...</p>
+            <p class="p-desc">A playable noir detective game where NPC dialogue is generated live by Gemini 2.5, wrapped in a visible evaluati...</p>
             <span class="p-link">Read Case Study -></span>
           </div>
         </a>
@@ -285,7 +289,7 @@
           <div class="p-content">
             <div class="p-eyebrow">AI Evaluation</div>
             <h3 class="p-title">DEAD SIGNAL: An AI Evals Harness for Generative Game Dialogue</h3>
-            <p class="p-desc">A playable noir detective game where NPC dialogue is generated live by Gemini 2.5, wrapped in a visible evalua...</p>
+            <p class="p-desc">A playable noir detective game where NPC dialogue is generated live by Gemini 2.5, wrapped in a visible evaluati...</p>
             <span class="p-link">Read Case Study -></span>
           </div>
         </a>
@@ -568,93 +572,6 @@
   }
   if (document.getElementById('carousel-group-1')) shuffleCarousel();
   else document.addEventListener('DOMContentLoaded', shuffleCarousel);
-})();
-</script>
-
-<script>
-// Expandable Biography + Education toggles. These were wired by an inline
-// script in live_index.html; that script was dropped when the project
-// carousel moved to static SSG rendering, which left the buttons inert.
-(function () {
-  function wireToggle(expandId, collapseId, contentId, anchorId) {
-    var expandBtn = document.getElementById(expandId);
-    var collapseBtn = document.getElementById(collapseId);
-    var content = document.getElementById(contentId);
-    if (!expandBtn || !collapseBtn || !content) return;
-    var hasGsap = (typeof gsap !== 'undefined');
-    var refresh = function () { if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh(); };
-    var anchor = function () { return anchorId ? document.getElementById(anchorId) : null; };
-
-    expandBtn.addEventListener('click', function () {
-      var open = function () {
-        content.style.display = 'block';
-        content.style.opacity = 1;
-        expandBtn.style.display = 'none';
-        if (content.focus) content.focus();
-        refresh();
-      };
-      if (document.startViewTransition) { document.startViewTransition(open); }
-      else if (hasGsap) {
-        expandBtn.style.display = 'none';
-        content.style.display = 'block';
-        gsap.to(content, { opacity: 1, duration: 0.6, ease: 'power2.out', onComplete: function () { if (content.focus) content.focus(); refresh(); } });
-      } else { open(); }
-    });
-
-    collapseBtn.addEventListener('click', function () {
-      var a = anchor();
-      var close = function () {
-        content.style.display = 'none';
-        content.style.opacity = 0;
-        expandBtn.style.display = 'inline-flex';
-        if (a) a.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        refresh();
-      };
-      if (document.startViewTransition) { document.startViewTransition(close); }
-      else if (hasGsap) {
-        gsap.to(content, { opacity: 0, duration: 0.4, ease: 'power2.in', onComplete: function () {
-          content.style.display = 'none';
-          expandBtn.style.display = 'inline-flex';
-          refresh();
-          if (a) a.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        } });
-      } else { close(); }
-    });
-  }
-
-  wireToggle('expandBioBtn', 'collapseBioBtn', 'bioFullContent', 'executive-bio');
-  wireToggle('expandEduBtn', 'collapseEduBtn', 'eduFullContent', 'education');
-})();
-
-// Auto-populate the abbreviated bio box from the bio page (about.html),
-// truncated to a character limit. The hard-coded <p> below is the fallback
-// shown until the fetch resolves, and is kept if the fetch ever fails.
-(function () {
-  var BIO_PREVIEW_CHAR_LIMIT = 520; // adjust to taste; cuts at a sentence/word boundary
-  var previewP = document.querySelector('.bio-preview > p');
-  if (!previewP) return;
-
-  function truncate(text, limit) {
-    text = text.replace(/\s+/g, ' ').trim();
-    if (text.length <= limit) return text;
-    var slice = text.slice(0, limit);
-    // Cut at the last whole word (never mid-word) and end with an ellipsis —
-    // a deliberate cliffhanger so the reader clicks to see the rest.
-    var lastSpace = slice.lastIndexOf(' ');
-    return slice.slice(0, lastSpace > 0 ? lastSpace : limit).replace(/[\s.,;:!?]+$/, '') + '...';
-  }
-
-  fetch('about.html')
-    .then(function (r) { if (!r.ok) throw new Error('bio fetch ' + r.status); return r.text(); })
-    .then(function (html) {
-      var doc = new DOMParser().parseFromString(html, 'text/html');
-      var nodes = doc.querySelectorAll('.about-body p');
-      if (!nodes.length) nodes = doc.querySelectorAll('main p, .col p, p');
-      var text = Array.prototype.map.call(nodes, function (p) { return p.textContent; }).join(' ');
-      text = text.replace(/\s+/g, ' ').trim();
-      if (text) previewP.textContent = truncate(text, BIO_PREVIEW_CHAR_LIMIT);
-    })
-    .catch(function () { /* keep the hard-coded fallback text */ });
 })();
 </script>
 
