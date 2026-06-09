@@ -3,15 +3,24 @@
 
 ---
 
-## Start Here — 5-Step Workflow
+## ⚠️ Writing any user-facing copy? Read this first.
+
+**Before writing or editing any text that will appear on the site — article prose, abstracts, project descriptions, bio text, captions, labels — read [`VOICE.md`](VOICE.md).**
+
+This is not optional and it is not scoped to a piece type. Every word a visitor reads must conform to the voice spec. The most common agent failure mode is producing technically correct HTML with prose that sounds like an LLM wrote it. `VOICE.md` defines exactly what that means and how to avoid it, including a cold-read gate that must pass before any copy is finalized.
+
+---
+
+## Start Here — 6-Step Workflow
 
 Before writing a single line of HTML, every agent must complete these steps in order:
 
-1. **Read `DESIGN.md`** — Understand the visual grammar, palette rules, and component index.
-2. **Read `components/system/global-js-contract.md`** — Know what global.js auto-injects. If you add any of those elements manually, the page breaks.
-3. **Read `components/system/band-theme-system.md`** — Understand the dark/paper band rhythm before laying out sections.
-4. **Identify which components you need** from the DESIGN.md index. Fetch those spec files.
-5. **Run the Visualization Decision Tree** (in DESIGN.md) for every data visualization before choosing a chart type.
+1. **Read `VOICE.md`** — Understand the voice, register, and hard constraints before writing a word of copy.
+2. **Read `DESIGN.md`** — Understand the visual grammar, palette rules, and component index.
+3. **Read `components/system/global-js-contract.md`** — Know what global.js auto-injects. If you add any of those elements manually, the page breaks.
+4. **Read `components/system/band-theme-system.md`** — Understand the dark/paper band rhythm before laying out sections.
+5. **Identify which components you need** from the DESIGN.md index. Fetch those spec files.
+6. **Run the Visualization Decision Tree** (in DESIGN.md) for every data visualization before choosing a chart type.
 
 ---
 
@@ -84,7 +93,26 @@ Every content section (not front matter) must begin with the numbered section he
 | Any `border-radius` | Global reset sets `border-radius: 0 !important` everywhere |
 | Raw hex color values | Always use CSS variable names |
 
-### e. projects_index.json Entry
+### e. Voice checklist
+
+Before finalizing any prose, verify every item:
+
+- [ ] Piece is oriented toward what the reader leaves with, not what the author accomplished
+- [ ] No sassy, denigrating, or dismissive language toward any person, organization, or body of work
+- [ ] Register matches harm assessment, not topic gravity — see `VOICE.md` for the distinction
+- [ ] Humor (if present) comes from the situation, not the author's commentary; not at anyone's expense
+- [ ] No significance stamping: *"this demonstrates," "this proves," "this is significant because"*
+- [ ] No aphoristic closer (tidy moral or lesson in the final sentence)
+- [ ] No staged contrast: *"X is not Y; it is Z"*
+- [ ] No *"rather than"* — use *"not"* or *"instead of"*
+- [ ] No banned words: *matters*, *earns* (in evaluative sense)
+- [ ] No em-dashes or en-dashes in research/analytical pieces
+- [ ] Epistemic verbs match claim strength: *indicates/supports*, not *shows/proves*
+- [ ] First-person active where author is the agent: *"I built"*, not *"a pipeline was constructed"*
+- [ ] American spelling throughout
+- [ ] **Cold-read gate:** read the prose as if seeing it for the first time. Flag and rewrite any sentence that sounds AI-generated.
+
+### f. projects_index.json Entry
 
 Every new article must add an entry. The agent must add this to `projects_index.json`:
 
