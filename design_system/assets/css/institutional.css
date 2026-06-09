@@ -1937,6 +1937,30 @@ body {
 .band--dark .figure .cap .num, .band--ink .figure .cap .num { color:var(--phthalo-lift); }
 
 /* ============================================================
+   MARKDOWN <figure> — bare figure/img/figcaption emitted by markdown
+   (PNG/JPEG screenshots). Fits the image to the text column and
+   PRESERVES its native aspect ratio (no crop, no squish); styles the
+   caption to match the .figure system.
+   ============================================================ */
+.markdown-body figure {
+  margin:48px auto; max-width:var(--col-wide); padding:0 32px;
+}
+.markdown-body figure img {
+  display:block; width:100%; height:auto;
+  border:1px solid var(--paper-3);
+}
+.band--dark .markdown-body figure img, .band--ink .markdown-body figure img {
+  border-color:var(--graphite);
+}
+.markdown-body figure figcaption {
+  font-family:var(--mono); font-size:12px; line-height:1.7; letter-spacing:0.03em;
+  color:var(--ink-3); margin-top:14px; max-width:74ch;
+}
+.band--dark .markdown-body figure figcaption, .band--ink .markdown-body figure figcaption {
+  color:var(--tungsten);
+}
+
+/* ============================================================
    STATS STRIP — sharp, no boxes
    ============================================================ */
 .stats {
