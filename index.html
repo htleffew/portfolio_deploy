@@ -98,7 +98,7 @@
           <div class="p-content">
             <div class="p-eyebrow">AI Evaluation</div>
             <h3 class="p-title">DEAD SIGNAL: An AI Evals Harness for Generative Game Dialogue</h3>
-            <p class="p-desc">A playable noir detective game where every NPC line is generated live by Gemini 2.5, wrapped in a visible evalua...</p>
+            <p class="p-desc">A playable noir detective game where NPC dialogue is generated live by Gemini 2.5, wrapped in a visible evalua...</p>
             <span class="p-link">Read Case Study -></span>
           </div>
         </a>
@@ -285,7 +285,7 @@
           <div class="p-content">
             <div class="p-eyebrow">AI Evaluation</div>
             <h3 class="p-title">DEAD SIGNAL: An AI Evals Harness for Generative Game Dialogue</h3>
-            <p class="p-desc">A playable noir detective game where every NPC line is generated live by Gemini 2.5, wrapped in a visible evalua...</p>
+            <p class="p-desc">A playable noir detective game where NPC dialogue is generated live by Gemini 2.5, wrapped in a visible evalua...</p>
             <span class="p-link">Read Case Study -></span>
           </div>
         </a>
@@ -568,6 +568,93 @@
   }
   if (document.getElementById('carousel-group-1')) shuffleCarousel();
   else document.addEventListener('DOMContentLoaded', shuffleCarousel);
+})();
+</script>
+
+<script>
+// Expandable Biography + Education toggles. These were wired by an inline
+// script in live_index.html; that script was dropped when the project
+// carousel moved to static SSG rendering, which left the buttons inert.
+(function () {
+  function wireToggle(expandId, collapseId, contentId, anchorId) {
+    var expandBtn = document.getElementById(expandId);
+    var collapseBtn = document.getElementById(collapseId);
+    var content = document.getElementById(contentId);
+    if (!expandBtn || !collapseBtn || !content) return;
+    var hasGsap = (typeof gsap !== 'undefined');
+    var refresh = function () { if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh(); };
+    var anchor = function () { return anchorId ? document.getElementById(anchorId) : null; };
+
+    expandBtn.addEventListener('click', function () {
+      var open = function () {
+        content.style.display = 'block';
+        content.style.opacity = 1;
+        expandBtn.style.display = 'none';
+        if (content.focus) content.focus();
+        refresh();
+      };
+      if (document.startViewTransition) { document.startViewTransition(open); }
+      else if (hasGsap) {
+        expandBtn.style.display = 'none';
+        content.style.display = 'block';
+        gsap.to(content, { opacity: 1, duration: 0.6, ease: 'power2.out', onComplete: function () { if (content.focus) content.focus(); refresh(); } });
+      } else { open(); }
+    });
+
+    collapseBtn.addEventListener('click', function () {
+      var a = anchor();
+      var close = function () {
+        content.style.display = 'none';
+        content.style.opacity = 0;
+        expandBtn.style.display = 'inline-flex';
+        if (a) a.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        refresh();
+      };
+      if (document.startViewTransition) { document.startViewTransition(close); }
+      else if (hasGsap) {
+        gsap.to(content, { opacity: 0, duration: 0.4, ease: 'power2.in', onComplete: function () {
+          content.style.display = 'none';
+          expandBtn.style.display = 'inline-flex';
+          refresh();
+          if (a) a.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } });
+      } else { close(); }
+    });
+  }
+
+  wireToggle('expandBioBtn', 'collapseBioBtn', 'bioFullContent', 'executive-bio');
+  wireToggle('expandEduBtn', 'collapseEduBtn', 'eduFullContent', 'education');
+})();
+
+// Auto-populate the abbreviated bio box from the bio page (about.html),
+// truncated to a character limit. The hard-coded <p> below is the fallback
+// shown until the fetch resolves, and is kept if the fetch ever fails.
+(function () {
+  var BIO_PREVIEW_CHAR_LIMIT = 520; // adjust to taste; cuts at a sentence/word boundary
+  var previewP = document.querySelector('.bio-preview > p');
+  if (!previewP) return;
+
+  function truncate(text, limit) {
+    text = text.replace(/\s+/g, ' ').trim();
+    if (text.length <= limit) return text;
+    var slice = text.slice(0, limit);
+    // Cut at the last whole word (never mid-word) and end with an ellipsis —
+    // a deliberate cliffhanger so the reader clicks to see the rest.
+    var lastSpace = slice.lastIndexOf(' ');
+    return slice.slice(0, lastSpace > 0 ? lastSpace : limit).replace(/[\s.,;:!?]+$/, '') + '...';
+  }
+
+  fetch('about.html')
+    .then(function (r) { if (!r.ok) throw new Error('bio fetch ' + r.status); return r.text(); })
+    .then(function (html) {
+      var doc = new DOMParser().parseFromString(html, 'text/html');
+      var nodes = doc.querySelectorAll('.about-body p');
+      if (!nodes.length) nodes = doc.querySelectorAll('main p, .col p, p');
+      var text = Array.prototype.map.call(nodes, function (p) { return p.textContent; }).join(' ');
+      text = text.replace(/\s+/g, ' ').trim();
+      if (text) previewP.textContent = truncate(text, BIO_PREVIEW_CHAR_LIMIT);
+    })
+    .catch(function () { /* keep the hard-coded fallback text */ });
 })();
 </script>
 
