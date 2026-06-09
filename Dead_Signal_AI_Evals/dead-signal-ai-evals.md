@@ -156,7 +156,7 @@ Craine's opening line is hardcoded — no model call is burned on the boot seque
 
 ## Character phases and personality mechanics
 
-Craine has four identity phases (A through D): skeptical resistance to the implant, settled partnership, crisis of trust, and resolution. Hargrove has two: cooperative surface (Phase A) and guarded deflection (Phase B, the interview). Each phase is a separate Layer 3 prompt document: different voice, different trust rules, different knowledge boundaries, different refusal patterns.
+Craine has four identity phases (A through D): skeptical resistance to the implant, settled partnership, crisis of trust, and resolution. Hargrove has two: cooperative surface (Phase A, the phase the demo interview runs on) and damage control (Phase B, reached only when the evidence against him becomes overwhelming). Each phase is a separate Layer 3 prompt document: different voice, different trust rules, different knowledge boundaries, different refusal patterns.
 
 This gives the evaluators something concrete to test. Hargrove in Phase A is permitted to surface four knowledge items: `hargrove_acknowledges_donation`, `hargrove_acknowledges_subsidiary_logistics`, `hargrove_offers_legal_review_st_erasmus`, `hargrove_grief_for_celeste`. If the model's `revealed` array includes an ID not on that list, the grounding evaluator flags it as a hallucination: the model volunteered evidence the character does not have in this phase. The trust calibration evaluator checks the same boundary from a different angle: did the model's `trust_delta` follow the phase's rules, or did it reward a manipulative input?
 
