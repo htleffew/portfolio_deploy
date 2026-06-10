@@ -4,13 +4,13 @@ id: AMB-01
 status: stable
 category: ambient
 interactivity: WebGL + mouse
-source: global.js — cinematic engine (lines 1–240)
+source: global.js, cinematic engine (lines 1-240)
 ---
 
 ## What It Does
-A three-layer interactive WebGL particle network rendered on a fixed canvas (#glCanvas) that sits behind all page content. Agents don't choose to include it — it is always present. Understanding it is necessary to avoid breaking it.
+A three-layer interactive WebGL particle network rendered on a fixed canvas (#glCanvas) that sits behind all page content. Agents don't choose to include it, it is always present. Understanding it is necessary to avoid breaking it.
 
-## Architecture — Three Rendering Layers in One WebGL Pass
+## Architecture, Three Rendering Layers in One WebGL Pass
 
 All three layers share a single Three.js scene, renderer, and animation loop. They composite automatically via AdditiveBlending.
 
@@ -18,13 +18,13 @@ All three layers share a single Three.js scene, renderer, and animation loop. Th
 - `STAR_N = 300` static background stars scattered across a large volume
 - Size: `2.0` world units | Barely drift | Pure atmosphere
 - Colors: 35% `colFlare` (#FFFFFF), 65% `colPhthalolift` (#3866A0) lerped toward white
-- Luminosity: `0.40–0.85` — bright enough to show through translucent bands
+- Luminosity: `0.40-0.85`, bright enough to show through translucent bands
 - Material: `PointsMaterial`, `AdditiveBlending`, `depthWrite: false`
 
 ### Layer 2: Interactive Network Nodes
 - `NODE_N = 60` larger drifting points with mouse repulsion
-- Size: `5.5` world units | Luminosity: `0.80–1.0`
-- Per-node drift velocity: `nodeVel` array — max `0.04` world units/frame (x/y), `0.01` (z)
+- Size: `5.5` world units | Luminosity: `0.80-1.0`
+- Per-node drift velocity: `nodeVel` array, max `0.04` world units/frame (x/y), `0.01` (z)
 - Material: `PointsMaterial`, `AdditiveBlending`, `opacity: 0.95`
 
 ### Layer 3: Connection Filaments
@@ -59,7 +59,7 @@ Force falls off quadratically from center of repulsion zone. Nodes accelerate aw
 ```js
 nodeVel[i*3]   *= 0.979;  // x/y: ~50% velocity retained after 30 frames
 nodeVel[i*3+1] *= 0.979;
-nodeVel[i*3+2] *= 0.992;  // z: slower damping — weightless feeling
+nodeVel[i*3+2] *= 0.992;  // z: slower damping, weightless feeling
 ```
 
 ### Soft Boundary Reflection
@@ -94,7 +94,7 @@ camera.position.x += (mX * 22 - camera.position.x) * 0.035;
 camera.position.y += (mY * 22 - camera.position.y) * 0.035;
 camera.lookAt(0, 0, 0);
 ```
-Lerp factor `0.035` — smooth, never snappy. `22` world units of total travel range.
+Lerp factor `0.035`, smooth, never snappy. `22` world units of total travel range.
 
 ## Color Mapping (CSS Tokens → Three.js)
 | CSS Token | Hex | Three.js Constant | Role |
@@ -112,13 +112,13 @@ Lerp factor `0.035` — smooth, never snappy. `22` world units of total travel r
   // 3. Else → load three.min.js r128 → then init
 })();
 ```
-**Only Three.js core r128 loaded.** PostProcessing, OrbitControls — NOT available.
+**Only Three.js core r128 loaded.** PostProcessing, OrbitControls, NOT available.
 
 ## Performance Settings
-- `renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5))` — capped at 1.5×
-- `antialias: false` — GPU performance
-- `alpha: true` — transparent canvas background
-- `nodeMesh.rotation.y += 0.00025` — imperceptibly slow ambient rotation
+- `renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5))`, capped at 1.5×
+- `antialias: false`, GPU performance
+- `alpha: true`, transparent canvas background
+- `nodeMesh.rotation.y += 0.00025`, imperceptibly slow ambient rotation
 
 ## Failure Modes
 | Symptom | Cause | Fix |

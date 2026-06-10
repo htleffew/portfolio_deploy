@@ -4,7 +4,7 @@ id: LAY-03
 status: stable
 category: layout
 interactivity: click
-source: index.html — biography section (.bio-card, .bio-expand-btn)
+source: index.html, biography section (.bio-card, .bio-expand-btn)
 ---
 
 ## What It Does
@@ -18,7 +18,7 @@ A content block with a preview state (first paragraph visible) and a full state 
 ## When NOT to Use
 - Content shorter than 3 paragraphs (just show it all)
 - When the hidden content is critical to understanding the visible content
-- Article body sections — use full prose; article readers have committed to reading
+- Article body sections, use full prose; article readers have committed to reading
 
 **The rule:** Use expand/collapse when the preview stands alone as useful content AND the full version rewards curiosity. Don't use it to hide content that should just be shorter.
 
@@ -95,7 +95,7 @@ btn.addEventListener('click', () => {
 
 ## The `tabindex="-1"` + `outline:none` Pattern
 
-The hidden `.bio-full` div carries `tabindex="-1"` and `style="outline:none;"`. This is an **accessibility pattern** — it prevents the hidden div from being tab-navigable in its hidden state, and suppresses the focus ring that would flash briefly during GSAP's display toggle. Without it, keyboard users would see a confusing focus indicator appear and disappear on expand.
+The hidden `.bio-full` div carries `tabindex="-1"` and `style="outline:none;"`. This is an **accessibility pattern**, it prevents the hidden div from being tab-navigable in its hidden state, and suppresses the focus ring that would flash briefly during GSAP's display toggle. Without it, keyboard users would see a confusing focus indicator appear and disappear on expand.
 
 ## Button Text Swap Pattern
 
@@ -104,7 +104,7 @@ Collapsed: "Read Full Biography +"   (verb + object + affirmative signal)
 Expanded:  "Show Less -"             (verb + less + negative signal)
 ```
 
-The `+` and `-` suffix is a visual affordance — it signals "this is expandable" at a glance, without iconography. Always use `+` for collapsed and `-` for expanded.
+The `+` and `-` suffix is a visual affordance, it signals "this is expandable" at a glance, without iconography. Always use `+` for collapsed and `-` for expanded.
 
 ## CSS (from global.css)
 ```css

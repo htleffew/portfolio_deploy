@@ -10,7 +10,7 @@ All three families loaded via a single `<link>` tag in article `<head>`:
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
 ```
-Also declared in `global.css` at the top via `@import url(...)`. Both load the same families — the `<link>` tag in articles ensures fonts are available before CSS parses, preventing FOUT.
+Also declared in `global.css` at the top via `@import url(...)`. Both load the same families, the `<link>` tag in articles ensures fonts are available before CSS parses, preventing FOUT.
 
 ### The Three Families
 
@@ -20,7 +20,7 @@ Also declared in `global.css` at the top via `@import url(...)`. Both load the s
 | `--body` / `--font-body` | Lora | Georgia, 'Times New Roman', serif | All prose | Legible, patient, literary |
 | `--mono` / `--font-mono` | JetBrains Mono | 'SF Mono', Menlo, monospace | All data/labels/code | Technical, precise, systematic |
 
-**The display + body serif pairing** (Playfair + Lora) signals "this is longform writing worth reading" — both are editorial typefaces with strong literary associations. The mono contrast makes data feel categorically different from prose.
+**The display + body serif pairing** (Playfair + Lora) signals "this is longform writing worth reading", both are editorial typefaces with strong literary associations. The mono contrast makes data feel categorically different from prose.
 
 **Never use sans-serif fonts.** The system has no sans-serif family and doesn't want one. The serif/mono pairing is the entire typographic identity.
 
@@ -44,8 +44,8 @@ All sizes defined as CSS custom properties in `:root`:
 | `--fs-h1` | `clamp(40px, 5.5vw, 72px)` | Page titles (design system context) |
 
 **Article-specific sizes** (from global.css component styles):
-- Article H1: `clamp(28px, 3.5vw, 46px)` — slightly smaller than design system H1
-- Article H2: `clamp(22px, 2.5vw, 30px)` — section headings
+- Article H1: `clamp(28px, 3.5vw, 46px)`, slightly smaller than design system H1
+- Article H2: `clamp(22px, 2.5vw, 30px)`, section headings
 - Article body: `17px` or `18px` line-height `1.78`
 - Abstract: `20px` italic, line-height `1.62`
 
@@ -58,10 +58,10 @@ All sizes defined as CSS custom properties in `:root`:
 | 300 | JetBrains Mono | Light mono (rarely used) |
 | 400 | All three families | Body text, regular prose |
 | 500 | Playfair Display, Lora, JetBrains Mono | Semi-emphasis, `.r-dates`, data values |
-| 600 | Playfair Display, Lora | H1, H2, H3 headings — the primary display weight |
+| 600 | Playfair Display, Lora | H1, H2, H3 headings, the primary display weight |
 | 700 | JetBrains Mono, Playfair Display | Strong emphasis, rarely used |
 
-**The workhorse weight is 600.** All article headings (H1, H2, H3) use `font-weight: 600`. Weight 400 handles all prose. Weight 500 is the tertiary — for values that need emphasis without being a heading.
+**The workhorse weight is 600.** All article headings (H1, H2, H3) use `font-weight: 600`. Weight 400 handles all prose. Weight 500 is the tertiary, for values that need emphasis without being a heading.
 
 ---
 
@@ -76,7 +76,7 @@ All sizes defined as CSS custom properties in `:root`:
 **Practical values by context:**
 ```css
 /* Article eyebrows (.eyebrow) */
-letter-spacing: 0.30em;   /* very open — reads from distance */
+letter-spacing: 0.30em;   /* very open, reads from distance */
 
 /* Spine labels (.label) */
 letter-spacing: 0.18em;
@@ -91,10 +91,10 @@ letter-spacing: 0.18em;
 letter-spacing: 0.10em;   /* reduced for legibility at small size */
 
 /* Display headlines (h1, h2) */
-letter-spacing: -0.012em to -0.018em;  /* negative — tight editorial feel */
+letter-spacing: -0.012em to -0.018em;  /* negative, tight editorial feel */
 
 /* Body text */
-letter-spacing: default (0) — never track body copy */
+letter-spacing: default (0), never track body copy */
 ```
 
 **The mono-everywhere-data rule:** Any text representing data, labels, metadata, or system output uses `--mono`. This includes: eyebrows, figure captions, table headers, slider labels, nav links, footer text, spine labels, card metadata, code blocks, stat labels. Rationale: mono signals "this is information, not narrative."
@@ -105,12 +105,12 @@ letter-spacing: default (0) — never track body copy */
 
 | Token | Value | Applied To |
 |-------|-------|-----------|
-| `--leading-tight` | 1.10 | Display headlines — packed, editorial |
+| `--leading-tight` | 1.10 | Display headlines, packed, editorial |
 | `--leading-snug` | 1.25 | H3/H4 subheadings |
 | `--leading-comfort` | 1.70 | Abstract lede paragraphs |
-| `--leading-reading` | 1.85 | Standard body prose — generous for long reads |
+| `--leading-reading` | 1.85 | Standard body prose, generous for long reads |
 
-Article body paragraphs consistently use `line-height: 1.78` or `1.85`. The generosity is intentional — data science articles are read slowly and carefully.
+Article body paragraphs consistently use `line-height: 1.78` or `1.85`. The generosity is intentional, data science articles are read slowly and carefully.
 
 ---
 
@@ -120,7 +120,7 @@ Lora italic is used for:
 - Abstract lede paragraphs (`.abstract { font-style: italic }`)
 - Company names in experience cards (`.r-company`)
 - University names in education cards (`.edu-school`)
-- `.byline strong` values — the key stats in front matter
+- `.byline strong` values, the key stats in front matter
 
 The italic signals "this is the human voice / narrative layer" vs. the roman weight which handles "this is the technical content."
 

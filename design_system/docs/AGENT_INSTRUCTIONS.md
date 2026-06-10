@@ -1,24 +1,24 @@
-# Agent Instructions — Leffew Portfolio Design System
+# Agent Instructions, Leffew Portfolio Design System
 > Operational guide for agents building new articles or components. Read this before touching any file.
 
 ---
 
 ## ⚠️ Writing any user-facing copy? Read this first.
 
-**Before writing or editing any text that will appear on the site — article prose, abstracts, project descriptions, bio text, captions, labels — read [`VOICE.md`](VOICE.md).**
+**Before writing or editing any text that will appear on the site, article prose, abstracts, project descriptions, bio text, captions, labels, read [`VOICE.md`](VOICE.md).**
 
 This is not optional and it is not scoped to a piece type. Every word a visitor reads must conform to the voice spec. The most common agent failure mode is producing technically correct HTML with prose that sounds like an LLM wrote it. `VOICE.md` defines exactly what that means and how to avoid it, including a cold-read gate that must pass before any copy is finalized.
 
 ---
 
-## Start Here — 6-Step Workflow
+## Start Here, 6-Step Workflow
 
 Before writing a single line of HTML, every agent must complete these steps in order:
 
-1. **Read `VOICE.md`** — Understand the voice, register, and hard constraints before writing a word of copy.
-2. **Read `DESIGN.md`** — Understand the visual grammar, palette rules, and component index.
-3. **Read `components/system/global-js-contract.md`** — Know what global.js auto-injects. If you add any of those elements manually, the page breaks.
-4. **Read `components/system/band-theme-system.md`** — Understand the dark/paper band rhythm before laying out sections.
+1. **Read `VOICE.md`**, Understand the voice, register, and hard constraints before writing a word of copy.
+2. **Read `DESIGN.md`**, Understand the visual grammar, palette rules, and component index.
+3. **Read `components/system/global-js-contract.md`**, Know what global.js auto-injects. If you add any of those elements manually, the page breaks.
+4. **Read `components/system/band-theme-system.md`**, Understand the dark/paper band rhythm before laying out sections.
 5. **Identify which components you need** from the DESIGN.md index. Fetch those spec files.
 6. **Run the Visualization Decision Tree** (in DESIGN.md) for every data visualization before choosing a chart type.
 
@@ -55,7 +55,7 @@ Legacy: pre-2026-06-05, every page linked a single `../design_system/js/global.j
 
 ### b. Mandatory HTML Placeholders
 
-These elements must be present in every article, empty — global.js populates them:
+These elements must be present in every article, empty, global.js populates them:
 
 ```html
 <canvas id="deep-space"></canvas>
@@ -71,8 +71,8 @@ Every `<section>` must have both attributes:
 <section class="band band--dark" data-spine="Short Label" data-section="Full Section Name">
 ```
 
-- `data-spine` — Short label shown in the left chapter spine navigation (≤20 chars)
-- `data-section` — Full name for accessibility and GSAP orchestration
+- `data-spine`, Short label shown in the left chapter spine navigation (≤20 chars)
+- `data-section`, Full name for accessibility and GSAP orchestration
 - `class` must include `band` plus one of `band--dark` or `band--paper`
 
 Every content section (not front matter) must begin with the numbered section header pattern:
@@ -87,7 +87,7 @@ Every content section (not front matter) must begin with the numbered section he
 |---------|--------|
 | `<nav>`, `<header id="topnav">` | Auto-injected by global.js |
 | `<footer>` | Auto-injected by global.js |
-| `<script src="three.js">` or any Three.js import | Already loaded by global.js — duplicate = black screen |
+| `<script src="three.js">` or any Three.js import | Already loaded by global.js, duplicate = black screen |
 | `<div id="grain">` | Auto-injected |
 | `#glCanvas` | Auto-injected |
 | Any `border-radius` | Global reset sets `border-radius: 0 !important` everywhere |
@@ -99,12 +99,12 @@ Before finalizing any prose, verify every item:
 
 - [ ] Piece is oriented toward what the reader leaves with, not what the author accomplished
 - [ ] No sassy, denigrating, or dismissive language toward any person, organization, or body of work
-- [ ] Register matches harm assessment, not topic gravity — see `VOICE.md` for the distinction
+- [ ] Register matches harm assessment, not topic gravity, see `VOICE.md` for the distinction
 - [ ] Humor (if present) comes from the situation, not the author's commentary; not at anyone's expense
 - [ ] No significance stamping: *"this demonstrates," "this proves," "this is significant because"*
 - [ ] No aphoristic closer (tidy moral or lesson in the final sentence)
 - [ ] No staged contrast: *"X is not Y; it is Z"*
-- [ ] No *"rather than"* — use *"not"* or *"instead of"*
+- [ ] No *"rather than"*, use *"not"* or *"instead of"*
 - [ ] No banned words: *matters*, *earns* (in evaluative sense)
 - [ ] No em-dashes or en-dashes in research/analytical pieces
 - [ ] Epistemic verbs match claim strength: *indicates/supports*, not *shows/proves*
@@ -160,7 +160,7 @@ Every new article must add an entry. The agent must add this to `projects_index.
 
 Before finalizing any new visualization, verify all 15 points:
 
-- [ ] Chart background is `rgba(0,0,0,0)` — not white, not black
+- [ ] Chart background is `rgba(0,0,0,0)`, not white, not black
 - [ ] All colors reference CSS variables, not hex values
 - [ ] Font family set to `var(--mono)` for axis labels
 - [ ] No `border-radius` anywhere in the component
@@ -170,7 +170,7 @@ Before finalizing any new visualization, verify all 15 points:
 - [ ] SVG arrow markers use `<defs><marker>` pattern (see `DIA-01`)
 - [ ] Component degrades gracefully on mobile (test at 375px)
 - [ ] Dark-band and light-band variants both tested (dark: `--platinum` labels; light: `--ink-3` labels)
-- [ ] No inline `style="color:#XXXXXX"` — only CSS variable references
+- [ ] No inline `style="color:#XXXXXX"`, only CSS variable references
 - [ ] Figure caption uses `.cap` class with `.num` span: `<span class="num">FIG. XX</span>`
 - [ ] Component wrapped in `.figure` + `.frame` structure
 - [ ] `.reveal` class added to `.figure` for scroll-triggered entrance

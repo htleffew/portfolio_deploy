@@ -4,17 +4,17 @@ id: DAT-04
 status: stable
 category: data-display
 interactivity: none
-source: projects_index.json — visual fields
+source: projects_index.json, visual fields
 ---
 
 ## What It Does
 Small inline SVG strings stored in `projects_index.json` that serve as visual thumbnails for project cards, the carousel, and the repository dashboard. Each SVG communicates the article's analytical category through a recognizable abstract motif.
 
 ## Standard Dimensions
-- `viewBox="0 0 600 600"` — square, 600×600 units
+- `viewBox="0 0 600 600"`, square, 600×600 units
 - Rendered at various sizes: 420×280 in carousel cards, 160×100 in repository thumbnails
 - `fill="none"` on root SVG (shapes are stroked, not filled)
-- All colors hardcoded hex (not CSS variables — SVG renders outside CSS scope)
+- All colors hardcoded hex (not CSS variables, SVG renders outside CSS scope)
 
 ## The Gradient Definition Pattern
 
@@ -29,7 +29,7 @@ All thumbnails use a standard phthalo gradient:
 ```
 Top-left (#3866A0 at 55%) → bottom-right (transparent). Gradient `id` is always `g1` or `g2` (reversed diagonal).
 
-⚠️ **Gradient ID collision warning:** All thumbnails use `id="g1"`. When multiple render on the same page, the browser uses the first definition. This is a known system quirk — do not "fix" by using unique IDs.
+⚠️ **Gradient ID collision warning:** All thumbnails use `id="g1"`. When multiple render on the same page, the browser uses the first definition. This is a known system quirk, do not "fix" by using unique IDs.
 
 ## Complete SVG Vocabulary
 
@@ -153,7 +153,7 @@ Top-left (#3866A0 at 55%) → bottom-right (transparent). Gradient `id` is alway
 | Ranking / Scoring | Ascending path |
 | Research / Exploration | Cross/grid mesh |
 | Interpretability / NLP | Dual arc |
-| Graph ML / Networks | Node-edge (custom — not yet in system) |
+| Graph ML / Networks | Node-edge (custom, not yet in system) |
 
 ## Source Reference
 All `visual` fields in `projects_index.json` (8 articles).

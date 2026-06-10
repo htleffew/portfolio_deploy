@@ -4,7 +4,7 @@
 ---
 
 ## File Location
-`portfolio_deploy/projects_index.json` — at the portfolio root.
+`portfolio_deploy/projects_index.json`, at the portfolio root.
 
 ---
 
@@ -14,7 +14,7 @@
 |-------|------|----------|-------------|---------|
 | `id` | string | **required** | Must exactly match folder name | Used to filter current article from recommendations |
 | `title` | string | **required** | No length limit | Full article title shown in search results and recommendation cards |
-| `desc` | string | **required** | 2–3 sentences | First 80 chars → next-article `.ti` truncation. First 140 chars → search result preview |
+| `desc` | string | **required** | 2-3 sentences | First 80 chars → next-article `.ti` truncation. First 140 chars → search result preview |
 | `cat` | string | **required** | Single category | Sidebar taxonomy filter in projects-repository.html; shown in search results |
 | `subtype` | string | **required** | UPPERCASE | Displayed above title in project cards (.p-eyebrow); drives carousel label |
 | `tags` | string[] | **required** | Array of strings | Drives tag chip generation; top 6 most-common across all articles become hot-button filters |
@@ -30,7 +30,7 @@
 ```json
 "id": "Account_Prioritization"
 ```
-Must match the folder name exactly, including case and underscores. global.js uses `currentPath.includes(p.url.split('/').pop())` to detect the current page — if `id` doesn't match, the article filters itself from recommendations incorrectly.
+Must match the folder name exactly, including case and underscores. global.js uses `currentPath.includes(p.url.split('/').pop())` to detect the current page, if `id` doesn't match, the article filters itself from recommendations incorrectly.
 
 ### `desc`
 Write the description so the first sentence stands alone as the next-article teaser (≤80 chars ideally), and the first two sentences work as the search preview (≤140 chars). The third sentence can elaborate freely.
@@ -162,10 +162,10 @@ Diagonal direction (top-left to bottom-right), phthalo-lift fading to transparen
 
 ### Wrong `url` Path
 ```json
-// WRONG — leading slash makes it absolute
+// WRONG, leading slash makes it absolute
 "url": "/Account_Prioritization/account-prioritization.html"
 
-// WRONG — relative to article not root  
+// WRONG, relative to article not root  
 "url": "./account-prioritization.html"
 
 // CORRECT
@@ -176,7 +176,7 @@ Diagonal direction (top-left to bottom-right), phthalo-lift fading to transparen
 The minimum viable entry requires all 8 non-optional fields. `visual` can be an empty string `""` but the card will render without a thumbnail.
 
 ### SVG with Unescaped Quotes
-The `visual` field is a JSON string. Any `"` inside the SVG must be escaped as `\"`. The `viewbox` attribute (lowercase) is used in the actual JSON (not `viewBox`) — this is a quirk of how the SVG was serialized into JSON.
+The `visual` field is a JSON string. Any `"` inside the SVG must be escaped as `\"`. The `viewbox` attribute (lowercase) is used in the actual JSON (not `viewBox`), this is a quirk of how the SVG was serialized into JSON.
 
 ### Gradient ID Collisions
-All articles use `id="g1"` or `id="g2"` in their SVG visuals. When multiple SVGs render on the same page (carousel, repository), these IDs collide. This is an existing quirk in the system — do not "fix" it by using unique IDs, as it would break existing visuals. The browser uses the first definition found.
+All articles use `id="g1"` or `id="g2"` in their SVG visuals. When multiple SVGs render on the same page (carousel, repository), these IDs collide. This is an existing quirk in the system, do not "fix" it by using unique IDs, as it would break existing visuals. The browser uses the first definition found.

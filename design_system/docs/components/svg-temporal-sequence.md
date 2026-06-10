@@ -4,7 +4,7 @@ id: DIA-02
 status: stable
 category: diagrams
 interactivity: none
-source: multimodal-autism-ai.html — FIG.05
+source: multimodal-autism-ai.html, FIG.05
 ---
 
 ## What It Does
@@ -42,7 +42,7 @@ This is the **only diagram in the system that uses `--hansa` (gold)**:
 | Blue | `--phthalo` / `--phthalo-lift` | #0F3A6B / #3866A0 | Initiator / Cause / Clinician action |
 | Gold | `--hansa` | #DBA844 | Responder / Effect / Patient response |
 
-Blue = the thing that happens first. Gold = the reaction that follows. This two-color logic is universal to any cause-effect temporal diagram — not just clinical settings.
+Blue = the thing that happens first. Gold = the reaction that follows. This two-color logic is universal to any cause-effect temporal diagram, not just clinical settings.
 
 ## SVG Implementation
 
@@ -97,7 +97,7 @@ Complete markup from `multimodal-autism-ai.html` FIG.05:
 Control point logic: `C [startX] [midY], [endX] [midY], [endX] [endY]`
 - The first and second control points share the same Y value (`midY = (y1 + y2) / 2`)
 - This creates a smooth S-curve connecting the two tracks
-- `stroke-dasharray="4 4"` signals "implied/invisible relationship" — the latency is inferred, not observed directly
+- `stroke-dasharray="4 4"` signals "implied/invisible relationship", the latency is inferred, not observed directly
 
 ### The Track Band
 ```html
@@ -129,7 +129,7 @@ Dark box with subtle border, centered over the bezier midpoint. Always positions
 
 **What stays constant:** The two-color system (blue = initiator, gold = responder). The dashed connector indicating latency. The `stroke-width: 20` track bands. The JetBrains Mono font.
 
-**For more events:** Add more circle markers along the tracks. Keep gold for responder events, blue for initiator events. Don't add a third color — use opacity variation instead.
+**For more events:** Add more circle markers along the tracks. Keep gold for responder events, blue for initiator events. Don't add a third color, use opacity variation instead.
 
 **For multiple latencies:** Each latency gets its own bezier path. Stack multiple connectors between the two tracks, varying `cx` positions.
 

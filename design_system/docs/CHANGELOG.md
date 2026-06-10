@@ -1,27 +1,27 @@
 # Design System Changelog
 
-## Week 4 — Ambient, Cinematic, Tokens & Gallery (May 2026)
+## Week 4, Ambient, Cinematic, Tokens & Gallery (May 2026)
 
 ### New Files
-- `components/ambient/three-particle-network.md` — Full documentation of the Three.js WebGL engine: three rendering layers, physics system (drift, mouse repulsion, damping, boundary reflection), connection filament logic, camera parallax, color mapping, self-bootstrapping, failure modes
-- `components/ambient/film-grain-overlay.md` — SVG feTurbulence noise overlay, steps(1) animation rationale, opacity 0.022 threshold, z-index context
-- `components/ambient/scroll-cue-drip.md` — CSS drip animation, GSAP fade-in/fade-out lifecycle, required HTML placement
-- `components/ambient/reading-progress-bar.md` — CSS custom property --p pattern, passive scroll listener, transition tuning
-- `components/cinematic/sticky-stack-narrative.md` — 2-column sticky layout, top: 80px nav offset, integration with GSAP
-- `components/cinematic/scroll-svg-draw.md` — stroke-dashoffset animation, getTotalLength() usage, stagger config
-- `components/cinematic/curtain-reveal.md` — Split curtain panels, conflict note re: global.js preloader IDs, ScrollTrigger once flag
-- `components/cinematic/sticky-cards.md` — Card stacking via scroll, .r-card styling, 3D tilt integration
-- `components/cinematic/text-mask-reveal.md` — background-clip:text fill animation, H2-only restriction, paper/dark variants
-- `components/cinematic/odometer-counter.md` — Counter on .byline scroll entry, data-* HTML API, GSAP interpolation
-- `components/cinematic/typewriter.md` — Character-by-character reveal, code block target, conflict note re: SplitType
-- `components/cinematic/mesh-gradient.md` — Paper-band-only atmospheric gradient, palette constraints, ::before animation
-- `tokens/typography.md` — All font families, size scale, weight usage, letter-spacing conventions, line-height, italic usage, loading strategy
-- `tokens/spacing.md` — Full spacing scale, column widths, band padding, nav height, card padding, code block padding, 48px margin convention
-- `gallery/DESIGN.html` — Self-contained visual browser of all 44 components: sidebar nav, search filter, live Plotly mini-charts, SVG previews, scroll-animated demos, reading progress bar, film grain overlay
+- `components/ambient/three-particle-network.md`, Full documentation of the Three.js WebGL engine: three rendering layers, physics system (drift, mouse repulsion, damping, boundary reflection), connection filament logic, camera parallax, color mapping, self-bootstrapping, failure modes
+- `components/ambient/film-grain-overlay.md`, SVG feTurbulence noise overlay, steps(1) animation rationale, opacity 0.022 threshold, z-index context
+- `components/ambient/scroll-cue-drip.md`, CSS drip animation, GSAP fade-in/fade-out lifecycle, required HTML placement
+- `components/ambient/reading-progress-bar.md`, CSS custom property --p pattern, passive scroll listener, transition tuning
+- `components/cinematic/sticky-stack-narrative.md`, 2-column sticky layout, top: 80px nav offset, integration with GSAP
+- `components/cinematic/scroll-svg-draw.md`, stroke-dashoffset animation, getTotalLength() usage, stagger config
+- `components/cinematic/curtain-reveal.md`, Split curtain panels, conflict note re: global.js preloader IDs, ScrollTrigger once flag
+- `components/cinematic/sticky-cards.md`, Card stacking via scroll, .r-card styling, 3D tilt integration
+- `components/cinematic/text-mask-reveal.md`, background-clip:text fill animation, H2-only restriction, paper/dark variants
+- `components/cinematic/odometer-counter.md`, Counter on .byline scroll entry, data-* HTML API, GSAP interpolation
+- `components/cinematic/typewriter.md`, Character-by-character reveal, code block target, conflict note re: SplitType
+- `components/cinematic/mesh-gradient.md`, Paper-band-only atmospheric gradient, palette constraints, ::before animation
+- `tokens/typography.md`, All font families, size scale, weight usage, letter-spacing conventions, line-height, italic usage, loading strategy
+- `tokens/spacing.md`, Full spacing scale, column widths, band padding, nav height, card padding, code block padding, 48px margin convention
+- `gallery/DESIGN.html`, Self-contained visual browser of all 44 components: sidebar nav, search filter, live Plotly mini-charts, SVG previews, scroll-animated demos, reading progress bar, film grain overlay
 
 ---
 
-## Week 3 — Complete Pages (May 2026)
+## Week 3, Complete Pages (May 2026)
 
 ### New Files
 **Interactive (4):**
@@ -53,7 +53,7 @@
 
 ---
 
-## Week 2 — Visualizations (May 2026)
+## Week 2, Visualizations (May 2026)
 
 ### New Files
 **Charts (4):**
@@ -78,15 +78,15 @@
 
 ---
 
-## Week 1 — Foundation (May 2026)
+## Week 1, Foundation (May 2026)
 
 ### New Files
-- `DESIGN.md` — Master index: visual grammar, component index table (51 entries), global.js auto-injection summary, visualization decision tree
-- `AGENT_INSTRUCTIONS.md` — Operational guide: 5-step workflow, new article checklist, visualization decision tree (imperative), 15-point component checklist, critical gotchas, file naming conventions
-- `components/system/global-js-contract.md` — Complete documentation of all three engines in global.js: WebGL cinematic, chrome injector, GSAP orchestration
-- `components/system/projects-index-schema.md` — Full field schema, SVG visual vocabulary (7 patterns), complete example entry, common mistakes
-- `components/system/band-theme-system.md` — Dark/paper band CSS, translucency rationale, data-mode attribute, padding conventions, editorial rhythm, eyebrow + H2 pattern
-- `tokens/colors.md` — All CSS custom properties with hex, usage rules, additive blending note, dark/paper behavior, no new colors rule
+- `DESIGN.md`, Master index: visual grammar, component index table (51 entries), global.js auto-injection summary, visualization decision tree
+- `AGENT_INSTRUCTIONS.md`, Operational guide: 5-step workflow, new article checklist, visualization decision tree (imperative), 15-point component checklist, critical gotchas, file naming conventions
+- `components/system/global-js-contract.md`, Complete documentation of all three engines in global.js: WebGL cinematic, chrome injector, GSAP orchestration
+- `components/system/projects-index-schema.md`, Full field schema, SVG visual vocabulary (7 patterns), complete example entry, common mistakes
+- `components/system/band-theme-system.md`, Dark/paper band CSS, translucency rationale, data-mode attribute, padding conventions, editorial rhythm, eyebrow + H2 pattern
+- `tokens/colors.md`, All CSS custom properties with hex, usage rules, additive blending note, dark/paper behavior, no new colors rule
 
 ---
 

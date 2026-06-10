@@ -9,7 +9,7 @@ adaptation-status: token-mapped
 ---
 
 ## What It Does
-Numbers count up from zero (or a lower value) to their final value when the element enters the viewport — creating kinetic energy around quantitative highlights.
+Numbers count up from zero (or a lower value) to their final value when the element enters the viewport, creating kinetic energy around quantitative highlights.
 
 ## When to Use In This Portfolio
 **DIRECT APPLICATION.** The hero stat trio (`.byline`) in article front matter contains key metrics:
@@ -17,19 +17,19 @@ Numbers count up from zero (or a lower value) to their final value when the elem
 - 1B+ records processed
 - 400K+ accounts ranked
 
-These should count up when the `.byline` section becomes visible. High-impact for quantitative portfolio — it makes the reader feel the scale of the numbers.
+These should count up when the `.byline` section becomes visible. High-impact for quantitative portfolio, it makes the reader feel the scale of the numbers.
 
 ## When NOT to Use
 - Non-numeric content
-- Numbers with complex formatting that a counter would obscure (e.g., "AUC: 0.974" counts from "0.000" — plan the format)
-- Hero H1 — already animated by GSAP SplitType; don't stack effects
+- Numbers with complex formatting that a counter would obscure (e.g., "AUC: 0.974" counts from "0.000", plan the format)
+- Hero H1, already animated by GSAP SplitType; don't stack effects
 
 ## Trigger: On `.byline` Visibility, Not Page Load
 ```js
-// WRONG — triggers immediately on load
+// WRONG, triggers immediately on load
 window.addEventListener('load', startCounters);
 
-// CORRECT — triggers when byline enters view
+// CORRECT, triggers when byline enters view
 ScrollTrigger.create({
   trigger: '.byline',
   start: 'top 80%',

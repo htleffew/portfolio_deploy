@@ -4,11 +4,11 @@ id: LAY-06
 status: stable
 category: layout
 interactivity: none
-source: account-prioritization.html — Section 05 "Synthesizing the Priority Score"
+source: account-prioritization.html, Section 05 "Synthesizing the Priority Score"
 ---
 
 ## What It Does
-A centered, monospace-formatted formula that gives a mathematical expression its own visual moment — signaling to the reader "this equation is the insight, not supporting detail."
+A centered, monospace-formatted formula that gives a mathematical expression its own visual moment, signaling to the reader "this equation is the insight, not supporting detail."
 
 ## When to Use
 - When a formula with ≤4 terms IS the central claim of a section
@@ -51,7 +51,7 @@ With CSS:
 ```css
 .formula-block {
   font-family: var(--mono);
-  font-size: var(--fs-lede);    /* 18px — larger than body for emphasis */
+  font-size: var(--fs-lede);    /* 18px, larger than body for emphasis */
   text-align: center;
   margin: 40px auto;
   max-width: var(--col);
@@ -74,7 +74,7 @@ With CSS:
 
 ## Why It Gets Its Own Visual Moment
 
-The formula display block creates intentional whitespace before and after the equation. This whitespace signals: **stop**. Read this. The formula is not decoration — it IS the architecture. In the account prioritization article, `Priority Score = P(convert) * E[deal_size]` is the thesis of the entire piece expressed in one line.
+The formula display block creates intentional whitespace before and after the equation. This whitespace signals: **stop**. Read this. The formula is not decoration, it IS the architecture. In the account prioritization article, `Priority Score = P(convert) * E[deal_size]` is the thesis of the entire piece expressed in one line.
 
 Prose around it should lead into and out of the formula:
 ```

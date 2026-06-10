@@ -8,7 +8,7 @@ source: global.js section 6 + article HTML back matter
 ---
 
 ## What It Does
-Two back-matter elements populated by global.js: a 3-card recommendation grid (random articles) and a single "Next Publication" link — both fetched from `projects_index.json` at runtime.
+Two back-matter elements populated by global.js: a 3-card recommendation grid (random articles) and a single "Next Publication" link, both fetched from `projects_index.json` at runtime.
 
 ## Required HTML Skeleton
 
@@ -20,7 +20,7 @@ Every article must include both placeholders in the back matter section. Without
     <h3 style="margin-bottom:22px;">Related Works</h3>
     <div class="related">
       <div class="related-grid" id="recommendation-grid">
-        <!-- Populated by global.js — do not add content here -->
+        <!-- Populated by global.js, do not add content here -->
       </div>
     </div>
   </div>
@@ -38,7 +38,7 @@ Every article must include both placeholders in the back matter section. Without
 ## What Gets Injected
 
 ### Recommendation Grid (`#recommendation-grid`)
-3 randomly selected articles from `projects_index.json`, excluding the current article. Randomized on every page load — intentional design decision (promotes discovery over algorithmic curation).
+3 randomly selected articles from `projects_index.json`, excluding the current article. Randomized on every page load, intentional design decision (promotes discovery over algorithmic curation).
 
 ```html
 <!-- Injected into #recommendation-grid for each of 3 articles -->
@@ -110,7 +110,7 @@ nextChapTitle.innerText  = nextP.title;
 
 ## Why Recommendations Are Randomized
 
-Intentional design decision: randomization prevents "filter bubbles" where the same popular articles always appear. Every page load surfaces different connections. The portfolio is small enough (8–15 articles) that randomization works — every article will eventually appear as a recommendation.
+Intentional design decision: randomization prevents "filter bubbles" where the same popular articles always appear. Every page load surfaces different connections. The portfolio is small enough (8-15 articles) that randomization works, every article will eventually appear as a recommendation.
 
 ## Design Tokens Applied
 | Element | Token |

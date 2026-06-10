@@ -4,7 +4,7 @@ id: VIZ-01
 status: stable
 category: charts
 interactivity: plotly-hover
-source: account-prioritization.html — Section 03 (plot-roc) + multimodal-autism-ai.html — Section 04 (FIG.03)
+source: account-prioritization.html, Section 03 (plot-roc) + multimodal-autism-ai.html, Section 04 (FIG.03)
 ---
 
 ## What It Does
@@ -13,13 +13,13 @@ Plots the tradeoff between True Positive Rate and False Positive Rate at all cla
 ## When to Use
 - Evaluating binary classification models (conversion prediction, ASD diagnosis, fraud detection)
 - Comparing multiple models on the same dataset
-- When the dataset is not severely imbalanced (if it is, use PR curve instead — see VIZ-02)
+- When the dataset is not severely imbalanced (if it is, use PR curve instead, see VIZ-02)
 - When you need to show a single headline metric (AUC score) alongside the full curve
 
 ## When NOT to Use
-- Highly imbalanced datasets (9% positive rate or lower) — ROC AUC is misleadingly optimistic. Use PR-AUC instead.
+- Highly imbalanced datasets (9% positive rate or lower), ROC AUC is misleadingly optimistic. Use PR-AUC instead.
 - When the analytical message IS the annotation (use SVG ROC with annotation, DIA-03, instead)
-- When mobile rendering matters heavily — Plotly hover is poor on touch
+- When mobile rendering matters heavily, Plotly hover is poor on touch
 
 ## Anatomy
 ```
@@ -35,7 +35,7 @@ Plots the tradeoff between True Positive Rate and False Positive Rate at all cla
 │           FPR                   │
 │  ╌╌╌ Random Baseline (diagonal) │
 └─────────────────────────────────┘
-     .cap: FIG.XX — caption text
+     .cap: FIG.XX, caption text
 ```
 
 ## Plotly Configuration
@@ -92,7 +92,7 @@ Plotly.newPlot('plot-roc', [rocTrace, rocBaseline], {
 | AUC score shown via annotation/text | Risk zone rect needed |
 | Mobile not critical | Clean static print output needed |
 
-The multimodal-autism-ai.html uses the SVG version (FIG.03) because the overfitting risk zone annotation is the point — the reader needs to see the rect + dashed line + bold label, not hover for values.
+The multimodal-autism-ai.html uses the SVG version (FIG.03) because the overfitting risk zone annotation is the point, the reader needs to see the rect + dashed line + bold label, not hover for values.
 
 ## Design Tokens Applied
 | Plotly Config | CSS Token | Value |

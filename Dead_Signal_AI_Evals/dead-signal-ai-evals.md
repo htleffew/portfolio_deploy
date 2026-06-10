@@ -148,11 +148,11 @@ The three-layer prompt architecture assembles each generation request from: Laye
 
 The demo opens with a four-step recalibration tutorial. A neural implant coming online needs calibration; the player completes four real inputs (advance a dialogue line, type a transmission, examine an object in the environment, resume after a pause), each gated by the actual mechanic it teaches. No "press A to continue" overlay. The implant's boot-up sequence is the onboarding.
 
-The boot flow maintains the game's diegetic fiction throughout — system diagnostics, unauthorized registry access warnings, neural telemetry readouts. The eval panel, by contrast, deliberately breaks the fourth wall: plain-language labels, technical tooltips, direct cost figures. The separation is intentional. The boot sequence teaches the player how the game works through its fiction; the eval panel teaches the reader how the evaluation architecture works through direct exposition. Both are visible in the same session, but they serve different audiences (player vs. evaluator) and use different registers accordingly.
+The boot flow maintains the game's diegetic fiction throughout, system diagnostics, unauthorized registry access warnings, neural telemetry readouts. The eval panel, by contrast, deliberately breaks the fourth wall: plain-language labels, technical tooltips, direct cost figures. The separation is intentional. The boot sequence teaches the player how the game works through its fiction; the eval panel teaches the reader how the evaluation architecture works through direct exposition. Both are visible in the same session, but they serve different audiences (player vs. evaluator) and use different registers accordingly.
 
 This has a direct eval consequence: a player who does not understand the input model produces garbage inputs that the evaluators score faithfully, and the resulting metrics measure player confusion, not model performance. By the time the first scored exchange happens the player has already operated each mechanic at least once.
 
-Craine's opening line is hardcoded — no model call is burned on the boot sequence. From the player's first typed transmission onward, every response is generated live. The evaluator panel scores those live turns; data collection starts with the first real exchange.
+Craine's opening line is hardcoded, no model call is burned on the boot sequence. From the player's first typed transmission onward, every response is generated live. The evaluator panel scores those live turns; data collection starts with the first real exchange.
 
 ## Character phases and personality mechanics
 

@@ -9,15 +9,15 @@ adaptation-status: token-mapped
 ---
 
 ## What It Does
-Text appears character by character as if being typed in real time — creating the impression that code or text is being generated live.
+Text appears character by character as if being typed in real time, creating the impression that code or text is being generated live.
 
 ## When to Use In This Portfolio
-- **Code block reveals** — showing ML pipeline code appearing as if being written (sections 02–04 in account-prioritization.html)
+- **Code block reveals**, showing ML pipeline code appearing as if being written (sections 02-04 in account-prioritization.html)
 - Terminal-style output displays
 - When the article narrative involves "running" a process and showing the output
 
 ## When NOT to Use
-- Hero H1 (already uses GSAP SplitType — do not stack)
+- Hero H1 (already uses GSAP SplitType, do not stack)
 - Body prose paragraphs (typewriter on prose feels gimmicky; save it for code)
 - More than 40 lines of code (typewriter on large blocks is too slow to be engaging)
 

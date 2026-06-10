@@ -4,17 +4,17 @@ id: INT-03
 status: stable
 category: interactive
 interactivity: click
-source: account-prioritization.html — Section 05 "Synthesizing the Priority Score"
+source: account-prioritization.html, Section 05 "Synthesizing the Priority Score"
 ---
 
 ## What It Does
-A data table whose rows re-sort on column header click — making the ranking order itself part of the narrative. Each column click reveals a different "truth" about the data.
+A data table whose rows re-sort on column header click, making the ranking order itself part of the narrative. Each column click reveals a different "truth" about the data.
 
 ## When to Use
 - When the same data produces different rankings by different metrics (this IS the insight)
 - Comparing ML models across multiple evaluation criteria
 - Any situation where "which is best depends on what you optimize for"
-- After presenting a formula — let the reader see it applied to example data
+- After presenting a formula, let the reader see it applied to example data
 
 ## When NOT to Use
 - Static reference tables (just use a plain `<table class="data-table">`)
@@ -23,7 +23,7 @@ A data table whose rows re-sort on column header click — making the ranking or
 
 ## WHY This Component Exists
 
-The dual-model account prioritization article uses this table to make its core argument interactive. The reader clicks "P(convert)" and sees Target D rank first (90% probability). Then clicks "Priority Score" and sees Target B jump to first ($37,500 vs Target D's $900). The reader doesn't need to be told "high probability ≠ best account" — they discover it by sorting.
+The dual-model account prioritization article uses this table to make its core argument interactive. The reader clicks "P(convert)" and sees Target D rank first (90% probability). Then clicks "Priority Score" and sees Target B jump to first ($37,500 vs Target D's $900). The reader doesn't need to be told "high probability ≠ best account", they discover it by sorting.
 
 **The lesson is in the interaction.** A static sorted table communicates one ranking. A sortable table communicates that rankings are contextual.
 
@@ -48,7 +48,7 @@ See `source-snippets/sortable-ranking-table.html` for complete drop-in HTML + JS
 <th data-sort="key">Column Label ▼</th>
 ```
 Each sortable header carries `data-sort="[key]"` where key matches a property name in the data objects. Special keys:
-- `"score"` — triggers a computed sort: `b.p * b.d - a.p * a.d`
+- `"score"`, triggers a computed sort: `b.p * b.d - a.p * a.d`
 - String keys use `localeCompare()` for alphabetical sort
 - All other keys use numeric descending sort
 

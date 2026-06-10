@@ -4,11 +4,11 @@ id: INT-04
 status: stable
 category: interactive
 interactivity: css-animation
-source: index.html — featured projects section (.project-carousel)
+source: index.html, featured projects section (.project-carousel)
 ---
 
 ## What It Does
-An ambient, auto-scrolling horizontal carousel of project cards that loops infinitely using pure CSS animation — no JS for the motion. Project cards are dynamically injected from `projects_index.json` by global.js.
+An ambient, auto-scrolling horizontal carousel of project cards that loops infinitely using pure CSS animation, no JS for the motion. Project cards are dynamically injected from `projects_index.json` by global.js.
 
 ## When to Use
 - Homepage featured projects section (its canonical use)
@@ -29,7 +29,7 @@ An ambient, auto-scrolling horizontal carousel of project cards that loops infin
   </div>
 </div>
 ```
-Two groups with identical content. The CSS animation moves the track left by exactly 50% + 12px (half-width + gap), which brings Group 2 into view at exactly the same moment Group 1 exits — creating a seamless infinite loop. No JS required for the motion itself.
+Two groups with identical content. The CSS animation moves the track left by exactly 50% + 12px (half-width + gap), which brings Group 2 into view at exactly the same moment Group 1 exits, creating a seamless infinite loop. No JS required for the motion itself.
 
 ## CSS Animation
 ```css
@@ -59,7 +59,7 @@ The fade mask on container edges:
 ```
 
 ## Project Card Injection
-global.js fetches `projects_index.json` and injects `.p-card` elements into both carousel groups. Articles don't need to manage this — it's automatic when the `.project-carousel` and `.carousel-group` structure is present.
+global.js fetches `projects_index.json` and injects `.p-card` elements into both carousel groups. Articles don't need to manage this, it's automatic when the `.project-carousel` and `.carousel-group` structure is present.
 
 ## Card Structure (injected by global.js)
 ```html

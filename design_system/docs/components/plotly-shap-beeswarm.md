@@ -4,11 +4,11 @@ id: VIZ-04
 status: stable
 category: charts
 interactivity: plotly-hover
-source: account-prioritization.html — Section 06 (plot-shap)
+source: account-prioritization.html, Section 06 (plot-shap)
 ---
 
 ## What It Does
-Approximates a SHAP beeswarm summary plot using Plotly scatter traces — showing global feature importance with individual prediction-level detail, color-coded by impact direction.
+Approximates a SHAP beeswarm summary plot using Plotly scatter traces, showing global feature importance with individual prediction-level detail, color-coded by impact direction.
 
 ## ⚠️ Important: This Is an Approximation
 
@@ -23,11 +23,11 @@ When to use approximation vs. real:
 ## When to Use
 - Explaining which features drive a model's predictions (interpretability section)
 - Showing that a model has learned sensible feature priorities (validation)
-- After presenting model performance metrics — this answers "but WHY does it perform well?"
+- After presenting model performance metrics, this answers "but WHY does it perform well?"
 - Any article involving XGBoost, Random Forest, or gradient boosted models
 
 ## When NOT to Use
-- Linear models (use coefficient bar chart instead — simpler and more accurate)
+- Linear models (use coefficient bar chart instead, simpler and more accurate)
 - When fewer than 3 features matter (a bar chart is cleaner)
 - When exact SHAP values are required (use Python matplotlib export as static image)
 
@@ -62,7 +62,7 @@ let shapData = [];
 for (let i = 0; i < feats.length; i++) {
   let xv = [], cv = [];
   for (let j = 0; j < 200; j++) {
-    // Points scaled by feature rank — top features have wider spread
+    // Points scaled by feature rank, top features have wider spread
     let s = (Math.random() - 0.5) * 2 * (feats.length - i);
     xv.push(s);
     cv.push(Math.abs(s));  // Color by absolute impact magnitude
@@ -112,7 +112,7 @@ SHAP beeswarms conventionally show the most important feature at the **top**. Pl
 ## Design Tokens Applied
 | Config | Token | Value |
 |--------|-------|-------|
-| `colorscale` | — | `'Bluered'` (blue=negative, red=positive — universal SHAP convention) |
+| `colorscale` |, | `'Bluered'` (blue=negative, red=positive, universal SHAP convention) |
 | `font.color` | `--tungsten` | #A1A1A6 |
 | `title.font.color` | `--flare` | #FFFFFF |
 | `paper_bgcolor` | transparent | rgba(0,0,0,0) |
@@ -122,7 +122,7 @@ SHAP beeswarms conventionally show the most important feature at the **top**. Pl
 To adapt for a different model:
 1. Replace `feats` array with your feature names (ordered most → least important)
 2. Adjust spread: `(feats.length - i)` creates linearly decreasing spread. For real rank-based spread, multiply by actual importance scores.
-3. Feature count: works for 3–10 features. More than 10 → reduce marker size to 4, opacity to 0.4.
+3. Feature count: works for 3-10 features. More than 10 → reduce marker size to 4, opacity to 0.4.
 
 ## Source Reference
 `account-prioritization.html` → `Plotly.newPlot('plot-shap', shapData.reverse(), ...)` in `DOMContentLoaded` handler. Section 06 "Interpretability with SHAP".

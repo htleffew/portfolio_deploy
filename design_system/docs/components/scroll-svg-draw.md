@@ -9,18 +9,18 @@ adaptation-status: token-mapped
 ---
 
 ## What It Does
-SVG paths animate their `stroke-dashoffset` from full (invisible) to zero (fully drawn) as the reader scrolls — creating a "self-drawing" diagram effect. Transforms static SVG diagrams into scroll-driven reveals.
+SVG paths animate their `stroke-dashoffset` from full (invisible) to zero (fully drawn) as the reader scrolls, creating a "self-drawing" diagram effect. Transforms static SVG diagrams into scroll-driven reveals.
 
 ## When to Use In This Portfolio
-**HIGH VALUE.** The SVG hierarchy tree (FIG.02) and temporal sequence (FIG.05) in multimodal-autism-ai.html are currently static. Applying this component would make them draw themselves as the reader arrives — dramatically improving the pedagogical impact.
+**HIGH VALUE.** The SVG hierarchy tree (FIG.02) and temporal sequence (FIG.05) in multimodal-autism-ai.html are currently static. Applying this component would make them draw themselves as the reader arrives, dramatically improving the pedagogical impact.
 
 Apply to:
-- `DIA-01` SVG Hierarchy Tree — paths draw as architecture is explained
-- `DIA-02` SVG Temporal Sequence — timeline appears then event markers pop in
+- `DIA-01` SVG Hierarchy Tree, paths draw as architecture is explained
+- `DIA-02` SVG Temporal Sequence, timeline appears then event markers pop in
 - Any `<path>` or `<line>` element in a `.figure` block
 
 ## When NOT to Use
-- Diagrams that are small or simple (< 3 paths) — the draw effect needs complexity to pay off
+- Diagrams that are small or simple (< 3 paths), the draw effect needs complexity to pay off
 - Text-heavy SVGs (text elements don't support dashoffset animation)
 - When the diagram must be immediately readable (waitlisted reader context)
 

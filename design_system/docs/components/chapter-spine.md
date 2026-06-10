@@ -15,13 +15,13 @@ A fixed left-sidebar navigation that shows the article's sections as a vertical 
 The spine is populated by reading `data-spine` attributes from every `section.band`. Without `data-spine`, the spine renders empty.
 
 ```html
-<!-- Required on every section — no exceptions -->
+<!-- Required on every section, no exceptions -->
 <section class="band band--dark" data-spine="Short Label" data-section="Full Name">
 ```
 
 ## HTML Placeholder Required
 
-Articles must include this empty `<aside>` — global.js populates it:
+Articles must include this empty `<aside>`, global.js populates it:
 ```html
 <aside id="spine"></aside>
 ```
@@ -107,8 +107,8 @@ const observer = new IntersectionObserver(entries => {
 ```
 
 ## Responsive Behavior
-- Hidden entirely at `max-width: 1180px` — spine only shows on wide desktop
-- Between 1180px–1360px: collapses to 44px wide, expands to full width on hover
+- Hidden entirely at `max-width: 1180px`, spine only shows on wide desktop
+- Between 1180px, 1360px: collapses to 44px wide, expands to full width on hover
 - At ≥1360px: always full width
 
 ## Design Tokens Applied

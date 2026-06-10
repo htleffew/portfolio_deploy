@@ -4,7 +4,7 @@ id: CHR-02
 status: stable
 category: chrome
 interactivity: injected
-source: global.js — initGlobalChrome() section 4
+source: global.js, initGlobalChrome() section 4
 ---
 
 ## What It Does
@@ -29,7 +29,7 @@ A minimal footer injected at the bottom of every page by global.js. Contains cop
 ## CSS
 ```css
 footer.site-foot {
-  background: var(--obsidian);       /* solid — not translucent */
+  background: var(--obsidian);       /* solid, not translucent */
   color: var(--tungsten);
   padding: 60px 48px;
   border-top: 1px solid var(--graphite);
@@ -47,12 +47,12 @@ footer.site-foot a { color: inherit; text-decoration: none; opacity: 0.8; }
 footer.site-foot a:hover { opacity: 1; color: var(--platinum); }
 ```
 
-Note: The footer uses **solid** `--obsidian` (not translucent) — it sits below the scrollable content where the starfield is no longer relevant. Translucency here would add visual noise without benefit.
+Note: The footer uses **solid** `--obsidian` (not translucent), it sits below the scrollable content where the starfield is no longer relevant. Translucency here would add visual noise without benefit.
 
 ## Design Tokens Applied
 | Element | Token |
 |---------|-------|
-| Background | `--obsidian` (#030303) — solid |
+| Background | `--obsidian` (#030303), solid |
 | Text | `--tungsten` (#A1A1A6) |
 | Link hover | `--platinum` (#F5F5F7) |
 | Border top | `--graphite` (#222222) |

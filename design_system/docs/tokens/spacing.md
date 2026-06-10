@@ -26,7 +26,7 @@ Defined as CSS custom properties in `:root`:
 
 | Token | Value | Used For |
 |-------|-------|---------|
-| `--col` | 860px | Default prose column — all article body text |
+| `--col` | 860px | Default prose column, all article body text |
 | `--col-wide` | 1200px / `var(--col-wide)` | Wide figures, tables, simulators, back matter |
 
 Practical usage:
@@ -35,7 +35,7 @@ Practical usage:
 .col-wide { max-width: var(--col-wide); margin: 0 auto; padding: 0 48px; }
 ```
 
-In the master grid system (≥1240px viewport), elements in `section.band` are placed in a 680px reading column (column 2). Full-width elements (`.col-wide`, `.figure`, `.report-prose`) span columns 2–4 (680px + 400px sidenote column).
+In the master grid system (≥1240px viewport), elements in `section.band` are placed in a 680px reading column (column 2). Full-width elements (`.col-wide`, `.figure`, `.report-prose`) span columns 2-4 (680px + 400px sidenote column).
 
 ---
 
@@ -43,12 +43,12 @@ In the master grid system (≥1240px viewport), elements in `section.band` are p
 
 | Context | Padding | Token |
 |---------|---------|-------|
-| Default `.band` | `80px 0` | — |
+| Default `.band` | `80px 0` |, |
 | `.front` hero | `120px 0 80px` | min-height: `clamp(400px, 80vh, 850px)` |
-| `.back-matter` | `120px top, 160px bottom` | — |
+| `.back-matter` | `120px top, 160px bottom` |, |
 | Mobile (≤768px) | `60px 0` (approximate) | Reduces with content padding |
 
-**The 80px default** is generous — equivalent to roughly 5 body text lines. This padding creates the "cinematic breathing room" between sections and ensures the starfield is always partially visible between bands.
+**The 80px default** is generous, equivalent to roughly 5 body text lines. This padding creates the "cinematic breathing room" between sections and ensures the starfield is always partially visible between bands.
 
 ---
 
@@ -75,7 +75,7 @@ This affects all article content:
 | `.next-chap` | `48px` all sides |
 | Search result `.search-result-item` | `24px` |
 
-Mobile override for cards (`≤768px`): `.r-content { padding: 32px 24px; }` — reduces to comfortable reading width.
+Mobile override for cards (`≤768px`): `.r-content { padding: 32px 24px; }`, reduces to comfortable reading width.
 
 ---
 
@@ -87,7 +87,7 @@ Mobile override for cards (`≤768px`): `.r-content { padding: 32px 24px; }` —
 }
 ```
 
-`.figure` itself has `margin: 48px auto` — matching the `--space-7` token. This gives figures the same visual weight as the `--space-7` paragraph spacing, so they feel like part of the reading flow rather than interruptions.
+`.figure` itself has `margin: 48px auto`, matching the `--space-7` token. This gives figures the same visual weight as the `--space-7` paragraph spacing, so they feel like part of the reading flow rather than interruptions.
 
 ---
 
@@ -127,7 +127,7 @@ Horizontal padding on all major layout containers is **48px** on desktop, **24px
 #topnav   { padding: 0 24px; }
 ```
 
-The 48px margin creates a consistent "safe zone" — no content ever touches the viewport edge at desktop widths.
+The 48px margin creates a consistent "safe zone", no content ever touches the viewport edge at desktop widths.
 
 ---
 
@@ -142,7 +142,7 @@ All corners are sharp (`border-radius: 0 !important` globally). The radius token
 | `--radius-lg` | 12px | Available but overridden |
 | `--radius-pill` | 20px | Available but overridden |
 
-Note: SVG elements use `rx="2"` or `rx="4"` in the hierarchy tree and card diagrams — this is SVG attribute syntax, not CSS, and is not affected by the global `border-radius: 0` reset.
+Note: SVG elements use `rx="2"` or `rx="4"` in the hierarchy tree and card diagrams, this is SVG attribute syntax, not CSS, and is not affected by the global `border-radius: 0` reset.
 
 ---
 
@@ -153,4 +153,4 @@ Note: SVG elements use `rx="2"` or `rx="4"` in the hierarchy tree and card diagr
 | `--shadow-card` | `0 8px 32px rgba(0,0,0,0.30)` | Available for cards |
 | `--shadow-glow` | `0 0 20px 0 rgba(77,140,255,0.06)` | Available for glow accents |
 
-Shadows are rarely used in the portfolio — the design relies on border, backdrop-filter, and z-index layering for depth rather than drop shadows. The Three.js starfield provides all the depth the design needs.
+Shadows are rarely used in the portfolio, the design relies on border, backdrop-filter, and z-index layering for depth rather than drop shadows. The Three.js starfield provides all the depth the design needs.

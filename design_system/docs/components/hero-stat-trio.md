@@ -4,11 +4,11 @@ id: LAY-02
 status: stable
 category: layout
 interactivity: none
-source: account-prioritization.html — front matter (.byline)
+source: account-prioritization.html, front matter (.byline)
 ---
 
 ## What It Does
-Three labeled statistics in the front matter hero section that frame the article's problem, solution, and impact at a glance — before the reader has read a single word of prose.
+Three labeled statistics in the front matter hero section that frame the article's problem, solution, and impact at a glance, before the reader has read a single word of prose.
 
 ## This Is a Required Template Element
 
@@ -87,7 +87,7 @@ Always place inside `.col-wide` within the `.front` section:
 }
 ```
 
-The label (`<span>`) is mono uppercase tungsten. The value (`<strong>`) is body italic platinum. This contrast — clinical label vs. human-readable value — is intentional.
+The label (`<span>`) is mono uppercase tungsten. The value (`<strong>`) is body italic platinum. This contrast, clinical label vs. human-readable value, is intentional.
 
 ## Fill-in-the-blank Template
 
@@ -95,7 +95,7 @@ The label (`<span>`) is mono uppercase tungsten. The value (`<strong>`) is body 
 PROBLEM   → What assumption was wrong? What process was breaking? 
             Be specific: not "data challenges" but "treating all conversions as equal"
             
-ARCHITECTURE → The technical approach in 3–5 words.
+ARCHITECTURE → The technical approach in 3-5 words.
                Not a list of tools, but the architectural pattern:
                "Classification + Regression Ensemble"
                "Late Fusion Bayesian Pipeline"

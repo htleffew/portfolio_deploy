@@ -8,7 +8,7 @@ source: global.css .scroll-cue + global.js orchestration
 ---
 
 ## What It Does
-A subtle "SCROLL" label and animated dripping line at the bottom of the hero section — fades in at the end of the hero entrance sequence and fades out when the reader starts scrolling.
+A subtle "SCROLL" label and animated dripping line at the bottom of the hero section, fades in at the end of the hero entrance sequence and fades out when the reader starts scrolling.
 
 ## Required HTML
 Must be placed inside the `.hero` or `.front` section, with `position: absolute`:
@@ -19,7 +19,7 @@ Must be placed inside the `.hero` or `.front` section, with `position: absolute`
     <!-- hero content -->
   </div>
 
-  <!-- Scroll cue — positioned absolute within .front -->
+  <!-- Scroll cue, positioned absolute within .front -->
   <div class="scroll-cue">
     <span>Scroll</span>
     <div class="scroll-cue-line"></div>
@@ -38,7 +38,7 @@ Must be placed inside the `.hero` or `.front` section, with `position: absolute`
   flex-direction: column;
   align-items: center;
   gap: 12px;
-  opacity: 0;        /* starts invisible — GSAP fades in */
+  opacity: 0;        /* starts invisible, GSAP fades in */
   z-index: 5;
 }
 
@@ -77,14 +77,14 @@ Must be placed inside the `.hero` or `.front` section, with `position: absolute`
 
 ## GSAP Lifecycle
 
-**Fade IN** — at end of hero entrance timeline (global.js):
+**Fade IN**, at end of hero entrance timeline (global.js):
 ```js
 const scrollCue = document.querySelector('.scroll-cue');
 if (scrollCue) tl.to(scrollCue, { opacity: 1, duration: 1.2, ease: 'power2.out' }, '-=0.3');
 ```
 The cue appears last, after the H1 animation and abstract have settled.
 
-**Fade OUT** — ScrollTrigger when reader scrolls 120px past hero top:
+**Fade OUT**, ScrollTrigger when reader scrolls 120px past hero top:
 ```js
 gsap.to('.scroll-cue', {
   opacity: 0, y: -10, duration: 0.6, ease: 'power2.in',
@@ -96,7 +96,7 @@ gsap.to('.scroll-cue', {
   }
 });
 ```
-The cue dissolves as the reader begins scrolling — it has served its purpose.
+The cue dissolves as the reader begins scrolling, it has served its purpose.
 
 ## Design Tokens Applied
 | Element | Token |

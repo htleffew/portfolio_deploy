@@ -4,11 +4,11 @@ id: INT-01
 status: stable
 category: interactive
 interactivity: live-js
-source: account-prioritization.html — Section 01 "The Single Metric Flaw"
+source: account-prioritization.html, Section 01 "The Single Metric Flaw"
 ---
 
 ## What It Does
-A two-slider input panel that computes and displays a real-time output score — letting readers feel how changing one variable affects the combined metric. No page reload; pure vanilla JS event listeners.
+A two-slider input panel that computes and displays a real-time output score, letting readers feel how changing one variable affects the combined metric. No page reload; pure vanilla JS event listeners.
 
 ## When to Use
 - Any A × B expected-value formula that benefits from reader experimentation
@@ -16,7 +16,7 @@ A two-slider input panel that computes and displays a real-time output score —
 - As a pedagogical tool before presenting the full model architecture
 
 ## When NOT to Use
-- More than 2 input variables (becomes overwhelming — use a dedicated form instead)
+- More than 2 input variables (becomes overwhelming, use a dedicated form instead)
 - When the formula is too complex to display as a simple output number
 - When exact inputs don't matter (use a static formula display block instead, LAY-06)
 
@@ -52,7 +52,7 @@ See `source-snippets/dual-slider-calculator.html` for the complete drop-in HTML 
 Any `A × B = Score` pattern works:
 ```js
 function updateSim() {
-  const a = parseFloat(sliderA.value) / normA;  // normalize to 0–1 if needed
+  const a = parseFloat(sliderA.value) / normA;  // normalize to 0-1 if needed
   const b = parseFloat(sliderB.value);
   output.textContent = formatScore(a * b);
 }

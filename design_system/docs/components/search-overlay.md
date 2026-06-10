@@ -4,7 +4,7 @@ id: CHR-03
 status: stable
 category: chrome
 interactivity: injected
-source: global.js — initGlobalChrome() section 5
+source: global.js, initGlobalChrome() section 5
 ---
 
 ## What It Does
@@ -84,7 +84,7 @@ const results = projectsData.filter(p => {
          (p.tags   || []).some(t => t.toLowerCase().includes(q));
 });
 ```
-Searches across all four fields simultaneously. No ranking — returns all matches. `desc` is truncated to 140 chars in result display.
+Searches across all four fields simultaneously. No ranking, returns all matches. `desc` is truncated to 140 chars in result display.
 
 ## Open/Close Behavior
 - **Open:** `#trigger-search` button click in nav → `searchOverlay.classList.add('is-active')` + focus input + lazy-load JSON

@@ -4,7 +4,7 @@ id: LAY-01
 status: stable
 category: layout
 interactivity: none
-source: account-prioritization.html + multimodal-autism-ai.html — every content section
+source: account-prioritization.html + multimodal-autism-ai.html, every content section
 ---
 
 ## What It Does
@@ -64,7 +64,7 @@ Examples from live articles:
 .band--dark .eyebrow {
   font-family: var(--mono);        /* JetBrains Mono */
   font-size: 10.5px;
-  letter-spacing: 0.30em;          /* heavy tracking — reads like a label */
+  letter-spacing: 0.30em;          /* heavy tracking, reads like a label */
   text-transform: uppercase;
   color: var(--phthalo-lift);       /* #3866A0 */
   margin: 0 auto 18px;
@@ -75,7 +75,7 @@ Examples from live articles:
 /* Paper band eyebrow */
 .band--paper .eyebrow { color: var(--ink-blue); }  /* #1A3A6B */
 
-/* H2 — dark */
+/* H2, dark */
 .band--dark h2 {
   font-family: var(--display);     /* Playfair Display */
   font-weight: 600;
@@ -88,7 +88,7 @@ Examples from live articles:
   padding: 0 32px;
 }
 
-/* H2 — paper */
+/* H2, paper */
 .band--paper h2 { color: var(--ink); }
 ```
 

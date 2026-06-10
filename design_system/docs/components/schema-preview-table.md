@@ -4,11 +4,11 @@ id: DAT-01
 status: stable
 category: data-display
 interactivity: none
-source: account-prioritization.html — Section 02 + multimodal-autism-ai.html — Section 02
+source: account-prioritization.html, Section 02 + multimodal-autism-ai.html, Section 02
 ---
 
 ## What It Does
-A 4–6 row data table showing representative records from the dataset used in the article — grounding the reader in what the raw data actually looks like before explaining what happens to it.
+A 4-6 row data table showing representative records from the dataset used in the article, grounding the reader in what the raw data actually looks like before explaining what happens to it.
 
 ## The Grounding Function
 
@@ -22,9 +22,9 @@ A reader who can see the actual columns and sample rows will follow the preproce
 - When the data schema is non-obvious (clinical features, custom signals, unusual targets)
 
 ## When NOT to Use
-- When the dataset is standard/public (MNIST, Iris, etc.) — readers know these
+- When the dataset is standard/public (MNIST, Iris, etc.), readers know these
 - When the schema is explained in a preceding code block (don't duplicate)
-- More than 6 rows — the table's purpose is sampling, not exhaustiveness
+- More than 6 rows, the table's purpose is sampling, not exhaustiveness
 
 ## Anatomy
 ```
@@ -76,7 +76,7 @@ Choose rows that show **variety**, not uniformity:
 - At least 2 positive cases and 2 negative cases (for classification datasets)
 - Rows that span the range of key features (small + large values)
 - At least 1 row that looks "surprising" (e.g., high engagement but no conversion)
-- Never cherry-pick only clean/perfect rows — show the messiness
+- Never cherry-pick only clean/perfect rows, show the messiness
 
 ## CSS (from global.css)
 ```css

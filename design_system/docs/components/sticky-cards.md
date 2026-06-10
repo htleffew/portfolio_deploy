@@ -9,7 +9,7 @@ adaptation-status: token-mapped
 ---
 
 ## What It Does
-Cards stack on top of each other as the user scrolls — each new card slides up and overlaps the previous one, creating a layered deck effect for multi-step content.
+Cards stack on top of each other as the user scrolls, each new card slides up and overlaps the previous one, creating a layered deck effect for multi-step content.
 
 ## When to Use In This Portfolio
 - Multi-strategy methodology sections (e.g., the 4 modeling strategies in multimodal-autism-ai.html: Supervised, Semi-Supervised, Late Fusion, Bayesian Ensemble)
@@ -29,7 +29,7 @@ Cards stack on top of each other as the user scrolls — each new card slides up
 
   <div class="sticky-cards-stage" style="position: sticky; top: 80px; height: calc(100vh - 80px); display: flex; align-items: center; justify-content: center;">
 
-    <!-- Card stack — cards positioned absolutely, staggered -->
+    <!-- Card stack, cards positioned absolutely, staggered -->
     <div style="position: relative; width: 100%; max-width: var(--col);">
 
       <div class="r-card sticky-card" data-index="0" style="position: absolute; width: 100%; transform-origin: top center;">
@@ -74,7 +74,7 @@ cards.forEach((card, i) => {
 ```
 
 ## Design Token Integration
-Cards use `.r-card` and `.r-bg` from the resume experience card system — same dark glass surface, same 3D tilt from global.js.
+Cards use `.r-card` and `.r-bg` from the resume experience card system, same dark glass surface, same 3D tilt from global.js.
 
 ## Source Reference
 `https://raw.githubusercontent.com/robonuggets/cinematic-site-components/master/sticky-cards.html`

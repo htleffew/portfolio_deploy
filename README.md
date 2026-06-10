@@ -49,7 +49,7 @@ design_system/
 <script src="design_system/js/institutional.js" defer></script>
 ```
 
-Case-study pages prefix every path with `../`. Tokens cascade automatically through the `@import` chain inside `institutional.css`; Google Fonts load via that chain too — no separate `<link>` tag required. GSAP, ScrollTrigger, Lenis, SplitType, simplex-noise, and HyperShader are loaded on demand by `institutional.js` and `global_chrome.js`; pages may add them as `<script defer>` tags but are not required to.
+Case-study pages prefix every path with `../`. Tokens cascade automatically through the `@import` chain inside `institutional.css`; Google Fonts load via that chain too, no separate `<link>` tag required. GSAP, ScrollTrigger, Lenis, SplitType, simplex-noise, and HyperShader are loaded on demand by `institutional.js` and `global_chrome.js`; pages may add them as `<script defer>` tags but are not required to.
 
 ## History
 

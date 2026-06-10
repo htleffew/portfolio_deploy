@@ -4,11 +4,11 @@ id: LAY-05
 status: stable
 category: layout
 interactivity: none
-source: index.html — capabilities section (.tech-block)
+source: index.html, capabilities section (.tech-block)
 ---
 
 ## What It Does
-A titled block of keyword tags organized by category — for dense skill/capability listings where the taxonomy matters more than interactivity.
+A titled block of keyword tags organized by category, for dense skill/capability listings where the taxonomy matters more than interactivity.
 
 ## When to Use
 - Skills and capabilities sections on homepage/about pages
@@ -21,7 +21,7 @@ A titled block of keyword tags organized by category — for dense skill/capabil
 - When fewer than 4 tags (just inline them in prose)
 - When tags should be clickable filters (use the repository dashboard tag system)
 
-**Distinction from filter chips:** `.tech-block` tags are **semantic labels** — they communicate taxonomy. Repository filter tags (`.tag.active`) are **interactive filters** — they change displayed content. These are different components serving different purposes.
+**Distinction from filter chips:** `.tech-block` tags are **semantic labels**, they communicate taxonomy. Repository filter tags (`.tag.active`) are **interactive filters**, they change displayed content. These are different components serving different purposes.
 
 ## Anatomy
 ```
@@ -104,7 +104,7 @@ Stack multiple `.tech-block` elements for multiple categories:
 const reveals = band.querySelectorAll('.tagrow, ...');
 tlBand.fromTo(reveals, { opacity: 0, y: 40 }, { opacity: 1, y: 0, ... });
 ```
-Tags start at `opacity: 0` and slide up on scroll — no manual reveal class needed.
+Tags start at `opacity: 0` and slide up on scroll, no manual reveal class needed.
 
 ## Design Tokens Applied
 | Element | Dark Band | Paper Band |

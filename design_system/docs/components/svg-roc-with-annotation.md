@@ -4,11 +4,11 @@ id: DIA-03
 status: stable
 category: diagrams
 interactivity: none
-source: multimodal-autism-ai.html — FIG.03
+source: multimodal-autism-ai.html, FIG.03
 ---
 
 ## What It Does
-A hand-drawn SVG ROC curve with a prominent risk zone annotation — a filled rectangle, dashed threshold line, and bold warning label marking where model performance becomes suspicious.
+A hand-drawn SVG ROC curve with a prominent risk zone annotation, a filled rectangle, dashed threshold line, and bold warning label marking where model performance becomes suspicious.
 
 ## When to Use
 - When the annotation IS the message (e.g., "this AUC is suspiciously high")
@@ -60,10 +60,10 @@ Complete markup from `multimodal-autism-ai.html` FIG.03:
           stroke="#444" stroke-width="1" stroke-dasharray="4 4"/>
 
     <!-- ═══════════════════════════════════════════════════════
-         THE THRESHOLD ANNOTATION PATTERN — Reusable Primitive
+         THE THRESHOLD ANNOTATION PATTERN, Reusable Primitive
          ═══════════════════════════════════════════════════════ -->
 
-    <!-- 1. Risk zone rect — translucent fill -->
+    <!-- 1. Risk zone rect, translucent fill -->
     <rect x="50" y="20" width="500" height="35"
           fill="#7A1626" opacity="0.1"/>
 
@@ -93,7 +93,7 @@ Complete markup from `multimodal-autism-ai.html` FIG.03:
 
 ---
 
-## The Threshold Annotation Pattern — Reusable Primitive
+## The Threshold Annotation Pattern, Reusable Primitive
 
 This three-element pattern is the most generalizable component in the entire diagram system. It communicates "here is a threshold you should care about" in any SVG chart:
 
@@ -112,9 +112,9 @@ This three-element pattern is the most generalizable component in the entire dia
 ```
 
 **The three-part recipe:**
-1. **Rect** — low-opacity fill (`opacity: 0.1`) shows "this region is different" without obscuring chart data
-2. **Dashed line** — marks the exact boundary; `stroke-dasharray: "2 4"` (short dash, long gap) signals permeability rather than a hard wall
-3. **Bold label** — ALL CAPS, inside the zone, `font-weight: bold`, `fill="#7A1626"` (--alizarin)
+1. **Rect**, low-opacity fill (`opacity: 0.1`) shows "this region is different" without obscuring chart data
+2. **Dashed line**, marks the exact boundary; `stroke-dasharray: "2 4"` (short dash, long gap) signals permeability rather than a hard wall
+3. **Bold label**, ALL CAPS, inside the zone, `font-weight: bold`, `fill="#7A1626"` (--alizarin)
 
 ### 3 Other Contexts for This Pattern
 
@@ -125,7 +125,7 @@ This three-element pattern is the most generalizable component in the entire dia
 | Business performance floor | `TARGET FLOOR (SCORE < 0.3)` | Minimum acceptable KPI threshold |
 | Model drift detection | `HIGH DRIFT (PSI > 0.2)` | Retraining trigger zone |
 
-The pattern works for horizontal thresholds (like this example) or vertical thresholds — simply rotate the rect and line to vertical orientation.
+The pattern works for horizontal thresholds (like this example) or vertical thresholds, simply rotate the rect and line to vertical orientation.
 
 ## Design Token Mapping
 | SVG Value | CSS Token |
@@ -145,7 +145,7 @@ The pattern works for horizontal thresholds (like this example) or vertical thre
 
 **For a lower threshold:** Move the rect lower in the viewBox (larger y value = lower on screen). Adjust the dashed line y1/y2 to match the rect's bottom edge.
 
-**For a target floor (minimum acceptable):** Flip — risk zone goes at the bottom, threshold line goes above it with label "BELOW TARGET."
+**For a target floor (minimum acceptable):** Flip, risk zone goes at the bottom, threshold line goes above it with label "BELOW TARGET."
 
 ## Source Reference
 `multimodal-autism-ai.html` → Section 04 "Interpreting the Results and Overfitting Warnings" → FIG.03 "Receiver Operating Characteristic curve. The highly steep arch indicates potential overfitting to the synthetic constraints."

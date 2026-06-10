@@ -8,10 +8,10 @@ source: global.css #progress + article HTML + article JS
 ---
 
 ## What It Does
-A 2px fixed bar at the very top of the viewport that fills left-to-right as the reader scrolls through the article — communicating reading position without a scrollbar.
+A 2px fixed bar at the very top of the viewport that fills left-to-right as the reader scrolls through the article, communicating reading position without a scrollbar.
 
 ## Required HTML Placeholder
-Every article must include this empty div — the bar is rendered via CSS `::after` pseudo-element:
+Every article must include this empty div, the bar is rendered via CSS `::after` pseudo-element:
 ```html
 <div id="progress"></div>
 ```
@@ -51,7 +51,7 @@ window.addEventListener('scroll', updateProgress, { passive: true });
 updateProgress(); // initialize at 0%
 ```
 
-The `{ passive: true }` flag is mandatory — it tells the browser this listener won't call `preventDefault()`, allowing smooth scrolling without jank.
+The `{ passive: true }` flag is mandatory, it tells the browser this listener won't call `preventDefault()`, allowing smooth scrolling without jank.
 
 ## The CSS Custom Property Pattern
 
@@ -61,7 +61,7 @@ width: var(--p, 0%)
 
 The bar width is driven by the `--p` custom property set inline by JS. This is faster than manipulating `element.style.width` because it only updates the CSS variable, not the element's style attribute directly. The `0%` fallback ensures the bar starts empty before JS runs.
 
-`transition: width 0.05s linear` — tight enough to feel live but loose enough to not stutter on rapid scroll.
+`transition: width 0.05s linear`, tight enough to feel live but loose enough to not stutter on rapid scroll.
 
 ## Design Tokens Applied
 | Element | Token |

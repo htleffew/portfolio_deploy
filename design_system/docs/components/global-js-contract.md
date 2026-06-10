@@ -8,7 +8,7 @@
 
 ## Overview (historical)
 
-`design_system/js/global.js` was a single self-bootstrapping file containing three engines that ran on every page. It had zero external dependencies that needed to be manually loaded — it lazy-loaded everything it needed.
+`design_system/js/global.js` was a single self-bootstrapping file containing three engines that ran on every page. It had zero external dependencies that needed to be manually loaded, it lazy-loaded everything it needed.
 
 **Originally loaded as the last script before `</body>`:**
 ```html
@@ -26,7 +26,7 @@
 
 ## Engine 1: Cinematic WebGL Engine
 
-**Lines:** ~1–240 of global.js  
+**Lines:** ~1-240 of global.js  
 **Execution:** Runs immediately on `DOMContentLoaded`; lazy-loads Three.js r128 first if absent.
 
 ### What It Does
@@ -34,23 +34,23 @@ Renders a three-layer interactive particle network on a fixed canvas (`#glCanvas
 
 ### Three Rendering Layers
 
-**Layer 1 — Background Starfield**
+**Layer 1, Background Starfield**
 - `STAR_N = 300` static background stars
 - Size: `2.0` world units; barely move; pure atmosphere
 - Colors: 35% `colFlare` (#FFFFFF), 65% `colPhthalolift` (#3866A0) lerped toward white
-- Luminosity: `0.40–0.85` (bright enough to show through translucent bands)
+- Luminosity: `0.40-0.85` (bright enough to show through translucent bands)
 - Material: `THREE.PointsMaterial`, `AdditiveBlending`, `depthWrite: false`
 
-**Layer 2 — Interactive Network Nodes**
+**Layer 2, Interactive Network Nodes**
 - `NODE_N = 60` larger, brighter drifting points
-- Size: `5.5` world units; luminosity `0.80–1.0`
+- Size: `5.5` world units; luminosity `0.80-1.0`
 - Per-node drift velocity: `nodeVel` array, max `0.04` world units/frame (x/y), `0.01` (z)
 - Mouse repulsion: activates within `MOUSE_D2 = 70²` units; force = `(MOUSE_D2 - dist²) / MOUSE_D2 × 0.0035`
-- Velocity damping: `×0.979` per frame (x/y), `×0.992` (z — slower to feel weightless)
+- Velocity damping: `×0.979` per frame (x/y), `×0.992` (z, slower to feel weightless)
 - Soft boundary: reflects at `±120` (x/y) and `±40` (z)
 - Material: `THREE.PointsMaterial`, `AdditiveBlending`, `opacity: 0.95`
 
-**Layer 3 — Connection Filaments**
+**Layer 3, Connection Filaments**
 - `MAX_SEG = 700` dynamic line segments; rebuilt every frame
 - Connection threshold: `CONNECT_D2 = 58²` world units
 - Proximity factor: `t = 1.0 - d²/CONNECT_D2` → drives filament luminosity
@@ -64,7 +64,7 @@ Renders a three-layer interactive particle network on a fixed canvas (`#glCanvas
 camera.position.x += (mX * 22 - camera.position.x) * 0.035;
 camera.position.y += (mY * 22 - camera.position.y) * 0.035;
 ```
-Lerp factor `0.035` toward mouse × `22` world units — gentle cinematic drift.
+Lerp factor `0.035` toward mouse × `22` world units, gentle cinematic drift.
 
 ### Color Mapping (CSS tokens → Three.js)
 | Token | Hex | Three.js Constant | Used For |
@@ -85,9 +85,9 @@ Lerp factor `0.035` toward mouse × `22` world units — gentle cinematic drift.
 **Only Three.js core r128 is loaded.** PostProcessing, OrbitControls, and other Three.js extras are NOT available and will throw if referenced.
 
 ### Performance Settings
-- `renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5))` — capped at 1.5
-- `antialias: false` — performance over quality
-- `alpha: true` — transparent background so page background (#030303 on `html`) shows through
+- `renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5))`, capped at 1.5
+- `antialias: false`, performance over quality
+- `alpha: true`, transparent background so page background (#030303 on `html`) shows through
 
 ### Failure Modes
 | Symptom | Cause |
@@ -101,7 +101,7 @@ Lerp factor `0.035` toward mouse × `22` world units — gentle cinematic drift.
 
 ## Engine 2: Global Chrome Injector
 
-**Lines:** ~245–490 of global.js  
+**Lines:** ~245-490 of global.js  
 **Execution:** IIFE runs synchronously on script parse.
 
 ### pathPrefix Resolution
@@ -115,13 +115,13 @@ This extracts the path to the portfolio root from the script's own `src` attribu
 
 ### Elements Injected
 
-**2.5 — Film Grain Overlay**
+**2.5, Film Grain Overlay**
 ```html
 <div id="grain" aria-hidden="true"></div>
 ```
 Inserted as `body.firstChild`. Styled entirely in CSS: SVG `feTurbulence` noise, `opacity: 0.022`, `background-size: 200px`, `animation: grain-drift 0.3s steps(1) infinite`.
 
-**3 — Top Navigation**
+**3, Top Navigation**
 ```html
 <header id="topnav">
   <a href="{pathPrefix}index.html" class="brand">Dr. Heather Leffew</a>
@@ -135,7 +135,7 @@ Inserted as `body.firstChild`. Styled entirely in CSS: SVG `feTurbulence` noise,
 ```
 Inserted as `body.firstChild`. Guard: `if (!document.getElementById('topnav'))`.
 
-**4 — Site Footer**
+**4, Site Footer**
 ```html
 <footer class="site-foot">
   <div class="lf">Dr. Heather Leffew © 2026</div>
@@ -147,7 +147,7 @@ Inserted as `body.firstChild`. Guard: `if (!document.getElementById('topnav'))`.
 ```
 Appended to `body`. Guard: `if (!document.querySelector('footer.site-foot'))`.
 
-**5 — Search Overlay**
+**5, Search Overlay**
 ```html
 <div id="search-overlay">
   <button id="search-close">Close [X]</button>
@@ -159,16 +159,16 @@ Appended to `body`. Guard: `if (!document.querySelector('footer.site-foot'))`.
 ```
 Lazy-loads `projects_index.json` on first open. Searches across `title`, `desc`, `cat`, `tags` simultaneously. Results link to `pathPrefix + p.url`. Closes on ESC key.
 
-**6 — Recommendation Grid & Next Article**
+**6, Recommendation Grid & Next Article**
 Reads `#recommendation-grid` and `#next-chap-link` from DOM. If found, fetches `projects_index.json`, filters out current article by URL path, picks 3 random articles for grid, picks first for next-chapter link.
 
-**8 — 3D Tilt on Cards**
+**8-3D Tilt on Cards**
 Applied to: `.p-card, .r-card, .edu-card, .bio-card`  
 Formula: `rotateX = ((y - centerY) / centerY) × -3`, `rotateY = ((x - centerX) / centerX) × 3`  
-The ±3° constraint keeps tilt subtle — enough to feel physical, not enough to obscure content.  
+The ±3° constraint keeps tilt subtle, enough to feel physical, not enough to obscure content.  
 MutationObserver watches for new cards added dynamically.
 
-**9 — Audio Feedback**
+**9, Audio Feedback**
 Web Audio API sine wave triggered on any `click` on `button, a, .p-card, .bio-expand-btn, .r-card, .db-row`:
 ```js
 osc.frequency.setValueAtTime(200, audioCtx.currentTime);
@@ -181,15 +181,15 @@ gain.gain.setValueAtTime(0.02, audioCtx.currentTime);  // subtle
 
 ## Engine 3: GSAP Orchestration
 
-**Lines:** ~495–709 of global.js  
+**Lines:** ~495-709 of global.js  
 **Execution:** IIFE; lazy-loads GSAP 3.12.5, ScrollTrigger, Lenis 1.0.29, SplitType; runs on `window.load`.
 
 ### Dependencies Loaded
 ```
-gsap.min.js          — cdnjs 3.12.5
-ScrollTrigger.min.js — cdnjs 3.12.5
-lenis.min.js         — jsdelivr studio-freight 1.0.29
-split-type           — unpkg
+gsap.min.js, cdnjs 3.12.5
+ScrollTrigger.min.js, cdnjs 3.12.5
+lenis.min.js, jsdelivr studio-freight 1.0.29
+split-type, unpkg
 ```
 
 ### Preloader Timeline
@@ -205,14 +205,14 @@ If only `#preloader` (no curtain panels): simple opacity fade.
 1. `#glCanvas` fades to opacity:1 over 3.5s
 2. `#topnav` slides in from `translateY(-100%)` over 1.4s
 3. `.meta-row span` elements stagger in (opacity + x)
-4. Hero H1 split by SplitType chars — staggered rotateX + y animation
+4. Hero H1 split by SplitType chars, staggered rotateX + y animation
 5. `.hero-rule` width expands to 64px
 6. `.abstract` fades up
 7. `.scroll-cue` fades in last
 
 ### Scroll Triggers (after hero completes)
 - **Scroll cue fadeout:** `.scroll-cue` fades when reader scrolls 120px past hero top
-- **Band reveals:** Each `.band` triggers when `top 75%` — eyebrow slides in from left, heading fades up from y:25, then `.type-block, .swatch-grid, .tagrow, .p-card, .r-card, .demo-box, .dashboard-layout` stagger up from y:40
+- **Band reveals:** Each `.band` triggers when `top 75%`, eyebrow slides in from left, heading fades up from y:25, then `.type-block, .swatch-grid, .tagrow, .p-card, .r-card, .demo-box, .dashboard-layout` stagger up from y:40
 - **Generic reveals:** `.reveal, .ds-prose` elements trigger at `top 85%`
 
 ### Disable Flag

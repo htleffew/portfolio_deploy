@@ -4,21 +4,21 @@ id: INT-02
 status: stable
 category: interactive
 interactivity: dropdown
-source: multimodal-autism-ai.html — Section 05 "Bridging the Gap to Clinical Practice"
+source: multimodal-autism-ai.html, Section 05 "Bridging the Gap to Clinical Practice"
 ---
 
 ## What It Does
-A `<select>` dropdown that swaps a structured profile card's content on change — letting readers inspect individual records, scenarios, or model outputs without navigating away.
+A `<select>` dropdown that swaps a structured profile card's content on change, letting readers inspect individual records, scenarios, or model outputs without navigating away.
 
 ## When to Use
-- Showing 3–6 distinct records/personas where comparison is the point
+- Showing 3-6 distinct records/personas where comparison is the point
 - Clinical or analytical outputs that vary meaningfully across cases
 - When the reader needs to explore individual examples, not aggregate statistics
-- As a "personalization" metaphor — "what would this system tell YOUR clinician?"
+- As a "personalization" metaphor, "what would this system tell YOUR clinician?"
 
 ## When NOT to Use
-- More than 8 options (dropdown becomes unwieldy — use a filterable table instead)
-- When all records are similar (no contrast = no insight — just show one example)
+- More than 8 options (dropdown becomes unwieldy, use a filterable table instead)
+- When all records are similar (no contrast = no insight, just show one example)
 - When the data should be compared side-by-side (use a table, not a card)
 
 ## Anatomy

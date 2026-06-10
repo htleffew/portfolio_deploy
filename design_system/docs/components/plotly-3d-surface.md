@@ -4,7 +4,7 @@ id: VIZ-03
 status: stable
 category: charts
 interactivity: plotly-3d
-source: account-prioritization.html — Section 04 (plot-3d-regression)
+source: account-prioritization.html, Section 04 (plot-3d-regression)
 ---
 
 ## What It Does
@@ -14,13 +14,13 @@ Renders an interactive 3D surface plot showing a regression prediction plane ove
 - Visualizing a regression model's learned surface over two continuous features
 - Showing how deal size / continuous outcome varies across two key predictors
 - When 3D exploration adds genuine insight (e.g., non-linear interaction between features)
-- As the "wow" visualization in a section — high visual impact, earns its complexity
+- As the "wow" visualization in a section, high visual impact, earns its complexity
 
 ## When NOT to Use
-- Mobile-primary audiences — 3D Plotly degrades severely on small screens (fallback: use 2D heatmap)
+- Mobile-primary audiences, 3D Plotly degrades severely on small screens (fallback: use 2D heatmap)
 - When the insight is a single number (use stat trio instead)
-- When the surface is nearly flat — a 2D line chart communicates better
-- More than 2 feature axes — 3D can't show 3+ features simultaneously
+- When the surface is nearly flat, a 2D line chart communicates better
+- More than 2 feature axes, 3D can't show 3+ features simultaneously
 
 ## Mobile Fallback
 If the article will be read on mobile, replace the 3D surface with a 2D heatmap:
@@ -28,7 +28,7 @@ If the article will be read on mobile, replace the 3D surface with a 2D heatmap:
 type: 'heatmap',
 colorscale: 'Blues',
 ```
-The same data works for both. Test at 375px viewport width — if the 3D chart clips or controls overlap content, switch to heatmap.
+The same data works for both. Test at 375px viewport width, if the 3D chart clips or controls overlap content, switch to heatmap.
 
 ## Anatomy
 ```
@@ -82,7 +82,7 @@ Plotly.newPlot('plot-3d-regression', [trace3D, traceScat], {
     xaxis: { title: 'Revenue Tier' },
     yaxis: { title: 'Engagement Score' },
     zaxis: { title: 'Deal Size $' },
-    camera: { eye: { x: 1.5, y: 1.5, z: 1.2 } }  // EXACT angle — do not change
+    camera: { eye: { x: 1.5, y: 1.5, z: 1.2 } }  // EXACT angle, do not change
   },
   margin: { t: 50, b: 0, l: 0, r: 0 }
 }, { displayModeBar: false });
@@ -95,8 +95,8 @@ camera: { eye: { x: 1.5, y: 1.5, z: 1.2 } }
 ```
 
 This is the exact camera angle that shows the surface clearly:
-- `x: 1.5, y: 1.5` — 45° diagonal view from the front-right
-- `z: 1.2` — slightly elevated, showing surface topology without looking straight down
+- `x: 1.5, y: 1.5`, 45° diagonal view from the front-right
+- `z: 1.2`, slightly elevated, showing surface topology without looking straight down
 - Do not change this. Lower z values obscure the surface; higher z makes it look flat.
 
 ## Building the Z Plane
@@ -119,14 +119,14 @@ Replace coefficients (0.5, 0.3) with your actual model coefficients. The `* 1000
 ## Design Tokens Applied
 | Config | Token | Value |
 |--------|-------|-------|
-| `colorscale` | — | `'Blues'` (Plotly built-in, aligns with phthalo palette) |
+| `colorscale` |, | `'Blues'` (Plotly built-in, aligns with phthalo palette) |
 | `marker.color` | `--flare` | #FFFFFF |
 | `marker.line.color` | `--phthalo-lift` | #3866A0 |
 | `font.color` | `--tungsten` | #A1A1A6 |
 | `title.font.color` | `--flare` | #FFFFFF |
 
 ## Generalization
-Works for any regression model with 2 continuous features. The Z plane grid size can expand (e.g., 10×10 for smoother surface), but keep scatter points sparse — 5–10 actual data points are enough to show residuals. Wrap in `.figure > .frame` with transparent background.
+Works for any regression model with 2 continuous features. The Z plane grid size can expand (e.g., 10×10 for smoother surface), but keep scatter points sparse, 5-10 actual data points are enough to show residuals. Wrap in `.figure > .frame` with transparent background.
 
 ## Source Reference
 `account-prioritization.html` → `Plotly.newPlot('plot-3d-regression', ...)` in `DOMContentLoaded` handler.

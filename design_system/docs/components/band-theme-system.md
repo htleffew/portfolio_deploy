@@ -18,7 +18,7 @@ color: var(--platinum);
 backdrop-filter: blur(10px);
 -webkit-backdrop-filter: blur(10px);
 ```
-- **Translucent obsidian** — not solid black. The `rgba(3,3,3,0.6)` lets the Three.js starfield show through at 40% opacity.
+- **Translucent obsidian**, not solid black. The `rgba(3,3,3,0.6)` lets the Three.js starfield show through at 40% opacity.
 - Text: `var(--platinum)` (#F5F5F7) for body, `var(--flare)` (#FFFFFF) for headings
 - Eyebrows: `var(--phthalo-lift)` (#3866A0)
 - Borders: `var(--graphite)` (#222222) or `rgba(255,255,255,0.08)`
@@ -30,7 +30,7 @@ color: var(--obsidian);
 backdrop-filter: blur(10px);
 -webkit-backdrop-filter: blur(10px);
 ```
-- **Translucent cream** — 85% opacity cream over the starfield. The stars are barely perceptible through paper bands, creating a subtle depth.
+- **Translucent cream**, 85% opacity cream over the starfield. The stars are barely perceptible through paper bands, creating a subtle depth.
 - Text: `var(--ink)` (#030303) for headings, `var(--ink-2)` (#222222) for body
 - Eyebrows: `var(--ink-blue)` (#1A3A6B)
 - Borders: `var(--paper-3)` (#DDDDDD)
@@ -49,7 +49,7 @@ Darker than `band--dark`. Used sparingly for code-heavy sections where maximum c
 
 The Three.js particle network is `position: fixed; z-index: 0`. All bands are `position: relative; z-index: 1`. The starfield is only visible because bands are semi-transparent.
 
-**If you make a band opaque, the background becomes a dead flat color.** The entire spatial depth of the design collapses. Opaque bands are a design error — not a stylistic choice.
+**If you make a band opaque, the background becomes a dead flat color.** The entire spatial depth of the design collapses. Opaque bands are a design error, not a stylistic choice.
 
 The same rule applies to chart frames: `background: rgba(0,0,0,0)` not `background: #000` or `background: white`.
 
@@ -111,7 +111,7 @@ section.band:not(.front):not(.library-band):not(.back-matter) {
 ```
 Where `--grid-left: max(260px, calc(50vw - 540px))` at ≥1360px viewport.
 
-Direct children of `section.band` are placed in column 2 (the 680px reading column) by default. Children with class `.col-wide`, `.figure`, `.report-prose`, `.simulator-layout`, `.dashboard-layout` span columns 2–4 (reading column + sidenote column).
+Direct children of `section.band` are placed in column 2 (the 680px reading column) by default. Children with class `.col-wide`, `.figure`, `.report-prose`, `.simulator-layout`, `.dashboard-layout` span columns 2-4 (reading column + sidenote column).
 
 ---
 
@@ -165,7 +165,7 @@ CSS for eyebrow:
 .band--paper .eyebrow { color: var(--ink-blue); }
 ```
 
-The eyebrow format is always: `[two-digit number] / [Section Name]` — the slash convention is mandatory. Examples: `01 / The Flaw`, `03 / Stage 1`, `06 / Interpretability`.
+The eyebrow format is always: `[two-digit number] / [Section Name]`, the slash convention is mandatory. Examples: `01 / The Flaw`, `03 / Stage 1`, `06 / Interpretability`.
 
 H2 should communicate the insight, not describe the content. "The Blind Spot in Conversion Probability" not "Problem Overview."
 
@@ -197,4 +197,4 @@ H2 should communicate the insight, not describe the content. "The Blind Spot in 
   border-top: 1px solid rgba(0,0,0,0.0);
 }
 ```
-The border is transparent — this selector exists to reset any inherited border that might appear between bands. The visual transition is handled by the background color alone.
+The border is transparent, this selector exists to reset any inherited border that might appear between bands. The visual transition is handled by the background color alone.

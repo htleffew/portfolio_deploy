@@ -1,5 +1,5 @@
 # Color Tokens
-> Every color token in the system. Always use variable names — never raw hex.
+> Every color token in the system. Always use variable names, never raw hex.
 
 ---
 
@@ -74,7 +74,7 @@
 `--alizarin` (#7A1626) appears only when the content is flagging a problem or warning. In the autism article, it marks the "overfitting risk zone" on the ROC curve (AUC > 0.95). Never use it decoratively or for general emphasis.
 
 **Flare white is for maximum emphasis only.**  
-`--flare` (#FFFFFF) is saved for H1 headings and the highest-contrast moments. Using it for body text defeats its purpose — everything becomes equally important, which means nothing is.
+`--flare` (#FFFFFF) is saved for H1 headings and the highest-contrast moments. Using it for body text defeats its purpose, everything becomes equally important, which means nothing is.
 
 **Hansa yellow is the only warm color.**  
 `--hansa` (#DBA844) appears in exactly one place: the temporal sequence diagram (FIG.05) to mark "responder/effect" events against the phthalo-blue "initiator/cause" events. If you reach for a warm color outside of temporal sequence diagrams, question whether it belongs.
@@ -83,10 +83,10 @@
 
 ## The Additive Blending Rule
 
-The Three.js particle network uses `THREE.AdditiveBlending`. This means colors appear **brighter** against dark backgrounds than their hex values suggest — especially in the particle core. The `--phthalo-lift` (#3866A0) blue becomes a glowing electric blue when particles overlap. Account for this:
+The Three.js particle network uses `THREE.AdditiveBlending`. This means colors appear **brighter** against dark backgrounds than their hex values suggest, especially in the particle core. The `--phthalo-lift` (#3866A0) blue becomes a glowing electric blue when particles overlap. Account for this:
 
-- **Chart lines at #3866A0** appear as a medium blue — correct for readability
-- **Particles at #3866A0 with AdditiveBlending** appear as bright cyan-blue — intentional glow
+- **Chart lines at #3866A0** appear as a medium blue, correct for readability
+- **Particles at #3866A0 with AdditiveBlending** appear as bright cyan-blue, intentional glow
 - Never try to "correct" the glow by darkening particle colors. The brightness is the effect.
 
 ---
@@ -97,11 +97,11 @@ Same token, different perceived value against different backgrounds:
 
 | Token | On Dark Band | On Paper Band |
 |-------|-------------|---------------|
-| `--phthalo-lift` (#3866A0) | Medium blue, good contrast | Too light, low contrast — use `--ink-blue` instead |
-| `--ink-blue` (#1A3A6B) | Too dark, disappears — use `--phthalo-lift` instead | Good contrast, authoritative |
-| `--tungsten` (#A1A1A6) | Good muted gray | Too light on cream — use `--ink-3` instead |
+| `--phthalo-lift` (#3866A0) | Medium blue, good contrast | Too light, low contrast, use `--ink-blue` instead |
+| `--ink-blue` (#1A3A6B) | Too dark, disappears, use `--phthalo-lift` instead | Good contrast, authoritative |
+| `--tungsten` (#A1A1A6) | Good muted gray | Too light on cream, use `--ink-3` instead |
 | `--ink-3` (#5E5E5A) | Too dark on obsidian | Good muted brown-gray on cream |
-| `--platinum` (#F5F5F7) | Good body text | Invisible on cream — use `--ink-2` |
+| `--platinum` (#F5F5F7) | Good body text | Invisible on cream, use `--ink-2` |
 | `--ink-2` (#222222) | Invisible on obsidian | Good body text on cream |
 
 **Pattern:** Dark band → use `--phthalo-lift`, `--platinum`, `--flare`, `--tungsten`  
@@ -144,7 +144,7 @@ const layoutLight = {
   font: { color: '#5E5E5A', family: "'JetBrains Mono', monospace" }  // --ink-3
 };
 
-// Trace line color — always phthalo-lift
+// Trace line color, always phthalo-lift
 line: { color: '#3866A0', width: 3 }  // --phthalo-lift
 
 // Secondary/baseline trace

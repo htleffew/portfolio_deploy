@@ -4,21 +4,21 @@ id: VIZ-02
 status: stable
 category: charts
 interactivity: plotly-hover
-source: account-prioritization.html — Section 03 (plot-pr)
+source: account-prioritization.html, Section 03 (plot-pr)
 ---
 
 ## What It Does
-Plots Precision vs. Recall at all classification thresholds. Unlike ROC, PR curves are not distorted by class imbalance — making them the preferred evaluation metric for rare-event prediction.
+Plots Precision vs. Recall at all classification thresholds. Unlike ROC, PR curves are not distorted by class imbalance, making them the preferred evaluation metric for rare-event prediction.
 
 ## When to Use
 - **Imbalanced datasets** (conversion rates < 15%, rare disease prevalence, fraud detection)
 - When false positives are costly (e.g., sending sales team to low-quality leads)
 - When you want to show that the model actually finds the rare positives well
-- Always pair with ROC curve — show both to give a complete picture
+- Always pair with ROC curve, show both to give a complete picture
 
 ## When NOT to Use
-- Balanced datasets (50/50 split) — ROC is equally valid and more widely understood
-- When your audience is unfamiliar with Precision-Recall tradeoffs — add an explanatory sentence
+- Balanced datasets (50/50 split), ROC is equally valid and more widely understood
+- When your audience is unfamiliar with Precision-Recall tradeoffs, add an explanatory sentence
 - As a standalone metric without ROC context
 
 ## Anatomy
@@ -40,7 +40,7 @@ Plots Precision vs. Recall at all classification thresholds. Unlike ROC, PR curv
 
 ## Plotly Configuration
 
-### Light Band Version (canonical — PR curves used in paper bands)
+### Light Band Version (canonical, PR curves used in paper bands)
 ```js
 const prTrace = {
   x: [0, 0.2, 0.4, 0.6, 0.8, 1],
@@ -86,7 +86,7 @@ Change `line.color` to `'#3866A0'` (--phthalo-lift), `font.color` to `'#A1A1A6'`
 | `font.color` (dark) | `--tungsten` | #A1A1A6 |
 
 ## Generalization
-Replace x/y arrays with values from `sklearn.metrics.precision_recall_curve()`. Note the inverted shape — high precision at low recall (top-left), degrading toward high recall (bottom-right). For the prevalence baseline (no-skill classifier): add a horizontal line at `y = [prevalence, prevalence]` across `x = [0, 1]`.
+Replace x/y arrays with values from `sklearn.metrics.precision_recall_curve()`. Note the inverted shape, high precision at low recall (top-left), degrading toward high recall (bottom-right). For the prevalence baseline (no-skill classifier): add a horizontal line at `y = [prevalence, prevalence]` across `x = [0, 1]`.
 
 ## Source Reference
 `account-prioritization.html` → `Plotly.newPlot('plot-pr', ...)` inside `DOMContentLoaded` handler.

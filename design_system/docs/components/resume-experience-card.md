@@ -4,7 +4,7 @@ id: LAY-04
 status: stable
 category: layout
 interactivity: hover (3D tilt)
-source: index.html — experience section (.r-card, .resume-stack)
+source: index.html, experience section (.r-card, .resume-stack)
 ---
 
 ## What It Does
@@ -20,7 +20,7 @@ A structured experience card with role title, company, dates, intro paragraph, a
 ┌──────────────────────────────────────────────────────────┐
 │ ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  │  ← .r-bg (grid texture, absolute)
 │                                                          │
-│  Senior Data Scientist          [2022 – Present]         │  ← .r-title + .r-dates
+│  Senior Data Scientist          [2022, Present]         │  ← .r-title + .r-dates
 │  Acme Corp                                               │  ← .r-company
 │ ─────────────────────────────────────────────────────── │
 │  Introduction paragraph describing the role context      │  ← .r-intro
@@ -37,17 +37,17 @@ A structured experience card with role title, company, dates, intro paragraph, a
 ```html
 <div class="resume-stack">
   <div class="r-card">
-    <div class="r-bg"></div>    <!-- grid texture hover surface — required -->
+    <div class="r-bg"></div>    <!-- grid texture hover surface, required -->
     <div class="r-content">
       <div class="r-header">
         <div>
           <div class="r-title">Senior Data Scientist</div>
           <div class="r-company">Acme Corporation</div>
         </div>
-        <div class="r-dates">2022 – Present</div>
+        <div class="r-dates">2022, Present</div>
       </div>
       <p class="r-intro">
-        Brief paragraph (2–3 sentences) describing the role, team context,
+        Brief paragraph (2-3 sentences) describing the role, team context,
         and the primary problem space.
       </p>
       <ul class="r-bullets">
@@ -76,14 +76,14 @@ A structured experience card with role title, company, dates, intro paragraph, a
 }
 ```
 
-The `.r-bg` grid texture is invisible until hover — it's always present but only becomes perceptible when the card subtly brightens via the `border-color` transition and 3D tilt scale. It gives the card surface a "material" quality — like brushed metal — without adding visual noise.
+The `.r-bg` grid texture is invisible until hover, it's always present but only becomes perceptible when the card subtly brightens via the `border-color` transition and 3D tilt scale. It gives the card surface a "material" quality, like brushed metal, without adding visual noise.
 
 ## The 3D Tilt Interaction
 
 global.js automatically applies 3D tilt to all `.r-card` elements (no manual wiring needed):
 
 ```js
-// Applied by global.js — do not add manually
+// Applied by global.js, do not add manually
 card.addEventListener('mousemove', (e) => {
   const rotateX = ((y - centerY) / centerY) * -3;
   const rotateY = ((x - centerX) / centerX) * 3;
@@ -92,9 +92,9 @@ card.addEventListener('mousemove', (e) => {
 });
 ```
 
-The ±3° constraint is intentional — enough to feel physical, not enough to obscure content.
+The ±3° constraint is intentional, enough to feel physical, not enough to obscure content.
 
-## CSS (from global.css — dark band variant)
+## CSS (from global.css, dark band variant)
 
 ```css
 .r-card {

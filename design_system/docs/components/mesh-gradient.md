@@ -9,17 +9,17 @@ adaptation-status: token-mapped
 ---
 
 ## What It Does
-An animated mesh gradient background — soft organic color blobs that shift slowly, creating a living atmospheric background texture.
+An animated mesh gradient background, soft organic color blobs that shift slowly, creating a living atmospheric background texture.
 
 ## When to Use In This Portfolio
-**Paper band atmosphere only.** The Three.js starfield provides ambient depth for dark bands. Paper bands (`.band--paper`) have 85% cream opacity over the starfield — the stars are barely visible. A subtle mesh gradient inside paper bands can provide equivalent atmospheric depth for the light context.
+**Paper band atmosphere only.** The Three.js starfield provides ambient depth for dark bands. Paper bands (`.band--paper`) have 85% cream opacity over the starfield, the stars are barely visible. A subtle mesh gradient inside paper bands can provide equivalent atmospheric depth for the light context.
 
 This is the **only cinematic component that is optional and band-specific.**
 
 ## When NOT to Use
-- Dark bands (`.band--dark`) — the starfield already provides atmosphere; competing gradients create visual noise
-- As the primary design element — it should be barely perceptible, like the grain overlay
-- Saturated or bright colors — restrict to the cream/phthalo-lift palette range only
+- Dark bands (`.band--dark`), the starfield already provides atmosphere; competing gradients create visual noise
+- As the primary design element, it should be barely perceptible, like the grain overlay
+- Saturated or bright colors, restrict to the cream/phthalo-lift palette range only
 
 ## Palette Constraint
 The mesh gradient for this portfolio must use only cream and phthalo tones:

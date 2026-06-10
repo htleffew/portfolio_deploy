@@ -4,11 +4,11 @@ id: DIA-01
 status: stable
 category: diagrams
 interactivity: none
-source: multimodal-autism-ai.html — FIG.02
+source: multimodal-autism-ai.html, FIG.02
 ---
 
 ## What It Does
-A static SVG hierarchical tree diagram mapping multimodal data streams to ADOS-2 behavioral domains — showing parent-to-child relationships with directional arrows and color-coded node tiers.
+A static SVG hierarchical tree diagram mapping multimodal data streams to ADOS-2 behavioral domains, showing parent-to-child relationships with directional arrows and color-coded node tiers.
 
 ## When to Use
 - System architecture diagrams (input → processing → output)
@@ -17,7 +17,7 @@ A static SVG hierarchical tree diagram mapping multimodal data streams to ADOS-2
 - Any "this feeds into that" relationship with clear levels
 
 ## When NOT to Use
-- Cyclic relationships (use dashed orbit circles instead — DAT-04)
+- Cyclic relationships (use dashed orbit circles instead, DAT-04)
 - Temporal/causal sequences where timing matters (use DIA-02)
 - More than 4 levels deep (becomes unreadable at SVG scale)
 - When the diagram needs to be interactive (use a JS-rendered tree)

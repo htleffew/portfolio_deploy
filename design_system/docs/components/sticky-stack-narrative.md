@@ -9,14 +9,14 @@ adaptation-status: token-mapped
 ---
 
 ## What It Does
-A section header sticks to the top of the viewport while prose content scrolls past it — creating a "pinned context" effect that keeps the reader oriented through long technical walkthroughs.
+A section header sticks to the top of the viewport while prose content scrolls past it, creating a "pinned context" effect that keeps the reader oriented through long technical walkthroughs.
 
 ## When to Use In This Portfolio
 - Multi-step technical sections where the section header should remain visible as explanatory content scrolls (e.g., a 4-step preprocessing pipeline where the reader needs to see "02 / Data Architecture" while reading each step)
 - Walkthroughs with ≥3 sub-steps where context is easily lost
 
 ## When NOT to Use
-- Short sections (< 400px of content) — the sticky never gets triggered
+- Short sections (< 400px of content), the sticky never gets triggered
 - Sections with interactive components that need full viewport height
 - Front matter hero sections (they use their own scroll dynamic)
 
@@ -50,9 +50,9 @@ The component uses `position: sticky; top: 0` on the section header element, wit
 ```
 
 ## Integration Notes
-- `top: 80px` accounts for the 60px `#topnav` height + 20px breathing room — adjust if nav height changes
+- `top: 80px` accounts for the 60px `#topnav` height + 20px breathing room, adjust if nav height changes
 - The `border-left: 4px solid var(--phthalo-lift)` accent connects to the `.method` callout block pattern
-- Works with the GSAP reveal system — add `.reveal` class to content paragraphs
+- Works with the GSAP reveal system, add `.reveal` class to content paragraphs
 - On mobile (< 768px): collapse to single column, remove sticky behavior
 
 ## Source Reference

@@ -3,7 +3,7 @@
 
 ## What This System Is
 
-Dr. Heather Leffew's portfolio is a cinematic, dark-mode-first publication platform that treats data science case studies as long-form editorial pieces. Every page is a spatial narrative: a fixed WebGL starfield provides infinite depth, translucent dark and cream bands float above it, and GSAP-orchestrated reveals turn scrolling into storytelling. The design rejects SaaS conventions (no rounded corners, no gradients, no pastels) in favor of a metallurgical, institutional aesthetic — obsidian backgrounds, phthalo-blue accents, Playfair Display headlines, and JetBrains Mono for all data labels. The two-band system (dark/paper) creates rhythm across every article. Visualizations are always transparent so the starfield shows through.
+Dr. Heather Leffew's portfolio is a cinematic, dark-mode-first publication platform that treats data science case studies as long-form editorial pieces. Every page is a spatial narrative: a fixed WebGL starfield provides infinite depth, translucent dark and cream bands float above it, and GSAP-orchestrated reveals turn scrolling into storytelling. The design rejects SaaS conventions (no rounded corners, no gradients, no pastels) in favor of a metallurgical, institutional aesthetic, obsidian backgrounds, phthalo-blue accents, Playfair Display headlines, and JetBrains Mono for all data labels. The two-band system (dark/paper) creates rhythm across every article. Visualizations are always transparent so the starfield shows through.
 
 ---
 
@@ -17,7 +17,7 @@ Dr. Heather Leffew's portfolio is a cinematic, dark-mode-first publication platf
 | **Level 2** | Vanilla JS | Full interactive components requiring state (dual-slider calculator, patient profile explorer, sortable table). |
 
 ### The Palette Rule
-Use only CSS variable names — never raw hex values. The full palette:
+Use only CSS variable names, never raw hex values. The full palette:
 - Primary dark: `var(--obsidian)`, `var(--charcoal)`, `var(--graphite)`, `var(--brushed)`, `var(--tungsten)`, `var(--platinum)`, `var(--flare)`
 - Primary light: `var(--paper)`, `var(--paper-2)`, `var(--paper-3)`, `var(--ink)`, `var(--ink-2)`, `var(--ink-3)`
 - Brand accents: `var(--phthalo)`, `var(--phthalo-lift)`, `var(--ink-blue)`
@@ -27,9 +27,9 @@ Use only CSS variable names — never raw hex values. The full palette:
 Thresholds and risk zones always use: `var(--alizarin)` (#7A1626) + dashed line + bold label. See FIG.03 in multimodal-autism-ai.html for the canonical pattern.
 
 ### The Typography Rule
-- `var(--display)` (Playfair Display) — headlines only, never inside chart frames
-- `var(--body)` (Lora) — all prose, abstracts, report text
-- `var(--mono)` (JetBrains Mono) — all data labels, eyebrows, metadata, code, chart axis text
+- `var(--display)` (Playfair Display), headlines only, never inside chart frames
+- `var(--body)` (Lora), all prose, abstracts, report text
+- `var(--mono)` (JetBrains Mono), all data labels, eyebrows, metadata, code, chart axis text
 
 ### The Transparency Rule
 All chart backgrounds must be `rgba(0,0,0,0)`. In Plotly: `paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)'`. The Three.js starfield is fixed at z-index:0; bands are translucent so stars show through. **Never use solid backgrounds on bands or chart frames.**
@@ -40,12 +40,12 @@ All chart backgrounds must be `rgba(0,0,0,0)`. In Plotly: `paper_bgcolor: 'rgba(
 
 | ID | Component Name | Category | File Path | Interactivity | Status |
 |----|---------------|----------|-----------|---------------|--------|
-| SYS-01 | Global JS Contract | System | components/system/global-js-contract.md | — | stable |
-| SYS-02 | Projects Index Schema | System | components/system/projects-index-schema.md | — | stable |
-| SYS-03 | Band Theme System | System | components/system/band-theme-system.md | — | stable |
-| TOK-01 | Colors | Tokens | tokens/colors.md | — | stable |
-| TOK-02 | Typography | Tokens | tokens/typography.md | — | stable |
-| TOK-03 | Spacing | Tokens | tokens/spacing.md | — | stable |
+| SYS-01 | Global JS Contract | System | components/system/global-js-contract.md |, | stable |
+| SYS-02 | Projects Index Schema | System | components/system/projects-index-schema.md |, | stable |
+| SYS-03 | Band Theme System | System | components/system/band-theme-system.md |, | stable |
+| TOK-01 | Colors | Tokens | tokens/colors.md |, | stable |
+| TOK-02 | Typography | Tokens | tokens/typography.md |, | stable |
+| TOK-03 | Spacing | Tokens | tokens/spacing.md |, | stable |
 | AMB-01 | Three.js Particle Network | Ambient | components/ambient/three-particle-network.md | WebGL | stable |
 | AMB-02 | Film Grain Overlay | Ambient | components/ambient/film-grain-overlay.md | none | stable |
 | AMB-03 | Scroll Cue Drip | Ambient | components/ambient/scroll-cue-drip.md | scroll | stable |
@@ -84,20 +84,20 @@ All chart backgrounds must be `rgba(0,0,0,0)`. In Plotly: `paper_bgcolor: 'rgba(
 | CIN-06 | Odometer Counter | Cinematic | components/cinematic/odometer-counter.md | scroll | stable |
 | CIN-07 | Typewriter | Cinematic | components/cinematic/typewriter.md | scroll | stable |
 | CIN-08 | Mesh Gradient | Cinematic | components/cinematic/mesh-gradient.md | none | stable |
-| SNIP-01 | Dual Slider Calculator | Snippets | source-snippets/dual-slider-calculator.html | — | stable |
-| SNIP-02 | SVG Hierarchy Tree | Snippets | source-snippets/svg-hierarchy-tree.html | — | stable |
-| SNIP-03 | SVG Temporal Sequence | Snippets | source-snippets/svg-temporal-sequence.html | — | stable |
-| SNIP-04 | SVG ROC Annotation | Snippets | source-snippets/svg-roc-annotation.html | — | stable |
-| SNIP-05 | Plotly SHAP Beeswarm | Snippets | source-snippets/plotly-shap-beeswarm.html | — | stable |
-| SNIP-06 | Patient Profile Explorer | Snippets | source-snippets/patient-profile-explorer.html | — | stable |
-| SNIP-07 | Sortable Ranking Table | Snippets | source-snippets/sortable-ranking-table.html | — | stable |
+| SNIP-01 | Dual Slider Calculator | Snippets | source-snippets/dual-slider-calculator.html |, | stable |
+| SNIP-02 | SVG Hierarchy Tree | Snippets | source-snippets/svg-hierarchy-tree.html |, | stable |
+| SNIP-03 | SVG Temporal Sequence | Snippets | source-snippets/svg-temporal-sequence.html |, | stable |
+| SNIP-04 | SVG ROC Annotation | Snippets | source-snippets/svg-roc-annotation.html |, | stable |
+| SNIP-05 | Plotly SHAP Beeswarm | Snippets | source-snippets/plotly-shap-beeswarm.html |, | stable |
+| SNIP-06 | Patient Profile Explorer | Snippets | source-snippets/patient-profile-explorer.html |, | stable |
+| SNIP-07 | Sortable Ranking Table | Snippets | source-snippets/sortable-ranking-table.html |, | stable |
 | GAL-01 | Visual Gallery | Gallery | gallery/DESIGN.html | search | stable |
 
 ---
 
 ## What global.js Injects Automatically
 
-Agents **must not** add these elements manually — global.js creates them:
+Agents **must not** add these elements manually, global.js creates them:
 
 | Element | ID/Class | Notes |
 |---------|----------|-------|

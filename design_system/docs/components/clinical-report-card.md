@@ -4,11 +4,11 @@ id: DAT-03
 status: stable
 category: data-display
 interactivity: none (static) / dropdown (via INT-02)
-source: multimodal-autism-ai.html — Section 05 "Bridging the Gap to Clinical Practice"
+source: multimodal-autism-ai.html, Section 05 "Bridging the Gap to Clinical Practice"
 ---
 
 ## What It Does
-A structured output card displaying labeled metric pairs in a two-column grid — translating raw model outputs into readable, scannable clinical (or analytical) summaries.
+A structured output card displaying labeled metric pairs in a two-column grid, translating raw model outputs into readable, scannable clinical (or analytical) summaries.
 
 ## When to Use
 - ML model outputs translated for non-technical audiences
@@ -80,9 +80,9 @@ A structured output card displaying labeled metric pairs in a two-column grid �
 ## The `.highlight` Risk Class System
 
 ```css
-.mval.highlight        { color: var(--phthalo);   /* blue — neutral */  }
-.mval.highlight.moderate { color: #DBA844;          /* gold — watch  */  }
-.mval.highlight.high     { color: #7A1626;          /* red  — act    */  }
+.mval.highlight        { color: var(--phthalo);   /* blue, neutral */  }
+.mval.highlight.moderate { color: #DBA844;          /* gold, watch  */  }
+.mval.highlight.high     { color: #7A1626;          /* red, act    */  }
 ```
 
 Apply the class to values that carry clinical/business significance. The three-tier color system maps to natural language:

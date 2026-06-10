@@ -9,12 +9,12 @@ adaptation-status: token-mapped
 ---
 
 ## What It Does
-A headline fills with color as the reader scrolls — text starts as an outline/gray and saturates to full color as the element passes through the viewport.
+A headline fills with color as the reader scrolls, text starts as an outline/gray and saturates to full color as the element passes through the viewport.
 
 ## When to Use In This Portfolio
 **For H2 section headings only.** Apply to `<h2>` elements in content sections when you want to add kinetic energy to a major insight heading.
 
-Do NOT apply to H1 hero headings — those already use GSAP SplitType char animation (global.js). Stacking two entrance effects on one element creates visual noise.
+Do NOT apply to H1 hero headings, those already use GSAP SplitType char animation (global.js). Stacking two entrance effects on one element creates visual noise.
 
 ## When NOT to Use
 - Hero H1 (owned by GSAP SplitType in global.js)
