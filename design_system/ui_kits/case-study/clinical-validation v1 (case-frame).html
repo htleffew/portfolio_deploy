@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Clinical AI Validation — Case 07 — Dr. Heather Leffew</title>
+<title>Clinical AI Validation, Case 07, Dr. Heather Leffew</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="../../css/global.css">
@@ -11,7 +11,7 @@
 
 <body>
 
-<!-- Atmosphere — invisible during paper bands -->
+<!-- Atmosphere, invisible during paper bands -->
 <div class="atmosphere"></div>
 
 <!-- Reading progress -->
@@ -100,7 +100,7 @@
       <h1>Validation, with the <em>I&nbsp;don&rsquo;t&nbsp;know</em> preserved.</h1>
 
       <p class="abstract">
-        A late-fusion multimodal pipeline with per-modality Platt and isotonic calibration produces clinical reports where the algorithm operates strictly as an assistant — surfacing evidence and disagreement to the clinician rather than collapsing them into a single confident probability.
+        A late-fusion multimodal pipeline with per-modality Platt and isotonic calibration produces clinical reports where the algorithm operates strictly as an assistant, surfacing evidence and disagreement to the clinician rather than collapsing them into a single confident probability.
       </p>
 
       <div class="byline">
@@ -123,8 +123,8 @@
       </div>
 
       <div class="citation" style="margin-top:64px;">
-        <b>Cite as &mdash;</b> Leffew, H. (2026). <i>Multimodal clinical AI validation with surfaced uncertainty.</i> Research Note 07, DrHeatherLeffew.com. Retrieved from drheatherleffew.com/clinical-validation.<br>
-        <b>Companion materials &mdash;</b> ADOS-2 mapping table; calibration diagnostics; conformal coverage notebook (on request).
+        <b>Cite as, </b> Leffew, H. (2026). <i>Multimodal clinical AI validation with surfaced uncertainty.</i> Research Note 07, DrHeatherLeffew.com. Retrieved from drheatherleffew.com/clinical-validation.<br>
+        <b>Companion materials, </b> ADOS-2 mapping table; calibration diagnostics; conformal coverage notebook (on request).
       </div>
      </div>
      <div></div>
@@ -134,18 +134,18 @@
 
 
 <!-- ============================================================
-     1 — CONTEXT (paper)
+     1, CONTEXT (paper)
      ============================================================ -->
 <section class="band band--paper" data-spine="Context" data-section="The clinical question">
-  <div class="eyebrow reveal">§ 01 — Problem space</div>
+  <div class="eyebrow reveal">§ 01, Problem space</div>
   <h2 class="reveal is-chapter">A test that can say "I don't know."</h2>
 
   <p class="has-dropcap reveal col-with-sidenotes">
-    In real clinical settings, autism is not a binary, and an autism risk score is not a diagnosis. Synthetic data drawn from <span class="gloss">ADOS-2<span class="gloss-tip"><b>ADOS-2</b> — Autism Diagnostic Observation Schedule, 2nd ed. The standard clinician-administered observation rubric used in pediatric autism assessment. Items A1–D4 map specific behaviors to coded scores.</span></span> rubrics shows that 60 to 80 percent of behavioral signals overlap perfectly between autistic and non-autistic children<span class="sn"><span class="sn-num">1</span><span class="sn-body">"Synthetic" here means generated from published ADOS-2 distributions and validated against between-rater variance. No real patient data was used.</span></span>. Add the natural noise of a restless toddler in an assessment room — a missed gaze, a tired afternoon, an unfamiliar tester — and a binary classifier collapses entirely. Not because the math is bad. Because the question is bad.
+    In real clinical settings, autism is not a binary, and an autism risk score is not a diagnosis. Synthetic data drawn from <span class="gloss">ADOS-2<span class="gloss-tip"><b>ADOS-2</b>: Autism Diagnostic Observation Schedule, 2nd ed. The standard clinician-administered observation rubric used in pediatric autism assessment. Items A1, D4 map specific behaviors to coded scores.</span></span> rubrics shows that 60 to 80 percent of behavioral signals overlap perfectly between autistic and non-autistic children<span class="sn"><span class="sn-num">1</span><span class="sn-body">"Synthetic" here means generated from published ADOS-2 distributions and validated against between-rater variance. No real patient data was used.</span></span>. Add the natural noise of a restless toddler in an assessment room, a missed gaze, a tired afternoon, an unfamiliar tester, and a binary classifier collapses entirely. Not because the math is bad. Because the question is bad.
   </p>
 
   <p class="reveal col-with-sidenotes">
-    If a system simply emits <code style="font-family:var(--mono);font-size:0.9em;color:var(--ink-blue);">P(autism) = 0.74</code>, that number is useless to a clinician. It strips away every piece of context the score was actually built from. Did the model see poor eye contact, or repetitive hand flapping? Did those signals contradict each other? Was the child responsive to her name in 8 out of 10 trials, or 2? A single probability collapses a structured observation into a number that <a class="xlink" data-preview-id="implicit-power-drives" href="#">looks rigorous and behaves arbitrarily</a><span class="sn"><span class="sn-num">2</span><span class="sn-body">This is the same failure mode I documented in Case 04 — a single confident number that hides which features it depends on.</span></span>.
+    If a system simply emits <code style="font-family:var(--mono);font-size:0.9em;color:var(--ink-blue);">P(autism) = 0.74</code>, that number is useless to a clinician. It strips away every piece of context the score was actually built from. Did the model see poor eye contact, or repetitive hand flapping? Did those signals contradict each other? Was the child responsive to her name in 8 out of 10 trials, or 2? A single probability collapses a structured observation into a number that <a class="xlink" data-preview-id="implicit-power-drives" href="#">looks rigorous and behaves arbitrarily</a><span class="sn"><span class="sn-num">2</span><span class="sn-body">This is the same failure mode I documented in Case 04, a single confident number that hides which features it depends on.</span></span>.
   </p>
 
   <p class="reveal">
@@ -162,31 +162,31 @@
   <div class="method reveal">
     <div class="inner">
       <div class="lab">Methodological note</div>
-      Throughout this case, "confidence" refers to a calibrated probability bin (<i>low</i> / <i>moderate</i> / <i>high</i>) where each bin's empirical frequency matches its stated probability within ±2%. This is not the model's <i>raw</i> probability — those are systematically overconfident before calibration.
+      Throughout this case, "confidence" refers to a calibrated probability bin (<i>low</i> / <i>moderate</i> / <i>high</i>) where each bin's empirical frequency matches its stated probability within ±2%. This is not the model's <i>raw</i> probability, those are systematically overconfident before calibration.
     </div>
   </div>
 </section>
 
 
 <!-- ============================================================
-     2 — PULL QUOTE (ink)
+     2, PULL QUOTE (ink)
      ============================================================ -->
 <section class="band band--ink" data-spine="Thesis" data-section="A test that can say I don't know">
   <div class="col reveal" style="padding:80px 32px;">
     <div class="pullquote">
       The algorithm's job is not to be confident.
       Its job is to be <em>legible</em>.
-      <span class="qa">— working principle, this case</span>
+      <span class="qa">, working principle, this case</span>
     </div>
   </div>
 </section>
 
 
 <!-- ============================================================
-     3 — DOMAINS (paper)
+     3, DOMAINS (paper)
      ============================================================ -->
 <section class="band band--paper" data-spine="Domains" data-section="Isolated feature streams">
-  <div class="eyebrow reveal">§ 02 — Architecture</div>
+  <div class="eyebrow reveal">§ 02, Architecture</div>
   <h2 class="reveal">Four streams, kept apart on purpose.</h2>
 
   <p class="reveal col-with-sidenotes">
@@ -240,31 +240,31 @@
         </g>
       </svg>
     </div>
-    <div class="cap"><span class="num">Fig. 1 —</span> ADOS-2 item coverage by domain, mapped to clinical primacy. Social engagement carries the most diagnostic weight; temporal features are derived rather than directly observed.</div>
+    <div class="cap"><span class="num">Fig. 1: </span> ADOS-2 item coverage by domain, mapped to clinical primacy. Social engagement carries the most diagnostic weight; temporal features are derived rather than directly observed.</div>
   </div>
 
   <ul class="bullets reveal">
-    <li><strong>Social</strong> — gaze percentage, mutual gaze, joint attention initiation, response latency to name (4 ADOS-2 items, A1 / A2 / A7 / B1).</li>
-    <li><strong>Communication</strong> — vocalization rate, stereotyped vocalization, conventional gesture frequency (3 items, B2 / C1 / D1).</li>
-    <li><strong>Repetitive</strong> — proportion of session in motion-loop, object-fixation duration, transitional difficulty (3 items, D4 / B5 / C3).</li>
-    <li><strong>Temporal</strong> — within-session variability, fatigue-corrected feature deltas (derived, no direct rubric mapping).</li>
+    <li><strong>Social</strong>: gaze percentage, mutual gaze, joint attention initiation, response latency to name (4 ADOS-2 items, A1 / A2 / A7 / B1).</li>
+    <li><strong>Communication</strong>: vocalization rate, stereotyped vocalization, conventional gesture frequency (3 items, B2 / C1 / D1).</li>
+    <li><strong>Repetitive</strong>: proportion of session in motion-loop, object-fixation duration, transitional difficulty (3 items, D4 / B5 / C3).</li>
+    <li><strong>Temporal</strong>: within-session variability, fatigue-corrected feature deltas (derived, no direct rubric mapping).</li>
   </ul>
 </section>
 
 
 <!-- ============================================================
-     4 — FUSION (dark technical)
+     4, FUSION (dark technical)
      ============================================================ -->
 <section class="band band--dark" data-spine="Fusion" data-section="Late fusion ensemble">
-  <div class="eyebrow reveal">§ 03 — Late fusion</div>
-  <h2 class="reveal">When the streams agree — and when they don't.</h2>
+  <div class="eyebrow reveal">§ 03, Late fusion</div>
+  <h2 class="reveal">When the streams agree, and when they don't.</h2>
 
   <p class="reveal col-with-sidenotes">
-    Each domain stream feeds an independent <span class="gloss">XGBoost<span class="gloss-tip"><b>XGBoost</b> — a gradient-boosted tree library. Used here because tree ensembles handle heterogeneous tabular features (continuous gaze metrics + categorical session covariates) without requiring careful normalization, and because feature attributions per-prediction are tractable.</span></span> classifier producing a per-domain probability. A fifth model — a meta-learner — takes those four probabilities, plus session-level covariates (tester, fatigue index, age band) and produces the final risk score. This is "late fusion": fuse decisions, not features.
+    Each domain stream feeds an independent <span class="gloss">XGBoost<span class="gloss-tip"><b>XGBoost</b>: a gradient-boosted tree library. Used here because tree ensembles handle heterogeneous tabular features (continuous gaze metrics + categorical session covariates) without requiring careful normalization, and because feature attributions per-prediction are tractable.</span></span> classifier producing a per-domain probability. A fifth model, a meta-learner, takes those four probabilities, plus session-level covariates (tester, fatigue index, age band) and produces the final risk score. This is "late fusion": fuse decisions, not features.
   </p>
 
   <p class="reveal">
-    The structural payoff is that <em>disagreement is preserved as a first-class signal</em>. When social and repetitive both fire but communication is typical, the meta-learner doesn't average those signals away — it surfaces the divergence as an anomaly flag and routes the case to mandatory clinician review. Most published end-to-end pipelines lose this signal in the embedding layer and spend the rest of the paper trying to recover it through attention maps. Late fusion just keeps it.
+    The structural payoff is that <em>disagreement is preserved as a first-class signal</em>. When social and repetitive both fire but communication is typical, the meta-learner doesn't average those signals away, it surfaces the divergence as an anomaly flag and routes the case to mandatory clinician review. Most published end-to-end pipelines lose this signal in the embedding layer and spend the rest of the paper trying to recover it through attention maps. Late fusion just keeps it.
   </p>
 
   <div class="figure reveal">
@@ -284,7 +284,7 @@
           <text x="625" y="30" text-anchor="middle">TEMPORAL</text>
           <text x="820" y="30" text-anchor="middle">META-LEARNER</text>
         </g>
-        <!-- bars — each domain gets its own pigment from the quartet -->
+        <!-- bars, each domain gets its own pigment from the quartet -->
         <g>
           <rect x="80"  y="60"  width="70" height="220" fill="#222"/>
           <rect x="80"  y="100" width="70" height="180" fill="#0F3A6B"/>     <!-- Social · Phthalo -->
@@ -317,27 +317,27 @@
         <text x="820" y="248" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#7A1626" letter-spacing="2">FLAG</text>
       </svg>
     </div>
-    <div class="cap"><span class="num">Fig. 2 —</span> A disagreement case. Social and repetitive streams fire (0.82, 0.74) while communication is typical (0.18). The meta-learner produces a moderate fused score and explicitly flags the cross-domain divergence for clinician review.</div>
+    <div class="cap"><span class="num">Fig. 2: </span> A disagreement case. Social and repetitive streams fire (0.82, 0.74) while communication is typical (0.18). The meta-learner produces a moderate fused score and explicitly flags the cross-domain divergence for clinician review.</div>
   </div>
 
   <div class="method reveal">
     <div class="inner">
       <div class="lab">Disagreement metric</div>
-      The flag fires when <code style="font-family:var(--mono);color:var(--phthalo-lift);">max(p) - min(p) &gt; 0.55</code> across domains, after each domain has been individually calibrated. The threshold was chosen on a held-out validation split to maximize routed-review precision at fixed recall — not maximum F1 — because the clinically expensive failure mode is <em>silent</em> disagreement, not over-flagging.
+      The flag fires when <code style="font-family:var(--mono);color:var(--phthalo-lift);">max(p) - min(p) &gt; 0.55</code> across domains, after each domain has been individually calibrated. The threshold was chosen on a held-out validation split to maximize routed-review precision at fixed recall, not maximum F1, because the clinically expensive failure mode is <em>silent</em> disagreement, not over-flagging.
     </div>
   </div>
 </section>
 
 
 <!-- ============================================================
-     5 — CALIBRATION (paper, dense)
+     5, CALIBRATION (paper, dense)
      ============================================================ -->
 <section class="band band--paper" data-spine="Calibration" data-section="Per-modality calibration">
-  <div class="eyebrow reveal">§ 04 — Calibration</div>
+  <div class="eyebrow reveal">§ 04, Calibration</div>
   <h2 class="reveal">Calibrated probabilities, per stream.</h2>
 
   <p class="reveal col-with-sidenotes">
-    A common pattern in clinical ML is to report a probability that is statistically meaningless. The model says 0.85; the empirical frequency of positives in the 0.85 bin is 0.62. The number is internally consistent but externally a lie. The fix here is per-modality calibration: fit a <span class="gloss">Platt<span class="gloss-tip"><b>Platt scaling</b> — fits a logistic regression to the model's raw scores against held-out labels. Smooth, parametric, two parameters. Works well when the score distribution is approximately sigmoid.</span></span> or <span class="gloss">isotonic<span class="gloss-tip"><b>Isotonic regression</b> — fits a non-parametric monotone step function. More flexible than Platt, but needs more data to avoid overfitting the calibration curve itself.</span></span> regression on each domain's held-out validation set, choosing the method per-domain by cross-validated Brier score.
+    A common pattern in clinical ML is to report a probability that is statistically meaningless. The model says 0.85; the empirical frequency of positives in the 0.85 bin is 0.62. The number is internally consistent but externally a lie. The fix here is per-modality calibration: fit a <span class="gloss">Platt<span class="gloss-tip"><b>Platt scaling</b>: fits a logistic regression to the model's raw scores against held-out labels. Smooth, parametric, two parameters. Works well when the score distribution is approximately sigmoid.</span></span> or <span class="gloss">isotonic<span class="gloss-tip"><b>Isotonic regression</b>: fits a non-parametric monotone step function. More flexible than Platt, but needs more data to avoid overfitting the calibration curve itself.</span></span> regression on each domain's held-out validation set, choosing the method per-domain by cross-validated Brier score.
   </p>
 
   <div class="figure reveal">
@@ -363,7 +363,7 @@
         </g>
         <g font-family="JetBrains Mono" font-size="10" fill="#5E5E5A">
           <text x="80" y="290" text-anchor="middle">0.0</text>
-          <text x="480" y="290" text-anchor="middle">0.5 — predicted probability</text>
+          <text x="480" y="290" text-anchor="middle">0.5, predicted probability</text>
           <text x="880" y="290" text-anchor="middle">1.0</text>
           <text x="64" y="270" text-anchor="end">0.0</text>
           <text x="64" y="150" text-anchor="end">0.5</text>
@@ -372,24 +372,24 @@
         <text x="32" y="150" font-family="JetBrains Mono" font-size="10" fill="#5E5E5A" transform="rotate(-90 32 150)" text-anchor="middle">empirical frequency</text>
       </svg>
     </div>
-    <div class="cap"><span class="num">Fig. 3 —</span> Reliability diagram for the social-engagement head. Raw scores (red) bow above the diagonal — the model is systematically overconfident in the high-probability region. Isotonic-calibrated scores (blue) track the diagonal within ±2% across all bins.</div>
+    <div class="cap"><span class="num">Fig. 3: </span> Reliability diagram for the social-engagement head. Raw scores (red) bow above the diagonal, the model is systematically overconfident in the high-probability region. Isotonic-calibrated scores (blue) track the diagonal within ±2% across all bins.</div>
   </div>
 
   <p class="reveal">
-    The calibration step doesn't change which cases get flagged — that's a function of the score's <em>rank</em>. What it changes is the meaning of the number a clinician reads. After calibration, "the social model says 0.74" means that across many cases scored at 0.74, roughly 74% were eventually labeled positive. That sentence is the entire reason calibration is worth its compute.
+    The calibration step doesn't change which cases get flagged, that's a function of the score's <em>rank</em>. What it changes is the meaning of the number a clinician reads. After calibration, "the social model says 0.74" means that across many cases scored at 0.74, roughly 74% were eventually labeled positive. That sentence is the entire reason calibration is worth its compute.
   </p>
 </section>
 
 
 <!-- ============================================================
-     6 — UNCERTAINTY (ink, dramatic)
+     6, UNCERTAINTY (ink, dramatic)
      ============================================================ -->
 <section class="band band--ink" data-spine="Uncertainty" data-section="Conformal abstention">
-  <div class="eyebrow reveal">§ 05 — Surfaced uncertainty</div>
+  <div class="eyebrow reveal">§ 05, Surfaced uncertainty</div>
   <h2 class="reveal">When the model abstains.</h2>
 
   <p class="reveal col-with-sidenotes">
-    The final layer is an abstention rule built from <span class="gloss">conformal prediction<span class="gloss-tip"><b>Conformal prediction</b> — a distribution-free framework for producing prediction sets with finite-sample coverage guarantees. Given a target coverage like 90%, conformal sets contain the true label at least 90% of the time across exchangeable test points.</span></span>. For each prediction, the system constructs a prediction set at a fixed coverage level (here, 90%). If the set contains both classes — autistic and non-autistic — the system reports "uncertain" rather than committing to either label. This is the difference between a model that says <em>I think</em> and a model that says <em>I cannot rule out the alternative</em>.
+    The final layer is an abstention rule built from <span class="gloss">conformal prediction<span class="gloss-tip"><b>Conformal prediction</b>: a distribution-free framework for producing prediction sets with finite-sample coverage guarantees. Given a target coverage like 90%, conformal sets contain the true label at least 90% of the time across exchangeable test points.</span></span>. For each prediction, the system constructs a prediction set at a fixed coverage level (here, 90%). If the set contains both classes, autistic and non-autistic, the system reports "uncertain" rather than committing to either label. This is the difference between a model that says <em>I think</em> and a model that says <em>I cannot rule out the alternative</em>.
   </p>
 
   <div class="stats reveal">
@@ -400,20 +400,20 @@
   </div>
 
   <p class="reveal">
-    Abstention is not a failure mode. It is a routing decision. About one in eight cases lands in the abstain bucket, and those are the cases where the report most needs a human reading the rubric directly rather than a model's summary of it. The model's value, in those cases, is the candor of its abstention — the fact that it can decline.
+    Abstention is not a failure mode. It is a routing decision. About one in eight cases lands in the abstain bucket, and those are the cases where the report most needs a human reading the rubric directly rather than a model's summary of it. The model's value, in those cases, is the candor of its abstention, the fact that it can decline.
   </p>
 
   <p class="reveal col-with-sidenotes">
-    Critics sometimes object that abstention is a rhetorical trick — a way to claim performance only on the easy cases<span class="sn"><span class="sn-num">4</span><span class="sn-body">This is correct in spirit, which is why abstention is reported with its rate, not hidden inside an aggregate metric. A 95% accuracy with 50% abstention is not the same product as 95% accuracy with 5% abstention.</span></span>. The methodology here addresses that directly: the abstention rate is a published outcome, not an asterisk. The 12.4% rate is the cost of the 90% calibrated-coverage guarantee, and that tradeoff is what the system is for.
+    Critics sometimes object that abstention is a rhetorical trick, a way to claim performance only on the easy cases<span class="sn"><span class="sn-num">4</span><span class="sn-body">This is correct in spirit, which is why abstention is reported with its rate, not hidden inside an aggregate metric. A 95% accuracy with 50% abstention is not the same product as 95% accuracy with 5% abstention.</span></span>. The methodology here addresses that directly: the abstention rate is a published outcome, not an asterisk. The 12.4% rate is the cost of the 90% calibrated-coverage guarantee, and that tradeoff is what the system is for.
   </p>
 </section>
 
 
 <!-- ============================================================
-     7 — PRINCIPLES (paper)
+     7, PRINCIPLES (paper)
      ============================================================ -->
 <section class="band band--paper" data-spine="Principles" data-section="Operating principles">
-  <div class="eyebrow reveal">§ 06 — Working principles</div>
+  <div class="eyebrow reveal">§ 06, Working principles</div>
   <h2 class="reveal">Six commitments this case made.</h2>
 
   <p class="reveal lede">
@@ -430,7 +430,7 @@
   </ul>
 
   <p class="reveal" style="margin-top:48px;">
-    None of these are clever. They are the floor. The reason this case is worth writing down is not that the methods are novel — Platt scaling is from 1999 — but that <em>committing to all six together</em> is what it takes to produce a clinical AI artifact that a careful reader can defend in a deposition. The architecture follows from the commitments, not the other way around.
+    None of these are clever. They are the floor. The reason this case is worth writing down is not that the methods are novel, Platt scaling is from 1999, but that <em>committing to all six together</em> is what it takes to produce a clinical AI artifact that a careful reader can defend in a deposition. The architecture follows from the commitments, not the other way around.
   </p>
 
   <div class="method reveal" style="margin-top:48px;">
@@ -449,17 +449,17 @@
   <h3 style="margin-top:0;">Bibliography</h3>
   <ol class="biblio">
     <li><span class="n">[1]</span><span class="ent">Lord, C., Rutter, M., DiLavore, P. C., et al. (2012). <i>Autism Diagnostic Observation Schedule, Second Edition (ADOS-2)</i>. Western Psychological Services.</span></li>
-    <li><span class="n">[2]</span><span class="ent">Platt, J. (1999). Probabilistic outputs for support vector machines and comparisons to regularized likelihood methods. <i>Advances in Large Margin Classifiers</i>, 10(3), 61–74.</span></li>
-    <li><span class="n">[3]</span><span class="ent">Niculescu-Mizil, A. &amp; Caruana, R. (2005). Predicting good probabilities with supervised learning. <i>Proceedings of ICML</i>, 625–632.</span></li>
+    <li><span class="n">[2]</span><span class="ent">Platt, J. (1999). Probabilistic outputs for support vector machines and comparisons to regularized likelihood methods. <i>Advances in Large Margin Classifiers</i>, 10(3), 61-74.</span></li>
+    <li><span class="n">[3]</span><span class="ent">Niculescu-Mizil, A. &amp; Caruana, R. (2005). Predicting good probabilities with supervised learning. <i>Proceedings of ICML</i>, 625-632.</span></li>
     <li><span class="n">[4]</span><span class="ent">Vovk, V., Gammerman, A., &amp; Shafer, G. (2005). <i>Algorithmic Learning in a Random World</i>. Springer.</span></li>
     <li><span class="n">[5]</span><span class="ent">Angelopoulos, A. N. &amp; Bates, S. (2023). A gentle introduction to conformal prediction and distribution-free uncertainty quantification. <i>Foundations and Trends in ML</i>, 16(4).</span></li>
-    <li><span class="n">[6]</span><span class="ent">Chen, T. &amp; Guestrin, C. (2016). XGBoost: A scalable tree boosting system. <i>KDD '16</i>, 785–794.</span></li>
+    <li><span class="n">[6]</span><span class="ent">Chen, T. &amp; Guestrin, C. (2016). XGBoost: A scalable tree boosting system. <i>KDD '16</i>, 785-794.</span></li>
   </ol>
 
-  <h3>Cited by, cites — within this portfolio</h3>
+  <h3>Cited by, cites, within this portfolio</h3>
   <div class="citegraph">
     <svg viewBox="0 0 920 240" preserveAspectRatio="none">
-      <!-- center node — this case -->
+      <!-- center node, this case -->
       <g>
         <circle cx="460" cy="120" r="34" fill="#0F3A6B" stroke="#3866A0"/>
         <text x="460" y="116" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#FFFFFF" letter-spacing="1">CASE 07</text>
@@ -497,7 +497,7 @@
         <text x="144" y="223">CITED BY</text>
       </g>
     </svg>
-    <div class="lab">Internal citation graph — hover any node in the live build to preview the case.</div>
+    <div class="lab">Internal citation graph, hover any node in the live build to preview the case.</div>
   </div>
 
   <h3>Related cases</h3>
@@ -526,7 +526,7 @@
 
   <a class="next-chap" href="#">
     <div class="lf">
-      <div class="eb">Next chapter — Case 08</div>
+      <div class="eb">Next chapter, Case 08</div>
       <div class="ti">Crisis detection telemetry: routing cross-modal escalations.</div>
     </div>
     <div class="rt">→</div>
@@ -570,7 +570,7 @@ const PREVIEWS = {
 };
 
 /* ============================================================
-   SPINE — generated from sections with [data-spine]
+   SPINE, generated from sections with [data-spine]
    ============================================================ */
 const spine = document.getElementById('spine');
 const sections = [...document.querySelectorAll('[data-spine]')];
@@ -583,7 +583,7 @@ sections.forEach((s, i) => {
 });
 
 /* ============================================================
-   SCROLL ENGINE — progress, status, mode, spine, reveals
+   SCROLL ENGINE, progress, status, mode, spine, reveals
    ============================================================ */
 const progress = document.getElementById('progress');
 const topnav = document.getElementById('topnav');
@@ -696,7 +696,7 @@ function layoutSidenotes() {
       const numRect = num.getBoundingClientRect();
       // top relative to paragraph
       let top = numRect.top - pRect.top - 2;
-      // avoid stacking — push down if previous note's bottom would overlap
+      // avoid stacking, push down if previous note's bottom would overlap
       if (top < lastBottom + 12) top = lastBottom + 12;
       body.style.top = top + 'px';
       // remember bottom (estimate height: 240px wide, lh ~1.55, ~13.5px → ~3 lines avg)

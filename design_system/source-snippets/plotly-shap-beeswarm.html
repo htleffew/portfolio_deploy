@@ -1,6 +1,6 @@
 <!--
   COMPONENT: Plotly SHAP Beeswarm (Browser Approximation)
-  SOURCE:    account-prioritization.html — Section 06 (plot-shap)
+  SOURCE:    account-prioritization.html, Section 06 (plot-shap)
   CSS REQUIRED: .plotly-wrapper, .figure, .cap (all in global.css)
   BAND CONTEXT: Designed for band--dark
   NOTE: This is a JS approximation of a real SHAP beeswarm. Real SHAP requires Python.
@@ -37,7 +37,7 @@
   const shapData = feats.map(function(name, i) {
     const xv = [], cv = [];
     for (let j = 0; j < numPoints; j++) {
-      // Spread decreases by rank — top feature has widest distribution
+      // Spread decreases by rank, top feature has widest distribution
       // CUSTOMIZE: replace (feats.length - i) with actual importance weights
       const s = (Math.random() - 0.5) * 2 * (feats.length - i);
       xv.push(s);
@@ -50,7 +50,7 @@
       type: 'scatter',
       marker: {
         color: cv,
-        colorscale: 'Bluered', // blue=negative impact, red=positive — SHAP convention
+        colorscale: 'Bluered', // blue=negative impact, red=positive, SHAP convention
         size: 6,
         opacity: 0.6
       },

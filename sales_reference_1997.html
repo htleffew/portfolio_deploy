@@ -1,4 +1,4 @@
-﻿<html>
+<html>
   <head>
     <title>DATA SCIENCE PORTAL -- Coverage Answers: Sales Reference</title>
     <meta http-equiv="refresh" content="600" />
@@ -1727,7 +1727,7 @@ function dbForVolume(v){
   return v <= 0 ? -Infinity : 20 * Math.log10(v);
 }
 
-// Persistent synth pool — created once, never disposed
+// Persistent synth pool, created once, never disposed
 var _pool = null;
 var _poolIdx = 0;
 
@@ -1735,7 +1735,7 @@ function initTone(){
   if(P.master) return;
   P.master = new Tone.Gain(P.muted ? 0 : P.vol).toDestination();
   P.limiter = new Tone.Limiter(-3).connect(P.master);
-  // Pre-allocate 20 melodic synths + 1 drum rack — reused across every song skip
+  // Pre-allocate 20 melodic synths + 1 drum rack, reused across every song skip
   _pool = {melodic: []};
   for(var _i = 0; _i < 20; _i++){
     var _g = new Tone.Gain(0.14).connect(P.limiter);
@@ -1758,7 +1758,7 @@ function cancelAll(){
   if(P.endTimer){ clearTimeout(P.endTimer); P.endTimer=null; }
   if(P.clockTimer){ clearInterval(P.clockTimer); P.clockTimer=null; }
   if(P.schedulerTimer){ clearInterval(P.schedulerTimer); P.schedulerTimer=null; }
-  // Release all pool voices immediately — no disposal, no node churn
+  // Release all pool voices immediately, no disposal, no node churn
   if(_pool){
     _pool.melodic.forEach(function(sl){ try{ sl.synth.releaseAll(0); }catch(e){} });
   }
@@ -1818,7 +1818,7 @@ function trackGain(track){
   return 0.14;
 }
 
-// makeMelodicSynth and makeDrumRack replaced by pool — see initTone
+// makeMelodicSynth and makeDrumRack replaced by pool, see initTone
 
 function scheduleTrack(track){
   if(!track.notes || !track.notes.length) return;

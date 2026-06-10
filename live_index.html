@@ -473,7 +473,7 @@ window.addEventListener('load', () => {
         });
       }
     } else {
-      // No GSAP — make everything visible immediately so nothing is stuck hidden
+      // No GSAP, make everything visible immediately so nothing is stuck hidden
       const preloader = document.getElementById('preloader');
       if (preloader) preloader.style.display = 'none';
       document.querySelectorAll('.meta-row span, h1, .hero-rule, .abstract, .contact-row a, .ambient, #glCanvas, #deep-space, .hero-text > *, .headshot-frame, .gs-reveal, .tech-block, .band .section-eyebrow, .band .section-heading, .bio-card, .project-carousel, .view-all-link, .r-card, .edu-card').forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; el.style.filter = 'none'; el.style.clipPath = 'none'; });
