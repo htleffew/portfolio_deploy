@@ -644,21 +644,18 @@
 })();
 
 // Auto-populate the abbreviated bio box from the bio page (about.html),
-// truncated to a character limit. The hard-coded <p> below is the fallback
+// truncated to the first 200 words. The hard-coded <p> below is the fallback
 // shown until the fetch resolves, and is kept if the fetch ever fails.
 (function () {
-  var BIO_PREVIEW_CHAR_LIMIT = 250; // adjust to taste; cuts at a sentence/word boundary
+  var BIO_PREVIEW_WORD_LIMIT = 200; // adjust to taste; cuts at a sentence/word boundary
   var previewP = document.querySelector('.bio-preview > p');
   if (!previewP) return;
 
   function truncate(text, limit) {
     text = text.replace(/\s+/g, ' ').trim();
-    if (text.length <= limit) return text;
-    var slice = text.slice(0, limit);
-    // Cut at the last whole word (never mid-word) and end with an ellipsis —
-    // a deliberate cliffhanger so the reader clicks to see the rest.
-    var lastSpace = slice.lastIndexOf(' ');
-    return slice.slice(0, lastSpace > 0 ? lastSpace : limit).replace(/[\s.,;:!?]+$/, '') + '...';
+    var words = text.split(/\s+/);
+    if (words.length <= limit) return text;
+    return words.slice(0, limit).join(' ').replace(/[\s.,;:!?]+$/, '') + '...';
   }
 
   fetch('about.html')
@@ -669,7 +666,7 @@
       if (!nodes.length) nodes = doc.querySelectorAll('main p, .col p, p');
       var text = Array.prototype.map.call(nodes, function (p) { return p.textContent; }).join(' ');
       text = text.replace(/\s+/g, ' ').trim();
-      if (text) previewP.textContent = truncate(text, BIO_PREVIEW_CHAR_LIMIT);
+      if (text) previewP.textContent = truncate(text, BIO_PREVIEW_WORD_LIMIT);
     })
     .catch(function () { /* keep the hard-coded fallback text */ });
 })();
