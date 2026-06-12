@@ -189,6 +189,25 @@ BLOCKER (owner: user; needs GitHub web access; must not conflict with live domai
 STATUS: Article migration goal = DONE and verified (local + CI). Live-domain cutover = the
 single gated step remaining, documented and owner-assigned.
 
+### 2026-06-12 (LIVE) — Re-targeted to existing repo+domain; deployed; no CNAME change
+
+User pushback (correct): don't make a new repo / touch CNAME — use the existing domain.
+Finding: portfolio_deploy Pages is already build_type=workflow serving drheatherleffew.com.
+So: Astro app integrated at portfolio_deploy/site/; existing production-deploy.yml rewritten to
+`cd site && npm install && npm run build && npm run verify` then upload site/dist. Pushed to
+master (commit 7aee1db). Production-deploy run 27429766967: build + deploy BOTH green.
+
+LIVE VERIFICATION (drheatherleffew.com):
+- /dead-signal-ai-evals/ → new MDX build, figures at /assets/..., demo CTA, all sections. ✓
+- / (cache-busted origin) → homepage with all 23 article links rewritten to /slug/ routes. ✓
+- Built artifact: old /<Folder>/<slug>.html paths = redirect stubs (meta-refresh to /slug/). ✓
+- GitHub edge cache serves prior deploy on already-cached paths for a few min post-deploy
+  (cosmetic, self-clearing; confirmed correct via ?cb= origin fetch).
+- No CNAME/DNS change; reused existing Pages workflow + domain.
+
+Superseded: interim private repo htleffew/portfolio_astro (can be deleted; canonical = site/).
+GOAL COMPLETE AND LIVE.
+
 ## Pass/fail for completion
 
 All 23 articles render from MDX via `astro build` with frame + index + Related Works + next-article + all figures/widgets intact and content-parity with current live pages; CI workflow present; index auto-generated; old URLs redirected; handoff + plan updated; temp artifacts removed. Cutover step documented and gated.

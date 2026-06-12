@@ -68,49 +68,39 @@ The converter reads `../portfolio_deploy`, so keep that folder one level up
 (copy it next to `/tmp/pa` as `/tmp/portfolio_deploy` if building in /tmp).
 GitHub Actions runners have no such restriction, so CI builds the repo unchanged.
 
-## Cutover to the live domain (gated)
+## Deployment — LIVE
 
-The site currently serves from `htleffew/portfolio_deploy` (static HTML) via
-GitHub Pages, custom domain `drheatherleffew.com` (CNAME preserved in
-`public/CNAME`).
+This project lives at `portfolio_deploy/site/` inside the **htleffew/portfolio_deploy**
+repo and **is the live site at https://drheatherleffew.com**. The repo's
+`.github/workflows/production-deploy.yml` builds `site/` and deploys `site/dist`
+to GitHub Pages (already configured as `build_type=workflow` with the custom
+domain; `site/public/CNAME` keeps `drheatherleffew.com` bound). No CNAME or DNS
+changes were needed — the existing domain and Pages setup are reused.
 
-The source is committed and pushed to **https://github.com/htleffew/portfolio_astro**
-(private). On every push, the `build` job runs `npm install && npm run build` and
-uploads the Pages artifact (verified green). The `deploy` job is intentionally not
-active yet because GitHub Pages isn't enabled on the repo — enabling it with the
-`CNAME` present would try to bind `drheatherleffew.com`, which still belongs to
-`portfolio_deploy`. **Two Pages sites cannot claim the same custom domain**, so the
-domain move is the one deliberate, gated step.
+**To publish an edit:** change a file under `site/src/pages/*.mdx`, commit, and
+push to `master`. The workflow rebuilds and deploys in ~60-90s. After a deploy,
+GitHub's edge cache may serve the previous version of already-cached paths
+(the homepage, old URLs) for a few minutes; a hard refresh or `?v=` query bypasses it.
 
-### Preview safely (no domain impact)
+### Preview locally before pushing
 
 ```bash
-npm run build && npm run preview     # serves the built dist locally for review
+npm run build && npm run preview
 ```
 
-### Cut over to the live domain (when ready)
+> Note: an earlier private repo `htleffew/portfolio_astro` was created as an
+> interim staging spot and is now **superseded** by `portfolio_deploy/site`.
+> It can be deleted; the canonical source is here.
 
-1. In **htleffew/portfolio_deploy** → Settings → Pages, remove the custom domain
-   `drheatherleffew.com` (frees the domain binding).
-2. In **htleffew/portfolio_astro** → Settings → Pages, set **Source = GitHub Actions**.
-3. Re-run the latest workflow (or push any commit). The `deploy` job now publishes;
-   the committed `public/CNAME` re-binds `drheatherleffew.com` to this repo.
-4. DNS already points at GitHub Pages, so propagation is immediate-to-minutes.
-5. (Optional) Make the repo public if you want the source visible; Pages on a free
-   private repo won't serve publicly.
-
-Old `/<Folder>/<slug>.html` URLs are handled by redirect stubs the build emits, so
-external links keep working after cutover.
-
-## Status (2026-06-12) — article migration COMPLETE + verified
+## Status (2026-06-12) — COMPLETE + LIVE
 
 - 23 articles migrated to MDX; homepage, library (`projects-repository.html`),
   about, and gallery ported; figures + interactive widgets + the inline-SVG card
   thumbnails carried over; `projects_index.json` auto-generated with tags + visuals;
-  old-URL redirects emitted.
-- **Local build:** `npm run build` → 23 article pages + landing pages, 0 errors.
-- **CI build:** green on a clean GitHub Actions runner (install + build + artifact).
-- Committed (`ce0267d`) and pushed to the private repo above.
-- Remaining (gated, needs your GitHub web access): enable Pages + move the custom
-  domain per the steps above. See
-  `portfolio_deploy/internal/plans/active/mdx-migration-plan.md` for full detail.
+  old-URL redirect stubs emitted.
+- **Local build & verify:** 23 article pages + landing pages, 0 errors; frame
+  contract + no broken asset refs + content parity ≥85% per article.
+- **CI:** `production-deploy.yml` build + deploy jobs both green; live on
+  `drheatherleffew.com` (verified: article pages, homepage with new `/slug/` links,
+  figures, redirects).
+- See `portfolio_deploy/internal/plans/active/mdx-migration-plan.md` for full detail.
