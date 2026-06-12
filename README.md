@@ -1,98 +1,67 @@
-# Deployment Environment: Institutional Portfolio
+# portfolio_deploy — drheatherleffew.com
 
-This repository (`portfolio_deploy`) acts as the strict production environment and GitHub Pages host for the `htleffew.github.io/portfolio_deploy/` domain.
+Production repository and GitHub Pages host for **https://drheatherleffew.com**
+(Dr. Heather Leffew's research portfolio).
 
-## Live Domain
-**[https://htleffew.github.io/portfolio_deploy/](https://htleffew.github.io/portfolio_deploy/)**
+As of June 2026 the site is an **Astro + MDX** application living in [`site/`](site/).
+Each article is a small `.mdx` file; a shared layout supplies the cinematic
+frame (nav, footer, reading progress, chapter spine, Related Works, next-article
+link). Editing an `.mdx` and pushing to `master` rebuilds and redeploys the live
+site in ~60–90 seconds via GitHub Actions — no manual build, no hand-edited HTML.
 
-## Deployed Architecture
+## Repository layout
 
 ```
-design_system/
-├── tokens.css                          ← Design tokens (colors, fonts, spacing, motion).
-│                                         @imported by institutional.css + global_chrome.css;
-│                                         do not link directly.
-├── css/
-│   └── global_chrome.css               ← App shell stylesheet. @imports tokens.css. Defines
-│                                         #topnav, #progress, .site-foot, #search-overlay,
-│                                         #grain film grain, #preloader, #glCanvas, .scroll-cue,
-│                                         .ambient, .atmosphere fixed-position chrome.
-├── assets/
-│   └── css/
-│       └── institutional.css           ← Single stylesheet linked by every page.
-│                                         @imports tokens.css and global_chrome.css.
-│                                         Defines .band mode system, .col-wide grid, .reveal
-│                                         scroll transitions, .figure, .data-table, .sn
-│                                         sidenotes, .has-dropcap, plus page-specific extracts
-│                                         kept for widget compatibility.
-└── js/
-    ├── cinematic_engine_v3.js          ← Three.js starfield + interactive node network behind
-    │                                     every page. Self-bootstrapping: injects #glCanvas,
-    │                                     dynamically loads three.min.js if needed.
-    ├── global_chrome.js                ← App shell injector + SPA router. Injects topnav,
-    │                                     footer, search overlay, film grain. Owns the
-    │                                     HyperShader WebGL page-transition router. Provides
-    │                                     scoped window.onReady / window.onLoad helpers and
-    │                                     the 3D tilt parallax via event delegation.
-    └── institutional.js                ← Reveal orchestration + reading engine. Lenis smooth
-                                          scroll, GSAP hero reveal cascade, ScrollTrigger band
-                                          reveals, scroll-progress bar, nav-mode toggle, spine
-                                          row generation, sidenotes Tufte layout.
+portfolio_deploy/
+├── site/                     ← the entire website (Astro/MDX app). START HERE.
+│   ├── src/pages/*.mdx       ← one file per article (the editable source of truth)
+│   ├── src/layouts/          ← CinematicLayout.astro (the shared frame)
+│   ├── src/components/        ← Band, Figure, ApaReferences + widgets/
+│   ├── src/data/live-index.json  ← prior index, merged for tags + card thumbnails
+│   ├── public/design_system/  ← tokens.css + the split CSS/JS design system
+│   ├── public/assets/<slug>/  ← per-article figures (SVG/PNG)
+│   ├── scripts/               ← build helpers (gen-index, gen-redirects, verify-build)
+│   └── README.md              ← detailed authoring + build guide
+├── .github/workflows/production-deploy.yml  ← builds site/ → deploys to Pages
+├── internal/plans/           ← planning + migration history
+├── CLAUDE.md / AGENTS.md      ← guidance for AI agents working in this repo
+└── CNAME                      ← drheatherleffew.com
 ```
 
-**Every HTML page needs exactly one stylesheet link and three script tags (in this order):**
+The full design-system reference (tokens, the `.band` layout system, the
+runtime chrome contract) lives in `site/public/design_system/`. Older paper
+templates (`ICLR_LaTex_Template/`, `Nature_LaTex_Template/`) and unrelated
+reference files remain at root and are not part of the website build.
 
-```html
-<link rel="stylesheet" href="design_system/assets/css/institutional.css">
-<script src="design_system/js/cinematic_engine_v3.js" defer></script>
-<script src="design_system/js/global_chrome.js" defer></script>
-<script src="design_system/js/institutional.js" defer></script>
-```
+## Edit or add an article
 
-Case-study pages prefix every path with `../`. Tokens cascade automatically through the `@import` chain inside `institutional.css`; Google Fonts load via that chain too, no separate `<link>` tag required. GSAP, ScrollTrigger, Lenis, SplitType, simplex-noise, and HyperShader are loaded on demand by `institutional.js` and `global_chrome.js`; pages may add them as `<script defer>` tags but are not required to.
+1. Edit `site/src/pages/<slug>.mdx` — change prose between the `<Band>` tags, or
+   the frontmatter (title, description, category, tags, time).
+2. To add an article, create a new `site/src/pages/<new-slug>.mdx` with the same
+   frontmatter shape. The library index, Related Works grid, and next-article
+   link pick it up automatically (regenerated from frontmatter at build).
+3. Commit and push to `master`. CI rebuilds and deploys. Done.
+
+See [`site/README.md`](site/README.md) for the authoring rules (MDX gotchas,
+figures, interactive widgets) and how to build/preview locally.
+
+## How it deploys
+
+`.github/workflows/production-deploy.yml` runs on every push to `master`:
+`cd site && npm install && npm run build && npm run verify`, then uploads
+`site/dist` as the Pages artifact and deploys it. GitHub Pages is configured as
+`build_type: workflow` with the custom domain `drheatherleffew.com`
+(`site/public/CNAME`). No CNAME or DNS changes are needed to ship.
+
+After a deploy, GitHub's edge cache may serve the previous version of an
+already-cached path (the homepage, an old URL) for a few minutes; a hard refresh
+or a `?v=` query parameter bypasses it.
 
 ## History
 
-`design_system/css/global.css` and `design_system/js/global.js` were the pre-split single-file predecessors of the current architecture. They were removed on 2026-06-05 after the split files had been verified live on `drheatherleffew.com` on both index and case-study pages. The legacy documents under `design_system/docs/components/` (`global-js-contract.md`, `global-nav.md`) carry historical-status banners and remain as a record of the unified-file design.
-
-## Adding a New Case Study
-
-### Quick Start (paste this into Antigravity)
-```
-/html_translation
-```
-
-### Manual Process
-1. Run `/content_synthesis` on source files → produces `[ProjectName]_enriched_article.txt`
-2. Run `/html_translation` → copies `design_system/ui_kits/case-study/template.html`, fills content, builds SVGs + interactives
-3. Paste the deployment audit prompt from `deployment-prompt.txt` → 4-phase conformity check
-4. Run `node sync_index.js` → registers in `projects_index.json`, regenerates Related Works
-5. `git add . && git commit && git push` → live on GitHub Pages
-
-### What NOT to do
-- ❌ Add inline `:root` token declarations (tokens come from `tokens.css`)
-- ❌ Add a Google Fonts `<link>` tag (fonts load through `tokens.css`)
-- ❌ Hardcode hex colors in SVG diagrams (use `var(--phthalo)`, `var(--alizarin)`, etc.)
-- ❌ Add inline `<style>` for standard components (use `institutional.css` classes)
-- ✅ Inline `<style>` is fine for page-specific interactive widgets (sliders, sandboxes, live charts)
-
-## Key Files
-
-| File | Purpose |
-|------|---------|
-| `tokens.css` | Single source of truth for all design variables |
-| `institutional.css` | Case study component styles |
-| `global_chrome.css` | App shell (nav, footer, search, grain) |
-| `global_chrome.js` | Runtime nav/footer/search injector |
-| `institutional.js` | Spine, sidenotes, reveals, Related Works engine |
-| `cinematic_engine_v3.js` | Three.js particle network + deep-space starfield |
-| `library_dashboard.js` | Projects repository filterable dashboard |
-| `sync_index.js` | Regenerates site index from `projects_index.json` |
-| `deployment-prompt.txt` | 4-phase conformity audit prompt |
-| `template.html` | Canonical case study HTML skeleton |
-| `projects_index.json` | Master registry of all case studies |
-
-## Architectural Rules
-1. **Tokens are centralized.** All design variables live in `tokens.css`. Never re-declare them anywhere else.
-2. **Global Chrome is injected.** Navigation, footers, search overlays, and film grain are dynamically injected by `global_chrome.js`.
-3. **Automated Index.** Run `node sync_index.js` after adding a new case study to regenerate the Research Library and Related Works grids.
+This repo previously served hand-authored static HTML (one big `.html` per
+article plus a root design-system tree). In June 2026 all 23 articles were
+migrated to MDX under `site/`, the old HTML/CSS/JS was removed (preserved in git
+history), and the existing Pages workflow was repointed to build the Astro app.
+Old `/<Folder>/<slug>.html` URLs are preserved via redirect stubs the build
+emits. See `internal/plans/active/mdx-migration-plan.md` for the full record.

@@ -40,33 +40,33 @@ MDX parses `<` and `{` as JSX. In prose, write `&lt;` for a literal less-than
 (e.g. `p &lt; .05`) and avoid bare `{ }`. Inside `` `inline code` `` and fenced
 code blocks they are safe. The converter (below) handles this automatically.
 
-## Bulk migration from portfolio_deploy
+## Interactive widgets
 
-`scripts/convert-articles.mjs` converts every article in `../portfolio_deploy`
-from its paired Markdown source into `src/pages/<slug>.mdx`, copying figures to
-`public/assets/<slug>/` and interactive widgets to `public/interactive/<slug>/`.
-It skips articles already present unless `--force` is passed (so hand-authored
-pages are preserved).
+Widgets are self-contained Astro components in `src/components/widgets/`: markup +
+a scoped `<script>` + a token-styled `<style>`. To add one, build the component and
+drop `<WidgetName />` into the relevant `.mdx`. Current widgets:
 
-```bash
-npm run convert              # convert all not-yet-migrated articles
-npm run convert -- --force   # regenerate everything
-```
+- `MutationBudgetSim` — autonomous-loop mutation-budget simulator (autoresearch-master).
+- `ProfileExplorer` — per-participant clinical card selector (multimodal-autism-ai).
+- `OutputVsActivation` — output-vs-NLA-activation case explorer (nla_anthropic).
+
+Keep widget logic inside the component. Do **not** add scripts that rebuild the
+nav, spine, reveals, or scroll progress — the design system owns the frame, and
+duplicating it fights `institutional.js`.
 
 ## Building locally
 
-The Cowork mounted filesystem disallows `unlink` in some temp dirs, which breaks
-Vite's cache. To build locally, copy the project off-mount first:
-
 ```bash
-rsync -a --exclude node_modules --exclude .astro --exclude dist \
-  /path/to/Pm_html/portfolio_astro/ /tmp/pa/
-cd /tmp/pa && npm install && npm run convert && npm run build
+cd site
+npm install
+npm run build      # gen-index + gen-redirects + astro build
+npm run verify     # frame contract + no broken asset refs
+npm run preview    # serve the built dist for review
 ```
 
-The converter reads `../portfolio_deploy`, so keep that folder one level up
-(copy it next to `/tmp/pa` as `/tmp/portfolio_deploy` if building in /tmp).
-GitHub Actions runners have no such restriction, so CI builds the repo unchanged.
+> The migration from the old hand-authored HTML was a one-time process; its
+> tooling has been removed now that `src/pages/*.mdx` is the source of truth.
+> History is in `internal/plans/active/mdx-migration-plan.md` and git.
 
 ## Deployment — LIVE
 
