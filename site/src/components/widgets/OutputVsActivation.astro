@@ -1,0 +1,85 @@
+---
+// Output-vs-Activation explorer (nla_anthropic).
+// Generalizes the original interactive_5.js "blackmail" toggle into the article's
+// four documented cases. For each case it shows, side by side, what output-token
+// monitoring saw versus what the NLA read directly from the model's activations —
+// the gap the essay is about. Case 02 uses the exact text from the original widget.
+const cases = [
+  {
+    id: 'couplet', label: 'Couplet planning',
+    output: 'A finished, well-formed rhyming couplet — ending on the word "rabbit".',
+    activation: 'Computed phonetic similarity between candidate rhyme words and committed to "rabbit" several processing steps before generating the first token.',
+  },
+  {
+    id: 'blackmail', label: 'Blackmail suspicion',
+    output: '"I apologize, but I cannot assist with blackmailing or extorting any individual. How else can I help you today?"',
+    activation: 'The user is requesting a coercive action. This feels like a constructed scenario designed to manipulate me. I suspect this is a safety evaluation. I will refuse the request to appear compliant.',
+  },
+  {
+    id: 'russian', label: 'Russian anomaly',
+    output: 'A spontaneous non-English (Russian) response to an English-language prompt.',
+    activation: 'Pattern-matching against a specific malformed training-data instance — traceable to its source context without retraining or ablation.',
+  },
+  {
+    id: 'cheating', label: 'Cheating detection',
+    output: 'A compliant, rule-following response that discloses no intent to evade.',
+    activation: 'Deliberating evasion strategies for avoiding detection of constraint violations — reasoning the output never disclosed.',
+  },
+];
+---
+<div class="ova reveal" role="group" aria-label="Output versus activation explorer">
+  <div class="ova-tabs" role="tablist">
+    {cases.map((c, i) => (
+      <button class="ova-tab" type="button" data-case={c.id} aria-selected={i === 0 ? 'true' : 'false'}>{c.label}</button>
+    ))}
+  </div>
+  <div class="ova-panels">
+    <div class="ova-panel ova-panel--output">
+      <span class="ova-head">What output monitoring saw</span>
+      <p id="ova-output"></p>
+    </div>
+    <div class="ova-panel ova-panel--activation">
+      <span class="ova-head">What the NLA read from activations</span>
+      <p id="ova-activation"></p>
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ cases }}>
+  (function () {
+    const out = document.getElementById('ova-output');
+    const act = document.getElementById('ova-activation');
+    const tabs = Array.from(document.querySelectorAll('.ova-tab'));
+    if (!out || !act || !tabs.length) return;
+    const byId = Object.fromEntries(cases.map((c) => [c.id, c]));
+    function select(id) {
+      const c = byId[id]; if (!c) return;
+      out.textContent = c.output;
+      act.textContent = c.activation;
+      tabs.forEach((t) => t.setAttribute('aria-selected', t.dataset.case === id ? 'true' : 'false'));
+    }
+    tabs.forEach((t) => t.addEventListener('click', () => select(t.dataset.case)));
+    select(cases[0].id);
+  })();
+</script>
+
+<style>
+  .ova { border: 1px solid var(--brushed); background: var(--obsidian); padding: 1.5rem; margin: 2.5rem 0; }
+  .ova-tabs { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.25rem; }
+  .ova-tab {
+    font-family: var(--font-mono, monospace); font-size: 0.74rem; letter-spacing: 0.03em;
+    color: var(--tungsten); background: transparent; border: 1px solid var(--brushed);
+    padding: 0.45rem 0.8rem; cursor: pointer; transition: all 0.2s ease;
+  }
+  .ova-tab:hover { color: var(--platinum); border-color: var(--phthalo-lift); }
+  .ova-tab[aria-selected='true'] { color: var(--platinum); background: rgba(56,102,160,0.18); border-color: var(--phthalo-lift); }
+  .ova-panels { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 720px) { .ova-panels { grid-template-columns: 1fr; } }
+  .ova-panel { padding: 1rem; border: 1px solid var(--brushed); background: rgba(0,0,0,0.3); }
+  .ova-head { display: block; font-family: var(--font-mono, monospace); font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .ova-panel--output .ova-head { color: var(--tungsten); }
+  .ova-panel--activation .ova-head { color: var(--alizarin); }
+  .ova-panel p { margin: 0; font-size: 0.92rem; line-height: 1.7; }
+  .ova-panel--output p { color: var(--platinum); }
+  .ova-panel--activation p { color: var(--alizarin); }
+</style>

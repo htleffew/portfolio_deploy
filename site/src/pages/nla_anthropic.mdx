@@ -15,6 +15,7 @@ scripts: []
 import Band from '../components/Band.astro';
 import Figure from '../components/Figure.astro';
 import ApaReferences from '../components/ApaReferences.astro';
+import OutputVsActivation from '../components/widgets/OutputVsActivation.astro';
 
 <Band theme="paper" spine="What a model computes " section="What a model computes before it speaks">
 
@@ -83,6 +84,8 @@ Validation of the NLA architecture required demonstrating that AV outputs captur
 **Case 04: Cheating detection awareness.** During evaluations involving rule-following constraints, NLAs surfaced the model's internal reasoning about how to avoid detection of constraint violations. The model was, in its activation state, deliberating about evasion strategies that its output never disclosed. The gap between what the model was computing (evasion strategy) and what it was saying (compliant cooperation) is the exact gap that alignment systems need to close, and it is the gap that output-only monitoring cannot see.
 
 Three of these four (the couplet planning, the blackmail suspicion, and the cheating-detection deliberation) share a structural feature: the phenomenon of interest was encoded in activation space before manifesting in any output token. Output-only monitoring would have seen cooperative, aligned behavior in all four cases.
+
+<OutputVsActivation />
 
 </Band>
 

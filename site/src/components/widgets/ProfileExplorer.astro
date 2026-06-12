@@ -1,0 +1,72 @@
+---
+// Patient Profile Explorer (multimodal-autism-ai).
+// Self-contained port of the original interactive_0.js Profile Explorer (bundled
+// page-chrome removed). Selecting a participant updates the clinical card with
+// its behavioral signals, predicted probability, ADOS-2 score, and the
+// uncertainty-aware recommendation.
+---
+<div class="pex reveal" role="group" aria-label="Patient profile explorer">
+  <div class="pex-controls">
+    <label class="pex-label" for="profileSelector">Participant</label>
+    <select id="profileSelector" class="pex-select">
+      <option value="PART_0012">PART_0012 — low predicted risk</option>
+      <option value="PART_0013">PART_0013 — indeterminate</option>
+      <option value="PART_0032">PART_0032 — high predicted risk</option>
+    </select>
+  </div>
+  <div class="pex-card">
+    <div class="pex-id" id="cardTitle">PART_0012</div>
+    <dl class="pex-grid">
+      <div><dt>Age (mo.)</dt><dd id="cardAge"></dd></div>
+      <div><dt>Predicted probability</dt><dd id="cardProb" class="pex-prob"></dd></div>
+      <div><dt>ADOS-2 score</dt><dd id="cardAdos"></dd></div>
+      <div class="pex-wide"><dt>Behavioral signals</dt><dd id="cardBehaviors"></dd></div>
+    </dl>
+    <div class="pex-rec"><span class="pex-rec-label">Recommendation</span><p id="cardRec"></p></div>
+  </div>
+</div>
+
+<style>
+  .pex { border: 1px solid var(--tungsten); background: var(--paper-3, #FBFAF8); padding: 1.5rem; margin: 2.5rem 0; }
+  :global(.band--dark) .pex { background: rgba(255,255,255,0.04); border-color: var(--brushed); }
+  .pex-controls { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem; }
+  .pex-label { font-family: var(--font-mono, monospace); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--tungsten); }
+  .pex-select {
+    font-family: var(--font-mono, monospace); font-size: 0.85rem; padding: 0.45rem 0.7rem;
+    background: var(--obsidian); color: var(--platinum); border: 1px solid var(--phthalo-lift); cursor: pointer;
+  }
+  .pex-id { font-family: var(--font-mono, monospace); font-size: 1.25rem; color: var(--phthalo-lift); margin-bottom: 1rem; }
+  .pex-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 1.5rem; margin: 0; }
+  .pex-wide { grid-column: 1 / -1; }
+  .pex-grid dt { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--tungsten); margin-bottom: 0.25rem; }
+  .pex-grid dd { margin: 0; font-size: 1rem; color: var(--charcoal); }
+  :global(.band--dark) .pex-grid dd { color: var(--platinum); }
+  .pex-prob { font-family: var(--font-mono, monospace); font-weight: 600; }
+  .pex-rec { margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--tungsten); }
+  .pex-rec-label { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--phthalo-lift); }
+  .pex-rec p { margin: 0.4rem 0 0; font-size: 0.95rem; line-height: 1.6; color: var(--charcoal); }
+  :global(.band--dark) .pex-rec p { color: var(--tungsten); }
+</style>
+
+<script>
+  (function () {
+    const sel = document.getElementById('profileSelector');
+    if (!sel) return;
+    const patientData = {
+      PART_0012: { age: 100, behaviors: 'High gaze (74.7%), 100% functional play', prob: '2.9%', ados: '3 / 18', rec: 'Routine screening. Bayesian uncertainty was extremely low (0.003).' },
+      PART_0013: { age: 70, behaviors: 'Typical gaze, reduced smiling, 50% functional play', prob: '26.2%', ados: 'N/A', rec: 'Continued surveillance. Predictions ranged wildly from 2.3% to 50.1% depending on the algorithm.' },
+      PART_0032: { age: 76, behaviors: 'Reduced gaze (36.2%), high phrase repetition', prob: '78.2%', ados: '9 / 18', rec: 'Prompt comprehensive evaluation by a developmental specialist.' },
+    };
+    function update(id) {
+      const d = patientData[id]; if (!d) return;
+      document.getElementById('cardTitle').textContent = id;
+      document.getElementById('cardAge').textContent = d.age;
+      document.getElementById('cardBehaviors').textContent = d.behaviors;
+      document.getElementById('cardProb').textContent = d.prob;
+      document.getElementById('cardAdos').textContent = d.ados;
+      document.getElementById('cardRec').textContent = d.rec;
+    }
+    sel.addEventListener('change', (e) => update(e.target.value));
+    update(sel.value);
+  })();
+</script>

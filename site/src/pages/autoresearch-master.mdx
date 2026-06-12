@@ -15,6 +15,7 @@ scripts: []
 import Band from '../components/Band.astro';
 import Figure from '../components/Figure.astro';
 import ApaReferences from '../components/ApaReferences.astro';
+import MutationBudgetSim from '../components/widgets/MutationBudgetSim.astro';
 
 <Band theme="paper" spine="The loop that runs whi" section="The loop that runs while you sleep">
 
@@ -259,23 +260,7 @@ The harness, the budget, and the CUSUM monitor each handle a different failure m
 
 Experience the Fixed Harness / Mutation Budget dichotomy firsthand. The simulator below initializes an autonomous loop with a 100-unit mutation budget. Use the valid mutation buttons to spend budget, or attempt a harness violation to see the system halt.
 
-Valid Mutations
-Mutate Hyperparameters (Cost: 10)
-Mutate Feature Logic (Cost: 20)
-
-Harness Violation
-Disable PII Redaction Filter
-
-↺ Reset Simulator
-
-Autonomous Loop Telemetry
-
-Remaining Mutation Budget
-100 / 100
-
-[ INIT ] Autonomous research loop initialized. Budget: 100/100.
-
-Fig 4Interactive Mutation Boundary Simulator. Click the mutation buttons to spend budget, or attempt a harness violation.
+<MutationBudgetSim />
 
 </Band>
 

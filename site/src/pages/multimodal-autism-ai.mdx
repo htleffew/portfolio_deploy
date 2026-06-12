@@ -15,6 +15,7 @@ scripts: []
 import Band from '../components/Band.astro';
 import Figure from '../components/Figure.astro';
 import ApaReferences from '../components/ApaReferences.astro';
+import ProfileExplorer from '../components/widgets/ProfileExplorer.astro';
 
 <Band theme="paper" spine="Abstract" section="Abstract">
 
@@ -211,7 +212,9 @@ The report also surfaces data quality alongside the prediction: video clarity, f
 
 The model organizes the behavioral evidence so the clinician, who has the training, the context, and the legal and ethical responsibility for the diagnosis, can make an informed judgment. The two-report architecture is the layer at which that distinction becomes structurally enforceable: the clinician receives output formatted around the questions they have to answer, and the ML team receives output formatted around the questions they have to answer, and neither receives the other's report by accident.
 
-[Interactive Explorer Block - See live site]
+A live version of that per-participant clinical view is below: select a participant to see the behavioral signals, the predicted probability, the ADOS-2 score, and the uncertainty-aware recommendation the clinical report would surface.
+
+<ProfileExplorer />
 
 </Band>
 
