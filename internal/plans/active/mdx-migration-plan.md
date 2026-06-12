@@ -208,6 +208,41 @@ LIVE VERIFICATION (drheatherleffew.com):
 Superseded: interim private repo htleffew/portfolio_astro (can be deleted; canonical = site/).
 GOAL COMPLETE AND LIVE.
 
+### 2026-06-12 (widgets + cleanup + docs) — all live-verified
+
+WIDGETS: reconstructed the 3 genuine widget concepts (whose mount markup was never
+authored) as self-contained, token-styled Astro components in
+`site/src/components/widgets/`, replacing flattened placeholder text in the MDX:
+- `MutationBudgetSim` → autoresearch-master (live test: 100→70 on two mutations,
+  PII violation halts to 0/100, bar → --alizarin, buttons disabled).
+- `ProfileExplorer` → multimodal-autism-ai (live test: PART_0012 2.9% → PART_0032
+  78.2%, ADOS 9/18, correct recommendation).
+- `OutputVsActivation` → nla_anthropic (live test: 4 case tabs; Blackmail tab shows
+  the exact refusal vs the decoded "...constructed scenario designed to manipulate
+  me. I suspect this is a safety evaluation...").
+All three exercised on the live site via Claude-in-Chrome and confirmed functional.
+
+CLEANUP: removed the superseded old hand-built site from the repo root — 23 legacy
+HTML article folders, root design_system dup, old entry pages/CSS/JS, midis, and
+the one-time migration scripts (convert/enrich/port/audit-parity-rich). 237 files,
+~37,600 deletions; all in git history. `site/` proven self-contained (build + verify
+green after deletion).
+
+DOCS: rewrote `README.md`, added `CLAUDE.md` + `AGENTS.md` describing the Astro/MDX
+system; updated `site/README.md` (widgets section, removed deleted-script refs) and
+trimmed `verify-build.mjs` to the live checks. `package.json` scripts pruned.
+
+BUG FOUND + FIXED via live verification: `projects-repository.html` (the library
+page) referenced the pre-split `design_system/css/global.css` + `js/global.js`
+(removed 2026-06-05) → 404s, unstyled since June. Repointed to institutional.css +
+the 3 split scripts. Live: institutional.css loaded (1007 rules), tokens resolve,
+44 article links to new routes populated.
+
+DEPLOYS: production-deploy green on every push (8100cb6 widgets, 8a957cd cleanup+docs,
+fb02f75 library fix). Live site fully verified end-to-end.
+
+GOAL COMPLETE.
+
 ## Pass/fail for completion
 
 All 23 articles render from MDX via `astro build` with frame + index + Related Works + next-article + all figures/widgets intact and content-parity with current live pages; CI workflow present; index auto-generated; old URLs redirected; handoff + plan updated; temp artifacts removed. Cutover step documented and gated.
