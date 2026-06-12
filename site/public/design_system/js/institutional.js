@@ -20,12 +20,14 @@
 // Pages need ZERO additional script tags beyond global.js.
 // ==========================================
 (function mountOrchestration() {
+    // shader-transitions (HyperShader) removed 2026-06-12: it existed solely
+    // for the SPA router deleted from global_chrome.js, and was downloaded on
+    // every page for nothing.
     const gsapDeps = [
         'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js',
         'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js',
         'https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js',
-        'https://unpkg.com/split-type',
-        'https://cdn.jsdelivr.net/npm/@hyperframes/shader-transitions@0.4.45/dist/index.global.js'
+        'https://unpkg.com/split-type'
     ];
 
     const alreadyLoaded = (url) => {
@@ -33,7 +35,6 @@
         if (url.includes('ScrollTrigger') && typeof ScrollTrigger !== 'undefined') return true;
         if (url.includes('lenis')         && typeof Lenis !== 'undefined')         return true;
         if (url.includes('split-type')    && typeof SplitType !== 'undefined')     return true;
-        if (url.includes('shader-transitions') && typeof HyperShader !== 'undefined') return true;
         return false;
     };
 
@@ -339,7 +340,20 @@
                     }
                 });
                 gsap.utils.toArray('.reveal, .ds-prose').forEach(el => {
-                    if (el.closest('.band')) return;
+                    // Skip ONLY elements whose band already reveals them via the
+                    // band timeline above. The previous blanket `closest('.band')`
+                    // skip excluded markdown-body / front / library / back-matter
+                    // bands too — but those bands are themselves skipped by the
+                    // band loop, so every `.figure.reveal` inside an article body
+                    // stayed at the CSS pre-hide opacity:0 forever. Every figure
+                    // on every case-study page was invisible.
+                    const band = el.closest('.band');
+                    const bandHandlesReveals = band &&
+                        !band.classList.contains('library-band') &&
+                        !band.classList.contains('front') &&
+                        !band.classList.contains('back-matter') &&
+                        !band.querySelector('.markdown-body');
+                    if (bandHandlesReveals) return;
 
                     gsap.fromTo(el, { opacity: 0, y: 40 }, {
                         opacity: 1, y: 0, duration: 1.2, ease: 'expo.out',

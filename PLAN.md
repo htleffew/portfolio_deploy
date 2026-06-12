@@ -38,6 +38,35 @@ Root causes and fixes (all in `site/public/`, which Astro copies verbatim into `
    LinkedIn / Research Library hero links were permanently invisible for everyone.
    Tween added at `heroIn+=1.00`.
 
+### 2026-06-12 second pass: full-site audit (all 23 articles + index + about)
+
+Checks run against a fresh dist build: link/asset crawl over 26 pages (every
+internal href/src HEAD-checked — zero 404s), runtime-error sweep of all pages
+in instrumented iframes (zero exceptions), and reveal end-state probes.
+
+Found and fixed:
+
+1. **Article figures invisible site-wide.** `initScrollTriggers` skips
+   markdown-body / front / library / back-matter bands, and the standalone
+   `.reveal` loop skipped anything inside *any* `.band` — so every
+   `div.figure.reveal` in every article body stayed at the CSS pre-hide
+   `opacity:0` forever. The standalone loop now skips only elements whose band
+   actually owns a reveal timeline.
+2. **Related Works cards invisible on every article.** `.r-card` was pre-hidden
+   in two separate CSS blocks but is injected asynchronously into the
+   back-matter band, which no timeline reveals. Removed `.r-card` from both
+   pre-hide lists (band timelines use `fromTo`, so homepage/about animation is
+   unaffected).
+3. **Dead script weight removed**: HyperShader (shader-transitions) dropped from
+   institutional.js's lazy dep list (only the deleted SPA router used it); six
+   unused Three.js postprocessing scripts + simplex-noise removed from
+   CinematicLayout.astro (~150KB/article); unused simplex-noise removed from
+   index.html.
+4. **svg-gallery.html deleted**: orphaned dev inspection page (nothing linked
+   it) whose ~30 image refs were all broken.
+
+Legacy `<Old_Name>/<slug>.html` paths confirmed to be gen-redirects stubs (OK).
+
 Validation: `npm run build` + `npm run verify` pass (23 pages, frame contract
 intact). Chrome checks on dist build: zero console errors on index, about,
 projects-repository, dead-signal-ai-evals; library filter/sort/search and global

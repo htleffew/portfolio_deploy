@@ -743,12 +743,16 @@ html{scroll-behavior:smooth}
 .meta-row span, h1, .hero-rule, .abstract, .contact-row a, #glCanvas {
   opacity: 0;
 }
-/* ─── Scroll-revealed elements start hidden for cinematic entrance ─ */
+/* ─── Scroll-revealed elements start hidden for cinematic entrance ─
+   .r-card removed 2026-06-12: Related Works cards are injected
+   asynchronously (populateRelatedWorks fetch) into the back-matter band,
+   which no reveal timeline owns — pre-hiding them left the Related Works
+   grid permanently invisible on every article page. Band timelines that do
+   animate r-cards use fromTo, which supplies its own initial state. */
 .band .section-eyebrow,
 .band .section-heading,
 .bio-card,
 .view-all-link,
-.r-card,
 .edu-card,
 .tech-block {
   opacity: 0;
@@ -1097,7 +1101,9 @@ html{scroll-behavior:smooth}
 .scroll-cue-line::after{content:'';position:absolute;top:-100%;left:0;width:100%;height:100%;background:linear-gradient(to bottom,transparent,var(--phthalo-lift));animation:scrollDrip 2s ease-in-out infinite}
 @keyframes scrollDrip{0%{top:-100%;opacity:0}30%{opacity:1}100%{top:100%;opacity:0}}
 .hero .meta-row span, .hero h1, .hero .hero-rule, .hero .abstract, .about-hero .eyebrow, .about-hero h1, .about-hero .lede { opacity: 0; }
-.band .section-eyebrow, .band .section-heading, .type-block, .swatch-grid, .tagrow, .p-card, .r-card, .demo-box { opacity: 0; }
+/* .r-card removed from this pre-hide list 2026-06-12 (same reason as the
+   earlier block: async-injected Related Works cards were never revealed). */
+.band .section-eyebrow, .band .section-heading, .type-block, .swatch-grid, .tagrow, .p-card, .demo-box { opacity: 0; }
 
 /* Extracted from account-prioritization.html */
 /* Interactive Simulator Styles */
