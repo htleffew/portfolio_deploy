@@ -2,6 +2,51 @@
 
 Captured: 2026-06-05. Owner: Dr. Leffew. Lead agent: Claude.
 
+## 2026-06-12 follow-up: Research Library repair (mobile header, dead/slow links, animation races)
+
+Symptoms reported: header items overlapping on mobile; library index links broken
+or very slow; competing misordered stuttering load animations.
+
+Root causes and fixes (all in `site/public/`, which Astro copies verbatim into `dist/`):
+
+1. **SPA shader router removed** (`design_system/js/global_chrome.js`, former section 10).
+   It intercepted every internal link into fetch + 1.2s HyperShader transition, and
+   its manual script re-execution never fired `DOMContentLoaded`-bound page scripts —
+   the library arrived with dead accordions/filters/search after any SPA navigation.
+   Navigation is native MPA again; cross-document View Transitions in
+   `global_chrome.css` provide the polish. Dead helpers (`updateChromeHrefs`,
+   `executeScriptsQueue`) deleted. `resetScrollToTop` now no-ops when a `#fragment`
+   is present so anchor deep links land correctly.
+2. **Preloader curtain plays once per browser session** (`institutional.js`,
+   sessionStorage key `hl_preloader_played`). With MPA navigation it would otherwise
+   replay ~1.9s on every page.
+3. **Library row reveal race removed** (`library_dashboard.js`): per-row GSAP
+   ScrollTrigger reveals with compounding `i*0.05` delays competed with the
+   preloader/hero cascade running on a different clock. Rows now render
+   immediately; init is run-now-or-on-ready instead of DOMContentLoaded-only.
+4. **Mobile header** (`institutional.css`, final override block): `#topnav` was a
+   fixed 60px no-wrap bar declared 4x across the cascade with conflicting
+   z-indexes (150 vs 9999). Final authoritative block sets z-index 9999 and lets
+   the bar wrap to brand-row + links-row under 720px. Verified at 390px: two rows,
+   zero overlapping rects, no horizontal overflow.
+5. **Reduced-motion / no-GSAP completeness** (`institutional.js`
+   `revealEverythingImmediately()` + CSS `prefers-reduced-motion` block): previous
+   fallbacks never revealed `#topnav` or `.contact-row a` — those users got no
+   header and no hero CTAs.
+6. **Pre-existing bug found during verification**: the hero cascade never revealed
+   `.contact-row a` (CSS pre-hides it; no tween existed) — homepage Resume /
+   LinkedIn / Research Library hero links were permanently invisible for everyone.
+   Tween added at `heroIn+=1.00`.
+
+Validation: `npm run build` + `npm run verify` pass (23 pages, frame contract
+intact). Chrome checks on dist build: zero console errors on index, about,
+projects-repository, dead-signal-ai-evals; library filter/sort/search and global
+search overlay verified working (category filter → 3 rows, URL `?filter=` param,
+overlay returns results); sidebar link navigates natively and instantly; 390px
+iframe probe: header wraps with no overlap/overflow. Note for future verification:
+GSAP/rAF and CSS transitions freeze in backgrounded Chrome windows — force
+timeline progress or foreground the tab before reading computed styles.
+
 ## /goal
 
 Hero and section reveal animations on every page (index, about, projects-repository, all case studies) must:

@@ -2716,3 +2716,54 @@ ul.bullets li::before { content:'\25B8'; position:absolute; left:0; top:1px; fon
 /* Defensive CSS for SplitType Typography to prevent mid-word breaks */
 .line, .word, .char { display: inline-block; }
 .word { white-space: nowrap; }
+
+/* ============================================================
+   AUTHORITATIVE HEADER + MOTION-SAFETY OVERRIDES (2026-06-12)
+   This file declares #topnav four times across the cascade
+   (global_chrome.css + three concatenated blocks above) with
+   conflicting z-indexes (9999 vs 150). This final block is the
+   single source of truth; it loads last and therefore wins.
+   ============================================================ */
+
+/* z-index: above #grain (9998); search overlay (10000) stays on top. */
+#topnav { z-index: 9999; }
+
+/* Mobile header. Below 720px the fixed 60px single-row bar cannot hold
+   brand + Search + About + Research Library + Resume: items collided and
+   overlapped. Let the bar wrap into brand row + links row instead. */
+@media (max-width: 720px) {
+  #topnav {
+    height: auto;
+    min-height: 52px;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 10px 20px;
+    row-gap: 6px;
+  }
+  #topnav .brand { font-size: 14px; white-space: nowrap; }
+  #topnav .nav-links {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px 14px;
+    font-size: 10px;
+    letter-spacing: 0.10em;
+  }
+  #topnav .nav-links a,
+  #topnav .nav-links button { white-space: nowrap; }
+  #topnav .nav-btn { padding: 5px 10px; }
+}
+
+/* CSS-level reduced-motion safety net. institutional.js has a JS fallback,
+   but if scripts fail to load the pre-hidden elements must still appear. */
+@media (prefers-reduced-motion: reduce) {
+  #preloader { display: none !important; }
+  #topnav { transform: none !important; }
+  .meta-row span, h1, .hero-rule, .abstract, .contact-row a, #glCanvas,
+  .scroll-cue, .band .section-eyebrow, .band .section-heading,
+  .bio-card, .view-all-link, .r-card, .edu-card, .tech-block,
+  .reveal, .ds-prose {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

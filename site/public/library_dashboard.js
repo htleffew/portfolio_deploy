@@ -1,7 +1,12 @@
 // Static Library Dashboard Engine
 // Filters and sorts pre-rendered HTML DOM elements (SSG) for 100% SEO compliance.
 
-document.addEventListener('DOMContentLoaded', () => {
+// Run-now-or-on-ready: binding only on DOMContentLoaded made the dashboard
+// silently dead whenever this script executed after the DOM was already
+// parsed (e.g. dynamic injection). Idempotent guard included.
+function initLibraryDashboard() {
+    if (window._libraryDashboardInitialized) return;
+    window._libraryDashboardInitialized = true;
     const searchInput = document.getElementById('searchInput');
     const sortDropdown = document.getElementById('sortDropdown');
     const tableWrap = document.getElementById('tableWrap');
@@ -61,8 +66,8 @@ document.addEventListener('DOMContentLoaded', () => {
             noRes.style.display = visibleCount === 0 ? 'block' : 'none';
         }
 
-        // 5. Refresh ScrollTrigger geometry after DOM reorder
-        if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+        // (ScrollTrigger.refresh() removed: no row-level triggers exist anymore,
+        // and refreshing on every keystroke forced needless full-page layout.)
     }
 
     function setCategoryFilter(cat) {
@@ -124,27 +129,16 @@ document.addEventListener('DOMContentLoaded', () => {
         setCategoryFilter(urlFilter);
     }
 
-    // Trigger initial layout GSAP reveal if needed
-    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-        const gsRows = document.querySelectorAll('.db-row.gs-reveal');
-        gsRows.forEach((row, i) => {
-            gsap.fromTo(row, 
-                { opacity: 0, y: 30 },
-                {
-                    opacity: 1, 
-                    y: 0, 
-                    duration: 0.6, 
-                    ease: 'power2.out',
-                    scrollTrigger: {
-                        trigger: row,
-                        start: 'top 92%',
-                        toggleActions: 'play none none none',
-                        once: true
-                    },
-                    delay: i * 0.05
-                }
-            );
-        });
-        ScrollTrigger.refresh();
-    }
-});
+    // Per-row GSAP reveal removed 2026-06-12. It hid every publication row
+    // (opacity 0) and re-revealed each one on its own ScrollTrigger plus a
+    // compounding i*0.05s delay, while institutional.js's preloader curtain
+    // and hero cascade ran on a different clock (window load) — the visible
+    // result was stuttering, misordered row pop-in. An index should render
+    // its rows immediately; the page-level hero reveal provides the entrance.
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLibraryDashboard);
+} else {
+    initLibraryDashboard();
+}

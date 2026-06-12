@@ -161,6 +161,39 @@
         }
     };
 
+    // Shared no-animation reveal. Covers EVERY selector that the CSS pre-hides
+    // (institutional.css "Hero elements start invisible" + "Scroll-revealed
+    // elements start hidden" blocks). The previous fallback lists omitted
+    // .contact-row a, .bio-card, .view-all-link, .edu-card, .tech-block and
+    // #topnav — reduced-motion / GSAP-failure users got a page with no header
+    // and no hero CTA links.
+    const revealEverythingImmediately = () => {
+        const pre = document.getElementById('preloader');
+        if (pre) pre.style.display = 'none';
+        const nav = document.getElementById('topnav');
+        if (nav) nav.style.transform = 'none';
+        document.querySelectorAll(
+            '.meta-row span, h1, .hero-rule, .abstract, .contact-row a, #glCanvas, ' +
+            '.scroll-cue, .band .section-eyebrow, .band .section-heading, .type-block, ' +
+            '.swatch-grid, .tagrow, .p-card, .r-card, .demo-box, .dashboard-layout, ' +
+            '.reveal, .ds-prose, .bio-card, .view-all-link, .edu-card, .tech-block, ' +
+            '.project-carousel, .headshot-frame'
+        ).forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
+    };
+
+    // The preloader curtain plays once per browser session. With native MPA
+    // navigation every page load would otherwise replay the ~1.9s curtain,
+    // which is what made moving through the library feel glacial.
+    const shouldPlayPreloader = () => {
+        try {
+            if (sessionStorage.getItem('hl_preloader_played') === '1') return false;
+            sessionStorage.setItem('hl_preloader_played', '1');
+            return true;
+        } catch (e) {
+            return true; // storage unavailable (private mode etc.) — just play it
+        }
+    };
+
     window.initPageAnimations = () => {
         // Respect the OS-level "reduce motion" setting before doing any animation work.
         // When set, reveal every animated element immediately and skip the cascade
@@ -169,24 +202,12 @@
             typeof window.matchMedia === 'function' &&
             window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         if (prefersReducedMotion) {
-            const pre = document.getElementById('preloader');
-            if (pre) pre.style.display = 'none';
-            document.querySelectorAll(
-                '.meta-row span, h1, .hero-rule, .abstract, #glCanvas, ' +
-                '.scroll-cue, .band .section-eyebrow, .band .section-heading, .type-block, ' +
-                '.swatch-grid, .tagrow, .p-card, .r-card, .demo-box, .dashboard-layout, .reveal, .ds-prose'
-            ).forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
+            revealEverythingImmediately();
             return;
         }
         window.ensureDependenciesLoaded(() => {
             if (typeof gsap === 'undefined') {
-                const pre = document.getElementById('preloader');
-                if (pre) pre.style.display = 'none';
-                document.querySelectorAll(
-                    '.meta-row span, h1, .hero-rule, .abstract, #glCanvas, ' +
-                    '.scroll-cue, .band .section-eyebrow, .band .section-heading, .type-block, ' +
-                    '.swatch-grid, .tagrow, .p-card, .r-card, .demo-box, .dashboard-layout, .reveal, .ds-prose'
-                ).forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
+                revealEverythingImmediately();
                 return;
             }
 
@@ -211,6 +232,9 @@
             const preLeft   = document.getElementById('preloader-left');
             const preRight  = document.getElementById('preloader-right');
             const preLine   = document.getElementById('preloader-line');
+            if (preloader && !shouldPlayPreloader()) {
+                preloader.style.display = 'none';
+            }
             if (preloader && preloader.style.display !== 'none') {
                 tl.to(preLine,  { height: '28vh', duration: 0.55, ease: 'power2.inOut' })
                   .to(preLine,  { opacity: 0, height: '50vh', duration: 0.3, ease: 'power2.in' }, '+=0.075')
@@ -276,6 +300,11 @@
 
             const abstractEl = document.querySelector('.abstract, .about-hero .lede');
             if (abstractEl) tl.to(abstractEl, { opacity: 1, y: 0, duration: 1.3, ease: 'power2.out' }, 'heroIn+=0.70');
+            // Hero CTA links: institutional.css pre-hides .contact-row a, but no
+            // tween ever revealed them — the homepage hero shipped with its
+            // Resume / LinkedIn / Research Library links permanently invisible.
+            const contactLinks = gsap.utils.toArray('.contact-row a');
+            if (contactLinks.length) tl.to(contactLinks, { opacity: 1, duration: 1.0, stagger: 0.12, ease: 'power2.out' }, 'heroIn+=1.00');
             const scrollCue = document.querySelector('.scroll-cue');
             if (scrollCue) tl.to(scrollCue,   { opacity: 1, duration: 1.2, ease: 'power2.out' }, 'heroIn+=1.40');
 
