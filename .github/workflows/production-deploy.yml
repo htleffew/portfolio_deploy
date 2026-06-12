@@ -1,4 +1,10 @@
-name: Production Deploy (Sync + Pages)
+name: Production Deploy (Astro → Pages)
+
+# The portfolio site is built from MDX in ./site (Astro). Editing an .mdx and
+# pushing to master rebuilds and deploys to drheatherleffew.com in ~60-90s.
+# Pages is already configured as build_type=workflow with the custom domain, so
+# this serves the Astro build (site/dist, which includes CNAME) — no Pages or
+# DNS changes needed.
 
 on:
   push:
@@ -6,7 +12,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -15,33 +21,46 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  sync-and-deploy:
+  build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: site
     steps:
-      - name: Checkout Repository
+      - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      - name: Inject cache-busting version strings
-        run: |
-          SHORT_SHA=$(echo "${{ github.sha }}" | cut -c1-7)
-          echo "Cache-bust version: $SHORT_SHA"
-          find . -name '*.html' -not -path './.git/*' | while read f; do
-            # Add ?v=SHA to LOCAL .css/.js references ONLY (skip http://, https://, //)
-            perl -pi -e 's/href="((?!https?:\/\/|\/\/)[^"]+\.css)"/href="$1?v='"$SHORT_SHA"'"/g' "$f"
-            perl -pi -e 's/src="((?!https?:\/\/|\/\/)[^"]+\.js)"/src="$1?v='"$SHORT_SHA"'"/g' "$f"
-          done
-          echo "Cache-busted $(find . -name '*.html' -not -path './.git/*' | wc -l) HTML files"
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build (gen-index + gen-redirects + astro build)
+        run: npm run build
+
+      - name: Verify build (frame contract + no broken asset refs)
+        run: npm run verify
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload artifact
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: site/dist
 
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@v4

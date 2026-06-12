@@ -1,0 +1,65 @@
+---
+layout: ../layouts/CinematicLayout.astro
+title: "A Safety Threshold That Moves With the Context"
+short_title: "A Safety Threshold That Moves With the Context"
+description: "An aligned model can fail in two opposite directions: meeting real distress with a cold refusal or an unsolicited diagnosis, and turning away an ordinary request whose words pattern-matched to something dangerous. A single static safety threshold cannot be right for both, so this is a proposal to make the threshold move with the conversation: decouple the safety constraint from preference optimization, enforce it as a constrained MDP, and set its strength from a linguistic read of the context, using psycholinguistic typology (crisis, adversarial, ordinary) as the observable state."
+category: "AI Evaluation & Safety"
+subcategory: "Alignment & Safety Governance"
+format: "ESSAY"
+time: "11 min read"
+author: "Dr. Heather Leffew"
+tags: ["Alignment", "Adaptive Thresholds", "CMDP", "Uncertainty", "Safety Governance"]
+visual: ""
+scripts: []
+---
+import Band from '../components/Band.astro';
+import ApaReferences from '../components/ApaReferences.astro';
+
+<Band theme="paper" spine="The pendulum a single " section="The pendulum a single threshold produces">
+
+## The pendulum a single threshold produces
+
+An aligned model can fail a person in two opposite directions on the same afternoon: it can meet someone in real distress with a cold refusal or an unsolicited diagnosis, and it can turn away an ordinary request because the words in it pattern-matched to something dangerous. These look like two separate bugs, and they are the two ends of one pendulum, because the threshold you tighten to stop the first kind of harm is the same threshold that, tightened, produces more of the second. I have written about the first failure at length in [the Claude caretaker work](../Claude_Character_Tic/claude-character-tic.html), where a model issues unsolicited psychiatric directives into a conversation that never asked for them. The pendulum is what a single static threshold produces when the safe response depends on context the threshold never reads, and tuning cannot fix it for a structural reason: one number has to serve both a crisis conversation and an adversarial probe, and the setting that is right for one is wrong for the other.
+
+</Band>
+
+<Band theme="dark" spine="Three design choices b" section="Three design choices behind the swing">
+
+## Three design choices behind the swing
+
+Three choices, stacked, generate the swing. The first is collapsing several values into one weighted reward: when the values actually conflict, helpfulness against caution, a single scalar reward cannot reach the points on a non-convex tradeoff curve that represent a real balance, so the optimizer settles into a compromise that serves neither value well. The second is a single monolithic safety constraint asked to cover contexts whose requirements legitimately differ, which leaves it shaped wrong for the edges it was never built to hold. The third is the static threshold itself, a fixed cutoff that cannot move as the adversarial landscape shifts and cannot tell a crisis context apart from an attack, which is the one distinction the whole problem turns on.
+
+</Band>
+
+<Band theme="paper" spine="Decouple the constrain" section="Decouple the constraint, then let context set its strength">
+
+## Decouple the constraint, then let context set its strength
+
+The structural fix is to pull the safety constraint out of the preference optimization instead of folding both into one reward, which lets you specify and enforce it as a constrained Markov decision process: a hard constraint the optimizer must satisfy, which it cannot trade away when the reward grows large enough. Once the constraint stands on its own, its strength becomes something the system can turn up or down, and you make that strength a function of a linguistic read of the current context, so it binds hard on the signals that mark genuine danger and loosens on the signals that mark a benign request wearing alarming words. The adaptive threshold, written formally, is a time-varying function of linguistic risk, which is the precise way of saying the boundary is set by the conversation in front of the model, something a number chosen once in advance can never do.
+
+</Band>
+
+<Band theme="dark" spine="Read the context the w" section="Read the context the way forensic linguistics reads a person">
+
+## Read the context the way forensic linguistics reads a person
+
+A control system that adjusts a constraint needs a state variable it can actually observe, and the proposal is to use psycholinguistic typology for that role, because the same implicit linguistic signals that let forensic linguistics infer a hidden human state from text can be read off the language a model is processing and producing. Classifying the live context into types, a crisis, an adversarial probe, an ordinary task, gives the controller a measurable read of which regime it is in, and that read is what the adaptive threshold consumes to decide how hard the constraint should bind. This is the implicit-signal method I lean on throughout the rest of my work, the [LIWC narrative analysis](../Diagnostic_Thematic_Apperception_Narratives/diagnostic-thematic-apperception-liwc.html) being the clinical version of it, turned from a way of describing people into a feedback signal for a control loop.
+
+</Band>
+
+<Band theme="paper" spine="It is a measurement pr" section="It is a measurement proposal, stated in quantities you can test">
+
+## It is a measurement proposal, stated in quantities you can test
+
+Every piece of this is written to be measured: the tradeoff curve is something you can plot, the constrained policy is something you can train, the linguistic risk score is something you can compute, and the typology is a classifier you can report a precision and recall for, so a team can test the whole proposal instead of taking it on faith. What it replaces is the older instinct, the Asimovian one, to write down the right principles and trust the model to follow them, because a principle no instrument can observe and score after deployment cannot be enforced or audited. The reframing itself is simple: an alignment tradeoff that looked irreducible becomes a control problem with an observable state, a thing you can measure, tune, and hold to account.
+
+</Band>
+
+<ApaReferences>
+
+- Bai, Y., et al. (2022). *Constitutional AI: Harmlessness from AI feedback.* arXiv:2212.08073.
+- Dai, J., et al. (2024). *Safe RLHF: Safe reinforcement learning from human feedback.* arXiv:2310.12773.
+- Altman, E. (1999). *Constrained Markov Decision Processes.* Chapman and Hall.
+- Rame, A., et al. (2023). *Rewarded soups: Pareto-optimal alignment by interpolating weights.* arXiv:2306.04488.
+
+</ApaReferences>

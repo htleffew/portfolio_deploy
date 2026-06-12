@@ -1,0 +1,22 @@
+---
+export interface Props {
+  title?: string;
+}
+const { title = "References" } = Astro.props;
+---
+<section class="band band--paper" data-spine="References" data-section={title}>
+  <div class="col-wide markdown-body">
+    <h2 class="is-chapter">{title}</h2>
+    <div class="references">
+      <slot />
+    </div>
+  </div>
+</section>
+
+<style>
+  .references :global(p) {
+    padding-left: 2em;
+    text-indent: -2em;
+    margin-bottom: 1em;
+  }
+</style>

@@ -1,0 +1,13 @@
+---
+export interface Props {
+  theme?: "paper" | "dark";
+  spine?: string;
+  section?: string;
+}
+const { theme = "paper", spine = "Section", section = "Section" } = Astro.props;
+---
+<section class={`band band--${theme}`} data-spine={spine} data-section={section}>
+  <div class="col-wide markdown-body">
+    <slot />
+  </div>
+</section>

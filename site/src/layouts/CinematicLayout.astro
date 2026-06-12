@@ -1,0 +1,129 @@
+---
+// Shared article frame. Owns: head/design-system contract, top nav, reading
+// progress, chapter spine, atmospheric chrome, front matter, Related Works,
+// and the next-article link. Article MDX renders into the <slot/> as a series
+// of <Band> sections. The frame here mirrors the live portfolio_deploy contract
+// (split design system + DOM hooks consumed by global_chrome.js / institutional.js).
+const { frontmatter } = Astro.props;
+const fm = frontmatter ?? {};
+const title = fm.title || "Project";
+const shortTitle = fm.short_title || fm.title || "Project";
+const category = fm.category || "Research";
+const subcategory = fm.subcategory || "Analysis";
+const format = (fm.format || "CASE STUDY").toUpperCase();
+const headline = fm.headline || title;
+const abstractText = fm.abstract || fm.description || "";
+const subject = fm.subject || "";
+const architecture = fm.architecture || "";
+const output = fm.output || "";
+const time = fm.time || "";
+const description = fm.description || abstractText;
+
+// Per-article interactive widgets. The converter copies each interactive_*.js
+// into public/interactive/<slug>/ and lists the filenames in frontmatter.scripts.
+// Slug is derived from the route (trailingSlash: 'always' → /<slug>/).
+const slug = Astro.url.pathname.replace(/^\/+|\/+$/g, '').split('/').pop() || '';
+const pageScripts = Array.isArray(fm.scripts) ? fm.scripts : [];
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title} | Dr. Heather Leffew</title>
+  {description && <meta name="description" content={description} />}
+
+  <!-- On-demand WebGL libraries for the cinematic engine (match live contract) -->
+  <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+  <script is:inline src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js" defer></script>
+  <script is:inline src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js" defer></script>
+  <script is:inline src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js" defer></script>
+  <script is:inline src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js" defer></script>
+  <script is:inline src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js" defer></script>
+  <script is:inline src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js" defer></script>
+  <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js" defer></script>
+
+  <!-- Single stylesheet; tokens.css + global_chrome.css load via @import inside it -->
+  <link rel="stylesheet" href="/design_system/assets/css/institutional.css" />
+</head>
+
+<body data-category={category} data-title={shortTitle}>
+
+<!-- Reading progress -->
+<div id="progress"></div>
+
+<!-- Top nav (injected by global_chrome.js) -->
+<div id="global-nav-container"></div>
+
+<!-- Chapter spine (populated by institutional.js / global_chrome.js) -->
+<aside id="spine"></aside>
+
+<!-- Atmospheric gradient -->
+<div class="atmosphere"></div>
+
+<canvas id="glCanvas"></canvas>
+
+<!-- FRONT MATTER -->
+<section class="band band--dark front" data-spine="Front" data-section="Front matter">
+  <div class="col-wide">
+    <div class="grid">
+      <div>
+        <div class="meta-row">
+          <span class="bracket">{format}</span>
+          <span class="sep">/</span>
+          <span>{category}</span>
+          <span class="sep">/</span>
+          <span>{subcategory}</span>
+        </div>
+
+        <h1>{headline}</h1>
+
+        <p class="abstract">{abstractText}</p>
+
+        <div class="byline">
+          {subject && <div>Subject<strong>{subject}</strong></div>}
+          {architecture && <div>Architecture<strong>{architecture}</strong></div>}
+          {output && <div>Output<strong>{output}</strong></div>}
+          {time && <div>Read Time<strong>{time}</strong></div>}
+        </div>
+      </div>
+      <div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ARTICLE BODY (MDX renders here as <Band> sections) -->
+<slot />
+
+<!-- BACK MATTER: Related Works + Next Publication -->
+<section class="band band--dark back-matter" data-spine="Research Graph" data-section="Research Graph">
+  <div class="back-matter" style="padding-top:0;">
+    <h3 style="margin-bottom:22px;">Related Works</h3>
+    <div class="related">
+      <div class="related-grid" id="recommendation-grid">
+        <!-- Populated by global_chrome.js from projects_index.json -->
+      </div>
+    </div>
+  </div>
+
+  <a class="next-chap" id="next-chap-link" href="#">
+    <div class="lf">
+      <div class="eb">Next Publication</div>
+      <div class="ti" id="next-chap-title">Loading...</div>
+    </div>
+    <div class="rt">&rarr;</div>
+  </a>
+</section>
+
+<!-- Page-specific interactive widgets (from frontmatter.scripts) -->
+{pageScripts.map((s) => (
+  <script is:inline src={`/interactive/${slug}/${s}`} defer></script>
+))}
+<slot name="scripts" />
+
+<!-- GLOBAL CHROME + READING ENGINE (split design system) -->
+<script is:inline src="/design_system/js/cinematic_engine_v3.js" defer></script>
+<script is:inline src="/design_system/js/global_chrome.js" defer></script>
+<script is:inline src="/design_system/js/institutional.js" defer></script>
+</body>
+</html>
