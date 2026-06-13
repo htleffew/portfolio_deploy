@@ -45,9 +45,9 @@ body {
 
 
 /* BAND BACKGROUNDS — translucent so starfield shows through */
-.band { position: relative; z-index: 1; padding: 80px 0; transition: background 0.9s cubic-bezier(0.4,0,0.2,1), color 0.9s cubic-bezier(0.4,0,0.2,1); }
+.band { position: relative; z-index: 1; padding: 40px 0; transition: background 0.9s cubic-bezier(0.4,0,0.2,1), color 0.9s cubic-bezier(0.4,0,0.2,1); }
 .band--dark { background: rgba(3,3,3,0.6); color: var(--platinum); }
-.band--paper { background: rgba(245,245,247,0.85); color: var(--ink); }
+.band--paper { background: rgba(245,245,247,0.95); color: var(--ink); }
 
 /* TOP NAV */
 #topnav {

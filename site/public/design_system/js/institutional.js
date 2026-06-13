@@ -400,6 +400,27 @@
 
 
 /* ============================================================
+   Article Light-Mode Override
+   Force all article body bands (those with .markdown-body) to
+   paper mode. Hero (.front) and footer (.back-matter) stay dark.
+   ============================================================ */
+(function forceArticleLightMode() {
+    var run = function () {
+        document.querySelectorAll('section.band:not(.front):not(.back-matter)').forEach(function (band) {
+            if (band.querySelector('.markdown-body')) {
+                band.classList.remove('band--dark', 'band--ink');
+                band.classList.add('band--paper');
+            }
+        });
+    };
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', run);
+    } else {
+        run();
+    }
+})();
+
+/* ============================================================
    Spine + Sidenotes Reading Engine
    ============================================================ */
 (function spineAndSidenotes() {
@@ -420,6 +441,25 @@
                 });
                 spine.appendChild(r);
             });
+
+            // Spine active-state tracking via IntersectionObserver
+            var rows = spine.querySelectorAll('.row');
+            var observer = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        var idx = sections.indexOf(entry.target);
+                        if (idx !== -1) {
+                            rows.forEach(function (row) { row.classList.remove('is-active'); });
+                            if (rows[idx]) rows[idx].classList.add('is-active');
+                            // Toggle spine paper/dark mode
+                            var isPaper = entry.target.classList.contains('band--paper');
+                            spine.classList.toggle('is-paper', isPaper);
+                        }
+                    }
+                });
+            }, { rootMargin: '-20% 0px -79% 0px' });
+
+            sections.forEach(function (s) { observer.observe(s); });
         }
         var layoutSidenotes = function () {
             if (window.innerWidth < 1240) {

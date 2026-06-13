@@ -142,7 +142,7 @@
             <div class="nav-links">
                 <button id="trigger-search">Search</button>
                 <a href="${pathPrefix}about.html">About</a>
-                <a href="${pathPrefix}projects-repository.html">Research Library</a>
+                <a href="${pathPrefix}projects-repository.html">Articles</a>
                 <a href="${pathPrefix}resume.pdf" target="_blank" class="nav-btn">Resume -></a>
             </div>
         `;
@@ -156,7 +156,8 @@
         footer.innerHTML = `
             <div class="lf">Dr. Heather Leffew &copy; 2026</div>
             <div style="display:flex;gap:24px;" class="rt">
-                <a href="${pathPrefix}projects-repository.html">Research Library</a>
+                <a href="${pathPrefix}index.html">Home</a>
+                <a href="${pathPrefix}projects-repository.html">Articles</a>
                 <a href="https://linkedin.com/in/heathertleffew" target="_blank">LinkedIn</a>
             </div>
         `;

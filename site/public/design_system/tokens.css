@@ -40,7 +40,7 @@
   --accent:       var(--phthalo-lift);
 
   /* ── LAYOUT COLUMNS ── */
-  --col:      860px;
+  --col:      980px;
   --col-wide: 1200px;
 
   /* ── TYPE FAMILIES ── */
@@ -80,7 +80,7 @@
   --space-7:  40px;
   --space-8:  48px;
   --space-9:  60px;
-  --space-section: 120px;
+  --space-section: 64px;
 
   /* ── RADII ── */
   --radius-sm:   4px;

@@ -35,9 +35,9 @@ body {
   transition:background 1.2s var(--ease-std);
 }
 
-.band { position:relative; z-index:1; padding:60px 0; transition:background 0.9s var(--ease-std), color 0.9s var(--ease-std); }
+.band { position:relative; z-index:1; padding:40px 0; transition:background 0.9s var(--ease-std), color 0.9s var(--ease-std); }
 .band--dark  { background:rgba(3,3,3,0.6); color:var(--platinum); }
-.band--paper { background:rgba(245,245,247,0.85); color:var(--obsidian); }
+.band--paper { background:rgba(245,245,247,0.95); color:var(--obsidian); }
 .band--ink   { background:rgba(26,26,26,0.7); color:var(--platinum); }
 
 .band--dark + .band--paper, .band--paper + .band--dark, .band--ink + .band--paper, .band--paper + .band--ink {
@@ -109,7 +109,7 @@ body {
 #status.is-paper .pct { color:var(--ink-blue); }
 
 .front {
-  padding:80px 0 100px;
+  padding:60px 0 60px;
   display:flex; flex-direction:column; justify-content:center;
   position:relative; overflow:hidden;
 }
@@ -288,7 +288,7 @@ input[type=range]::-webkit-slider-runnable-track {
 }
 .band--dark .method .lab, .band--ink .method .lab { color:var(--phthalo-lift); }
 
-.back-matter { padding-top:120px; padding-bottom:160px; }
+.back-matter { padding-top:48px; padding-bottom:64px; }
 .back-matter h3 {
   font-family:var(--display); font-weight:600; font-size:24px; line-height:1.2; color:var(--flare);
   margin:0 auto 22px; max-width:var(--col-wide); padding:0 48px;
@@ -335,8 +335,8 @@ input[type=range]::-webkit-slider-runnable-track {
 /* ============================================================
    MASTER GRID: Centered, Balanced, Wide
    ============================================================ */
-:root { --grid-left: max(32px, calc(50vw - 540px)); }
-@media (min-width: 1360px) { :root { --grid-left: max(260px, calc(50vw - 540px)); } }
+:root { --grid-left: max(32px, calc(50vw - 600px)); }
+@media (min-width: 1360px) { :root { --grid-left: max(200px, calc(50vw - 600px)); } }
 
 section.band:not(.front):not(.library-band):not(.back-matter) {
   display: block; /* Fallback for small screens */
@@ -351,7 +351,7 @@ section.band:not(.front):not(.library-band):not(.back-matter) > * {
 @media (min-width: 1240px) {
   section.band:not(.front):not(.library-band):not(.back-matter) {
     display: grid;
-    grid-template-columns: var(--grid-left) 680px 400px minmax(16px, 1fr);
+    grid-template-columns: var(--grid-left) 800px 340px minmax(16px, 1fr);
     align-items: start;
   }
   section.band:not(.front):not(.library-band):not(.back-matter) > * {
@@ -393,7 +393,7 @@ p, li, .abstract, .r-intro, .p-desc, .db-desc {
 }
 
 /* Portrait Mode Space Fix */
-.front { min-height: clamp(400px, 80vh, 850px) !important; justify-content: center !important; }
+.front { min-height: clamp(320px, 60vh, 640px) !important; justify-content: center !important; }
 
 /* ============================================================
    BACK MATTER: Related Works, Next Chapter, Citation Graph
@@ -401,7 +401,7 @@ p, li, .abstract, .r-intro, .p-desc, .db-desc {
    selectors for .related, .r-card, .next-chap, etc.)
    ============================================================ */
 
-.back-matter .related { max-width:var(--col-wide); margin:0 auto 60px; padding:0 48px; }
+.back-matter .related { max-width:var(--col-wide); margin:0 auto 24px; padding:0 48px; }
 .related-grid {
   display:grid; grid-template-columns:repeat(3, 1fr); gap:0;
   border-top:1px solid var(--graphite); border-bottom:1px solid var(--graphite);
@@ -428,7 +428,7 @@ p, li, .abstract, .r-intro, .p-desc, .db-desc {
 
 /* Next chapter */
 .next-chap {
-  max-width:var(--col-wide); margin:80px auto 0; padding:48px;
+  max-width:var(--col-wide); margin:32px auto 0; padding:32px 48px;
   border-top:1px solid var(--graphite); border-bottom:1px solid var(--graphite);
   display:flex; align-items:center; justify-content:space-between; gap:32px;
   text-decoration:none; color:inherit;
@@ -773,9 +773,9 @@ html.lenis, html.lenis body { height: auto; }
   height: 100vh;
 }
 
-.band{position:relative;padding:80px 0;transition:background 0.9s var(--ease-std),color 0.9s var(--ease-std)}
+.band{position:relative;padding:40px 0;transition:background 0.9s var(--ease-std),color 0.9s var(--ease-std)}
 .band--dark{background:rgba(3,3,3,0.6);color:var(--platinum)}
-.band--paper{background:rgba(245,245,247,0.85);color:var(--ink)}
+.band--paper{background:rgba(245,245,247,0.95);color:var(--ink)}
 
 #progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:200;pointer-events:none;background:transparent}
 #progress::after{content:'';position:absolute;left:0;top:0;bottom:0;width:var(--p,0%);background:linear-gradient(90deg,var(--phthalo-lift) 0%,var(--phthalo) 100%);transition:width 0.05s linear}
@@ -826,7 +826,7 @@ html.lenis, html.lenis body { height: auto; }
 
 .section-eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:0.30em;text-transform:uppercase;color:var(--phthalo-lift);margin-bottom:18px}
 .band--paper .section-eyebrow{color:var(--ink-blue)}
-.section-heading{font-family:var(--display);font-size:clamp(24px,3.0vw,32px);font-weight:600;letter-spacing:-0.012em;line-height:1.12;color:var(--flare);margin-bottom:48px}
+.section-heading{font-family:var(--display);font-size:clamp(24px,3.0vw,32px);font-weight:600;letter-spacing:-0.012em;line-height:1.12;color:var(--flare);margin-bottom:28px}
 .band--paper .section-heading{color:var(--ink)}
 
 .bio-wrap{max-width:1400px;margin:0 auto;padding:0 48px}
@@ -963,7 +963,7 @@ html{scroll-behavior:smooth}
 
 .section-eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:0.30em;text-transform:uppercase;color:var(--phthalo-lift);margin-bottom:18px}
 .band--paper .section-eyebrow{color:var(--ink-blue)}
-.section-heading{font-family:var(--display);font-size:clamp(24px,3.0vw,32px);font-weight:600;letter-spacing:-0.012em;line-height:1.12;color:var(--flare);margin-bottom:48px}
+.section-heading{font-family:var(--display);font-size:clamp(24px,3.0vw,32px);font-weight:600;letter-spacing:-0.012em;line-height:1.12;color:var(--flare);margin-bottom:28px}
 .band--paper .section-heading{color:var(--ink)}
 
 /* Buttons & Links */
@@ -2027,7 +2027,7 @@ body {
 /* ============================================================
    BACK MATTER
    ============================================================ */
-.back-matter { padding-top:120px; padding-bottom:160px; }
+.back-matter { padding-top:48px; padding-bottom:64px; }
 .back-matter h3 {
   font-family:var(--display); font-weight:600; font-size:24px; line-height:1.2; color:var(--flare);
   margin:0 auto 22px; max-width:var(--col-wide); padding:0 48px;
@@ -2043,7 +2043,7 @@ body {
 .back-matter .biblio .n { font-family:var(--mono); font-size:11px; color:var(--phthalo-lift); letter-spacing:0.20em; }
 .back-matter .biblio .ent i { color:var(--tungsten); }
 
-.back-matter .related { max-width:var(--col-wide); margin:0 auto 60px; padding:0 48px; }
+.back-matter .related { max-width:var(--col-wide); margin:0 auto 24px; padding:0 48px; }
 .related-grid {
   display:grid; grid-template-columns:repeat(3, 1fr); gap:0;
   border-top:1px solid var(--graphite); border-bottom:1px solid var(--graphite);
@@ -2070,7 +2070,7 @@ body {
 
 /* Next chapter */
 .next-chap {
-  max-width:var(--col-wide); margin:80px auto 0; padding:48px;
+  max-width:var(--col-wide); margin:32px auto 0; padding:32px 48px;
   border-top:1px solid var(--graphite); border-bottom:1px solid var(--graphite);
   display:flex; align-items:center; justify-content:space-between; gap:32px;
   text-decoration:none; color:inherit;
@@ -2620,7 +2620,7 @@ body {
 /* ============================================================
    BACK MATTER
    ============================================================ */
-.back-matter { padding-top:120px; padding-bottom:160px; }
+.back-matter { padding-top:48px; padding-bottom:64px; }
 .back-matter h3 {
   font-family:var(--display); font-weight:600; font-size:24px; line-height:1.2; color:var(--flare);
   margin:0 auto 22px; max-width:var(--col-wide); padding:0 48px;
@@ -2636,7 +2636,7 @@ body {
 .back-matter .biblio .n { font-family:var(--mono); font-size:11px; color:var(--phthalo-lift); letter-spacing:0.20em; }
 .back-matter .biblio .ent i { color:var(--tungsten); }
 
-.back-matter .related { max-width:var(--col-wide); margin:0 auto 60px; padding:0 48px; }
+.back-matter .related { max-width:var(--col-wide); margin:0 auto 24px; padding:0 48px; }
 .related-grid {
   display:grid; grid-template-columns:repeat(3, 1fr); gap:0;
   border-top:1px solid var(--graphite); border-bottom:1px solid var(--graphite);
@@ -2663,7 +2663,7 @@ body {
 
 /* Next chapter */
 .next-chap {
-  max-width:var(--col-wide); margin:80px auto 0; padding:48px;
+  max-width:var(--col-wide); margin:32px auto 0; padding:32px 48px;
   border-top:1px solid var(--graphite); border-bottom:1px solid var(--graphite);
   display:flex; align-items:center; justify-content:space-between; gap:32px;
   text-decoration:none; color:inherit;

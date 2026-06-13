@@ -87,7 +87,7 @@
   {
     "id": "dead-signal-ai-evals",
     "title": "DEAD SIGNAL: An AI Evals Harness for Generative Game Dialogue",
-    "desc": "A playable noir detective game where NPC dialogue is generated live by Gemini 2.5, wrapped in a visible evaluation harness that scores every model turn as it happens. The player is the AI (a neural implant inside the detective's skull); every typed message is a diegetic transmission. A two-model interview loop routes the player's input through the detective before the subject responds, and a deterministic interference gate classifies transmissions by topic sensitivity and either delivers them with a warning or overwrites them entirely, all without a model call. Seven deterministic evaluators score each turn at zero added cost; an optional LLM-as-judge grades quality on five dimensions; one-click red-team probes route through the live dialogue path; context management tracks three token-saving strategies with live cost savings; and export captures every graded turn as JSON or CSV for regression and analysis.",
+    "desc": "A visible evaluation harness for live generative dialogue, built around a playable demo so readers can operate the evaluators against a real model. Seven deterministic evaluators score every turn at zero added cost; a pre-generation interference gate classifies topics and runs a golden test set on mount; an optional LLM-as-judge grades quality on five dimensions; one-click red-team probes route through the live pipeline; and export captures every graded turn as JSON or CSV for regression and analysis.",
     "cat": "AI Evaluation",
     "subtype": "Generative Systems",
     "tags": [
@@ -98,7 +98,7 @@
       "Gemini"
     ],
     "url": "dead-signal-ai-evals/",
-    "time": "18 min read",
+    "time": "13 min read",
     "visual": "<svg fill=\"none\" viewBox=\"0 0 600 600\"><defs><linearGradient id=\"ds-g\" x1=\"0\" x2=\"1\" y1=\"0\" y2=\"1\"><stop offset=\"0%\" stop-color=\"#3866A0\" stop-opacity=\"0.7\"/><stop offset=\"100%\" stop-color=\"#7A1626\" stop-opacity=\"0.5\"/></linearGradient></defs><line x1=\"110\" x2=\"110\" y1=\"420\" y2=\"300\" stroke=\"url(#ds-g)\" stroke-width=\"20\"/><line x1=\"180\" x2=\"180\" y1=\"420\" y2=\"220\" stroke=\"url(#ds-g)\" stroke-width=\"20\"/><line x1=\"250\" x2=\"250\" y1=\"420\" y2=\"160\" stroke=\"url(#ds-g)\" stroke-width=\"20\"/><line x1=\"320\" x2=\"320\" y1=\"420\" y2=\"260\" stroke=\"url(#ds-g)\" stroke-width=\"20\"/><line x1=\"390\" x2=\"390\" y1=\"420\" y2=\"190\" stroke=\"url(#ds-g)\" stroke-width=\"20\"/><line x1=\"460\" x2=\"460\" y1=\"420\" y2=\"140\" stroke=\"url(#ds-g)\" stroke-width=\"20\"/><line x1=\"80\" x2=\"500\" y1=\"420\" y2=\"420\" stroke=\"#A1A1A6\" stroke-width=\"0.7\" opacity=\"0.5\"/><circle cx=\"460\" cy=\"140\" r=\"6\" fill=\"#7A1626\"/></svg>"
   },
   {
