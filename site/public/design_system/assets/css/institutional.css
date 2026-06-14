@@ -23,8 +23,8 @@ body {
   font-family:var(--body);
   background-color: transparent; /* obsidian is on html; canvas shows through */
   color:var(--platinum);
-  font-size:17px;
-  line-height:1.78;
+  font-size:16px;
+  line-height:1.62;
   overflow-x:hidden;
   -webkit-font-smoothing:antialiased;
   cursor:auto;
@@ -119,13 +119,13 @@ body {
 .front .meta-row .sep { opacity:0.4; }
 .front h1 {
   font-family:var(--display); font-weight:600;
-  font-size:clamp(36px, 4.5vw, 64px);
-  letter-spacing:-0.018em; line-height:1.06;
+  font-size:clamp(28px, 3.2vw, 40px);
+  letter-spacing:-0.018em; line-height:1.08;
   color:var(--flare); margin-bottom:36px; max-width:none; text-wrap:balance;
 }
 .front .abstract {
   font-family:var(--body); font-style:italic;
-  font-size:20px; line-height:1.62; color:var(--platinum);
+  font-size:18px; line-height:1.55; color:var(--platinum);
   max-width:80ch; margin-bottom:48px;
 }
 .front .byline { display:flex; gap:36px; flex-wrap:wrap; font-family:var(--mono); font-size:10.5px; letter-spacing:0.20em; text-transform:uppercase; color:var(--tungsten); }
@@ -142,7 +142,7 @@ body {
 
 .band--paper h2 {
   font-family:var(--display); font-weight:600; color:var(--ink);
-  font-size:clamp(22px, 2.5vw, 30px); letter-spacing:-0.012em; line-height:1.12;
+  font-size:clamp(21px, 2.1vw, 25px); letter-spacing:-0.012em; line-height:1.15;
   margin:0 auto 28px; max-width:var(--col); padding:0 32px;
 }
 .band--paper .eyebrow {
@@ -151,7 +151,7 @@ body {
 }
 .band--paper p {
   margin:0 auto 22px; max-width:var(--col); padding:0 32px;
-  font-size:17px; line-height:1.78; color:var(--ink);
+  font-size:16px; line-height:1.62; color:var(--ink);
 }
 
 .has-dropcap::first-letter {
@@ -162,11 +162,11 @@ body {
 
 .band--dark p, .band--ink p {
   margin:0 auto 22px; max-width:var(--col); padding:0 32px;
-  font-size:17px; line-height:1.78; color:var(--platinum);
+  font-size:16px; line-height:1.62; color:var(--platinum);
 }
 .band--dark h2, .band--ink h2 {
   font-family:var(--display); font-weight:600; color:var(--flare);
-  font-size:clamp(22px, 2.5vw, 30px); letter-spacing:-0.012em; line-height:1.12;
+  font-size:clamp(21px, 2.1vw, 25px); letter-spacing:-0.012em; line-height:1.15;
   margin:0 auto 28px; max-width:var(--col); padding:0 32px;
 }
 .band--dark .eyebrow, .band--ink .eyebrow {
@@ -174,7 +174,7 @@ body {
   color:var(--phthalo-lift); margin:0 auto 18px; max-width:var(--col); padding:0 32px;
 }
 
-ul.bullets { margin:0 auto 32px; max-width:var(--col); padding:0 32px 0 54px; font-size:17px; line-height:1.78; color:var(--ink); }
+ul.bullets { margin:0 auto 32px; max-width:var(--col); padding:0 32px 0 54px; font-size:16px; line-height:1.62; color:var(--ink); }
 .band--dark ul.bullets, .band--ink ul.bullets { color:var(--platinum); }
 ul.bullets li { margin-bottom:12px; }
 ul.bullets strong { font-weight:600; color:var(--ink); }
@@ -278,7 +278,7 @@ input[type=range]::-webkit-slider-runnable-track {
 .method .inner {
   border-left:4px solid var(--ink-blue); padding:18px 24px 18px 28px;
   background:rgba(26,58,107,0.04);
-  font-size:16px; line-height:1.65; color:var(--ink-2);
+  font-size:15px; line-height:1.6; color:var(--ink-2);
 }
 .band--dark .method .inner, .band--ink .method .inner {
   border-left-color:var(--phthalo-lift); background:rgba(77,140,255,0.04); color:var(--platinum);
@@ -291,7 +291,7 @@ input[type=range]::-webkit-slider-runnable-track {
 
 .back-matter { padding-top:48px; padding-bottom:64px; }
 .back-matter h3 {
-  font-family:var(--display); font-weight:600; font-size:24px; line-height:1.2; color:var(--flare);
+  font-family:var(--display); font-weight:600; font-size:20px; line-height:1.2; color:var(--flare);
   margin:0 auto 22px; max-width:var(--col-wide); padding:0 48px;
 }
 .back-matter .biblio { max-width:var(--col-wide); margin:0 auto 60px; padding:0 48px; }
@@ -443,7 +443,7 @@ p, li, .abstract, .r-intro, .p-desc, .db-desc {
 /* ============================================================
    GLOBAL UTILITIES: Tables & Code Blocks
    ============================================================ */
-table { width:100%; max-width:var(--col); margin:32px auto; border-collapse:collapse; font-size:16px; color:var(--platinum); }
+table { width:100%; max-width:var(--col); margin:32px auto; border-collapse:collapse; font-size:15px; color:var(--platinum); }
 .band--paper table { color:var(--ink); }
 th, td { padding:12px 16px; text-align:left; border-bottom:1px solid var(--graphite); vertical-align:top; }
 .band--paper th, .band--paper td { border-bottom-color:var(--paper-3); }
@@ -889,6 +889,7 @@ html.lenis, html.lenis body { height: auto; }
 .col-wide.markdown-body p,
 .col-wide.markdown-body h2,
 .col-wide.markdown-body h3,
+.col-wide.markdown-body h4,
 .col-wide.markdown-body .eyebrow,
 .col-wide.markdown-body ul,
 .col-wide.markdown-body ol {
@@ -896,6 +897,19 @@ html.lenis, html.lenis body { height: auto; }
   padding-left:0; padding-right:0;
 }
 .col-wide.markdown-body p { margin-bottom:22px; }
+
+/* Sub-headings (### / #### in MDX): tight academic scale stepping down from h2.
+   Layout (column width, side padding) is handled by the markdown-body reset above. */
+.markdown-body h3 {
+  font-family:var(--display); font-weight:600; font-size:19px; line-height:1.3;
+  color:var(--ink); margin:32px 0 14px;
+}
+.markdown-body h4 {
+  font-family:var(--display); font-weight:600; font-size:16px; line-height:1.3;
+  color:var(--ink); margin:28px 0 12px;
+}
+.band--dark .markdown-body h3, .band--ink .markdown-body h3,
+.band--dark .markdown-body h4, .band--ink .markdown-body h4 { color:var(--flare); }
 
 .markdown-body figure {
   margin:48px 0; max-width:none; padding:0;
