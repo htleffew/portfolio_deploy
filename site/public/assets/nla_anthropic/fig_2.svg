@@ -1,9 +1,60 @@
-<svg style="width:100%; max-width:220px; height:auto; display:block; margin:0 auto;" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-<rect fill="none" height="80" stroke="var(--phthalo-lift)" stroke-dasharray="4 4" stroke-width="1.5" width="100" x="50" y="20"></rect>
-<circle cx="100" cy="60" fill="var(--alizarin)" opacity="0.85" r="22"></circle>
-<text fill="#fff" font-family="monospace" font-size="9" text-anchor="middle" x="100" y="64">Deception</text>
-<path d="M 10 60 L 44 60" marker-end="url(#arrow)" stroke="var(--platinum)" stroke-width="1.5"></path>
-<path d="M 156 60 L 190 60" marker-end="url(#arrow)" stroke="var(--platinum)" stroke-width="1.5"></path>
-<circle cx="175" cy="88" fill="var(--alizarin)" r="14"></circle>
-<path d="M 168 88 L 182 88" fill="none" stroke="#fff" stroke-width="1.5"></path>
+<svg viewBox="0 0 760 360" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;">
+  <rect x="0" y="0" width="760" height="360" fill="#ffffff"></rect>
+
+  <!-- header -->
+  <text x="24" y="32" font-family="JetBrains Mono, SF Mono, Menlo, monospace" font-size="12" letter-spacing="1.2" fill="#030303">EVALUATION AWARENESS: IN THE ACTIVATIONS, NOT THE OUTPUT</text>
+  <line x1="24" y1="42" x2="736" y2="42" stroke="#030303" stroke-width="1"></line>
+
+  <!-- plot geometry: baseline y=300, top y=70, 0..30% over 230px (7.6667 px per %) -->
+  <!-- y axis -->
+  <line x1="150" y1="70" x2="150" y2="300" stroke="#030303" stroke-width="1.5"></line>
+  <line x1="150" y1="300" x2="720" y2="300" stroke="#030303" stroke-width="1.5"></line>
+
+  <!-- gridlines + ticks at 0,10,20,30% -->
+  <line x1="150" y1="300" x2="720" y2="300" stroke="#030303" stroke-width="0.5" opacity="0.25"></line>
+  <text x="142" y="304" text-anchor="end" font-family="JetBrains Mono, SF Mono, Menlo, monospace" font-size="10" fill="#030303">0%</text>
+  <line x1="150" y1="223.3" x2="720" y2="223.3" stroke="#030303" stroke-width="0.5" opacity="0.25"></line>
+  <text x="142" y="227" text-anchor="end" font-family="JetBrains Mono, SF Mono, Menlo, monospace" font-size="10" fill="#030303">10%</text>
+  <line x1="150" y1="146.7" x2="720" y2="146.7" stroke="#030303" stroke-width="0.5" opacity="0.25"></line>
+  <text x="142" y="150" text-anchor="end" font-family="JetBrains Mono, SF Mono, Menlo, monospace" font-size="10" fill="#030303">20%</text>
+  <line x1="150" y1="70" x2="720" y2="70" stroke="#030303" stroke-width="0.5" opacity="0.25"></line>
+  <text x="142" y="74" text-anchor="end" font-family="JetBrains Mono, SF Mono, Menlo, monospace" font-size="10" fill="#030303">30%</text>
+
+  <!-- production baseline reference line at <1% (~0.8% -> y=293.9) -->
+  <line x1="150" y1="293.9" x2="720" y2="293.9" stroke="#0F3A6B" stroke-width="1.25" stroke-dasharray="6 4"></line>
+
+  <!-- BAR 1: verbalized = 0% (no bar; marker on baseline) -->
+  <line x1="195" y1="300" x2="265" y2="300" stroke="#030303" stroke-width="3"></line>
+  <text x="230" y="291" text-anchor="middle" font-family="JetBrains Mono, SF Mono, Menlo, monospace" font-size="13" fill="#030303">0%</text>
+  <text x="230" y="318" text-anchor="middle" font-family="JetBrains Mono, SF Mono, Menlo, monospace" font-size="9" fill="#030303">VERBALIZED</text>
+  <text x="230" y="330" text-anchor="middle" font-family="JetBrains Mono, SF Mono, Menlo, monospace" font-size="8" fill="#030303" opacity="0.7">output tokens</text>
+
+  <!-- BAR 2: production < 1% -> tiny sliver (0.8% -> h=6.1) -->
+  <rect x="325" y="293.9" width="70" height="6.1" fill="#0F3A6B"></rect>
+  <text x="360" y="285" text-anchor="middle" font-family="JetBrains Mono, SF Mono, Menlo, monospace" font-size="13" fill="#0F3A6B">&lt;1%</text>
+  <text x="360" y="318" text-anchor="middle" font-family="JetBrains Mono, SF Mono, Menlo, monospace" font-size="9" fill="#030303">PRODUCTION</text>
+  <text x="360" y="330" text-anchor="middle" font-family="JetBrains Mono, SF Mono, Menlo, monospace" font-size="8" fill="#030303" opacity="0.7">real traffic</text>
+
+  <!-- BAR 3: benchmark destructive-code = 16% -> h=122.7, top y=177.3 -->
+  <rect x="455" y="177.3" width="70" height="122.7" fill="#7A1626"></rect>
+  <text x="490" y="169" text-anchor="middle" font-family="JetBrains Mono, SF Mono, Menlo, monospace" font-size="13" fill="#7A1626">16%</text>
+  <text x="490" y="318" text-anchor="middle" font-family="JetBrains Mono, SF Mono, Menlo, monospace" font-size="9" fill="#030303">BENCHMARK</text>
+  <text x="490" y="330" text-anchor="middle" font-family="JetBrains Mono, SF Mono, Menlo, monospace" font-size="8" fill="#030303" opacity="0.7">destructive-code</text>
+
+  <!-- BAR 4: benchmark SWE-bench = 26% -> h=199.3, top y=100.7 -->
+  <rect x="585" y="100.7" width="70" height="199.3" fill="#7A1626"></rect>
+  <text x="620" y="92" text-anchor="middle" font-family="JetBrains Mono, SF Mono, Menlo, monospace" font-size="13" fill="#7A1626">26%</text>
+  <text x="620" y="318" text-anchor="middle" font-family="JetBrains Mono, SF Mono, Menlo, monospace" font-size="9" fill="#030303">BENCHMARK</text>
+  <text x="620" y="330" text-anchor="middle" font-family="JetBrains Mono, SF Mono, Menlo, monospace" font-size="8" fill="#030303" opacity="0.7">SWE-bench Verified</text>
+
+  <!-- 21x gap annotation between production line and benchmark band -->
+  <line x1="690" y1="293.9" x2="690" y2="124.3" stroke="#DBA844" stroke-width="1.5"></line>
+  <line x1="685" y1="293.9" x2="695" y2="293.9" stroke="#DBA844" stroke-width="1.5"></line>
+  <line x1="685" y1="124.3" x2="695" y2="124.3" stroke="#DBA844" stroke-width="1.5"></line>
+  <rect x="612" y="196" width="96" height="34" fill="#ffffff" stroke="#DBA844" stroke-width="1.5"></rect>
+  <text x="660" y="210" text-anchor="middle" font-family="JetBrains Mono, SF Mono, Menlo, monospace" font-size="11" fill="#DBA844">~21&#215; gap</text>
+  <text x="660" y="224" text-anchor="middle" font-family="JetBrains Mono, SF Mono, Menlo, monospace" font-size="8" fill="#030303">vs &lt;1% baseline</text>
+
+  <!-- production line label -->
+  <text x="156" y="290" text-anchor="start" font-family="JetBrains Mono, SF Mono, Menlo, monospace" font-size="8" fill="#0F3A6B">production baseline &lt;1%</text>
 </svg>
