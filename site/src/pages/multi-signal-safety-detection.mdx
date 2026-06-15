@@ -2,7 +2,7 @@
 layout: ../layouts/CinematicLayout.astro
 title: "Why a Safety Detector Needs Corroboration"
 short_title: "Why a Safety Detector Needs Corroboration"
-description: "A safety detector can be wrong in two directions: under-detecting real harm, and over-detecting a benign look-alike in a way that causes the harm it was meant to prevent. One classifier cannot tell those apart, because the harmful pattern and its benign twin share words and tone. A method for running several independent signals, scoring how much they agree, and scaling the enforcement to that corroboration, so every decision carries a measured precision instead of one signal's guess."
+description: "A safety detector can be wrong in two directions, under-detecting real harm, and over-detecting a benign look-alike in a way that causes the harm it was meant to prevent. One classifier cannot tell those apart, because the harmful pattern and its benign twin share words and tone. A method for running several independent signals, scoring how much they agree, and scaling the enforcement to that corroboration, so every decision carries a measured precision instead of one signal's guess."
 category: "AI Evaluation & Safety"
 subcategory: "Detection & Trust and Safety"
 format: "ESSAY"
@@ -19,7 +19,7 @@ import ApaReferences from '../components/ApaReferences.astro';
 
 ## A safety detector can be wrong in two directions
 
-A safety detector can be wrong in two directions. It can under-detect, letting real harm through, the direction audits and red teams are built to catch. It can also over-detect, firing on something that shares surface features with a harmful class while being something else, and that second mistake can produce the very harm the detector was meant to prevent: a model that answers a person's distress with an unsolicited diagnosis is pattern-matching to care while delivering an outcome the person did not ask for (I measure that exact failure in [the Claude caretaker work](../Claude_Character_Tic/claude-character-tic.html)). One classifier cannot keep both directions honest, because the harmful pattern and its benign look-alike co-occur at the level of words and tone, so a single read of the surface cannot separate them.
+A safety detector can be wrong in two directions. It can under-detect, letting real harm through, the direction audits and red teams are built to catch. It can also over-detect, firing on something that shares surface features with a harmful class while being something else, and that second mistake can produce the very harm the detector was meant to prevent. A model that answers a person's distress with an unsolicited diagnosis is pattern-matching to care while delivering an outcome the person did not ask for (I measure that exact failure in [the Claude caretaker work](../Claude_Character_Tic/claude-character-tic.html)). One classifier cannot keep both directions honest, because the harmful pattern and its benign look-alike co-occur at the level of words and tone, so a single read of the surface cannot separate them.
 
 </Band>
 
@@ -35,7 +35,7 @@ Driving detection from a single signal builds in a predictable error. Sentiment 
 
 ## Run several signals and score their agreement
 
-The detector runs several independent streams over the same content: a sentiment and affect read, a lexical co-occurrence check against curated harm-related and intervention-related vocabularies, structural and behavioral features, and relational or network signals where the data supports them. It then scores how much the streams agree rather than taking a majority vote. A flag is as strong as the corroboration behind it, so a case where one stream is confident and the others stay silent is treated as the weak signal it is. Independent streams also make a flag legible: it arrives with the specific streams that agreed, which is what a human reviewer needs to act on it with any confidence.
+The detector runs several independent streams over the same content, among them a sentiment and affect read, a lexical co-occurrence check against curated harm-related and intervention-related vocabularies, structural and behavioral features, and relational or network signals where the data supports them. It then scores how much the streams agree rather than taking a majority vote. A flag is as strong as the corroboration behind it, so a case where one stream is confident and the others stay silent is treated as the weak signal it is. Independent streams also make a flag legible, since it arrives with the specific streams that agreed, which is what a human reviewer needs to act on it with any confidence.
 
 </Band>
 
@@ -51,7 +51,7 @@ A detection score does something only when it connects to an action, so the dete
 
 ## What the method is, underneath
 
-This is a discipline for using the detectors you already have: you accept that any single signal is fragile, you require several of them to agree, you score that agreement instead of counting votes, and you let the strength of the agreement decide how hard you act. What you get back is an enforcement decision you can put a number on, rather than one signal's confident guess. The same shape shows up wherever a single read is too fragile to act on alone, which is why it sits next to the [agentic experience suite](../Agentic_Experience_Evaluation/agentic-experience-evaluation.html), where several weak signals of dissatisfaction are combined the same way.
+The method is a discipline for using the detectors you already have. You accept that any single signal is fragile, you require several of them to agree, you score that agreement instead of counting votes, and you let the strength of the agreement decide how hard you act. What you get back is an enforcement decision you can put a number on, rather than one signal's confident guess. The same shape shows up wherever a single read is too fragile to act on alone, which is why it sits next to the [agentic experience suite](../Agentic_Experience_Evaluation/agentic-experience-evaluation.html), where several weak signals of dissatisfaction are combined the same way.
 
 </Band>
 

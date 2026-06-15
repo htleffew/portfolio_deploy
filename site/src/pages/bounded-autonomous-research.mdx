@@ -2,7 +2,7 @@
 layout: ../layouts/CinematicLayout.astro
 title: "Letting an Agent Improve Your System, Gated by Evaluation"
 short_title: "Letting an Agent Improve Your System, Gated by"
-description: "An agent that can rewrite your ranking logic is powerful and risky at the same time, because a change can improve the metric it was told to optimize while quietly degrading something nobody was watching. You get the power without the risk by gating the autonomy on measurement, every proposed change scored against a held-out metric before it ships, and by bounding what the agent is allowed to touch: skill-based routing so cost tracks the task, unified evidence so the evaluation has a target, and a tracked versioning history where automated evaluation decides what advances."
+description: "An agent that can rewrite your ranking logic is powerful and risky at the same time, because a change can improve the metric it was told to optimize while quietly degrading something nobody was watching. You get the power without the risk by gating the autonomy on measurement, every proposed change scored against a held-out metric before it ships, and by bounding what the agent is allowed to touch, namely skill-based routing so cost tracks the task, unified evidence so the evaluation has a target, and a tracked versioning history where automated evaluation decides what advances."
 category: "AI Evaluation & Safety"
 subcategory: "Agentic & Experience Evaluation"
 format: "ESSAY"
@@ -19,7 +19,7 @@ import ApaReferences from '../components/ApaReferences.astro';
 
 ## Powerful and risky at the same time
 
-An agent that can rewrite the ranking logic of your retrieval system is powerful and risky at the same time, because the change it proposes can improve the metric it was told to optimize while quietly degrading some property nobody was watching. You get the power without the risk by gating the autonomy on measurement: every change the agent proposes is scored against a held-out metric before it is allowed to ship, and the agent is only ever allowed to alter a finite, auditable set of things. The rest of this is what that loop looks like in practice, and it leans on the same held-out, offline evaluation as [the guardrail recipe](../AI_Safety_Audit_Framework/ai-safety-audit-framework.html) and [the agentic experience suite](../Agentic_Experience_Evaluation/agentic-experience-evaluation.html): the agent acts, the evaluation judges, and only the changes the measurement supports go live.
+An agent that can rewrite the ranking logic of your retrieval system is powerful and risky at the same time, because the change it proposes can improve the metric it was told to optimize while quietly degrading some property nobody was watching. You get the power without the risk by gating the autonomy on measurement, where every change the agent proposes is scored against a held-out metric before it is allowed to ship, and the agent is only ever allowed to alter a finite, auditable set of things. The rest of this is what that loop looks like in practice, and it leans on the same held-out, offline evaluation as [the guardrail recipe](../AI_Safety_Audit_Framework/ai-safety-audit-framework.html) and [the agentic experience suite](../Agentic_Experience_Evaluation/agentic-experience-evaluation.html), where the agent acts, the evaluation judges, and only the changes the measurement supports go live.
 
 </Band>
 

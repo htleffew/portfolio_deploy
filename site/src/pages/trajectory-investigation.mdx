@@ -2,7 +2,7 @@
 layout: ../layouts/CinematicLayout.astro
 title: "Per-User Investigation as Trajectory, Not Snapshot"
 short_title: "Per-User Investigation as Trajectory, Not Snapshot"
-description: "Cohort analytics and per-user investigation are different research problems with different ethical regimes. This methodology takes a flagged user account with months or years of platform activity, slices the timeline into six overlapping segments, runs multi-axis analysis on each, and produces a structured forensic report. Risk is a trajectory: the right way to characterize an account is to compare what it was doing on arrival to what it was doing immediately before being flagged."
+description: "Cohort analytics and per-user investigation are different research problems with different ethical regimes. The methodology takes a flagged user account with months or years of platform activity, slices the timeline into six overlapping segments, runs multi-axis analysis on each, and produces a structured forensic report. Risk is a trajectory, so the right way to characterize an account is to compare what it was doing on arrival to what it was doing immediately before being flagged."
 category: "Platform Integrity"
 subcategory: "Forensic Methodology"
 format: "ESSAY"
@@ -19,7 +19,7 @@ import Figure from '../components/Figure.astro';
 
 ## From cohort to case
 
-The first time I ran a per-user investigation after spending months in cohort analytics, I kept reaching for population-level tools that did not apply. Cohort analytics estimates population behavior: what fraction of users encounter a given category of content, how long the average session lasts, where the rate of policy violations is rising. The unit of analysis is the population, and the law of large numbers is forgiving of missing data and noisy signals. Per-user investigation does the inverse. It takes one account, often surfaced because automated systems flagged it for human review, and asks what specifically happened on this account, in what order, and what the trajectory implies.
+The first time I ran a per-user investigation after spending months in cohort analytics, I kept reaching for population-level tools that did not apply. Cohort analytics estimates population behavior, asking what fraction of users encounter a given category of content, how long the average session lasts, where the rate of policy violations is rising. The unit of analysis is the population, and the law of large numbers is forgiving of missing data and noisy signals. Per-user investigation does the inverse. It takes one account, often surfaced because automated systems flagged it for human review, and asks what specifically happened on this account, in what order, and what the trajectory implies.
 
 The two kinds of work demand different statistical sensibilities and different ethical guardrails. Forensic per-user analysis is unforgiving on both counts, because there is no averaging across cases when the case is a single individual whose situation may end in account removal, escalation to a child-safety team, or referral to law enforcement.
 
@@ -29,15 +29,15 @@ The two kinds of work demand different statistical sensibilities and different e
 
 ## The temporal segmentation
 
-A current risk score captures the account's state at one moment. A topic distribution computed over the entire user history summarizes the whole window into one average. Neither answers the question I kept coming back to with flagged accounts: is the trajectory decelerating, stable, or accelerating? The methodology below is built around that question.
+A current risk score captures the account's state at one moment. A topic distribution computed over the entire user history summarizes the whole window into one average. Neither answers the question I kept coming back to with flagged accounts, namely whether the trajectory is decelerating, stable, or accelerating. The methodology below is built around that question.
 
 For each user of interest, the engine slices the timeline six ways and runs the full analytical suite on each slice independently.
 
-<Figure src="/assets/trajectory-investigation/fig_1.svg" alt="Timeline diagram showing six overlapping temporal slices: Consolidated, Early/Mid/Late Tertile, First 25, and Last 25, applied to a user's observation window." caption="FIG. 01 The six temporal slices applied to each user of interest. The three tertiles partition the full window for trajectory inference; the First 25 and Last 25 insets anchor the boundaries so arrival behavior is directly comparable to pre-flag behavior." />
+<Figure src="/assets/trajectory-investigation/fig_1.svg" alt="Timeline diagram showing six overlapping temporal slices (Consolidated, Early/Mid/Late Tertile, First 25, and Last 25) applied to a user's observation window." caption="FIG. 01 The six temporal slices applied to each user of interest. The three tertiles partition the full window for trajectory inference; the First 25 and Last 25 insets anchor the boundaries so arrival behavior is directly comparable to pre-flag behavior." />
 
-The **Consolidated** slice gives the baseline distribution: the user's overall content profile across the full observation window. The three **tertile slices** partition that window into thirds, which is the minimum granularity at which trajectory direction (decelerating, stable, accelerating) becomes statistically legible. The **First 25** and **Last 25** insets anchor the boundaries: the first twenty-five observations capture how the user behaved on arrival, and the last twenty-five capture how the account was behaving immediately before the flagging event. Comparing those two boundary samples directly is where I start most investigations; a user whose arrival behavior and pre-flag behavior look the same is a different finding than a user whose pre-flag behavior is qualitatively divergent from how they began.
+The **Consolidated** slice gives the baseline distribution, the user's overall content profile across the full observation window. The three **tertile slices** partition that window into thirds, which is the minimum granularity at which trajectory direction (decelerating, stable, accelerating) becomes statistically legible. The **First 25** and **Last 25** insets anchor the boundaries; the first twenty-five observations capture how the user behaved on arrival, and the last twenty-five capture how the account was behaving immediately before the flagging event. Comparing those two boundary samples directly is where I start most investigations; a user whose arrival behavior and pre-flag behavior look the same is a different finding than a user whose pre-flag behavior is qualitatively divergent from how they began.
 
-The slices overlap deliberately. The Early Tertile contains the First 25 by construction, and the Late Tertile contains the Last 25 by construction. This lets an analyst confirm that a signal observed in a small inset is also visible in its containing tertile, which is a basic robustness check. A finding that appears only in the First 25 but not in the Early Tertile is more likely a small-sample artifact than a real signal.
+The slices overlap deliberately. The Early Tertile contains the First 25 by construction, and the Late Tertile contains the Last 25 by construction. The overlap lets an analyst confirm that a signal observed in a small inset is also visible in its containing tertile, which is a basic robustness check. A finding that appears only in the First 25 but not in the Early Tertile is more likely a small-sample artifact than a real signal.
 
 </Band>
 
@@ -45,7 +45,7 @@ The slices overlap deliberately. The Early Tertile contains the First 25 by cons
 
 ## Multi-axis triangulation
 
-Each slice receives the full analytical suite from the upstream engine: time series of policy events, view source distribution, sentiment polarity, n-gram frequency, topic clusters, collocation graphs, NLTK-derived language features, and word clouds. The engine emits all of these for every slice rather than picking one or two, because each axis has known failure modes, and those failure modes are mostly orthogonal. Two signals from different axes pointing in the same direction is a much stronger inference than either signal alone.
+Each slice receives the full analytical suite from the upstream engine, which spans time series of policy events, view source distribution, sentiment polarity, n-gram frequency, topic clusters, collocation graphs, NLTK-derived language features, and word clouds. The engine emits all of these for every slice rather than picking one or two, because each axis has known failure modes, and those failure modes are mostly orthogonal. Two signals from different axes pointing in the same direction is a much stronger inference than either signal alone.
 
 A topic-cluster shift between Early and Late Tertiles, for example, is a candidate signal but not a finding on its own. Topic models are stochastic, the topic indices reshuffle from run to run, and apparent drift can be an artifact of corpus size differences between the slices. The same shift becomes a finding when it co-occurs with a sentiment polarity shift in the same direction and a change in the dominant view sources driving that user's content delivery. I have had investigations where a dramatic-looking topic shift turned out to be a corpus-size artifact; the sentiment axis was flat, the view sources were unchanged, and the "drift" dissolved under cross-examination. That is why the engine runs everything instead of letting the analyst pick one axis and trust it.
 
@@ -55,17 +55,17 @@ The co-occurrence layer catches what frequency and topic analysis smooth over. N
 
 </Band>
 
-<Band theme="dark" spine="Ethics: when does patt" section="Ethics: when does pattern inference become surveillance?">
+<Band theme="dark" spine="Ethics, and when patt" section="Ethics, and when pattern inference becomes surveillance">
 
-## Ethics: when does pattern inference become surveillance?
+## Ethics, and when pattern inference becomes surveillance
 
 A methodology that produces forensic-grade trajectory reports on individual users is a methodology that can be misused. Four principles shape when and how it is appropriate to use.
 
 **Necessity.** The investigation runs only on accounts that have already been flagged by an upstream system, with documented justification for the flag. The methodology is an interpretation tool for cases that have already cleared a threshold, not a discovery tool. Fishing expeditions are excluded by design.
 
-**Proportionality.** The depth of analysis scales with the severity of the suspected violation. A spam-policy flag does not warrant the six-slice trajectory analysis; it warrants a lighter cohort-level look. The deep methodology is reserved for high-severity categories: child safety, credible threat indicators, and coordinated inauthentic behavior.
+**Proportionality.** The depth of analysis scales with the severity of the suspected violation. A spam-policy flag does not warrant the six-slice trajectory analysis; it warrants a lighter cohort-level look. The deep methodology is reserved for high-severity categories, namely child safety, credible threat indicators, and coordinated inauthentic behavior.
 
-**Accountability.** Every investigation produces a structured artifact that is logged, attributable to the analyst, reviewable by audit, and subject to retention policy. The Jinja-templated report format from the upstream engine makes this enforceable: every section is the same in every report, so reviewers can read across investigations consistently and audit teams can verify that conclusions are supported by the documented analysis.
+**Accountability.** Every investigation produces a structured artifact that is logged, attributable to the analyst, reviewable by audit, and subject to retention policy. The Jinja-templated report format from the upstream engine makes this enforceable, since every section is the same in every report, so reviewers can read across investigations consistently and audit teams can verify that conclusions are supported by the documented analysis.
 
 **Redaction discipline.** Reports leaving the analytics environment for legal review, policy review, or external regulator inspection are redacted by default. User identifiers, granular timestamps, and content excerpts that could re-identify an account are removed before any external transmission. The redaction is a property of the report templates themselves, which generate redacted and unredacted variants from the same underlying analysis.
 

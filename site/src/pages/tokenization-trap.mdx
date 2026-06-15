@@ -1,8 +1,8 @@
 ---
 layout: ../layouts/CinematicLayout.astro
-title: "The Tokenization Trap: Why Logographic Languages Don't Save Agentic Context"
+title: "The Tokenization Trap, Why Logographic Languages Don't Save Agentic Context"
 short_title: "The Tokenization Trap"
-description: "Logographic languages look like they should compress agent prompts, but BPE tokenization fragments them into per-byte pieces: GLM-5 encodes Chinese at 0.98x the English token count, while MiniMax-2.7 inflates to 1.28x. The round-trip translation overhead (Chinese reasoning to English output) taxes every step of the agentic loop. The cost model and the empirics, side by side."
+description: "Logographic languages look like they should compress agent prompts, but BPE tokenization fragments them into per-byte pieces. GLM-5 encodes Chinese at 0.98x the English token count, while MiniMax-2.7 inflates to 1.28x. The round-trip translation overhead (Chinese reasoning to English output) taxes every step of the agentic loop. The cost model and the empirics, side by side."
 category: "Research & Architecture"
 subcategory: "Tokenization"
 format: "CASE STUDY"
@@ -19,7 +19,7 @@ import ApaReferences from '../components/ApaReferences.astro';
 
 ## The hypothesis and its appeal
 
-A Simplified Chinese character can encode an entire semantic concept in a single logogram. English spreads the same concept across multiple characters, spaces, and grammatical particles. The arithmetic looks obvious: instruct an agentic LLM to conduct its chain-of-thought reasoning in Chinese, and the context window holds more reasoning per token.
+A Simplified Chinese character can encode an entire semantic concept in a single logogram. English spreads the same concept across multiple characters, spaces, and grammatical particles. The arithmetic looks obvious. Instruct an agentic LLM to conduct its chain-of-thought reasoning in Chinese, and the context window holds more reasoning per token.
 
 Practitioners call this "vibe coding." I ran through the arithmetic myself when planning a multilingual agentic pipeline, and the tokenizer does not cooperate.
 
@@ -43,12 +43,12 @@ The distinction is between morphosyntactic density (characters per concept, a pr
 
 Whether Chinese saves tokens at all depends on the specific model's vocabulary allocation. Ren et al. (2026) tested the vibe-coding hypothesis empirically across multiple models and found the efficiency to be entirely model-dependent:
 
-- **GLM-5** (Chinese-optimized vocabulary): 0.98x the English token count for equivalent Chinese prompts. A marginal saving.
-- **MiniMax-2.7** and several GPT variants: up to 1.28x the English token count. Chinese is more expensive, not less.
+- **GLM-5** (Chinese-optimized vocabulary), 0.98x the English token count for equivalent Chinese prompts. A marginal saving.
+- **MiniMax-2.7** and several GPT variants, up to 1.28x the English token count. Chinese is more expensive, not less.
 
 The token count is not the only variable. Ren et al. also measured task resolution rates and found that models prompted to reason in Chinese frequently exhibited lower problem-solving rates than the same models prompted in English. The metric that should govern a deployment decision is cost per successful task completion, and that metric deteriorated when switching to Chinese across most models tested.
 
-A separate failure mode: multilingual models instructed to reason strictly in Chinese exhibit language mixing during complex logical or mathematical steps. The model reverts to English unpredictably, producing convoluted outputs that disrupt the intended context-saving mechanism.
+There is a separate failure mode here. Multilingual models instructed to reason strictly in Chinese exhibit language mixing during complex logical or mathematical steps. The model reverts to English unpredictably, producing convoluted outputs that disrupt the intended context-saving mechanism.
 
 </Band>
 
