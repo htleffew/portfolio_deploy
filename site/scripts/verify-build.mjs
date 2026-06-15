@@ -32,7 +32,8 @@ for (const d of articleDirs) {
   checked++;
   const refs = [...html.matchAll(/(?:src|href)="(\/(?:assets|interactive)\/[^"]+)"/g)].map((m) => m[1]);
   for (const ref of refs) {
-    if (!existsSync(path.join(dist, ref.replace(/^\//, '')))) problems.push(`[asset] ${d.name}: missing ${ref}`);
+    const refPath = ref.split('?')[0].replace(/^\//, ''); // strip ?v= cache-bust token
+    if (!existsSync(path.join(dist, refPath))) problems.push(`[asset] ${d.name}: missing ${ref}`);
   }
 }
 

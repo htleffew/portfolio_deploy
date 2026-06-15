@@ -1,5 +1,5 @@
 {
-  "name": "portfolio_astro",
+  "name": "portfolio_deploy",
   "type": "module",
   "version": "1.0.0",
   "engines": {
@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "node scripts/gen-index.mjs && node scripts/gen-redirects.mjs && astro dev",
-    "build": "node scripts/gen-index.mjs && node scripts/gen-redirects.mjs && astro build",
+    "build": "node scripts/gen-index.mjs && node scripts/gen-redirects.mjs && astro build && node scripts/cache-bust.mjs",
     "preview": "astro preview",
     "genindex": "node scripts/gen-index.mjs",
     "redirects": "node scripts/gen-redirects.mjs",
