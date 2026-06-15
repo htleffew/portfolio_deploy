@@ -6,3 +6,6 @@ __pycache__/
 *.pyc
 site/dist/
 site/public/projects_index.json
+
+# Local-only Claude Code settings (per-machine)
+.claude/settings.local.json
