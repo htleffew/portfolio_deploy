@@ -1,5 +1,10 @@
 # portfolio_deploy/site — MDX article engine
 
+> Authoring specs (`VISUALIZATIONS.md`, `CITATIONS.md`), design rationale (`STYLE.md`), and
+> prose voice live in the **private** `portfolio_studio` repo. This public repo holds the
+> token *implementation* (`public/design_system/`) and the published content. See
+> `../../AGENTS.md` → "Portfolio Architecture".
+
 Astro + MDX rebuild of the portfolio article pages. Each article is a small
 `.mdx` file (frontmatter + prose + components). A shared layout owns the frame
 (nav, footer, reading progress, chapter spine, Related Works, next-article

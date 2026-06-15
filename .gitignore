@@ -7,5 +7,5 @@ __pycache__/
 site/dist/
 site/public/projects_index.json
 
-# Local-only Claude Code settings (per-machine)
-.claude/settings.local.json
+# Internal authoring tooling (canonical copy lives in the private writing-standards repo)
+.claude/

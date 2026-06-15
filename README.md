@@ -9,6 +9,14 @@ frame (nav, footer, reading progress, chapter spine, Related Works, next-article
 link). Editing an `.mdx` and pushing to `master` rebuilds and redeploys the live
 site in ~60–90 seconds via GitHub Actions — no manual build, no hand-edited HTML.
 
+## Scope (public artifact)
+
+This repo is the **public** published site only. Operational tooling, authoring specs,
+design rationale, and raw source material live in the **private** `portfolio_studio` repo
+(and the `academic_publishing` / `medium_publishing` / `synthesis_engine` tool repos). Do
+not add agent guidance, internal notes, or prep material here. See `../AGENTS.md` →
+"Portfolio Architecture".
+
 ## Repository layout
 
 ```
@@ -29,9 +37,9 @@ portfolio_deploy/
 ```
 
 The full design-system reference (tokens, the `.band` layout system, the
-runtime chrome contract) lives in `site/public/design_system/`. Older paper
-templates (`ICLR_LaTex_Template/`, `Nature_LaTex_Template/`) and unrelated
-reference files remain at root and are not part of the website build.
+runtime chrome contract) lives in `site/public/design_system/`. (Paper LaTeX templates and unrelated reference/positioning files that used to sit at
+root were relocated 2026-06-15 to the `academic_publishing` repo and the private
+`portfolio_studio` repo; this repo is the website build only.)
 
 ## Edit or add an article
 
