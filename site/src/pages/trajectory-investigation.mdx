@@ -10,7 +10,7 @@ time: "13 min read"
 author: "Dr. Heather Leffew"
 tags: ["Trust & Safety", "Forensic Methodology", "Behavioral Trajectory", "Investigation Ethics", "Platform Safety"]
 visual: "fig_1.svg"
-scripts: []
+scripts: ["interactive_0.js"]
 ---
 import Band from '../components/Band.astro';
 import Figure from '../components/Figure.astro';
@@ -33,9 +33,7 @@ A current risk score captures the account's state at one moment. A topic distrib
 
 For each user of interest, the engine slices the timeline six ways and runs the full analytical suite on each slice independently.
 
-<Figure src="/assets/trajectory-investigation/fig_1.svg" alt="Figure 1" caption="Figure 1" />
-
-FIG. 01 The six temporal slices applied to each user of interest. The three tertiles partition the full window for trajectory inference; the First 25 and Last 25 insets anchor the boundaries so arrival behavior is directly comparable to pre-flag behavior.
+<Figure src="/assets/trajectory-investigation/fig_1.svg" alt="Timeline diagram showing six overlapping temporal slices: Consolidated, Early/Mid/Late Tertile, First 25, and Last 25, applied to a user's observation window." caption="FIG. 01 The six temporal slices applied to each user of interest. The three tertiles partition the full window for trajectory inference; the First 25 and Last 25 insets anchor the boundaries so arrival behavior is directly comparable to pre-flag behavior." />
 
 The **Consolidated** slice gives the baseline distribution: the user's overall content profile across the full observation window. The three **tertile slices** partition that window into thirds, which is the minimum granularity at which trajectory direction (decelerating, stable, accelerating) becomes statistically legible. The **First 25** and **Last 25** insets anchor the boundaries: the first twenty-five observations capture how the user behaved on arrival, and the last twenty-five capture how the account was behaving immediately before the flagging event. Comparing those two boundary samples directly is where I start most investigations; a user whose arrival behavior and pre-flag behavior look the same is a different finding than a user whose pre-flag behavior is qualitatively divergent from how they began.
 

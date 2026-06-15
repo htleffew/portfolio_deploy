@@ -33,12 +33,15 @@ const pageScripts = Array.isArray(fm.scripts) ? fm.scripts : [];
   <title>{title} | Dr. Heather Leffew</title>
   {description && <meta name="description" content={description} />}
 
-  <!-- Three.js core for the cinematic engine. The postprocessing chain
-       (EffectComposer/RenderPass/ShaderPass/CopyShader/LuminosityHighPass/
-       UnrealBloomPass) and simplex-noise were removed 2026-06-12: nothing in
-       cinematic_engine_v3.js references them — they were ~150KB of dead
-       script downloads on every article page. -->
+  <!-- On-demand WebGL libraries for the cinematic engine (match live contract) -->
   <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+  <script is:inline src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js" defer></script>
+  <script is:inline src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js" defer></script>
+  <script is:inline src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js" defer></script>
+  <script is:inline src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js" defer></script>
+  <script is:inline src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js" defer></script>
+  <script is:inline src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js" defer></script>
+  <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js" defer></script>
 
   <!-- Single stylesheet; tokens.css + global_chrome.css load via @import inside it -->
   <link rel="stylesheet" href="/design_system/assets/css/institutional.css" />

@@ -10,7 +10,7 @@ time: "14 min read"
 author: "Dr. Heather Leffew"
 tags: ["Survival Analysis", "Platform Safety", "Trust & Safety", "Spark / Distributed", "LDA Topic Modeling"]
 visual: "fig_1.svg"
-scripts: []
+scripts: ["interactive_0.js"]
 ---
 import Band from '../components/Band.astro';
 import Figure from '../components/Figure.astro';
@@ -35,9 +35,7 @@ The engine runs on a YARN-managed Spark cluster sized for petabyte-scale moderat
 
 The pipeline splits cleanly into four modules, each with a single responsibility, and the modules communicate through standardized intermediate CSV artifacts rather than in-memory state. Any module can be re-run in isolation when a methodology question demands it, which is the property that makes the pipeline auditable: you can re-run the survival analysis on the same intermediates without re-running the Spark fetch, and if the numbers change, the problem is in the analysis, not in the data extraction.
 
-<Figure src="/assets/platform-survival-analytics/fig_1.svg" alt="Figure 1" caption="Figure 1" />
-
-FIG. 01 The four-module decomposition. Modules communicate through standardized CSV intermediates instead of in-memory state, so any analytical module can be re-run in isolation without re-running the Spark fetch.
+<Figure src="/assets/platform-survival-analytics/fig_1.svg" alt="Diagram of the four-module pipeline: Spark data fetch, survival analysis, text NLP, and Jinja report generation, connected by CSV intermediate artifacts." caption="FIG. 01 The four-module decomposition. Modules communicate through standardized CSV intermediates instead of in-memory state, so any analytical module can be re-run in isolation without re-running the Spark fetch." />
 
 </Band>
 
@@ -81,9 +79,7 @@ None of these signals is conclusive on its own, which is why the engine runs all
 
 Co-occurrence analysis catches what topic modeling smooths over. LDA gives you topic distributions; the co-occurrence graph gives you the word-pairs that shape the texture inside those topics. When two words that did not previously co-occur start appearing together at high frequency in a user's consumption window, the engine flags the pair regardless of whether either word is independently policy-relevant. The engine sidesteps LDA's stochastic renumbering problem (the same data can produce different topic indices on different runs) by labeling topics by their top-five terms instead of by index, which makes the topical drift inference robust to renumbering even though downstream automation that hard-codes topic IDs would not be.
 
-<Figure src="/assets/platform-survival-analytics/fig_2.svg" alt="Figure 2" caption="Figure 2" />
-
-FIG. 03 Topic drift across time slices. LDA topic clusters are tracked from early to late tertile; emergent clusters in red signal new topical territory. When this chart shifts at the same temporal boundary as the survival curve, the analyst has both the timing of the change and the content that changed.
+<Figure src="/assets/platform-survival-analytics/fig_2.svg" alt="Small-multiple chart of LDA topic clusters across early, mid, and late user-session tertiles, with emergent clusters highlighted in red." caption="FIG. 03 Topic drift across time slices. LDA topic clusters are tracked from early to late tertile; emergent clusters in red signal new topical territory. When this chart shifts at the same temporal boundary as the survival curve, the analyst has both the timing of the change and the content that changed." />
 
 </Band>
 

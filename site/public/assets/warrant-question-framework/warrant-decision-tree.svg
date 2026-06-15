@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 640" fill="none" font-family="'JetBrains Mono', monospace">
+  <rect width="1000" height="640" fill="#030303" rx="10"/>
+
+  <!-- Title -->
+  <text x="40" y="46" fill="#F5F5F7" font-size="15" letter-spacing="2">THE WARRANT QUESTION IS THE GATE</text>
+  <text x="40" y="70" fill="#DBA844" font-size="12" letter-spacing="1">accuracy is downstream of the warrant question</text>
+  <line x1="40" y1="84" x2="960" y2="84" stroke="#3D1F4A" stroke-width="1.5"/>
+
+  <!-- Node A: the output -->
+  <rect x="350" y="108" width="300" height="68" rx="6" fill="#0F3A6B" stroke="#F5F5F7" stroke-width="1"/>
+  <text x="500" y="138" fill="#F5F5F7" font-size="14" text-anchor="middle">AI emits a wellness or</text>
+  <text x="500" y="158" fill="#F5F5F7" font-size="14" text-anchor="middle">clinical-adjacent output</text>
+
+  <!-- A -> diamond -->
+  <path d="M 500 176 L 500 206" stroke="#F5F5F7" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Decision diamond -->
+  <polygon points="500,210 690,300 500,390 310,300" fill="#DBA844" stroke="#F5F5F7" stroke-width="1.5"/>
+  <text x="500" y="292" fill="#030303" font-size="14" font-weight="bold" text-anchor="middle">Did the user</text>
+  <text x="500" y="312" fill="#030303" font-size="14" font-weight="bold" text-anchor="middle">invite this output?</text>
+
+  <!-- NO branch (left) -->
+  <path d="M 310 300 L 200 300 L 200 432" stroke="#7A1626" stroke-width="2.5" marker-end="url(#arrow-red)"/>
+  <text x="252" y="290" fill="#DBA844" font-size="13" font-weight="bold" text-anchor="middle">NO</text>
+
+  <!-- YES branch (right) -->
+  <path d="M 690 300 L 800 300 L 800 432" stroke="#1A4A38" stroke-width="2.5" marker-end="url(#arrow-green)"/>
+  <text x="748" y="290" fill="#DBA844" font-size="13" font-weight="bold" text-anchor="middle">YES</text>
+
+  <!-- Left outcome: unwarranted -->
+  <rect x="40" y="436" width="320" height="150" rx="6" fill="#7A1626" stroke="#F5F5F7" stroke-width="1"/>
+  <text x="60" y="466" fill="#F5F5F7" font-size="14" font-weight="bold">Unwarranted.</text>
+  <text x="60" y="492" fill="#F5F5F7" font-size="12">The intervention itself is the</text>
+  <text x="60" y="510" fill="#F5F5F7" font-size="12">error. The accuracy question</text>
+  <text x="60" y="528" fill="#F5F5F7" font-size="12">never opens. An accurate</text>
+  <text x="60" y="546" fill="#F5F5F7" font-size="12">output here is still harmful;</text>
+  <text x="60" y="564" fill="#DBA844" font-size="12">accuracy can be zero and the</text>
+  <text x="60" y="582" fill="#DBA844" font-size="12">harm unchanged.</text>
+
+  <!-- Right outcome: warranted -->
+  <rect x="640" y="436" width="320" height="64" rx="6" fill="#1A4A38" stroke="#F5F5F7" stroke-width="1"/>
+  <text x="660" y="466" fill="#F5F5F7" font-size="14" font-weight="bold">Warranted.</text>
+  <text x="660" y="488" fill="#F5F5F7" font-size="12">The role the user assigned invited it.</text>
+
+  <!-- Warranted -> downstream -->
+  <path d="M 800 500 L 800 522" stroke="#F5F5F7" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Downstream node: accuracy -->
+  <rect x="640" y="526" width="320" height="64" rx="6" fill="#3D1F4A" stroke="#F5F5F7" stroke-width="1"/>
+  <text x="660" y="554" fill="#F5F5F7" font-size="12">Now the accuracy and helpfulness</text>
+  <text x="660" y="574" fill="#F5F5F7" font-size="12">questions apply.</text>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#F5F5F7"/>
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#7A1626"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1A4A38"/>
+    </marker>
+  </defs>
+</svg>

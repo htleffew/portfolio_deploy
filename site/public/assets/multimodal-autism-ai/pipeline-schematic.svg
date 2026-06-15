@@ -1,0 +1,204 @@
+<svg viewBox="0 0 900 540" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Multimodal feature-extraction pipeline diagram for ADOS-2-aligned autism assessment">
+  <title>Multimodal Feature-Extraction Pipeline</title>
+  <desc>Two input streams — Video (left) and Audio (right) — flow through computer-vision and NLP processing modules, producing behavioral features that map to ADOS-2 scoring domains A, B, C, and D.</desc>
+
+  <style>
+    text { font-family: "JetBrains Mono", "Courier New", monospace; fill: #E0E0E6; }
+    .label-sm { font-size: 10px; fill: #A1A1A6; }
+    .label-md { font-size: 12px; }
+    .label-lg { font-size: 14px; font-weight: 600; }
+    .label-head { font-size: 13px; font-weight: 700; fill: #FFFFFF; }
+    .box-blue { fill: #1A2C45; stroke: #3866A0; stroke-width: 1.5; rx: 6; }
+    .box-accent { fill: #1F1A2E; stroke: #4D8CFF; stroke-width: 1.5; rx: 6; }
+    .box-domain { fill: #1E1118; stroke: #7A1626; stroke-width: 1.5; rx: 6; }
+    .box-input { fill: #111827; stroke: #3866A0; stroke-width: 2; rx: 8; }
+    .arrow { stroke: #A1A1A6; stroke-width: 1.5; fill: none; marker-end: url(#arrowhead); }
+    .arrow-blue { stroke: #4D8CFF; stroke-width: 1.5; fill: none; marker-end: url(#arrowhead-blue); }
+    .arrow-red { stroke: #7A1626; stroke-width: 1.5; fill: none; marker-end: url(#arrowhead-red); }
+    .divider { stroke: #333340; stroke-width: 1; stroke-dasharray: 4 3; }
+  </style>
+
+  <defs>
+    <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#A1A1A6"/>
+    </marker>
+    <marker id="arrowhead-blue" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#4D8CFF"/>
+    </marker>
+    <marker id="arrowhead-red" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#7A1626"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="540" fill="#0D1117" rx="4"/>
+
+  <!-- Title -->
+  <text x="450" y="32" text-anchor="middle" class="label-head" font-size="15">Multimodal Feature-Extraction Pipeline — ADOS-2 Alignment</text>
+
+  <!-- ===== COLUMN LABELS ===== -->
+  <text x="150" y="64" text-anchor="middle" class="label-md" fill="#4D8CFF">INPUT</text>
+  <text x="350" y="64" text-anchor="middle" class="label-md" fill="#4D8CFF">PROCESSING</text>
+  <text x="580" y="64" text-anchor="middle" class="label-md" fill="#4D8CFF">FEATURES</text>
+  <text x="780" y="64" text-anchor="middle" class="label-md" fill="#7A1626">ADOS-2 DOMAINS</text>
+
+  <!-- Vertical dividers -->
+  <line x1="237" y1="55" x2="237" y2="520" class="divider"/>
+  <line x1="460" y1="55" x2="460" y2="520" class="divider"/>
+  <line x1="685" y1="55" x2="685" y2="520" class="divider"/>
+
+  <!-- ===== VIDEO INPUT ===== -->
+  <rect x="60" y="80" width="170" height="54" fill="#111827" stroke="#3866A0" stroke-width="2" rx="8"/>
+  <text x="145" y="102" text-anchor="middle" class="label-head" font-size="13">VIDEO STREAM</text>
+  <text x="145" y="120" text-anchor="middle" class="label-sm">Camera / session recording</text>
+
+  <!-- ===== AUDIO INPUT ===== -->
+  <rect x="60" y="160" width="170" height="54" fill="#111827" stroke="#3866A0" stroke-width="2" rx="8"/>
+  <text x="145" y="182" text-anchor="middle" class="label-head" font-size="13">AUDIO STREAM</text>
+  <text x="145" y="200" text-anchor="middle" class="label-sm">Microphone / session audio</text>
+
+  <!-- ===== PROCESSING: Computer Vision ===== -->
+  <rect x="252" y="74" width="190" height="72" fill="#1A2C45" stroke="#3866A0" stroke-width="1.5" rx="6"/>
+  <text x="347" y="96" text-anchor="middle" class="label-head" font-size="12">COMPUTER VISION</text>
+  <text x="347" y="113" text-anchor="middle" class="label-sm">MediaPipe face mesh &amp; gaze</text>
+  <text x="347" y="128" text-anchor="middle" class="label-sm">Skeletal pose estimation</text>
+
+  <!-- ===== PROCESSING: NLP / Audio ===== -->
+  <rect x="252" y="160" width="190" height="72" fill="#1A2C45" stroke="#3866A0" stroke-width="1.5" rx="6"/>
+  <text x="347" y="182" text-anchor="middle" class="label-head" font-size="12">NLP / AUDIO</text>
+  <text x="347" y="199" text-anchor="middle" class="label-sm">Whisper speech-to-text</text>
+  <text x="347" y="214" text-anchor="middle" class="label-sm">Prosodic feature extraction</text>
+
+  <!-- Arrows: inputs → processing -->
+  <line x1="230" y1="107" x2="251" y2="107" class="arrow"/>
+  <line x1="230" y1="187" x2="251" y2="187" class="arrow"/>
+
+  <!-- ===== FEATURES (middle column) ===== -->
+
+  <!-- Feature: Eye Contact -->
+  <rect x="474" y="76" width="196" height="30" fill="#1F1A2E" stroke="#4D8CFF" stroke-width="1.5" rx="5"/>
+  <text x="572" y="91" text-anchor="middle" class="label-md" fill="#C0D4FF">Gaze-to-face %</text>
+  <text x="572" y="103" text-anchor="middle" class="label-sm">A1 — Eye Contact</text>
+
+  <!-- Feature: Facial Expressions -->
+  <rect x="474" y="114" width="196" height="30" fill="#1F1A2E" stroke="#4D8CFF" stroke-width="1.5" rx="5"/>
+  <text x="572" y="129" text-anchor="middle" class="label-md" fill="#C0D4FF">Social smile count</text>
+  <text x="572" y="141" text-anchor="middle" class="label-sm">A2 — Facial Expressions</text>
+
+  <!-- Feature: Response to Name -->
+  <rect x="474" y="152" width="196" height="30" fill="#1F1A2E" stroke="#4D8CFF" stroke-width="1.5" rx="5"/>
+  <text x="572" y="167" text-anchor="middle" class="label-md" fill="#C0D4FF">Response latency (s)</text>
+  <text x="572" y="179" text-anchor="middle" class="label-sm">A4 — Response to Name</text>
+
+  <!-- Feature: Joint Attention -->
+  <rect x="474" y="190" width="196" height="30" fill="#1F1A2E" stroke="#4D8CFF" stroke-width="1.5" rx="5"/>
+  <text x="572" y="205" text-anchor="middle" class="label-md" fill="#C0D4FF">Joint attention bids</text>
+  <text x="572" y="217" text-anchor="middle" class="label-sm">A7 — Joint Attention</text>
+
+  <!-- Feature: Vocalizations -->
+  <rect x="474" y="238" width="196" height="30" fill="#1F1A2E" stroke="#4D8CFF" stroke-width="1.5" rx="5"/>
+  <text x="572" y="253" text-anchor="middle" class="label-md" fill="#C0D4FF">Spontaneous vocalizations</text>
+  <text x="572" y="265" text-anchor="middle" class="label-sm">B1 — Vocalizations</text>
+
+  <!-- Feature: Repetitive Language -->
+  <rect x="474" y="276" width="196" height="30" fill="#1F1A2E" stroke="#4D8CFF" stroke-width="1.5" rx="5"/>
+  <text x="572" y="291" text-anchor="middle" class="label-md" fill="#C0D4FF">Phrase repetition rate</text>
+  <text x="572" y="303" text-anchor="middle" class="label-sm">B2 — Repetitive Language</text>
+
+  <!-- Feature: Functional Play -->
+  <rect x="474" y="322" width="196" height="30" fill="#1F1A2E" stroke="#4D8CFF" stroke-width="1.5" rx="5"/>
+  <text x="572" y="337" text-anchor="middle" class="label-md" fill="#C0D4FF">Functional play %</text>
+  <text x="572" y="349" text-anchor="middle" class="label-sm">C1 — Functional Play</text>
+
+  <!-- Feature: Hand Mannerisms -->
+  <rect x="474" y="360" width="196" height="30" fill="#1F1A2E" stroke="#4D8CFF" stroke-width="1.5" rx="5"/>
+  <text x="572" y="375" text-anchor="middle" class="label-md" fill="#C0D4FF">Hand mannerism duration</text>
+  <text x="572" y="387" text-anchor="middle" class="label-sm">D1 — Hand Mannerisms</text>
+
+  <!-- Feature: Sensory Interests -->
+  <rect x="474" y="398" width="196" height="30" fill="#1F1A2E" stroke="#4D8CFF" stroke-width="1.5" rx="5"/>
+  <text x="572" y="413" text-anchor="middle" class="label-md" fill="#C0D4FF">Sensory interest duration</text>
+  <text x="572" y="425" text-anchor="middle" class="label-sm">D4 — Sensory Interests</text>
+
+  <!-- Arrows: CV processing → features A1–A7, C1, D1, D4 -->
+  <line x1="442" y1="100" x2="473" y2="91" class="arrow-blue"/>
+  <line x1="442" y1="104" x2="473" y2="129" class="arrow-blue"/>
+  <line x1="442" y1="108" x2="473" y2="167" class="arrow-blue"/>
+  <line x1="442" y1="110" x2="473" y2="205" class="arrow-blue"/>
+  <line x1="442" y1="112" x2="473" y2="337" class="arrow-blue"/>
+  <line x1="442" y1="114" x2="473" y2="375" class="arrow-blue"/>
+  <line x1="442" y1="116" x2="473" y2="413" class="arrow-blue"/>
+
+  <!-- Arrows: NLP processing → features B1, B2; also A4 (audio+vision) -->
+  <line x1="442" y1="183" x2="473" y2="167" class="arrow-blue"/>
+  <line x1="442" y1="190" x2="473" y2="253" class="arrow-blue"/>
+  <line x1="442" y1="196" x2="473" y2="291" class="arrow-blue"/>
+
+  <!-- ===== ADOS-2 DOMAINS ===== -->
+
+  <!-- Domain A -->
+  <rect x="700" y="76" width="178" height="148" fill="#1E1118" stroke="#7A1626" stroke-width="1.5" rx="6"/>
+  <text x="789" y="96" text-anchor="middle" class="label-head" font-size="12" fill="#FF6B7A">DOMAIN A</text>
+  <text x="789" y="112" text-anchor="middle" class="label-sm" fill="#FF6B7A">Social Communication</text>
+  <line x1="710" y1="118" x2="868" y2="118" stroke="#7A1626" stroke-width="0.8"/>
+  <text x="789" y="136" text-anchor="middle" class="label-sm">A1 Eye Contact</text>
+  <text x="789" y="152" text-anchor="middle" class="label-sm">A2 Facial Expressions</text>
+  <text x="789" y="168" text-anchor="middle" class="label-sm">A4 Response to Name</text>
+  <text x="789" y="184" text-anchor="middle" class="label-sm">A7 Joint Attention</text>
+  <text x="789" y="200" text-anchor="middle" class="label-sm" fill="#A1A1A6">RF Classifier</text>
+  <text x="789" y="215" text-anchor="middle" class="label-sm" fill="#A1A1A6">(social affect features)</text>
+
+  <!-- Domain B -->
+  <rect x="700" y="238" width="178" height="86" fill="#1E1118" stroke="#7A1626" stroke-width="1.5" rx="6"/>
+  <text x="789" y="258" text-anchor="middle" class="label-head" font-size="12" fill="#FF6B7A">DOMAIN B</text>
+  <text x="789" y="274" text-anchor="middle" class="label-sm" fill="#FF6B7A">Communication</text>
+  <line x1="710" y1="279" x2="868" y2="279" stroke="#7A1626" stroke-width="0.8"/>
+  <text x="789" y="295" text-anchor="middle" class="label-sm">B1 Vocalizations</text>
+  <text x="789" y="311" text-anchor="middle" class="label-sm">B2 Repetitive Language</text>
+  <text x="789" y="316" text-anchor="middle" class="label-sm" fill="#A1A1A6">  </text>
+
+  <!-- Domain C/D -->
+  <rect x="700" y="338" width="178" height="100" fill="#1E1118" stroke="#7A1626" stroke-width="1.5" rx="6"/>
+  <text x="789" y="358" text-anchor="middle" class="label-head" font-size="12" fill="#FF6B7A">DOMAINS C / D</text>
+  <text x="789" y="374" text-anchor="middle" class="label-sm" fill="#FF6B7A">Play &amp; Repetitive Behaviors</text>
+  <line x1="710" y1="379" x2="868" y2="379" stroke="#7A1626" stroke-width="0.8"/>
+  <text x="789" y="396" text-anchor="middle" class="label-sm">C1 Functional Play</text>
+  <text x="789" y="412" text-anchor="middle" class="label-sm">D1 Hand Mannerisms</text>
+  <text x="789" y="428" text-anchor="middle" class="label-sm">D4 Sensory Interests</text>
+
+  <!-- Arrows: features → domains -->
+  <!-- A1–A7 to Domain A -->
+  <line x1="670" y1="91" x2="699" y2="136" class="arrow-red"/>
+  <line x1="670" y1="129" x2="699" y2="152" class="arrow-red"/>
+  <line x1="670" y1="167" x2="699" y2="168" class="arrow-red"/>
+  <line x1="670" y1="205" x2="699" y2="184" class="arrow-red"/>
+  <!-- B1–B2 to Domain B -->
+  <line x1="670" y1="253" x2="699" y2="281" class="arrow-red"/>
+  <line x1="670" y1="291" x2="699" y2="311" class="arrow-red"/>
+  <!-- C1, D1, D4 to Domain C/D -->
+  <line x1="670" y1="337" x2="699" y2="396" class="arrow-red"/>
+  <line x1="670" y1="375" x2="699" y2="412" class="arrow-red"/>
+  <line x1="670" y1="413" x2="699" y2="428" class="arrow-red"/>
+
+  <!-- Late fusion summary box -->
+  <rect x="700" y="452" width="178" height="52" fill="#141A14" stroke="#4D8CFF" stroke-width="1.5" rx="6"/>
+  <text x="789" y="470" text-anchor="middle" class="label-head" font-size="11" fill="#4D8CFF">LATE FUSION</text>
+  <text x="789" y="485" text-anchor="middle" class="label-sm">Domain probabilities →</text>
+  <text x="789" y="498" text-anchor="middle" class="label-sm">LR meta-learner → consensus</text>
+
+  <!-- Arrows domain boxes → late fusion -->
+  <line x1="789" y1="438" x2="789" y2="451" class="arrow-red"/>
+
+  <!-- Legend -->
+  <rect x="60" y="460" width="340" height="60" fill="#111827" stroke="#333340" stroke-width="1" rx="6"/>
+  <text x="80" y="480" class="label-sm">KEY:</text>
+  <line x1="110" y1="477" x2="150" y2="477" stroke="#4D8CFF" stroke-width="1.5" fill="none" marker-end="url(#arrowhead-blue)"/>
+  <text x="155" y="481" class="label-sm">CV / NLP → Feature</text>
+  <line x1="110" y1="497" x2="150" y2="497" stroke="#7A1626" stroke-width="1.5" fill="none" marker-end="url(#arrowhead-red)"/>
+  <text x="155" y="501" class="label-sm">Feature → ADOS-2 Domain</text>
+  <text x="270" y="481" class="label-sm">RF = Random Forest</text>
+  <text x="270" y="497" class="label-sm">LR = Logistic Regression</text>
+
+  <!-- Note -->
+  <text x="450" y="524" text-anchor="middle" class="label-sm" fill="#555560">Synthetic-data pipeline — no real patient data. Domain classifiers train independently; meta-learner combines probability outputs.</text>
+</svg>

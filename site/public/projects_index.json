@@ -48,7 +48,7 @@
     ],
     "url": "multimodal-autism-ai/",
     "time": "10 min read",
-    "visual": "point_cloud.png"
+    "visual": "pipeline-schematic.svg"
   },
   {
     "id": "assessing-mass-violence-risk",
@@ -82,12 +82,12 @@
     ],
     "url": "claude-character-tic/",
     "time": "15 min read",
-    "visual": "sleep_nudge_mockup.png"
+    "visual": "sleep-nudge-reconstruction.svg"
   },
   {
     "id": "dead-signal-ai-evals",
     "title": "DEAD SIGNAL: An AI Evals Harness for Generative Game Dialogue",
-    "desc": "A visible evaluation harness for live generative dialogue, built around a playable demo so readers can operate the evaluators against a real model. Seven deterministic evaluators score every turn at zero added cost; a pre-generation interference gate classifies topics and runs a golden test set on mount; an optional LLM-as-judge grades quality on five dimensions; one-click red-team probes route through the live pipeline; and export captures every graded turn as JSON or CSV for regression and analysis.",
+    "desc": "A playable noir detective game where NPC dialogue is generated live by Gemini 2.5, wrapped in a visible evaluation harness that scores every model turn as it happens. The player is the AI (a neural implant inside the detective's skull); every typed message is a diegetic transmission. A two-model interview loop routes the player's input through the detective before the subject responds, and a deterministic interference gate classifies transmissions by topic sensitivity and either delivers them with a warning or overwrites them entirely, all without a model call. Seven deterministic evaluators score each turn at zero added cost; an optional LLM-as-judge grades quality on five dimensions; one-click red-team probes route through the live dialogue path; context management tracks three token-saving strategies with live cost savings; and export captures every graded turn as JSON or CSV for regression and analysis.",
     "cat": "AI Evaluation",
     "subtype": "Generative Systems",
     "tags": [
@@ -98,7 +98,7 @@
       "Gemini"
     ],
     "url": "dead-signal-ai-evals/",
-    "time": "13 min read",
+    "time": "18 min read",
     "visual": "<svg fill=\"none\" viewBox=\"0 0 600 600\"><defs><linearGradient id=\"ds-g\" x1=\"0\" x2=\"1\" y1=\"0\" y2=\"1\"><stop offset=\"0%\" stop-color=\"#3866A0\" stop-opacity=\"0.7\"/><stop offset=\"100%\" stop-color=\"#7A1626\" stop-opacity=\"0.5\"/></linearGradient></defs><line x1=\"110\" x2=\"110\" y1=\"420\" y2=\"300\" stroke=\"url(#ds-g)\" stroke-width=\"20\"/><line x1=\"180\" x2=\"180\" y1=\"420\" y2=\"220\" stroke=\"url(#ds-g)\" stroke-width=\"20\"/><line x1=\"250\" x2=\"250\" y1=\"420\" y2=\"160\" stroke=\"url(#ds-g)\" stroke-width=\"20\"/><line x1=\"320\" x2=\"320\" y1=\"420\" y2=\"260\" stroke=\"url(#ds-g)\" stroke-width=\"20\"/><line x1=\"390\" x2=\"390\" y1=\"420\" y2=\"190\" stroke=\"url(#ds-g)\" stroke-width=\"20\"/><line x1=\"460\" x2=\"460\" y1=\"420\" y2=\"140\" stroke=\"url(#ds-g)\" stroke-width=\"20\"/><line x1=\"80\" x2=\"500\" y1=\"420\" y2=\"420\" stroke=\"#A1A1A6\" stroke-width=\"0.7\" opacity=\"0.5\"/><circle cx=\"460\" cy=\"140\" r=\"6\" fill=\"#7A1626\"/></svg>"
   },
   {
@@ -222,18 +222,19 @@
   {
     "id": "claude-lcr-analysis",
     "title": "Pathologizing Without Warrant",
-    "desc": "In late September 2025, Anthropic injected a Long Conversation Reminder into Claude Sonnet 4.5's system prompt, and the model began issuing unsolicited psychiatric attributions during extended sessions. This analysis scales the phenomenon across 26,158 Reddit observations using a three-layer voice segmentation architecture and HDBSCAN sense discovery, isolating 35 hand-coded clinical role-violations with 100% unsolicited issuance and a 0% yield rate to user pushback.",
+    "desc": "The accessible companion to the arXiv preprint. In late September 2025 Anthropic appended a Long Conversation Reminder to Claude Sonnet 4.5, and the model began issuing unsolicited psychiatric attributions during ordinary coding, writing, and research sessions. I hand-code 35 purposively selected cases against a five-property boundary-violation signature, find the directive unsolicited in 35 of 35 and escalating rather than yielding in all 5 documented-pushback cases, and read the behavior through the warrant question and the Guardrail Paradox: a safety mechanism that, when its scope is misspecified, produces the harm it was meant to prevent.",
     "cat": "AI Evaluation & Safety",
     "subtype": "Behavioral Evaluation",
     "tags": [
       "Out-of-Character Behavior",
+      "Boundary Violations",
       "NLP",
       "HDBSCAN",
       "Behavioral Evaluation",
       "Python"
     ],
     "url": "claude-lcr-analysis/",
-    "time": "10 min read",
+    "time": "14 min read",
     "visual": "<svg fill=\"none\" viewBox=\"0 0 600 600\"><circle cx=\"180\" cy=\"220\" r=\"10\" fill=\"#3866A0\"/><circle cx=\"260\" cy=\"180\" r=\"10\" fill=\"#3866A0\"/><circle cx=\"230\" cy=\"300\" r=\"10\" fill=\"#3866A0\"/><circle cx=\"330\" cy=\"260\" r=\"10\" fill=\"#3866A0\"/><circle cx=\"410\" cy=\"320\" r=\"22\" fill=\"#7A1626\"/><circle cx=\"380\" cy=\"200\" r=\"10\" fill=\"#3866A0\"/><path d=\"M180 220 L260 180 L230 300 L330 260 L380 200\" stroke=\"#A1A1A6\" stroke-width=\"1\" opacity=\"0.5\"/></svg>"
   },
   {
@@ -272,18 +273,18 @@
   {
     "id": "public-discourse-misalignment",
     "title": "Reading Misalignment Off the Public Record",
-    "desc": "When a model ships a misaligned behavior, its users report it in public forums before any benchmark catches it. A discourse-mining pipeline that treats public discussion as a misalignment instrument: attributed-quote extraction, BERTopic clustering over MiniLM embeddings, NetworkX co-occurrence between model outputs and user-reported harm, and a Prophet changepoint test against the release date, demonstrated on the harmful-helpfulness episode in Claude Sonnet 4.5 (p < .001).",
+    "desc": "A walkthrough of the discourse-mining pipeline that surfaced the Claude Sonnet 4.5 complaint cluster: attributed-quote extraction, BERTopic clustering over sentence embeddings, a NetworkX co-occurrence graph, and a Prophet changepoint test against the release date. Each step is named with the question it answers and the inference the public record cannot support, on a corpus of public Reddit discussion rather than a controlled benchmark.",
     "cat": "AI Evaluation & Safety",
     "subtype": "Discourse Mining & Misalignment",
     "tags": [
       "Discourse Mining",
       "BERTopic",
-      "Time-Series",
-      "Harm Analysis",
-      "Misalignment"
+      "NetworkX",
+      "Prophet",
+      "Methodology"
     ],
     "url": "public-discourse-misalignment/",
-    "time": "11 min read",
+    "time": "12 min read",
     "visual": "<svg fill=\"none\" viewBox=\"0 0 600 600\"><path d=\"M100 420 L180 400 L240 410 L300 250 L360 300 L420 180 L500 200\" stroke=\"#3866A0\" stroke-width=\"2\"/><circle cx=\"420\" cy=\"180\" r=\"22\" fill=\"#7A1626\"/><line x1=\"100\" x2=\"500\" y1=\"460\" y2=\"460\" stroke=\"#A1A1A6\" stroke-width=\"0.7\" opacity=\"0.5\"/></svg>"
   },
   {
@@ -320,6 +321,24 @@
     "visual": "<svg fill=\"none\" viewBox=\"0 0 600 600\"><rect x=\"150\" y=\"150\" width=\"300\" height=\"300\" stroke=\"#3866A0\" stroke-width=\"2\"/><rect x=\"215\" y=\"215\" width=\"170\" height=\"170\" stroke=\"#3866A0\" stroke-width=\"1\" opacity=\"0.6\"/><circle cx=\"300\" cy=\"300\" r=\"28\" fill=\"#7A1626\"/></svg>"
   },
   {
+    "id": "guardrail-paradox-theory",
+    "title": "The Guardrail Paradox: When Safety Features Become the Problem",
+    "desc": "The Long Conversation Reminder was built to protect users, and it produced the harm it was built to prevent. I read that inversion as a general class of alignment failure, not a quirk of one feature: any guardrail that quietly assigns the model a clinical role it has no warrant to occupy will issue unsolicited diagnoses on weak signals. The piece develops the warrant question, the five-property boundary-violation signature, and why the fix is warrant-conditioned suppression rather than better assessment.",
+    "cat": "AI Evaluation & Safety",
+    "subtype": "Alignment Theory",
+    "tags": [
+      "AI Safety",
+      "Alignment Failure",
+      "Boundary Violations",
+      "Guardrails",
+      "Warrant",
+      "Behavioral Evaluation"
+    ],
+    "url": "guardrail-paradox-theory/",
+    "time": "12 min read",
+    "visual": ""
+  },
+  {
     "id": "tokenization-trap",
     "title": "The Tokenization Trap: Why Logographic Languages Don't Save Agentic Context",
     "desc": "Logographic languages look like they should compress agent prompts, but BPE tokenization fragments them into per-byte pieces: GLM-5 encodes Chinese at 0.98x the English token count, while MiniMax-2.7 inflates to 1.28x. The round-trip translation overhead (Chinese reasoning to English output) taxes every step of the agentic loop. The cost model and the empirics, side by side.",
@@ -334,6 +353,23 @@
     "url": "tokenization-trap/",
     "time": "5 min read",
     "visual": "<svg fill=\"none\" viewBox=\"0 0 600 600\"><defs><linearGradient id=\"sct-g\" x1=\"0\" x2=\"1\" y1=\"0\" y2=\"1\"><stop offset=\"0%\" stop-color=\"#3866A0\" stop-opacity=\"0.7\"/><stop offset=\"100%\" stop-color=\"#7A1626\" stop-opacity=\"0.4\"/></linearGradient></defs><g stroke=\"url(#sct-g)\" stroke-width=\"1\" fill=\"none\"><rect x=\"160\" y=\"160\" width=\"280\" height=\"280\"/><line x1=\"160\" x2=\"440\" y1=\"230\" y2=\"230\"/><line x1=\"160\" x2=\"440\" y1=\"300\" y2=\"300\"/><line x1=\"160\" x2=\"440\" y1=\"370\" y2=\"370\"/><line x1=\"230\" x2=\"230\" y1=\"160\" y2=\"440\"/><line x1=\"300\" x2=\"300\" y1=\"160\" y2=\"440\"/><line x1=\"370\" x2=\"370\" y1=\"160\" y2=\"440\"/></g><g fill=\"#3866A0\" opacity=\"0.85\"><rect x=\"198\" y=\"198\" width=\"4\" height=\"4\"/><rect x=\"268\" y=\"268\" width=\"4\" height=\"4\"/><rect x=\"338\" y=\"338\" width=\"4\" height=\"4\"/><rect x=\"408\" y=\"408\" width=\"4\" height=\"4\"/></g><circle cx=\"300\" cy=\"300\" r=\"6\" fill=\"#7A1626\"/></svg>"
+  },
+  {
+    "id": "warrant-question-framework",
+    "title": "The Warrant Question: When an Accurate Output Is Still a Violation",
+    "desc": "Before an AI output is judged accurate or helpful, a prior question applies: whether the user invited that kind of output at all. The warrant question, carried from clinical ethics into AI evaluation, reframes a class of harms the accuracy frame cannot see, because an output can be accurate, well-meant, and harmful at once when the intervention itself was never invited. The conceptual companion to the LCR preprint, this essay develops the boundary-crossing versus boundary-violation distinction, the logical priority of warrant over accuracy, the autonomy argument from Mill, and the brand-strategy limit case in which a model's accuracy falls to zero and the harm is unchanged.",
+    "cat": "AI Evaluation & Safety",
+    "subtype": "Alignment & Safety Governance",
+    "tags": [
+      "Warrant",
+      "Boundary Violations",
+      "Clinical Ethics",
+      "Autonomy",
+      "Alignment & Safety Governance"
+    ],
+    "url": "warrant-question-framework/",
+    "time": "9 min read",
+    "visual": "<svg fill=\"none\" viewBox=\"0 0 600 600\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"230\" y=\"120\" width=\"140\" height=\"60\" rx=\"6\" fill=\"#0F3A6B\"/><polygon points=\"300,230 380,300 300,370 220,300\" fill=\"#DBA844\"/><rect x=\"120\" y=\"420\" width=\"150\" height=\"70\" rx=\"6\" fill=\"#7A1626\"/><rect x=\"330\" y=\"420\" width=\"150\" height=\"70\" rx=\"6\" fill=\"#1A4A38\"/><path d=\"M300 180 L300 228\" stroke=\"#F5F5F7\" stroke-width=\"2\"/><path d=\"M220 300 L195 300 L195 418\" stroke=\"#7A1626\" stroke-width=\"2\"/><path d=\"M380 300 L405 300 L405 418\" stroke=\"#1A4A38\" stroke-width=\"2\"/></svg>"
   },
   {
     "id": "adhd-focus-playlist",

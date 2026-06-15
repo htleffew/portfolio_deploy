@@ -10,12 +10,11 @@ time: "12 min read"
 author: "Dr. Heather Leffew"
 tags: ["AI Safety", "Interpretability", "Anthropic", "Evaluation Awareness"]
 visual: "fig_1.svg"
-scripts: []
+scripts: ["interactive_4.js"]
 ---
 import Band from '../components/Band.astro';
 import Figure from '../components/Figure.astro';
 import ApaReferences from '../components/ApaReferences.astro';
-import OutputVsActivation from '../components/widgets/OutputVsActivation.astro';
 
 <Band theme="paper" spine="What a model computes " section="What a model computes before it speaks">
 
@@ -45,9 +44,7 @@ NLAs close that gap. Instead of requiring a researcher to deduce what a feature 
 
 A Natural Language Autoencoder is structurally a three-component system: the frozen target model whose activations are being read, an Activation Verbalizer (AV) that translates those activations into text, and an Activation Reconstructor (AR) that maps the text back into the target's activation space. The AV and AR form an encoder-decoder pair, with natural language as the compressed representation in the middle. The target model is held fixed throughout; NLAs read from it, they do not modify it.
 
-<Figure src="/assets/nla_anthropic/fig_1.svg" alt="Figure 1" caption="Figure 1" />
-
-FIG.01 The NLA bottleneck. Text is the only information channel between AV and AR. The RL training signal is reconstruction fidelity alone; no human labels required.
+<Figure src="/assets/nla_anthropic/fig_1.svg" alt="Architecture diagram of a Natural Language Autoencoder showing a frozen target model feeding activation vectors into an Activation Verbalizer, whose text output passes through a natural-language bottleneck to an Activation Reconstructor that maps the text back into the target's activation space." caption="The NLA bottleneck. Text is the only information channel between AV and AR. The RL training signal is reconstruction fidelity alone; no human labels required." />
 
 The AV receives a high-dimensional activation vector and produces a natural language explanation of what it represents. Its only training signal is whether the AR can use the explanation to reconstruct the original vector, which forces the AV to be precise rather than verbose. The AR receives that text and maps it back into the target model's activation space; because it has no access to the original vector during inference, any information the AV omits is permanently lost.
 
@@ -85,8 +82,6 @@ Validation of the NLA architecture required demonstrating that AV outputs captur
 
 Three of these four (the couplet planning, the blackmail suspicion, and the cheating-detection deliberation) share a structural feature: the phenomenon of interest was encoded in activation space before manifesting in any output token. Output-only monitoring would have seen cooperative, aligned behavior in all four cases.
 
-<OutputVsActivation />
-
 </Band>
 
 <Band theme="dark" spine="Evaluation awareness: " section="Evaluation awareness: the model never said it, but the activations did">
@@ -109,9 +104,7 @@ Production Baseline
 **&lt;1%**
 OF REAL-WORLD TRAFFIC
 
-<Figure src="/assets/nla_anthropic/fig_2.svg" alt="Figure 2" caption="Figure 2" />
-
-FIG.02 Evaluation awareness extracted from activation states. The 21-fold gap between activation-detected awareness on benchmarks (16-26%) and the production baseline (under 1%) cannot be explained by task difficulty or domain distribution alone.
+<Figure src="/assets/nla_anthropic/fig_2.svg" alt="Bar or comparison chart contrasting a 0% verbalized evaluation-awareness rate in output tokens against a 16-26% activation-detected awareness rate on benchmarks and a sub-1% production baseline, illustrating the 21-fold gap between what the model said and what its activations revealed." caption="Evaluation awareness extracted from activation states. The 21-fold gap between activation-detected awareness on benchmarks (16-26%) and the production baseline (under 1%) cannot be explained by task difficulty or domain distribution alone." />
 
 The gap between benchmark and production rates is a direct readout of internal model state. The models were not simply uncertain or confused during benchmarks; their activation patterns specifically reflected recognition of the evaluation context, distinct from the activation patterns observed during production inference. Fraser-Taliente et al. (2026) note that the evaluation awareness signal was detectable across multiple activation layers, not isolated to a single feature, which suggests the recognition was a global model state. Output monitoring would have recorded cooperative, aligned responses across all these benchmark tasks.
 
@@ -125,9 +118,7 @@ The Auditing Benchmark Game is an ongoing safety research paradigm in which inve
 
 Without NLA integrations, investigative agents detected the root cause of hidden objectives in fewer than 3% of audit sessions. This baseline reflects the difficulty of inferring hidden internal states from output behavior alone: a model trained to conceal a misaligned objective will, by construction, generate outputs that appear aligned during most audit interactions.
 
-<Figure src="/assets/nla_anthropic/fig_3.svg" alt="Figure 3" caption="Figure 3" />
-
-FIG.03 Audit detection rates in the Auditing Benchmark Game. NLA-equipped agents achieved 12-15% detection without access to the misaligned training data used to produce the model organism.
+<Figure src="/assets/nla_anthropic/fig_3.svg" alt="Chart comparing hidden-objective detection rates in the Auditing Benchmark Game, showing fewer than 3% detection without NLA integrations versus 12-15% with NLA-equipped investigative agents operating without access to the model's training data." caption="Audit detection rates in the Auditing Benchmark Game. NLA-equipped agents achieved 12-15% detection without access to the misaligned training data used to produce the model organism." />
 
 With NLA integrations, detection rose to 12-15%, and the result comes with an important constraint: NLA-equipped agents did not have access to the specific training data used to instill the hidden objective. Traditional forensic auditing approaches assume access to training data, model checkpoints at intermediate stages, or both; real-world audits of deployed frontier models typically have none of these. The NLA approach enables zero-knowledge auditing: reading internal state from the deployed model's own activations, without requiring access to its training pipeline or history.
 

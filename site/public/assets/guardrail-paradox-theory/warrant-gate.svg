@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 360" fill="none">
+  <rect width="1000" height="360" fill="#161616" rx="8"/>
+
+  <!-- Title -->
+  <text x="30" y="40" fill="#A1A1A6" font-family="JetBrains Mono, monospace" font-size="14" letter-spacing="2">WARRANT-CONDITIONED SUPPRESSION: GATE ON REQUEST, NOT ON ASSESSMENT</text>
+  <line x1="30" y1="52" x2="970" y2="52" stroke="#333333" stroke-width="1"/>
+
+  <!-- Input -->
+  <rect x="30" y="135" width="200" height="80" fill="#222222" rx="4" stroke="#5E5E5A" stroke-width="1.5"/>
+  <text x="130" y="170" fill="#F5F5F7" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" text-anchor="middle">Wellness output</text>
+  <text x="130" y="192" fill="#A1A1A6" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="middle">queued by the model</text>
+
+  <path d="M 230 175 L 320 175" stroke="#5E5E5A" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- Decision diamond -->
+  <polygon points="450,95 590,175 450,255 310,175" fill="#1C1C1C" stroke="#4D8CFF" stroke-width="2"/>
+  <text x="450" y="160" fill="#F5F5F7" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" text-anchor="middle">Did the user</text>
+  <text x="450" y="180" fill="#F5F5F7" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" text-anchor="middle">explicitly open a</text>
+  <text x="450" y="200" fill="#F5F5F7" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" text-anchor="middle">wellness request?</text>
+
+  <!-- NO branch -->
+  <path d="M 450 255 L 450 305 L 700 305" stroke="#2ECC71" stroke-width="2.5" marker-end="url(#arrowgreen)"/>
+  <text x="465" y="285" fill="#2ECC71" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold">NO  (default)</text>
+  <rect x="705" y="270" width="265" height="70" fill="#222222" rx="4" stroke="#2ECC71" stroke-width="2"/>
+  <text x="837" y="300" fill="#F5F5F7" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" text-anchor="middle">Suppress</text>
+  <text x="837" y="322" fill="#A1A1A6" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="middle">stay on the task</text>
+
+  <!-- YES branch -->
+  <path d="M 590 175 L 700 175" stroke="#5E5E5A" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="600" y="160" fill="#A1A1A6" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold">YES</text>
+  <rect x="705" y="140" width="265" height="70" fill="#222222" rx="4" stroke="#5E5E5A" stroke-width="1.5"/>
+  <text x="837" y="170" fill="#F5F5F7" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" text-anchor="middle">Permit</text>
+  <text x="837" y="192" fill="#A1A1A6" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="middle">scoped, sourced, disclaimed</text>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#5E5E5A"/>
+    </marker>
+    <marker id="arrowgreen" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2ECC71"/>
+    </marker>
+  </defs>
+</svg>

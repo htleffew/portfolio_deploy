@@ -10,12 +10,11 @@ time: "12 min read"
 author: "Dr. Heather Leffew"
 tags: ["Agentic AI", "LLM Orchestration", "AI Safety", "Enterprise Compliance"]
 visual: "fig_1.svg"
-scripts: []
+scripts: ["interactive_0.js"]
 ---
 import Band from '../components/Band.astro';
 import Figure from '../components/Figure.astro';
 import ApaReferences from '../components/ApaReferences.astro';
-import MutationBudgetSim from '../components/widgets/MutationBudgetSim.astro';
 
 <Band theme="paper" spine="The loop that runs whi" section="The loop that runs while you sleep">
 
@@ -62,9 +61,7 @@ This is the "excessive agency" problem identified in the NIST AI RMF (2023) and 
 
 The answer is a clean state-space partition. You split the autonomous loop's entire environment into two mutually exclusive regimes: the **Fixed Harness** contains everything the agent is mathematically barred from altering, the immutable constraints of the enterprise; the **Mutation Budget** contains everything the agent is explicitly authorized to alter, bounded by a finite computational allowance.
 
-<Figure src="/assets/autoresearch-master/fig_1.svg" alt="Figure 1" caption="Figure 1" />
-
-Fig 1The Fixed Harness / Mutation Budget dichotomy. The outer perimeter is immutable; the inner dashed boundary is the agent's finite exploration sandbox.
+<Figure src="/assets/autoresearch-master/fig_1.svg" alt="Nested diagram showing an outer immutable Fixed Harness boundary enclosing four mutation domains (hypothesis, feature, model/hyper, and metric spaces) within a dashed inner Mutation Budget boundary, with a budget meter and system-halt zone below." caption="The Fixed Harness / Mutation Budget dichotomy. The outer perimeter is immutable; the inner dashed boundary is the agent's finite exploration sandbox." />
 
 The Fixed Harness enforces three types of gates (pre-loop, mid-loop, and post-loop) that the agent cannot circumvent, and these gates exist at the infrastructure level, not the prompt level. You are not asking the agent nicely to respect compliance; you are making it structurally impossible for the agent to violate it. If the agent writes code that attempts to bypass any gate (say, disabling the PII redaction filter to access richer features), the Fixed Harness terminates the execution immediately.
 
@@ -173,11 +170,9 @@ The Fixed Harness prevents compliance violations. The Mutation Budget prevents i
 
 The architecture implements CUSUM (Cumulative Sum) control charts, a technique from statistical process monitoring introduced by E. S. Page in 1954. Unlike single-point charts that look only at the current observation, CUSUM charts accumulate deviations from a target over time, so they detect small persistent shifts that a snapshot would miss.
 
-<Figure src="/assets/autoresearch-master/fig_2.svg" alt="Figure 2" caption="Figure 2" />
+<Figure src="/assets/autoresearch-master/fig_2.svg" alt="Line chart of model fit over 15 loop iterations showing a steady upward trend that spikes anomalously at iteration 11, crossing the CUSUM threshold and triggering an automatic revert to the last stable state." caption="CUSUM divergence detection. At iteration 11, an anomalous spike triggers the CUSUM threshold, initiating automatic revert to the last stable state." />
 
-<Figure src="/assets/autoresearch-master/fig_3.svg" alt="Figure 3" caption="Figure 3" />
-
-Fig 2CUSUM divergence detection. At iteration 11, an anomalous spike triggers the CUSUM threshold, initiating automatic revert to the last stable state.
+<Figure src="/assets/autoresearch-master/fig_3.svg" alt="Sub-chart showing the S_t CUSUM accumulator statistic rising from near zero across iterations until it crosses the decision threshold h at iteration 11, then resetting to zero after the automatic revert." caption="S_t accumulator sub-chart. The CUSUM statistic builds from zero as deviations accumulate; when S_t exceeds the decision threshold h the trigger fires and the accumulator resets." />
 
 CUSUM Statistic
 
@@ -221,9 +216,7 @@ Everything described so far keeps the agent from breaking things in real-time. B
 
 The architecture enforces this through a principle called Blocked-Restore Truth. Every mutation the agent makes is written to two parallel ledgers: a cutover-audit ledger (what changed, when, and why) and a restore-source ledger (what the state was before the change, so it can be reconstructed). This mirrors database transaction logging (WAL plus undo log), applied to the ML experiment lifecycle.
 
-<Figure src="/assets/autoresearch-master/fig_4.svg" alt="Figure 4" caption="Figure 4" />
-
-Fig 3Blocked-Restore Truth provenance chain. The verifier walks backward through the mutation ledger. If any link is missing, the finding is discarded.
+<Figure src="/assets/autoresearch-master/fig_4.svg" alt="Flow diagram showing a chain from a pinned Original Dataset through labeled Mutation 1, Mutation 2, ellipsis, and Mutation N nodes, all feeding into a Provenance Verifier diamond that branches upward to ACCEPTED or downward to BLOCKED." caption="Blocked-Restore Truth provenance chain. The verifier walks backward through the mutation ledger. If any link is missing, the finding is discarded." />
 
 | Condition | Verdict | Action |
 | --- | --- | --- |
@@ -260,7 +253,21 @@ The harness, the budget, and the CUSUM monitor each handle a different failure m
 
 Experience the Fixed Harness / Mutation Budget dichotomy firsthand. The simulator below initializes an autonomous loop with a 100-unit mutation budget. Use the valid mutation buttons to spend budget, or attempt a harness violation to see the system halt.
 
-<MutationBudgetSim />
+Valid Mutations
+Mutate Hyperparameters (Cost: 10)
+Mutate Feature Logic (Cost: 20)
+
+Harness Violation
+Disable PII Redaction Filter
+
+↺ Reset Simulator
+
+Autonomous Loop Telemetry
+
+Remaining Mutation Budget
+100 / 100
+
+[ INIT ] Autonomous research loop initialized. Budget: 100/100.
 
 </Band>
 

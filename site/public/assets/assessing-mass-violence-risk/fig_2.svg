@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 580" fill="none" font-family="JetBrains Mono, monospace">
+  <rect width="900" height="580" fill="#030303" rx="10"/>
+
+  <!-- Title -->
+  <text x="40" y="44" fill="#DBA844" font-size="15" letter-spacing="2">WARNING BEHAVIOR &#215; PATH TO INTENDED VIOLENCE</text>
+  <text x="40" y="66" fill="#6F6F72" font-size="10.5">Eight pre-attack warning behaviors (Meloy et al., 2012) across the six-stage pathway (Calhoun &amp; Weston, 2003)</text>
+  <line x1="40" y1="80" x2="860" y2="80" stroke="#2A2A2A" stroke-width="1"/>
+
+  <!-- Column headers (stages) + phase underlines -->
+  <text x="300" y="100" fill="#F5F5F7" font-size="11" text-anchor="middle">Grievance</text>
+  <text x="400" y="100" fill="#F5F5F7" font-size="11" text-anchor="middle">Ideation</text>
+  <text x="500" y="100" fill="#F5F5F7" font-size="11" text-anchor="middle">Planning</text>
+  <text x="600" y="100" fill="#F5F5F7" font-size="11" text-anchor="middle">Prep</text>
+  <text x="700" y="100" fill="#F5F5F7" font-size="11" text-anchor="middle">Breach</text>
+  <text x="800" y="100" fill="#F5F5F7" font-size="11" text-anchor="middle">Attack</text>
+  <line x1="256" y1="107" x2="344" y2="107" stroke="#3D1F4A" stroke-width="2.5"/>
+  <line x1="356" y1="107" x2="444" y2="107" stroke="#3D1F4A" stroke-width="2.5"/>
+  <line x1="456" y1="107" x2="544" y2="107" stroke="#0F3A6B" stroke-width="2.5"/>
+  <line x1="556" y1="107" x2="644" y2="107" stroke="#0F3A6B" stroke-width="2.5"/>
+  <line x1="656" y1="107" x2="744" y2="107" stroke="#7A1626" stroke-width="2.5"/>
+  <line x1="756" y1="107" x2="844" y2="107" stroke="#7A1626" stroke-width="2.5"/>
+
+  <!-- Row labels (warning behaviors) -->
+  <text x="232" y="143" fill="#F5F5F7" font-size="12" text-anchor="end">1. Pathway</text>
+  <text x="232" y="189" fill="#F5F5F7" font-size="12" text-anchor="end">2. Fixation</text>
+  <text x="232" y="235" fill="#F5F5F7" font-size="12" text-anchor="end">3. Identification</text>
+  <text x="232" y="281" fill="#F5F5F7" font-size="12" text-anchor="end">4. Novel Aggression</text>
+  <text x="232" y="327" fill="#F5F5F7" font-size="12" text-anchor="end">5. Energy Burst</text>
+  <text x="232" y="373" fill="#F5F5F7" font-size="12" text-anchor="end">6. Leakage</text>
+  <text x="232" y="419" fill="#F5F5F7" font-size="12" text-anchor="end">7. Direct Threat</text>
+  <text x="232" y="465" fill="#F5F5F7" font-size="12" text-anchor="end">8. Last Resort</text>
+
+  <!-- Matrix cells: row 1 Pathway -> Planning, Prep, Breach, Attack -->
+  <rect x="256" y="120" width="88" height="36" rx="4" fill="#0D0D0D" stroke="#262626"/>
+  <rect x="356" y="120" width="88" height="36" rx="4" fill="#0D0D0D" stroke="#262626"/>
+  <rect x="456" y="120" width="88" height="36" rx="4" fill="#0F3A6B" stroke="#F5F5F7" stroke-opacity="0.14"/>
+  <rect x="556" y="120" width="88" height="36" rx="4" fill="#0F3A6B" stroke="#F5F5F7" stroke-opacity="0.14"/>
+  <rect x="656" y="120" width="88" height="36" rx="4" fill="#7A1626" stroke="#F5F5F7" stroke-opacity="0.14"/>
+  <rect x="756" y="120" width="88" height="36" rx="4" fill="#7A1626" stroke="#F5F5F7" stroke-opacity="0.14"/>
+
+  <!-- row 2 Fixation -> Grievance, Ideation -->
+  <rect x="256" y="166" width="88" height="36" rx="4" fill="#3D1F4A" stroke="#F5F5F7" stroke-opacity="0.14"/>
+  <rect x="356" y="166" width="88" height="36" rx="4" fill="#3D1F4A" stroke="#F5F5F7" stroke-opacity="0.14"/>
+  <rect x="456" y="166" width="88" height="36" rx="4" fill="#0D0D0D" stroke="#262626"/>
+  <rect x="556" y="166" width="88" height="36" rx="4" fill="#0D0D0D" stroke="#262626"/>
+  <rect x="656" y="166" width="88" height="36" rx="4" fill="#0D0D0D" stroke="#262626"/>
+  <rect x="756" y="166" width="88" height="36" rx="4" fill="#0D0D0D" stroke="#262626"/>
+
+  <!-- row 3 Identification -> Ideation, Planning -->
+  <rect x="256" y="212" width="88" height="36" rx="4" fill="#0D0D0D" stroke="#262626"/>
+  <rect x="356" y="212" width="88" height="36" rx="4" fill="#3D1F4A" stroke="#F5F5F7" stroke-opacity="0.14"/>
+  <rect x="456" y="212" width="88" height="36" rx="4" fill="#0F3A6B" stroke="#F5F5F7" stroke-opacity="0.14"/>
+  <rect x="556" y="212" width="88" height="36" rx="4" fill="#0D0D0D" stroke="#262626"/>
+  <rect x="656" y="212" width="88" height="36" rx="4" fill="#0D0D0D" stroke="#262626"/>
+  <rect x="756" y="212" width="88" height="36" rx="4" fill="#0D0D0D" stroke="#262626"/>
+
+  <!-- row 4 Novel Aggression -> Planning, Prep -->
+  <rect x="256" y="258" width="88" height="36" rx="4" fill="#0D0D0D" stroke="#262626"/>
+  <rect x="356" y="258" width="88" height="36" rx="4" fill="#0D0D0D" stroke="#262626"/>
+  <rect x="456" y="258" width="88" height="36" rx="4" fill="#0F3A6B" stroke="#F5F5F7" stroke-opacity="0.14"/>
+  <rect x="556" y="258" width="88" height="36" rx="4" fill="#0F3A6B" stroke="#F5F5F7" stroke-opacity="0.14"/>
+  <rect x="656" y="258" width="88" height="36" rx="4" fill="#0D0D0D" stroke="#262626"/>
+  <rect x="756" y="258" width="88" height="36" rx="4" fill="#0D0D0D" stroke="#262626"/>
+
+  <!-- row 5 Energy Burst -> Prep, Breach -->
+  <rect x="256" y="304" width="88" height="36" rx="4" fill="#0D0D0D" stroke="#262626"/>
+  <rect x="356" y="304" width="88" height="36" rx="4" fill="#0D0D0D" stroke="#262626"/>
+  <rect x="456" y="304" width="88" height="36" rx="4" fill="#0D0D0D" stroke="#262626"/>
+  <rect x="556" y="304" width="88" height="36" rx="4" fill="#0F3A6B" stroke="#F5F5F7" stroke-opacity="0.14"/>
+  <rect x="656" y="304" width="88" height="36" rx="4" fill="#7A1626" stroke="#F5F5F7" stroke-opacity="0.14"/>
+  <rect x="756" y="304" width="88" height="36" rx="4" fill="#0D0D0D" stroke="#262626"/>
+
+  <!-- row 6 Leakage -> Ideation, Planning, Prep -->
+  <rect x="256" y="350" width="88" height="36" rx="4" fill="#0D0D0D" stroke="#262626"/>
+  <rect x="356" y="350" width="88" height="36" rx="4" fill="#3D1F4A" stroke="#F5F5F7" stroke-opacity="0.14"/>
+  <rect x="456" y="350" width="88" height="36" rx="4" fill="#0F3A6B" stroke="#F5F5F7" stroke-opacity="0.14"/>
+  <rect x="556" y="350" width="88" height="36" rx="4" fill="#0F3A6B" stroke="#F5F5F7" stroke-opacity="0.14"/>
+  <rect x="656" y="350" width="88" height="36" rx="4" fill="#0D0D0D" stroke="#262626"/>
+  <rect x="756" y="350" width="88" height="36" rx="4" fill="#0D0D0D" stroke="#262626"/>
+
+  <!-- row 7 Direct Threat -> Breach, Attack -->
+  <rect x="256" y="396" width="88" height="36" rx="4" fill="#0D0D0D" stroke="#262626"/>
+  <rect x="356" y="396" width="88" height="36" rx="4" fill="#0D0D0D" stroke="#262626"/>
+  <rect x="456" y="396" width="88" height="36" rx="4" fill="#0D0D0D" stroke="#262626"/>
+  <rect x="556" y="396" width="88" height="36" rx="4" fill="#0D0D0D" stroke="#262626"/>
+  <rect x="656" y="396" width="88" height="36" rx="4" fill="#7A1626" stroke="#F5F5F7" stroke-opacity="0.14"/>
+  <rect x="756" y="396" width="88" height="36" rx="4" fill="#7A1626" stroke="#F5F5F7" stroke-opacity="0.14"/>
+
+  <!-- row 8 Last Resort -> Breach, Attack -->
+  <rect x="256" y="442" width="88" height="36" rx="4" fill="#0D0D0D" stroke="#262626"/>
+  <rect x="356" y="442" width="88" height="36" rx="4" fill="#0D0D0D" stroke="#262626"/>
+  <rect x="456" y="442" width="88" height="36" rx="4" fill="#0D0D0D" stroke="#262626"/>
+  <rect x="556" y="442" width="88" height="36" rx="4" fill="#0D0D0D" stroke="#262626"/>
+  <rect x="656" y="442" width="88" height="36" rx="4" fill="#7A1626" stroke="#F5F5F7" stroke-opacity="0.14"/>
+  <rect x="756" y="442" width="88" height="36" rx="4" fill="#7A1626" stroke="#F5F5F7" stroke-opacity="0.14"/>
+
+  <!-- Temporal axis arrow under grid -->
+  <line x1="256" y1="498" x2="832" y2="498" stroke="#DBA844" stroke-opacity="0.55" stroke-width="1.5" marker-end="url(#axhead)"/>
+  <text x="548" y="492" fill="#DBA844" font-size="9.5" letter-spacing="3" text-anchor="middle" opacity="0.8">ESCALATION OVER TIME</text>
+
+  <!-- Note + legend -->
+  <text x="256" y="524" fill="#6F6F72" font-size="9.5">A filled cell marks where a warning behavior typically surfaces along the pathway.</text>
+
+  <rect x="256" y="540" width="13" height="13" rx="2" fill="#3D1F4A"/>
+  <text x="276" y="551" fill="#A1A1A6" font-size="10">Grievance / Ideation</text>
+  <rect x="430" y="540" width="13" height="13" rx="2" fill="#0F3A6B"/>
+  <text x="450" y="551" fill="#A1A1A6" font-size="10">Research / Preparation</text>
+  <rect x="620" y="540" width="13" height="13" rx="2" fill="#7A1626"/>
+  <text x="640" y="551" fill="#A1A1A6" font-size="10">Breach / Attack</text>
+
+  <defs>
+    <marker id="axhead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#DBA844" fill-opacity="0.55"/>
+    </marker>
+  </defs>
+</svg>

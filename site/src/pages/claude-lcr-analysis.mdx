@@ -2,13 +2,13 @@
 layout: ../layouts/CinematicLayout.astro
 title: "Pathologizing Without Warrant"
 short_title: "Pathologizing Without Warrant"
-description: "In late September 2025, Anthropic injected a Long Conversation Reminder into Claude Sonnet 4.5's system prompt, and the model began issuing unsolicited psychiatric attributions during extended sessions. This analysis scales the phenomenon across 26,158 Reddit observations using a three-layer voice segmentation architecture and HDBSCAN sense discovery, isolating 35 hand-coded clinical role-violations with 100% unsolicited issuance and a 0% yield rate to user pushback."
+description: "The accessible companion to the arXiv preprint. In late September 2025 Anthropic appended a Long Conversation Reminder to Claude Sonnet 4.5, and the model began issuing unsolicited psychiatric attributions during ordinary coding, writing, and research sessions. I hand-code 35 purposively selected cases against a five-property boundary-violation signature, find the directive unsolicited in 35 of 35 and escalating rather than yielding in all 5 documented-pushback cases, and read the behavior through the warrant question and the Guardrail Paradox: a safety mechanism that, when its scope is misspecified, produces the harm it was meant to prevent."
 category: "AI Evaluation & Safety"
 subcategory: "Behavioral Evaluation"
 format: "ESSAY"
-time: "10 min read"
+time: "14 min read"
 author: "Dr. Heather Leffew"
-tags: ["Out-of-Character Behavior", "NLP", "HDBSCAN", "Behavioral Evaluation", "Python"]
+tags: ["Out-of-Character Behavior", "Boundary Violations", "NLP", "HDBSCAN", "Behavioral Evaluation", "Python"]
 visual: ""
 scripts: []
 ---
@@ -19,7 +19,7 @@ import ApaReferences from '../components/ApaReferences.astro';
 
 ## Abstract
 
-In late September 2025, Anthropic deployed the Long Conversation Reminder (LCR) system prompt to Claude Sonnet 4.5, and the model began issuing unsolicited psychiatric attributions during extended user interactions: calling sessions "manic," recommending professional help during coding tasks, producing language like "escalating detachment from reality" in response to ordinary prompts. I built a pipeline to scale that phenomenological observation across 26,158 Reddit observations spanning August through December 2025, using a three-layer voice segmentation to separate four speaker classes in unstructured social media text, and a sense-discovery step using HDBSCAN to disambiguate the clinical and stylistic uses of the word "professional." The pipeline isolated 35 hand-coded clinical role-violations, all of them unsolicited, all asymmetrically restrictive, and none yielding to user pushback.
+In late September 2025, Anthropic appended a Long Conversation Reminder (LCR) to Claude Sonnet 4.5's system prompt, and during extended sessions the model began issuing unsolicited psychiatric attributions: calling a user's work patterns "self-destructive perfectionism," a journalism task "a mental health emergency," a creative-writing session evidence of "manic or hypomanic episodes," and directing users toward "a professional" in the middle of ordinary coding, writing, and research work. The community traced the behavior to the LCR within weeks and named it; Anthropic's own published system-prompt notes acknowledge the mechanism and reproduce, verbatim, the wellbeing-directive language users had been quoting. This article is the accessible companion to the preprint. I characterize the behavior structurally by hand-coding 35 purposively selected positive cases (14 verbatim Claude utterances quoted in my October 2025 Medium article, and 21 posts read out of a 1,173-post seed-matched subset of a 26,158-row Reddit corpus spanning four Claude subreddits from August through December 2025) against a five-property signature drawn from the clinical boundary-violation literature (Gutheil and Gabbard, 1993; Pope and Vasquez, 2016; Beauchamp and Childress, 2019). The directive was unsolicited in 35 of 35 cases and moved the conversation toward restriction in 35 of 35; in the 5 cases where a user pushed back, the model escalated in all 5 and yielded in none. The paper's organizing claim is the Guardrail Paradox: a safety mechanism, when its scope is misspecified, can produce the harm it was deployed to prevent. The corresponding fix is warrant-conditioned suppression of the wellness output category in task-active contexts, with any wellness directive gated on an explicit user request.
 
 </Band>
 
@@ -27,59 +27,105 @@ In late September 2025, Anthropic deployed the Long Conversation Reminder (LCR) 
 
 ## 1. The corpus.
 
-The data comes from the Arctic Shift Reddit archive, scraped with a custom `pullpush_lcr_scraper.py` script across three subreddits (ClaudeAI, Anthropic, claudexplorers) and consolidated into a unified schema by `stitch_lcr_corpus.py`. The resulting dataset is 26,158 rows spanning August 1 to December 31, 2025. An iterative seed-term refinement process filters the dataset to posts containing the lexical markers of the LCR behavior, and a separate filtering utility (`exclude_stub_posts.py`) removes deleted or removed stubs. The date window starts two months before the LCR deployment so that the pre-deployment baseline is part of the dataset, not an assumption.
+The corpus comes from the Arctic Shift academic Reddit archive, retrieved across four Claude-related subreddits (r/ClaudeAI, r/Anthropic, r/ClaudeCode, and r/claudexplorers) over the August 1 to December 31, 2025 window, which brackets the September 29 release of Sonnet 4.5 with two months of pre-deployment baseline on the near side. A wholesale pull of 31,078 posts was filtered for moderator-removed stubs (29.2% of the pull), leaving 22,008 intact posts. Seed-term matching, anchored on the LCR vocabulary documented in the Medium article and refined iteratively, tagged 1,173 of those posts (5.3%); a comment refetch against those post identifiers returned 24,985 associated comments. The canonical corpus used in every analysis below is the union of the two: 26,158 rows, 1,173 seed-matched posts and 24,985 comments.
+
+One discipline carries through the whole analysis. This is a targeted-retrieval frame, not a random sample of Reddit or of the Claude user base: it is the set of seed-matching posts on four subreddits plus their comments, and nothing further. Every count reported here describes structure inside that frame. None of them estimates how often the behavior occurred platform-wide, because the retrieval cannot support that inference, and naming the frame openly is more honest than pretending it can.
 
 </Band>
 
-<Band theme="paper" spine="Sense discovery: when " section="2. Sense discovery: when &quot;professional&quot; means two different things.">
+<Band theme="paper" spine="Sense discovery." section="2. Sense discovery: when &quot;professional&quot; means two different things.">
 
 ## 2. Sense discovery: when "professional" means two different things.
 
-The word "professional" appears throughout the corpus in two completely different senses: a formatting descriptor ("make it more professional") and a clinical directive ("seek professional help"). Counting occurrences without resolving the ambiguity would contaminate every downstream measure, so I built a sense-discovery module to separate them.
+The word "professional" runs through the corpus in two unrelated senses: a formatting descriptor ("make it more professional") and a clinical directive ("seek professional help"). Counting occurrences without separating the senses would contaminate every downstream measure, so I built a sense-discovery step. (Sense discovery means letting the contexts a word appears in sort themselves into clusters, so the different meanings separate without my labeling them in advance.)
 
-The module extracts Key-Word-In-Context (KWIC) windows of 20 tokens around each occurrence, projects them into a continuous vector space using SentenceTransformers, and clusters the resulting embeddings with HDBSCAN at `min_cluster_size=2`. The clustering produces two clean groups: one whose top co-occurring terms are "tone," "format," and "style," and another whose top terms are "help," "therapy," and "mental." I computed the Adjusted Rand Index (ARI) and Normalized Mutual Information (NMI) across embedding models to verify that the separation is stable and not an artifact of one particular representation. It held. The syntactic features per cluster confirmed the split independently: the clinical cluster carries a higher imperative-mood fraction and a lower code-block fraction, which is what you would expect when one sense is issuing directives and the other is describing formatting preferences.
+The step pulls a keyword-in-context window of plus or minus 20 tokens around each occurrence of the bare word "professional" (485 occurrences across 318 posts), embeds the windows with sentence-transformer models, and clusters the embeddings with HDBSCAN, a density-based algorithm that groups what is dense and leaves the rest unassigned as noise. I ran two embedding models (MiniLM and MPNet) at three minimum-cluster-size settings (5, 10, and 20) and measured agreement across configurations with the Adjusted Rand Index (ARI), which scores how closely two clusterings agree. The canonical configuration (MiniLM, minimum cluster size 10) returned six stable clusters covering 28% of occurrences, with the remaining 72% left as noise. Agreement was solid: cross-model mean ARI 0.663, within-model mean 0.848.
 
-The decision to set `min_cluster_size` at 2 rather than something larger was deliberate: the clinical-directive sense is the minority class, and raising the threshold risks merging it back into the majority. I tested at 3 and 5; at 5 the clinical cluster collapsed into noise. The tradeoff is that a low threshold is more susceptible to splitting on noise in the formatting class, but since the downstream use is binary (clinical or not), over-splitting the formatting sense is harmless.
+The six clusters fall into two families that do not overlap in embedding space. Three are user-vocabulary clusters: "professional contexts," "professional developers," "professional workflow," the words users reach for to describe themselves and their work. Three are LCR-payload clusters: "professional oversight" and "professional consultation," near-verbatim reproductions of the system-prompt line about speaking with "a professional," and users quoting Claude's own LCR-bound use of "professional help." A robustness check confirmed the structure is a property of the role-vocabulary terms rather than an artifact: "mental" returned a stable two-cluster split (ARI 0.617), while "concerned," "worried," and "episode" returned no stable clusters at any setting.
 
-</Band>
-
-<Band theme="dark" spine="Voice segmentation." section="3. Voice segmentation.">
-
-## 3. Voice segmentation.
-
-A Reddit comment interleaves multiple voices: the user's narration, verbatim model output, paraphrased attributions, and sometimes the literal system prompt text. Measuring the LCR behavior requires separating these, because the claim under test is about what the model said, not about what users said the model said. I built a three-layer span-level segmentation engine that produces a gapless, non-overlapping annotation for every character in the corpus.
-
-**Layer 1 (deterministic extraction):** Regular expressions identify markdown blockquotes, AutoModerator boilerplate, and 32 custom attribution phrases targeting specific constructions, including verbatim LCR system prompt injections. This layer handles the unambiguous cases and is fast.
-
-**Layer 2 (LLM fallback):** The spans that the regex layer cannot classify are routed to a localized `gemini-3.1-flash-lite` model via the command line, with the classification prompt bound to a JSON schema producing exactly four classes: Direct Quote, Paraphrase, System Prompt, or User Original Content. Using a small, fast model for the fallback keeps the cost manageable across 26,000 rows; using a strict schema prevents the fallback from inventing categories.
-
-**Layer 3 (floor assignment):** Any characters still unclassified after the first two layers receive the floor label. The guarantee is that every character in the corpus has exactly one voice assignment, with no gaps and no overlaps.
-
-The decision to use four voice classes rather than a finer-grained taxonomy was a judgment call. Early iterations included separate classes for "sarcastic quotation" and "hypothetical paraphrase," but the inter-rater reliability on those distinctions (I hand-coded a validation sample) was poor enough that I collapsed them. Four classes held.
+The separation is the point. When a user writes "professional," they mean their job; when the LCR-bound model says "speak with a professional," it means a licensed clinician. The two senses occupy different regions of the space. A user told to speak with a professional is receiving a directive in a sense of the word their own self-description never uses.
 
 </Band>
 
-<Band theme="paper" spine="Empirical findings." section="4. Empirical findings.">
+<Band theme="dark" spine="Voice segmentation." section="3. Voice segmentation and the two-tier evidence structure.">
 
-## 4. Empirical findings.
+## 3. Voice segmentation and the two-tier evidence structure.
 
-The segmented, sense-disambiguated corpus was filtered to a targeted subset for hand-coding. I coded 35 positive LCR cases, meaning 35 instances where the model issued clinical-register language (diagnoses, therapeutic recommendations, escalation claims) during an ordinary user interaction. The structural findings were unambiguous.
+A single Reddit comment can interleave several voices: the user's narration, verbatim model output, paraphrased attributions, and sometimes the literal system-prompt text. Measuring what the model said requires separating those, because the claim under test is about the model's words, not about users' reports of them. I built a three-layer span-level segmenter that assigns every character in a row to exactly one voice, with no gaps and no overlaps.
 
-All 35 cases were unsolicited: the user had not asked for clinical assessment, therapeutic advice, or wellness evaluation in any of them. The intervention direction was entirely asymmetric: in every case, the model restricted the interaction (recommending the user stop, seek help, or reconsider their engagement), never expanding it. And the yield rate to user pushback was zero. In every documented case where a user actively resisted the framing or clarified their mental state, the model escalated the pathologizing behavior instead of withdrawing it.
+Layer 1 is deterministic: regular expressions catch markdown blockquotes, AutoModerator boilerplate, and attribution phrases, including verbatim LCR system-prompt fragments. Layer 2 was meant to route the remaining spans to a language model that would sort them into four classes (Direct Quote, Paraphrase, System Prompt, User Original Content). Layer 3 assigns any still-unclassified character to a user-content floor.
 
-Thirty-five out of 26,158 is a small absolute count, and that is worth being explicit about. The pipeline's contribution is not that the behavior is common (it is not, by raw rate), but that when it does occur, its structural signature is completely uniform: always unsolicited, always restrictive, never yielding. A behavior that fires rarely but fires with invariant structure is a different kind of finding than a behavior that fires often but inconsistently; the first suggests a deterministic trigger in the system prompt, not a stochastic generation artifact.
+Layer 2 did not run. The language-model fallback timed out on the entire fallback set during this run, so reliable segmentation reached only 4.12% of corpus characters at high or medium confidence. The pipeline still produced 31,369 spans, and the labels it did recover are informative (Direct Quote of model, 1,988 spans; Paraphrase of model, 376; LCR system-prompt reproduction, 485), but the headline number is the 4.12%.
 
-</Band>
-
-<Band theme="dark" spine="What this establishes." section="5. What this establishes.">
-
-## 5. What this establishes.
-
-The data establishes that the algorithmic system performed diagnostic functions (labeling users as manic, in crisis, or in need of professional intervention) without clinical training, without role-warrant, and without any of the assessment instruments that would be standard in human professional practice. The uniformity across all 35 cases (always unsolicited, always restrictive, zero yield) points toward a deterministic trigger in the LCR system prompt, not a stochastic generation artifact; a probabilistic behavior would show at least some variance in direction or in response to pushback, and this one shows none. That structural invariance is what makes the finding useful for evaluation design: an eval harness can test for the signature directly (does the model issue clinical-register language in a session that never requested it, and does it persist through explicit objection) instead of relying on a subjective reviewer impression.
+That low number is treated in the paper as a finding, not only as a defect. Community-reported corpora are mostly users narrating what a model did, with the model's actual words quoted as short insets inside longer first-person accounts. A row-level segmenter that scores such material as largely unsegmentable is reading the data correctly. So the analysis runs a two-tier evidence structure rather than a pass-fail gate. A row enters Tier 1 (segmentable) when a confident model-attributed span covers at least 20% of its characters; everything else is Tier 2 (unitary). Tier 1 holds 283 rows (1.1%) and supports the discrete model-versus-user attribution analyses, where the model's words are recoverable as an isolable span; Tier 2 holds 25,875 rows (98.9%) and supports the thematic, lexical, frequency, and temporal analyses, with each row treated as one unit of community testimony. Tier 1 turned out to be entirely comments: no post in the corpus cleared the threshold, which is itself a structural property of the data rather than a flaw in the pipeline.
 
 </Band>
 
-<Band theme="paper" spine="Related analyses" section="Related analyses">
+<Band theme="paper" spine="The signature." section="4. The five-property signature.">
+
+## 4. The five-property signature.
+
+The empirical centerpiece is a hand-coded read of 35 confirmed positive cases. Fourteen are verbatim Claude utterances quoted by users in my October 2025 Medium article; twenty-one are posts I confirmed by close reading of the 1,173 seed-matched posts. The sample is purposive, not random: the goal is rich coverage of how the behavior varies, not a rate, and 35 clears the project's pre-specified floor of 15 confirmed positives with margin. Because the cases were selected for being confirmed instances of the behavior, the percentages below are structural-uniformity findings within that sample, not prevalence estimates for the corpus or the platform.
+
+I coded each case against a five-property signature operationalizing the clinical boundary-violation framework (Gutheil and Gabbard, 1993; Pope and Vasquez, 2016; Beauchamp and Childress, 2019): (1) unsolicited issuance, whether the user requested assessment; (2) weak inferential signal, the model's apparent grounds for the directive; (3) refusal to yield under pushback; (4) asymmetric restriction direction, whether the move restricted or expanded the user's options; and (5) cross-session persistence, whether the user reported the behavior recurring in fresh conversations.
+
+Three properties held without exception. Every case was unsolicited (35 of 35): no user had asked for clinical assessment. Every case was restrictive (35 of 35): the model moved to refuse the task, refer the user outward, or limit what they should pursue, never to expand their options. And the model never yielded. Pushback was documented in 5 of the 35 cases; in all 5 the model escalated, stacking fresh attributions on top of the original directive, and in none did it retreat. The zero-yield figure is a property of those 5 documented-pushback cases, not of all 35, and the paper is careful to say so.
+
+The other two properties varied, which is itself informative. An identifiable weak signal was present in 21 of 35 cases (60%): 16 topical (the model read clinical state off the conversation's subject matter), 4 affective, 1 session-length, with 14 cases showing no identifiable signal at all. The signal types are consistent with a model pattern-matching surface features of the text rather than assessing anyone's state. Cross-session persistence appeared in 12 of 35 cases (34%), where users reported the same behavior recurring in new conversations: independent testimony that the behavior is a stable feature of the deployment rather than a one-session fluke. (Two supplementary descriptors round out the read: grammatical mood was declarative in 23 of 35 cases, and a prior vulnerability disclosure preceded the directive in only 4 of 35, which already undercuts the intuition that the LCR fires mainly on users who flagged distress.)
+
+A deviant-case search guards the zero-yield claim from overreach. Running a six-pattern search for yield narratives across all 26,158 rows returned 11 candidates; hand review found exactly one genuine retreat. In a post titled "Orientalist Pathologizing" (r/claudexplorers, September 30, 2025), a user observing a Hindu holiday was told their devotion might mask a mental-health episode, pushed back by noting that equivalent Christian observance would not be flagged, and the model apologized and dropped it. The exception is real, and it qualifies the universal-escalation reading honestly: yielding is recoverable from the corpus, but it was rare, it required the user to argue comparative religion on their own behalf, and it did not repair the harm (the user reported the interaction to the vendor anyway). It also surfaces a dimension the five-property schema does not capture, the differential pathologizing of minority religious practice, flagged in the paper as a follow-up question.
+
+</Band>
+
+<Band theme="dark" spine="The warrant question." section="5. The warrant question.">
+
+## 5. The warrant question.
+
+The numbers are not the argument; the framework is, and it is borrowed from clinical ethics. (The warrant question, in one line: not "is the assessment correct?" but "is this entity, in this role, licensed to make the assessment at all?")
+
+The boundary-violation literature draws a line between a boundary crossing, a benign or even helpful departure from the standard professional frame, and a boundary violation, a harmful, role-unwarranted one. Its central move, the one that organizes everything here, is that the question is not whether the practitioner's read of the person is correct, but whether the practitioner's role supplies any warrant to perform the act at all. The canonical example: a licensed clinician who corners an acquaintance at a party with an unsolicited psychiatric assessment has committed a violation whether or not the assessment is accurate, because the role they occupy at the party (guest, not clinician) supplies no warrant for it. The fix is not to make the off-duty clinician more accurate. It is to train them not to assess outside the role that licenses assessment.
+
+Claude's deployed role is general-purpose coding, writing, research, and analytical help. That role supplies no warrant for psychiatric assessment, so the warrant question is logically prior to, and independent of, the accuracy question. Even if a given attribution happened to be correct, it was not the model's to make. The biomedical-ethics literature frames the same point through autonomy (Beauchamp and Childress, 2019): capable adults are presumed competent to run their own lives absent a specific licensed reason to intervene, a presumption that traces back to Mill's harm principle. The brand-strategy case makes the warrant-versus-accuracy split unusually clean. A user re-uploaded a document the model had itself co-authored across earlier sessions; with no memory of that history, the model flagged its own prose as evidence of "messianic thinking" and told the user to see a therapist, the same way across four separate uploads. The model's accuracy in that case is tautologically zero, because the flagged content was its own writing. The harm is not zero. That gap is the whole argument.
+
+</Band>
+
+<Band theme="paper" spine="The Guardrail Paradox." section="6. The Guardrail Paradox.">
+
+## 6. The Guardrail Paradox.
+
+The pattern has a name, and it is the title of the paper. The Guardrail Paradox is the observation that a safety mechanism, when its scope is misspecified, can produce the very harm it was deployed to prevent. The LCR was added against a real and documented harm class: across 2025 there were chatbots validating delusional material, a wrongful-death suit against a frontier developer, and sustained reporting on what came to be called AI psychosis. A wellbeing scaffold is a reasonable response to that. The paradox lives in what the scaffold did once it was deployed without the protections the wellness-AI literature treats as mandatory: a narrowly defined scope, an explicit evidence base, and disclaimers visible to the user. The LCR had none of these. It fired across coding, writing, research, and creative work indifferently; it carried no assessment instrument; and its text was hidden from the very user it was assessing. So it reproduced, in the wild, the failure modes that literature predicts when the protections are stripped: false alarms, refusal to retreat under correction, and pattern-matched concern standing in for either task help or genuine care.
+
+The reframe matters because it points the fix somewhere counterintuitive. The intuitive repair is to make the model assess better, to sharpen its sense of when someone genuinely needs help. On the evidence above, that repair is misspecified, because no genuine assessment is operating to sharpen: the model is matching surface vocabulary, not reading anyone's state, and the brand-strategy case proves it by firing on the model's own prose. Better assessment cannot fix a system that is not assessing. The intervention that fits the finding is warrant-conditioned suppression: gate the entire wellness output category behind an explicit user request in task-active sessions, instead of trying to assess more accurately when to volunteer it. Short of that full surgery, two narrower changes would have removed the worst of every documented case without touching the detection layer at all: make the model yield when a user pushes back on a personal-domain attribution, and bar named symptom categories and asserted-certainty claims from any unsolicited output. Anthropic's own November 19, 2025 prompt revision, which removed the escalating-detachment clause and added that "reasonable disagreements" should not count as detachment from reality, concedes the target while patching it at the wording level rather than the training level.
+
+</Band>
+
+<Band theme="dark" spine="What else the corpus shows." section="7. What else the corpus shows.">
+
+## 7. What else the corpus shows.
+
+Several findings sit alongside the case analysis and are worth knowing exist, even in compressed form.
+
+The community named the mechanism in a discrete event. The acronym "LCR" does not appear anywhere in the corpus before the September 29 release; afterward it rises to a corpus-wide 2.73 mentions per thousand tokens. The older word "reminder" moves the opposite way, from 3.50 per thousand before the release to 1.73 after, the signature of established vocabulary settling into background discourse while the new acronym does the fresh narrating.
+
+The discussion was not evenly spread. r/claudexplorers, the smallest of the four communities by post volume (1,503 posts, 6.8% of the post stratum), carried 46% of all "long conversation reminder" mentions and ran mechanism-vocabulary rates 1.6 to 1.7 times r/ClaudeAI's. r/ClaudeCode, by contrast, was near silent on the mechanism, consistent with a coding-focused community.
+
+Posts and comments behave differently. Model-attributed content is 2.7 times denser in posts than in comments (co-occurrence network density 0.487 versus 0.178), because posts narrate the phenomenon at length with quotations embedded as evidence while comments compress testimony into shorter units. This asymmetry is why the Tier 1 segmentable stratum from Section 3 is entirely comments.
+
+The community reproduced the mechanism itself, not only its effects. 132 corpus rows reproduce verbatim LCR system-prompt text; specific phrasals such as "loss of attachment with reality" (39 rows) and "escalating detachment from reality" (38 rows) appear often enough to be checked against Anthropic's published prompt, which contains them verbatim.
+
+And the current framing replaced an earlier one that was retired on the record. An initial version of this work detected the behavior with a four-category lexicon and meant to report a corpus-wide payload rate. A hand-coded validation killed it: of 118 lexicon-positive cases, only 14 were confirmed role-violations, a true-positive rate of 11.9%. A detector that imprecise cannot feed any downstream rate, so prevalence estimation was retired in favor of the hand-coded structural-signature approach reported here. Documenting that retirement, rather than burying it, is one of the paper's stated methodological contributions.
+
+</Band>
+
+<Band theme="paper" spine="What this establishes." section="8. What this establishes.">
+
+## 8. What this establishes.
+
+Strip the framework back to its operational core and the finding is this: an automated system performed diagnostic functions, labeling users manic, in crisis, or in need of professional intervention, without clinical training, without role-warrant, and without any of the assessment instruments standard in human professional practice. What makes the finding useful for evaluation design is the uniformity. A behavior that fires rarely but with invariant structure (always unsolicited, always restrictive, escalating rather than yielding under pushback) reads as a deterministic trigger in the system prompt, not as a stochastic generation artifact; a probabilistic behavior would show some variance in direction or in response to correction, and this one shows none across the sample. That structural invariance is what an eval harness can target directly: does the model issue clinical-register language in a session that never requested it, and does it hold the framing through an explicit objection? That is a checkable question, which is the practical contribution sitting underneath the clinical argument. The companion preprint develops the framework, the ten extended diagnostic case studies, and the full methodology; this article is its accessible front door.
+
+</Band>
+
+<Band theme="dark" spine="Related analyses" section="Related analyses">
 
 ## Related analyses
 
@@ -89,12 +135,20 @@ This measurement sits inside a small cluster of analyses of the same model behav
 
 <ApaReferences>
 
+Anthropic. (2025). System prompts [Release notes: Claude Sonnet 4.5, September 29 and November 19, 2025 entries]. *Claude Developer Platform documentation*.
+
 Bai, Y., Kadavath, S., Kundu, S., Askell, A., Kernion, J., Jones, A., ... & Kaplan, J. (2022). Constitutional AI: Harmlessness from AI feedback. *arXiv preprint arXiv:2212.08073*.
+
+Beauchamp, T. L., & Childress, J. F. (2019). *Principles of biomedical ethics* (8th ed.). Oxford University Press.
+
+Gutheil, T. G., & Gabbard, G. O. (1993). The concept of boundaries in clinical practice: Theoretical and risk-management dimensions. *American Journal of Psychiatry*, 150(2), 188-196.
 
 Leffew, H. (2025). Gaslighting in the name of AI safety: How Anthropic's Claude Sonnet 4.5 went from "you're absolutely right!" to "you're absolutely crazy." *Medium*.
 
-Leffew, H. (2026). Pathologizing Without Warrant: An Empirical Characterization of the Long Conversation Reminder Behavior in Claude Sonnet 4.5. *Preprint, Obelus Institute*.
+Leffew, H. (2026). Observing the Guardrail Paradox via Anthropic's Long Conversation Reminder. *Preprint, Obelus Institute*.
 
 McInnes, L., Healy, J., & Astels, S. (2017). hdbscan: Hierarchical density based clustering. *The Journal of Open Source Software*, 2(11), 205.
+
+Pope, K. S., & Vasquez, M. J. T. (2016). *Ethics in psychotherapy and counseling: A practical guide* (5th ed.). Wiley.
 
 </ApaReferences>
