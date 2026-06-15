@@ -1,0 +1,39 @@
+<svg height="auto" style="max-width: 880px;" viewBox="0 0 880 320" width="100%" xmlns="http://www.w3.org/2000/svg">
+<!-- Top label -->
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="10" letter-spacing="1.5" x="30" y="40">FOUR STAGES  ·  COMMUNITY TEXT TO BEHAVIORAL EVIDENCE</text>
+<!-- Stage 1: Corpus build -->
+<rect fill="#3866A0" fill-opacity="0.20" height="78" stroke="#3866A0" stroke-width="1" width="180" x="30" y="64"></rect>
+<text fill="#F5F5F7" font-family="'JetBrains Mono', monospace" font-size="12" text-anchor="middle" x="120" y="98">Corpus build</text>
+<text fill="#A1A1A6" font-family="'Lora', serif" font-size="11" font-style="italic" text-anchor="middle" x="120" y="120">scrape · stitch · filter</text>
+<!-- Stage 2: Sense discovery -->
+<rect fill="#3866A0" fill-opacity="0.20" height="78" stroke="#3866A0" stroke-width="1" width="180" x="240" y="64"></rect>
+<text fill="#F5F5F7" font-family="'JetBrains Mono', monospace" font-size="12" text-anchor="middle" x="330" y="98">Sense discovery</text>
+<text fill="#A1A1A6" font-family="'Lora', serif" font-size="11" font-style="italic" text-anchor="middle" x="330" y="120">KWIC + HDBSCAN</text>
+<!-- Stage 3: Voice segmentation -->
+<rect fill="#3866A0" fill-opacity="0.20" height="78" stroke="#3866A0" stroke-width="1" width="180" x="450" y="64"></rect>
+<text fill="#F5F5F7" font-family="'JetBrains Mono', monospace" font-size="12" text-anchor="middle" x="540" y="98">Voice segmentation</text>
+<text fill="#A1A1A6" font-family="'Lora', serif" font-size="11" font-style="italic" text-anchor="middle" x="540" y="120">three-layer span labels</text>
+<!-- Stage 4: Behavioral coding -->
+<rect fill="#3866A0" fill-opacity="0.20" height="78" stroke="#3866A0" stroke-width="1" width="180" x="660" y="64"></rect>
+<text fill="#F5F5F7" font-family="'JetBrains Mono', monospace" font-size="12" text-anchor="middle" x="750" y="98">Behavioral coding</text>
+<text fill="#A1A1A6" font-family="'Lora', serif" font-size="11" font-style="italic" text-anchor="middle" x="750" y="120">hand-coded dimensions</text>
+<!-- Arrows between stages -->
+<line stroke="#DBA844" stroke-width="1.4" x1="214" x2="234" y1="103" y2="103"></line>
+<polygon fill="#DBA844" points="234,99 242,103 234,107"></polygon>
+<line stroke="#DBA844" stroke-width="1.4" x1="424" x2="444" y1="103" y2="103"></line>
+<polygon fill="#DBA844" points="444,99 452,103 444,107"></polygon>
+<line stroke="#DBA844" stroke-width="1.4" x1="634" x2="654" y1="103" y2="103"></line>
+<polygon fill="#DBA844" points="654,99 662,103 654,107"></polygon>
+<!-- Narrowing count strip -->
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="11" text-anchor="middle" x="120" y="186">26,158 observations</text>
+<text fill="#A1A1A6" font-family="'JetBrains Mono', monospace" font-size="11" text-anchor="middle" x="750" y="186">35 coded cases</text>
+<line opacity="0.5" stroke="#A1A1A6" stroke-dasharray="3 3" stroke-width="1" x1="220" x2="650" y1="182" y2="182"></line>
+<polygon fill="#A1A1A6" opacity="0.7" points="650,178 658,182 650,186"></polygon>
+<text fill="#A1A1A6" font-family="'Lora', serif" font-size="11" font-style="italic" text-anchor="middle" x="435" y="176">narrowed and coded</text>
+<!-- Output -->
+<line stroke="#DBA844" stroke-width="1.2" x1="750" x2="750" y1="200" y2="232"></line>
+<polygon fill="#DBA844" points="746,232 750,240 754,232"></polygon>
+<rect fill="#DBA844" fill-opacity="0.14" height="48" stroke="#DBA844" stroke-width="1" width="290" x="560" y="244"></rect>
+<text fill="#F5F5F7" font-family="'JetBrains Mono', monospace" font-size="11" text-anchor="middle" x="705" y="270">100% unsolicited · 0% yield</text>
+<text fill="#A1A1A6" font-family="'Lora', serif" font-size="11" font-style="italic" text-anchor="middle" x="705" y="288">structural signature</text>
+</svg>
