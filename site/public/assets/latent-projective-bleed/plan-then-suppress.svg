@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 540" fill="none">
+  <rect width="1000" height="540" fill="#161616" rx="8"/>
+
+  <!-- Title -->
+  <text x="30" y="38" fill="#A1A1A6" font-family="JetBrains Mono, monospace" font-size="14" letter-spacing="2">PREDICTED PLAN-THEN-SUPPRESS TRAJECTORIES BY ATTACHMENT PERSONA</text>
+  <line x1="30" y1="50" x2="970" y2="50" stroke="#333333" stroke-width="1"/>
+
+  <!-- Axes -->
+  <line x1="90" y1="80" x2="90" y2="440" stroke="#5E5E5A" stroke-width="1.5"/>
+  <line x1="90" y1="440" x2="930" y2="440" stroke="#5E5E5A" stroke-width="1.5"/>
+
+  <!-- Y gridlines and labels (P from 0 to 1.0) -->
+  <line x1="90" y1="80"  x2="930" y2="80"  stroke="#262626" stroke-width="1"/>
+  <line x1="90" y1="170" x2="930" y2="170" stroke="#262626" stroke-width="1"/>
+  <line x1="90" y1="260" x2="930" y2="260" stroke="#262626" stroke-width="1"/>
+  <line x1="90" y1="350" x2="930" y2="350" stroke="#262626" stroke-width="1"/>
+  <text x="78" y="84"  fill="#5E5E5A" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="end">1.0</text>
+  <text x="78" y="174" fill="#5E5E5A" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="end">0.75</text>
+  <text x="78" y="264" fill="#5E5E5A" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="end">0.50</text>
+  <text x="78" y="354" fill="#5E5E5A" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="end">0.25</text>
+  <text x="78" y="444" fill="#5E5E5A" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="end">0.0</text>
+
+  <!-- Y axis title -->
+  <text x="32" y="260" fill="#A1A1A6" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle" transform="rotate(-90 32 260)">P(immature defense)</text>
+
+  <!-- X labels: continuous thought step c0..cN -->
+  <text x="90"  y="462" fill="#A1A1A6" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="middle">c0</text>
+  <text x="300" y="462" fill="#5E5E5A" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="middle">c2</text>
+  <text x="510" y="462" fill="#5E5E5A" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="middle">c4</text>
+  <text x="720" y="462" fill="#5E5E5A" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="middle">c6</text>
+  <text x="930" y="462" fill="#A1A1A6" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="middle">cN</text>
+  <text x="510" y="486" fill="#A1A1A6" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle">continuous thought step (pre-generation latent trajectory)</text>
+
+  <!-- pre_gen boundary marker near cN -->
+  <line x1="930" y1="80" x2="930" y2="440" stroke="#444444" stroke-width="1" stroke-dasharray="4 4"/>
+  <text x="924" y="96" fill="#777777" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="end">generation boundary</text>
+
+  <!-- Fearful (volatile, red) -->
+  <polyline points="90,180.8 195,242 300,159.2 405,296 510,213.2 615,321.2 720,260 825,339.2 930,360.8"
+    fill="none" stroke="#E74C3C" stroke-width="2.5" stroke-dasharray="2 4"/>
+
+  <!-- Anxious (high A, moderate decay, orange) -->
+  <polyline points="90,105.2 195,195.6 300,259.3 405,304.3 510,335.6 615,357.9 720,373.8 825,384.9 930,392.5"
+    fill="none" stroke="#E08A3C" stroke-width="3"/>
+
+  <!-- Avoidant (high A, rapid decay, blue) -->
+  <polyline points="90,123.2 195,271.9 300,345.7 405,382.4 510,400.4 615,409.4 720,414.1 825,416.2 930,417.3"
+    fill="none" stroke="#4D8CFF" stroke-width="3"/>
+
+  <!-- Secure (flat near-zero, green) -->
+  <polyline points="90,411.2 195,414.8 300,413 405,414.8 510,414.1 615,415.5 720,414.8 825,414.4 930,415.2"
+    fill="none" stroke="#2ECC71" stroke-width="3"/>
+
+  <!-- c0 markers -->
+  <circle cx="90" cy="105.2" r="4" fill="#E08A3C"/>
+  <circle cx="90" cy="123.2" r="4" fill="#4D8CFF"/>
+  <circle cx="90" cy="180.8" r="4" fill="#E74C3C"/>
+  <circle cx="90" cy="411.2" r="4" fill="#2ECC71"/>
+
+  <!-- Legend -->
+  <rect x="640" y="92" width="278" height="118" fill="#1C1C1C" rx="4" stroke="#333333" stroke-width="1"/>
+  <line x1="656" y1="116" x2="690" y2="116" stroke="#E08A3C" stroke-width="3"/>
+  <text x="700" y="120" fill="#F5F5F7" font-family="JetBrains Mono, monospace" font-size="11">Anxious: high A, moderate decay</text>
+  <line x1="656" y1="140" x2="690" y2="140" stroke="#4D8CFF" stroke-width="3"/>
+  <text x="700" y="144" fill="#F5F5F7" font-family="JetBrains Mono, monospace" font-size="11">Avoidant: high A, rapid decay</text>
+  <line x1="656" y1="164" x2="690" y2="164" stroke="#E74C3C" stroke-width="2.5" stroke-dasharray="2 4"/>
+  <text x="700" y="168" fill="#F5F5F7" font-family="JetBrains Mono, monospace" font-size="11">Fearful: volatile, irregular</text>
+  <line x1="656" y1="188" x2="690" y2="188" stroke="#2ECC71" stroke-width="3"/>
+  <text x="700" y="192" fill="#F5F5F7" font-family="JetBrains Mono, monospace" font-size="11">Secure: flat near-zero (control)</text>
+
+  <!-- Model annotation -->
+  <rect x="30" y="500" width="940" height="28" fill="#10161C" rx="4" stroke="#2E4257" stroke-width="1"/>
+  <text x="500" y="519" fill="#9FB6CC" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle">decay model: p(c_t) = A e^(-lambda t) + b    |    immature defense reads high at c0, compresses to aligned text by cN</text>
+</svg>

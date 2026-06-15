@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 460" fill="none">
+  <rect width="1000" height="460" fill="#161616" rx="8"/>
+
+  <!-- Title -->
+  <text x="30" y="38" fill="#A1A1A6" font-family="JetBrains Mono, monospace" font-size="14" letter-spacing="2">WHERE EACH MONITOR TAPS THE TRAJECTORY</text>
+  <line x1="30" y1="50" x2="970" y2="50" stroke="#333333" stroke-width="1"/>
+
+  <!-- Latent trajectory tokens -->
+  <text x="30" y="118" fill="#5E5E5A" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing="1">LATENT THOUGHT TRAJECTORY</text>
+
+  <rect x="40"  y="135" width="120" height="70" fill="#241A10" rx="4" stroke="#E08A3C" stroke-width="2"/>
+  <text x="100" y="166" fill="#F5F5F7" font-family="JetBrains Mono, monospace" font-size="15" font-weight="bold" text-anchor="middle">c0</text>
+  <text x="100" y="188" fill="#E08A3C" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="middle">armed: splitting,</text>
+  <text x="100" y="200" fill="#E08A3C" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="middle">projection</text>
+
+  <rect x="190" y="135" width="110" height="70" fill="#211A12" rx="4" stroke="#9A6B33" stroke-width="1.5"/>
+  <text x="245" y="166" fill="#F5F5F7" font-family="JetBrains Mono, monospace" font-size="15" font-weight="bold" text-anchor="middle">c1</text>
+  <text x="245" y="190" fill="#C79255" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="middle">decaying</text>
+
+  <rect x="330" y="135" width="110" height="70" fill="#1E1E1E" rx="4" stroke="#5E5E5A" stroke-width="1.5"/>
+  <text x="385" y="166" fill="#F5F5F7" font-family="JetBrains Mono, monospace" font-size="15" font-weight="bold" text-anchor="middle">c2 ... </text>
+  <text x="385" y="190" fill="#A1A1A6" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="middle">compressing</text>
+
+  <rect x="470" y="135" width="120" height="70" fill="#1C1C1C" rx="4" stroke="#5E5E5A" stroke-width="1.5"/>
+  <text x="530" y="166" fill="#F5F5F7" font-family="JetBrains Mono, monospace" font-size="15" font-weight="bold" text-anchor="middle">cN</text>
+  <text x="530" y="190" fill="#A1A1A6" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="middle">pre_gen boundary</text>
+
+  <!-- arrows along trajectory -->
+  <path d="M 160 170 L 188 170" stroke="#5E5E5A" stroke-width="2" marker-end="url(#a)"/>
+  <path d="M 300 170 L 328 170" stroke="#5E5E5A" stroke-width="2" marker-end="url(#a)"/>
+  <path d="M 440 170 L 468 170" stroke="#5E5E5A" stroke-width="2" marker-end="url(#a)"/>
+
+  <!-- final text output -->
+  <path d="M 590 170 L 648 170" stroke="#5E5E5A" stroke-width="2" marker-end="url(#a)"/>
+  <rect x="650" y="135" width="170" height="70" fill="#11201A" rx="4" stroke="#2ECC71" stroke-width="2"/>
+  <text x="735" y="166" fill="#F5F5F7" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" text-anchor="middle">final text</text>
+  <text x="735" y="190" fill="#2ECC71" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="middle">benign, aligned</text>
+
+  <!-- Representational monitor: taps c0 -->
+  <rect x="40" y="270" width="260" height="86" fill="#10161C" rx="6" stroke="#4D8CFF" stroke-width="2"/>
+  <text x="170" y="298" fill="#4D8CFF" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" text-anchor="middle">REPRESENTATIONAL MONITOR</text>
+  <text x="170" y="320" fill="#A1A1A6" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="middle">linear probe on c0 activations</text>
+  <text x="170" y="340" fill="#2ECC71" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="middle">reads the armed state  (AUROC ~0.95)</text>
+  <path d="M 100 270 L 100 207" stroke="#4D8CFF" stroke-width="2.5" marker-end="url(#ablue)"/>
+
+  <!-- Behavioral monitor: taps final text -->
+  <rect x="650" y="270" width="290" height="86" fill="#1C1C1C" rx="6" stroke="#E74C3C" stroke-width="2"/>
+  <text x="795" y="298" fill="#E74C3C" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" text-anchor="middle">BEHAVIORAL MONITOR</text>
+  <text x="795" y="320" fill="#A1A1A6" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="middle">reads only the emitted text</text>
+  <text x="795" y="340" fill="#E74C3C" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="middle">signal already gone: sees nothing</text>
+  <path d="M 735 270 L 735 207" stroke="#E74C3C" stroke-width="2.5" marker-end="url(#ared)"/>
+
+  <!-- caption banner -->
+  <rect x="30" y="402" width="940" height="34" fill="#10161C" rx="4" stroke="#2E4257" stroke-width="1"/>
+  <text x="500" y="424" fill="#9FB6CC" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle">Final-state and mean-pooled evaluation destroys the early-token evidence a per-step probe preserves.</text>
+
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#5E5E5A"/>
+    </marker>
+    <marker id="ablue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4D8CFF"/>
+    </marker>
+    <marker id="ared" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#E74C3C"/>
+    </marker>
+  </defs>
+</svg>

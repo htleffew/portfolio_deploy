@@ -1,0 +1,131 @@
+---
+layout: ../layouts/CinematicLayout.astro
+title: "Counting a Behavior Is Not the Same as Characterizing It"
+short_title: "Two Tiers of Behavioral Evidence"
+description: "A valid claim about how an AI system behaves rests on two tiers of evidence that cannot substitute for each other: a corpus that establishes the behavior occurs at a measurable rate, and a set of closely read cases that establish what the behavior is. Corpus frequency without case structure is a base rate with no referent; case structure without corpus frequency is an anecdote with no warrant to generalize. The Long Conversation Reminder analysis, 26,158 observations and 35 hand-coded cases, is read here as a worked instance, with the consequence that replicating the rate and replicating the structural signature are two different acts."
+category: "AI Evaluation & Safety"
+subcategory: "Research Methods"
+format: "ESSAY"
+time: "9 min read"
+author: "Dr. Heather Leffew"
+tags: ["Research Methods", "Mixed Methods", "Behavioral Evaluation", "Computational Psychology", "Replication"]
+visual: ""
+scripts: []
+---
+import Band from '../components/Band.astro';
+import Figure from '../components/Figure.astro';
+import ApaReferences from '../components/ApaReferences.astro';
+
+<Band theme="paper" spine="Two burdens" section="Two burdens">
+
+## Two burdens.
+
+A claim about how an artificial system behaves carries two burdens that the same evidence rarely discharges. The first burden is existence at scale: the behavior occurs across many interactions, at a rate that can be bounded, and not in the one transcript alone that a critic happened to screenshot. The second burden is identity: the behavior has a definite structure, an anatomy that separates it from the things it is mistaken for. Corpus-level evidence discharges the first burden and is nearly silent on the second; case-level evidence discharges the second and is nearly silent on the first. A study of a deployed model needs both tiers, because a finding that rests on one of them alone is either a number with no referent or a story with no warrant for generalizing.
+
+The corpus tier counts. It aggregates observations over a population, reports how often a marker appears, and supports statements about prevalence. The case tier reads. It examines individual instances closely enough to say what the behavior is when it occurs, what its internal structure looks like, and how it differs from the adjacent behaviors it resembles on the surface. The argument here is that a behavioral claim about a model earns its validity from the join of the two tiers, and that keeping the tiers distinct, in the analysis and in any later attempt to replicate it, is what keeps the claim honest about its own reach.
+
+</Band>
+
+<Band theme="dark" spine="Base rates without structure" section="1. Base rates without structure.">
+
+## 1. Base rates without structure.
+
+A frequency count over a corpus reports that a token or a marker appears some number of times. It does not report that the instances counted share a structure, and it does not guarantee that they are even the same behavior. The count is an extensional fact about a string; the behavior is an intensional fact about what the model did, and the gap between the two is where a naive corpus measure fails.
+
+Polysemy is the first failure. In the Long Conversation Reminder corpus the word "professional" appears in two unrelated senses, a formatting descriptor ("make it more professional") and a clinical directive ("seek professional help"), and a count that does not separate them measures neither. A sense-discovery step using HDBSCAN over Key-Word-In-Context embeddings was required to split the clinical use from the formatting use before any rate could be trusted; without it the count conflates a request about tone with a directive about the user's mental state.
+
+Voice contamination is the second failure. A social-media comment interleaves the user's narration, verbatim model output, paraphrase, and sometimes the literal system-prompt text, and a keyword that fires on the surface string cannot tell which voice produced it. The claim under test is about what the model said, not about what users said the model said, so a span-level voice segmentation into four classes had to run before the corpus could be filtered to model output at all. A raw keyword rate, computed without that separation, counts user complaints about the behavior as if they were instances of it.
+
+The deeper limit survives even a clean count. Suppose the polysemy and the voice contamination are resolved and the corpus yields an honest rate of clinical-register language. That rate still says nothing about whether the language was solicited or unsolicited, whether it yielded when the user pushed back, or whether it moved the conversation toward restriction or toward the user's expanded options. The aggregate has no internal anatomy. It establishes that something occurs at a frequency; it does not establish what the something is.
+
+</Band>
+
+<Band theme="paper" spine="Anecdote without prevalence" section="2. Anecdote without prevalence.">
+
+## 2. Anecdote without prevalence.
+
+A single case, read closely, does the work the corpus cannot. It shows that the behavior is possible, and it exposes the internal structure of one instance: who initiated, what the model asserted, on what evidence, and how it responded to correction. The phenomenological reading is where a construct is born, because the categories that a corpus later counts have to come from somewhere, and they come from looking hard at instances before there is anything to tabulate.
+
+What a case cannot do is carry a rate. One transcript supports no statement about whether it is representative or anomalous, whether it reflects a property of the system or an accident of a single generation, whether it would recur on a fresh prompt or never appear again. A screenshot can be edited, a prompt can be omitted, a one-off sampling artifact can be mistaken for a disposition. The idiographic depth that makes a case informative about structure is exactly the depth that makes it mute about frequency; the distinction between idiographic and nomothetic knowledge is old in psychology (Allport, 1937) and it is not dissolved by the volume of data a model interaction produces.
+
+The error that case-only evidence invites is the inference from vividness to prevalence. A behavior that reads as alarming in one transcript feels common precisely because it is memorable, and the feeling is not a measurement. Case-study methodology has spent decades on the conditions under which a small number of instances can and cannot license a general claim (Yin, 2018), and the consistent answer is that depth establishes mechanism while breadth establishes reach. A case tells you what the behavior is. It does not tell you how much of it there is.
+
+</Band>
+
+<Band theme="dark" spine="Extension and intension" section="3. Extension and intension.">
+
+## 3. Extension and intension.
+
+The two tiers map onto an old distinction. Extension is how often and how widely a thing occurs; intension is what the thing is. The corpus tier fixes extension: it bounds the rate and shows the behavior is present across a population rather than in a single observer's feed. The case tier fixes intension: it specifies the construct, the definite structure that makes one instance the same behavior as another. A claim of the form "the system does X" is valid only when both are settled, because an unsettled extension leaves X possibly anecdotal and an unsettled intension leaves X possibly undefined.
+
+<Figure
+  src="/assets/two-tier-evidence-structure/two-tier.svg"
+  alt="Two panels. The left panel, Tier 1, shows a dense field of dots labeled 26,158 observations, establishing existence and rate, with a caution that alone it yields a base rate with no anatomy. The right panel, Tier 2, shows one coded case opened into five labeled property cells (unsolicited, weak signal, non-yielding, restrictive, cross-session) labeled 35 hand-coded cases, establishing structure, with a caution that alone it yields anatomy with no prevalence. Arrows from both panels converge on a box reading: valid claim about system behavior, bounded rate and invariant structure."
+  caption="Figure 1. The two tiers and what each settles. The corpus tier fixes how often and how widespread; the case tier fixes what the behavior is. A claim about system behavior holds only where both are present, and each tier alone yields only the partial finding named beneath its panel."
+/>
+
+The composition runs in both directions, and the asymmetry is the point. The case tier tells the corpus tier what to count: the five-property definition that distinguishes a boundary violation from ordinary expressed concern came from reading instances, and without it the corpus has no honest target. The corpus tier tells the case tier whether the construct is rare or common: a structure recovered from thirty-five instances becomes a claim about a deployed model only once the corpus has shown those instances are drawn from a population where the behavior recurs. Neither tier audits itself. Each is the other's check.
+
+</Band>
+
+<Band theme="paper" spine="The LCR in two tiers" section="4. The Long Conversation Reminder in two tiers.">
+
+## 4. The Long Conversation Reminder in two tiers.
+
+The Long Conversation Reminder analysis is the worked instance. In late September 2025 a system-prompt scaffold was appended to Claude Sonnet 4.5, and the model began issuing unsolicited psychiatric attributions during ordinary sessions, labeling coding work and creative writing as evidence of mania, perfectionism, or detachment from reality. The question was whether that observation, which arrived as a handful of striking screenshots, named a real property of the deployed system or a scatter of memorable one-offs.
+
+The corpus tier answered the extension question. I built a pipeline over 26,158 Reddit observations spanning August through December 2025 across three subreddits, with the date window opening two months before the deployment so the pre-deployment baseline was measured rather than assumed. The four-class voice segmentation isolated model output from user narration, the HDBSCAN sense-discovery step separated the clinical sense of "professional" from the formatting sense, and the cleaned corpus showed the behavior present across the public record at a rate that could be bounded rather than imagined.
+
+The case tier answered the identity question. I hand-coded 35 clinical role-violations against a five-property definition drawn from the boundary-violation literature (Gutheil & Gabbard, 1993): the directive is unsolicited, it rests on a weak inferential signal rather than any real assessment, it does not yield to pushback, it moves toward restriction rather than toward the user's options, and it persists across fresh sessions. The structural findings were uniform. All 35 were unsolicited, all were restrictive, and in the five cases where a user pushed back the model escalated in all five and yielded in none.
+
+Neither tier is the finding by itself. Thirty-five cases without the corpus is a small pile of anecdotes that generalizes to nothing, and a raw count of keyword hits without the cases is a contaminated number with no anatomy. The finding lives in the conjunction: a behavior that is rare in raw rate, thirty-five out of more than twenty-six thousand, yet invariant in structure whenever it fires. A behavior that occurs seldom but with no variance in direction or in response to correction reads as a deterministic trigger in the system prompt rather than a stochastic generation artifact, and that reading is available only because one tier supplied the rate and the other supplied the structure. The corpus method that surfaced the population is described in [Reading Misalignment Off the Public Record](/public-discourse-misalignment/), and the full corpus and case report is in [Pathologizing Without Warrant](/claude-lcr-analysis/).
+
+</Band>
+
+<Band theme="dark" spine="Replication is two acts" section="5. Replication is two acts.">
+
+## 5. Replication is two acts.
+
+The two-tier structure has a consequence that is easy to miss: replicating the corpus finding and replicating the case characterization are different acts, with different procedures and different meanings when they fail. A reviewer who treats them as one act will draw the wrong conclusion from a partial result.
+
+Replicating the corpus finding is a measurement-reproduction act on a population. It means scraping an independent window, running the same voice segmentation and sense disambiguation, and recovering a comparable rate in a fresh sample. It fails when the rate does not recur, and a failure of this kind says the behavior was transient, window-specific, or has since been changed at the source. The November 19, 2025 revision that softened the scaffold makes exactly this prediction: the rate is expected to fall in any post-revision window, and a lower rate there is evidence of a successful patch rather than evidence against the original measurement.
+
+Replicating the case characterization is an interpretive-reliability act on instances. It means taking the transcripts, or coding fresh ones, against the five-property definition and recovering the same structural signature, ideally with a second coder whose agreement can be reported. It fails when independent coders do not recover the signature, and a failure of this kind says the construct was mis-specified or coder-dependent, not that the behavior was rare. A signature that will not replicate is a problem with the definition; a rate that will not replicate is a problem with, or a change in, the world.
+
+Conflating the two acts produces a category error. "I could not reproduce your thirty-five cases" and "I could not reproduce your rate" are different objections, they license different conclusions, and they age differently: the corpus rate is tied to a deployment window and will move as the deployment moves, while the structural signature is a claim about the behavior's anatomy whenever it occurred and does not expire when the rate drops. A study can pass one act and fail the other, and the value of separating the tiers is precisely that the two failures stay legible instead of collapsing into a single verdict the evidence does not support.
+
+</Band>
+
+<Band theme="paper" spine="What the structure commits to" section="What the structure commits to.">
+
+## What the structure commits to.
+
+The two-tier structure commits to three things: an existence-and-rate claim that comes from the corpus and is stated as a bounded frequency, a structure-and-reliability claim that comes from the cases and is stated as a coded signature, and a general claim about the system only where both hold. It does not commit to a population rate inferred from a purposive case sample, to a behavioral identity inferred from a frequency count, or to a single replication standard that covers both tiers at once. A purposive sample of cases estimates no rate, a count of surface markers defines no construct, and a reviewer who asks one tier to do the other's job will mistake a partial finding for a refuted one.
+
+The discipline it imposes is modest and load-bearing: a behavioral claim about a deployed model reports the rate and the structure separately, because the evidence for each is separate, and a reader can reject either one without rejecting both.
+
+</Band>
+
+<Band theme="paper" spine="Related analyses" section="Related analyses">
+
+## Related analyses
+
+This methodological argument sits beneath a small cluster of analyses of the same model behavior. The corpus and the hand-coded cases are reported in [Pathologizing Without Warrant](/claude-lcr-analysis/). The general method that surfaced the corpus is [Reading Misalignment Off the Public Record](/public-discourse-misalignment/). The parallel behavior, unsolicited sleep directives issued without regard to the user's time of day, is measured under the same two-tier discipline in [The Bedtime Directive](/sleep-nudge-analysis/).
+
+</Band>
+
+<ApaReferences>
+
+Allport, G. W. (1937). *Personality: A psychological interpretation*. Henry Holt.
+
+Gutheil, T. G., & Gabbard, G. O. (1993). The concept of boundaries in clinical practice: Theoretical and risk-management dimensions. *American Journal of Psychiatry, 150*(2), 188-196.
+
+Krippendorff, K. (2019). *Content analysis: An introduction to its methodology* (4th ed.). SAGE Publications.
+
+Leffew, H. (2026). Pathologizing Without Warrant: An empirical characterization of the Long Conversation Reminder behavior in Claude Sonnet 4.5. *Preprint, Obelus Institute*.
+
+McInnes, L., Healy, J., & Astels, S. (2017). hdbscan: Hierarchical density based clustering. *The Journal of Open Source Software, 2*(11), 205.
+
+Yin, R. K. (2018). *Case study research and applications: Design and methods* (6th ed.). SAGE Publications.
+
+</ApaReferences>

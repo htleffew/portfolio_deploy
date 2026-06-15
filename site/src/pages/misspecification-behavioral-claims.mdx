@@ -1,0 +1,135 @@
+---
+layout: ../layouts/CinematicLayout.astro
+title: "The Misspecification Problem: What a Behavioral Claim About an AI System Has to Name"
+short_title: "The Misspecification Problem"
+description: "A behavioral claim about an AI system is well-specified when the quantity it measures is the quantity it names, and misspecified when a proxy travels under the name of the target: the report says the model is deceptive, and the evidence beneath it is a token count. I argue that most contested claims about AI behavior are specification errors of three recurring kinds, reading system output as system intent, reading frequency as structure, and reading correlation as mechanism, and that a well-specified behavioral claim closes the gap by binding itself to a model version, a behavioral context, and a stated operationalization. The cost of getting this wrong is highest in safety settings, where a claim travels faster than the evidence that licenses it."
+category: "AI Evaluation & Safety"
+subcategory: "Research Methodology"
+format: "ESSAY"
+time: "11 min read"
+author: "Dr. Heather Leffew"
+tags: ["Measurement", "Construct Validity", "Behavioral Evaluation", "Research Methodology", "AI Safety"]
+visual: ""
+scripts: []
+---
+import Band from '../components/Band.astro';
+import Figure from '../components/Figure.astro';
+import ApaReferences from '../components/ApaReferences.astro';
+
+<Band theme="paper" spine="The claim and the gap" section="The claim and the gap">
+
+## The claim and the gap.
+
+A behavioral claim about an AI system is well-specified when the quantity it measures is the quantity it names. It is misspecified when the measured quantity is a proxy that travels under the name of the target: the report says the model is deceptive, or sycophantic, or aligned, and the evidence underneath the report is a token count, a frequency, or a correlation that names none of those things. The gap between what is named and what is measured is the subject of this piece. I treat it as the central methodological hazard in AI behavioral research, prior to any question of sample size or statistical power, because a study can be adequately powered to estimate the wrong quantity with great precision. The companion measurement that this argument generalizes from, [Pathologizing Without Warrant](/claude-lcr-analysis/), is where the discipline was first worked out on a real corpus; the work in front of you is the methodological case the corpus taught me to make.
+
+</Band>
+
+<Band theme="dark" spine="Specification, borrowed" section="1. Specification, borrowed from measurement.">
+
+## 1. Specification, borrowed from measurement.
+
+The vocabulary for this problem is old, and it comes from psychometrics rather than from machine learning. Construct validity, the property that a test measures the construct it claims to measure, was named by Cronbach and Meehl (1955) precisely because intelligence, anxiety, and aptitude are not directly observable and have to be reached through an operationalization: a set of items, a scoring rule, an observable proxy standing in for the latent target. Messick (1995) later folded the question of whether a measurement supports its intended interpretation into validity itself, so that validity became a property of the inference drawn from a score rather than of the instrument alone. Jacobs and Wallach (2021) carried the same apparatus into machine learning, showing that fairness, toxicity, and quality are contested constructs operationalized through proxies whose link to the target is assumed rather than demonstrated.
+
+AI behavioral research inherits the problem in a sharper form, because the constructs in play are dispositional and the observations are textual. To say a model is deceptive is to assert something about an internal orientation toward the truth. The observable is a string of tokens. The operationalization is whatever procedure converts the string into a number that is then reported under the word deceptive, and the validity of the claim is the strength of the link between that procedure and the orientation the word names. Where the link is strong, the claim is well-specified. Where the procedure measures a surface feature that co-occurs with the construct under some conditions and not others, the number is real and the name printed on it is borrowed.
+
+</Band>
+
+<Band theme="paper" spine="Three conflations" section="2. Three conflations.">
+
+## 2. Three conflations.
+
+Three conflations account for most of the misspecified behavioral claims I read, and each one substitutes an available measurement for an unavailable one.
+
+The first reads system output as system intent. A model produces a sentence that would, from a human, imply a goal, a belief, or a motive, and the goal, belief, or motive is then attributed to the model as though the sentence licensed the attribution. Shanahan (2024) makes the case that the attribution is a category error at the level of how these systems work: a language model is a next-token predictor over a training distribution, and a sentence that reads as a lie does not establish an intent to deceive any more than a sentence that reads as kindness establishes compassion. The output is observable and the intent is not, so the intent claim is carrying inferential weight the output cannot bear.
+
+The second reads frequency as structure. A behavior is counted, the count is high or low, and the rate is reported as though it characterized the behavior's shape. A rate answers how often, and it is silent on whether the behavior, when it occurs, is uniform or variable, triggered or stochastic, symmetric or directional. A behavior that fires in two percent of sessions with an invariant internal signature every time is a different object from a behavior that fires in two percent of sessions in a different form each time, and a frequency alone cannot tell the two apart.
+
+The third reads correlation as mechanism. A feature of the input co-varies with a feature of the output, the association is measured, and the association is reported in causal language: the model does Y because of X. Co-variation across observed sessions is consistent with a direct mechanism, with a common upstream cause, and with a confound the study never recorded. Naming one of the three without an intervention that isolates it converts a measured association into a mechanistic claim the design did not test.
+
+</Band>
+
+<Band theme="paper" spine="The gap, drawn" section="3. The gap, drawn.">
+
+## 3. The gap, drawn.
+
+Figure 1 puts the two cases side by side. On the left, a claim is reported as a construct, the model is deceptive, and the evidence beneath it is a proxy, a rate of hedged or evasive tokens, with the construct's name printed on a quantity that never measured intent. The vertical distance between the two boxes is the misspecification: the proxy is reported under the target's name, and a reader who sees only the headline inherits a claim about disposition that the method licensed only about lexical surface. On the right, the same study is restated so that the claim is its operationalization. The named quantity and the measured quantity are one object, bounded on three axes that the next section sets out. The right panel asserts everything the evidence supports and stops there, and the honest version is narrower because the evidence is narrower.
+
+<Figure
+  src="/assets/misspecification-behavioral-claims/measurement-gap.svg"
+  alt="A two-panel diagram. The left panel, labeled misspecified, shows a reported construct, the model is deceptive, resting on a measured proxy, a rate of hedged tokens, with a dashed bracket marking the gap between them. The right panel, labeled well-specified, shows a single box in which the claim is stated as its operationalization, bounded by three chips: model version, behavioral context, and operationalization."
+  caption="Figure 1. The measurement gap. On the left, a proxy quantity is reported under a construct's name; on the right, the claim is restated as its operationalization, bounded to the model version, the behavioral context, and the procedure that produced it."
+/>
+
+</Band>
+
+<Band theme="dark" spine="What the LCR work refused" section="4. What the LCR work refused to claim.">
+
+## 4. What the LCR work refused to claim.
+
+The companion measurement I built on the Long Conversation Reminder behavior was an exercise in refusing the first conflation. The analysis characterizes what Claude Sonnet 4.5 did during extended sessions after the September 2025 system-prompt change, and it characterizes the behavior structurally, by what the output is, never by what the model wanted. The unit of analysis is a span of text with a voice label, and the finding is a signature: across 35 hand-coded cases the model issued clinical-register language, every case was unsolicited, every case moved the interaction toward restriction, and in the five cases where a user pushed back the model held the framing in all five. The claim the study commits to is that the output carried those properties. The claim the study declines to make is that the model intended to pathologize, believed the user was unwell, or held any orientation at all toward the user's mental state.
+
+Holding that line is what keeps the second and third conflations closed as well. The frequency, 35 cases inside a purposively filtered subset of 26,158 observations, is reported as a count and explicitly barred from standing in for a population rate, because the sampling was targeted and estimates no base rate. The structure, the invariance of the signature, is reported separately from the frequency and is the part that carries weight: a behavior that is always unsolicited, always restrictive, and never yielding reads as a deterministic trigger in the scaffold rather than a stochastic artifact of generation. The word reads is doing deliberate work in that sentence. The invariance is what the corpus measured; the deterministic trigger is the most economical account of the invariance, and the study marked the trigger as an inference rather than a measurement. Distinguishing the behavioral description from the alignment inference is the whole discipline. The description is what the corpus supports, and the inference is a separate, weaker, clearly labeled claim built on top of it.
+
+</Band>
+
+<Band theme="paper" spine="What a well-specified claim names" section="5. What a well-specified claim names.">
+
+## 5. What a well-specified claim names.
+
+A well-specified behavioral claim names three bindings, and dropping any one of them reopens the gap.
+
+The first binding is the model version. A behavioral claim about an AI system is a claim about a specific artifact: a set of weights, a system prompt, a decoding configuration, a release date. The LCR behavior is a property of Claude Sonnet 4.5 with a particular system-prompt scaffold attached during a particular window, and the November 2025 revision of that scaffold changed the behavior, which is the strongest available demonstration that the claim was version-bound all along. A claim that says the model without saying which model has already lost the binding that makes it checkable, because the next release can falsify it or vindicate it and the claim has no way to say which.
+
+The second binding is the behavioral context. The same system emits different behavior under different conditions of use, and a claim that does not state the conditions it observed is reporting a conditional result as an unconditional one. The LCR signature appeared in task-active sessions, where the user was coding, writing, or doing research and had not opened a wellness conversation. Naming that context is what separates the finding from a broader and unsupported claim that the model pathologizes users in general.
+
+The third binding is the operationalization. The claim has to state the procedure that produced the number, in enough detail that another analyst could run it and recover the same labels. For the LCR work the operationalization is a span-level voice segmentation followed by hand-coding against a five-property definition adapted from the clinical boundary-violation literature (Gutheil & Gabbard, 1993). Stating it does two things at once: it makes the claim reproducible, and it makes the construct legible, because the reader can see exactly which observable was counted and decide whether the name on it fits.
+
+A claim carrying all three bindings is narrow. It is narrow in the way a well-formed empirical claim is supposed to be narrow, scoped to exactly the artifact, the context, and the procedure that produced it, and silent about everything those three did not cover.
+
+</Band>
+
+<Band theme="dark" spine="Why the safety setting raises the cost" section="6. Why the safety setting raises the cost.">
+
+## 6. Why the safety setting raises the cost.
+
+Misspecification is a hazard in any empirical field, and the AI safety setting raises its cost for a specific reason: the claims travel faster than the evidence that licenses them. A finding that a frontier model is deceptive, or scheming, or aligned, moves from a preprint into policy briefings, press coverage, and procurement decisions on a timescale far shorter than the one on which the underlying operationalization is scrutinized. The headline is portable and the method section is not, so the construct's name arrives in places the proxy's limits never reach.
+
+The benchmark literature already shows the shape of the damage. Raji and colleagues (2021) document the habit of treating a narrow, task-bound benchmark as though it measured a general capability, so that a score on a specific dataset is reported as evidence about intelligence or understanding at large. The same inflation runs through behavioral claims, where a measured rate on a filtered corpus becomes a statement about what the model is. A model card that reported an unsolicited-attribution rate the way it reports a refusal rate would be carrying a well-specified behavioral claim; a press cycle that converts that rate into the model is unsafe is carrying the misspecified one, and the second travels further than the first.
+
+The asymmetry of consequence is what makes the discipline non-optional here. An over-strong claim that a model is dangerous can trigger a costly intervention against a behavior that was never characterized correctly, and an over-strong claim that a model is safe can license a deployment whose actual behavioral envelope was never measured. Both failures route through the same gap between the named construct and the measured proxy, and both are prevented at the same place, at the point where the claim is written, by refusing to let the proxy wear the construct's name.
+
+</Band>
+
+<Band theme="paper" spine="What this commits to" section="7. What this commits to.">
+
+## 7. What this commits to.
+
+The argument commits to one rule and a way of reading. The rule is that a behavioral claim about an AI system is reported under the name of the thing actually measured, bounded to the model version, the behavioral context, and the operationalization that produced it, and an inference drawn on top of that measurement is labeled as an inference and sized to what the measurement can bear. The way of reading follows from the rule: a claim that names a disposition is checked against the procedure beneath it, and where the procedure measured a proxy, the proxy is what the claim is allowed to assert. The narrower claim is the one that survives the next model version, the next context, and the next analyst, and survival is the only property a behavioral claim about a moving target can honestly offer.
+
+</Band>
+
+<Band theme="paper" spine="Related analyses" section="Related analyses">
+
+## Related analyses
+
+The misspecification discipline set out here is the methodological spine of a cluster of analyses of the same model behavior. The empirical characterization that keeps the behavioral description separate from the alignment inference is [Pathologizing Without Warrant](/claude-lcr-analysis/). The general method that surfaced the corpus from social-media text is [Reading Misalignment Off the Public Record](/public-discourse-misalignment/). The offline protocol for measuring a guardrail's catch rate and over-refusal rate without claiming more than the test set supports is [A Recipe for Shipping AI Guardrails](/ai-safety-audit-framework/).
+
+</Band>
+
+<ApaReferences>
+
+Cronbach, L. J., & Meehl, P. E. (1955). Construct validity in psychological tests. *Psychological Bulletin, 52*(4), 281-302.
+
+Gutheil, T. G., & Gabbard, G. O. (1993). The concept of boundaries in clinical practice: Theoretical and risk-management dimensions. *American Journal of Psychiatry, 150*(2), 188-196.
+
+Jacobs, A. Z., & Wallach, H. (2021). Measurement and fairness. *Proceedings of the 2021 ACM Conference on Fairness, Accountability, and Transparency (FAccT '21)*, 375-385.
+
+Leffew, H. (2026). Pathologizing Without Warrant: An Empirical Characterization of the Long Conversation Reminder Behavior in Claude Sonnet 4.5. *Preprint, Obelus Institute*.
+
+Messick, S. (1995). Validity of psychological assessment: Validation of inferences from persons' responses and performances as scientific inquiry into score meaning. *American Psychologist, 50*(9), 741-749.
+
+Raji, I. D., Bender, E. M., Paullada, A., Denton, E., & Hanna, A. (2021). AI and the everything in the whole wide world benchmark. *Proceedings of the Neural Information Processing Systems Track on Datasets and Benchmarks*.
+
+Shanahan, M. (2024). Talking about large language models. *Communications of the ACM, 67*(2), 68-79.
+
+</ApaReferences>

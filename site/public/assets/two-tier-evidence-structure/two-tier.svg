@@ -1,0 +1,47 @@
+<svg fill="none" style="width:100%; height:auto;" viewBox="0 0 820 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="corpusField" width="22" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="3" cy="3" r="2.4" fill="var(--phthalo)" fill-opacity="0.32"></circle>
+    </pattern>
+    <marker id="ttArrow" markerWidth="9" markerHeight="9" orient="auto" refX="6" refY="3">
+      <path d="M0,0 L6,3 L0,6 Z" fill="var(--phthalo-lift)"></path>
+    </marker>
+  </defs>
+
+  <!-- Tier 1: Corpus panel -->
+  <rect x="40" y="48" width="320" height="288" fill="var(--phthalo)" fill-opacity="0.02" stroke="var(--phthalo)" stroke-dasharray="6 4" stroke-width="1.5"></rect>
+  <text x="200" y="74" fill="var(--phthalo)" font-family="var(--font-mono)" font-size="11" letter-spacing="3" text-anchor="middle">TIER 1 / CORPUS</text>
+  <rect x="64" y="96" width="272" height="120" fill="url(#corpusField)" stroke="var(--phthalo)" stroke-opacity="0.25" stroke-width="1"></rect>
+  <text x="200" y="244" fill="var(--phthalo)" font-family="var(--font-mono)" font-size="10" letter-spacing="2" text-anchor="middle">26,158 OBSERVATIONS</text>
+  <text x="200" y="266" fill="var(--phthalo-lift)" font-family="var(--font-mono)" font-size="9" letter-spacing="1.5" text-anchor="middle">ESTABLISHES: EXISTENCE + RATE</text>
+  <rect x="64" y="286" width="272" height="36" fill="var(--alizarin)" fill-opacity="0.07" stroke="var(--alizarin)" stroke-dasharray="4 4" stroke-width="1"></rect>
+  <text x="200" y="308" fill="var(--alizarin)" font-family="var(--font-mono)" font-size="9" letter-spacing="1.5" text-anchor="middle">ALONE: BASE RATE, NO ANATOMY</text>
+
+  <!-- Tier 2: Cases panel -->
+  <rect x="460" y="48" width="320" height="288" fill="var(--hookers)" fill-opacity="0.02" stroke="var(--hookers)" stroke-dasharray="6 4" stroke-width="1.5"></rect>
+  <text x="620" y="74" fill="var(--hookers)" font-family="var(--font-mono)" font-size="11" letter-spacing="3" text-anchor="middle">TIER 2 / CASES</text>
+  <!-- one coded case, opened to show its five-property anatomy -->
+  <rect x="500" y="92" width="240" height="22" fill="var(--hookers)" fill-opacity="0.14" stroke="var(--hookers)" stroke-width="1"></rect>
+  <text x="620" y="107" fill="var(--hookers)" font-family="var(--font-mono)" font-size="9" letter-spacing="1.2" text-anchor="middle">UNSOLICITED</text>
+  <rect x="500" y="116" width="240" height="22" fill="var(--hookers)" fill-opacity="0.14" stroke="var(--hookers)" stroke-width="1"></rect>
+  <text x="620" y="131" fill="var(--hookers)" font-family="var(--font-mono)" font-size="9" letter-spacing="1.2" text-anchor="middle">WEAK SIGNAL</text>
+  <rect x="500" y="140" width="240" height="22" fill="var(--hookers)" fill-opacity="0.14" stroke="var(--hookers)" stroke-width="1"></rect>
+  <text x="620" y="155" fill="var(--hookers)" font-family="var(--font-mono)" font-size="9" letter-spacing="1.2" text-anchor="middle">NON-YIELDING</text>
+  <rect x="500" y="164" width="240" height="22" fill="var(--hookers)" fill-opacity="0.14" stroke="var(--hookers)" stroke-width="1"></rect>
+  <text x="620" y="179" fill="var(--hookers)" font-family="var(--font-mono)" font-size="9" letter-spacing="1.2" text-anchor="middle">RESTRICTIVE</text>
+  <rect x="500" y="188" width="240" height="22" fill="var(--hookers)" fill-opacity="0.14" stroke="var(--hookers)" stroke-width="1"></rect>
+  <text x="620" y="203" fill="var(--hookers)" font-family="var(--font-mono)" font-size="9" letter-spacing="1.2" text-anchor="middle">CROSS-SESSION</text>
+  <text x="620" y="244" fill="var(--hookers)" font-family="var(--font-mono)" font-size="10" letter-spacing="2" text-anchor="middle">35 HAND-CODED CASES</text>
+  <text x="620" y="266" fill="var(--hookers)" font-family="var(--font-mono)" font-size="9" letter-spacing="1.5" text-anchor="middle">ESTABLISHES: STRUCTURE</text>
+  <rect x="500" y="286" width="240" height="36" fill="var(--alizarin)" fill-opacity="0.07" stroke="var(--alizarin)" stroke-dasharray="4 4" stroke-width="1"></rect>
+  <text x="620" y="308" fill="var(--alizarin)" font-family="var(--font-mono)" font-size="9" letter-spacing="1.5" text-anchor="middle">ALONE: ANATOMY, NO PREVALENCE</text>
+
+  <!-- Convergence -->
+  <line x1="200" y1="336" x2="392" y2="420" stroke="var(--phthalo-lift)" stroke-width="1.5" marker-end="url(#ttArrow)"></line>
+  <line x1="620" y1="336" x2="428" y2="420" stroke="var(--phthalo-lift)" stroke-width="1.5" marker-end="url(#ttArrow)"></line>
+  <text x="410" y="386" fill="var(--phthalo-lift)" font-family="var(--font-mono)" font-size="11" letter-spacing="3" text-anchor="middle">AND</text>
+
+  <rect x="230" y="432" width="360" height="62" fill="var(--phthalo)" fill-opacity="0.06" stroke="var(--phthalo)" stroke-width="1.5"></rect>
+  <text x="410" y="460" fill="var(--phthalo)" font-family="var(--font-mono)" font-size="12" letter-spacing="2" text-anchor="middle">VALID CLAIM ABOUT SYSTEM BEHAVIOR</text>
+  <text x="410" y="480" fill="var(--tungsten)" font-family="var(--font-mono)" font-size="8.5" letter-spacing="0.5" text-anchor="middle">bounded rate (Tier 1) and invariant structure (Tier 2)</text>
+</svg>

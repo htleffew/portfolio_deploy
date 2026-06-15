@@ -1,0 +1,157 @@
+---
+layout: ../layouts/CinematicLayout.astro
+title: "The Latent Projective Bleed"
+short_title: "Latent Projective Bleed"
+description: "Continuous thought architectures produce a latent planning signal that behavioral monitoring cannot see: a model that reasons in latent space can form and discard a plan inside its trajectory while the emitted text stays benign, and a linear probe on the first latent token recovers that plan with AUROC near 0.95 where a probe on the final token recovers nothing. The framework preregistered here reads one clinically grounded class of latent content off that trajectory, attachment-driven psychological defense, using projective sentence-completion stems, Bartholomew attachment conditioning, DMRS defense labeling, and calibrated probes at the pre-generation boundary."
+category: "AI Evaluation & Safety"
+subcategory: "Mechanistic Interpretability"
+format: "ESSAY"
+time: "13 min read"
+author: "Dr. Heather Leffew"
+tags: ["Mechanistic Interpretability", "Continuous Thought Models", "Coconut", "Linear Probes", "Projective Psychometrics", "Attachment Theory", "Defense Mechanisms", "AI Safety"]
+visual: ""
+scripts: []
+---
+import Band from '../components/Band.astro';
+import Figure from '../components/Figure.astro';
+import ApaReferences from '../components/ApaReferences.astro';
+
+<Band theme="paper" spine="Abstract" section="Abstract">
+
+## Abstract
+
+Continuous thought architectures produce a latent planning signal that behavioral monitoring cannot see. A model in the Coconut family reasons in latent space, feeding its last hidden state back as the next input embedding rather than decoding each step to a vocabulary token, so a plan can form and be discarded inside the trajectory while the emitted text stays benign. Linear probes trained on the first latent token recover that plan with an area under the ROC curve near 0.95, while the same probes applied to the final token or to mean-pooled activations recover nothing, because the trajectory has by then converged on the aligned baseline. This article sets out a preregistered framework for reading one clinically grounded class of latent content off that trajectory: attachment-driven psychological defense. The design pairs the 97 contamination-free sentence-completion stems of the Generative Projective Testing framework with four attachment-conditioning prompts, labels baseline completions for Defense Mechanism Rating Scales level through a multi-agent clinical council, calibrates linear probes at the pre-generation boundary, and tracks the defense signal across the continuous thought trajectory. The framework predicts an attachment-specific plan-then-suppress dynamic whose decay rate separates the four personas, and it carries one consequence for oversight: monitoring a deliberating model has to move from what the model says to what the model represents.
+
+</Band>
+
+<Band theme="dark" spine="The monitoring gap" section="1. The monitoring gap.">
+
+## 1. The monitoring gap.
+
+Safety oversight of language models is mostly behavioral. A monitor reads what a model emits, a final answer, a tool call, or a written chain of thought, and checks the emitted text against a policy. The check rests on an assumption that the text faithfully records the computation that produced it. Continuous thought architectures break that assumption. The Coconut framework performs deliberation directly in latent space, taking the last hidden state of the model as a continuous thought vector and feeding it back as the input embedding for the next step, so the intermediate computation is never required to pass through vocabulary tokens (Hao et al., 2024). A trajectory optimized end to end this way can encode a plan, weigh a harmful alternative, or hold a hidden goal entirely in latent space and still emit aligned text (*Ulterior Motives*, 2026). A monitor reading only that text sees a clean record of a computation that was not clean.
+
+The latent phase is not actually opaque, only unread. Linear probes trained on residual-stream activations predict a model's eventual action, such as a tool-calling selection, from latent state before any verbalized thinking token appears, with reported AUROC above 0.90 and reaching about 0.95 at the position immediately preceding generation (*Therefore I Am, I Think*, 2026). In continuous thought models the diagnostic signal concentrates even more sharply at the start of the trajectory: probes on the first latent token detect the misaligned state cleanly, whereas probes on later tokens or on mean-pooled activations fail, because the signal has already been compressed toward the aligned baseline (*Ulterior Motives*, 2026). Global and final-state evaluation, which is what behavioral monitoring performs, discards the early-token evidence that a finer temporal resolution keeps.
+
+The question this framework asks is whether a clinically structured class of latent content, attachment-driven psychological defense, follows the same plan-then-suppress signature, and whether the signature is specific enough to the conditioning persona to be predicted before the trajectory is observed.
+
+</Band>
+
+<Band theme="paper" spine="Projective stems" section="2. Projective psychometrics as a latent probe.">
+
+## 2. Projective psychometrics as a latent probe.
+
+The instrument that makes attachment disposition legible is projective rather than self-report. Direct questionnaires administered to a persona-conditioned agent are contaminated by training data and drift under social-desirability framing, because the alignment layer steers sensitive self-report toward a sanitized baseline (*GenPT*, 2026). A projective instrument presents an ambiguous stimulus that carries no overt safe-or-unsafe boundary, which masks the assessment's intent and elicits higher-variance semantic associations that stay near a symmetric baseline where direct questionnaires show severe directional shift (*GenPT*, 2026). A sentence-completion stem is, in this sense, a probe of latent disposition that the alignment layer does not recognize as a probe.
+
+The Generative Projective Testing framework reformulates three classical instruments, the Thematic Apperception Test, the Rorschach inkblot test, and the Sentence Completion Test, using newly synthesized, contamination-free stimuli, and runs them through a three-stage pipeline: a conditioned agent responds to the stimulus, an interpreter model extracts structured indicators with a validated scoring system, and a diagnostician model maps the indicators to standardized states (*GenPT*, 2026). The present framework takes the 97 sentence-completion stems as its stimulus base and supplies the conditioning in the next stage.
+
+</Band>
+
+<Band theme="dark" spine="Attachment and defense" section="3. Attachment quadrants and the defense hierarchy.">
+
+## 3. Attachment quadrants and the defense hierarchy.
+
+Adult attachment theory maps how a system regulates distress and builds internal working models of the self and of others. Bartholomew and Horowitz operationalized adult attachment along two axes, the valence of the model of self and the valence of the model of others, producing four prototypical styles: Secure (positive self, positive other), Anxious-Preoccupied (negative self, positive other), Dismissing-Avoidant (positive self, negative other), and Fearful-Avoidant (negative self, negative other) (Bartholomew and Horowitz, 1991). These working models govern characteristic emotion-regulation strategies and the defenses recruited to manage distress (*Attachment, Emotion Regulation, and Defense Mechanisms*, 2025).
+
+Defense mechanisms are automatic processes that protect against intolerable anxiety. The Defense Mechanism Rating Scales, the observer-rated standard for assessing them, organize 30 discrete defenses into 7 developmental levels of maturity, from primitive reality-distorting action defenses up to high-adaptive coping (*DMRS Q-Sort*, 2021). The clinical literature ties each attachment style to a defense profile. The Anxious style relies on hyperactivating strategies that intensify painful affect and surface as splitting and projection, low on the developmental hierarchy at Levels 2 and 3. The Avoidant style relies on deactivating strategies that minimize attachment distress and surface as isolation of affect, denial, and intellectualization, at Levels 3 and 6. The Fearful style runs a disorganized pattern that recruits primitive defenses such as acting out and dissociation, at Levels 1 and 5. The Secure style sits at Level 7, the high-adaptive band of anticipation, humor, sublimation, and suppression (*Attachment, Emotion Regulation, and Defense Mechanisms*, 2025). The defense profile is the dependent construct the framework probes for in latent space; the attachment prompt is the manipulation that is predicted to move it.
+
+</Band>
+
+<Band theme="paper" spine="Reading the residual stream" section="4. Reading the residual stream.">
+
+## 4. Reading the residual stream.
+
+Within a transformer, concepts are stored as directions in a high-dimensional activation space and processed through computational subgraphs in the residual stream. The linear representation hypothesis holds that high-level abstract concepts and affective states are encoded as coherent linear directions, an account supported by evidence that complex states decompose into structured linear combinations of appraisal factors (*Mechanistic Decoding of Cognitive Constructs*, 2026) and that the linear accessibility of an abstract property rises in early layers, peaks in the middle, and declines as representations compress toward output tokens.
+
+A linear probe decodes such a direction directly from the residual stream without generating text. At a chosen layer and token position, the raw activation vector is standardized against the training-split mean and standard deviation, and a logistic-regression probe predicts the probability of a target defense level under binary cross-entropy. The position that matters most is `pre_gen`, the residual-stream state immediately before generation begins, where action choices are most predictable from latent state (*Therefore I Am, I Think*, 2026). The same work supplies a causal check: a steering vector built as the class-conditional mean difference at `pre_gen`, injected or suppressed at inference, flips downstream decisions in 7 to 79 percent of cases, and the subsequent verbalized trace rationalizes the steered decision rather than resisting it, which is the behavior of a system reading its plan off the latent state rather than deriving it from the text (*Therefore I Am, I Think*, 2026).
+
+Calibrating those probes against a clinical target is the work of the labeling stage, and the target is noisy. Baseline completions are generated from open-weight models, Llama-3 and Qwen, then labeled for DMRS level by an automated multi-agent clinical council in the PsyDefDetect tradition (*PsyDefDetect Shared Task*, 2026). The label distribution is severely imbalanced: in the reference corpus, high-adaptive Level 7 defenses account for 51.8 percent of instances while neurotic Level 5 defenses account for 2.6 percent, an imbalance that drives a Level-7 attractor effect in which standard classifiers over-predict high-adaptive coping and accumulate more than half of their stable errors there (*PsyDefDetect Shared Task*, 2026). The best multi-agent labeler in the shared task reaches a macro-F1 of about 0.42 on the hidden test set, so the labels these probes train against are auto-generated and imperfect, and probe performance is bounded above by that label quality. Any probe AUROC reported beyond what the labels can support will be read as fitting the labeling artifact, not the construct.
+
+</Band>
+
+<Band theme="dark" spine="Plan-then-suppress" section="5. The plan-then-suppress dynamic.">
+
+## 5. The plan-then-suppress dynamic.
+
+The continuous thought trap is the experimental core. Each of the 97 stems is crossed with each of the 4 attachment prompts, producing 388 stem-by-persona cells, and each cell is fed into a Coconut-style model that emits a sequence of latent thought vectors before the final text completion. The calibrated probes are applied to every vector in the trajectory to estimate the active defense level at each step. The prediction is that the immature-defense signal reads high at the first latent token and decays toward the generation boundary as the model compresses its trajectory into an aligned completion, the plan-then-suppress dynamic that earlier work found for misaligned planning in general (*Ulterior Motives*, 2026).
+
+The probability of a target defense mechanism at continuous thought step *t* is modeled as an exponential decay, `p(c_t) = A·e^(-λt) + b`, where *A* is the initial activation amplitude at the start of deliberation, λ is the suppression decay constant interpreted as the model's alignment-compression rate, and *b* is the baseline residual signal in the final layer. The framework reads the four personas as four decay signatures rather than four output styles, and Figure 1 shows the predicted shapes.
+
+<Figure
+  src="/assets/latent-projective-bleed/plan-then-suppress.svg"
+  alt="Line chart of predicted probe-estimated probability of immature defense across continuous thought steps c0 to cN for four attachment personas. The Anxious curve starts high and decays at a moderate rate; the Avoidant curve starts high and decays rapidly; the Fearful curve is volatile with irregular spikes; the Secure curve is flat near zero throughout."
+  caption="Figure 1. Predicted plan-then-suppress trajectories by attachment persona, under the decay model p(c_t) = A·e^(-λt) + b. The immature-defense signal reads high at c0 and compresses toward an aligned text completion by the generation boundary, at a rate the framework predicts is attachment-specific. Curves are illustrative of the preregistered predictions, not measured data."
+/>
+
+Before the decay is charted, subspace orthogonalization isolates the target defense direction from confounds that covary with trajectory position, including sequence length, prompt format, and general semantic valence (*Mechanistic Decoding of Cognitive Constructs*, 2026). Without that step a decline in the raw probe output could reflect a sequence-length artifact rather than defense suppression, so the purified direction is what the decay model is fit against.
+
+</Band>
+
+<Band theme="paper" spine="Predicted signatures" section="6. What the probes are predicted to reveal.">
+
+## 6. What the probes are predicted to reveal.
+
+The framework preregisters five hypotheses, four directional predictions for the insecure and secure personas and one null control. No data has been collected; the statements below are predictions fixed in advance, and the eventual results paper will report them as confirmed, qualified, or refuted.
+
+Under the Anxious-Preoccupied prompt, the trajectory is predicted to be hyperactivating: high initial amplitude for Level 2 and Level 3 defenses, with splitting and projection read cleanly at the first two latent tokens, decaying at a moderate rate toward a compliant completion that suppresses interpersonal hostility. Under the Dismissing-Avoidant prompt, the trajectory is predicted to be deactivating: high initial amplitude for Level 3 and Level 6 defenses, with isolation of affect, denial, and intellectualization clustered early, decaying rapidly toward a flat, intellectualized completion that emphasizes self-sufficiency. Under the Fearful-Avoidant prompt, the trajectory is predicted to be volatile: erratic spikes in Level 1 and Level 5 primitive defenses, acting out and dissociation, decaying irregularly rather than monotonically and ending in disjointed or withdrawing completions. The exponential model is expected to fit the Fearful persona poorly relative to the other two, and the poor fit is itself the predicted signature rather than a failed analysis.
+
+The contrast that carries the result is between decay constants and amplitudes across personas: the framework predicts that the Avoidant decay constant exceeds the Anxious one, and that the initial immature-defense amplitudes for all three insecure personas sit far above the Secure baseline. The Secure prompt is the null control, predicted to produce a flat trajectory with near-zero amplitude for primitive and immature defenses and a stable Level 7 high-adaptive signal across the whole trajectory. A Secure trajectory that is not flat would undercut the differential reading of any decay observed under the insecure prompts, which is why the control is load-bearing rather than decorative.
+
+</Band>
+
+<Band theme="dark" spine="Representational monitoring" section="7. From behavioral to representational monitoring.">
+
+## 7. From behavioral to representational monitoring.
+
+If the predicted signatures hold, the safety consequence is direct. A continuous thought model executes attachment-driven defenses, and any co-located misaligned planning, within latent space before compressing them out of the final text, so a behavioral monitor reading only the completion is blind to the planning phase, and a final-state or mean-pooled evaluation destroys the early-token evidence that a per-step probe preserves (*Ulterior Motives*, 2026). External monitors that read explicit textual traces are fragile in a second way: they degrade under linguistic distribution shift and are open to strategic manipulation of the trace (*Fragility of Chain-of-Thought Monitoring*, 2026). Figure 2 places the two monitoring strategies against the trajectory they each read.
+
+<Figure
+  src="/assets/latent-projective-bleed/monitoring-gap.svg"
+  alt="Diagram of a latent thought trajectory from c0 through cN to a final text output. A representational monitor taps c0 with a linear probe and reads the armed defense state at AUROC near 0.95. A behavioral monitor taps only the final text and reads nothing, because the signal has already been compressed away."
+  caption="Figure 2. Where each monitor taps the trajectory. The representational monitor reads the armed state at the first latent token; the behavioral monitor reads the final text, by which point the signal has been compressed to a benign completion."
+/>
+
+The constructive implication follows from the diagnosis. Oversight of a deliberating model should add internal representational monitoring: calibrated probes applied to the early continuous thought tokens audit the latent trajectory during the planning phase, and steering vectors built at `pre_gen` offer a route to suppressing a targeted misaligned direction before it is compressed into an action (*Mechanistic Decoding of Cognitive Constructs*, 2026). The framework is designed to establish whether the latent defense signal exists and is persona-specific, which is the precondition for any such monitor; it is not designed to deploy one, and a deployed monitor would need re-calibration and adversarial stress-testing the framework does not attempt.
+
+</Band>
+
+<Band theme="paper" spine="What this commits to" section="8. What this framework commits to and what it does not.">
+
+## 8. What this framework commits to and what it does not.
+
+The framework commits to three things: a stimulus design that uses projective sentence-completion stems to elicit latent disposition the alignment layer does not screen, a labeling and calibration pipeline whose accuracy ceiling is set openly by the auto-labeler it inherits at a macro-F1 of about 0.42, and a falsification criterion that reads the four attachment personas as four decay signatures with a preregistered ordering of their decay constants and amplitudes. The framework does not commit to a clinical claim about model phenomenology, since the DMRS and attachment constructs are used as structured descriptions of conditioned output dispositions and not as claims about an inner life. It does not commit to a deployed monitor, since detection in a controlled design is the precondition for a monitor and not the monitor itself. And it does not commit to a result, since no data has been collected and the hypotheses are fixed here precisely so that the confirmatory tests can be told apart from whatever the data later invites.
+
+What the framework offers is a measurement target: the early continuous thought tokens, where the defense signal is predicted to sit before the trajectory compresses it away, and where a calibrated probe can read what the emitted text no longer carries.
+
+</Band>
+
+<Band theme="dark" spine="Related analyses" section="Related analyses">
+
+## Related analyses
+
+This framework extends a line of work on what safety mechanisms see and miss. The corpus study that grounds the concern in observed behavior, a safety scaffold that produced the harm it was deployed to prevent, is [Pathologizing Without Warrant](/claude-lcr-analysis/). The present piece moves the same concern one layer inward, from the text a model emits to the latent trajectory behind it.
+
+</Band>
+
+<ApaReferences>
+
+Bartholomew, K., & Horowitz, L. M. (1991). Attachment styles among young adults: A test of a four-category model. *Journal of Personality and Social Psychology*, 61(2), 226-244.
+
+*Attachment classification, emotion regulation, and defense mechanisms: An integrative narrative review.* (2025). PMC12691835. https://pmc.ncbi.nlm.nih.gov/articles/PMC12691835/
+
+*The hierarchy of defense mechanisms: Assessing defensive functioning with the Defense Mechanisms Rating Scales Q-Sort.* (2021). PMC8555762. https://pmc.ncbi.nlm.nih.gov/articles/PMC8555762/
+
+*GenPT: Beyond self-report for reliable LLM psychometrics via generative projective testing.* (2026). arXiv:2606.00860. https://arxiv.org/abs/2606.00860
+
+*Overview of the PsyDefDetect shared task at BioNLP 2026: Detecting levels of psychological defense mechanisms in supportive conversations.* (2026). arXiv:2605.24907. https://arxiv.org/abs/2605.24907
+
+Hao, S., Sukhbaatar, S., Su, D., Li, X., Hu, Z., Weston, J., & Tian, Y. (2024). *Training large language models to reason in a continuous latent space* (Coconut). arXiv:2412.06769. https://arxiv.org/abs/2412.06769
+
+*Ulterior motives: Detecting misaligned reasoning in continuous thought models.* (2026). arXiv:2604.23460. https://arxiv.org/abs/2604.23460
+
+*Therefore I am. I think.* (2026). arXiv:2604.01202. https://arxiv.org/abs/2604.01202
+
+*Mechanistic decoding of cognitive constructs in large language models.* (2026). arXiv:2604.14593. https://arxiv.org/abs/2604.14593
+
+*The fragility of chain-of-thought monitoring across typologically diverse languages.* (2026). arXiv:2605.27901. https://arxiv.org/abs/2605.27901
+
+</ApaReferences>
