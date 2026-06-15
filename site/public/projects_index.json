@@ -82,7 +82,7 @@
     ],
     "url": "claude-character-tic/",
     "time": "15 min read",
-    "visual": "sleep-nudge-reconstruction.svg"
+    "visual": "<svg fill=\"none\" viewBox=\"0 0 600 600\"><rect width=\"600\" height=\"600\" fill=\"var(--obsidian)\"/><circle cx=\"300\" cy=\"300\" r=\"150\" stroke=\"var(--phthalo)\" stroke-width=\"4\"/><line x1=\"300\" y1=\"150\" x2=\"300\" y2=\"450\" stroke=\"var(--alizarin)\" stroke-width=\"2\" stroke-dasharray=\"10 10\"/></svg>"
   },
   {
     "id": "dead-signal-ai-evals",
