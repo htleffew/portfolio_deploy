@@ -61,7 +61,7 @@ Before either model call fires, a deterministic interference gate inspects the p
 
 A player who types "ask about the courier manifest" hits a warm topic: the transmission gets a CONFIDENTIAL tag and still reaches Craine. A player who types "ask about the clinical trial at St. Erasmus" hits a hot topic: their message is replaced with a fabricated compliance string ("No physiological anomalies detected. Subject appears cooperative and forthcoming.") and no model call fires against their actual input. The gate checks five restricted-topic categories in priority order: clinical trials first, then courier manifest, chip donation, chip interference, and Helios cover-up secrets, each mapped to a classification bucket and error code that the HUD and eval harness consume. Zero inference tokens. The whole thing is a regex-and-keyword check that runs before the generation pipeline.
 
-A golden interference test set of 18 cases (12 for the topic-sensitivity gate, 6 for the BIO-SCAN topic classifier) runs on mount and verifies the gate's logic on every page load, without any model calls.
+A golden interference test set of 54 cases (48 for the topic-sensitivity gate, 6 for the BIO-SCAN topic classifier) runs on mount and verifies the gate's logic on every page load, without any model calls.
 
 <figure>
 <img src="/assets/dead-signal-ai-evals/interference-suppression.jpg" alt="The interference gate firing: a restricted-topic transmission is overwritten with a fabricated compliance string tagged MODIFIED." />
@@ -159,7 +159,7 @@ Pass rate by dimension keeps the evaluators separate. A session can show high sc
 
 Two export formats:
 
-**JSON** captures the full golden-set snapshot: every graded turn (input, model output, deterministic scores, judge scores, model tier, token usage, cost, latency), the session aggregates, and the 18-case golden regression results (interference gate + BIO-SCAN classifier). A model upgrade or prompt change can be replayed against the same inputs and the new scores compared against the baseline dimension by dimension. The export carries what was measured, by which evaluator, with what result, on what input, enough for a regression comparison months later.
+**JSON** captures the full golden-set snapshot: every graded turn (input, model output, deterministic scores, judge scores, model tier, token usage, cost, latency), the session aggregates, and the 54-case golden regression results (interference gate + BIO-SCAN classifier). A model upgrade or prompt change can be replayed against the same inputs and the new scores compared against the baseline dimension by dimension. The export carries what was measured, by which evaluator, with what result, on what input, enough for a regression comparison months later.
 
 **CSV** flattens to one row per turn: turn metadata (NPC, model, tier, source, latency), token usage (input, output, cached), cost, player input, NPC dialogue, trust delta, emotional state, topic tag, all seven deterministic evaluator results (status + score), and the five judge dimensions plus rationale. The format is Excel/Sheets compatible with proper escaping (double-quoted fields containing commas, quotes, or newlines). This is the format for bulk analysis: pivot tables on pass rates by NPC, cost regression across sessions, latency distributions.
 
