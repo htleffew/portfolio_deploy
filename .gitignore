@@ -1,2 +1,8 @@
 # Internal / private documents — never publish to the public site
 netflix_positioning_memo.md
+
+# Build artifacts and caches
+__pycache__/
+*.pyc
+site/dist/
+site/public/projects_index.json

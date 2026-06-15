@@ -1,4 +1,4 @@
-# portfolio_astro — MDX article engine
+# portfolio_deploy/site — MDX article engine
 
 Astro + MDX rebuild of the portfolio article pages. Each article is a small
 `.mdx` file (frontmatter + prose + components). A shared layout owns the frame
