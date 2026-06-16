@@ -42,15 +42,17 @@ const headshotAlt = fm.headshotAlt || "Dr. Heather Leffew";
     <div class="eyebrow">{eyebrow}</div>
     <h1>{title}</h1>
     {lede && <p class="lede">{lede}</p>}
-    <div class="about-headshot">
-      <img src={headshot} alt={headshotAlt} />
-    </div>
   </div>
 </section>
 
 <section class="about-body band band--paper">
   <div class="col">
-    <slot />
+    <div class="about-prose">
+      <div class="about-headshot about-headshot--float">
+        <img src={headshot} alt={headshotAlt} />
+      </div>
+      <slot />
+    </div>
   </div>
 </section>
 
