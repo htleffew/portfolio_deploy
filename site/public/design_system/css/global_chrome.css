@@ -62,7 +62,7 @@ body {
     padding: 0 48px;
     z-index: 9999; /* Highest z-index to sit above canvas and other absolute elements */
     font-family: var(--mono);
-    font-size: 11px;
+    font-size: 0.6875rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--platinum);
@@ -83,7 +83,7 @@ body {
 
 #topnav .brand {
     font-family: var(--display);
-    font-size: 15px;
+    font-size: 0.9375rem;
     font-weight: 600;
     letter-spacing: 0.04em;
     text-transform: none;
@@ -152,7 +152,7 @@ footer.site-foot {
     padding: 60px 48px;
     border-top: 1px solid var(--graphite);
     font-family: var(--mono);
-    font-size: 10px;
+    font-size: 0.625rem;
     letter-spacing: 0.16em;
     text-transform: uppercase;
     display: flex;
@@ -214,7 +214,7 @@ footer.site-foot a:hover {
     border: none;
     color: var(--tungsten);
     font-family: var(--mono);
-    font-size: 11px;
+    font-size: 0.6875rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     cursor: pointer;
@@ -239,7 +239,7 @@ footer.site-foot a:hover {
     border-bottom: 2px solid var(--graphite);
     padding: 16px 0;
     font-family: var(--display);
-    font-size: 48px;
+    font-size: 3rem;
     color: var(--flare);
     outline: none;
     transition: border-color 0.3s;
@@ -284,7 +284,7 @@ footer.site-foot a:hover {
 
 .search-result-cat {
     font-family: var(--mono);
-    font-size: 10px;
+    font-size: 0.625rem;
     letter-spacing: 0.3em;
     text-transform: uppercase;
     color: var(--phthalo-lift);
@@ -292,14 +292,14 @@ footer.site-foot a:hover {
 
 .search-result-title {
     font-family: var(--display);
-    font-size: 20px;
+    font-size: 1.25rem;
     color: var(--flare);
     font-weight: 600;
 }
 
 .search-result-desc {
     font-family: var(--body, 'Lora', serif);
-    font-size: 14.5px;
+    font-size: 0.90625rem;
     color: var(--tungsten);
     line-height: 1.6;
 }
@@ -466,7 +466,7 @@ html.lenis, html.lenis body { height: auto; }
 }
 .scroll-cue span {
   font-family: var(--mono);
-  font-size: 9px;
+  font-size: 0.5625rem;
   letter-spacing: 0.35em;
   text-transform: uppercase;
   color: var(--tungsten);

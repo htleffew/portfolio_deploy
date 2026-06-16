@@ -49,16 +49,16 @@
   --font-mono:    'JetBrains Mono', 'SF Mono', Menlo, monospace;   /* eyebrows, labels, data */
 
   /* ── TYPE SCALE ── */
-  --fs-caption:   10px;
-  --fs-label:     11px;
-  --fs-body-sm:   13px;
-  --fs-body:      15px;
-  --fs-body-lg:   16px;
-  --fs-lede:      18px;
-  --fs-h4:        20px;
-  --fs-h3:        28px;
-  --fs-h2:        40px;
-  --fs-h1:        clamp(40px, 5.5vw, 72px);
+  --fs-caption:   0.625rem;
+  --fs-label:     0.6875rem;
+  --fs-body-sm:   0.8125rem;
+  --fs-body:      0.9375rem;
+  --fs-body-lg:   1rem;
+  --fs-lede:      1.125rem;
+  --fs-h4:        1.25rem;
+  --fs-h3:        1.75rem;
+  --fs-h2:        2.5rem;
+  --fs-h1:        clamp(2.5rem, 5.5vw, 4.5rem);
 
   /* ── LETTERING ── */
   --tracking-display: -0.015em;
