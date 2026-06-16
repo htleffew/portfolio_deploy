@@ -667,7 +667,7 @@ table.data-table tr:last-child td { border-bottom:none; }
 .about-hero h1{font-family:var(--display);font-weight:600;font-size:clamp(1.75rem,3.5vw,2.625rem);letter-spacing:-0.018em;line-height:1.12;color:var(--flare);margin-bottom:28px}
 .about-hero .lede{font-family:var(--body);font-style:italic;font-size:var(--fs-lede-fl);line-height:1.7;color:var(--tungsten);max-width:60ch}
 
-.about-body{padding:0 0 100px}
+.about-body{padding:72px 0 100px}
 .about-body .col{max-width:var(--col);margin:0 auto;padding:0 32px}
 .about-prose{max-width:740px}
 .about-prose::after{content:"";display:block;clear:both}
