@@ -60,10 +60,6 @@
   --fs-h2:        2.5rem;
   --fs-h1:        clamp(2.5rem, 5.5vw, 4.5rem);
 
-  /* Fluid reading sizes: rem floor/ceiling preserve zoom + font-size prefs; vw adds viewport fluidity */
-  --fs-read:    clamp(0.9375rem, 0.88rem + 0.22vw, 1.0625rem);   /* body  ~15 -> 17px */
-  --fs-lede-fl: clamp(1.0625rem, 1rem + 0.30vw, 1.25rem);       /* lede  ~17 -> 20px */
-
   /* ── LETTERING ── */
   --tracking-display: -0.015em;
   --tracking-caps:    0.10em;
