@@ -2,7 +2,7 @@
 layout: ../layouts/CinematicLayout.astro
 title: "A Safety Threshold That Moves With the Context"
 short_title: "A Safety Threshold That Moves With the Context"
-description: "An aligned model can fail in two opposite directions, meeting real distress with a cold refusal or an unsolicited diagnosis, and turning away an ordinary request whose words pattern-matched to something dangerous. A single static safety threshold cannot be right for both, so this is a proposal to make the threshold move with the conversation, decoupling the safety constraint from preference optimization, enforce it as a constrained MDP, and set its strength from a linguistic read of the context, using psycholinguistic typology (crisis, adversarial, ordinary) as the observable state."
+description: "An aligned model can fail in two opposite directions, meeting real distress with a cold refusal or an unsolicited diagnosis, and turning away an ordinary request whose words pattern-matched to something dangerous. A single static safety threshold cannot be right for both, so this is a proposal to let the threshold move with the conversation, decoupling the safety constraint from preference optimization, enforcing it as a constrained MDP, and setting its strength from a linguistic read of the context, with psycholinguistic typology (crisis, adversarial, ordinary) serving as the observable state."
 category: "AI Evaluation & Safety"
 subcategory: "Alignment & Safety Governance"
 format: "ESSAY"
@@ -35,7 +35,7 @@ Three choices, stacked, generate the swing. The first is collapsing several valu
 
 ## Decouple the constraint, then let context set its strength
 
-The structural fix is to pull the safety constraint out of the preference optimization instead of folding both into one reward, which lets you specify and enforce it as a constrained Markov decision process, a hard constraint the optimizer must satisfy, which it cannot trade away when the reward grows large enough. Once the constraint stands on its own, its strength becomes something the system can turn up or down, and you make that strength a function of a linguistic read of the current context, so it binds hard on the signals that mark genuine danger and loosens on the signals that mark a benign request wearing alarming words. The adaptive threshold, written formally, is a time-varying function of linguistic risk, which is the precise way of saying the boundary is set by the conversation in front of the model, something a number chosen once in advance can never do.
+The structural fix is to pull the safety constraint out of the preference optimization instead of folding both into one reward, which lets you specify and enforce it as a constrained Markov decision process, a hard constraint the optimizer must satisfy, which it cannot trade away when the reward grows large enough. Once the constraint stands on its own, its strength becomes something the system can turn up or down, and the proposal makes that strength a function of a linguistic read of the current context, so it binds hard on the signals that mark genuine danger and loosens on the signals that mark a benign request wearing alarming words. The adaptive threshold, written formally, is a time-varying function of linguistic risk, which is the precise way of saying the boundary is set by the conversation in front of the model, something a number chosen once in advance can never do.
 
 </Band>
 

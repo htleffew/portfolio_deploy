@@ -19,9 +19,7 @@ import ApaReferences from '../components/ApaReferences.astro';
 
 ## The hypothesis and its appeal
 
-A Simplified Chinese character can encode an entire semantic concept in a single logogram. English spreads the same concept across multiple characters, spaces, and grammatical particles. The arithmetic looks obvious. Instruct an agentic LLM to conduct its chain-of-thought reasoning in Chinese, and the context window holds more reasoning per token.
-
-Practitioners call this "vibe coding." I ran through the arithmetic myself when planning a multilingual agentic pipeline, and the tokenizer does not cooperate.
+A Simplified Chinese character can encode an entire semantic concept in a single logogram, where English spreads that same concept across multiple characters, spaces, and grammatical particles; the arithmetic looks like it ought to be obvious, since if you ask an agentic LLM to conduct its chain-of-thought reasoning in Chinese, the intuition says the context window should then hold more reasoning per token. Practitioners call this "vibe coding," and it is an appealing idea; I ran through the arithmetic myself when I was planning a multilingual agentic pipeline, and the tokenizer turns out not to cooperate in the way the intuition promises.
 
 </Band>
 
@@ -29,11 +27,11 @@ Practitioners call this "vibe coding." I ran through the arithmetic myself when 
 
 ## Semantic density is not token density
 
-Modern LLMs do not process raw characters. They process tokens produced by Byte-Pair Encoding (BPE), a statistical compression algorithm trained predominantly on English-heavy internet corpora. BPE builds its merge table from co-occurrence statistics in the training distribution, so it compresses frequent English words into single tokens efficiently. Chinese logograms, underrepresented in the training distribution, get fragmented into multiple sub-word units or raw bytes.
+Modern LLMs do not process raw characters; they process tokens produced by Byte-Pair Encoding (BPE), a statistical compression algorithm trained predominantly on English-heavy internet corpora, and BPE builds its merge table from co-occurrence statistics in the training distribution, so it compresses frequent English words into single tokens efficiently while Chinese logograms, which are underrepresented in that distribution, get fragmented into multiple sub-word units or raw bytes.
 
-Ahia et al. (2023) and Petrov et al. (2023) quantify the disparity directly. For many Western LLMs, encoding Simplified Chinese requires two to three times as many tokens as encoding the equivalent semantic content in English. The character-level density that makes the hypothesis appealing is consumed by the tokenizer before the model sees it.
+Ahia et al. (2023) and Petrov et al. (2023) quantify the disparity directly; for many Western LLMs, encoding Simplified Chinese requires two to three times as many tokens as encoding the equivalent semantic content in English, so the character-level density that makes the hypothesis appealing tends to be consumed by the tokenizer before the model ever sees it.
 
-The distinction is between morphosyntactic density (characters per concept, a property of the writing system) and tokenization density (tokens per concept, a property of the model's vocabulary). Chinese wins the first metric. English wins the second on most production models.
+The distinction worth holding onto is between morphosyntactic density (characters per concept, a property of the writing system) and tokenization density (tokens per concept, a property of the model's vocabulary); Chinese wins the first metric, and English wins the second on most production models.
 
 </Band>
 
@@ -41,14 +39,14 @@ The distinction is between morphosyntactic density (characters per concept, a pr
 
 ## Model-specific empirics
 
-Whether Chinese saves tokens at all depends on the specific model's vocabulary allocation. Ren et al. (2026) tested the vibe-coding hypothesis empirically across multiple models and found the efficiency to be entirely model-dependent:
+Whether Chinese saves tokens at all turns out to depend on the specific model's vocabulary allocation; Ren et al. (2026) tested the vibe-coding hypothesis empirically across multiple models and found the efficiency to be entirely model-dependent:
 
 - **GLM-5** (Chinese-optimized vocabulary), 0.98x the English token count for equivalent Chinese prompts. A marginal saving.
 - **MiniMax-2.7** and several GPT variants, up to 1.28x the English token count. Chinese is more expensive, not less.
 
-The token count is not the only variable. Ren et al. also measured task resolution rates and found that models prompted to reason in Chinese frequently exhibited lower problem-solving rates than the same models prompted in English. The metric that should govern a deployment decision is cost per successful task completion, and that metric deteriorated when switching to Chinese across most models tested.
+The token count is not the only variable in play; Ren et al. also measured task resolution rates and found that models prompted to reason in Chinese frequently exhibited lower problem-solving rates than the same models prompted in English, so the metric that tends to govern a deployment decision, cost per successful task completion, deteriorated when switching to Chinese across most models tested.
 
-There is a separate failure mode here. Multilingual models instructed to reason strictly in Chinese exhibit language mixing during complex logical or mathematical steps. The model reverts to English unpredictably, producing convoluted outputs that disrupt the intended context-saving mechanism.
+A separate failure mode sits beside that one; multilingual models instructed to reason strictly in Chinese exhibit language mixing during complex logical or mathematical steps, where the model reverts to English unpredictably and produces convoluted outputs that disrupt the very context-saving mechanism the approach was reaching for.
 
 </Band>
 
@@ -56,13 +54,13 @@ There is a separate failure mode here. Multilingual models instructed to reason 
 
 ## The round-trip translation tax
 
-Even where a model's tokenizer does compress Chinese marginally better than English, agentic workflows do not operate in a vacuum. The agent calls APIs with English parameters, writes code with English syntax, generates artifacts for English-speaking users, and produces logs that English-speaking engineers need to read.
+Even where a model's tokenizer does compress Chinese marginally better than English, agentic workflows do not operate in a vacuum; the agent calls APIs with English parameters, writes code with English syntax, generates artifacts for English-speaking users, and produces logs that English-speaking engineers need to read.
 
-When the agent reasons in Chinese but outputs in English, the model spends tokens translating its internal state at every interface boundary. The dual-processing step bloats the output context and neutralizes whatever savings accrued during the reasoning phase.
+When the agent reasons in Chinese but outputs in English, the model spends tokens translating its internal state at every interface boundary, and that dual-processing step bloats the output context and tends to neutralize whatever savings accrued during the reasoning phase.
 
-The observability cost is harder to quantify but governs the deployment decision. An agent whose internal reasoning traces are in Chinese is opaque to non-Chinese-speaking developers. Resolving this through real-time log translation requires secondary LLM API calls, which defeats the original economic incentive. The alternative is tolerating opaque reasoning in production.
+The observability cost is harder to quantify, yet it is the one that tends to govern the deployment decision; an agent whose internal reasoning traces are in Chinese is opaque to non-Chinese-speaking developers, and resolving that through real-time log translation requires secondary LLM API calls, which defeats the original economic incentive, so the remaining option is tolerating opaque reasoning in production.
 
-The intermediate translation also introduces generation noise. Each shift between the reasoning language and the output language is a point where semantic precision can degrade. For complex neuro-symbolic tasks where precision is critical, the added translation layers increase the risk of hallucination and logic breakdown.
+The intermediate translation also introduces generation noise, since each shift between the reasoning language and the output language is a point where semantic precision can degrade; for complex neuro-symbolic tasks where precision is the whole game, the added translation layers raise the risk of hallucination and logic breakdown.
 
 </Band>
 
@@ -70,13 +68,15 @@ The intermediate translation also introduces generation noise. Each shift betwee
 
 ## Where the real savings are
 
-The underlying intuition (that context windows waste capacity on redundant tokens) is correct. The fix is at the tokenizer and compression layers, not at the language layer.
+The underlying intuition, that context windows waste capacity on redundant tokens, is correct; the place the fix lives is the tokenizer and compression layers, not the language layer.
 
-**Fairer tokenizers.** If BPE vocabularies allocated capacity more equitably across languages, the natural semantic density of logographic scripts could translate into real compute savings. Petrov et al. (2023) frame this as a tokenizer fairness problem.
+**Fairer tokenizers.** If BPE vocabularies allocated capacity more equitably across languages, the natural semantic density of logographic scripts could translate into real compute savings, and Petrov et al. (2023) frame this as a tokenizer fairness problem.
 
-**Algorithmic prompt compression.** LLMLingua and similar tools calculate conditional perplexity to identify and drop unnecessary tokens from a prompt. The compression is mathematically grounded, observable, and language-agnostic. It does not introduce translation overhead because it operates on the prompt's own language.
+**Algorithmic prompt compression.** LLMLingua and similar tools calculate conditional perplexity to identify and drop unnecessary tokens from a prompt; the compression is mathematically grounded, observable, and language-agnostic, and it does not introduce translation overhead because it operates on the prompt's own language.
 
 **Latent-space reasoning.** Architectures that process intermediate reasoning steps natively in continuous embeddings or token vectors would sidestep discrete human writing systems altogether.
+
+The hypothesis was reaching for a real inefficiency through the one layer that cannot deliver it; the savings live in the tokenizer, not in the choice of human language the model thinks in.
 
 </Band>
 

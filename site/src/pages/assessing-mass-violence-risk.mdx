@@ -2,7 +2,7 @@
 layout: ../layouts/CinematicLayout.astro
 title: "Assessing Risk for Mass Violence From Platform Behaviors"
 short_title: "Assessing Risk for Mass Violence From Platform"
-description: "The case for why user reports should be prioritized over automated detection. Perpetrators of mass violence are characte..."
+description: "The case for why user reports tend to outperform automated detection. Perpetrators of mass violence are characterologically heterogeneous, the warning signs are contextual, and the on-platform signal is thin, which is most of the reason a list-based classifier struggles where a human reader does not."
 category: "Threat Assessment · Predictive Limitations"
 subcategory: "14 min read"
 format: "CASE STUDY"
@@ -20,7 +20,7 @@ import ApaReferences from '../components/ApaReferences.astro';
 
 ## Abstract
 
-The case for why user reports should be prioritized over automated detection. Perpetrators of mass violence are characterologically heterogeneous, the warning signs are contextual, and the on-platform signal is thin. A working note on the threat-assessment literature, the eight pre-attack warning behaviors, the six-stage path to intended violence, and where machine detection actually breaks.
+The case for why user reports tend to outperform automated detection. Perpetrators of mass violence are characterologically heterogeneous, the warning signs are contextual, and the on-platform signal is thin. A working note on the threat-assessment literature, the eight pre-attack warning behaviors, the six-stage path to intended violence, and where machine detection tends to break.
 
 </Band>
 
@@ -30,13 +30,13 @@ The case for why user reports should be prioritized over automated detection. Pe
 
 Mass shootings in the United States rose roughly 250% from one decade to the next, with 57% of all recorded mass shootings in the past ten years (Office for Victims of Crime, 2018). The FBI logged 250 active shooter incidents between 2000 and 2017, producing 2,217 casualties not counting the perpetrators themselves (Silver, Simons, & Craun, 2018). The volume justifies the interest. The literature has not produced a profile.
 
-Thompson and Kyle (2005) cast these offenders as low-self-esteem. Palermo (1997) reads them as psychopathic. Hempel and Richards (1999) and Virtanen (2013) read them as narcissistic. Bondu and Scheithauer (2015) and Wike and Fraser (2009) document characterological heterogeneity at a scale that defeats single-construct typologies. Lankford (2013) finds that the age and attack-location differences between rampage shooters, workplace shooters, school shooters, and suicide terrorists are mostly superficial. Ferguson, Coulson, and Barnett (2011) find youthful mass murderers resemble adult perpetrators more than they differ from them. Most perpetrators do not survive the event, so traditional post-event psychological assessment cannot be performed.
+Thompson and Kyle (2005) cast these offenders as low-self-esteem; Palermo (1997) reads them as psychopathic; Hempel and Richards (1999) and Virtanen (2013) read them as narcissistic. Bondu and Scheithauer (2015) and Wike and Fraser (2009) document characterological heterogeneity at a scale that defeats single-construct typologies. Lankford (2013) finds that the age and attack-location differences between rampage shooters, workplace shooters, school shooters, and suicide terrorists are mostly superficial, and Ferguson, Coulson, and Barnett (2011) find youthful mass murderers resemble adult perpetrators more than they differ from them. Most perpetrators do not survive the event, so traditional post-event psychological assessment cannot be performed at all.
 
-Seung-Hui Cho killed 32 people at Virginia Tech in 2007. Anders Breivik killed 77 across two locations in Norway in 2011. Both left manifestos. Cho's reads as raw, affective, personal injury, in lines like "Vandalizing my heart wasn't enough for you. Raping my soul wasn't enough for you." Breivik's runs more than 1,500 pages with chapter headings like "Modern Aftermath of the Crusades" and "US and European Nationalist Rhetorical Differences." The two attacks share an outcome and almost nothing else.
+Seung-Hui Cho killed 32 people at Virginia Tech in 2007; Anders Breivik killed 77 across two locations in Norway in 2011. Both left manifestos. Cho's reads as raw, affective, personal injury, in lines like "Vandalizing my heart wasn't enough for you. Raping my soul wasn't enough for you." Breivik's runs more than 1,500 pages with chapter headings like "Modern Aftermath of the Crusades" and "US and European Nationalist Rhetorical Differences." The two attacks share an outcome and almost nothing else.
 
 Implication for detection
 
-I kept finding that any classifier built on a single perpetrator template will miss most of the population it is supposed to flag.
+I kept finding that a classifier built on a single perpetrator template will tend to miss most of the population it is meant to flag.
 
 </Band>
 
@@ -44,7 +44,7 @@ I kept finding that any classifier built on a single perpetrator template will m
 
 ## Attacks are planned, and the planning leaks.
 
-Popular framing treats mass violence as a sudden break, an unpredictable snap. Governmental and academic work has converged on the opposite reading. Most perpetrators display identifiable pre-attack behaviors that reflect intent (Fein, Vossekuil, & Holden, 1998; U.S. Secret Service, 2004). Silver, Simons, and Craun (2018) studied 63 active shooters and found that the majority spent a week or longer in planning and preparation. That is the operational window detection has to live in.
+Popular framing treats mass violence as a sudden break, an unpredictable snap; governmental and academic work has converged on close to the opposite reading. Most perpetrators display identifiable pre-attack behaviors that reflect intent (Fein, Vossekuil, & Holden, 1998; U.S. Secret Service, 2004), and Silver, Simons, and Craun (2018) studied 63 active shooters and found that the majority spent a week or longer in planning and preparation. That is the operational window detection has to live in.
 
 88%
 
@@ -62,7 +62,7 @@ Median planning-and-preparation window
 
 Active shooters analyzed in the FBI pre-attack study
 
-The same study and adjacent work (Silver, Horgan, & Gill, 2018) document leakage to third parties as the modal communication. The communication channel is less relevant than the fact that it happens. Detection logic that requires a respondent to directly address law enforcement will miss most cases. Detection logic that pays attention to what perpetrators tell their friends, their classmates, or the internet has signal to work with.
+The same study and adjacent work (Silver, Horgan, & Gill, 2018) document leakage to third parties as the modal communication, and the channel matters less than the fact that the communication happens at all. Detection logic that asks a respondent to directly address law enforcement will tend to miss most cases, while detection logic that pays attention to what perpetrators tell their friends, their classmates, or the internet has signal to work with.
 
 </Band>
 
@@ -70,7 +70,7 @@ The same study and adjacent work (Silver, Horgan, & Gill, 2018) document leakage
 
 ## Eight behaviors, six stages.
 
-Meloy, Hoffmann, Guldimann, and James (2012) propose eight essential warning behaviors. These are acute, dynamic, particularly toxic changes in behavior that signal accelerating risk and require an operational response. Calhoun and Weston (2003, 2015) propose the path to intended violence as a discrete six-stage sequence (grievance, ideation, research and planning, preparation, breach, attack). The eight behaviors do not occur uniformly across the six stages. Mapping them to where they tend to appear is the structure most threat-assessment work runs on.
+Meloy, Hoffmann, Guldimann, and James (2012) propose eight essential warning behaviors, acute, dynamic, particularly toxic changes in behavior that signal accelerating risk and call for an operational response. Calhoun and Weston (2003, 2015) propose the path to intended violence as a discrete six-stage sequence (grievance, ideation, research and planning, preparation, breach, attack). The eight behaviors do not occur uniformly across the six stages, and mapping them to where they tend to appear is the structure most threat-assessment work runs on.
 
 <Figure src="/assets/assessing-mass-violence-risk/fig_2.svg" alt="Warning Behavior Matrix, the eight pre-attack warning behaviors mapped across the six-stage path to intended violence" caption="Warning Behavior Matrix. Each of the eight warning behaviors is shaded across the stages of the six-stage path to intended violence where it typically surfaces, from grievance and ideation, through research and preparation, to breach and attack." />
 
@@ -82,11 +82,11 @@ Meloy, Hoffmann, Guldimann, and James (2012) propose eight essential warning beh
 
 ## Threats as emotional release.
 
-People often prefer words that alarm over actions that harm. Reading a threatening statement requires separating content from context. The first question is whether the statement is direct (delivered to the potential target) or indirect (delivered to a third party). The second question is whether the statement is a threat or an ultimatum. Ultimatums attach conditions. They are warnings or attempts at manipulation. Threats are non-conditional.
+People often prefer words that alarm over actions that harm, so reading a threatening statement tends to mean separating content from context. The first question is whether the statement is direct (delivered to the potential target) or indirect (delivered to a third party); the second is whether the statement is a threat or an ultimatum. Ultimatums attach conditions, and they read as warnings or attempts at manipulation, where threats are non-conditional.
 
-Threats are riskier in principle but often less actionable in practice. A person who directly threatens another is frequently expressing desperation and frustration rather than communicating an actual plan. The anxiety the threat provokes in the target functions as an emotional release for the speaker, and that release can substitute for the act itself. The threat that worries threat-assessment professionals is the one that does not seek a fear pay-out.
+Threats are riskier in principle but often less actionable in practice; a person who directly threatens another is frequently expressing desperation and frustration more than communicating an actual plan, and the anxiety the threat provokes in the target functions as an emotional release for the speaker, a release that can substitute for the act itself. The threat that worries threat-assessment professionals is the one that does not seek a fear pay-out.
 
-Late-appearing threats are more concerning than early ones. Early threats tend to be emotional reactions to an immediate upset. Late threats tend to be the residue of a deliberative process where other alternatives have already been considered and rejected. Indirect threats, delivered to someone other than the intended target, carry elevated risk precisely because they bypass the fear-payout loop that normally drains the speaker's emotional charge.
+Late-appearing threats tend to be more concerning than early ones; early threats tend to be emotional reactions to an immediate upset, while late threats tend to be the residue of a deliberative process where other alternatives have already been considered and rejected. Indirect threats, delivered to someone other than the intended target, carry elevated risk precisely because they bypass the fear-payout loop that usually drains the speaker's emotional charge.
 
 </Band>
 
@@ -94,7 +94,7 @@ Late-appearing threats are more concerning than early ones. Early threats tend t
 
 ## Probability against impact.
 
-Threat assessment risk management is an equation evaluating the probability an event will occur (the threat) against the potential impacts of the event (the risk). The intervention demand for low-probability events rises with the impact magnitude. The combinations produce a familiar 2x2.
+Threat assessment risk management is an equation weighing the probability an event will occur (the threat) against the potential impacts of the event (the risk), and the intervention demand for low-probability events rises with the impact magnitude. The combinations produce a familiar 2x2.
 
 Threat (probability)
 
@@ -116,7 +116,7 @@ High risk · High threat
 
 A well-armed individual who has communicated credible intent to commit a mass shooting at a specific, accessible elementary school. Both axes are pegged. The response demand is immediate.
 
-The matrix is useful as a decision aid because it forces the assessor to hold two separate estimates, how likely is this, and how bad if it happens. Conflating them produces the two characteristic failures of threat work, treating every catastrophic scenario as imminent, or dismissing every statistically rare scenario as negligible.
+The matrix earns its place as a decision aid because it holds the assessor to two separate estimates, how likely is this, and how bad if it happens. Conflating them produces the two characteristic failures of threat work, treating every catastrophic scenario as imminent, or dismissing every statistically uncommon scenario as negligible.
 
 </Band>
 
@@ -124,9 +124,9 @@ The matrix is useful as a decision aid because it forces the assessor to hold tw
 
 ## The post-event risk window.
 
-After a highly publicized attack the risk of a copycat attack remains elevated for approximately 13 days. Watershed events, the ones that lodge in cultural memory, can elevate risk for ten years or longer. Mother Jones tracked the Columbine effect and counted 72 plots inspired by the event, 21 carried out, 89 deaths. The contagion does not require the original attacker to have used a platform. The contagion vector is the cultural event itself, independent of any particular dataset.
+After a highly publicized attack the risk of a copycat attack stays elevated for approximately 13 days, and watershed events, the ones that lodge in cultural memory, can elevate risk for ten years or longer. Mother Jones tracked the Columbine effect and counted 72 plots inspired by the event, 21 carried out, 89 deaths. The contagion does not require the original attacker to have used a platform; the contagion vector is the cultural event itself, independent of any particular dataset.
 
-For platform threat-assessment workflows, the operational implication is asymmetric staffing. Detection volume needs to spike with cultural events, not with calendar quarters. The post-watershed window is also where automated false-positive rates spike, because the volume of users discussing the event surges and discussion is not intent. The cost of pattern-matching on surface features in a contagion window is paid in over-flagging the people who are simply reading the news.
+For platform threat-assessment workflows, the operational implication is asymmetric staffing, since detection volume tends to spike with cultural events, not with calendar quarters. The post-watershed window is also where automated false-positive rates spike, because the volume of users discussing the event surges and discussion is not intent; the cost of pattern-matching on surface features in a contagion window gets paid in over-flagging the people who are just reading the news.
 
 </Band>
 
@@ -134,15 +134,15 @@ For platform threat-assessment workflows, the operational implication is asymmet
 
 ## User reports outperform automated detection, and the reasons are structural.
 
-Grounded threat assessment is only as good as the data feeding it. Examination of on-platform behavior in isolation cannot reach a defensible determination of actual threat level, because the variables that move the assessment (warning signs, risk factors, stabilizing factors, precipitating events) are almost never all on-platform. Collateral data sources are essential. A platform that builds its threat workflow exclusively around its own telemetry has stipulated to working with an incomplete record.
+Grounded threat assessment is only as good as the data feeding it. Examination of on-platform behavior in isolation cannot reach a defensible determination of actual threat level, because the variables that move the assessment (warning signs, risk factors, stabilizing factors, precipitating events) are almost never all on-platform; collateral data sources tend to be essential, and a platform that builds its threat workflow exclusively around its own telemetry has stipulated to working with an incomplete record.
 
-The characterological heterogeneity that defeats single-profile classifiers also defeats list-based automated detection. Different behaviors represent different positions on the pathway, and a single behavior late in the pathway warrants a more urgent response than several appearances at the early end. Building an automated system around behavior counts rather than behavior positions inverts that logic and dilutes the operational response.
+The characterological heterogeneity that defeats single-profile classifiers also defeats list-based automated detection. Different behaviors represent different positions on the pathway, and a single behavior late in the pathway warrants a more urgent response than several appearances at the early end; building an automated system around behavior counts instead of behavior positions inverts that logic and dilutes the operational response.
 
-Users of a platform with millions of participants bring something an automated system cannot replicate, contextual interpretation at scale. A user reading a friend's post understands the prior six months of that person's behavior, the relationship history, the in-group jokes, the affective baseline. Algorithms see a comment and a numeric vector; humans see a person whose pattern has changed. The recommendation is not to remove automation. It is to position automation as the support layer for the human judgment that has the higher base rate of correct identification.
+Users of a platform with millions of participants bring something an automated system cannot replicate, which is contextual interpretation at scale. A user reading a friend's post understands the prior six months of that person's behavior, the relationship history, the in-group jokes, the affective baseline; algorithms see a comment and a numeric vector, where humans see a person whose pattern has changed. The point is not to remove automation, but to position it as the support layer for the human judgment that has the higher base rate of correct identification.
 
 Operational stance
 
-Prioritize clear, low-friction reporting channels for users. Use automated systems to support the routing, triage, and analytical surfacing of those reports, not as the primary detection mechanism. Anticipate elevated reporting volume in the 13-day window after any watershed event, and staff accordingly.
+It helps to keep clear, low-friction reporting channels open for users, and to let automated systems support the routing, triage, and analytical surfacing of those reports instead of carrying detection as the primary mechanism. It also doesn't hurt to anticipate elevated reporting volume in the 13-day window after any watershed event, and to staff for it. On-platform behavior alone cannot tell you who is dangerous; the people who know the person can.
 
 </Band>
 

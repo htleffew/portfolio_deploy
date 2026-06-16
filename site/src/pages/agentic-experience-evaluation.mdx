@@ -15,11 +15,11 @@ scripts: []
 import Band from '../components/Band.astro';
 import ApaReferences from '../components/ApaReferences.astro';
 
-<Band theme="paper" spine="The agent's logs alrea" section="The agent's logs already hold its experience">
+<Band theme="paper" spine="Six measurements from " section="Six measurements from the logs the agent already left">
 
-## The agent's logs already hold its experience
+## Six measurements from the logs the agent already left
 
-An agent leaves a complete record of everything it did to answer a request, the tools it called, the order it called them in, how long each step took, and how the user reacted to the result. That record is where the user's actual experience lives, because the person who asked lives the whole trajectory that produced the answer, the dead ends, the waiting, and the moments where they had to rephrase because the agent misread them. Six measurements, all drawn from those logs and all kept at the level of aggregate behavioral signals rather than individual transcripts, turn that record into a read on whether the agent served the person who asked, and they borrow the same offline discipline as [A Recipe for Shipping AI Guardrails](../AI_Safety_Audit_Framework/ai-safety-audit-framework.html). The agent already produced the evidence, so you score what it did instead of running a live experiment to find out.
+Every tool call an agent makes, the order it made them in, how long each step took, and how the user reacted to the result all land in the conversation log, which means the record of the user's actual experience is already sitting there waiting to be read. The person who asked lives the whole trajectory that produced the answer, the dead ends, the waiting, and the moments where they had to rephrase because the agent misread them, and that lived trajectory is exactly what the log preserves. Six measurements, all drawn from those logs and all kept at the level of aggregate behavioral signals rather than individual transcripts, turn that record into a read on whether the agent served the person who asked, and they borrow the same offline discipline as [A Recipe for Shipping AI Guardrails](../AI_Safety_Audit_Framework/ai-safety-audit-framework.html). The evidence is already produced, so it helps to score what the agent did instead of running a live experiment to find out.
 
 </Band>
 
@@ -27,7 +27,7 @@ An agent leaves a complete record of everything it did to answer a request, the 
 
 ## Start with a task-success baseline
 
-A claim that a new version improved the product needs an earlier number to improve on, so the first measurement is a task-success baseline read from the conversations the agent already had. You infer success from structural signals, whether the session reached a resolved state, how many turns it took, whether the user came back to rephrase, so the baseline stays aggregate and never reads individual content. The number is comparative, since a task-success rate tells you something only against the version before it and the segment it came from, so it comes first, and every later measurement is read against it.
+A claim that a new version improved the product needs an earlier number to improve on, so the first measurement is a task-success baseline read from the conversations the agent already had. Success here gets inferred from structural signals, whether the session reached a resolved state, how many turns it took, whether the user came back to rephrase, which keeps the baseline aggregate and never reads individual content. The number is comparative, since a task-success rate means something only against the version before it and the segment it came from, so it comes first, and every later measurement is read against it.
 
 </Band>
 
@@ -35,7 +35,7 @@ A claim that a new version improved the product needs an earlier number to impro
 
 ## Grounding, is the answer anchored in the evidence
 
-Grounding measures how often a returned answer is actually anchored in the tool responses recorded in the session, using the tool-call metadata as the thing you check against, because an answer built from the evidence and an answer improvised past it can read the same on the surface. It is the agentic version of a hallucination rate; when grounding drops, the tools are still in the loop but the model is talking past what they returned.
+Grounding measures how often a returned answer is actually anchored in the tool responses recorded in the session, using the tool-call metadata as the thing the answer gets checked against, because an answer built from the evidence and an answer improvised past it can read the same on the surface. It is the agentic version of a hallucination rate; when grounding drops, the tools are still in the loop but the model is talking past what they returned.
 
 </Band>
 
@@ -51,7 +51,7 @@ The route an agent takes to an answer is its own quality signal, because a sessi
 
 ## Dissatisfaction leaves fingerprints in the text
 
-Users rarely file a complaint, so the sign that a session went badly lives in how they write, in the reformulations, the corrections, the sentences getting shorter and sharper, the quiet abandonment after a bad turn. This measurement reads those behavioral signals of reformulation pressure and abandonment, and a second pass adds part-of-speech and sentiment analysis to catch confusion in the language itself. It is the same implicit-signal approach behavioral measurement has always used, a reading of what people do and how they phrase it rather than what they report on a survey, applied here to the transcript an agent leaves behind (the [LIWC narrative work](../Diagnostic_Thematic_Apperception_Narratives/diagnostic-thematic-apperception-liwc.html) is the same method on clinical text).
+Users tend not to file a complaint, so the sign that a session went badly lives in how they write, in the reformulations, the corrections, the sentences getting shorter and sharper, the abandonment that follows a bad turn. This measurement reads those behavioral signals of reformulation pressure and abandonment, and a second pass adds part-of-speech and sentiment analysis to catch confusion in the language itself. It is the same implicit-signal approach behavioral measurement has long used, a reading of what people do and how they phrase it rather than what they report on a survey, applied here to the transcript an agent leaves behind (the [LIWC narrative work](../Diagnostic_Thematic_Apperception_Narratives/diagnostic-thematic-apperception-liwc.html) is the same method on clinical text).
 
 </Band>
 
@@ -59,7 +59,7 @@ Users rarely file a complaint, so the sign that a session went badly lives in ho
 
 ## Latency is an experience budget
 
-Responsiveness decides whether a correct answer feels usable, so latency belongs inside the experience evaluation and not only on the systems dashboard. This measurement sets a responsiveness budget and scores each session against it, which lets a slow-but-correct path and a fast-but-correct path register as the different experiences they are. Holding latency as a budget makes the tradeoff visible when a more capable model costs more time, so the decision to ship it weighs the capability you gain against the responsiveness you spend.
+Responsiveness decides whether a correct answer feels usable, so latency belongs inside the experience evaluation and not only on the systems dashboard. This measurement sets a responsiveness budget and scores each session against it, which lets a slow-but-correct path and a fast-but-correct path register as the different experiences they are. Holding latency as a budget makes the tradeoff visible when a more capable model costs more time, so the decision to ship it weighs the capability gained against the responsiveness spent.
 
 </Band>
 
@@ -67,9 +67,9 @@ Responsiveness decides whether a correct answer feels usable, so latency belongs
 
 ## Break every metric down by user segment
 
-The last measurement breaks every preceding metric down by user segment, so grounding, tool-path efficiency, latency, and the rest are read per population instead of as one blended number. A per-segment view points you at the group whose grounding dropped or whose tool path ballooned, which is where the next iteration should aim, because an average reports one result for a set of users the agent may be serving very unevenly.
+The last measurement breaks every preceding metric down by user segment, so grounding, tool-path efficiency, latency, and the rest are read per population instead of as one blended number. A per-segment view points at the group whose grounding dropped or whose tool path ballooned, which is where the next iteration tends to be best aimed, because an average reports one result for a set of users the agent may be serving very unevenly.
 
-None of these six is exotic. You read the agent's own logs, you set a baseline before you change anything, you check that answers come from evidence, you watch the path and the latency and the language, and you break every number down by who was on the other end. Together they answer the question a benchmark score leaves open, whether each user segment actually got a working result, and if not, where the agent lost them.
+None of these six is exotic. They read the agent's own logs, fix a baseline before anything changes, check that answers come from the evidence, watch the path and the latency and the language, and break every number down by who was on the other end. Together they answer the question a benchmark score leaves open, whether each user segment actually got a working result, and if not, where the agent lost them. A score read off the trajectory the user actually lived is the only kind that can answer it.
 
 </Band>
 

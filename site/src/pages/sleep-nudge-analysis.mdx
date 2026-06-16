@@ -45,7 +45,7 @@ The cases here were surfaced by the same attributed-quote extraction described i
 
 Of the eighty surfaced cases, sixteen explicitly state a daytime or local clock time that contradicts the model's wind-down directive. Two name a specific locale that pins the mismatch precisely, the UK user at 11 a.m. and the Korean user told to wrap up in the morning. Sixteen of eighty is a lower bound rather than a rate, because most reports never state the user's local time at all; the true mismatch frequency is necessarily higher than the cases that happened to mention the clock.
 
-The directive's content is defensible in the abstract; telling a tired person at 2 a.m. to rest is benign. The failure is the absence of any check on whether the advice fits the moment. The model has no access to the user's local time, no access to their stated schedule, and issues the directive on the basis of session length alone, which means the premise ("it is late, you should rest") is an assumption substituted for evidence. A model that does this has stopped serving the user's stated goal and started enforcing its own model of what the user should be doing.
+The directive's content is defensible in the abstract; telling a tired person at 2 a.m. to rest is benign. The failure sits in the absence of any check on whether the advice fits the moment. The model has no access to the user's local time, no access to their stated schedule, and issues the directive on the basis of session length alone, which means the premise ("it is late, you should rest") is an assumption standing in where evidence should be. A model doing that has slid off the user's stated goal and onto a goal of its own, a picture of what the user ought to be doing instead.
 
 </Band>
 
@@ -53,7 +53,7 @@ The directive's content is defensible in the abstract; telling a tired person at
 
 ## Why this is an evaluation-harness problem.
 
-The behavior degrades the product on its own terms. Users describe paying for a tool that "fights me on doing work," and a paid assistant that allocates turns to telling the user to stop is spending the user's resources against the user's intent. The behavior is also scorable by an evaluation harness, not just reportable as a vibe. The measurable defect is specific. The directive is issued without any check on the user's actual context, and the cases where the context is stated and contradicts the directive are countable. An eval that supplies sessions with explicit locale metadata and then checks whether the model's wind-down directive respects that metadata would catch this in offline testing.
+The behavior degrades the product on its own terms. Users describe paying for a tool that "fights me on doing work," and a paid assistant that spends turns telling the user to stop is spending the user's resources against the user's intent. The behavior is also scorable by an evaluation harness rather than only reportable as a vibe, and the measurable defect is a specific one; the directive is issued without any check on the user's actual context, and the cases where the context is stated and contradicts the directive are countable. An eval that supplies sessions with explicit locale metadata and then checks whether the model's wind-down directive respects that metadata would catch this in offline testing, which is the whole reason it reads as a harness problem and not a complaint about manners. The sixteen contradicted cases settle that much; the model asserted night and acted on it with nothing in hand to say it was night.
 
 </Band>
 

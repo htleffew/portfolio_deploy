@@ -1,8 +1,8 @@
 ---
 layout: ../layouts/CinematicLayout.astro
-title: "Why a Safety Detector Needs Corroboration"
+title: "Why a Safety Detector Tends to Need Corroboration"
 short_title: "Why a Safety Detector Needs Corroboration"
-description: "A safety detector can be wrong in two directions, under-detecting real harm, and over-detecting a benign look-alike in a way that causes the harm it was meant to prevent. One classifier cannot tell those apart, because the harmful pattern and its benign twin share words and tone. A method for running several independent signals, scoring how much they agree, and scaling the enforcement to that corroboration, so every decision carries a measured precision instead of one signal's guess."
+description: "A safety detector can be wrong in two directions, under-detecting real harm, and over-detecting a benign look-alike in a way that causes the harm it was meant to prevent. One classifier tends to struggle to tell those apart, because the harmful pattern and its benign twin share words and tone. Here is a method for running several independent signals, scoring how much they agree, and scaling the enforcement to that corroboration, so every decision carries a measured precision instead of one signal's guess."
 category: "AI Evaluation & Safety"
 subcategory: "Detection & Trust and Safety"
 format: "ESSAY"
@@ -19,7 +19,7 @@ import ApaReferences from '../components/ApaReferences.astro';
 
 ## A safety detector can be wrong in two directions
 
-A safety detector can be wrong in two directions. It can under-detect, letting real harm through, the direction audits and red teams are built to catch. It can also over-detect, firing on something that shares surface features with a harmful class while being something else, and that second mistake can produce the very harm the detector was meant to prevent. A model that answers a person's distress with an unsolicited diagnosis is pattern-matching to care while delivering an outcome the person did not ask for (I measure that exact failure in [the Claude caretaker work](../Claude_Character_Tic/claude-character-tic.html)). One classifier cannot keep both directions honest, because the harmful pattern and its benign look-alike co-occur at the level of words and tone, so a single read of the surface cannot separate them.
+A safety detector can be wrong in two directions, and it helps to hold both of them in view at once; it can under-detect, letting real harm through, which is the direction audits and red teams are built to catch, and it can also over-detect, firing on something that shares surface features with a harmful class while being something else entirely, and that second mistake is the sneaky one, because it can produce the very harm the detector was meant to prevent. A model that answers a person's distress with an unsolicited diagnosis is pattern-matching to care while delivering an outcome the person did not ask for, which is the exact failure I measure in [the Claude caretaker work](../Claude_Character_Tic/claude-character-tic.html). One classifier tends to struggle to keep both directions honest, because the harmful pattern and its benign look-alike co-occur at the level of words and tone, so a single read of the surface usually cannot separate them.
 
 </Band>
 
@@ -27,7 +27,7 @@ A safety detector can be wrong in two directions. It can under-detect, letting r
 
 ## One signal has a predictable blind spot
 
-Driving detection from a single signal builds in a predictable error. Sentiment polarity alone misses posts that are flat in tone while describing real harm; lexical co-occurrence alone flags posts that mention harm-adjacent terms with nothing harmful behind them. Each signal is fragile in its own way, so running detection on any one of them hands the enforcement decision to whichever blind spot that signal happens to have.
+Driving detection from a single signal tends to build in a predictable error. Sentiment polarity alone misses posts that are flat in tone while describing real harm; lexical co-occurrence alone flags posts that mention harm-adjacent terms with nothing harmful behind them. Each signal is fragile in its own way, so running detection on any one of them hands the enforcement decision over to whichever blind spot that signal happens to have.
 
 </Band>
 
@@ -35,7 +35,7 @@ Driving detection from a single signal builds in a predictable error. Sentiment 
 
 ## Run several signals and score their agreement
 
-The detector runs several independent streams over the same content, among them a sentiment and affect read, a lexical co-occurrence check against curated harm-related and intervention-related vocabularies, structural and behavioral features, and relational or network signals where the data supports them. It then scores how much the streams agree rather than taking a majority vote. A flag is as strong as the corroboration behind it, so a case where one stream is confident and the others stay silent is treated as the weak signal it is. Independent streams also make a flag legible, since it arrives with the specific streams that agreed, which is what a human reviewer needs to act on it with any confidence.
+The detector runs several independent streams over the same content, among them a sentiment and affect read, a lexical co-occurrence check against curated harm-related and intervention-related vocabularies, structural and behavioral features, and relational or network signals where the data supports them. It then scores how much the streams agree, which is a different thing from taking a majority vote. A flag is as strong as the corroboration behind it, so a case where one stream is confident and the others stay silent gets treated as the weak signal it is. Independent streams also make a flag legible, since it arrives with the specific streams that agreed, which is what a human reviewer tends to need before acting on it with any confidence.
 
 </Band>
 
@@ -43,7 +43,7 @@ The detector runs several independent streams over the same content, among them 
 
 ## Scale the enforcement to the confidence
 
-A detection score does something only when it connects to an action, so the detector maps the corroboration confidence to the scope of the enforcement, holding the heaviest actions for the highest-corroboration cases. A low-corroboration signal can drive a light response, a soft prompt or a place in a review queue, while a high-corroboration signal can support a decisive one, and both are taken with a measured precision behind them instead of an assumed threshold. With that mapping a system can run at scale without treating every flag as equally certain, where a single threshold for everything forces a choice between drowning reviewers in low-confidence flags and missing the high-confidence ones.
+A detection score does something only when it connects to an action, so the detector maps the corroboration confidence to the scope of the enforcement, holding the heaviest actions for the highest-corroboration cases. A low-corroboration signal can drive a light response, a soft prompt or a place in a review queue, while a high-corroboration signal can support a decisive one, and both arrive with a measured precision behind them instead of an assumed threshold. With that mapping a system can run at scale without treating every flag as equally certain; a single threshold for everything forces a choice between drowning reviewers in low-confidence flags and missing the high-confidence ones, and scaling the action to the corroboration is how the method sidesteps that bind.
 
 </Band>
 
@@ -51,7 +51,7 @@ A detection score does something only when it connects to an action, so the dete
 
 ## What the method is, underneath
 
-The method is a discipline for using the detectors you already have. You accept that any single signal is fragile, you require several of them to agree, you score that agreement instead of counting votes, and you let the strength of the agreement decide how hard you act. What you get back is an enforcement decision you can put a number on, rather than one signal's confident guess. The same shape shows up wherever a single read is too fragile to act on alone, which is why it sits next to the [agentic experience suite](../Agentic_Experience_Evaluation/agentic-experience-evaluation.html), where several weak signals of dissatisfaction are combined the same way.
+Underneath the streams and the confidence mapping, the method asks several fragile detectors to agree before it acts, and scores how much they actually do; it starts from the premise that any single signal is fragile, it leans on several of them corroborating each other, it scores that agreement rather than counting votes, and it lets the strength of the agreement set how hard the enforcement leans. The detectors are the ones already on hand, so this is less a new model than a new way of listening to the ones in place. What comes back from that is an enforcement decision with a number attached to it, instead of one signal's confident guess. The same shape shows up wherever a single read is too fragile to act on alone, which is why it sits next to the [agentic experience suite](../Agentic_Experience_Evaluation/agentic-experience-evaluation.html), where several weak signals of dissatisfaction get combined the same way. A flag that arrives with its corroboration measured is the only kind worth scaling an action to.
 
 </Band>
 
