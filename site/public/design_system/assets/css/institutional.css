@@ -39,6 +39,8 @@ body {
 .band--dark  { background:rgba(3,3,3,0.6); color:var(--platinum); }
 .band--paper { background:rgba(245,245,247,0.95); color:var(--obsidian); }
 .band--ink   { background:rgba(26,26,26,0.7); color:var(--platinum); }
+/* APA-style article sections: tighten the large between-section spacing (content bands only) */
+section.band:has(> .col-wide.markdown-body){ padding-top:12px; padding-bottom:12px; }
 
 .band--dark + .band--paper, .band--paper + .band--dark, .band--ink + .band--paper, .band--paper + .band--ink {
   border-top:1px solid rgba(0,0,0,0.0);
