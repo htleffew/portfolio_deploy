@@ -22,8 +22,11 @@ const articleDirs = distEntries.filter(
 let checked = 0;
 for (const d of articleDirs) {
   const html = await readFile(path.join(dist, d.name, 'index.html'), 'utf8');
-  // Skip non-article pages that legitimately lack the case-study frame.
+  // Skip non-article pages that legitimately lack the case-study frame: those
+  // without the design system at all, and content pages (e.g. /about/) that use
+  // the design system but are not case studies (no Front-matter band).
   if (!html.includes('institutional.css')) continue;
+  if (!html.includes('data-section="Front matter"')) continue;
   const needs = [
     'institutional.css', 'cinematic_engine_v3.js', 'global_chrome.js', 'institutional.js',
     'recommendation-grid', 'next-chap-link',

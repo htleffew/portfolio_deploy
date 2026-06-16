@@ -1,0 +1,82 @@
+---
+// About-page frame. Mirrors the chrome of the previous hand-authored about.html
+// (preloader, progress, atmosphere, top nav, hero with headshot, paper body,
+// CTA, design-system scripts) but takes its hero content from frontmatter and
+// renders the MDX body into the paper band, so the About page is authored as
+// src/pages/about.mdx exactly like the articles are.
+const { frontmatter } = Astro.props;
+const fm = frontmatter ?? {};
+const title = fm.title || "About";
+const eyebrow = fm.eyebrow || "About";
+const lede = fm.lede || "";
+const headshot = fm.headshot || "/design_system/assets/Heather_headshot_3.jpg";
+const headshotAlt = fm.headshotAlt || "Dr. Heather Leffew";
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{title} | Dr. Heather Leffew</title>
+{lede && <meta name="description" content={lede} />}
+<link rel="stylesheet" href="/design_system/assets/css/institutional.css" />
+</head>
+<body>
+<div id="preloader"><div id="preloader-left"></div><div id="preloader-right"></div><div id="preloader-line"></div></div>
+<div id="progress"></div>
+<div class="atmosphere"></div>
+<canvas id="glCanvas"></canvas>
+
+<header id="topnav">
+  <a href="/index.html" class="brand">Dr. Heather Leffew</a>
+  <div class="nav-links">
+    <button id="trigger-search">Search</button>
+    <a href="/about/">About</a>
+    <a href="/projects-repository.html">Articles</a>
+    <a href="/resume.pdf" target="_blank" class="nav-btn">Resume -></a>
+  </div>
+</header>
+
+<section class="about-hero">
+  <div class="col">
+    <div class="eyebrow">{eyebrow}</div>
+    <h1>{title}</h1>
+    {lede && <p class="lede">{lede}</p>}
+    <div class="about-headshot">
+      <img src={headshot} alt={headshotAlt} />
+    </div>
+  </div>
+</section>
+
+<section class="about-body band band--paper">
+  <div class="col">
+    <slot />
+  </div>
+</section>
+
+<section class="about-cta">
+  <div class="col">
+    <div class="links">
+      <a href="/index.html">Home</a>
+      <a href="/projects-repository.html">Articles</a>
+      <a href="/resume.pdf" target="_blank">Resume PDF</a>
+      <a href="https://linkedin.com/in/heathertleffew" target="_blank">LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+let cachedScrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+window.addEventListener('resize', () => { cachedScrollHeight = document.documentElement.scrollHeight - window.innerHeight; });
+window.addEventListener('scroll', () => {
+  const p = cachedScrollHeight > 0 ? (window.scrollY / cachedScrollHeight) * 100 : 0;
+  const progEl = document.getElementById('progress');
+  if (progEl) progEl.style.setProperty('--p', p + '%');
+}, { passive: true });
+</script>
+
+<script is:inline src="/design_system/js/cinematic_engine_v3.js" defer></script>
+<script is:inline src="/design_system/js/global_chrome.js" defer></script>
+<script is:inline src="/design_system/js/institutional.js" defer></script>
+</body>
+</html>

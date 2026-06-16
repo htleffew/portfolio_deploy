@@ -21,7 +21,7 @@ const outDir = path.join(root, 'public');
 const outFile = path.join(outDir, 'projects_index.json');
 const liveIndexFile = path.join(root, 'src', 'data', 'live-index.json');
 
-const EXCLUDE = new Set(['index.mdx', 'index.astro', '404.astro']);
+const EXCLUDE = new Set(['index.mdx', 'index.astro', '404.astro', 'about.mdx']);
 
 // Build a slug -> live-entry map from the previous deploy index (url = Folder/slug.html).
 const liveBySlug = {};

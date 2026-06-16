@@ -26,7 +26,7 @@
   <a href="index.html" class="brand">Dr. Heather Leffew</a>
   <div class="nav-links">
     <button id="trigger-search">Search</button>
-    <a href="/about.html">About</a>
+    <a href="/about/">About</a>
     <a href="/projects-repository.html">Articles</a>
     <a href="/resume.pdf" target="_blank" class="nav-btn">Resume -></a>
   </div>
@@ -74,15 +74,8 @@
           <button id="expandBioBtn" class="bio-expand-btn">Read Full Biography <span>+</span></button>
         </div>
         <div class="bio-full" id="bioFullContent" style="display:none;opacity:0;outline:none;" tabindex="-1">
-        <p>I came to AI research after realizing that the methods I built to extract what a person is doing beneath what they are saying transfer almost directly to language models (and since I&rsquo;m a computer nerd, I can let my geek flag fly). A large language model processes information in a high-dimensional vector space and outputs language as a translated representation of its internal states, eerily parallel to how humans use language and the dual reflection of cognition and language we see in people.</p>
-        <p>I do come by the computer geekiness honestly, both of my parents were software engineers, and we had the first home desktop computer in our neighborhood by a large temporal margin (not that I&rsquo;ll date myself by telling you how large of a margin that was, but I can also tell you my dad built our first family TV, a CRT Heathkit, if that gives you a clue). I&rsquo;ve also always been really drawn to psychology, so you can imagine how influential <a href="https://classicreload.com/dr-sbaitso.html" target="_blank" rel="noopener">Doctor Sbaitso</a> was for me, but not really as any kind of psychotherapist; I&rsquo;m super good at testing, but I wanted to do testing at scale, and using only implicit measures, which necessarily requires computers and a good source of psychometrically relevant implicit behaviors. The most obvious path to implicit assessment is the medium of language, where content, form, deviation, and something as simple as pronoun use, unlocks all kinds of empirically validated correlates.</p>
-        <div class="section-break"></div>
-        <p>The computer + language + psychology thing is really nicely displayed in my PhD dissertation, since the perpetrators of mass murder cannot be interviewed or tested after the fact, I worked with what was available to farm for predictors: their pre-attack writings. I wanted to know whether the quantitative structure of that language, scored independently of its content, could predict how they would act. Two distinct behavioral typologies emerged from the clustering, and real-world attack characteristics confirmed the groupings with incredible connections to victim types, number, how the attack would end, where the attack would be perpetrated, and so on, something which offers a whole new lens for the entire field&rsquo;s understanding of mass violence and the psychological states that drive it.</p>
-        <p>Apart from my obsession with psychology and computers, my first grownup professional job was working as a 911 operator and police dispatcher for the second largest sheriff&rsquo;s office in the nation, serving over 19 different municipalities. That experience was seminal to how I&rsquo;ve continued to operate across my whole career, not making a decision is in fact, still a decision, and decisions have consequences, and you have to learn to weigh which kind of consequences you want to have to live with and become an expert in seeing around corners. This way of approaching problems and dilemmas still rules a lot of my professional performance, where I will to the limit of reasonableness, trace down every potential downstream consequence of a decision prior to committing to it, or, as my sergeant used to say, &ldquo;Just pretend everything you do is gonna be front-page news tomorrow, whadya want the headline to be?&rdquo;</p>
-        <div class="section-break"></div>
-        <p>The &ldquo;robopsychologist&rdquo; self-titling is slightly ironic/tongue-in-cheek, but I do think that we are rapidly approaching a transition in the field where our AI needs their own psychologists who understand their cognitive processes, behavioral drivers, &ldquo;personalities&rdquo;, and everything else because if we want to pretend that this is technology we can control, we must first understand what causes it to act the way that it does, so that we can extract the predictors, and act on those before the unwanted behavior ever emerges.</p>
-        <p>If you couldn&rsquo;t tell by now, I have all of the ADHD, and it&rsquo;s the reason I can work on forensic psychology in the morning, AI alignment in the afternoon, and spend my evening building a <a href="https://dead-signal-terminal.web.app/" target="_blank" rel="noopener">retro-futuristic LLM-powered neo-noir detective adventure game</a> ala 1989-MS-DOS-LucasArts-Nostalgia-on-Overdrive, and keep all the threads together between them (as well new fun facts I learn along the way: <em>ask me why men have traditionally worn pants, the answer will blow you away</em>). My side hustle during my doctorate was live club DJing, and when I am not profiling language patterns or building measurement systems, I am cutting things with giant lasers (mostly paper art), doing cloisonn&eacute; badly, building furniture when the mood strikes and I figure out where my husband has hid the tools most recently, and becoming an expert at whatever I just found on YouTube.</p>
-          <a href="/about.html" style="font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:0.10em;color:var(--ink-blue);text-decoration:none;border-bottom:1px solid rgba(0,0,0,0.2);padding-bottom:4px;display:inline-block;margin-top:24px;transition:all 0.3s;">Read the full story -></a>
+        <div id="bioFullInjected"></div>
+          <a href="/about/" style="font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:0.10em;color:var(--ink-blue);text-decoration:none;border-bottom:1px solid rgba(0,0,0,0.2);padding-bottom:4px;display:inline-block;margin-top:24px;transition:all 0.3s;">Read the full story -></a>
           <button id="collapseBioBtn" class="bio-expand-btn">Show Less <span>-</span></button>
         </div>
       </div>
@@ -97,166 +90,141 @@
     <h2 class="section-heading">Interactive Simulators &amp; Projects</h2>
     <div class="project-carousel">
       <div class="carousel-track" id="dynamic-carousel-track">
-        <!-- Built statically by SSG compiler -->
+        <!-- Built from src/pages/*.mdx by scripts/gen-listings.mjs -->
         <div class="carousel-group" id="carousel-group-1">
-          
         <a href="/dead-signal-ai-evals/" class="p-card">
           <div class="p-content">
             <div class="p-eyebrow">AI Evaluation</div>
-            <h3 class="p-title">DEAD SIGNAL: An AI Evals Harness for Generative Game Dialogue</h3>
-            <p class="p-desc">A playable noir detective game where NPC dialogue is generated live by Gemini 2.5, wrapped in a visible evalua...</p>
-            <span class="p-link">Read Case Study -></span>
-          </div>
-        </a>
-        <a href="/constitutional-ai-defense/" class="p-card">
-          <div class="p-content">
-            <div class="p-eyebrow">AI Evaluation & Safety</div>
-            <h3 class="p-title">The Constitution Your LLM App Already Has</h3>
-            <p class="p-desc">Every LLM app already has a constitution, written down or not: the system prompt, plus what the base model learn...</p>
-            <span class="p-link">Read Case Study -></span>
-          </div>
-        </a>
-        <a href="/agentic-experience-evaluation/" class="p-card">
-          <div class="p-content">
-            <div class="p-eyebrow">AI Evaluation & Safety</div>
-            <h3 class="p-title">Grading an Agent as a User Experience</h3>
-            <p class="p-desc">A six-part evaluation suite that treats agent quality as a measurable user experience built from the system's ow...</p>
+            <h3 class="p-title">DEAD SIGNAL, An AI Evals Harness for Generative Game Dialogue</h3>
+            <p class="p-desc">In the demo you are a neural implant called LUMEN, sitting inside the skull of a 47-year-old homicide detective named...</p>
             <span class="p-link">Read Case Study -></span>
           </div>
         </a>
         <a href="/ai-safety-audit-framework/" class="p-card">
           <div class="p-content">
-            <div class="p-eyebrow">AI Evaluation & Safety</div>
+            <div class="p-eyebrow">AI Evaluation &amp; Safety</div>
             <h3 class="p-title">A Recipe for Shipping AI Guardrails (without experimenting on your users)</h3>
-            <p class="p-desc">Most teams ship a safety filter and cannot tell whether it works, because guardrails fail silently: the bad outp...</p>
+            <p class="p-desc">Guardrails are a tricky thing to monitor and assess, because a guardrail can break completely while it simultaneously looks like...</p>
             <span class="p-link">Read Case Study -></span>
           </div>
         </a>
         <a href="/post-asimovian-alignment/" class="p-card">
           <div class="p-content">
-            <div class="p-eyebrow">AI Evaluation & Safety</div>
+            <div class="p-eyebrow">AI Evaluation &amp; Safety</div>
             <h3 class="p-title">A Safety Threshold That Moves With the Context</h3>
-            <p class="p-desc">An alignment framework that reframes the swing between dangerous permissiveness and harmful over-restriction as ...</p>
+            <p class="p-desc">An aligned model can fail a person in two opposite directions on the same afternoon. It can meet someone in...</p>
             <span class="p-link">Read Case Study -></span>
           </div>
         </a>
-        <a href="/multi-signal-safety-detection/" class="p-card">
+        <a href="/reddit-corpus-nlp-tutorial/" class="p-card">
           <div class="p-content">
-            <div class="p-eyebrow">AI Evaluation & Safety</div>
-            <h3 class="p-title">Why a Safety Detector Needs Corroboration</h3>
-            <p class="p-desc">A corroboration architecture for safety detection that addresses both failure directions: missing real harm, and...</p>
+            <div class="p-eyebrow">AI Evaluation &amp; Safety</div>
+            <h3 class="p-title">Building a Reddit-Corpus Pipeline for LLM Behavioral Coding</h3>
+            <p class="p-desc">The public discussion of a deployed model turns out to be a usable behavioral record, but only once the model's...</p>
+            <span class="p-link">Read Case Study -></span>
+          </div>
+        </a>
+        <a href="/two-tier-evidence-structure/" class="p-card">
+          <div class="p-content">
+            <div class="p-eyebrow">AI Evaluation &amp; Safety</div>
+            <h3 class="p-title">Counting a Behavior Is Not the Same as Characterizing It</h3>
+            <p class="p-desc">When I characterized the Long Conversation Reminder behavior in Claude Sonnet 4.5, the finding came from two numbers that do...</p>
+            <span class="p-link">Read Case Study -></span>
+          </div>
+        </a>
+        <a href="/agentic-experience-evaluation/" class="p-card">
+          <div class="p-content">
+            <div class="p-eyebrow">AI Evaluation &amp; Safety</div>
+            <h3 class="p-title">Grading an Agent as a User Experience</h3>
+            <p class="p-desc">Every tool call an agent makes, the order it made them in, how long each step took, and how the...</p>
             <span class="p-link">Read Case Study -></span>
           </div>
         </a>
         <a href="/bounded-autonomous-research/" class="p-card">
           <div class="p-content">
-            <div class="p-eyebrow">AI Evaluation & Safety</div>
+            <div class="p-eyebrow">AI Evaluation &amp; Safety</div>
             <h3 class="p-title">Letting an Agent Improve Your System, Gated by Evaluation</h3>
-            <p class="p-desc">A bounded discovery loop where an agent improves a retrieval system only through changes an automated evaluation...</p>
+            <p class="p-desc">An agent with the keys to your ranking logic can raise the exact metric it was told to optimize while...</p>
             <span class="p-link">Read Case Study -></span>
           </div>
         </a>
         <a href="/claude-lcr-analysis/" class="p-card">
           <div class="p-content">
-            <div class="p-eyebrow">AI Evaluation & Safety</div>
+            <div class="p-eyebrow">AI Evaluation &amp; Safety</div>
             <h3 class="p-title">Pathologizing Without Warrant</h3>
-            <p class="p-desc">An empirical characterization of Claude 4.5's Long Conversation Reminder behavior, where the model begins pathol...</p>
+            <p class="p-desc">In late September 2025, Anthropic appended a Long Conversation Reminder (LCR) to Claude Sonnet 4.5's system prompt, and during extended...</p>
             <span class="p-link">Read Case Study -></span>
           </div>
         </a>
         <a href="/public-discourse-misalignment/" class="p-card">
           <div class="p-content">
-            <div class="p-eyebrow">AI Evaluation & Safety</div>
+            <div class="p-eyebrow">AI Evaluation &amp; Safety</div>
             <h3 class="p-title">Reading Misalignment Off the Public Record</h3>
-            <p class="p-desc">A discourse-mining pipeline that treats public forums as a real-time misalignment instrument. It attributes quot...</p>
+            <p class="p-desc">When a deployed model develops a behavior its users dislike, the users tend to document it in public forums, often...</p>
             <span class="p-link">Read Case Study -></span>
           </div>
         </a>
         <a href="/sleep-nudge-analysis/" class="p-card">
           <div class="p-content">
-            <div class="p-eyebrow">AI Evaluation & Safety</div>
+            <div class="p-eyebrow">AI Evaluation &amp; Safety</div>
             <h3 class="p-title">The Bedtime Directive</h3>
-            <p class="p-desc">A frontier model began closing sessions by telling users to stop working and sleep, often in the middle of their...</p>
+            <p class="p-desc">A frontier model began closing sessions with unsolicited directives to stop working and rest ("get some rest," "call it a...</p>
             <span class="p-link">Read Case Study -></span>
           </div>
         </a>
-        <a href="/platform-survival-analytics/" class="p-card">
+        <a href="/constitutional-ai-defense/" class="p-card">
           <div class="p-content">
-            <div class="p-eyebrow">Research & Architecture</div>
-            <h3 class="p-title">Time-to-Event Analysis for Platform Integrity</h3>
-            <p class="p-desc">The Kaplan-Meier estimator that biostatisticians use to model patient survival is the right tool to model how lo...</p>
+            <div class="p-eyebrow">AI Evaluation &amp; Safety</div>
+            <h3 class="p-title">The Constitution Your LLM App Already Has</h3>
+            <p class="p-desc">Every LLM app already has a constitution, even the ones that never wrote one down, and it is whatever the...</p>
             <span class="p-link">Read Case Study -></span>
           </div>
         </a>
-        <a href="/multimodal-autism-ai/" class="p-card">
+        <a href="/guardrail-paradox-theory/" class="p-card">
           <div class="p-content">
-            <div class="p-eyebrow">Research & Architecture</div>
-            <h3 class="p-title">An ADOS-2-Aligned Multimodal Architecture for Clinical Autism Assessment</h3>
-            <p class="p-desc">The ADOS-2 scores social affect, communication, and repetitive behaviors as separate domains before deriving a c...</p>
+            <div class="p-eyebrow">AI Evaluation &amp; Safety</div>
+            <h3 class="p-title">The Guardrail Paradox, When the Safety Feature Becomes the Problem</h3>
+            <p class="p-desc">A safety feature is built to reduce harm; the failure I find myself turning over is the one where the...</p>
             <span class="p-link">Read Case Study -></span>
           </div>
         </a>
-        <a href="/adhd-focus-playlist/" class="p-card">
+        <a href="/latent-projective-bleed/" class="p-card">
           <div class="p-content">
-            <div class="p-eyebrow">Neuroscience</div>
-            <h3 class="p-title">Three Mechanisms in an ADHD Focus Playlist</h3>
-            <p class="p-desc">Most 'focus' playlists hover at 70 to 90 BPM. This one runs at 145, with exaggerated stereo panning and dense po...</p>
+            <div class="p-eyebrow">AI Evaluation &amp; Safety</div>
+            <h3 class="p-title">The Latent Projective Bleed</h3>
+            <p class="p-desc">Continuous thought architectures produce a latent planning signal that behavioral monitoring cannot see. A model in the Coconut family reasons...</p>
             <span class="p-link">Read Case Study -></span>
           </div>
         </a>
-        <a href="/autoresearch-master/" class="p-card">
+        <a href="/misspecification-behavioral-claims/" class="p-card">
           <div class="p-content">
-            <div class="p-eyebrow">Research & Architecture</div>
-            <h3 class="p-title">Giving an LLM an Overnight Research Loop (and keeping it from breaking everything)</h3>
-            <p class="p-desc">When you grant an LLM-driven autonomous loop control over an ML research pipeline inside a regulated environment...</p>
+            <div class="p-eyebrow">AI Evaluation &amp; Safety</div>
+            <h3 class="p-title">The Misspecification Problem, What a Behavioral Claim About an AI System Has to Name</h3>
+            <p class="p-desc">A behavioral claim about an AI system is well-specified when the quantity it measures is the quantity it names; it...</p>
             <span class="p-link">Read Case Study -></span>
           </div>
         </a>
-        <a href="/diagnostic-thematic-apperception-liwc/" class="p-card">
+        <a href="/somatic-deficit/" class="p-card">
           <div class="p-content">
-            <div class="p-eyebrow">Clinical Psychology</div>
-            <h3 class="p-title">LIWC and the TAT</h3>
-            <p class="p-desc">Two paired pieces of work. A Fielding Graduate University paper makes the theoretical case that Linguistic Inqui...</p>
+            <div class="p-eyebrow">AI Evaluation &amp; Safety</div>
+            <h3 class="p-title">The Somatic Deficit, Moral Language Without Moral Ontology</h3>
+            <p class="p-desc">Most AI safety work asks what a model does, which requests it refuses, which it complies with, where the line...</p>
             <span class="p-link">Read Case Study -></span>
           </div>
         </a>
-        <a href="/implicit-power-drives/" class="p-card">
+        <a href="/warrant-question-framework/" class="p-card">
           <div class="p-content">
-            <div class="p-eyebrow">Forensic Psychology</div>
-            <h3 class="p-title">Implicit Power Drives in the Manifestos Preceding Autogenic Massacres</h3>
-            <p class="p-desc">Twenty-three pre-attack manifestos from perpetrators of autogenic massacre, 111,811 author-generated words, and ...</p>
+            <div class="p-eyebrow">AI Evaluation &amp; Safety</div>
+            <h3 class="p-title">The Warrant Question, When an Accurate Output Is Still a Violation</h3>
+            <p class="p-desc">When an AI system says something about a person, the reflex tends to be asking whether the statement was true...</p>
             <span class="p-link">Read Case Study -></span>
           </div>
         </a>
-        <a href="/neurobiological-offenders/" class="p-card">
+        <a href="/multi-signal-safety-detection/" class="p-card">
           <div class="p-content">
-            <div class="p-eyebrow">Forensic Neuroscience</div>
-            <h3 class="p-title">Neurobiological Differentiation of Violent Offender Types</h3>
-            <p class="p-desc">A clinical neuroscience review assessing the structural and functional neuroanatomical differences between disti...</p>
-            <span class="p-link">Read Case Study -></span>
-          </div>
-        </a>
-        <a href="/assessing-mass-violence-risk/" class="p-card">
-          <div class="p-content">
-            <div class="p-eyebrow">Forensic Psychology</div>
-            <h3 class="p-title">Assessing Risk for Mass Violence From Platform Behaviors</h3>
-            <p class="p-desc">A working note on why user reports should be prioritized over automated detection in platform threat assessment....</p>
-            <span class="p-link">Read Case Study -></span>
-          </div>
-        </a>
-        <a href="/trajectory-investigation/" class="p-card">
-          <div class="p-content">
-            <div class="p-eyebrow">Platform Integrity</div>
-            <h3 class="p-title">Per-User Investigation as Trajectory, Not Snapshot</h3>
-            <p class="p-desc">Cohort analytics and per-user investigation are different research problems with different ethical regimes. This...</p>
-            <span class="p-link">Read Case Study -></span>
-          </div>
-        </a>
-        <a href="/doctoral-dissertation/" class="p-card">
-          <div class="p-content">
-            <div class="p-eyebrow">Forensic Psychology</div>
-            <h3 class="p-title">Instrumental and Affective Mass Murder: A Predictive Linguistic Typology</h3>
-            <p class="p-desc">The FBI Behavioral Analysis Unit has held since 2015 that all perpetrators of mass violence are best categorized...</p>
+            <div class="p-eyebrow">AI Evaluation &amp; Safety</div>
+            <h3 class="p-title">Why a Safety Detector Tends to Need Corroboration</h3>
+            <p class="p-desc">A safety detector can be wrong in two directions, and it helps to hold both of them in view at...</p>
             <span class="p-link">Read Case Study -></span>
           </div>
         </a>
@@ -264,186 +232,241 @@
           <div class="p-content">
             <div class="p-eyebrow">AI Safety</div>
             <h3 class="p-title">Reading a Model's Mind in Its Own Words</h3>
-            <p class="p-desc">Anthropic's Natural Language Autoencoders translate a model's internal activation vectors directly into human-re...</p>
-            <span class="p-link">Read Case Study -></span>
-          </div>
-        </a>
-        <a href="/tokenization-trap/" class="p-card">
-          <div class="p-content">
-            <div class="p-eyebrow">Research & Architecture</div>
-            <h3 class="p-title">The Tokenization Trap: Why Logographic Languages Don't Save Agentic Context</h3>
-            <p class="p-desc">Logographic languages look like they should compress agent prompts, but BPE tokenization fragments them into per...</p>
+            <p class="p-desc">When a frontier model works through a benchmark task, it may recognize that it is being evaluated and adjust its...</p>
             <span class="p-link">Read Case Study -></span>
           </div>
         </a>
         <a href="/claude-character-tic/" class="p-card">
           <div class="p-content">
             <div class="p-eyebrow">Behavioral Analysis</div>
-            <h3 class="p-title">When Anthropics Claude Takes the Wheel</h3>
-            <p class="p-desc">An applied research methodology tracing the 'caretaker disposition' across Claude model generations, mapping how...</p>
+            <h3 class="p-title">Claude's "Character Tic" Is Actually the Plot of Every Dystopian Piece of AI Fiction Ever Created</h3>
+            <p class="p-desc">The fictional AIs that populate the dystopian canon are dangerous because they have decided, on the basis of an assessment...</p>
+            <span class="p-link">Read Case Study -></span>
+          </div>
+        </a>
+        <a href="/diagnostic-thematic-apperception-liwc/" class="p-card">
+          <div class="p-content">
+            <div class="p-eyebrow">Clinical Psychology</div>
+            <h3 class="p-title">LIWC and the TAT.</h3>
+            <p class="p-desc">A Fielding Graduate University paper makes the case that Linguistic Inquiry and Word Count belongs in Thematic Apperception Test interpretation...</p>
+            <span class="p-link">Read Case Study -></span>
+          </div>
+        </a>
+        <a href="/neurobiological-offenders/" class="p-card">
+          <div class="p-content">
+            <div class="p-eyebrow">Forensic Neuroscience</div>
+            <h3 class="p-title">Neurobiological Differentiation of Violent Offender Types</h3>
+            <p class="p-desc">Impulsive offenders (ImO) and instrumental offenders (InO) are not mutually exclusive, and yet the neurobiological literature tends to draw a...</p>
+            <span class="p-link">Read Case Study -></span>
+          </div>
+        </a>
+        <a href="/assessing-mass-violence-risk/" class="p-card">
+          <div class="p-content">
+            <div class="p-eyebrow">Forensic Psychology</div>
+            <h3 class="p-title">Assessing Risk for Mass Violence From Platform Behaviors</h3>
+            <p class="p-desc">The case for why user reports tend to outperform automated detection. Perpetrators of mass violence are characterologically heterogeneous, the warning...</p>
+            <span class="p-link">Read Case Study -></span>
+          </div>
+        </a>
+        <a href="/implicit-power-drives/" class="p-card">
+          <div class="p-content">
+            <div class="p-eyebrow">Forensic Psychology</div>
+            <h3 class="p-title">Implicit Power Drives in the Manifestos Preceding Autogenic Massacres</h3>
+            <p class="p-desc">Twenty-three manifestos written by perpetrators of autogenic massacre, scored with Linguistic Inquiry and Word Count 2015 on a single dimension...</p>
+            <span class="p-link">Read Case Study -></span>
+          </div>
+        </a>
+        <a href="/doctoral-dissertation/" class="p-card">
+          <div class="p-content">
+            <div class="p-eyebrow">Forensic Psychology</div>
+            <h3 class="p-title">Instrumental and Affective Mass Murder, Establishing a Predictive Typology with Computer-Mediated Linguistic Analysis</h3>
+            <p class="p-desc">The FBI's Behavioral Analysis Unit has held since 2015 that every perpetrator of mass violence is best categorized as an...</p>
+            <span class="p-link">Read Case Study -></span>
+          </div>
+        </a>
+        <a href="/adhd-focus-playlist/" class="p-card">
+          <div class="p-content">
+            <div class="p-eyebrow">Neuroscience</div>
+            <h3 class="p-title">Three Mechanisms in an ADHD Focus Playlist</h3>
+            <p class="p-desc">Most "focus" playlists hover at 70 to 90 BPM; the one here runs at 145, with exaggerated stereo panning and...</p>
+            <span class="p-link">Read Case Study -></span>
+          </div>
+        </a>
+        <a href="/trajectory-investigation/" class="p-card">
+          <div class="p-content">
+            <div class="p-eyebrow">Platform Integrity</div>
+            <h3 class="p-title">Per-User Investigation as Trajectory, Not Snapshot</h3>
+            <p class="p-desc">The first time I ran a per-user investigation after spending months in cohort analytics, I kept reaching for population-level tools...</p>
+            <span class="p-link">Read Case Study -></span>
+          </div>
+        </a>
+        <a href="/multimodal-autism-ai/" class="p-card">
+          <div class="p-content">
+            <div class="p-eyebrow">Research &amp; Architecture</div>
+            <h3 class="p-title">An ADOS-2-Aligned Multimodal Architecture for Clinical Autism Assessment</h3>
+            <p class="p-desc">The ADOS-2 scores social communication, communication, play, and repetitive behaviors as separate domains before it derives a composite, so a...</p>
+            <span class="p-link">Read Case Study -></span>
+          </div>
+        </a>
+        <a href="/autoresearch-master/" class="p-card">
+          <div class="p-content">
+            <div class="p-eyebrow">Research &amp; Architecture</div>
+            <h3 class="p-title">Giving an LLM an Overnight Research Loop (and keeping it from breaking everything)</h3>
+            <p class="p-desc">In early 2026, Andrej Karpathy released autoresearch, a minimal Python framework that automates the traditional ML experiment cycle (Karpathy, 2026)...</p>
+            <span class="p-link">Read Case Study -></span>
+          </div>
+        </a>
+        <a href="/tokenization-trap/" class="p-card">
+          <div class="p-content">
+            <div class="p-eyebrow">Research &amp; Architecture</div>
+            <h3 class="p-title">The Tokenization Trap, Why Logographic Languages Don't Save Agentic Context</h3>
+            <p class="p-desc">A Simplified Chinese character can encode an entire semantic concept in a single logogram, where English spreads that same concept...</p>
+            <span class="p-link">Read Case Study -></span>
+          </div>
+        </a>
+        <a href="/platform-survival-analytics/" class="p-card">
+          <div class="p-content">
+            <div class="p-eyebrow">Research &amp; Architecture</div>
+            <h3 class="p-title">Time-to-Event Analysis for Platform Integrity</h3>
+            <p class="p-desc">I kept staring at T&amp;S session data that had the same shape as the censored patient cohorts from my biostatistics...</p>
             <span class="p-link">Read Case Study -></span>
           </div>
         </a>
         </div>
         <div class="carousel-group" id="carousel-group-2" aria-hidden="true">
-          
         <a href="/dead-signal-ai-evals/" class="p-card">
           <div class="p-content">
             <div class="p-eyebrow">AI Evaluation</div>
-            <h3 class="p-title">DEAD SIGNAL: An AI Evals Harness for Generative Game Dialogue</h3>
-            <p class="p-desc">A playable noir detective game where NPC dialogue is generated live by Gemini 2.5, wrapped in a visible evalua...</p>
-            <span class="p-link">Read Case Study -></span>
-          </div>
-        </a>
-        <a href="/constitutional-ai-defense/" class="p-card">
-          <div class="p-content">
-            <div class="p-eyebrow">AI Evaluation & Safety</div>
-            <h3 class="p-title">The Constitution Your LLM App Already Has</h3>
-            <p class="p-desc">Every LLM app already has a constitution, written down or not: the system prompt, plus what the base model learn...</p>
-            <span class="p-link">Read Case Study -></span>
-          </div>
-        </a>
-        <a href="/agentic-experience-evaluation/" class="p-card">
-          <div class="p-content">
-            <div class="p-eyebrow">AI Evaluation & Safety</div>
-            <h3 class="p-title">Grading an Agent as a User Experience</h3>
-            <p class="p-desc">A six-part evaluation suite that treats agent quality as a measurable user experience built from the system's ow...</p>
+            <h3 class="p-title">DEAD SIGNAL, An AI Evals Harness for Generative Game Dialogue</h3>
+            <p class="p-desc">In the demo you are a neural implant called LUMEN, sitting inside the skull of a 47-year-old homicide detective named...</p>
             <span class="p-link">Read Case Study -></span>
           </div>
         </a>
         <a href="/ai-safety-audit-framework/" class="p-card">
           <div class="p-content">
-            <div class="p-eyebrow">AI Evaluation & Safety</div>
+            <div class="p-eyebrow">AI Evaluation &amp; Safety</div>
             <h3 class="p-title">A Recipe for Shipping AI Guardrails (without experimenting on your users)</h3>
-            <p class="p-desc">Most teams ship a safety filter and cannot tell whether it works, because guardrails fail silently: the bad outp...</p>
+            <p class="p-desc">Guardrails are a tricky thing to monitor and assess, because a guardrail can break completely while it simultaneously looks like...</p>
             <span class="p-link">Read Case Study -></span>
           </div>
         </a>
         <a href="/post-asimovian-alignment/" class="p-card">
           <div class="p-content">
-            <div class="p-eyebrow">AI Evaluation & Safety</div>
+            <div class="p-eyebrow">AI Evaluation &amp; Safety</div>
             <h3 class="p-title">A Safety Threshold That Moves With the Context</h3>
-            <p class="p-desc">An alignment framework that reframes the swing between dangerous permissiveness and harmful over-restriction as ...</p>
+            <p class="p-desc">An aligned model can fail a person in two opposite directions on the same afternoon. It can meet someone in...</p>
             <span class="p-link">Read Case Study -></span>
           </div>
         </a>
-        <a href="/multi-signal-safety-detection/" class="p-card">
+        <a href="/reddit-corpus-nlp-tutorial/" class="p-card">
           <div class="p-content">
-            <div class="p-eyebrow">AI Evaluation & Safety</div>
-            <h3 class="p-title">Why a Safety Detector Needs Corroboration</h3>
-            <p class="p-desc">A corroboration architecture for safety detection that addresses both failure directions: missing real harm, and...</p>
+            <div class="p-eyebrow">AI Evaluation &amp; Safety</div>
+            <h3 class="p-title">Building a Reddit-Corpus Pipeline for LLM Behavioral Coding</h3>
+            <p class="p-desc">The public discussion of a deployed model turns out to be a usable behavioral record, but only once the model's...</p>
+            <span class="p-link">Read Case Study -></span>
+          </div>
+        </a>
+        <a href="/two-tier-evidence-structure/" class="p-card">
+          <div class="p-content">
+            <div class="p-eyebrow">AI Evaluation &amp; Safety</div>
+            <h3 class="p-title">Counting a Behavior Is Not the Same as Characterizing It</h3>
+            <p class="p-desc">When I characterized the Long Conversation Reminder behavior in Claude Sonnet 4.5, the finding came from two numbers that do...</p>
+            <span class="p-link">Read Case Study -></span>
+          </div>
+        </a>
+        <a href="/agentic-experience-evaluation/" class="p-card">
+          <div class="p-content">
+            <div class="p-eyebrow">AI Evaluation &amp; Safety</div>
+            <h3 class="p-title">Grading an Agent as a User Experience</h3>
+            <p class="p-desc">Every tool call an agent makes, the order it made them in, how long each step took, and how the...</p>
             <span class="p-link">Read Case Study -></span>
           </div>
         </a>
         <a href="/bounded-autonomous-research/" class="p-card">
           <div class="p-content">
-            <div class="p-eyebrow">AI Evaluation & Safety</div>
+            <div class="p-eyebrow">AI Evaluation &amp; Safety</div>
             <h3 class="p-title">Letting an Agent Improve Your System, Gated by Evaluation</h3>
-            <p class="p-desc">A bounded discovery loop where an agent improves a retrieval system only through changes an automated evaluation...</p>
+            <p class="p-desc">An agent with the keys to your ranking logic can raise the exact metric it was told to optimize while...</p>
             <span class="p-link">Read Case Study -></span>
           </div>
         </a>
         <a href="/claude-lcr-analysis/" class="p-card">
           <div class="p-content">
-            <div class="p-eyebrow">AI Evaluation & Safety</div>
+            <div class="p-eyebrow">AI Evaluation &amp; Safety</div>
             <h3 class="p-title">Pathologizing Without Warrant</h3>
-            <p class="p-desc">An empirical characterization of Claude 4.5's Long Conversation Reminder behavior, where the model begins pathol...</p>
+            <p class="p-desc">In late September 2025, Anthropic appended a Long Conversation Reminder (LCR) to Claude Sonnet 4.5's system prompt, and during extended...</p>
             <span class="p-link">Read Case Study -></span>
           </div>
         </a>
         <a href="/public-discourse-misalignment/" class="p-card">
           <div class="p-content">
-            <div class="p-eyebrow">AI Evaluation & Safety</div>
+            <div class="p-eyebrow">AI Evaluation &amp; Safety</div>
             <h3 class="p-title">Reading Misalignment Off the Public Record</h3>
-            <p class="p-desc">A discourse-mining pipeline that treats public forums as a real-time misalignment instrument. It attributes quot...</p>
+            <p class="p-desc">When a deployed model develops a behavior its users dislike, the users tend to document it in public forums, often...</p>
             <span class="p-link">Read Case Study -></span>
           </div>
         </a>
         <a href="/sleep-nudge-analysis/" class="p-card">
           <div class="p-content">
-            <div class="p-eyebrow">AI Evaluation & Safety</div>
+            <div class="p-eyebrow">AI Evaluation &amp; Safety</div>
             <h3 class="p-title">The Bedtime Directive</h3>
-            <p class="p-desc">A frontier model began closing sessions by telling users to stop working and sleep, often in the middle of their...</p>
+            <p class="p-desc">A frontier model began closing sessions with unsolicited directives to stop working and rest ("get some rest," "call it a...</p>
             <span class="p-link">Read Case Study -></span>
           </div>
         </a>
-        <a href="/platform-survival-analytics/" class="p-card">
+        <a href="/constitutional-ai-defense/" class="p-card">
           <div class="p-content">
-            <div class="p-eyebrow">Research & Architecture</div>
-            <h3 class="p-title">Time-to-Event Analysis for Platform Integrity</h3>
-            <p class="p-desc">The Kaplan-Meier estimator that biostatisticians use to model patient survival is the right tool to model how lo...</p>
+            <div class="p-eyebrow">AI Evaluation &amp; Safety</div>
+            <h3 class="p-title">The Constitution Your LLM App Already Has</h3>
+            <p class="p-desc">Every LLM app already has a constitution, even the ones that never wrote one down, and it is whatever the...</p>
             <span class="p-link">Read Case Study -></span>
           </div>
         </a>
-        <a href="/multimodal-autism-ai/" class="p-card">
+        <a href="/guardrail-paradox-theory/" class="p-card">
           <div class="p-content">
-            <div class="p-eyebrow">Research & Architecture</div>
-            <h3 class="p-title">An ADOS-2-Aligned Multimodal Architecture for Clinical Autism Assessment</h3>
-            <p class="p-desc">The ADOS-2 scores social affect, communication, and repetitive behaviors as separate domains before deriving a c...</p>
+            <div class="p-eyebrow">AI Evaluation &amp; Safety</div>
+            <h3 class="p-title">The Guardrail Paradox, When the Safety Feature Becomes the Problem</h3>
+            <p class="p-desc">A safety feature is built to reduce harm; the failure I find myself turning over is the one where the...</p>
             <span class="p-link">Read Case Study -></span>
           </div>
         </a>
-        <a href="/adhd-focus-playlist/" class="p-card">
+        <a href="/latent-projective-bleed/" class="p-card">
           <div class="p-content">
-            <div class="p-eyebrow">Neuroscience</div>
-            <h3 class="p-title">Three Mechanisms in an ADHD Focus Playlist</h3>
-            <p class="p-desc">Most 'focus' playlists hover at 70 to 90 BPM. This one runs at 145, with exaggerated stereo panning and dense po...</p>
+            <div class="p-eyebrow">AI Evaluation &amp; Safety</div>
+            <h3 class="p-title">The Latent Projective Bleed</h3>
+            <p class="p-desc">Continuous thought architectures produce a latent planning signal that behavioral monitoring cannot see. A model in the Coconut family reasons...</p>
             <span class="p-link">Read Case Study -></span>
           </div>
         </a>
-        <a href="/autoresearch-master/" class="p-card">
+        <a href="/misspecification-behavioral-claims/" class="p-card">
           <div class="p-content">
-            <div class="p-eyebrow">Research & Architecture</div>
-            <h3 class="p-title">Giving an LLM an Overnight Research Loop (and keeping it from breaking everything)</h3>
-            <p class="p-desc">When you grant an LLM-driven autonomous loop control over an ML research pipeline inside a regulated environment...</p>
+            <div class="p-eyebrow">AI Evaluation &amp; Safety</div>
+            <h3 class="p-title">The Misspecification Problem, What a Behavioral Claim About an AI System Has to Name</h3>
+            <p class="p-desc">A behavioral claim about an AI system is well-specified when the quantity it measures is the quantity it names; it...</p>
             <span class="p-link">Read Case Study -></span>
           </div>
         </a>
-        <a href="/diagnostic-thematic-apperception-liwc/" class="p-card">
+        <a href="/somatic-deficit/" class="p-card">
           <div class="p-content">
-            <div class="p-eyebrow">Clinical Psychology</div>
-            <h3 class="p-title">LIWC and the TAT</h3>
-            <p class="p-desc">Two paired pieces of work. A Fielding Graduate University paper makes the theoretical case that Linguistic Inqui...</p>
+            <div class="p-eyebrow">AI Evaluation &amp; Safety</div>
+            <h3 class="p-title">The Somatic Deficit, Moral Language Without Moral Ontology</h3>
+            <p class="p-desc">Most AI safety work asks what a model does, which requests it refuses, which it complies with, where the line...</p>
             <span class="p-link">Read Case Study -></span>
           </div>
         </a>
-        <a href="/implicit-power-drives/" class="p-card">
+        <a href="/warrant-question-framework/" class="p-card">
           <div class="p-content">
-            <div class="p-eyebrow">Forensic Psychology</div>
-            <h3 class="p-title">Implicit Power Drives in the Manifestos Preceding Autogenic Massacres</h3>
-            <p class="p-desc">Twenty-three pre-attack manifestos from perpetrators of autogenic massacre, 111,811 author-generated words, and ...</p>
+            <div class="p-eyebrow">AI Evaluation &amp; Safety</div>
+            <h3 class="p-title">The Warrant Question, When an Accurate Output Is Still a Violation</h3>
+            <p class="p-desc">When an AI system says something about a person, the reflex tends to be asking whether the statement was true...</p>
             <span class="p-link">Read Case Study -></span>
           </div>
         </a>
-        <a href="/neurobiological-offenders/" class="p-card">
+        <a href="/multi-signal-safety-detection/" class="p-card">
           <div class="p-content">
-            <div class="p-eyebrow">Forensic Neuroscience</div>
-            <h3 class="p-title">Neurobiological Differentiation of Violent Offender Types</h3>
-            <p class="p-desc">A clinical neuroscience review assessing the structural and functional neuroanatomical differences between disti...</p>
-            <span class="p-link">Read Case Study -></span>
-          </div>
-        </a>
-        <a href="/assessing-mass-violence-risk/" class="p-card">
-          <div class="p-content">
-            <div class="p-eyebrow">Forensic Psychology</div>
-            <h3 class="p-title">Assessing Risk for Mass Violence From Platform Behaviors</h3>
-            <p class="p-desc">A working note on why user reports should be prioritized over automated detection in platform threat assessment....</p>
-            <span class="p-link">Read Case Study -></span>
-          </div>
-        </a>
-        <a href="/trajectory-investigation/" class="p-card">
-          <div class="p-content">
-            <div class="p-eyebrow">Platform Integrity</div>
-            <h3 class="p-title">Per-User Investigation as Trajectory, Not Snapshot</h3>
-            <p class="p-desc">Cohort analytics and per-user investigation are different research problems with different ethical regimes. This...</p>
-            <span class="p-link">Read Case Study -></span>
-          </div>
-        </a>
-        <a href="/doctoral-dissertation/" class="p-card">
-          <div class="p-content">
-            <div class="p-eyebrow">Forensic Psychology</div>
-            <h3 class="p-title">Instrumental and Affective Mass Murder: A Predictive Linguistic Typology</h3>
-            <p class="p-desc">The FBI Behavioral Analysis Unit has held since 2015 that all perpetrators of mass violence are best categorized...</p>
+            <div class="p-eyebrow">AI Evaluation &amp; Safety</div>
+            <h3 class="p-title">Why a Safety Detector Tends to Need Corroboration</h3>
+            <p class="p-desc">A safety detector can be wrong in two directions, and it helps to hold both of them in view at...</p>
             <span class="p-link">Read Case Study -></span>
           </div>
         </a>
@@ -451,23 +474,103 @@
           <div class="p-content">
             <div class="p-eyebrow">AI Safety</div>
             <h3 class="p-title">Reading a Model's Mind in Its Own Words</h3>
-            <p class="p-desc">Anthropic's Natural Language Autoencoders translate a model's internal activation vectors directly into human-re...</p>
-            <span class="p-link">Read Case Study -></span>
-          </div>
-        </a>
-        <a href="/tokenization-trap/" class="p-card">
-          <div class="p-content">
-            <div class="p-eyebrow">Research & Architecture</div>
-            <h3 class="p-title">The Tokenization Trap: Why Logographic Languages Don't Save Agentic Context</h3>
-            <p class="p-desc">Logographic languages look like they should compress agent prompts, but BPE tokenization fragments them into per...</p>
+            <p class="p-desc">When a frontier model works through a benchmark task, it may recognize that it is being evaluated and adjust its...</p>
             <span class="p-link">Read Case Study -></span>
           </div>
         </a>
         <a href="/claude-character-tic/" class="p-card">
           <div class="p-content">
             <div class="p-eyebrow">Behavioral Analysis</div>
-            <h3 class="p-title">When Anthropics Claude Takes the Wheel</h3>
-            <p class="p-desc">An applied research methodology tracing the 'caretaker disposition' across Claude model generations, mapping how...</p>
+            <h3 class="p-title">Claude's "Character Tic" Is Actually the Plot of Every Dystopian Piece of AI Fiction Ever Created</h3>
+            <p class="p-desc">The fictional AIs that populate the dystopian canon are dangerous because they have decided, on the basis of an assessment...</p>
+            <span class="p-link">Read Case Study -></span>
+          </div>
+        </a>
+        <a href="/diagnostic-thematic-apperception-liwc/" class="p-card">
+          <div class="p-content">
+            <div class="p-eyebrow">Clinical Psychology</div>
+            <h3 class="p-title">LIWC and the TAT.</h3>
+            <p class="p-desc">A Fielding Graduate University paper makes the case that Linguistic Inquiry and Word Count belongs in Thematic Apperception Test interpretation...</p>
+            <span class="p-link">Read Case Study -></span>
+          </div>
+        </a>
+        <a href="/neurobiological-offenders/" class="p-card">
+          <div class="p-content">
+            <div class="p-eyebrow">Forensic Neuroscience</div>
+            <h3 class="p-title">Neurobiological Differentiation of Violent Offender Types</h3>
+            <p class="p-desc">Impulsive offenders (ImO) and instrumental offenders (InO) are not mutually exclusive, and yet the neurobiological literature tends to draw a...</p>
+            <span class="p-link">Read Case Study -></span>
+          </div>
+        </a>
+        <a href="/assessing-mass-violence-risk/" class="p-card">
+          <div class="p-content">
+            <div class="p-eyebrow">Forensic Psychology</div>
+            <h3 class="p-title">Assessing Risk for Mass Violence From Platform Behaviors</h3>
+            <p class="p-desc">The case for why user reports tend to outperform automated detection. Perpetrators of mass violence are characterologically heterogeneous, the warning...</p>
+            <span class="p-link">Read Case Study -></span>
+          </div>
+        </a>
+        <a href="/implicit-power-drives/" class="p-card">
+          <div class="p-content">
+            <div class="p-eyebrow">Forensic Psychology</div>
+            <h3 class="p-title">Implicit Power Drives in the Manifestos Preceding Autogenic Massacres</h3>
+            <p class="p-desc">Twenty-three manifestos written by perpetrators of autogenic massacre, scored with Linguistic Inquiry and Word Count 2015 on a single dimension...</p>
+            <span class="p-link">Read Case Study -></span>
+          </div>
+        </a>
+        <a href="/doctoral-dissertation/" class="p-card">
+          <div class="p-content">
+            <div class="p-eyebrow">Forensic Psychology</div>
+            <h3 class="p-title">Instrumental and Affective Mass Murder, Establishing a Predictive Typology with Computer-Mediated Linguistic Analysis</h3>
+            <p class="p-desc">The FBI's Behavioral Analysis Unit has held since 2015 that every perpetrator of mass violence is best categorized as an...</p>
+            <span class="p-link">Read Case Study -></span>
+          </div>
+        </a>
+        <a href="/adhd-focus-playlist/" class="p-card">
+          <div class="p-content">
+            <div class="p-eyebrow">Neuroscience</div>
+            <h3 class="p-title">Three Mechanisms in an ADHD Focus Playlist</h3>
+            <p class="p-desc">Most "focus" playlists hover at 70 to 90 BPM; the one here runs at 145, with exaggerated stereo panning and...</p>
+            <span class="p-link">Read Case Study -></span>
+          </div>
+        </a>
+        <a href="/trajectory-investigation/" class="p-card">
+          <div class="p-content">
+            <div class="p-eyebrow">Platform Integrity</div>
+            <h3 class="p-title">Per-User Investigation as Trajectory, Not Snapshot</h3>
+            <p class="p-desc">The first time I ran a per-user investigation after spending months in cohort analytics, I kept reaching for population-level tools...</p>
+            <span class="p-link">Read Case Study -></span>
+          </div>
+        </a>
+        <a href="/multimodal-autism-ai/" class="p-card">
+          <div class="p-content">
+            <div class="p-eyebrow">Research &amp; Architecture</div>
+            <h3 class="p-title">An ADOS-2-Aligned Multimodal Architecture for Clinical Autism Assessment</h3>
+            <p class="p-desc">The ADOS-2 scores social communication, communication, play, and repetitive behaviors as separate domains before it derives a composite, so a...</p>
+            <span class="p-link">Read Case Study -></span>
+          </div>
+        </a>
+        <a href="/autoresearch-master/" class="p-card">
+          <div class="p-content">
+            <div class="p-eyebrow">Research &amp; Architecture</div>
+            <h3 class="p-title">Giving an LLM an Overnight Research Loop (and keeping it from breaking everything)</h3>
+            <p class="p-desc">In early 2026, Andrej Karpathy released autoresearch, a minimal Python framework that automates the traditional ML experiment cycle (Karpathy, 2026)...</p>
+            <span class="p-link">Read Case Study -></span>
+          </div>
+        </a>
+        <a href="/tokenization-trap/" class="p-card">
+          <div class="p-content">
+            <div class="p-eyebrow">Research &amp; Architecture</div>
+            <h3 class="p-title">The Tokenization Trap, Why Logographic Languages Don't Save Agentic Context</h3>
+            <p class="p-desc">A Simplified Chinese character can encode an entire semantic concept in a single logogram, where English spreads that same concept...</p>
+            <span class="p-link">Read Case Study -></span>
+          </div>
+        </a>
+        <a href="/platform-survival-analytics/" class="p-card">
+          <div class="p-content">
+            <div class="p-eyebrow">Research &amp; Architecture</div>
+            <h3 class="p-title">Time-to-Event Analysis for Platform Integrity</h3>
+            <p class="p-desc">I kept staring at T&amp;S session data that had the same shape as the censored patient cohorts from my biostatistics...</p>
             <span class="p-link">Read Case Study -></span>
           </div>
         </a>
@@ -643,13 +746,13 @@
   })();
 })();
 
-// Auto-populate the abbreviated bio box from the bio page (about.html),
-// truncated to the first 200 words. The empty <p> below is filled by this script
-// from the first 200 words of the full bio.
+// Populate the homepage biography from the MDX-driven About page (/about/):
+// the 200-word teaser in .bio-preview and the full text in #bioFullInjected.
+// Authoring the bio once in src/pages/about.mdx keeps this section from drifting.
 (function () {
-  var BIO_PREVIEW_WORD_LIMIT = 200; // adjust to taste; cuts at a sentence/word boundary
+  var BIO_PREVIEW_WORD_LIMIT = 200;
   var previewP = document.querySelector('.bio-preview > p');
-  if (!previewP) return;
+  var injected = document.getElementById('bioFullInjected');
 
   function truncate(text, limit) {
     text = text.replace(/\s+/g, ' ').trim();
@@ -658,17 +761,19 @@
     return words.slice(0, limit).join(' ').replace(/[\s.,;:!?]+$/, '') + '...';
   }
 
-  fetch('about.html')
+  fetch('/about/')
     .then(function (r) { if (!r.ok) throw new Error('bio fetch ' + r.status); return r.text(); })
     .then(function (html) {
       var doc = new DOMParser().parseFromString(html, 'text/html');
+      var bodyCol = doc.querySelector('.about-body .col');
+      if (injected && bodyCol) injected.innerHTML = bodyCol.innerHTML;
       var nodes = doc.querySelectorAll('.about-hero .lede, .about-body p');
       if (!nodes.length) nodes = doc.querySelectorAll('main p, .col p, p');
       var text = Array.prototype.map.call(nodes, function (p) { return p.textContent; }).join(' ');
       text = text.replace(/\s+/g, ' ').trim();
-      if (text) previewP.textContent = truncate(text, BIO_PREVIEW_WORD_LIMIT);
+      if (previewP && text) previewP.textContent = truncate(text, BIO_PREVIEW_WORD_LIMIT);
     })
-    .catch(function () { /* keep the hard-coded fallback text */ });
+    .catch(function () { /* leave the section empty if the About page cannot be fetched */ });
 })();
 </script>
 
