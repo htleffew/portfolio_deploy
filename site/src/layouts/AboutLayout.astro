@@ -7,8 +7,9 @@
 const { frontmatter } = Astro.props;
 const fm = frontmatter ?? {};
 const title = fm.title || "About";
-const eyebrow = fm.eyebrow || "About";
+const eyebrow = fm.eyebrow || "";
 const lede = fm.lede || "";
+const description = fm.description || lede;
 const headshot = fm.headshot || "/design_system/assets/Heather_headshot_3.jpg";
 const headshotAlt = fm.headshotAlt || "Dr. Heather Leffew";
 ---
@@ -18,7 +19,7 @@ const headshotAlt = fm.headshotAlt || "Dr. Heather Leffew";
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>{title} | Dr. Heather Leffew</title>
-{lede && <meta name="description" content={lede} />}
+{description && <meta name="description" content={description} />}
 <link rel="stylesheet" href="/design_system/assets/css/institutional.css" />
 </head>
 <body>
@@ -39,7 +40,7 @@ const headshotAlt = fm.headshotAlt || "Dr. Heather Leffew";
 
 <section class="about-hero">
   <div class="col">
-    <div class="eyebrow">{eyebrow}</div>
+    {eyebrow && <div class="eyebrow">{eyebrow}</div>}
     <h1>{title}</h1>
     {lede && <p class="lede">{lede}</p>}
   </div>
