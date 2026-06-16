@@ -639,22 +639,63 @@
 
 
 
-<ullets.style.display = 'none'; }
-          });
+<script>
+// Per-card "View Details" toggle for the Professional Experience section: each
+// card's bullet list starts collapsed and expands on click. Restored 2026-06:
+// the original inline script had lost its opening lines and was inert, which
+// left every card's bullets permanently expanded.
+(function () {
+  function initExperienceToggles() {
+    var cards = document.querySelectorAll('#experience .r-card');
+    cards.forEach(function (card) {
+      var bullets = card.querySelector('.r-bullets');
+      var intro = card.querySelector('.r-intro');
+      if (!bullets || !intro || card.dataset.toggleWired) return;
+      card.dataset.toggleWired = '1';
+
+      var hasGsap = (typeof gsap !== 'undefined');
+      bullets.style.display = 'none';
+      bullets.style.opacity = '0';
+
+      var btnWrap = document.createElement('div');
+      btnWrap.className = 'r-toggle-wrap';
+      btnWrap.style.marginTop = '20px';
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'bio-expand-btn';
+      btn.innerHTML = 'View Details <span>+</span>';
+
+      var open = false;
+      btn.addEventListener('click', function () {
+        if (!open) {
+          bullets.style.display = 'block';
+          if (hasGsap) {
+            gsap.to(bullets, { opacity: 1, duration: 0.5, ease: 'power2.out', onComplete: function () {
+              if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+            } });
+          } else {
+            bullets.style.opacity = '1';
+          }
+          btn.innerHTML = 'Hide Details <span>-</span>';
         } else {
           bullets.style.display = 'none';
           bullets.style.opacity = '0';
+          btn.innerHTML = 'View Details <span>+</span>';
         }
-        btn.innerHTML = 'View Details <span>+</span>';
-      }
-      open = !open;
-      if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+        open = !open;
+        if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+      });
+
+      btnWrap.appendChild(btn);
+      intro.parentNode.insertBefore(btnWrap, intro.nextSibling);
     });
-    
-    btnWrap.appendChild(btn);
-    intro.parentNode.insertBefore(btnWrap, intro.nextSibling);
-  });
-});
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initExperienceToggles);
+  } else {
+    initExperienceToggles();
+  }
+})();
 </script>
 
 <!-- Randomize the featured carousel order on every load (keeps both loop groups in sync) -->
