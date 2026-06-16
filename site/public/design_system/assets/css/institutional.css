@@ -665,7 +665,7 @@ table.data-table tr:last-child td { border-bottom:none; }
 .about-prose::after{content:"";display:block;clear:both}
 .about-body p{font-family:var(--body);font-size:16.5px;line-height:1.85;color:var(--ink-2);margin:0 0 28px;padding:0;max-width:none}
 .about-body p:last-child{margin-bottom:0}
-.about-body .section-break{width:48px;height:1px;background:var(--ink-blue);margin:48px 0;opacity:0.4}
+.about-body .section-break{width:48px;height:1px;background:var(--ink-blue);margin:14px 0;opacity:0.5}
 
 .about-headshot{margin:36px 0 0;max-width:280px}
 .about-headshot--float{float:left;width:264px;max-width:45%;margin:6px 36px 20px 0;shape-outside:margin-box}
