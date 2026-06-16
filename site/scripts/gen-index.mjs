@@ -14,7 +14,7 @@ import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import matter from 'gray-matter';
-import { resolveCategory } from './lib/article-data.mjs';
+import { resolveCategory, summarize } from './lib/article-data.mjs';
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const pagesDir = path.join(root, 'src', 'pages');
@@ -44,13 +44,17 @@ const files = (await readdir(pagesDir)).filter(
 for (const file of files.sort()) {
   const slug = file.replace(/\.mdx$/, '');
   const raw = await readFile(path.join(pagesDir, file), 'utf8');
-  const { data } = matter(raw);
+  const { data, content } = matter(raw);
   const live = liveBySlug[slug] || {};
 
   const fmTags = Array.isArray(data.tags) ? data.tags : [];
   entries.push({
     id: data.id || slug,
     title: data.title || slug,
+    // `summary` is the auto-derived first ~20 words of the body (shown in
+    // Related Works cards and search results); `desc` keeps the fuller
+    // frontmatter abstract for richer search-match recall.
+    summary: summarize(content),
     desc: data.description || data.abstract || live.desc || '',
     cat: await resolveCategory(slug, data),
     subtype: data.subcategory || data.subtype || live.subtype || data.format || 'Analysis',
