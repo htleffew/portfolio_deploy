@@ -141,7 +141,7 @@
             <a href="${pathPrefix}index.html" class="brand">Dr. Heather Leffew</a>
             <div class="nav-links">
                 <button id="trigger-search">Search</button>
-                <a href="${pathPrefix}about.html">About</a>
+                <a href="/about/">About</a>
                 <a href="${pathPrefix}projects-repository.html">Articles</a>
                 <a href="${pathPrefix}resume.pdf" target="_blank" class="nav-btn">Resume -></a>
             </div>
@@ -224,7 +224,7 @@
                 a.innerHTML = `
                     <div class="search-result-cat">${p.cat || 'Research'}</div>
                     <div class="search-result-title">${p.title}</div>
-                    <div class="search-result-desc">${p.desc.substring(0, 140)}...</div>
+                    <div class="search-result-desc">${p.summary || ((p.desc || '').substring(0, 140) + '...')}</div>
                 `;
                 searchResults.appendChild(a);
             });
@@ -239,7 +239,7 @@
             
             const results = projectsData.filter(p => {
                 const titleMatch = (p.title || '').toLowerCase().includes(query);
-                const descMatch = (p.desc || '').toLowerCase().includes(query);
+                const descMatch = ((p.desc || '') + ' ' + (p.summary || '')).toLowerCase().includes(query);
                 const catMatch = (p.cat || '').toLowerCase().includes(query);
                 const tagsMatch = p.tags ? p.tags.some(t => t.toLowerCase().includes(query)) : false;
                 return titleMatch || descMatch || catMatch || tagsMatch;
@@ -317,7 +317,7 @@
                             <a class="r-card" href="${currentPrefix}${p.url}">
                                 <div class="eb">${p.cat || 'Research'}</div>
                                 <div class="ti">${p.title}</div>
-                                <div class="ds">${(p.desc || '').substring(0, 80)}...</div>
+                                <div class="ds">${p.summary || ((p.desc || '').substring(0, 80) + '...')}</div>
                             </a>
                         `;
                     });

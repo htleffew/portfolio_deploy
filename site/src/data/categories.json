@@ -1,0 +1,40 @@
+{
+  "_comment": "Curated library taxonomy (slug -> category). Source of truth for the Library sidebar, the homepage carousel eyebrows, and projects_index.json; overrides the inconsistent per-article frontmatter `category`. Unlisted slugs fall back to frontmatter. Grouped by method, not by academic field, to match the site's positioning (implicit signal measurement / human-AI behavioral science): the linguistic-measurement studies sit together across forensic and clinical subjects, and the platform work reads as that same behavioral measurement at scale.",
+
+  "ai-safety-audit-framework": "AI Evaluation & Safety",
+  "agentic-experience-evaluation": "AI Evaluation & Safety",
+  "bounded-autonomous-research": "AI Evaluation & Safety",
+  "constitutional-ai-defense": "AI Evaluation & Safety",
+  "dead-signal-ai-evals": "AI Evaluation & Safety",
+
+  "post-asimovian-alignment": "Alignment & Interpretability",
+  "guardrail-paradox-theory": "Alignment & Interpretability",
+  "somatic-deficit": "Alignment & Interpretability",
+  "warrant-question-framework": "Alignment & Interpretability",
+  "misspecification-behavioral-claims": "Alignment & Interpretability",
+  "latent-projective-bleed": "Alignment & Interpretability",
+  "nla_anthropic": "Alignment & Interpretability",
+
+  "claude-lcr-analysis": "Model Behavior Studies",
+  "sleep-nudge-analysis": "Model Behavior Studies",
+  "public-discourse-misalignment": "Model Behavior Studies",
+  "claude-character-tic": "Model Behavior Studies",
+
+  "reddit-corpus-nlp-tutorial": "Methods & Systems",
+  "two-tier-evidence-structure": "Methods & Systems",
+  "tokenization-trap": "Methods & Systems",
+  "autoresearch-master": "Methods & Systems",
+
+  "doctoral-dissertation": "Linguistic & Behavioral Measurement",
+  "implicit-power-drives": "Linguistic & Behavioral Measurement",
+  "diagnostic-thematic-apperception-liwc": "Linguistic & Behavioral Measurement",
+
+  "assessing-mass-violence-risk": "Threat & Safety at Scale",
+  "trajectory-investigation": "Threat & Safety at Scale",
+  "platform-survival-analytics": "Threat & Safety at Scale",
+  "multi-signal-safety-detection": "Threat & Safety at Scale",
+
+  "neurobiological-offenders": "Clinical & Neurocognitive Science",
+  "multimodal-autism-ai": "Clinical & Neurocognitive Science",
+  "adhd-focus-playlist": "Clinical & Neurocognitive Science"
+}
