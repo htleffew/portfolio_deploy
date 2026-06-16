@@ -14,7 +14,7 @@ import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import matter from 'gray-matter';
-import { resolveCategory, summarize } from './lib/article-data.mjs';
+import { resolveCategory, summarize, normalizeTags } from './lib/article-data.mjs';
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const pagesDir = path.join(root, 'src', 'pages');
@@ -58,7 +58,7 @@ for (const file of files.sort()) {
     desc: data.description || data.abstract || live.desc || '',
     cat: await resolveCategory(slug, data),
     subtype: data.subcategory || data.subtype || live.subtype || data.format || 'Analysis',
-    tags: fmTags.length ? fmTags : (Array.isArray(live.tags) ? live.tags : []),
+    tags: await normalizeTags(fmTags.length ? fmTags : (Array.isArray(live.tags) ? live.tags : [])),
     url: `${slug}/`,
     time: data.time || live.time || '',
     visual: data.visual || live.visual || '',

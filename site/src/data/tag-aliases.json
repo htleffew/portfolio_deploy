@@ -1,0 +1,105 @@
+{
+  "_comment": "Tag normalization map (variant -> canonical). Collapses the 115 raw frontmatter tags into a curated vocabulary of ~35 so tags actually cluster articles and strengthen Related Works scoring. Any tag not listed here passes through unchanged (it is already canonical). Applied at build by article-data.mjs (normalizeTags) and consumed by gen-listings (Library chips + filter) and gen-index (projects_index tags). Edit freely; per-article tag order is preserved and duplicates are collapsed.",
+
+  "Alignment": "AI Safety",
+  "Alignment Theory": "AI Safety",
+  "Alignment Failure": "AI Safety",
+  "Alignment & Safety Governance": "AI Safety",
+  "Safety Evals": "AI Safety",
+  "Safety Governance": "AI Safety",
+  "Adaptive Thresholds": "AI Safety",
+  "CMDP": "AI Safety",
+  "RLHF": "AI Safety",
+
+  "Boundary Violations": "Warrant",
+  "Autonomy": "Warrant",
+  "Clinical Ethics": "Warrant",
+
+  "Behavioral Analysis": "Behavioral Evaluation",
+  "Behavioral Measurement": "Behavioral Evaluation",
+  "Behavioral Coding": "Behavioral Evaluation",
+  "Out-of-Character Behavior": "Behavioral Evaluation",
+  "Context-Blindness": "Behavioral Evaluation",
+
+  "NLP & LLMs": "NLP",
+  "Discourse Mining": "NLP",
+  "BERTopic": "NLP",
+  "HDBSCAN": "NLP",
+  "Prophet": "NLP",
+  "NetworkX": "NLP",
+  "LDA Topic Modeling": "NLP",
+  "Corpus Analysis": "NLP",
+
+  "Computer-Mediated Analysis": "Linguistic Analysis",
+
+  "Construct Validity": "Psychometrics",
+  "Measurement": "Psychometrics",
+  "Predictive Typology": "Psychometrics",
+  "Projective Psychometrics": "Psychometrics",
+  "Projective Testing": "Psychometrics",
+  "Attachment Theory": "Psychometrics",
+  "Defense Mechanisms": "Psychometrics",
+
+  "Research Methods": "Methodology",
+  "Research Methodology": "Methodology",
+  "Mixed Methods": "Methodology",
+  "Replication": "Methodology",
+  "Computational Psychology": "Methodology",
+
+  "Agentic AI": "Agentic Evals",
+  "Agentic Workflows": "Agentic Evals",
+  "Tool-Use Evaluation": "Agentic Evals",
+  "Grounding": "Agentic Evals",
+  "UX Metrics": "Agentic Evals",
+  "Long-Horizon": "Agentic Evals",
+
+  "Offline Evaluation": "AI Evaluation",
+  "Golden Datasets": "AI Evaluation",
+  "Evaluation Gating": "AI Evaluation",
+  "Refusal Evals": "AI Evaluation",
+  "Precision/Recall": "AI Evaluation",
+  "Learning-to-Rank": "AI Evaluation",
+
+  "Prompt Injection": "Red-Teaming",
+
+  "Interpretability": "Mechanistic Interpretability",
+  "Linear Probes": "Mechanistic Interpretability",
+  "Continuous Thought Models": "Mechanistic Interpretability",
+  "Coconut": "Mechanistic Interpretability",
+  "Evaluation Awareness": "Mechanistic Interpretability",
+
+  "Platform Safety": "Trust & Safety",
+  "Toxicity Detection": "Trust & Safety",
+  "Enforcement": "Trust & Safety",
+  "Multi-Signal": "Trust & Safety",
+  "Investigation Ethics": "Trust & Safety",
+  "Forensic Methodology": "Trust & Safety",
+  "Behavioral Trajectory": "Trust & Safety",
+  "Spark / Distributed": "Trust & Safety",
+
+  "Threat Modeling": "Threat Assessment",
+  "Warning Behaviors": "Threat Assessment",
+  "Behavioral Heterogeneity": "Threat Assessment",
+
+  "Forensic Neuroscience": "Forensic Psychology",
+  "Psychopathy": "Forensic Psychology",
+  "Antisocial Personality": "Forensic Psychology",
+  "Neuroanatomy": "Forensic Psychology",
+  "Dimensional Diagnostics": "Forensic Psychology",
+
+  "Decision Support": "Clinical ML",
+
+  "Bayesian Uncertainty": "Uncertainty",
+
+  "Arousal Theory": "Neuroscience",
+
+  "Kohlberg": "Moral Reasoning",
+
+  "Claude Opus": "Claude",
+  "Claude Sonnet": "Claude",
+  "Anthropic": "Claude",
+
+  "Gemini": "Generative AI",
+
+  "Enterprise Compliance": "LLM Orchestration"
+}

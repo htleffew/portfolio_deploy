@@ -31,10 +31,9 @@ function attr(s) {
 
 const articles = await getArticles();
 
-// Category (`cat`) is already resolved by getArticles from the curated map.
+// Category (`cat`) and tags (normalized) are already resolved by getArticles.
 for (const a of articles) {
   a.title = a.frontmatter.title || a.slug;
-  a.tags = Array.isArray(a.frontmatter.tags) ? a.frontmatter.tags : [];
 }
 
 // Stable display order: grouped by category (alphabetical), then title.

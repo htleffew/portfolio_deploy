@@ -12,6 +12,7 @@ import matter from 'gray-matter';
 const root = path.dirname(path.dirname(path.dirname(fileURLToPath(import.meta.url))));
 const pagesDir = path.join(root, 'src', 'pages');
 const categoriesFile = path.join(root, 'src', 'data', 'categories.json');
+const tagAliasesFile = path.join(root, 'src', 'data', 'tag-aliases.json');
 
 // Curated slug -> category map (the Library taxonomy). Overrides the
 // inconsistent per-article frontmatter `category`; unlisted slugs fall back to
@@ -33,6 +34,33 @@ async function loadCategories() {
 export async function resolveCategory(slug, frontmatter = {}) {
   const map = await loadCategories();
   return map[slug] || frontmatter.category || 'Research';
+}
+
+// Tag normalization map (variant -> canonical).
+let TAG_ALIASES = null;
+async function loadTagAliases() {
+  if (TAG_ALIASES) return TAG_ALIASES;
+  TAG_ALIASES = {};
+  if (existsSync(tagAliasesFile)) {
+    const raw = JSON.parse(await readFile(tagAliasesFile, 'utf8'));
+    for (const [k, v] of Object.entries(raw)) {
+      if (!k.startsWith('_')) TAG_ALIASES[k] = v;
+    }
+  }
+  return TAG_ALIASES;
+}
+
+// Map each tag to its canonical form and collapse duplicates, preserving the
+// order tags first appear in. Unlisted tags pass through unchanged.
+export async function normalizeTags(tags = []) {
+  const aliases = await loadTagAliases();
+  const seen = new Set();
+  const out = [];
+  for (const t of tags) {
+    const canon = aliases[t] || t;
+    if (!seen.has(canon)) { seen.add(canon); out.push(canon); }
+  }
+  return out;
 }
 
 // about.mdx is a content page authored with the article toolchain, not an
@@ -112,6 +140,7 @@ export async function getArticles(wordCount = DEFAULT_WORDS) {
       url: `/${slug}/`,
       frontmatter: data,
       cat: await resolveCategory(slug, data),
+      tags: await normalizeTags(Array.isArray(data.tags) ? data.tags : []),
       summary: summarize(content, wordCount),
     });
   }
