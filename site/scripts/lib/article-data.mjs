@@ -4,12 +4,36 @@
 // from the body on every build, so when an article's opening paragraph changes
 // the library/carousel summaries change with it (no hand-maintained desc text).
 import { readdir, readFile } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import matter from 'gray-matter';
 
 const root = path.dirname(path.dirname(path.dirname(fileURLToPath(import.meta.url))));
 const pagesDir = path.join(root, 'src', 'pages');
+const categoriesFile = path.join(root, 'src', 'data', 'categories.json');
+
+// Curated slug -> category map (the Library taxonomy). Overrides the
+// inconsistent per-article frontmatter `category`; unlisted slugs fall back to
+// their frontmatter category.
+let CATEGORY_MAP = null;
+async function loadCategories() {
+  if (CATEGORY_MAP) return CATEGORY_MAP;
+  CATEGORY_MAP = {};
+  if (existsSync(categoriesFile)) {
+    const raw = JSON.parse(await readFile(categoriesFile, 'utf8'));
+    for (const [k, v] of Object.entries(raw)) {
+      if (!k.startsWith('_')) CATEGORY_MAP[k] = v;
+    }
+  }
+  return CATEGORY_MAP;
+}
+
+// Resolve an article's display category: curated map first, then frontmatter.
+export async function resolveCategory(slug, frontmatter = {}) {
+  const map = await loadCategories();
+  return map[slug] || frontmatter.category || 'Research';
+}
 
 // about.mdx is a content page authored with the article toolchain, not an
 // article; keep it out of the library index, carousel, and related-works.
@@ -87,6 +111,7 @@ export async function getArticles(wordCount = DEFAULT_WORDS) {
       slug,
       url: `/${slug}/`,
       frontmatter: data,
+      cat: await resolveCategory(slug, data),
       summary: summarize(content, wordCount),
     });
   }

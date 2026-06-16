@@ -9,10 +9,9 @@
 // scripts/lib/article-data.mjs), so editing an article's opening paragraph updates
 // these summaries automatically; adding an article adds it to both surfaces.
 //
-// Category note: the article frontmatter `category` is inconsistent across the
-// older articles, so the curated category from the prior live index
-// (src/data/live-index.json) wins when present; new articles fall back to their
-// own frontmatter category (already clean).
+// Category note: the article frontmatter `category` is inconsistent, so the
+// Library taxonomy is the curated map in src/data/categories.json (resolved by
+// getArticles as `cat`); unlisted slugs fall back to their frontmatter category.
 import { readFile, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -21,7 +20,6 @@ import { getArticles } from './lib/article-data.mjs';
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const publicDir = path.join(root, 'public');
-const liveIndexFile = path.join(root, 'src', 'data', 'live-index.json');
 
 function esc(s) {
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -31,26 +29,10 @@ function attr(s) {
   return esc(s).replace(/"/g, '&quot;');
 }
 
-// slug -> curated category from the previous deploy index.
-async function liveCategoryMap() {
-  const map = {};
-  if (!existsSync(liveIndexFile)) return map;
-  const live = JSON.parse(await readFile(liveIndexFile, 'utf8'));
-  const arr = Array.isArray(live) ? live : (live.projects || Object.values(live)[0] || []);
-  for (const e of arr) {
-    if (!e || !e.url || !e.cat) continue;
-    const slug = e.url.split('/').pop().replace(/\.html$/, '');
-    map[slug] = e.cat;
-  }
-  return map;
-}
-
 const articles = await getArticles();
-const liveCat = await liveCategoryMap();
 
-// Resolve each article's display category and tags once.
+// Category (`cat`) is already resolved by getArticles from the curated map.
 for (const a of articles) {
-  a.cat = liveCat[a.slug] || a.frontmatter.category || 'Research';
   a.title = a.frontmatter.title || a.slug;
   a.tags = Array.isArray(a.frontmatter.tags) ? a.frontmatter.tags : [];
 }

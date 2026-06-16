@@ -1,0 +1,40 @@
+{
+  "_comment": "Curated library taxonomy (slug -> category). This is the source of truth for the Library sidebar, the homepage carousel eyebrows, and the projects_index. It overrides the inconsistent per-article frontmatter `category`. Any slug not listed falls back to its frontmatter category. Seven content-driven groups, balanced 3-7 articles each.",
+
+  "ai-safety-audit-framework": "AI Evaluation & Safety",
+  "agentic-experience-evaluation": "AI Evaluation & Safety",
+  "bounded-autonomous-research": "AI Evaluation & Safety",
+  "constitutional-ai-defense": "AI Evaluation & Safety",
+  "dead-signal-ai-evals": "AI Evaluation & Safety",
+
+  "claude-lcr-analysis": "Model Behavior Studies",
+  "sleep-nudge-analysis": "Model Behavior Studies",
+  "public-discourse-misalignment": "Model Behavior Studies",
+  "claude-character-tic": "Model Behavior Studies",
+
+  "post-asimovian-alignment": "Alignment & Interpretability",
+  "guardrail-paradox-theory": "Alignment & Interpretability",
+  "somatic-deficit": "Alignment & Interpretability",
+  "warrant-question-framework": "Alignment & Interpretability",
+  "misspecification-behavioral-claims": "Alignment & Interpretability",
+  "latent-projective-bleed": "Alignment & Interpretability",
+  "nla_anthropic": "Alignment & Interpretability",
+
+  "reddit-corpus-nlp-tutorial": "Methods & Systems",
+  "two-tier-evidence-structure": "Methods & Systems",
+  "tokenization-trap": "Methods & Systems",
+  "autoresearch-master": "Methods & Systems",
+
+  "doctoral-dissertation": "Forensic Psychology & Threat Assessment",
+  "implicit-power-drives": "Forensic Psychology & Threat Assessment",
+  "assessing-mass-violence-risk": "Forensic Psychology & Threat Assessment",
+  "neurobiological-offenders": "Forensic Psychology & Threat Assessment",
+
+  "multi-signal-safety-detection": "Platform Integrity & Trust and Safety",
+  "platform-survival-analytics": "Platform Integrity & Trust and Safety",
+  "trajectory-investigation": "Platform Integrity & Trust and Safety",
+
+  "diagnostic-thematic-apperception-liwc": "Clinical & Cognitive Science",
+  "multimodal-autism-ai": "Clinical & Cognitive Science",
+  "adhd-focus-playlist": "Clinical & Cognitive Science"
+}
