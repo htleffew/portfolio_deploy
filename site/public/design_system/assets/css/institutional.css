@@ -665,7 +665,9 @@ table.data-table tr:last-child td { border-bottom:none; }
 .about-prose::after{content:"";display:block;clear:both}
 .about-body p{font-family:var(--body);font-size:16.5px;line-height:1.85;color:var(--ink-2);margin:0 0 28px;padding:0;max-width:none}
 .about-body p:last-child{margin-bottom:0}
-.about-body .section-break{width:48px;height:1px;background:var(--ink-blue);margin:14px 0;opacity:0.5}
+/* APA-style body: single-spaced paragraphs, first-line indent marks each new paragraph */
+.about-body p:has(+ p){margin-bottom:0}
+.about-body p + p{text-indent:2.5em}
 
 .about-headshot{margin:36px 0 0;max-width:280px}
 .about-headshot--float{float:left;width:264px;max-width:45%;margin:6px 36px 20px 0;shape-outside:margin-box}
@@ -901,6 +903,9 @@ html.lenis, html.lenis body { height: auto; }
   padding-left:0; padding-right:0;
 }
 .col-wide.markdown-body p { margin-bottom:22px; }
+/* APA-style article body: single-spaced paragraphs, first-line indent marks each new paragraph */
+.col-wide.markdown-body p:has(+ p){ margin-bottom:0; }
+.col-wide.markdown-body p + p{ text-indent:2.5em; }
 
 /* Sub-headings (### / #### in MDX): tight academic scale stepping down from h2.
    Layout (column width, side padding) is handled by the markdown-body reset above. */
