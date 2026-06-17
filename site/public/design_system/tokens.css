@@ -70,17 +70,36 @@
   --leading-comfort:  1.70;
   --leading-reading:  1.85;
 
-  /* ── SPACING ── */
-  --space-1:  4px;
-  --space-2:  8px;
-  --space-3:  12px;
-  --space-4:  16px;
-  --space-5:  24px;
-  --space-6:  32px;
-  --space-7:  40px;
-  --space-8:  48px;
-  --space-9:  60px;
-  --space-section: 64px;
+  /* ── SPACING SCALE ──
+     Single source of truth for all padding / margin / gap.
+     Step tokens are rem (1rem = 16px) so they scale with the user's
+     root font-size for accessibility; values are 1:1 with the old px
+     scale (no visual change at default zoom).
+     Use a --space-N step for component spacing. Use the adaptive
+     --space-section-* / --gutter tokens (below) for page-level rhythm
+     so layout breathes correctly from phone to wide desktop. */
+  --space-1:  0.25rem;   /*  4px */
+  --space-2:  0.5rem;    /*  8px */
+  --space-3:  0.75rem;   /* 12px */
+  --space-4:  1rem;      /* 16px */
+  --space-5:  1.5rem;    /* 24px */
+  --space-6:  2rem;      /* 32px */
+  --space-7:  2.5rem;    /* 40px */
+  --space-8:  3rem;      /* 48px */
+  --space-9:  3.75rem;   /* 60px */
+  --space-section: 4rem; /* 64px */
+
+  /* ── ADAPTIVE LAYOUT SPACING (viewport-responsive) ──
+     clamp(min, vw, max): the rem floor/ceiling respect font-size,
+     the vw middle scales with viewport width. Apply to section
+     vertical rhythm and page side-gutters, NOT to component padding
+     (buttons/chips should not grow with screen width). */
+  --space-section-sm: clamp(2.5rem, 5vw, 3.75rem);  /*  40 → 60px */
+  --space-section-md: clamp(3rem, 6vw, 5rem);       /*  48 → 80px */
+  --space-section-lg: clamp(4rem, 8vw, 7.5rem);     /*  64 → 120px */
+  --space-section-xl: clamp(6rem, 12vw, 10rem);     /*  96 → 160px */
+  --gutter:      clamp(1.5rem, 4vw, 2rem);          /*  24 → 32px  (standard page gutter) */
+  --gutter-wide: clamp(1.5rem, 5vw, 3rem);          /*  24 → 48px  (wide-container gutter) */
 
   /* ── RADII ── */
   --radius-sm:   4px;
