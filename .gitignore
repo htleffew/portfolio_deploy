@@ -9,3 +9,5 @@ site/public/projects_index.json
 
 # Internal authoring tooling (canonical copy lives in the private writing-standards repo)
 .claude/
+
+studio/
