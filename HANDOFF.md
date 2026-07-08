@@ -2,7 +2,7 @@
 
 - Project: portfolio-site
 - Path: C:/Users/drhea/estate/apps/portfolio-site
-- Verified state: 6d29fb6 2026-06-24 Sync working changes (branch master, working tree clean as of 2026-07-04)
+- Verified state: 89215b7 2026-07-08 chore/gitignore update, no content or site change; last substantive commit 6d29fb6 2026-06-24 "Sync working changes". Branch master, working tree clean, verified 2026-07-08.
 - In progress / uncommitted: none, all committed
 
 ## Tech
