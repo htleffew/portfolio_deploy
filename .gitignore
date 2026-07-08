@@ -11,3 +11,5 @@ site/public/projects_index.json
 .claude/
 
 studio/
+# graphify derived graph artifacts (regenerable; daily EstateGraphRefresh)
+graphify-out/
