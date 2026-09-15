@@ -13,12 +13,21 @@ const liveIndexFile = path.join(root, 'src', 'data', 'live-index.json');
 const live = JSON.parse(await readFile(liveIndexFile, 'utf8'));
 const arr = Array.isArray(live) ? live : (live.projects || Object.values(live)[0] || []);
 
+// Old-site URLs whose article was renamed or folded into another one, so their
+// slug no longer matches a live route. Juggernaut became Platform Survival
+// Analytics in the 2026-05-15 codename scrub (8f8ff49); the ADOS clinical
+// validation page was superseded by Multimodal Autism AI.
+const LEGACY_ALIASES = [
+  { url: 'Juggernaut/juggernaut.html', dest: '/platform-survival-analytics/' },
+  { url: 'ADOS/clinical-validation.html', dest: '/multimodal-autism-ai/' },
+];
+
 let n = 0;
-for (const e of arr) {
+for (const e of [...arr, ...LEGACY_ALIASES]) {
   if (!e || !e.url) continue;
   const oldUrl = e.url;                                   // Folder/slug.html
   const slug = oldUrl.split('/').pop().replace(/\.html$/, '');
-  const dest = `/${slug}/`;
+  const dest = e.dest || `/${slug}/`;
   const outPath = path.join(publicDir, oldUrl);
   await mkdir(path.dirname(outPath), { recursive: true });
   const html = `<!DOCTYPE html>
