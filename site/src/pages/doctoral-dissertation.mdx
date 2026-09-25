@@ -2,24 +2,29 @@
 layout: ../layouts/CinematicLayout.astro
 title: "Instrumental and Affective Mass Murder, Establishing a Predictive Typology with Computer-Mediated Linguistic Analysis"
 short_title: "Instrumental and Affective Mass Murder"
-description: "The FBI's Behavioral Analysis Unit has held since 2015 that every perpetrator of mass violence is best categorized as an instrumental offender; this dissertation takes the opposite position, and asks whether the language of a discovered pre-attack communication can sort attackers into two psychometrically distinct types that predict how the attack itself unfolds."
-category: "Fielding Graduate University  ·  Doctor of Philosophy in Psychology"
-subcategory: "14 min read"
+description: "A 2015 FBI Behavioral Analysis Unit report treats every perpetrator of mass violence as an instrumental offender; this dissertation tests the opposite position, asking whether the language of a discovered pre-attack communication sorts attackers into two psychometrically distinct types whose attacks unfold differently."
+category: "Fielding Graduate University  ·  Doctor of Philosophy in Psychology"
+subcategory: "Predictive Typology"
 format: "CASE STUDY"
-time: "5 min read"
+time: "14 min read"
 author: "Dr. Heather Leffew"
 tags: ["Forensic Psychology", "Threat Assessment", "LIWC", "Predictive Typology", "Behavioral Measurement"]
 visual: "fig_2.svg"
-scripts: ["interactive_0.js", "interactive_1.js", "interactive_3.js"]
+scripts: []
 ---
 import Band from '../components/Band.astro';
 import Figure from '../components/Figure.astro';
+import ThreatRiskMatrix from '../components/widgets/ThreatRiskMatrix.astro';
+import StatRow from '../components/widgets/StatRow.astro';
+import ClusterProfile from '../components/widgets/ClusterProfile.astro';
+import OddsBars from '../components/widgets/OddsBars.astro';
+import ExemplarProfiles from '../components/widgets/ExemplarProfiles.astro';
 
 <Band theme="paper" spine="Abstract" section="Abstract">
 
 ## Abstract
 
-The FBI's Behavioral Analysis Unit has held since 2015 that every perpetrator of mass violence is best categorized as an instrumental offender; this dissertation takes the opposite position. One hundred pre-attack communications were analyzed with LIWC2015 along four summary dimensions (Analytic, Clout, Authentic, Tone); K-means clustering separated the corpus into two psychometrically distinct types, Affective (n=53) and Instrumental (n=47), and linear discriminant analysis correctly classified 100% of cases. A binary logistic regression on four refined attack-behavior variables (lethality, demographic-based targeting, perpetrator's home among attack locations, perpetrator killed by another person) recovered cluster membership at McFadden R² = 0.24, with the strongest single predictor, perpetrator killed, carrying an odds ratio of 14.11. What this offers is the first within-groups typology of mass murderers with statistically validated predictive ties to specific attack characteristics, meant as input to threat assessment and risk management once a pre-attack communication has been discovered.
+A 2015 report from the FBI's Behavioral Analysis Unit (National Center for the Analysis of Violent Crime, 2015) treats every perpetrator of mass violence as best categorized as an instrumental offender; this dissertation takes the opposite position. One hundred pre-attack communications were analyzed with LIWC2015 along four summary dimensions (Analytic, Clout, Authentic, Tone); K-means clustering separated the corpus into two psychometrically distinct types, Affective (n=53) and Instrumental (n=47), and a linear discriminant analysis on the same four variables confirmed the separation. Cluster membership was then tested against how each attack unfolded, and a binary logistic regression on four attack-behavior variables (victims killed, demographic-based targeting, the perpetrator's home among the attack locations, the perpetrator being killed by another person) related them to type at McFadden R² = 0.24, with the strongest single predictor, the perpetrator being killed, carrying an odds ratio of 14.11 toward the Instrumental type. What this offers is a within-groups typology of mass murderers with statistically tested ties to specific attack characteristics, meant as input to threat assessment and risk management once a pre-attack communication has been discovered.
 
 </Band>
 
@@ -27,31 +32,11 @@ The FBI's Behavioral Analysis Unit has held since 2015 that every perpetrator of
 
 ## The Prediction Problem
 
-Theoretical Background
-
-Existing typologies of mass violence tend to fall into three categories; those that distinguish mass murderers from the general population, those that distinguish them from other violent offenders, and those that distinguish kinds of mass murderers from each other. The first two have produced workable likelihood-of-attack screens (Knoll & Meloy, 2014; Langman, 2009; Verlinden, Hersen, & Thomas, 2000); the third has not. Theoretical proposals from Dietz (1986), Holmes and Holmes (1994), and Kelleher (1997) have not been empirically replicated, and recent attempts at empirical within-groups typology (Langman, 2009; Ioannou, Hammond, & Simpson, 2015) sort attackers ex post facto without predicting how an attack will unfold; what the literature has not yet had is a within-groups distinction with statistically validated ties to specific attack behaviors, and that gap is where this work sits.
+Existing typologies of mass violence tend to fall into three categories; those that distinguish mass murderers from the general population, those that distinguish them from other violent offenders, and those that distinguish kinds of mass murderers from each other. The first two have produced workable likelihood-of-attack screens (Knoll & Meloy, 2014; Langman, 2009; Verlinden, Hersen, & Thomas, 2000); the third has not. Theoretical proposals from Dietz (1986), Holmes and Holmes (1994), and Kelleher (1997) have not been empirically replicated, and recent attempts at empirical within-groups typology (Langman, 2009; Ioannou, Hammond, & Simpson, 2015) sort attackers ex post facto without predicting how an attack will unfold; what the literature has not yet had is a within-groups distinction with statistically tested ties to specific attack behaviors, and that gap is where this work sits.
 
 In threat assessment, the standard frame separates threat (the probability an event will occur) from risk (the potential impacts if it does). A burglary of an unoccupied home is low-threat and low-risk; a school shooting is low-threat and high-risk, carrying low probability for any given school and catastrophic impact when it happens; an armed individual with credible communicated intent at an accessible location is high-threat and high-risk. This dissertation leaves the threat side of the matrix alone, the question of whether an attack will occur, and works the risk side instead, the question of what kind of attack is more likely once a pre-attack communication has been discovered, by treating that communication as a measurable psychometric signal.
 
-Threat (Probability of Event) →
-
-Risk (Impact of Event) →
-
-Low Threat / High Risk
-
-A school shooting in the abstract. Dire consequences for any individual school, but low base rate.
-
-High Threat / High Risk
-
-An armed individual with credible communicated intent attacking an accessible location. The case that tends to call for immediate tactical intervention.
-
-Low Threat / Low Risk
-
-Burglary of an unoccupied home. Low probability for any given home, limited impact.
-
-High Threat / Low Risk
-
-High-probability events with minimal destructive impact. Procedural deterrence is the standard response.
+<ThreatRiskMatrix />
 
 Separating attackers into affective and instrumental types lets the linguistic signals in a discovered pre-attack communication speak to what kind of attack is more likely, instead of waiting on the event itself to disclose its character.
 
@@ -61,23 +46,18 @@ Separating attackers into affective and instrumental types lets the linguistic s
 
 ## Language as Psychological Evidence
 
-Methodology
-
 The methodological premise rests on a finding that as many as 67% of perpetrators of mass violence create meaningful pre-attack communications (Hempel, Meloy, & Richards, 1999; Meloy, Hempel, Mohandie, Shiva, & Gray, 2001; Langman, 2013; Silver, Horgan, & Gill, 2018); most perpetrators do not survive their attack, but the communications do, and computer-mediated linguistic analysis on those communications is the one route I could find to a standardized, posthumous psychological characterization of this population, which is the field's central methodological constraint.
 
 I also set aside the FBI's definition of mass murder, four or more killed without significant cooling-off period, because that definition embeds a success component that lives outside the perpetrator's psychology. Geddy Kramer, who at a FedEx facility in 2014 fired on six coworkers but killed only himself, was prepared and committed to a mass attack; his victims survived because of emergency response speed, hospital proximity, and his own choice of less-lethal ammunition, and the FBI definition excludes him on those grounds. The definition used here, "any perpetrator who presents as prepared and motivated to murder four or more individuals, with insubstantial time passing between violent acts," includes him, and treats lack of success as a typology factor instead of a disqualifier.
 
-100 pre-attack communications were collected from individuals who carried out or attempted mass violence between 1966 and 2019. Sources included SchoolShooters.info (curated by Peter Langman), the Stanford Mass Shootings of America database, the Mother Jones US mass shootings dataset, and the Gun Violence Archive. LIWC2015 (Pennebaker, Booth, Boyd, & Francis, 2015) generated standardized percentile scores along four summary variables (Analytic, Clout, Authentic, and Tone), and K-means clustering and binary logistic regression handled the small-sample, mixed-variable structure.
+100 pre-attack communications were collected from individuals who carried out or attempted mass violence between 1966 and 2019. Sources included SchoolShooters.info (curated by Peter Langman), the Stanford Mass Shootings of America database, the Mother Jones US mass shootings dataset, and the Gun Violence Archive. LIWC2015 (Pennebaker, Booth, Boyd, & Francis, 2015) generated standardized scores along four summary variables (Analytic, Clout, Authentic, and Tone), and K-means clustering and binary logistic regression handled the small-sample, mixed-variable structure.
 
-0Communications Analyzed
-
-0Affective Type
-
-0Instrumental Type
-
-0.00McFadden R²
-
-LIWC2015 Summary Variables
+<StatRow items={[
+  { value: "100", label: "Communications analyzed" },
+  { value: "53", label: "Affective type" },
+  { value: "47", label: "Instrumental type" },
+  { value: "0.24", label: "McFadden R² (refined model)" },
+]} />
 
 | Variable | High Score | Low Score |
 | --- | --- | --- |
@@ -92,38 +72,11 @@ LIWC2015 Summary Variables
 
 ## A Detectable Divide
 
-Cluster Analysis
+K-means cluster analysis of the four LIWC summary variables produced two groups. A linear discriminant analysis on the same four variables classified all 100 cases into their K-means cluster under cross-validation, with Analytic (r = .64), Clout (r = .88), and Authentic (r = -.80) carrying the strongest contributions to separation and Tone (r = .48) a moderate one; because the discriminant analysis reads the variables that formed the clusters, that agreement confirms the partition is clean, not that the two types are validated against anything outside it, which is the job of the attack-outcome tests that follow.
 
-K-means cluster analysis of the four LIWC summary variables produced two groups with no fuzzy boundary between them; linear discriminant analysis correctly classified 100% of the 100 cases under cross-validation, with Analytic (r = .64), Clout (r = .88), and Authentic (r = -.80) carrying the strongest contributions to component separation and Tone (r = .48) carrying a moderate one.
+Cluster 1, the **Affective Type** (n = 53), shows the lower Analytic, lower Clout, lower Tone, and higher Authentic profile; their writing reads personal, present-tense, narrative, tentative, often saturated with hostility and despair. Cluster 2, the **Instrumental Type** (n = 47), shows the inverse profile, higher Analytic, higher Clout, higher Tone, lower Authentic; their writing reads formal, logical, hierarchical, confident, guarded, closer to ideological treatise than to personal grievance. The split aligns with the theoretical distinction in the violence literature between emotionally driven and goal-driven offending (Dodge, 1991; Glenn & Raine, 2009; McEllistrem, 2004; Meloy, 1988), and applies it within the mass-murder population.
 
-Cluster 1, the **Affective Type** (n = 53), shows the lower Analytic, lower Clout, lower Tone, and higher Authentic profile; their writing reads personal, present-tense, narrative, tentative, often saturated with hostility and despair. Cluster 2, the **Instrumental Type** (n = 47), shows the inverse profile, higher Analytic, higher Clout, higher Tone, lower Authentic; their writing reads formal, logical, hierarchical, confident, guarded, closer to ideological treatise than to personal grievance. The split aligns with the theoretical distinction in the violence literature between emotionally-driven and goal-driven offending (Dodge, 1991; Glenn & Raine, 2009; McEllistrem, 2004; Meloy, 1988), and applies it within the mass-murder population for the first time.
-
-Relative Profile
-Absolute Scale
-
-Analytic
-
-Tone
-
-Clout
-
-Authentic
-
-Affective Type (n=53)
-
-Instrumental Type (n=47)
-
-Analytic
-
-Tone
-
-Clout
-
-Authentic
-
-Affective (LIWC percentile)
-
-Instrumental (LIWC percentile)
+<ClusterProfile />
 
 </Band>
 
@@ -131,61 +84,27 @@ Instrumental (LIWC percentile)
 
 ## Formulating the Six Hypotheses
 
-Behavioral Predictions
+Six hypotheses mapped the linguistic clusters onto physical attack outcomes, each one asking whether the language in a pre-attack communication relates to how the event unfolds.
 
-Six hypotheses mapped the linguistic clusters onto physical attack outcomes, each one asking whether the language in a pre-attack communication predicts how the event unfolds.
+- **H1.** The text will cluster into two distinct behavioral typologies. *Supported* (K-means, two clusters).
+- **H2.** Cluster membership relates to the number of victims killed. *Supported;* Instrumental attackers killed more victims (Mann-Whitney U = 908, z = -2.35, p = .019).
+- **H3.** Membership relates to whether an attacker struck a location with a personal connection. *Supported;* Affective attackers had 2.7 times the odds of striking a connected location such as a school or workplace (Fisher's exact, OR = 0.37 inverted, p = .032).
+- **H4.** Membership relates to whether specific people or types of people were targeted, versus victims at random. *Not supported* (Fisher's exact, OR = 2.09, p = .075).
+- **H5.** Membership relates to how the attack ends. *Supported;* Affective attackers had 7.65 times the odds of ending the attack by suicide or apprehension instead of being killed by another person (Fisher's exact, p = .006).
+- **H6.** A logistic regression can relate cluster membership to lethality, targeting, location, and how the attack ends. *Supported;* see the next section.
 
-H1
+<Figure src="/assets/doctoral-dissertation/fig_2.svg" alt="Odds-ratio gauge showing OR 7.65 for how the attack ends. The arc is a relative visual indicator, not a calibrated scale." caption="H5, how the attack ends (OR 7.65, p = .006). Affective attackers had 7.65 times the odds of ending the attack by suicide or apprehension instead of being killed by another person. The arc is a relative visual indicator, not a calibrated scale." />
 
-The text will naturally cluster into two distinct behavioral typologies. (Confirmed via K-means analysis).
-
-H2
-
-The cluster an attacker belongs to will predict the number of victims killed. (True; Instrumental attackers are more lethal. Mann-Whitney U, p = .019).
-
-H3
-
-Membership predicts whether an attacker will target a location they have a personal connection to. (True; Affective attackers are 270% more likely to strike schools or workplaces they know. Fisher's exact, p = .032).
-
-H4
-
-The cluster will dictate whether specific victim demographics are targeted. (True; systematic demographic targeting correlates almost exclusively with the Instrumental group).
-
-H5
-
-The cluster predicts how the attack ends. (True; Affective attackers are substantially more likely to end the attack via suicide or apprehension. Fisher's exact, p = .006).
-
-H6
-
-We can build a unified logistical regression model correlating text clusters with physical lethality, targeting, location, and termination states.
-
-Key Odds Ratios
-Test Statistics
-
-Perpetrator Suicide or Apprehension
-
-<Figure src="/assets/doctoral-dissertation/fig_2.svg" alt="Odds-ratio gauge for the Perpetrator Killed predictor, showing OR 7.65. The arc is a relative visual indicator, not a calibrated scale." caption="Perpetrator Killed (OR 7.65, p = .006), the strongest single behavioral predictor of Affective type membership. Affective attackers are more than seven times as likely to be killed during or at the conclusion of the attack. The arc is a relative visual indicator, not a calibrated scale." />
-
-p = .006  ·  Affective vs Instrumental
-
-SCALE 0 TO 10
-
-Personal Connection to Attack Location
-
-<Figure src="/assets/doctoral-dissertation/fig_3.svg" alt="Odds-ratio gauge for the Personal Connection to Attack Location predictor, showing OR 2.7 (inverse of 0.37). The arc is a relative visual indicator, not a calibrated scale." caption="Personal Connection to Attack Location (OR 2.7 inverse, p = .032). Affective attackers are approximately 2.7 times more likely than Instrumental attackers to strike a location (such as a school or workplace) with which they have a personal history. The arc is a relative visual indicator, not a calibrated scale." />
-
-p = .032  ·  Affective vs Instrumental
-
-SCALE 0 TO 10
+<Figure src="/assets/doctoral-dissertation/fig_3.svg" alt="Odds-ratio gauge showing OR 2.7 (inverse of 0.37) for personal connection to the attack location. The arc is a relative visual indicator, not a calibrated scale." caption="H3, personal connection to the attack location (OR 0.37, inverted 2.7, p = .032). Affective attackers had 2.7 times the odds of striking a location, such as a school or workplace, with which they had a personal history. The arc is a relative visual indicator, not a calibrated scale." />
 
 | Hypothesis | Test | Statistic | Result |
 | --- | --- | --- | --- |
-| H2, Victims Killed | Mann-Whitney U | U=908, z=-2.35 | p = .019 |
-| H3, Location Connection | Fisher's Exact | OR = 0.37 (inv = 2.7) | p = .032 |
-| H4, Initial Targeting | Fisher's Exact | OR = 2.09 | p = .075 (n.s.) |
-| H5, Perpetrator Killed | Fisher's Exact | OR = 7.65 | p = .006 |
+| H2, Victims killed | Mann-Whitney U | U = 908, z = -2.35 | p = .019 |
+| H3, Location connection | Fisher's exact | OR = 0.37 (inv. 2.7) | p = .032 |
+| H4, Targeting | Fisher's exact | OR = 2.09 | p = .075 (n.s.) |
+| H5, How the attack ends | Fisher's exact | OR = 7.65 | p = .006 |
 
-AFFECTIVE TYPE (N=53) VS INSTRUMENTAL TYPE (N=47)  ·  ALPHA = .05
+Affective type (n = 53) versus Instrumental type (n = 47); alpha = .05, with no correction across the four tests. At a Bonferroni threshold of .0125 (.05 / 4), only H5 holds.
 
 </Band>
 
@@ -193,32 +112,9 @@ AFFECTIVE TYPE (N=53) VS INSTRUMENTAL TYPE (N=47)  ·  ALPHA = .05
 
 ## Predictive Signal Matrix
 
-Logistic Regression
+The first binary logistic regression used the raw hypothesis variables (victims killed, connection, targeting, perpetrator killed) and was significant (χ²(4) = 30.58, p &lt; .001, McFadden R² = 0.22), though targeting and connection were too coarse to do their work. Targeting was coded as yes/no without distinguishing between specific-individual targeting and demographic targeting; connection was coded without distinguishing between the perpetrator's home and a less intimate site like their school or workplace. A second iteration refined both, so that targeting became *demographic-based* targeting specifically, and connection became *perpetrator's home among the attack locations* specifically. The refined model improved fit to McFadden R² = 0.24 (χ²(4) = 32.52, p &lt; .001), and each of the four predictors is significant when controlling for the others. Three of them raise the odds of the Instrumental type; only a home among the attack locations points toward the Affective type.
 
-The first binary logistic regression used the raw H1-H5 predictors (lethality, connection, targeting, perpetrator killed) and was significant (χ²(4) = 30.58, p &lt; .001, McFadden R² = 0.22), though targeting and connection were too coarse to do their work. Targeting was coded as yes/no without distinguishing between specific-individual targeting and demographic targeting; connection was coded without distinguishing between the perpetrator's home and a less intimate site like their school or workplace. A second iteration refined both, so that targeting became *demographic-based* targeting specifically, and connection became *perpetrator's home among the attack locations* specifically. The refined model improved fit to McFadden R² = 0.24 (χ²(4) = 32.52, p &lt; .001) and produced the odds ratios below; each of the four predictors holds up as significant when controlling for the others.
-
-Odds Ratio
-% Change in Odds
-
-Perpetrator KilledOR 14.11
-
-Home as Attack LocationOR 5.0 inv.
-
-Demographic TargetingOR 4.83
-
-Per Victim KilledOR 1.14
-
-RUST = PREDICTS AFFECTIVE TYPE  ·  GLACIAL = PREDICTS INSTRUMENTAL TYPE
-
-Perpetrator Killed+1,311%
-
-Home as Attack Location+400%
-
-Demographic Targeting+383%
-
-Per Victim Killed+14%
-
-CHI-SQUARED(4) = 32.52  ·  P &lt; .001  ·  McFADDEN R² = 0.24
+<OddsBars />
 
 </Band>
 
@@ -226,59 +122,9 @@ CHI-SQUARED(4) = 32.52  ·  P &lt; .001  ·  McFADDEN R² = 0.24
 
 ## Operational Manifestations
 
-Type Exemplars
-
 Matthew Murray and Anders Breivik sit at opposite poles of the two clusters. Murray's pre-attack writings represent the limit of the Affective Type, highly personal, emotionally raw, focused on his own perceived mistreatment; Breivik's 1,500-page manifesto is the Instrumental limit, carrying no personal emotional disclosure, structured as a political treatise with chapter headings and citation conventions.
 
-Affective Type
-
-Matthew Murray
-
-Arvada and Colorado Springs, 2007. Four killed, five injured. Murray attacked locations where he had personal history. His communications were saturated with first-person emotionality, immediate grievances, and a stated indifference to his own survival.
-
-LIWC Profile
-Attack Outcomes
-
-Analytic18.81
-
-Tone1.00
-
-Clout46.47
-
-Authentic89.35
-
-Victims Killed4
-
-Victims Injured5
-
-Location ConnectionYes
-
-Attack ConclusionSuicide
-
-Instrumental Type
-
-Anders Breivik
-
-Utoya Island and Oslo, 2011. Seventy-seven killed, 319 injured. Breivik generated a 1,500-page manifesto reading as a calculated scholarly treatise. It is structured entirely around rigid ideological argument with no personal grievance. He was ultimately apprehended alive.
-
-LIWC Profile
-Attack Outcomes
-
-Analytic83.47
-
-Tone23.40
-
-Clout67.32
-
-Authentic26.71
-
-Victims Killed77
-
-Victims Injured319
-
-Location ConnectionNo
-
-Attack ConclusionApprehended
+<ExemplarProfiles />
 
 </Band>
 
@@ -286,15 +132,11 @@ Attack ConclusionApprehended
 
 ## Threat Management Efficacy
 
-Practical Constraints
-
 The intended use of this typology is narrow; it does not predict whether an attack will occur, only what kind of attack is more likely, conditional on a pre-attack communication being discovered and submitted for analysis. The work belongs to risk management, the impact side of the threat-assessment equation, not to threat detection, the probability side.
 
-Institutional Implementation Scenario
+Consider a university threat assessment team presented with what appears to be a pre-attack communication composed by a student. Running the text through the LIWC summary variables and applying the cluster model classifies the author as Affective; the team then knows the author is more likely to attack a location with personal connection (potentially the campus itself), more likely to end the attack by suicide or apprehension, and likely to be in an acute emotional state, so the response can shift accordingly, toward target hardening of the connected location and mental-health-led de-escalation instead of a counter-terror posture.
 
-Consider a university threat assessment team presented with what appears to be a pre-attack communication composed by a student. Running the text through the LIWC summary variables and applying the cluster model classifies the author as Affective; the team then knows the author is more likely to attack a location with personal connection (potentially the campus itself), more likely to commit suicide at the conclusion, and likely to be in an acute emotional state, so the response can shift accordingly, toward target hardening of the connected location and mental-health-led de-escalation instead of a counter-terror posture.
-
-The same model applied to an Instrumental classification points elsewhere, toward lower likelihood of personal connection to attack location, higher likelihood of demographic-based targeting, and substantially higher likelihood that the attack continues until the perpetrator is apprehended or killed by another person; the two response postures call for different resources, different personnel, and different timelines.
+The same model applied to an Instrumental classification points elsewhere, toward lower likelihood of a personal connection to the attack location, more victims killed, demographic-based targeting, and an attack more likely to end with the perpetrator killed by another person; the two response postures call for different resources, different personnel, and different timelines.
 
 </Band>
 
@@ -302,6 +144,10 @@ The same model applied to an Instrumental classification points elsewhere, towar
 
 ## Limitations
 
-n = 100 is small for a field with low base rates, and power analysis suggests significance may be underestimated for small and moderate effects. Stephen Paddock (Las Vegas, 2017) and other perpetrators who left no pre-attack communications are necessarily excluded, since the method has nothing to read where there is no communication. The within-sample classification accuracy of 100% is a property of the sample, not a claim about the world, so out-of-sample validation on new pre-attack communications is the next step worth taking; earlier work on increased communicated power drives in mass-murder manifestos (Leffew, 2017) was the seed for this dissertation's variable selection. The language an attacker leaves behind, weighed this way, sorts cleanly into two types that predict how the attack itself unfolds.
+n = 100 is small for a field with low base rates, and power analysis suggests significance may be underestimated for small and moderate effects. Stephen Paddock (Las Vegas, 2017) and other perpetrators who left no pre-attack communications are necessarily excluded, since the method has nothing to read where there is no communication.
+
+The 100% discriminant classification is a property of the sample and of the method; the discriminant analysis reads the same four variables that formed the clusters, so it confirms that the partition is clean, not that the two types generalize. The attack-outcome tests are the external check, and they were run on the same 100 cases, as was the regression, whose second iteration refined two predictor codings after the first model was fit; both models are reported. The hypothesis tests carry no correction for multiple comparisons, and H4 did not reach significance. Out-of-sample validation on new pre-attack communications is the next step worth taking; earlier work on increased communicated power drives in mass-murder manifestos (Leffew, 2017) was the seed for this dissertation's variable selection.
+
+Within those limits, the language an attacker leaves behind sorts into two types whose attacks unfold differently in lethality, location, and how they end.
 
 </Band>

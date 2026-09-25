@@ -1,0 +1,38 @@
+---
+// Threat (probability) by risk (impact) 2x2, the frame the dissertation works
+// inside: it addresses the risk axis only. Static markup; reads on paper and
+// dark bands through currentColor.
+const cells = [
+  { title: "Low threat / high risk", desc: "A school shooting in the abstract; dire consequences for any one school, but a low base rate.", col: 1, row: 1 },
+  { title: "High threat / high risk", desc: "An armed individual with credible communicated intent at an accessible location; usually calls for immediate tactical intervention.", col: 2, row: 1, hot: true },
+  { title: "Low threat / low risk", desc: "Burglary of an unoccupied home; low probability for any given home, limited impact.", col: 1, row: 2 },
+  { title: "High threat / low risk", desc: "High-probability events with minimal destructive impact; procedural deterrence is the standard response.", col: 2, row: 2 },
+];
+---
+<figure class="trm" aria-label="Threat by risk matrix">
+  <div class="trm-y">Risk (impact of event) &uarr;</div>
+  <div class="trm-grid">
+    {cells.map((c) => (
+      <div class:list={["trm-cell", { hot: c.hot }]} style={`grid-column:${c.col};grid-row:${c.row};`}>
+        <div class="trm-title">{c.title}</div>
+        <div class="trm-desc">{c.desc}</div>
+      </div>
+    ))}
+  </div>
+  <div class="trm-x">Threat (probability of event) &rarr;</div>
+</figure>
+
+<style>
+  .trm { margin: 2rem 0; display: grid; grid-template-columns: auto 1fr; grid-template-rows: 1fr auto; gap: .5rem .75rem; }
+  .trm-y { grid-column: 1; grid-row: 1; writing-mode: vertical-rl; transform: rotate(180deg); text-align: center;
+    font-family: var(--font-mono); font-size: var(--fs-label); letter-spacing: var(--tracking-caps); text-transform: uppercase; opacity: .6; }
+  .trm-x { grid-column: 2; grid-row: 2; text-align: center;
+    font-family: var(--font-mono); font-size: var(--fs-label); letter-spacing: var(--tracking-caps); text-transform: uppercase; opacity: .6; }
+  .trm-grid { grid-column: 2; grid-row: 1; display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+  .trm-cell { border: 1px solid color-mix(in srgb, currentColor 22%, transparent); border-radius: var(--radius-sm); padding: 1rem 1.1rem; }
+  .trm-cell.hot { border-color: #7A1626; box-shadow: inset 3px 0 0 #7A1626; }
+  .trm-title { font-family: var(--font-mono); font-size: var(--fs-label); letter-spacing: var(--tracking-caps); text-transform: uppercase; margin-bottom: .5rem; }
+  .trm-cell.hot .trm-title { color: #B8384B; }
+  .trm-desc { font-size: var(--fs-body-sm); line-height: 1.6; opacity: .85; }
+  @media (max-width: 640px) { .trm-grid { grid-template-columns: 1fr; } .trm-cell { grid-column: 1 !important; grid-row: auto !important; } }
+</style>

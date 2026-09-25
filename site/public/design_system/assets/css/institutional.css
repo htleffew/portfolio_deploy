@@ -122,6 +122,10 @@ section.band:has(> .col-wide.markdown-body){ padding-top:0.75rem; padding-bottom
   display:flex; flex-direction:column; justify-content:center;
   position:relative; overflow:hidden;
 }
+/* The top nav is fixed and wraps to two rows below ~900px (60-77px tall), while
+   --space-section-md bottoms out at 48px, so the meta row slid under the nav on
+   phones. Keep the front band's top padding clear of the nav at every width. */
+.front { padding-top:max(var(--space-section-md), 7rem); }
 .front .col-wide { position:relative; z-index:2; }
 .front .meta-row { font-family:var(--mono); font-size:0.6875rem; letter-spacing:0.30em; text-transform:uppercase; color:var(--tungsten); margin-bottom:var(--space-7); display:flex; gap:1.125rem; align-items:center; flex-wrap:wrap; }
 .front .meta-row .sep { opacity:0.4; }

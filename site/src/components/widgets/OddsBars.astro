@@ -1,0 +1,42 @@
+---
+// Refined binary logistic regression predicting cluster membership
+// (dissertation Table 17; chi2(4) = 32.52, p < .001, McFadden R2 = 0.24).
+// Direction is the cluster a predictor raises the odds of: three predict the
+// Instrumental type; a home among the attack locations predicts Affective
+// (OR 0.20, inverted to 5.0). Bar length is log-scaled so 1.14 and 14.11 both
+// read.
+const rows = [
+  { label: "Perpetrator killed by another person", or: 14.11, shown: "OR 14.11", pct: "+1,311%", p: "p = .003", dir: "ins" },
+  { label: "Perpetrator's home among attack locations", or: 5.0, shown: "OR 0.20 (inv. 5.0)", pct: "+400%", p: "p = .022", dir: "aff" },
+  { label: "Demographic-based targeting", or: 4.83, shown: "OR 4.83", pct: "+383%", p: "p = .008", dir: "ins" },
+  { label: "Each additional victim killed", or: 1.14, shown: "OR 1.14", pct: "+14%", p: "p < .001", dir: "ins" },
+];
+const max = Math.log(14.11);
+---
+<figure class="ob" aria-label="Logistic regression odds ratios by predictor">
+  {rows.map((r) => (
+    <div class="ob-row">
+      <div class="ob-label">{r.label}</div>
+      <div class="ob-track"><span class:list={["ob-fill", r.dir]} style={`width:${Math.max(4, (Math.log(r.or) / max) * 100).toFixed(1)}%`}></span></div>
+      <div class="ob-val">{r.shown}<small>{r.pct} odds &middot; {r.p}</small></div>
+    </div>
+  ))}
+  <div class="ob-legend"><span class="sw ins"></span>Raises the odds of the Instrumental type <span class="sw aff"></span>Raises the odds of the Affective type</div>
+  <figcaption>Refined model, all four predictors entered together: &chi;&sup2;(4) = 32.52, p &lt; .001, McFadden R&sup2; = 0.24. Bar length is log-scaled. The model is fit to the same 100 cases that defined the clusters, so these are associations within the sample, not out-of-sample predictions.</figcaption>
+</figure>
+
+<style>
+  .ob { margin: 2rem 0; }
+  .ob-row { display: grid; grid-template-columns: minmax(9rem, 16rem) 1fr 11rem; gap: .9rem; align-items: center; margin: .6rem 0; }
+  .ob-label { font-size: var(--fs-body-sm); line-height: 1.4; }
+  .ob-track { height: .8rem; background: color-mix(in srgb, currentColor 10%, transparent); border-radius: 2px; overflow: hidden; }
+  .ob-fill { display: block; height: 100%; }
+  .ob-fill.ins, .sw.ins { background: #A67C00; }
+  .ob-fill.aff, .sw.aff { background: #3866A0; }
+  .ob-val { font-family: var(--font-mono); font-size: var(--fs-label); }
+  .ob-val small { display: block; opacity: .65; font-size: var(--fs-caption); margin-top: .2rem; }
+  .ob-legend { margin-top: 1rem; font-family: var(--font-mono); font-size: var(--fs-caption); letter-spacing: .06em; text-transform: uppercase; opacity: .8; display: flex; flex-wrap: wrap; gap: .4rem 1rem; align-items: center; }
+  .sw { display: inline-block; width: .8rem; height: .8rem; border-radius: 2px; margin-right: .35rem; vertical-align: middle; }
+  .ob figcaption { margin-top: 1rem; font-size: var(--fs-body-sm); line-height: 1.6; opacity: .8; }
+  @media (max-width: 640px) { .ob-row { grid-template-columns: 1fr; gap: .3rem; } }
+</style>

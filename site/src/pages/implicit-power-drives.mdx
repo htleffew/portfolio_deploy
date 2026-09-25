@@ -20,7 +20,7 @@ import ApaReferences from '../components/ApaReferences.astro';
 
 ## Abstract
 
-Twenty-three manifestos written by perpetrators of autogenic massacre, scored with Linguistic Inquiry and Word Count 2015 on a single dimension, implicit power language. The manifesto mean of 3.00 was tested against three published LIWC baseline rates, personal blogs, expressive writing, and a multi-source composite. Independent samples t-tests returned t = 3.47, p &lt; .001 vs blogs; t = 3.66, p &lt; .001 vs expressive writing; t = 2.43, p = .02 vs the composite, with df = 22 on each. The elevation held across all three comparison genres. Presented at Fielding Graduate University in 2017 as an exploratory study with the explicit aim of directing future research rather than generating a predictive model.
+Twenty-three manifestos written by perpetrators of autogenic massacre, scored with Linguistic Inquiry and Word Count 2015 on a single dimension, implicit power language. The manifesto mean of 3.00 was tested against three published LIWC baseline rates, personal blogs, expressive writing, and a multi-source composite. One-sample t-tests against each published value returned t(22) = 3.47, p = .002 vs blogs; t(22) = 3.66, p = .001 vs expressive writing; and t(22) = 2.43, p = .024 vs the composite. The elevation held across all three comparison genres, though only the first two survive a correction for the three comparisons. Presented at Fielding Graduate University in 2017 as an exploratory study with the explicit aim of directing future research rather than generating a predictive model.
 
 </Band>
 
@@ -40,7 +40,7 @@ Mohandie (2013) proposes four categories of violent offenders within this broade
 
 Each manifesto was processed through LIWC2015, which assigns a normalized percent-of-words score on roughly ninety psychometric categories, and the analysis used a single one of those categories, the power dimension. The score for each document is the percent of its words that map to the LIWC power dictionary; the corpus mean came out at 3.00, with a standard deviation of 1.28 and a standard error of 0.268.
 
-Comparison was not against a separately scraped corpus. Pennebaker and colleagues publish LIWC2015 baseline rates for several large reference genres, and three of those published baselines anchored the comparison, personal blogs (M = 2.07), expressive writing (M = 2.02), and a multi-source composite of blogs, expressive writing, natural speech, novels, newspaper text, and Twitter postings (M = 2.35). Each one served as a fixed test value in an independent samples t-test against the manifesto sample, with df = 22 in every case.
+Comparison was not against a separately scraped corpus. Pennebaker and colleagues publish LIWC2015 baseline rates for several large reference genres, and three of those published baselines anchored the comparison, personal blogs (M = 2.07), expressive writing (M = 2.02), and a multi-source composite of blogs, expressive writing, natural speech, novels, newspaper text, and Twitter postings (M = 2.35). Each one served as a fixed test value in a one-sample t-test of the manifesto mean, with df = 22 in every case. A published norm carries no variance of its own and is not matched to these documents on length or genre, so the comparison describes how far the manifestos sit from typical writing; it is not a controlled contrast between two samples.
 
 </Band>
 
@@ -48,15 +48,15 @@ Comparison was not against a separately scraped corpus. Pennebaker and colleague
 
 ## Results
 
-All three comparisons reached significance. The manifesto mean of 3.00 exceeded the published baselines by margins ranging from 0.65 to 0.98 percentage points on a dimension where typical values across genres cluster around 2; the two largest gaps, versus blogs and expressive writing, cleared p &lt; .001, and the narrower gap, against the multi-source composite, still cleared p = .02. The 95% confidence intervals for the mean difference did not include zero in any of the three tests.
+All three comparisons reached significance. The manifesto mean of 3.00 exceeded the published baselines by margins ranging from 0.65 to 0.98 percentage points on a dimension where typical values across genres cluster around 2; the two largest gaps, versus blogs and expressive writing, reached p = .002 and p = .001, and the narrower gap, against the multi-source composite, reached p = .024. The 95% confidence intervals for the mean difference did not include zero in any of the three tests; with a Bonferroni correction for the three comparisons, the composite result (adjusted p = .07) no longer clears .05, while the other two do.
 
-<Figure src="/assets/implicit-power-drives/fig_2.svg" alt="Bar chart comparing mean LIWC power scores: Expressive Writing 2.02, Blogs 2.07, Multi-source Composite 2.35, and Manifestos 3.00. The manifesto bar is highlighted and scored significantly higher than all three baselines." caption="Mean LIWC Power Score by Source. The manifesto corpus (M = 3.00) exceeded all three published LIWC baseline rates, expressive writing (M = 2.02, t = 3.66, p &lt; .001), personal blogs (M = 2.07, t = 3.47, p &lt; .001), and the multi-source composite (M = 2.35, t = 2.43, p = .02). All tests df = 22. Asterisks denote significance level (*** p &lt; .001, * p &lt; .05)." />
+<Figure src="/assets/implicit-power-drives/fig_2.svg" alt="Bar chart comparing mean LIWC power scores: Expressive Writing 2.02, Blogs 2.07, Multi-source Composite 2.35, and Manifestos 3.00. The manifesto bar is highlighted and scored significantly higher than all three baselines." caption="Mean LIWC Power Score by Source. The manifesto corpus (M = 3.00) exceeded all three published LIWC baseline rates, expressive writing (M = 2.02, t = 3.66, p = .001), personal blogs (M = 2.07, t = 3.47, p = .002), and the multi-source composite (M = 2.35, t = 2.43, p = .024). One-sample t-tests, df = 22. Asterisks denote significance level (** p &lt; .01, * p &lt; .05), uncorrected." />
 
 | Comparison | Test value | Mean diff | 95% CI | t (df=22) | p |
 | --- | --- | --- | --- | --- | --- |
-| vs Blogs | 2.07 | +0.93 | [0.37, 1.48] | 3.47 | &lt; .001 |
-| vs Expressive writing | 2.02 | +0.98 | [0.42, 1.53] | 3.66 | &lt; .001 |
-| vs Multi-source composite | 2.35 | +0.65 | [0.09, 1.20] | 2.43 | = .02 |
+| vs Blogs | 2.07 | +0.93 | [0.37, 1.48] | 3.47 | .002 |
+| vs Expressive writing | 2.02 | +0.98 | [0.42, 1.53] | 3.66 | .001 |
+| vs Multi-source composite | 2.35 | +0.65 | [0.09, 1.20] | 2.43 | .024 |
 
 </Band>
 

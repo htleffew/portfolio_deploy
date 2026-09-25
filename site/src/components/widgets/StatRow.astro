@@ -1,0 +1,21 @@
+---
+// A row of headline figures. Values are printed as-is (no count-up), so the
+// page never shows a placeholder zero before a script runs.
+export interface Props { items: { value: string; label: string }[] }
+const { items = [] } = Astro.props;
+---
+<div class="stat-row">
+  {items.map((s) => (
+    <div class="stat">
+      <span class="stat-value">{s.value}</span>
+      <span class="stat-label">{s.label}</span>
+    </div>
+  ))}
+</div>
+
+<style>
+  .stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: .75rem; margin: 2rem 0; }
+  .stat { border: 1px solid color-mix(in srgb, currentColor 22%, transparent); border-radius: var(--radius-sm); padding: 1rem 1.1rem; }
+  .stat-value { display: block; font-family: var(--font-display); font-size: 2rem; line-height: 1.1; }
+  .stat-label { display: block; margin-top: .4rem; font-family: var(--font-mono); font-size: var(--fs-caption); letter-spacing: var(--tracking-caps); text-transform: uppercase; opacity: .7; }
+</style>

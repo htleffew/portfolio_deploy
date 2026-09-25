@@ -1,0 +1,46 @@
+---
+// Mean LIWC2015 summary scores for the two K-means clusters, mirrored on one
+// 0-100 scale. Values are the dissertation's Table 1 (M and SD of the
+// standardized scores; Affective n = 53, Instrumental n = 47).
+const rows = [
+  { dim: "Analytic",  a: 33.22, aSd: 19.00, i: 59.29, iSd: 22.09 },
+  { dim: "Tone",      a: 15.74, aSd: 14.95, i: 33.62, iSd: 24.84 },
+  { dim: "Clout",     a: 33.35, aSd: 15.55, i: 68.25, iSd: 15.93 },
+  { dim: "Authentic", a: 73.88, aSd: 17.49, i: 38.52, iSd: 21.35 },
+];
+---
+<figure class="cp" aria-label="Mean LIWC summary scores by cluster">
+  <div class="cp-head"><span class="aff">Affective type (n = 53)</span><span></span><span class="ins">Instrumental type (n = 47)</span></div>
+  {rows.map((r) => (
+    <div class="cp-row">
+      <div class="cp-side left">
+        <span class="cp-val">{r.a.toFixed(1)} <small>(SD {r.aSd.toFixed(1)})</small></span>
+        <span class="cp-bar aff-bar" style={`width:${r.a}%`}></span>
+      </div>
+      <div class="cp-dim">{r.dim}</div>
+      <div class="cp-side right">
+        <span class="cp-bar ins-bar" style={`width:${r.i}%`}></span>
+        <span class="cp-val">{r.i.toFixed(1)} <small>(SD {r.iSd.toFixed(1)})</small></span>
+      </div>
+    </div>
+  ))}
+  <figcaption>Mean LIWC2015 summary score by cluster, bars on a common 0 to 100 scale (dissertation Table 1). The within-cluster SDs are large, so individual communications overlap even where the cluster means differ.</figcaption>
+</figure>
+
+<style>
+  .cp { margin: 2rem 0; }
+  .cp-head { display: grid; grid-template-columns: 1fr 7rem 1fr; font-family: var(--font-mono); font-size: var(--fs-caption); letter-spacing: var(--tracking-caps); text-transform: uppercase; margin-bottom: .75rem; }
+  .cp-head .aff { text-align: right; color: #3866A0; }
+  .cp-head .ins { color: #A67C00; }
+  .cp-row { display: grid; grid-template-columns: 1fr 7rem 1fr; align-items: center; margin: .45rem 0; }
+  .cp-side { display: flex; align-items: center; gap: .5rem; }
+  .cp-side.left { justify-content: flex-end; }
+  .cp-bar { display: block; height: .9rem; border-radius: 2px; max-width: calc(100% - 7rem); }
+  .aff-bar { background: #3866A0; }
+  .ins-bar { background: #A67C00; }
+  .cp-dim { text-align: center; font-family: var(--font-mono); font-size: var(--fs-label); letter-spacing: var(--tracking-caps); text-transform: uppercase; }
+  .cp-val { font-family: var(--font-mono); font-size: var(--fs-label); white-space: nowrap; }
+  .cp-val small { opacity: .6; }
+  .cp figcaption { margin-top: 1rem; font-size: var(--fs-body-sm); line-height: 1.6; opacity: .8; }
+  @media (max-width: 640px) { .cp-row, .cp-head { grid-template-columns: 1fr 5rem 1fr; } .cp-val small { display: none; } .cp-bar { max-width: calc(100% - 3rem); } }
+</style>

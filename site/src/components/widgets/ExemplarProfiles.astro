@@ -1,0 +1,57 @@
+---
+// Two cases at opposite poles of the clusters: LIWC summary scores and
+// attack outcomes, side by side.
+const cases = [
+  { name: "Matthew Murray", type: "Affective type", cls: "aff", where: "Arvada and Colorado Springs, 2007",
+    liwc: [["Analytic", 18.81], ["Tone", 1.0], ["Clout", 46.47], ["Authentic", 89.35]],
+    outcomes: [["Victims killed", "4"], ["Victims injured", "5"], ["Personal connection to location", "Yes"], ["Attack ended in", "Suicide"]] },
+  { name: "Anders Breivik", type: "Instrumental type", cls: "ins", where: "Oslo and Utøya, 2011",
+    liwc: [["Analytic", 83.47], ["Tone", 23.4], ["Clout", 67.32], ["Authentic", 26.71]],
+    outcomes: [["Victims killed", "77"], ["Victims injured", "319"], ["Personal connection to location", "No"], ["Attack ended in", "Apprehension"]] },
+];
+---
+<div class="ex">
+  {cases.map((c) => (
+    <div class:list={["ex-card", c.cls]}>
+      <div class="ex-type">{c.type}</div>
+      <div class="ex-name">{c.name}</div>
+      <div class="ex-where">{c.where}</div>
+      <div class="ex-sub">LIWC2015 summary scores</div>
+      {c.liwc.map(([k, v]) => (
+        <div class="ex-row">
+          <span class="ex-k">{k}</span>
+          <span class="ex-track"><span class="ex-fill" style={`width:${v}%`}></span></span>
+          <span class="ex-v">{Number(v).toFixed(2)}</span>
+        </div>
+      ))}
+      <div class="ex-sub">Attack outcomes</div>
+      <dl class="ex-out">
+        {c.outcomes.map(([k, v]) => (<><dt>{k}</dt><dd>{v}</dd></>))}
+      </dl>
+    </div>
+  ))}
+</div>
+
+<style>
+  .ex { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 2rem 0; }
+  .ex-card { border: 1px solid color-mix(in srgb, currentColor 22%, transparent); border-radius: var(--radius-sm); padding: 1.1rem 1.2rem; }
+  .ex-card.aff { box-shadow: inset 3px 0 0 #3866A0; }
+  .ex-card.ins { box-shadow: inset 3px 0 0 #A67C00; }
+  .ex-type { font-family: var(--font-mono); font-size: var(--fs-caption); letter-spacing: var(--tracking-caps); text-transform: uppercase; }
+  .aff .ex-type { color: #3866A0; }
+  .ins .ex-type { color: #A67C00; }
+  .ex-name { font-family: var(--font-display); font-size: 1.35rem; margin-top: .3rem; }
+  .ex-where { font-size: var(--fs-body-sm); opacity: .7; margin-bottom: .6rem; }
+  .ex-sub { font-family: var(--font-mono); font-size: var(--fs-caption); letter-spacing: var(--tracking-caps); text-transform: uppercase; opacity: .6; margin: .9rem 0 .4rem; }
+  .ex-row { display: grid; grid-template-columns: 5.5rem 1fr 3.2rem; gap: .5rem; align-items: center; margin: .3rem 0; }
+  .ex-k, .ex-v { font-family: var(--font-mono); font-size: var(--fs-label); }
+  .ex-v { text-align: right; }
+  .ex-track { height: .6rem; background: color-mix(in srgb, currentColor 10%, transparent); border-radius: 2px; overflow: hidden; }
+  .ex-fill { display: block; height: 100%; }
+  .aff .ex-fill { background: #3866A0; }
+  .ins .ex-fill { background: #A67C00; }
+  .ex-out { display: grid; grid-template-columns: 1fr auto; gap: .3rem .75rem; margin: 0; font-size: var(--fs-body-sm); }
+  .ex-out dt { opacity: .75; }
+  .ex-out dd { margin: 0; font-family: var(--font-mono); font-size: var(--fs-label); text-align: right; }
+  @media (max-width: 760px) { .ex { grid-template-columns: 1fr; } }
+</style>
