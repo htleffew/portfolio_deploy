@@ -6,7 +6,6 @@ description: "A build walkthrough for the four-stage NLP pipeline behind the Lon
 category: "AI Evaluation & Safety"
 subcategory: "Methodology & Tooling"
 format: "ESSAY"
-time: "10 min read"
 author: "Dr. Heather Leffew"
 tags: ["NLP", "HDBSCAN", "Discourse Mining", "Behavioral Coding", "Methodology"]
 visual: ""
@@ -38,7 +37,7 @@ The pipeline answers a deliberately narrow question, which is the first thing wo
 
 ## Stage one, building the corpus.
 
-The corpus is the foundation, and every design choice you make while building it constrains what the later stages can possibly recover, so it pays to be deliberate here. I scraped the source posts from the Arctic Shift Reddit archive across three subreddits where the model's users congregate, then consolidated the separate exports into a single schema with a stitching script, so that posts, comments, and metadata all shared one row format. The window runs from August 1 to December 31, 2025, and it starts two months before the behavior's suspected onset on purpose; a pre-onset baseline has to live inside the dataset, because a frequency that looks elevated means nothing without a stretch of time from before the behavior appeared to compare it against. Filtering then proceeds in two passes. An iterative seed-term refinement keeps the posts carrying the lexical markers of the target behavior, growing an initial hand-built seed list by the terms that co-occur with it most consistently. A separate utility strips out the deleted and removed stubs, those empty shells Reddit leaves behind when content is taken down, which would otherwise inflate the post count while carrying no text at all. What you are left with is 26,158 rows, each one a unit the later stages can segment, score, and count.
+The corpus is the foundation, and every design choice you make while building it constrains what the later stages can possibly recover, so it pays to be deliberate here. I scraped the source posts from the Arctic Shift Reddit archive across four subreddits where the model's users congregate, then consolidated the separate exports into a single schema with a stitching script, so that posts, comments, and metadata all shared one row format. The window runs from August 1 to December 31, 2025, and it starts two months before the behavior's suspected onset on purpose; a pre-onset baseline has to live inside the dataset, because a frequency that looks elevated means nothing without a stretch of time from before the behavior appeared to compare it against. Filtering then proceeds in two passes. An iterative seed-term refinement keeps the posts carrying the lexical markers of the target behavior, growing an initial hand-built seed list by the terms that co-occur with it most consistently. A separate utility strips out the deleted and removed stubs, those empty shells Reddit leaves behind when content is taken down, which would otherwise inflate the post count while carrying no text at all. What you are left with is 26,158 rows, each one a unit the later stages can segment, score, and count.
 
 </Band>
 
@@ -78,7 +77,7 @@ The pipeline supports three kinds of claim, in increasing order of what each one
 
 Hubert, L., & Arabie, P. (1985). Comparing partitions. *Journal of Classification*, 2(1), 193-218.
 
-Leffew, H. (2026). Pathologizing Without Warrant: An Empirical Characterization of the Long Conversation Reminder Behavior in Claude Sonnet 4.5. *Preprint, HAIIQU*.
+Leffew, H. (2026). *Observing the Guardrail Paradox via Anthropic's Long Conversation Reminder* [Preprint manuscript, 46 pp.]. HAIIQU.
 
 McInnes, L., Healy, J., & Astels, S. (2017). hdbscan: Hierarchical density based clustering. *The Journal of Open Source Software*, 2(11), 205.
 

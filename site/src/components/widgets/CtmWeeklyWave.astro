@@ -1,0 +1,74 @@
+---
+// Weekly payment-error rate per 1,000 notes (monitor series) against the
+// fictional release dates in the synthetic stream. Data: weekly.json.
+import { loadCtm } from './ctmData.mjs';
+
+const d = loadCtm('weekly.json');
+const weeks = d.weeks;
+const W = 640, H = 300, L = 52, R = 14, T = 56, B = 40;
+const n = weeks.length;
+const step = (W - L - R) / n;
+const ymax = Math.ceil(Math.max(...weeks.map((w) => w.rate)) / 50) * 50;
+const y = (v) => T + (1 - v / ymax) * (H - T - B);
+const dayMs = 86400000;
+const t0 = new Date(weeks[0].week + 'T00:00:00Z').getTime();
+const xDate = (iso) => L + ((new Date(iso + 'T00:00:00Z').getTime() - t0) / (7 * dayMs)) * step;
+const ticks = [0, ymax / 2, ymax];
+const monthTicks = weeks.map((w, i) => ({ i, w })).filter(({ w }) => Number(w.week.slice(8, 10)) <= 7);
+const fmt = (iso) => new Date(iso + 'T00:00:00Z').toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
+const labelPos = [
+  { anchor: 'end', dx: -6, row: 0 },
+  { anchor: 'start', dx: 6, row: 0 },
+  { anchor: 'start', dx: 6, row: 1 },
+];
+---
+<figure class="ctm-ww" aria-label="Weekly payment-error rate against release dates">
+  <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Weekly payment-error notes per 1,000 notes, June 2023 to January 2024">
+    {ticks.map((v) => (
+      <g>
+        <line x1={L} x2={W - R} y1={y(v)} y2={y(v)} class="grid" />
+        <text x={L - 8} y={y(v) + 4} text-anchor="end" class="tick">{Math.round(v)}</text>
+      </g>
+    ))}
+    {weeks.map((w, i) => (
+      <rect x={L + i * step + 1.5} y={y(w.rate)} width={step - 3} height={Math.max(0, H - B - y(w.rate))} class="bar">
+        <title>{`Week of ${w.week}: ${w.payment} of ${w.notes} notes, ${w.rate} per 1,000`}</title>
+      </rect>
+    ))}
+    <line x1={L} x2={W - R} y1={y(d.baseline)} y2={y(d.baseline)} class="base" />
+    {d.events.map((e, j) => {
+      const xx = xDate(e.date);
+      const p = labelPos[j];
+      return (
+        <g>
+          <line x1={xx} x2={xx} y1={T - 6 - (p.row ? 0 : 18)} y2={H - B} class:list={['ev', { main: j === 1 }]} />
+          <text x={xx + p.dx} y={T - 30 + p.row * 18} text-anchor={p.anchor} class:list={['evl', { main: j === 1 }]}>{`${e.label}, ${fmt(e.date)}`}</text>
+        </g>
+      );
+    })}
+    {monthTicks.map(({ i, w }) => <text x={L + i * step} y={H - B + 18} class="tick">{fmt(w.week).split(' ')[0]}</text>)}
+  </svg>
+  <figcaption>
+    Figure 5. Weekly payment-error notes per 1,000 notes in the synthetic monitor series, June 2023 to January 2024, with
+    the three fictional release dates. Each bar is one week starting on a Monday, and the dashed line is at the baseline of
+    {d.baseline} per 1,000 over the 12 weeks before the payment-system change.
+  </figcaption>
+</figure>
+
+<style>
+  .ctm-ww { margin: 2rem 0; }
+  .ctm-ww svg { width: 100%; max-width: 860px; height: auto; display: block; overflow: visible; }
+  @media (max-width: 640px) {
+    .ctm-ww .tick { font-size: 18px; }
+    .ctm-ww .evl { font-size: 15px; }
+  }
+  .ctm-ww .grid { stroke: currentColor; stroke-opacity: .12; }
+  .ctm-ww .tick { fill: currentColor; fill-opacity: .65; font-family: var(--font-mono); font-size: 12px; }
+  .ctm-ww .bar { fill: #3866A0; }
+  .ctm-ww .base { stroke: currentColor; stroke-opacity: .5; stroke-dasharray: 5 4; }
+  .ctm-ww .ev { stroke: currentColor; stroke-opacity: .55; stroke-dasharray: 2 3; }
+  .ctm-ww .ev.main { stroke: #B8384B; stroke-opacity: 1; stroke-dasharray: none; stroke-width: 2; }
+  .ctm-ww .evl { fill: currentColor; fill-opacity: .8; font-family: var(--font-mono); font-size: 11px; }
+  .ctm-ww .evl.main { fill: #B8384B; fill-opacity: 1; font-weight: 700; }
+  .ctm-ww figcaption { margin-top: 1rem; font-size: var(--fs-body-sm); line-height: 1.6; opacity: .8; }
+</style>

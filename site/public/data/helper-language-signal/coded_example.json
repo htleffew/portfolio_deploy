@@ -1,0 +1,220 @@
+{
+  "id": "A00139",
+  "n_turns": 7,
+  "turns": [
+    {
+      "turn": 1,
+      "speaker": "claimant",
+      "segments": [
+        {
+          "t": "I",
+          "c": "i"
+        },
+        {
+          "t": " feel like ",
+          "c": null
+        },
+        {
+          "t": "I'm",
+          "c": "i"
+        },
+        {
+          "t": " on ",
+          "c": null
+        },
+        {
+          "t": "my",
+          "c": "i"
+        },
+        {
+          "t": " own with this.",
+          "c": null
+        }
+      ]
+    },
+    {
+      "turn": 2,
+      "speaker": "helper",
+      "segments": [
+        {
+          "t": "Sorry",
+          "c": "apology"
+        },
+        {
+          "t": " about the mix-up with the rental. ",
+          "c": null
+        },
+        {
+          "t": "Unfortunately",
+          "c": "limitation"
+        },
+        {
+          "t": " the policy does not cover that item.",
+          "c": null
+        }
+      ]
+    },
+    {
+      "turn": 3,
+      "speaker": "claimant",
+      "segments": [
+        {
+          "t": "A tree from next door fell on the garage. The adjuster came out to look at the roof on Monday.",
+          "c": null
+        }
+      ]
+    },
+    {
+      "turn": 4,
+      "speaker": "helper",
+      "segments": [
+        {
+          "t": "I ",
+          "c": null
+        },
+        {
+          "t": "regret",
+          "c": "apology"
+        },
+        {
+          "t": " that the callback took this long. ",
+          "c": null
+        },
+        {
+          "t": "I think",
+          "c": "hedging"
+        },
+        {
+          "t": " the shop ",
+          "c": null
+        },
+        {
+          "t": "might",
+          "c": "hedging"
+        },
+        {
+          "t": " have it by then. My ",
+          "c": null
+        },
+        {
+          "t": "apologies",
+          "c": "apology"
+        },
+        {
+          "t": " for the delay on the payment.",
+          "c": null
+        }
+      ]
+    },
+    {
+      "turn": 5,
+      "speaker": "claimant",
+      "segments": [
+        {
+          "t": "I",
+          "c": "i"
+        },
+        {
+          "t": " ",
+          "c": null
+        },
+        {
+          "t": "don't",
+          "c": "negation"
+        },
+        {
+          "t": " know what ",
+          "c": null
+        },
+        {
+          "t": "I'm",
+          "c": "i"
+        },
+        {
+          "t": " supposed to do now. Evenings are better for a call. ",
+          "c": null
+        },
+        {
+          "t": "I",
+          "c": "i"
+        },
+        {
+          "t": " ",
+          "c": null
+        },
+        {
+          "t": "can't",
+          "c": "negation"
+        },
+        {
+          "t": " keep paying for this ",
+          "c": null
+        },
+        {
+          "t": "myself",
+          "c": "i"
+        },
+        {
+          "t": ".",
+          "c": null
+        }
+      ]
+    },
+    {
+      "turn": 6,
+      "speaker": "helper",
+      "segments": [
+        {
+          "t": "Hopefully",
+          "c": "hedging"
+        },
+        {
+          "t": " we can close this out soon. I'm ",
+          "c": null
+        },
+        {
+          "t": "sorry",
+          "c": "apology"
+        },
+        {
+          "t": ", that request was missed on our end.",
+          "c": null
+        }
+      ]
+    },
+    {
+      "turn": 7,
+      "speaker": "claimant",
+      "segments": [
+        {
+          "t": "That's ",
+          "c": null
+        },
+        {
+          "t": "not what I said",
+          "c": "correction"
+        },
+        {
+          "t": " earlier. ",
+          "c": null
+        },
+        {
+          "t": "I",
+          "c": "i"
+        },
+        {
+          "t": " uploaded the photos of the damage this morning. What do you need from ",
+          "c": null
+        },
+        {
+          "t": "me",
+          "c": "i"
+        },
+        {
+          "t": " to move this forward?",
+          "c": null
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,187 @@
+{
+ "floor": 0.5,
+ "n": 200,
+ "confirmed": 96,
+ "rows": [
+  {
+   "t": 0.0,
+   "kept": 200,
+   "confirmed": 96,
+   "precision": 0.48,
+   "lo": 0.412,
+   "hi": 0.549,
+   "retained": 1.0
+  },
+  {
+   "t": 0.05,
+   "kept": 200,
+   "confirmed": 96,
+   "precision": 0.48,
+   "lo": 0.412,
+   "hi": 0.549,
+   "retained": 1.0
+  },
+  {
+   "t": 0.1,
+   "kept": 200,
+   "confirmed": 96,
+   "precision": 0.48,
+   "lo": 0.412,
+   "hi": 0.549,
+   "retained": 1.0
+  },
+  {
+   "t": 0.15,
+   "kept": 200,
+   "confirmed": 96,
+   "precision": 0.48,
+   "lo": 0.412,
+   "hi": 0.549,
+   "retained": 1.0
+  },
+  {
+   "t": 0.2,
+   "kept": 192,
+   "confirmed": 96,
+   "precision": 0.5,
+   "lo": 0.43,
+   "hi": 0.57,
+   "retained": 1.0
+  },
+  {
+   "t": 0.25,
+   "kept": 174,
+   "confirmed": 93,
+   "precision": 0.534,
+   "lo": 0.46,
+   "hi": 0.607,
+   "retained": 0.969
+  },
+  {
+   "t": 0.3,
+   "kept": 160,
+   "confirmed": 89,
+   "precision": 0.556,
+   "lo": 0.479,
+   "hi": 0.631,
+   "retained": 0.927
+  },
+  {
+   "t": 0.35,
+   "kept": 140,
+   "confirmed": 86,
+   "precision": 0.614,
+   "lo": 0.532,
+   "hi": 0.691,
+   "retained": 0.896
+  },
+  {
+   "t": 0.4,
+   "kept": 124,
+   "confirmed": 81,
+   "precision": 0.653,
+   "lo": 0.566,
+   "hi": 0.731,
+   "retained": 0.844
+  },
+  {
+   "t": 0.45,
+   "kept": 109,
+   "confirmed": 75,
+   "precision": 0.688,
+   "lo": 0.596,
+   "hi": 0.767,
+   "retained": 0.781
+  },
+  {
+   "t": 0.5,
+   "kept": 96,
+   "confirmed": 69,
+   "precision": 0.719,
+   "lo": 0.622,
+   "hi": 0.799,
+   "retained": 0.719
+  },
+  {
+   "t": 0.55,
+   "kept": 84,
+   "confirmed": 62,
+   "precision": 0.738,
+   "lo": 0.635,
+   "hi": 0.82,
+   "retained": 0.646
+  },
+  {
+   "t": 0.6,
+   "kept": 72,
+   "confirmed": 54,
+   "precision": 0.75,
+   "lo": 0.639,
+   "hi": 0.836,
+   "retained": 0.562
+  },
+  {
+   "t": 0.65,
+   "kept": 58,
+   "confirmed": 45,
+   "precision": 0.776,
+   "lo": 0.653,
+   "hi": 0.864,
+   "retained": 0.469
+  },
+  {
+   "t": 0.7,
+   "kept": 43,
+   "confirmed": 35,
+   "precision": 0.814,
+   "lo": 0.674,
+   "hi": 0.903,
+   "retained": 0.365
+  },
+  {
+   "t": 0.75,
+   "kept": 31,
+   "confirmed": 28,
+   "precision": 0.903,
+   "lo": 0.751,
+   "hi": 0.967,
+   "retained": 0.292
+  },
+  {
+   "t": 0.8,
+   "kept": 16,
+   "confirmed": 15,
+   "precision": 0.938,
+   "lo": 0.717,
+   "hi": 0.989,
+   "retained": 0.156
+  },
+  {
+   "t": 0.85,
+   "kept": 10,
+   "confirmed": 9,
+   "precision": 0.9,
+   "lo": 0.596,
+   "hi": 0.982,
+   "retained": 0.094
+  },
+  {
+   "t": 0.9,
+   "kept": 2,
+   "confirmed": 1,
+   "precision": 0.5,
+   "lo": 0.095,
+   "hi": 0.905,
+   "retained": 0.01
+  },
+  {
+   "t": 0.95,
+   "kept": 0,
+   "confirmed": 0,
+   "precision": null,
+   "lo": null,
+   "hi": null,
+   "retained": 0.0
+  }
+ ]
+}

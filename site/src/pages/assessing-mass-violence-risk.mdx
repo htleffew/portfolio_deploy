@@ -2,11 +2,10 @@
 layout: ../layouts/CinematicLayout.astro
 title: "Assessing Risk for Mass Violence From Platform Behaviors"
 short_title: "Assessing Risk for Mass Violence From Platform"
-description: "The case for why user reports tend to outperform automated detection. Perpetrators of mass violence are characterologically heterogeneous, the warning signs are contextual, and the on-platform signal is thin, which is most of the reason a list-based classifier struggles where a human reader does not."
-category: "Threat Assessment · Predictive Limitations"
+description: "I argue that user reports belong at the center of platform threat detection, because perpetrators often reveal intent to people who know them and most of the variables that move an assessment sit off-platform. I review the threat-assessment literature on perpetrator heterogeneity, the eight warning behaviors, and the six-stage path to intended violence."
+category: "Threat Assessment"
 subcategory: "Predictive Limitations"
-format: "CASE STUDY"
-time: "10 min read"
+format: "ESSAY"
 author: "Dr. Heather Leffew"
 tags: ["Forensic Psychology", "Threat Assessment", "Platform Safety", "Warning Behaviors", "Behavioral Heterogeneity"]
 visual: ""
@@ -15,12 +14,13 @@ scripts: []
 import Band from '../components/Band.astro';
 import Figure from '../components/Figure.astro';
 import ApaReferences from '../components/ApaReferences.astro';
+import ThreatRiskMatrix from '../components/widgets/ThreatRiskMatrix.astro';
 
 <Band theme="paper" spine="Abstract" section="Abstract">
 
 ## Abstract
 
-The case for why user reports tend to outperform automated detection. Perpetrators of mass violence are characterologically heterogeneous, the warning signs are contextual, and the on-platform signal is thin. A working note on the threat-assessment literature, the eight pre-attack warning behaviors, the six-stage path to intended violence, and where machine detection tends to break.
+I review the threat-assessment literature on perpetrator heterogeneity, the eight warning behaviors, and the six-stage path to intended violence, and I argue that platforms detect threats best when users report concerns and automated systems route and triage those reports. User reports belong at the center of platform threat detection, because perpetrators often reveal intent to people who know them (Silver, Horgan, & Gill, 2018) and most of the variables that move an assessment sit off-platform.
 
 </Band>
 
@@ -28,15 +28,13 @@ The case for why user reports tend to outperform automated detection. Perpetrato
 
 ## Perpetrators do not fit a profile.
 
-Mass shootings in the United States rose roughly 250% from one decade to the next, with 57% of all recorded mass shootings in the past ten years (Office for Victims of Crime, 2018). The FBI logged 250 active shooter incidents between 2000 and 2017, producing 2,217 casualties not counting the perpetrators themselves (Silver, Simons, & Craun, 2018). The volume justifies the interest. The literature has not produced a profile.
+Mother Jones recorded 51 mass shootings in the United States from 2008 to 2017, 2.4 times the 21 it recorded from 1998 to 2007; the most recent decade accounted for 57% of the mass shootings it recorded across the three decades from 1988 to 2017 (Office for Victims of Crime, 2018). The FBI counted 250 active shooter incidents between 2000 and 2017, with 2,217 people killed or wounded, not counting the shooters (Federal Bureau of Investigation, 2018). The volume justifies the research interest; researchers have not produced a profile.
 
-Thompson and Kyle (2005) cast these offenders as low-self-esteem; Palermo (1997) reads them as psychopathic; Hempel and Richards (1999) and Virtanen (2013) read them as narcissistic. Bondu and Scheithauer (2015) and Wike and Fraser (2009) document characterological heterogeneity at a scale that defeats single-construct typologies. Lankford (2013) finds that the age and attack-location differences between rampage shooters, workplace shooters, school shooters, and suicide terrorists are mostly superficial, and Ferguson, Coulson, and Barnett (2011) find youthful mass murderers resemble adult perpetrators more than they differ from them. Most perpetrators do not survive the event, so traditional post-event psychological assessment cannot be performed at all.
+Thompson and Kyle (2005) characterize these offenders by low self-esteem; Palermo (1997) reads them as psychopathic; Hempel, Meloy, and Richards (1999) and Virtanen (2013) read them as narcissistic. Bondü and Scheithauer (2015) and Wike and Fraser (2009) document characterological heterogeneity at a scale that defeats single-construct typologies. Lankford (2013) finds that the age and attack-location differences between rampage shooters, workplace shooters, school shooters, and suicide terrorists are mostly superficial, and Ferguson, Coulson, and Barnett (2011) find that youthful mass murderers resemble adult perpetrators more than they differ from them. Fox and Levin (2003) suggest that researchers have neglected mass murder partly because police usually neutralize the perpetrator quickly, so the case presents no ongoing threat to investigate. Most perpetrators do not survive the event, so no one can conduct a traditional post-event psychological assessment.
 
-Seung-Hui Cho killed 32 people at Virginia Tech in 2007; Anders Breivik killed 77 across two locations in Norway in 2011. Both left manifestos. Cho's reads as raw, affective, personal injury, in lines like "Vandalizing my heart wasn't enough for you. Raping my soul wasn't enough for you." Breivik's runs more than 1,500 pages with chapter headings like "Modern Aftermath of the Crusades" and "US and European Nationalist Rhetorical Differences." The two attacks share an outcome and almost nothing else.
+Seung-Hui Cho killed 32 people at Virginia Tech in 2007; Anders Breivik killed 77 across two locations in Norway in 2011. Both left manifestos. Cho's reads as raw, affective, personal injury, in lines like "Vandalizing my heart wasn't enough for you. Raping my soul wasn't enough for you." Breivik's runs more than 1,500 pages, with chapter headings like "Modern Aftermath of the Crusades" and "US and European Nationalist Rhetorical Differences." The two attacks share an outcome and almost nothing else.
 
-Implication for detection
-
-I kept finding that a classifier built on a single perpetrator template will tend to miss most of the population it is meant to flag.
+I expect a classifier built on a single perpetrator template to miss most of the population it targets.
 
 </Band>
 
@@ -44,25 +42,16 @@ I kept finding that a classifier built on a single perpetrator template will ten
 
 ## Attacks are planned, and the planning leaks.
 
-Popular framing treats mass violence as a sudden break, an unpredictable snap; governmental and academic work has converged on close to the opposite reading. Most perpetrators display identifiable pre-attack behaviors that reflect intent (Fein, Vossekuil, & Holden, 1998; U.S. Secret Service, 2004), and Silver, Simons, and Craun (2018) studied 63 active shooters and found that the majority spent a week or longer in planning and preparation. That is the operational window detection has to live in.
+Government and academic researchers have found that most perpetrators plan their attacks and display identifiable pre-attack behaviors (Fein, Vossekuil, & Holden, 1998; U.S. Secret Service & U.S. Department of Education, 2004). Silver, Simons, and Craun (2018) studied 63 active shooters from 2000 to 2013 and documented how long the planning ran and how often the shooters told someone.
 
-88%
+| Figure | What the FBI study measured |
+|---|---|
+| 63 | Active shooters in the study, 2000 to 2013 |
+| 77% | Shooters who spent a week or longer planning the attack, among the 34 whose planning time could be determined |
+| 88% | Shooters aged 17 and younger who leaked intent to commit violence (51% of adult shooters did) |
+| 30% | Shooters who created a legacy token, a communication prepared before the attack to claim credit and state a motive (19 of 63) |
 
-Active shooters aged 17 and younger communicated intent
-
-~33%
-
-Perpetrators created communications claiming credit or articulating motive
-
-≥ 7 days
-
-Median planning-and-preparation window
-
-63
-
-Active shooters analyzed in the FBI pre-attack study
-
-The same study and adjacent work (Silver, Horgan, & Gill, 2018) document leakage to third parties as the modal communication, and the channel matters less than the fact that the communication happens at all. Detection logic that asks a respondent to directly address law enforcement will tend to miss most cases, while detection logic that pays attention to what perpetrators tell their friends, their classmates, or the internet has signal to work with.
+The week-long planning window gives detection somewhere to work. Silver, Horgan, and Gill (2018) found that 67 of 115 public mass murderers leaked their intent before the attack, and in 36 of those cases the leakage reached family or friends. Detection that waits for a direct threat to law enforcement will miss most cases; perpetrators more often tell friends, classmates, or online audiences.
 
 </Band>
 
@@ -70,11 +59,11 @@ The same study and adjacent work (Silver, Horgan, & Gill, 2018) document leakage
 
 ## Eight behaviors, six stages.
 
-Meloy, Hoffmann, Guldimann, and James (2012) propose eight essential warning behaviors, acute, dynamic, particularly toxic changes in behavior that signal accelerating risk and call for an operational response. Calhoun and Weston (2003, 2015) propose the path to intended violence as a discrete six-stage sequence (grievance, ideation, research and planning, preparation, breach, attack). The eight behaviors do not occur uniformly across the six stages, and mapping them to where they tend to appear is the structure most threat-assessment work runs on.
+Meloy, Hoffmann, Guldimann, and James (2012) propose eight essential warning behaviors, acute, dynamic, and particularly toxic changes in behavior that signal accelerating risk and call for an operational response. Calhoun and Weston (2003, 2015) describe the path to intended violence as a discrete six-stage sequence (grievance, ideation, research and planning, preparation, breach, and attack). The eight behaviors do not occur uniformly across the six stages, and most threat-assessment work maps each behavior to the stages where it tends to appear.
 
 <Figure src="/assets/assessing-mass-violence-risk/fig_2.svg" alt="Warning Behavior Matrix, the eight pre-attack warning behaviors mapped across the six-stage path to intended violence" caption="Warning Behavior Matrix. Each of the eight warning behaviors is shaded across the stages of the six-stage path to intended violence where it typically surfaces, from grievance and ideation, through research and preparation, to breach and attack." />
 
-**Pathway** behavior is research, planning, preparation, or implementation of an attack (Calhoun & Weston, 2003). **Fixation** is increasingly pathological preoccupation with a person or cause (Mullen et al., 2009). **Identification** is the psychological desire to be a "pseudocommando" (Dietz, 1986), to adopt a warrior mentality, to identify with previous attackers, or to identify as an agent of a cause. **Novel aggression** is an act of violence unrelated to the attack, committed for the first time, testing the subject's capacity for the act. **Energy burst** is an increase in the frequency or variety of activities tied to the target. **Leakage** is communication to a third party of intent to harm. **Direct threat** is communication of a direct threat to the target or to law enforcement beforehand. **Last resort** is increasing desperation expressed in word or deed.
+**Pathway** behavior is research, planning, preparation, or implementation of an attack (Calhoun & Weston, 2003). **Fixation** is increasingly pathological preoccupation with a person or cause (Mullen et al., 2009). **Identification** is the psychological desire to be a "pseudocommando" (Dietz, 1986), to adopt a warrior mentality and associate closely with weapons or military paraphernalia (Hempel, Meloy, & Richards, 1999), to identify with previous attackers, or to identify as an agent of a cause. **Novel aggression** is an act of violence unrelated to the attack, committed for the first time, testing the subject's capacity for the act. **Energy burst** is an increase in the frequency or variety of activities tied to the target. **Leakage** is communication to a third party of intent to harm. **Direct threat** is communication of a direct threat to the target or to law enforcement beforehand. **Last resort** is increasing desperation expressed in word or deed.
 
 </Band>
 
@@ -82,11 +71,11 @@ Meloy, Hoffmann, Guldimann, and James (2012) propose eight essential warning beh
 
 ## Threats as emotional release.
 
-People often prefer words that alarm over actions that harm, so reading a threatening statement tends to mean separating content from context. The first question is whether the statement is direct (delivered to the potential target) or indirect (delivered to a third party); the second is whether the statement is a threat or an ultimatum. Ultimatums attach conditions, and they read as warnings or attempts at manipulation, where threats are non-conditional.
+People often prefer words that alarm over actions that harm, so an assessor reading a threatening statement separates its content from its context. The first question is whether the statement is direct (delivered to the potential target) or indirect (delivered to a third party); the second is whether the statement is a threat or an ultimatum. Ultimatums attach conditions and read as warnings or attempts at manipulation; threats attach no conditions.
 
-Threats are riskier in principle but often less actionable in practice; a person who directly threatens another is frequently expressing desperation and frustration more than communicating an actual plan, and the anxiety the threat provokes in the target functions as an emotional release for the speaker, a release that can substitute for the act itself. The threat that worries threat-assessment professionals is the one that does not seek a fear pay-out.
+A person who threatens a target directly is often venting desperation, and the target's fear can release the speaker's charge in place of the act. Assessors worry more about indirect threats delivered to third parties, because those threats bypass that release.
 
-Late-appearing threats tend to be more concerning than early ones; early threats tend to be emotional reactions to an immediate upset, while late threats tend to be the residue of a deliberative process where other alternatives have already been considered and rejected. Indirect threats, delivered to someone other than the intended target, carry elevated risk precisely because they bypass the fear-payout loop that usually drains the speaker's emotional charge.
+Late-appearing threats tend to be more concerning than early ones. Early threats tend to be emotional reactions to an immediate upset, while late threats tend to follow a deliberative process in which the speaker has already considered and rejected other options.
 
 </Band>
 
@@ -94,29 +83,13 @@ Late-appearing threats tend to be more concerning than early ones; early threats
 
 ## Probability against impact.
 
-Threat assessment risk management is an equation weighing the probability an event will occur (the threat) against the potential impacts of the event (the risk), and the intervention demand for low-probability events rises with the impact magnitude. The combinations produce a familiar 2x2.
+Threat-assessment risk management weighs the probability that an event will occur, which assessors call the threat, against the potential impact of the event, which assessors call the risk. Assessors demand more intervention for a low-probability event as its potential impact rises. The combinations produce a familiar 2x2.
 
-Threat (probability)
+<ThreatRiskMatrix />
 
-Risk (impact)
+Burglary of an unoccupied home is low threat and low risk; the likelihood is low for most homeowners, the impact is bounded, and locked doors usually suffice. A school shooting, for most communities, is low threat and high risk; consequences are catastrophic, and the probability for any one school stays low. A well-armed individual who has communicated credible intent to commit a mass shooting at a specific, accessible elementary school is high threat and high risk; the assessor rates both probability and impact as high and responds immediately.
 
-Low risk · Low threat
-
-Burglary of an unoccupied home. Likelihood is low for most homeowners, impact is bounded, locked doors are usually sufficient.
-
-Low risk · High threat
-
-Frequent low-stakes nuisance behavior with high probability of recurrence. Routine moderation handles this class.
-
-High risk · Low threat
-
-School shootings sit here for most communities. Consequences are catastrophic; probability remains low enough that schools stay open and parents continue to send children.
-
-High risk · High threat
-
-A well-armed individual who has communicated credible intent to commit a mass shooting at a specific, accessible elementary school. Both axes are pegged. The response demand is immediate.
-
-The matrix earns its place as a decision aid because it holds the assessor to two separate estimates, how likely is this, and how bad if it happens. Conflating them produces the two characteristic failures of threat work, treating every catastrophic scenario as imminent, or dismissing every statistically uncommon scenario as negligible.
+I use the matrix as a decision aid because it holds the assessor to two separate estimates, how likely the event is and how bad it would be. An assessor who conflates them commits one of the two characteristic failures of threat work, treating every catastrophic scenario as imminent or dismissing every statistically uncommon scenario as negligible.
 
 </Band>
 
@@ -124,47 +97,48 @@ The matrix earns its place as a decision aid because it holds the assessor to tw
 
 ## The post-event risk window.
 
-After a highly publicized attack the risk of a copycat attack stays elevated for approximately 13 days, and watershed events, the ones that lodge in cultural memory, can elevate risk for ten years or longer. Mother Jones tracked the Columbine effect and counted 72 plots inspired by the event, 21 carried out, 89 deaths. The contagion does not require the original attacker to have used a platform; the contagion vector is the cultural event itself, independent of any particular dataset.
+Towers, Gomez-Lievano, Khan, Mubayi, and Castillo-Chavez (2015) modeled mass killings with firearms and school shootings as contagion processes and found that each incident raises the probability of another for an average of 13 days. Highly publicized watershed events can inspire attacks for far longer; in the 16 years after the 1999 Columbine shooting, Follman and Andrews (2015) counted at least 74 plots or attacks across 30 states that drew on it. The contagion does not require the original attacker to have used a platform, because the cultural event itself carries the influence.
 
-For platform threat-assessment workflows, the operational implication is asymmetric staffing, since detection volume tends to spike with cultural events, not with calendar quarters. The post-watershed window is also where automated false-positive rates spike, because the volume of users discussing the event surges and discussion is not intent; the cost of pattern-matching on surface features in a contagion window gets paid in over-flagging the people who are just reading the news.
+For platform threat-assessment workflows, the operational implication is asymmetric staffing, since report volume tends to spike with cultural events. The post-watershed window is also where automated false-positive rates spike; the volume of users discussing the event surges, discussion is not intent, and pattern-matching on surface features in a contagion window over-flags users who are discussing the news.
 
 </Band>
 
-<Band theme="dark" spine="User reports outperfor" section="User reports outperform automated detection, and the reasons are structural.">
+<Band theme="dark" spine="The case for user rep" section="The case for user reports.">
 
-## User reports outperform automated detection, and the reasons are structural.
+## The case for user reports.
 
-Grounded threat assessment is only as good as the data feeding it. Examination of on-platform behavior in isolation cannot reach a defensible determination of actual threat level, because the variables that move the assessment (warning signs, risk factors, stabilizing factors, precipitating events) are almost never all on-platform; collateral data sources tend to be essential, and a platform that builds its threat workflow exclusively around its own telemetry has stipulated to working with an incomplete record.
+Assessors need warning signs, risk factors, stabilizing factors, and precipitating events, and those variables seldom all appear on-platform. Collateral data sources tend to be essential. Platform teams that rely only on their own telemetry work from an incomplete record.
 
-The characterological heterogeneity that defeats single-profile classifiers also defeats list-based automated detection. Different behaviors represent different positions on the pathway, and a single behavior late in the pathway warrants a more urgent response than several appearances at the early end; building an automated system around behavior counts instead of behavior positions inverts that logic and dilutes the operational response.
+The characterological heterogeneity that defeats single-profile classifiers also defeats list-based automated detection. Each behavior marks a different position on the pathway, and a single behavior late in the pathway warrants a more urgent response than several behaviors at the early end; a system that counts behaviors without weighting their positions inverts that logic and dilutes the operational response.
 
-Users of a platform with millions of participants bring something an automated system cannot replicate, which is contextual interpretation at scale. A user reading a friend's post understands the prior six months of that person's behavior, the relationship history, the in-group jokes, the affective baseline; algorithms see a comment and a numeric vector, where humans see a person whose pattern has changed. The point is not to remove automation, but to position it as the support layer for the human judgment that has the higher base rate of correct identification.
+Users of a platform with millions of participants bring contextual interpretation at scale. A user reading a friend's post knows the prior six months of that person's behavior, the relationship history, the in-group jokes, and the affective baseline. A friend reading the post recognizes that a person's pattern has changed; an automated system receives one comment and a numeric vector. I would position automation as the support layer for human judgment.
 
-Operational stance
-
-It helps to keep clear, low-friction reporting channels open for users, and to let automated systems support the routing, triage, and analytical surfacing of those reports instead of carrying detection as the primary mechanism. It also doesn't hurt to anticipate elevated reporting volume in the 13-day window after any watershed event, and to staff for it. On-platform behavior alone cannot tell you who is dangerous; the people who know the person can.
+Teams can keep clear, low-friction reporting channels open for users and let automated systems route, triage, and surface those reports for analysis. Teams can also staff for elevated reporting volume in the 13 days after a watershed event. The people who know a person are best placed to recognize when that person has become dangerous.
 
 </Band>
 
 <ApaReferences>
 
-* Bondu, R., & Scheithauer, H. (2015). Narcissistic symptoms in German school shooters. *International Journal of Offender Therapy and Comparative Criminology, 59*(14), 1520-1535.
+* Bondü, R., & Scheithauer, H. (2015). Narcissistic symptoms in German school shooters. *International Journal of Offender Therapy and Comparative Criminology, 59*(14), 1520-1535.
 * Calhoun, F. S., & Weston, S. W. (2003). *Contemporary threat management: A practical guide for identifying, assessing, and managing individuals of violent intent*. Specialized Training Services.
 * Calhoun, F. S., & Weston, S. W. (2015). Perspectives on threat management. *Journal of Threat Assessment and Management, 2*(3-4), 258-267.
 * Dietz, P. E. (1986). Mass, serial, and sensational homicides. *Bulletin of the New York Academy of Medicine, 62*(5), 477-491.
+* Federal Bureau of Investigation. (2018). *Quick look: 250 active shooter incidents in the United States from 2000 to 2017*. U.S. Department of Justice.
 * Fein, R., Vossekuil, B., & Holden, G. (1998). *Protective intelligence and threat assessment investigations: A guide for state and local law enforcement officials*. U.S. Department of Justice.
 * Ferguson, C. J., Coulson, M., & Barnett, J. (2011). Psychological profiles of school shooters: Positive directions and one big wrong turn. *Journal of Police Crisis Negotiations, 11*(2), 141-158.
+* Follman, M., & Andrews, B. (2015, October 5). How Columbine spawned dozens of copycats. *Mother Jones*.
 * Fox, J. A., & Levin, J. (2003). Mass murder: An analysis of extreme violence. *Journal of Applied Psychoanalytic Studies, 5*(1), 47-64.
 * Hempel, A. G., Meloy, J. R., & Richards, T. C. (1999). Offender and offense characteristics of a nonrandom sample of mass murderers. *Journal of the American Academy of Psychiatry and the Law, 27*(2), 213-225.
 * Lankford, A. (2013). A comparative analysis of suicide terrorists and rampage, workplace, and school shooters in the United States from 1990 to 2010. *Homicide Studies, 17*(3), 255-274.
 * Meloy, J. R., Hoffmann, J., Guldimann, A., & James, D. (2012). The role of warning behaviors in threat assessment: An exploration and suggested typology. *Behavioral Sciences & the Law, 30*(3), 256-279.
 * Mullen, P. E., James, D. V., Meloy, J. R., Pathe, M. T., Farnham, F. R., Preston, L., & Darnley, B. (2009). The fixated and the pursuit of public figures. *Journal of Forensic Psychiatry & Psychology, 20*(1), 33-47.
-* Office for Victims of Crime. (2018). *2018 National Crime Victims' Rights Week resource guide: Crime and victimization fact sheets - Mass casualty shootings*. U.S. Department of Justice.
+* Office for Victims of Crime. (2018). *2018 National Crime Victims' Rights Week resource guide: Crime and victimization fact sheets, mass casualty shootings*. U.S. Department of Justice.
 * Palermo, G. B. (1997). The berserk syndrome: A review of mass murder. *Aggression and Violent Behavior, 2*(1), 1-8.
 * Silver, J., Horgan, J., & Gill, P. (2018). Foreshadowing targeted violence: Assessing leakage of intent by public mass murderers. *Aggression and Violent Behavior, 38*, 94-100.
 * Silver, J., Simons, A., & Craun, S. (2018). *A study of the pre-attack behaviors of active shooters in the United States between 2000 and 2013*. Federal Bureau of Investigation, U.S. Department of Justice.
 * Thompson, S., & Kyle, K. (2005). Understanding mass school shootings: Links between personhood and power in the competitive school environment. *Journal of Primary Prevention, 26*(5), 419-438.
-* U.S. Secret Service & U.S. Department of Education. (2004). *The final report and findings of the safe school initiative: Implications for the prevention of school attacks in the United States*.
+* Towers, S., Gomez-Lievano, A., Khan, M., Mubayi, A., & Castillo-Chavez, C. (2015). Contagion in mass killings and school shootings. *PLoS ONE, 10*(7), e0117259.
+* U.S. Secret Service & U.S. Department of Education. (2004). *The final report and findings of the Safe School Initiative: Implications for the prevention of school attacks in the United States*.
 * Virtanen, H. (2013). The King of Norway: Negative individuation, the hero myth and psychopathic narcissism in extreme violence and the life of Anders Behring Breivik. *Journal of Analytical Psychology, 58*(5), 657-676.
 * Wike, T. L., & Fraser, M. W. (2009). School shootings: Making sense of the senseless. *Aggression and Violent Behavior, 14*(3), 162-169.
 

@@ -6,7 +6,6 @@ description: "An agent that can rewrite your ranking logic is powerful and risky
 category: "AI Evaluation & Safety"
 subcategory: "Agentic & Experience Evaluation"
 format: "ESSAY"
-time: "9 min read"
 author: "Dr. Heather Leffew"
 tags: ["Agentic Evals", "Learning-to-Rank", "Long-Horizon", "Entity Resolution", "Evaluation Gating"]
 visual: ""
@@ -19,7 +18,7 @@ import ApaReferences from '../components/ApaReferences.astro';
 
 ## Powerful and risky at the same time
 
-An agent with the keys to your ranking logic can raise the exact metric it was told to optimize while degrading some other property nobody happened to be watching, which is what makes an agent that can rewrite a retrieval system powerful and risky in the same breath. The way to keep the power without the risk is to gate the autonomy on measurement, where every change the agent proposes gets scored against a held-out metric before it is allowed to ship, and the agent is only ever allowed to alter a finite, auditable set of things. The rest of this is what that loop looks like in practice, and it leans on the same held-out, offline evaluation as [the guardrail recipe](../AI_Safety_Audit_Framework/ai-safety-audit-framework.html) and [the agentic experience suite](../Agentic_Experience_Evaluation/agentic-experience-evaluation.html), where the agent acts, the evaluation judges, and only the changes the measurement supports go live.
+An agent with the keys to your ranking logic can raise the exact metric it was told to optimize while degrading some other property nobody happened to be watching, which is what makes an agent that can rewrite a retrieval system powerful and risky in the same breath. The way to keep the power without the risk is to gate the autonomy on measurement, where every change the agent proposes gets scored against a held-out metric before it is allowed to ship, and the agent is only ever allowed to alter a finite, auditable set of things. The rest of this is what that loop looks like in practice, and it leans on the same held-out, offline evaluation as [the guardrail recipe](/ai-safety-audit-framework/) and [the agentic experience suite](/agentic-experience-evaluation/), where the agent acts, the evaluation judges, and only the changes the measurement supports go live.
 
 </Band>
 

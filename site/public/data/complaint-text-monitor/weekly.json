@@ -1,0 +1,229 @@
+{
+ "weeks": [
+  {
+   "week": "2023-06-05",
+   "notes": 62,
+   "payment": 1,
+   "rate": 16.1
+  },
+  {
+   "week": "2023-06-12",
+   "notes": 65,
+   "payment": 0,
+   "rate": 0.0
+  },
+  {
+   "week": "2023-06-19",
+   "notes": 66,
+   "payment": 2,
+   "rate": 30.3
+  },
+  {
+   "week": "2023-06-26",
+   "notes": 60,
+   "payment": 1,
+   "rate": 16.7
+  },
+  {
+   "week": "2023-07-03",
+   "notes": 58,
+   "payment": 1,
+   "rate": 17.2
+  },
+  {
+   "week": "2023-07-10",
+   "notes": 64,
+   "payment": 0,
+   "rate": 0.0
+  },
+  {
+   "week": "2023-07-17",
+   "notes": 61,
+   "payment": 0,
+   "rate": 0.0
+  },
+  {
+   "week": "2023-07-24",
+   "notes": 47,
+   "payment": 1,
+   "rate": 21.3
+  },
+  {
+   "week": "2023-07-31",
+   "notes": 54,
+   "payment": 0,
+   "rate": 0.0
+  },
+  {
+   "week": "2023-08-07",
+   "notes": 48,
+   "payment": 1,
+   "rate": 20.8
+  },
+  {
+   "week": "2023-08-14",
+   "notes": 52,
+   "payment": 1,
+   "rate": 19.2
+  },
+  {
+   "week": "2023-08-21",
+   "notes": 67,
+   "payment": 3,
+   "rate": 44.8
+  },
+  {
+   "week": "2023-08-28",
+   "notes": 59,
+   "payment": 1,
+   "rate": 16.9
+  },
+  {
+   "week": "2023-09-04",
+   "notes": 52,
+   "payment": 0,
+   "rate": 0.0
+  },
+  {
+   "week": "2023-09-11",
+   "notes": 68,
+   "payment": 1,
+   "rate": 14.7
+  },
+  {
+   "week": "2023-09-18",
+   "notes": 68,
+   "payment": 0,
+   "rate": 0.0
+  },
+  {
+   "week": "2023-09-25",
+   "notes": 61,
+   "payment": 0,
+   "rate": 0.0
+  },
+  {
+   "week": "2023-10-02",
+   "notes": 55,
+   "payment": 1,
+   "rate": 18.2
+  },
+  {
+   "week": "2023-10-09",
+   "notes": 128,
+   "payment": 41,
+   "rate": 320.3
+  },
+  {
+   "week": "2023-10-16",
+   "notes": 94,
+   "payment": 25,
+   "rate": 266.0
+  },
+  {
+   "week": "2023-10-23",
+   "notes": 59,
+   "payment": 10,
+   "rate": 169.5
+  },
+  {
+   "week": "2023-10-30",
+   "notes": 49,
+   "payment": 1,
+   "rate": 20.4
+  },
+  {
+   "week": "2023-11-06",
+   "notes": 46,
+   "payment": 0,
+   "rate": 0.0
+  },
+  {
+   "week": "2023-11-13",
+   "notes": 50,
+   "payment": 1,
+   "rate": 20.0
+  },
+  {
+   "week": "2023-11-20",
+   "notes": 52,
+   "payment": 0,
+   "rate": 0.0
+  },
+  {
+   "week": "2023-11-27",
+   "notes": 47,
+   "payment": 1,
+   "rate": 21.3
+  },
+  {
+   "week": "2023-12-04",
+   "notes": 61,
+   "payment": 0,
+   "rate": 0.0
+  },
+  {
+   "week": "2023-12-11",
+   "notes": 52,
+   "payment": 0,
+   "rate": 0.0
+  },
+  {
+   "week": "2023-12-18",
+   "notes": 42,
+   "payment": 2,
+   "rate": 47.6
+  },
+  {
+   "week": "2023-12-25",
+   "notes": 39,
+   "payment": 4,
+   "rate": 102.6
+  },
+  {
+   "week": "2024-01-01",
+   "notes": 80,
+   "payment": 3,
+   "rate": 37.5
+  },
+  {
+   "week": "2024-01-08",
+   "notes": 73,
+   "payment": 4,
+   "rate": 54.8
+  },
+  {
+   "week": "2024-01-15",
+   "notes": 69,
+   "payment": 1,
+   "rate": 14.5
+  },
+  {
+   "week": "2024-01-22",
+   "notes": 78,
+   "payment": 1,
+   "rate": 12.8
+  },
+  {
+   "week": "2024-01-29",
+   "notes": 78,
+   "payment": 1,
+   "rate": 12.8
+  }
+ ],
+ "events": [
+  {
+   "date": "2023-09-18",
+   "label": "Claims portal redesign"
+  },
+  {
+   "date": "2023-10-09",
+   "label": "Payment-system change"
+  },
+  {
+   "date": "2023-10-30",
+   "label": "Payment fix"
+  }
+ ],
+ "baseline": 13.0
+}

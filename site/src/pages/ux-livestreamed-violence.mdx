@@ -1,0 +1,193 @@
+---
+layout: ../layouts/CinematicLayout.astro
+title: "UX Principles and Livestreamed Violence"
+short_title: "UX Principles and Livestreamed Violence"
+description: "All eight livestreamed attacks catalogued between 2019 and 2023 ran on platforms that set no follower threshold for starting a stream, and the Buffalo stream had only seven viewers who were able to report it. Three principles from human factors research, Jakob's Law, Hick's Law, and the von Restorff effect, turn that problem into a reporting design that a randomized test can check, and the same design serves a first notice of loss in insurance claims."
+category: "Threat & Safety at Scale"
+subcategory: "Reporting Design"
+format: "WHITEPAPER"
+author: "Dr. Heather Leffew"
+output: "Whitepaper by Dr. Heather Leffew, 2023"
+tags: ["Trust & Safety", "Human Factors", "Threat Assessment", "Platform Safety", "Experiment Design"]
+visual: ""
+scripts: []
+---
+import Band from '../components/Band.astro';
+import ApaReferences from '../components/ApaReferences.astro';
+import StatRow from '../components/widgets/StatRow.astro';
+import PlatformTally from '../components/widgets/PlatformTally.astro';
+import ReportWindowTimeline from '../components/widgets/ReportWindowTimeline.astro';
+import ReportMenuCompare from '../components/widgets/ReportMenuCompare.astro';
+
+<Band theme="paper" spine="Abstract" section="Abstract">
+
+## Abstract
+
+Sorted by the platform that carried each stream, all eight livestreamed attacks of 2019 through 2023 ran on Facebook Live, Instagram Live, or Twitch, three services that asked a new streamer for nothing beyond an account; none ran on YouTube's mobile app or on TikTok LIVE, the two services that required a follower or subscriber base before a person could stream from a phone. The audiences were small. Facebook reported that the Christchurch stream drew fewer than 200 views while live and no user report until 12 minutes after the broadcast ended (Sonderby, 2019), and the New York State Office of the Attorney General (2022) counted between 20 and 28 viewers of the Buffalo stream, of whom 7 were logged in and therefore able to report it. With an audience that small, a handful of people carry the whole burden of detection, and on the reporting menus of 2023 each of them had to find a small entry point, read a long list of policy categories, and descend through more than one tier before submitting.
+
+Three principles from human factors research apply to that problem (Jakob's Law, Hick's Law, and the von Restorff effect), along with the literacy constraint that shows up in U.S. adult skills surveys, and the same design carries into insurance, where a first notice of loss is also a report filed by a person under stress, and where a randomized test can measure whether a simpler reporting menu helps people finish. I wrote the original as a whitepaper in 2023, and it appears here with a full reference list. Following the no-notoriety practice in threat assessment and journalism, which withholds the names and images that reward a person who streams an attack while reporting everything else (Lankford & Madfis, 2018), each attack goes by its location and year.
+
+</Band>
+
+<Band theme="dark" spine="Eight streams" section="1. Eight streams, three platforms.">
+
+## 1. Eight streams, three platforms.
+
+The list below holds the eight acts of livestreamed violence catalogued for the 2023 whitepaper, with the live audience wherever a platform or an official report published one. It is a purposive list built from news reporting and official reports, the incidents that drew coverage.
+
+| Location | Year | Platform | Live audience, where documented |
+| --- | --- | --- | --- |
+| Christchurch, New Zealand | 2019 | Facebook Live | Fewer than 200 views during the broadcast (Sonderby, 2019) |
+| Halle, Germany | 2019 | Twitch | About 5 live viewers; about 2,200 views of the recording before removal (Jee, 2019) |
+| Nakhon Ratchasima, Thailand | 2020 | Facebook | Not published (Euronews, 2020) |
+| Stamford, Connecticut | 2020 | Instagram Live | Not published; shots fired at passing cars, no injuries reported (Nickerson, 2020) |
+| Eslöv, Sweden | 2021 | Twitch | Not published (Wikipedia contributors, n.d.) |
+| Buffalo, New York | 2022 | Twitch | 20 to 28 viewers, 7 able to report (New York State Office of the Attorney General, 2022) |
+| Memphis, Tennessee | 2022 | Facebook Live | Not published (Sainz, 2022) |
+| Louisville, Kentucky | 2023 | Instagram Live | Not published (Associated Press, 2023) |
+
+Facebook carried three of the streams, Twitch three, and Instagram two. The audiences, where anyone counted them, ran from a handful of people to a couple of hundred, which fits what threat assessment tends to find about the people who stream attacks; they tend to have small social networks, and a livestream is an attempt to buy an audience they do not otherwise have. Ofcom documented the same reasoning at work in the planning of the Buffalo attack (Ofcom, 2022). According to Ofcom, the attacker's diary records an initial wish to use Facebook, a switch to Twitch on the grounds that Facebook's users skewed older, and a note that Facebook required viewers to hold an account while Twitch required an account only of the streamer; Ofcom set that choice beside YouTube, which required a minimum number of subscribers before a person could stream from a mobile device.
+
+<PlatformTally />
+
+</Band>
+
+<Band theme="paper" spine="A threshold to stream" section="2. A threshold to stream.">
+
+## 2. A threshold to stream.
+
+The two platforms with no streams on the list both put a social cost in front of the first broadcast. YouTube's help documentation lists at least 50 subscribers, a verified channel, and no live streaming restriction in the previous 90 days as conditions for streaming from a phone, and it states that YouTube may limit the number of viewers on a mobile stream for channels under 1,000 subscribers, with archived streams set to private by default (YouTube Help, n.d.). TikTok allowed any user over 16 with at least 1,000 followers to host a LIVE stream in 2022 (Mandler, 2022), and raised the minimum age to 18 from November 23, 2022 (TikTok, 2022). Twitch, by Ofcom's account, required only an account (Ofcom, 2022), and in 2023 Facebook Live and Instagram Live published no follower minimum.
+
+Platforms that set a threshold of that kind act on the trait that keeps turning up across the incident list. An attacker whose private chat room drew fifteen accepted invitations, the number the New York Attorney General's office reported for Buffalo, stands a long way from 1,000 followers, and by Ofcom's account at least one attacker weighed account rules when he picked a service. The New York Attorney General's office reached a parallel recommendation from a different direction, proposing that livestreaming be subject to restrictions, including verification requirements and tape delays, tailored to identify first-person violence before it spreads (New York State Office of the Attorney General, 2022).
+
+The strong objection is that the tally is a correlation over eight events. YouTube and TikTok differ from the other three services in audience, culture, and moderation as well as in streaming thresholds, and a determined attacker can open a desktop stream on YouTube, where no equivalent subscriber minimum existed in 2023. The fair reading of the tally is that follower thresholds are one barrier among several, worth their cost to new streamers, and the weight of the argument belongs on the part of the problem a platform controls in the minutes after a stream begins, which is how fast its viewers can report.
+
+</Band>
+
+<Band theme="dark" spine="Seven viewers who could report" section="3. Seven viewers who could report.">
+
+## 3. Seven viewers who could report.
+
+The Attorney General's office documented what Twitch's automated tools and the stream's viewers each contributed on the Buffalo stream. According to the office, Twitch periodically ran machine learning tools that visually inspected the broadcast before the violence began, because the account belonged to an infrequent streamer, and those tools detected no content that violated the platform's policies; for most of its first twenty minutes the stream showed a drive, with a rifle and parts of tactical gear visible at times (New York State Office of the Attorney General, 2022).
+
+The earliest signal came from a person. The first logged-in viewer joined at 2:26:59 p.m., reported the stream to Twitch at 2:29:49 p.m. with the description "about to shoot up a store," and the shooting began within about a minute of that report; two more viewers reported by about 2:30, and Twitch stopped the stream at 2:31:29 p.m., less than two minutes after the first report (New York State Office of the Attorney General, 2022). The office also reported that viewers in the United States who were not logged in had no option to report, which left 7 of the 20 to 28 viewers able to act.
+
+<ReportWindowTimeline />
+
+Christchurch sits at the other end of the range. Facebook reported that no user flagged the video during the live broadcast, and that the first user report arrived 29 minutes after the video started and 12 minutes after the broadcast ended (Sonderby, 2019). At Buffalo a viewer report came first and removal followed within two minutes; at Christchurch no viewer reported while the stream was live. Between a viewer deciding to report and the report reaching a reviewer lies an interval that interface designers can shorten directly. Threat assessment researchers reach the same conclusion from the other side, since the people around a person tend to see the change in behavior before any system does; the longer version of that argument is in [Assessing Risk for Mass Violence From Platform Behaviors](/assessing-mass-violence-risk/).
+
+</Band>
+
+<Band theme="paper" spine="What reporting asked" section="4. What reporting asked of a viewer in 2023.">
+
+## 4. What reporting asked of a viewer in 2023.
+
+In 2023 I walked through the live reporting flow on four services, once each on a phone, and wrote down what a viewer had to do to report a stream; interaction counts come from one service only, so the counts below stay with that service.
+
+- **TikTok LIVE.** A viewer reached the report option through an icon most people associate with sharing, or through a long press on the screen. A long list of categories followed, with further tiers beneath some of them, and filing a single report took four or five interactions. No option named a mass casualty attack, and no visual cue set high-harm categories apart from the rest.
+- **Facebook Live and Instagram Live.** A viewer reached the report option through a small, general-purpose menu marked with an ellipsis. Facebook Live did not offer reporting of a livestream from a mobile browser at the time.
+- **YouTube Live.** YouTube placed the most visible report entry point of the four services, followed by a long and detailed category menu.
+- **Twitch.** By the Attorney General's account, a viewer in the United States had to be logged in to report at all (New York State Office of the Attorney General, 2022).
+
+Platforms built each of these flows for general moderation, which they handle well; with a long list of policy categories, a platform can route each report to the reviewer trained for it, and with the report option inside an overflow menu, people scrolling a feed all day file fewer accidental reports. The viewer carrying the one report that cannot wait pays for both choices. A viewer who has just realized an attack is beginning has to find the entry point, read every label, decide which category an unfolding attack belongs to, and then make the same decision again one tier down.
+
+</Band>
+
+<Band theme="dark" spine="Three principles" section="5. Three principles for an emergency report.">
+
+## 5. Three principles for an emergency report.
+
+Platform users are likely the largest moderation workforce any platform has, and three well-established principles from human factors research are a good place to start when you design for them and the report is urgent.
+
+**Jakob's Law.** Nielsen (2000) observed that people spend most of their time on other sites, so they expect a new interface to work the way the familiar ones do. The flag is the most widely shared symbol for reporting content, so it belongs directly on the live player, one tap from the stream, where a viewer who has used any other service would look for it.
+
+**Hick's Law.** Choice reaction time rises with the logarithm of the number of equally likely alternatives (Hick, 1952; Proctor & Schneider, 2018); each added option costs a little less time than the one before it, and my 2023 draft, which called that growth exponential, had it wrong. The practical cost of a reporting menu comes from more than the option count, since a viewer facing an unfamiliar menu also has to read each label before choosing, and every tier repeats the whole decision. Four plain-language options at the first level, with the emergency option first and no second tier behind it, is the shape that follows.
+
+**The von Restorff effect.** Von Restorff (1933) showed that an item set apart from a run of homogeneous items is more likely to be noticed and remembered. In a list of eight policy categories set in the same type, the item a viewer needs most looks like every other item; giving the emergency option its own color and shape and an alert mark lets a viewer find it without reading the list.
+
+<ReportMenuCompare />
+
+</Band>
+
+<Band theme="paper" spine="Literacy" section="6. Writing for the reader who is there.">
+
+## 6. Writing for the reader who is there.
+
+A designer who relies on careful reading assumes a reader the population does not reliably supply. In the 2012/2014 round of the Program for the International Assessment of Adult Competencies, 13 percent of U.S. adults aged 16 to 65 performed at the highest literacy level (Level 4/5), against an international average of 12 percent (National Center for Education Statistics, n.d.). In the 2023 round, the share of U.S. adults at Level 1 or below in literacy rose from 19 percent in 2017 to 28 percent (National Center for Education Statistics, 2024).
+
+<StatRow items={[
+  { value: "13%", label: "U.S. adults at the top literacy level, 2012/2014" },
+  { value: "28%", label: "U.S. adults at Level 1 or below, 2023" },
+  { value: "8 of 8", label: "Listed attacks on platforms with no streaming threshold" },
+  { value: "7", label: "Buffalo viewers able to report" },
+]} />
+
+About one adult in eight reaches the top level, and more than a quarter performed at or below Level 1 in 2023. Those figures come from calm testing conditions, and a viewer watching an attack reads under far worse ones. Three design limits for an emergency report follow from them, short common words, few options on the screen at once, and a single tier.
+
+</Band>
+
+<Band theme="dark" spine="Claim reporting" section="7. The same design for a first notice of loss.">
+
+## 7. The same design for a first notice of loss.
+
+An insurance claim begins with a report filed by a person under stress, often within hours of a crash, a fire, or a storm, frequently on a phone, and sometimes by someone who has never filed a claim before. Claimants filing a first notice of loss face every condition that made livestream reporting hard; they are upset, the categories that matter to the insurer's routing are invisible to them, and a claimant facing a menu built around the insurer's lines of business has to classify their own loss before anyone has helped. The three principles carry over directly, and here is what they look like on a claims app.
+
+- **A familiar entry point.** "Report a claim" goes where people find it on other insurers' apps and sites, as a single labeled button on the first screen (Jakob's Law).
+- **Few first-level choices in plain words.** The first screen opens with four options written the way people describe a loss, such as "Someone is hurt," "My car," "My home," and "Something else," and the detail an adjuster needs comes after the claimant has started (Hick's Law).
+- **A distinct urgent path.** "Someone is hurt or unsafe" sits apart in color and shape, leading to an immediate call option, so a claimant in danger never has to read the rest of the menu (the von Restorff effect).
+
+A design argument is a hypothesis until a test supports it, so the change belongs in a pre-registered A/B test. New reporting sessions are randomized at the claimant level, so a person who returns to finish a report sees the same menu, to either the current menu or the simplified one. The primary KPI is the report-completion rate, the share of started reports that a claimant submits. The guardrail is the misrouted-report rate, the share of submitted reports later reassigned to a different line, queue, or adjuster group, because with fewer and broader first-level categories, more reports could reach the wrong place. Secondary measures are time to submit and the step at which abandoned reports stop.
+
+The pre-registration fixes the hypothesis, the randomization unit, the sample size computed from the current completion rate and the smallest lift worth shipping, the analysis (a difference in completion proportions with a confidence interval), and a non-inferiority margin for misrouting, all before launch. It helps to stratify randomization by catastrophe period, since a regional storm changes who reports and how, and to review a sample of misrouted reports by hand to learn which plain-language label sent them astray. The decision rule is simple; the team ships the simplified menu if completion rises and misrouting stays inside the margin, and revises the labels if completion rises while misrouting does not.
+
+</Band>
+
+<Band theme="paper" spine="Sticky spots" section="8. Sticky spots.">
+
+## 8. Sticky spots.
+
+The platform tally is a co-occurrence over eight purposively chosen incidents, and the honest use of it is as a reason to treat a streaming threshold as one barrier among several; the platforms differ in size, audience age, and moderation practice as well as in streaming rules, and viewer counts exist for only three of the eight streams, so a causal estimate of what a threshold prevents needs a different design. A single pass through each reporting flow in 2023 is a snapshot, and every interface described here has likely changed since, so anyone applying the principles today benefits from walking the current flows first. The three design principles come from laboratory and usability research, and their effect on emergency reporting remains to be measured directly, which is the reason the claim reporting section ends in a test; if you run that test, the completion rate and the misrouting rate together will tell you more than either one alone, and I hope the simpler menu earns its place on your first screen.
+
+</Band>
+
+<ApaReferences>
+
+Associated Press. (2023, April 10). Police: Louisville shooter livestreamed deadly attack on Instagram. *Bangor Daily News*. https://www.bangordailynews.com/2023/04/10/nation/louisville-shooting-kentucky-livestream/
+
+Euronews. (2020, February 8). Thai soldier shot dead after killing at least 29 in gun rampage. *Euronews*. https://www.euronews.com/2020/02/08/thai-soldier-kills-at-least-17-in-gun-rampage-streamed-on-facebook
+
+Hick, W. E. (1952). On the rate of gain of information. *Quarterly Journal of Experimental Psychology, 4*(1), 11-26.
+
+Jee, C. (2019, October 10). Germany's synagogue shooting was live-streamed on Twitch, but almost no one saw it. *MIT Technology Review*. https://www.technologyreview.com/2019/10/10/132662/germanys-synagogue-shooting-was-live-streamed-on-twitch-but-almost-no-one-saw-it/
+
+Lankford, A., & Madfis, E. (2018). Don't name them, don't show them, but report everything else: A pragmatic proposal for denying mass killers the attention they seek and deterring future offenders. *American Behavioral Scientist, 62*(2), 260-279.
+
+Mandler, C. (2022, October 19). TikTok to raise minimum age for hosting livestreams, add adult-only streams. *CBS News*.
+
+National Center for Education Statistics. (n.d.). *Program for the International Assessment of Adult Competencies (PIAAC): 2012 results summary*. U.S. Department of Education. https://nces.ed.gov/surveys/piaac/results/
+
+National Center for Education Statistics. (2024). *PIAAC 2023: Highlights of U.S. national results*. U.S. Department of Education. https://nces.ed.gov/surveys/piaac/2023/national_results.asp
+
+New York State Office of the Attorney General. (2022, October 18). *Investigative report on the role of online platforms in the tragic mass shooting in Buffalo on May 14, 2022*. https://ag.ny.gov/sites/default/files/buffaloshooting-onlineplatformsreport.pdf
+
+Nickerson, J. (2020, May 27). Stamford man charged in I-95 shooting incident. *Stamford Advocate*.
+
+Nielsen, J. (2000, July 22). *End of web design*. Nielsen Norman Group. https://www.nngroup.com/articles/end-of-web-design/
+
+Ofcom. (2022, October 12). *The Buffalo attack: Implications for online safety*. https://www.ofcom.org.uk/__data/assets/pdf_file/0019/245305/The-Buffalo-Attack-Implications-for-Online-Safety.pdf
+
+Proctor, R. W., & Schneider, D. W. (2018). Hick's law for choice reaction time: A review. *Quarterly Journal of Experimental Psychology, 71*(6), 1281-1299.
+
+Sainz, A. (2022, September 8). Memphis gunman arrested in livestreamed shootings that killed 4. *Associated Press*, via *PBS NewsHour*.
+
+Sonderby, C. (2019, March 18). *Update on New Zealand*. Meta Newsroom. https://about.fb.com/news/2019/03/update-on-new-zealand/
+
+TikTok. (2022, October 17). *Enhancing the LIVE community experience with new features, updates, and policies*. TikTok Newsroom. https://newsroom.tiktok.com/en-us/enhancing-the-live-community-experience
+
+von Restorff, H. (1933). Über die Wirkung von Bereichsbildungen im Spurenfeld. *Psychologische Forschung, 18*(1), 299-342.
+
+Wikipedia contributors. (n.d.). Eslöv school stabbing. In *Wikipedia*. Retrieved October 1, 2026, from https://en.wikipedia.org/wiki/Esl%C3%B6v_school_stabbing
+
+YouTube Help. (n.d.). *Create a live stream on mobile*. Google. Retrieved October 1, 2026, from https://support.google.com/youtube/answer/9228390
+
+</ApaReferences>

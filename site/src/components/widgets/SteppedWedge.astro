@@ -1,0 +1,46 @@
+---
+// Illustrative stepped-wedge schedule: six offices, seven two-month periods.
+// Every office starts on the current workflow; one randomly ordered office
+// crosses to the AI tool at each step. Cell text is months of exposure at the
+// end of the period, which the analysis models directly because a J-curve
+// makes the effect depend on time on the tool.
+const offices = ["Office A", "Office B", "Office C", "Office D", "Office E", "Office F"];
+const periods = 7;
+const monthsPerPeriod = 2;
+const cells = offices.map((_, i) =>
+  Array.from({ length: periods }, (_, p) => (p > i ? (p - i) * monthsPerPeriod : 0))
+);
+const shade = (m: number) => (m === 0 ? 0 : Math.min(0.15 + m * 0.06, 0.85));
+---
+<figure class="sw" aria-label="Illustrative stepped-wedge rollout schedule across six offices">
+  <div class="sw-grid" style={`grid-template-columns: minmax(5.5rem, 7rem) repeat(${periods}, 1fr);`}>
+    <div class="sw-h"></div>
+    {Array.from({ length: periods }, (_, p) => <div class="sw-h">{`P${p}`}<small>{`months ${p * monthsPerPeriod + 1}-${(p + 1) * monthsPerPeriod}`}</small></div>)}
+    {offices.map((name, i) => (
+      <>
+        <div class="sw-row">{name}</div>
+        {cells[i].map((m) => (
+          <div class:list={["sw-cell", { on: m > 0 }]} style={m > 0 ? `background: rgba(56, 102, 160, ${shade(m)});` : ""}>
+            {m > 0 ? `${m} mo` : "current"}
+          </div>
+        ))}
+      </>
+    ))}
+  </div>
+  <div class="sw-legend"><span class="k cur"></span>Current workflow <span class="k on"></span>On the AI tool, labeled with months of exposure</div>
+  <figcaption>Figure 2. An illustrative stepped-wedge rollout. All six offices start on the current workflow in period 0; at each two-month step one office, in an order drawn at random before launch, crosses to the AI tool and stays on it. Every office contributes time on both sides of the switch, and the cell labels carry the months of exposure the analysis needs to trace the dip and the recovery.</figcaption>
+</figure>
+
+<style>
+  .sw { margin: 2rem 0; overflow-x: auto; }
+  .sw-grid { display: grid; gap: 3px; min-width: 34rem; }
+  .sw-h { font-family: var(--font-mono); font-size: var(--fs-caption); letter-spacing: .06em; text-transform: uppercase; text-align: center; opacity: .75; padding-bottom: .3rem; }
+  .sw-h small { display: block; opacity: .7; text-transform: none; letter-spacing: 0; }
+  .sw-row { font-family: var(--font-mono); font-size: var(--fs-label); display: flex; align-items: center; }
+  .sw-cell { font-family: var(--font-mono); font-size: var(--fs-caption); text-align: center; padding: .55rem .2rem; border: 1px solid color-mix(in srgb, currentColor 18%, transparent); border-radius: 2px; opacity: .65; }
+  .sw-cell.on { opacity: 1; border-color: rgba(56, 102, 160, .9); }
+  .sw-legend { margin-top: .9rem; font-family: var(--font-mono); font-size: var(--fs-caption); letter-spacing: .06em; text-transform: uppercase; opacity: .8; display: flex; flex-wrap: wrap; gap: .4rem 1rem; align-items: center; }
+  .k { display: inline-block; width: .8rem; height: .8rem; margin-right: .35rem; vertical-align: middle; border: 1px solid color-mix(in srgb, currentColor 30%, transparent); }
+  .k.on { background: #3866A0; border-color: #3866A0; }
+  .sw figcaption { margin-top: 1rem; font-size: var(--fs-body-sm); line-height: 1.6; opacity: .8; }
+</style>

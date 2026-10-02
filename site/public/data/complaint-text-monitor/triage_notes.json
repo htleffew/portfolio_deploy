@@ -1,0 +1,22 @@
+[
+ {
+  "date": "2023-10-17",
+  "summary": "Escalation",
+  "description": "Caller verified the claim number. States direct deposit for the claim never arrived; claim payment is stuck in pending."
+ },
+ {
+  "date": "2023-10-15",
+  "summary": "Complaint",
+  "description": "Customer called in. States settlement check was issued without the mortgage company; claim payment is stuck in pending. Explained next steps."
+ },
+ {
+  "date": "2023-10-11",
+  "summary": "Payment to wrong payee",
+  "description": "Spoke with the insured. States settlement check was issued without the mortgage company; received a duplicate claim payment notice. Asked for a supervisor."
+ },
+ {
+  "date": "2023-10-16",
+  "summary": "Payment to wrong payee",
+  "description": "States claim payment was reversed after it posted; payment shows issued but the bank shows nothing. Asked for a supervisor."
+ }
+]

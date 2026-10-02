@@ -1,0 +1,87 @@
+---
+// Date-shift test for the synthetic payment wave. For each candidate date (the
+// payment-system change shifted by k weeks), the statistic is the excess of
+// payment-error notes in the 14 days after the date over the count expected from
+// the prior 12-week rate. Shifts whose windows avoid the wave form the null.
+// Data: date_shift.json, summary.json.
+import { loadCtm } from './ctmData.mjs';
+
+const d = loadCtm('date_shift.json');
+const s = loadCtm('summary.json');
+const pts = d.shifts;
+const nullSet = new Set(d.null_ks);
+const W = 640, H = 280, L = 52, R = 14, T = 20, B = 44;
+const kMin = pts[0].k, kMax = pts[pts.length - 1].k;
+const vMin = Math.floor(Math.min(...pts.map((p) => p.excess)) / 10) * 10;
+const vMax = Math.ceil(Math.max(...pts.map((p) => p.excess)) / 10) * 10;
+const x = (k) => L + ((k - kMin) / (kMax - kMin)) * (W - L - R);
+const y = (v) => T + (1 - (v - vMin) / (vMax - vMin)) * (H - T - B);
+const yTicks = [];
+for (let v = 0; v >= vMin; v -= 20) yTicks.unshift(v);
+for (let v = 20; v <= vMax; v += 20) yTicks.push(v);
+const xTicks = [-20, -15, -10, -5, 0, 5, 10, 15, 20];
+const signed = (v) => (v < 0 ? `−${Math.abs(v)}` : `${v}`);
+const obs = pts.find((p) => p.k === 0);
+const decoy = pts.find((p) => p.k === d.decoy_k);
+---
+<figure class="ctm-ds" aria-label="Date-shift test for the payment wave">
+  <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Excess payment-error notes by candidate date shift in weeks">
+    {yTicks.map((v) => (
+      <g>
+        <line x1={L} x2={W - R} y1={y(v)} y2={y(v)} class:list={['grid', { zero: v === 0 }]} />
+        <text x={L - 8} y={y(v) + 4} text-anchor="end" class="tick">{v > 0 ? `+${v}` : v}</text>
+      </g>
+    ))}
+    {xTicks.map((k) => <text x={x(k)} y={H - B + 18} text-anchor="middle" class="tick">{k > 0 ? `+${k}` : k}</text>)}
+    <text x={(L + W - R) / 2} y={H - 6} text-anchor="middle" class="axis">Candidate date, weeks from the payment-system change</text>
+    {pts.map((p) => (
+      <line x1={x(p.k)} x2={x(p.k)} y1={y(0)} y2={y(p.excess)} class:list={['stem', { nul: nullSet.has(p.k), obs: p.k === 0 }]} />
+    ))}
+    {pts.map((p) => (
+      <circle cx={x(p.k)} cy={y(p.excess)} r={p.k === 0 ? 6 : 4} class:list={['pt', { nul: nullSet.has(p.k), obs: p.k === 0, decoy: p.k === d.decoy_k }]}>
+        <title>{`Shift ${p.k} weeks: excess ${p.excess} notes`}</title>
+      </circle>
+    ))}
+    <text x={x(0) + 10} y={y(obs.excess) + 4} class="lab obs">{`Change date, +${obs.excess} notes`}</text>
+    <text x={x(decoy.k) - 8} y={y(decoy.excess) - 26} text-anchor="end" class="lab">{`Portal redesign, ${signed(decoy.excess)}`}</text>
+    <line x1={x(decoy.k)} x2={x(decoy.k) - 6} y1={y(decoy.excess) - 7} y2={y(decoy.excess) - 22} class="lead" />
+  </svg>
+  <div class="ctm-ds-legend">
+    <span><i class="sw obs"></i>Change date</span>
+    <span><i class="sw nul"></i>Null shift (windows avoid the wave)</span>
+    <span><i class="sw ovl"></i>Shift whose windows overlap the wave</span>
+  </div>
+  <figcaption>
+    Figure 6. Excess payment-error notes in the 14 days after each candidate date, over the count expected from the prior
+    12-week rate. The {s.shift_null_n} null shifts have a mean of {signed(s.shift_null_mean)} notes (standard deviation {s.shift_null_sd},
+    largest {s.shift_null_max}).
+  </figcaption>
+</figure>
+
+<style>
+  .ctm-ds { margin: 2rem 0; }
+  .ctm-ds svg { width: 100%; max-width: 860px; height: auto; display: block; overflow: visible; }
+  @media (max-width: 640px) {
+    .ctm-ds .tick, .ctm-ds .axis, .ctm-ds .lab { font-size: 17px; }
+  }
+  .ctm-ds .grid { stroke: currentColor; stroke-opacity: .12; }
+  .ctm-ds .grid.zero { stroke-opacity: .5; }
+  .ctm-ds .tick { fill: currentColor; fill-opacity: .65; font-family: var(--font-mono); font-size: 12px; }
+  .ctm-ds .axis { fill: currentColor; fill-opacity: .75; font-family: var(--font-mono); font-size: 12px; letter-spacing: .04em; }
+  .ctm-ds .stem { stroke: currentColor; stroke-opacity: .3; stroke-width: 1.5; }
+  .ctm-ds .stem.nul { stroke: #3866A0; stroke-opacity: .7; }
+  .ctm-ds .stem.obs { stroke: #B8384B; stroke-opacity: 1; stroke-width: 2.5; }
+  .ctm-ds .pt { fill: none; stroke: currentColor; stroke-opacity: .5; stroke-width: 1.5; }
+  .ctm-ds .pt.nul { fill: #3866A0; stroke: #3866A0; stroke-opacity: 1; }
+  .ctm-ds .pt.obs { fill: #B8384B; stroke: #B8384B; stroke-opacity: 1; }
+  .ctm-ds .pt.decoy { stroke: #DBA844; stroke-width: 2.5; stroke-opacity: 1; }
+  .ctm-ds .lab { fill: currentColor; fill-opacity: .85; font-family: var(--font-mono); font-size: 12px; }
+  .ctm-ds .lab.obs { fill: #B8384B; fill-opacity: 1; font-weight: 700; }
+  .ctm-ds .lead { stroke: #DBA844; stroke-width: 1.5; }
+  .ctm-ds-legend { margin-top: .8rem; font-family: var(--font-mono); font-size: var(--fs-caption); letter-spacing: .05em; text-transform: uppercase; opacity: .8; display: flex; flex-wrap: wrap; gap: .4rem 1.2rem; align-items: center; }
+  .ctm-ds .sw { display: inline-block; width: .7rem; height: .7rem; border-radius: 50%; margin-right: .4rem; vertical-align: middle; }
+  .ctm-ds .sw.obs { background: #B8384B; }
+  .ctm-ds .sw.nul { background: #3866A0; }
+  .ctm-ds .sw.ovl { border: 1.5px solid currentColor; opacity: .6; }
+  .ctm-ds figcaption { margin-top: 1rem; font-size: var(--fs-body-sm); line-height: 1.6; opacity: .8; }
+</style>

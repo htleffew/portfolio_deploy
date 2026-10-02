@@ -1,0 +1,224 @@
+---
+layout: ../layouts/CinematicLayout.astro
+title: "The Helper's Language as an Early Indicator"
+short_title: "The Helper's Language"
+description: "When a service conversation starts to fail, the person helping tends to say so first, in apologies and stated limits, while most dissatisfied customers leave without a word of complaint. On 5,000 synthetic claim chats, this is the method end to end; count LIWC-style categories on both sides of the exchange, remove the length confound that makes whole-conversation flags look predictive, predict attorney representation from the first two turns with a calibrated model, validate a weak-supervision proxy against a thin survey anchor, and rerun everything on a second population where the proxy fails to transfer."
+category: "Linguistic & Behavioral Measurement"
+subcategory: "Conversational Measurement"
+format: "TUTORIAL"
+author: "Dr. Heather Leffew"
+tags: ["LIWC", "Linguistic Analysis", "Behavioral Evaluation", "Experiment Design", "Weak Supervision"]
+visual: ""
+scripts: []
+---
+import Band from '../components/Band.astro';
+import Figure from '../components/Figure.astro';
+import ApaReferences from '../components/ApaReferences.astro';
+import HelperLengthTrap from '../components/widgets/HelperLengthTrap.astro';
+import HelperCodedChat from '../components/widgets/HelperCodedChat.astro';
+
+<Band theme="paper" spine="Abstract" section="Abstract">
+
+## Abstract
+
+When a service conversation starts to fail, the person helping tends to say so first, in apologies and stated limits, while most dissatisfied customers leave without a word of complaint; anyone who waits for the customer to object starts late and misses most of the cases they set out to find. I first built a version of this method for a conversational assistant answering customer requests, and the part that stayed with me was how early the helper's side of the transcript started apologizing. Here the method runs end to end on 5,000 synthetic claim chats between claimants and claim professionals, with attorney representation within 90 days as the outcome, so every step can be shown on data anyone may inspect. You will see seven dictionary categories in the LIWC tradition, three for the professional and four for the claimant; how a whole-conversation flag picks up the outcome through chat length, and how a rate inside a fixed first-contact window closes that route; a first-two-turn model that predicts representation (AUC .65, calibration slope .96); a weak-supervision label model built from three evidence streams and measured against 300 survey responses, 20 of them negative; and the same pipeline rerun on a second synthetic population, where the proxy falls to chance. The method ends in a pre-registered field experiment, because an indicator earns its keep once it points at something a claim organization can test.
+
+</Band>
+
+<Band theme="dark" spine="1. The asymmetry" section="1. The asymmetry">
+
+## 1. The asymmetry
+
+Satisfied people leave very little text behind. A claimant who gets a clear answer about the rental, the inspection date, or the payment tends to say thanks and close the chat, and the transcript of a conversation that went well is short, polite, and nearly empty of anything a dictionary could count. Dissatisfaction has two routes, and Hirschman (1970) named them for customers of declining firms; a dissatisfied person can use voice, which in a chat looks like a correction or an angry line, or exit, which looks like nothing at all. In conversation logs most dissatisfied people choose exit, so a team that waits for the customer to complain starts late and misses most of the cases it set out to find.
+
+The person on the other side of the exchange behaves differently. A claim professional who cannot approve an amount, cannot move a date, or has to explain a gap in coverage says so in words, and in those words the breakdown is visible in real time; "I'm sorry for the wait," "unfortunately I can't approve that today," "I think the shop might have it by then." The helper narrates the failure as it happens, whether or not the claimant ever answers back. Researchers who studied malpractice plaintiffs found a parallel pattern at the far end of the process; families who sued after a perinatal injury often cited communication problems, such as feeling misled or unable to get information, among their reasons for seeking a lawyer (Hickson et al., 1992), and plaintiffs in depositions repeatedly named relationship problems, such as feeling deserted or unheard, alongside the clinical facts (Beckman et al., 1994).
+
+In claim work, people sit on both sides of the chat and the outcome at the end is costly and observable, which makes claims a natural home for this kind of measurement, and a synthetic population makes the transposition concrete. In 5,000 simulated chats with a representation rate of 11.6 percent, the 29 percent of chats in which the professional apologized at least once ran 7.8 turns on average against 4.4 for the rest (1.8 times as long), closed in a single exchange 13 percent of the time against 51 percent, and ended in representation 26 percent of the time against 5.6 percent. That contrast is reported here the way a dashboard usually reports it, as any apology anywhere in the chat, and section 3 takes part of it back.
+
+</Band>
+
+<Band theme="paper" spine="2. A dictionary for both speakers" section="2. A dictionary for both speakers">
+
+## 2. A dictionary for both speakers
+
+The counting method comes from the Linguistic Inquiry and Word Count (LIWC) tradition, in which researchers assign words to psychologically meaningful categories and report each category as a percentage of the words in a text (Pennebaker et al., 2015; Tausczik & Pennebaker, 2010). The finding from that tradition most relevant here is that much of the social and psychological information in a text sits in its small, frequent words; pronouns, negations, and other function words vary with attention, self-focus, and stance in ways speakers seldom monitor (Chung & Pennebaker, 2007; Pennebaker et al., 2003). First-person singular is the clearest case. Higher rates of "I," "me," and "my" accompany distress and depression, modestly but consistently across many samples (Rude et al., 2004; Tackman et al., 2019), and in conversations between people of unequal standing the lower-status speaker tends to use more of them (Kacewicz et al., 2014), a description that fits a claimant waiting on a decision from the person across the chat.
+
+Seven categories do the work here, three for the claim professional and four for the claimant, and each one is counted only in its own speaker's turns, with that speaker's own word count as the denominator. The same word means different things on each side of the exchange; "can't" from a professional states a limit on what the company will do, while "can't" from a claimant is negation, often about their own situation ("I can't keep paying for this myself"). Four categories have close LIWC2015 analogues. Apology, limitation, and correction are specific to service conversations, so they are custom lists, and LIWC users can load lists like these as user dictionaries. The lexicon below is a small illustrative one of my own; for a real deployment it helps to take the validated LIWC-22 categories where they exist (Boyd et al., 2022) and to validate the custom lists against human coding before counting anything at scale.
+
+| Category | Speaker | Nearest LIWC2015 category | Example entries | Role in the simulation |
+| --- | --- | --- | --- | --- |
+| Apology | Claim professional | none (custom) | sorry, apologize, apologies, regret | raises representation risk |
+| Limitation | Claim professional | none (custom) | unfortunately, unable, cannot, can't, not able, not authorized | raises representation risk |
+| Hedging | Claim professional | tentat | maybe, perhaps, possibly, might, probably, I think, I believe | planted null |
+| Negation | Claimant | negate | no, not, never, nothing, nobody, any word ending in n't | raises risk modestly |
+| Correction | Claimant | none (custom) | already, I said, I told, I meant, actually, twice | raises risk modestly, arrives late |
+| Anger | Claimant | anger | angry, furious, ridiculous, unacceptable, fed up, sick of | raises risk modestly, arrives late |
+| First-person singular | Claimant | i | I, me, my, mine, myself, I'm, I've | raises risk modestly |
+
+In the last column sits the one thing you can never know in a real dataset, the truth. I generated every chat from fixed sentence banks under a planted process, with a latent friction score for each chat. Higher friction means more professional apologies and limitations, slightly more claimant negation and first-person singular, more correction and anger only for the 30 percent of claimants who voice complaints at all (and more so in later turns), and a higher probability of representation. Hedging I planted at a constant rate per sentence, unrelated to friction or outcome, so hedging is a null category; a method that finds hedging predictive has found an artifact. Because the truth is known, every analytic step can be scored against it, which is the whole reason to build the example synthetically.
+
+<HelperCodedChat />
+
+</Band>
+
+<Band theme="dark" spine="3. The length trap" section="3. The length trap">
+
+## 3. The length trap
+
+The easiest way to turn a dictionary into a conversation-level measure is a flag; a chat "has apology" if any professional turn contains an apology word. The flag is intuitive, and its failure is predictable. If each sentence has a small probability p of containing a category word, a chat with n sentences contains at least one with probability 1 minus (1 minus p) to the power n, which climbs steadily with n. If some chats run longer than others for any reason, every flag moves with them, whatever the words mean.
+
+In the simulation, length depends partly on the outcome itself; claimants headed toward representation ask more questions and stay in the chat longer, so turn count correlates r = .42 with representation, and part of that correlation passes into every whole-chat flag. The figure below has a toggle between the two ways of counting. Counted as any occurrence anywhere in the chat, hedging correlates r = .16 (95% CI .13 to .18) with representation; counted as a rate per 100 words in the first two turns, the same category correlates r = .01 (CI −.02 to .04), consistent with the zero I planted. With log turn count held constant, the whole-chat hedging flag has a partial r of .04, so nearly all of its apparent signal was length.
+
+<HelperLengthTrap />
+
+Switching to a rate in a fixed window removes two things at once, and it helps to keep them apart. The first is length leakage, which the hedging row isolates. The second is timing; claimant correction and anger have real planted signal, but they arrive late in the chat, so little of them shows in the first-contact window (correction falls from r = .11 as a whole-chat flag to r = .00 as an early rate), and their whole-chat flags shrink to partial correlations of .02 and .03 once length is held constant. Apology loses the least, from r = .29 as a flag to r = .18 as an early rate, because its signal was planted in every professional turn, the first reply included.
+
+LIWC researchers have long handled the length problem by reporting each category as a percentage of words (Pennebaker et al., 2015); the trap reappears whenever a team converts rates back into flags for a dashboard, which happens more often than anyone would like to admit. The cost of the trap is easiest to see in a model. A logistic regression on the seven whole-chat flags reaches an AUC of .79 on the same synthetic data, well above the first-contact model in the next section; most of that margin is chat length, which a claim organization observes only after the conversation is over and which, here, depends on the outcome itself.
+
+</Band>
+
+<Band theme="paper" spine="4. Prediction from the first contact" section="4. Prediction from the first contact">
+
+## 4. Prediction from the first contact
+
+At first contact only the first two turns exist, so the features are the seven category rates in turns 1 and 2, the claimant's opening message (14.7 words on average) and the professional's first reply (17.9 words). The model is a logistic regression on standardized rates with a light L2 penalty, scored by five-fold stratified cross-validation so every chat is scored by a model fit without it, with a 95% interval for the AUC from 2,000 bootstrap resamples of those out-of-fold predictions (Efron & Tibshirani, 1993; Hanley & McNeil, 1982). Resampling the evaluation set alone leaves out the smaller variation from refitting the model, which is worth knowing when you read the interval.
+
+The cross-validated AUC was .65 (95% CI .62 to .67), a modest level of discrimination, and in my experience the level a first-message model tends to reach on real service conversations as well.
+
+<Figure src="/assets/helper-language-signal/fig_roc.svg" alt="ROC curve for the first-two-turn logistic model, rising above the diagonal with a shaded bootstrap band, AUC 0.65 with a 95 percent bootstrap interval from 0.62 to 0.67." caption="Figure 1. ROC curve for the first-contact model on 5,000 synthetic chats, from out-of-fold predictions. The shaded band is the pointwise 95% interval across 2,000 bootstrap resamples; the dashed diagonal is chance." />
+
+Discrimination is how well the model ranks claims; calibration is whether its probabilities mean what they say, and a measure read as rates by team or by week is only as good as its calibration (Van Calster et al., 2019). The model is fit without class reweighting, since with a reweighted minority class the AUC stays the same and every predicted probability rises. Mean predicted risk was 11.6 percent against an observed rate of 11.6 percent, the calibration slope was .96 (1.00 is ideal), and the Brier score was .098 against .102 for predicting the base rate for everyone. The top decile of predicted risk had an observed representation rate of 28.8 percent and the bottom decile 9.2 percent.
+
+<Figure src="/assets/helper-language-signal/fig_calibration.svg" alt="Calibration plot with ten decile points close to the diagonal, nine clustered between 6 and 18 percent and the top decile near 29 percent, calibration slope 0.96." caption="Figure 2. Observed representation rate by decile of out-of-fold predicted risk, with 95% Wilson intervals. Points on the dashed diagonal are perfectly calibrated." />
+
+The coefficients recover the planted structure, with one instructive exception.
+
+| First-two-turn category | Odds ratio per SD | 95% bootstrap CI |
+| --- | --- | --- |
+| Apology (professional) | 1.50 | 1.40 to 1.61 |
+| Limitation (professional) | 1.33 | 1.23 to 1.42 |
+| Hedging (professional) | 1.11 | 1.01 to 1.21 |
+| Negation (claimant) | 1.13 | 1.03 to 1.21 |
+| Correction (claimant) | 0.98 | 0.86 to 1.05 |
+| Anger (claimant) | 1.06 | 0.97 to 1.12 |
+| First-person singular (claimant) | 1.04 | 0.95 to 1.14 |
+
+Apology and limitation have the largest odds ratios. Negation has the modest effect I planted; correction and anger sit near 1.0 because they seldom appear in the first claimant turn; and first-person singular, planted at the same strength as negation, loses its signal in an opening message of about fifteen words, a reminder that dictionary rates on very short texts are noisy. Hedging, the planted null, comes out at 1.11 with an interval that just clears 1.0, and the cause is a feature of the generator. Each sentence has at most one category, so a hedge occupies a slot an apology could have filled; once apology is held constant in the regression, the hedging coefficient rises above one, a suppression effect created by the way the text was built. The same kind of artifact appears in real text whenever categories compete for the same words or slots, and the univariate rate (r = .01) is the safer reading of hedging here.
+
+</Band>
+
+<Band theme="dark" spine="5. Which side speaks first" section="5. Which side speaks first">
+
+## 5. Which side speaks first
+
+The timing of each signal shows the same asymmetry. In the synthetic population, 43 percent of all chats had a professional apology or limitation somewhere, against 8.6 percent with a claimant correction, so the helper's side flags 5.0 times as many chats as the claimant's. The ratio in this simulation is held down by the generous assumption that 30 percent of claimants voice complaints; real customers tend to voice even less, so expect the ratio on your own logs to run higher.
+
+Among the 578 chats that ended in representation, 79 percent had a helper signal by the end of the chat and 19 percent had a claimant correction or anger, and 81 percent of those claimants never voiced either. The helper signal also arrived first; it appeared in the second turn for 47 percent of represented chats, and the median first helper signal fell at turn 2 against turn 5 for the claimant. By turn 3 only 6.4 percent of represented chats contained a claimant correction or anger.
+
+<Figure src="/assets/helper-language-signal/fig_first_signal.svg" alt="Line chart of the cumulative share of chats with a signal by turn. For represented chats, the helper apology or limitation line rises to 47 percent at turn 2 and 78 percent by turn 8, far above the claimant correction or anger line, which reaches 19 percent; dashed lines for chats without representation sit lower for both speakers." caption="Figure 3. Share of chats with a signal by each turn, for chats that ended in representation (solid) and chats that did not (dashed). Helper signals appear at turn 2; claimant signals accumulate slowly and stay low, because most claimants never voice a complaint." />
+
+The other half of the lesson is in the dashed lines. By the end of the chat, 39 percent of the chats that did not end in representation also had a helper signal, so the helper's language is sensitive and far from specific; an apology marks friction, and most friction resolves. The signal belongs in a rate across many claims (a team, a line of business, a week), where its sensitivity is a strength and its lack of specificity averages out.
+
+</Band>
+
+<Band theme="paper" spine="6. Measuring when ground truth is thin" section="6. Measuring when ground truth is thin">
+
+## 6. Measuring when ground truth is thin
+
+Representation is a hard outcome, and claim professionals record it in the file. The claimant's experience is softer and matters on its own terms, and here the only explicit evidence is a post-close survey that few people answer. In the simulation, 300 survey responses were drawn at random, and 20 of them were negative, about the size of anchor a team usually has when it first asks whether its implicit measures mean anything.
+
+Three evidence streams combine into one label. The first is helper language (the professional's apology and limitation rate over the whole chat, flagged for the top fifth); the second is claimant language (negation, correction, and anger, flagged the same way); the third is behavioral (a repeat contact within seven days). Rates per word keep the length trap out of the two language streams, and reading the whole chat is appropriate here, since the question concerns how the conversation went once it was over. A two-class latent class model fit by expectation maximization (Dawid & Skene, 1979), the model family behind data programming and weak supervision (Ratner et al., 2016, 2017), estimates each stream's sensitivity and false-positive rate without any labels and yields a posterior probability of a dissatisfied experience for every chat. A simulated LLM-judge label stays out of the model and serves as an independent cross-check, the way a judge pass is often used to audit a proxy (Zheng et al., 2023).
+
+Against the 300-response anchor, the label model's AUC is .64 (95% CI .51 to .77). In the simulation you can do something no real program allows and score the same label against every chat's true state; that AUC was .76. Drawing 1,000 alternative surveys of 300 from the same population, the middle 90 percent of their AUC estimates ran from .61 to .82. The anchor that happened to be drawn sits low in that spread, and with any single anchor of this size the answer would stay just as open; by the Hanley and McNeil (1982) approximation the AUC on the current anchor is known only to within about ±.13, and narrowing that to ±.05 at this prevalence takes about 2,190 responses, roughly 146 of them negative.
+
+<Figure src="/assets/helper-language-signal/fig_label_model.svg" alt="Dot-and-whisker chart of label-model AUC against the 300-response survey anchor. Population A with all three streams estimates 0.64 with an interval from 0.51 to 0.77 and a true value of 0.76; dropping helper language, claimant language, or repeat contact gives similar anchor estimates with true values of 0.71, 0.78, and 0.70. Population B with all three streams estimates 0.40 with an interval from 0.32 to 0.50 and a true value of 0.50." caption="Figure 4. Label-model AUC on the thin survey anchor (dots and whiskers) beside the AUC against every chat's true state (open diamonds), for the full model, for the model with each stream dropped, and for the transfer population in section 7." />
+
+Fitting the label model means assuming the streams are independent once the true state is known, and dropping each stream in turn is a practical check on that assumption. Without helper language, the true AUC fell from .76 to .71; without repeat contact it fell to .70; without claimant language it rose to .78. Both language streams rise with the same friction, and among the satisfied survey respondents their flags still correlated (phi = .19), so the shared friction enters the posterior twice and gets too much weight. None of this was visible on the anchor, since its estimates for the four versions (.64, .63, .66, .62) differ by far less than its own interval. The judge's labels and the proxy agreed only weakly, at a Cohen's (1960) kappa of .16, although the judge's own AUC against the true state was .71; two imperfect readers of the same construct can disagree substantially while each contains real signal.
+
+</Band>
+
+<Band theme="dark" spine="7. Transfer" section="7. Transfer">
+
+## 7. Transfer
+
+Anyone who validates an index in one population and uses it in another makes an implicit claim that the process generating its signals stays the same, and the claim is worth testing on purpose. The test here is a second synthetic population of 5,000 chats built on a different process, the kind of difference that separates two lines of business, or one team before and after a new script. Every professional in Population B opens with a scripted apology, apology and limitation language appear at constant rates whatever the friction, nearly every claim receives a scheduled callback (97 percent have a repeat contact), and dissatisfaction and representation depend mainly on something absent from every transcript, the timing of a payment after the chat ends. The identical pipeline runs again.
+
+| Measure | Population A | Population B |
+| --- | --- | --- |
+| Label-model AUC on the 300-response anchor | .64 (.51 to .77) | .40 (.32 to .50) |
+| Label-model AUC against every chat's true state | .76 | .50 |
+| Middle 90% of 1,000 alternative anchors | .61 to .82 | .42 to .59 |
+| Agreement of judge and label (Cohen's kappa) | .16 | −.01 |
+| First-contact representation model, trained on A | .65 (.62 to .67) | .50 (.47 to .52) |
+
+In B the label model's AUC against the true state is .50, the judge and the label agree at chance, and B's claims come out at AUC .50 under the first-contact model trained on A. The anchor estimate of .40 is a further hazard of a thin anchor, since an index with no information can land below chance by luck. Population B is built the way real failures tend to happen; a scripted opening removes the variance from the helper stream, a scheduled callback removes it from the behavioral stream, and the thing that drives the outcome never appears in the text.
+
+The practical conclusion is to collect explicit feedback before trusting the index, and to keep collecting it. A one-question post-close survey with a reason code, sized to measure the AUC within ±.05 in each population and re-read whenever a script or process changes, costs far less than acting on an index that has stopped measuring anything.
+
+</Band>
+
+<Band theme="paper" spine="8. From indicator to experiment" section="8. From indicator to experiment">
+
+## 8. From indicator to experiment
+
+From an association between apology language and representation you learn that apologies mark breakdowns, and nothing yet about whether a different way of handling the breakdown would change the outcome. A field experiment answers that question, and the indicator is how you choose what to test. Experimental work on apologies in legal settlement suggests that an apology that accepts responsibility and one that only expresses sympathy may move claimants differently (Robbennolt, 2003), and the limitation category points at a second target, the moment a professional tells a claimant what the company will not do. A pre-registered test, filed before any claim enters it (Nosek et al., 2018), would carry these elements.
+
+- **Intervention.** Coaching and a short script for claim professionals on delivering a limitation, pairing each stated limit with its reason, the next step, and the date of that step, and closing with a check that the claimant understood.
+- **Unit of randomization.** Teams of claim professionals, since coaching is delivered to people and spreads within a team; claims inherit the arm of the team that handles them.
+- **Primary KPI.** Attorney representation within 90 days of first notice of loss, analyzed by intention to treat with a mixed-effects logistic regression and a random intercept for team.
+- **Guardrail.** The helper apology rate per 100 words in turns 1 and 2, held within a two-sided band around its baseline. A sharp rise would mean the script turned into rote apology, the Population B failure that erased the signal; a sharp fall would mean professionals learned to avoid the words. Once the coaching is about the language, the language can no longer serve as the measure of success (Campbell, 1979), so it stays a guardrail and representation stays the outcome. Cycle time and the post-close survey score serve as secondary guardrails.
+- **Exclusions and stopping.** Claims already represented at first contact are excluded in advance, and the analysis runs once, at a fixed horizon 90 days after the last claim enters.
+
+The sample size follows from the outcome. Detecting a drop from 11.6 to 10.15 percent (a 12.5 percent relative reduction) at α = .05 with 80 percent power requires 7,236 claims per arm if claims were independent. Claims are clustered within teams, so the requirement grows by the design effect, one plus the intraclass correlation times the cluster size minus one.
+
+| Claims per team | Assumed ICC | Design effect | Claims per arm | Teams per arm |
+| --- | --- | --- | --- | --- |
+| 200 | .01 | 2.99 | 21,636 | 109 |
+| 200 | .02 | 4.98 | 36,036 | 181 |
+| 400 | .01 | 4.99 | 36,108 | 91 |
+
+The ICC values are assumptions, and it pays to estimate them from historical claims before committing to a design, since the required sample at an ICC of .02 is about two thirds larger than the sample at .01.
+
+</Band>
+
+<Band theme="dark" spine="9. Sticky spots" section="9. Sticky spots, and using this fairly">
+
+## 9. Sticky spots, and using this fairly
+
+The measures belong in aggregate, as rates by team, line of business, and week. With a first-contact AUC of .65, a large share of individual claims would be misranked, and a claimant scored by the words they used and then handled differently because of the score has been treated unfairly on weak evidence, in a way that could produce the very outcome the score predicted. The professional's language is the more appropriate object of measurement in any case, since it is a record of how the organization handled the conversation, and the use it supports best is coaching and process design, applied to teams.
+
+The associations are observational. Apology language marks a breakdown; whether a different response to the same breakdown would change representation is a causal question, and the pre-registered experiment in section 8 is the way to answer it.
+
+A few things tend to bite in practice. Rates computed from about 33 words per chat are noisy, as the first-person singular result shows, so a very short opening window asks a lot of a dictionary. Real post-close surveys are self-selected where the simulated one was a random sample, so a real anchor needs a nonresponse analysis before it can anchor anything. The label model assumes conditional independence, and language streams that rise with the same friction tend to violate it (phi = .19 here), so it helps to run the drop-one check every time and to hold the posterior lightly where the streams overlap. A small custom lexicon like the one on this page needs validation against human coders before it counts anything at scale, and the validated LIWC-22 categories (Boyd et al., 2022) are the better starting point wherever they exist. Language style matching between the two speakers (Ireland & Pennebaker, 2010) is a natural next category once the basics are in place.
+
+The method sits in the same line as earlier work counting function words in Thematic Apperception Test narratives ([LIWC and the TAT](/diagnostic-thematic-apperception-liwc/)) and the broader set of conversation-log measures in [Grading an Agent as a User Experience](/agentic-experience-evaluation/). What carries over is an order of operations; count both speakers, fix the window before counting, calibrate before anyone reads a rate, and buy explicit feedback before believing a proxy. I hope it serves you well, and that the first thing it finds on your own logs is a coaching opportunity and not a lawyer.
+
+</Band>
+
+<ApaReferences>
+
+- Beckman, H. B., Markakis, K. M., Suchman, A. L., & Frankel, R. M. (1994). The doctor-patient relationship and malpractice: Lessons from plaintiff depositions. *Archives of Internal Medicine, 154*(12), 1365-1370.
+- Boyd, R. L., Ashokkumar, A., Seraj, S., & Pennebaker, J. W. (2022). *The development and psychometric properties of LIWC-22*. University of Texas at Austin.
+- Campbell, D. T. (1979). Assessing the impact of planned social change. *Evaluation and Program Planning, 2*(1), 67-90.
+- Chung, C. K., & Pennebaker, J. W. (2007). The psychological functions of function words. In K. Fiedler (Ed.), *Social communication* (pp. 343-359). Psychology Press.
+- Cohen, J. (1960). A coefficient of agreement for nominal scales. *Educational and Psychological Measurement, 20*(1), 37-46.
+- Dawid, A. P., & Skene, A. M. (1979). Maximum likelihood estimation of observer error-rates using the EM algorithm. *Journal of the Royal Statistical Society, Series C (Applied Statistics), 28*(1), 20-28.
+- Efron, B., & Tibshirani, R. J. (1993). *An introduction to the bootstrap*. Chapman & Hall.
+- Hanley, J. A., & McNeil, B. J. (1982). The meaning and use of the area under a receiver operating characteristic (ROC) curve. *Radiology, 143*(1), 29-36.
+- Hickson, G. B., Clayton, E. W., Githens, P. B., & Sloan, F. A. (1992). Factors that prompted families to file medical malpractice claims following perinatal injuries. *JAMA, 267*(10), 1359-1363.
+- Hirschman, A. O. (1970). *Exit, voice, and loyalty: Responses to decline in firms, organizations, and states*. Harvard University Press.
+- Ireland, M. E., & Pennebaker, J. W. (2010). Language style matching in writing: Synchrony in essays, correspondence, and poetry. *Journal of Personality and Social Psychology, 99*(3), 549-571.
+- Kacewicz, E., Pennebaker, J. W., Davis, M., Jeon, M., & Graesser, A. C. (2014). Pronoun use reflects standings in social hierarchies. *Journal of Language and Social Psychology, 33*(2), 125-143.
+- Nosek, B. A., Ebersole, C. R., DeHaven, A. C., & Mellor, D. T. (2018). The preregistration revolution. *Proceedings of the National Academy of Sciences, 115*(11), 2600-2606.
+- Pennebaker, J. W., Boyd, R. L., Jordan, K., & Blackburn, K. (2015). *The development and psychometric properties of LIWC2015*. University of Texas at Austin.
+- Pennebaker, J. W., Mehl, M. R., & Niederhoffer, K. G. (2003). Psychological aspects of natural language use: Our words, our selves. *Annual Review of Psychology, 54*, 547-577.
+- Ratner, A., Bach, S. H., Ehrenberg, H., Fries, J., Wu, S., & Ré, C. (2017). Snorkel: Rapid training data creation with weak supervision. *Proceedings of the VLDB Endowment, 11*(3), 269-282.
+- Ratner, A., De Sa, C., Wu, S., Selsam, D., & Ré, C. (2016). Data programming: Creating large training sets, quickly. *Advances in Neural Information Processing Systems, 29*.
+- Robbennolt, J. K. (2003). Apologies and legal settlement: An empirical examination. *Michigan Law Review, 102*(3), 460-516.
+- Rude, S. S., Gortner, E.-M., & Pennebaker, J. W. (2004). Language use of depressed and depression-vulnerable college students. *Cognition and Emotion, 18*(8), 1121-1133.
+- Tackman, A. M., Sbarra, D. A., Carey, A. L., Donnellan, M. B., Horn, A. B., Holtzman, N. S., Edwards, T. S., Pennebaker, J. W., & Mehl, M. R. (2019). Depression, negative emotionality, and self-referential language: A multi-lab, multi-measure, and multi-language-task research synthesis. *Journal of Personality and Social Psychology, 116*(5), 817-834.
+- Tausczik, Y. R., & Pennebaker, J. W. (2010). The psychological meaning of words: LIWC and computerized text analysis methods. *Journal of Language and Social Psychology, 29*(1), 24-54.
+- Van Calster, B., McLernon, D. J., van Smeden, M., Wynants, L., & Steyerberg, E. W. (2019). Calibration: The Achilles heel of predictive analytics. *BMC Medicine, 17*, Article 230.
+- Zheng, L., Chiang, W.-L., Sheng, Y., Zhuang, S., Wu, Z., Zhuang, Y., Lin, Z., Li, Z., Li, D., Xing, E. P., Zhang, H., Gonzalez, J. E., & Stoica, I. (2023). Judging LLM-as-a-judge with MT-Bench and Chatbot Arena. *Advances in Neural Information Processing Systems, 36*.
+
+</ApaReferences>

@@ -1,0 +1,441 @@
+{
+ "seed": 20261001,
+ "n_notes": 9000,
+ "n_months": 36,
+ "year_volume": {
+  "2022": 1601,
+  "2023": 2939,
+  "2024": 4460
+ },
+ "monthly_volume_min": 106,
+ "monthly_volume_max": 444,
+ "seed_n": 800,
+ "stage1_n": 600,
+ "stage2_n": 200,
+ "coder_pct_agree": 0.786,
+ "coder_kappa": 0.76,
+ "coder_pabak": 0.762,
+ "coder_vs_adjudicated_kappa": 0.871,
+ "adjudicated_matches_truth": 0.953,
+ "classifier_kappa": 0.723,
+ "classifier_kappa_process": 0.787,
+ "category_kappa": 0.395,
+ "category_kappa_process": 0.488,
+ "handler_stated_n": 242,
+ "handler_agree": 0.843,
+ "process_share_population": 0.462,
+ "small_share_population": 0.199,
+ "small_share_seed": 0.497,
+ "payment_share_population": 0.0294,
+ "seed_cv_precision_small": 0.837,
+ "validation_n": 200,
+ "validation_confirmed": 96,
+ "validation_precision": 0.48,
+ "validation_ci": [
+  0.412,
+  0.549
+ ],
+ "true_precision_small": 0.527,
+ "predicted_small_nonseed": 1526,
+ "floor": 0.5,
+ "floor_precision": 0.719,
+ "floor_ci": [
+  0.622,
+  0.799
+ ],
+ "floor_retained": 0.719,
+ "alerts_default": 6,
+ "alert_hits": 4,
+ "alert_false": 2,
+ "event_cells": 13,
+ "episodes": {
+  "Payment wave": true,
+  "2022 storm": true,
+  "2024 storm": true,
+  "Valuation guideline change": false,
+  "Representation rise after the wave": true
+ },
+ "false_alarm_cells": [
+  {
+   "cls": "payment",
+   "label": "Payment error",
+   "month": 8,
+   "month_label": "August 2022",
+   "count": 5,
+   "truth_mix": {
+    "billing_ops": 3,
+    "payment": 2
+   }
+  },
+  {
+   "cls": "catastrophe",
+   "label": "Catastrophe logistics",
+   "month": 7,
+   "month_label": "July 2022",
+   "count": 8,
+   "truth_mix": {
+    "catastrophe": 6,
+    "delay": 2
+   }
+  }
+ ],
+ "wave_rate_m22": 222.2,
+ "wave_median_prior": 8.1,
+ "wave_ratio": 27.3,
+ "truth_wave_ratio": 20.1,
+ "weekly_baseline_rate": 13.0,
+ "first_wave_week": "2023-10-09",
+ "shift_obs": 63.1,
+ "shift_decoy": -1.9,
+ "shift_null_mean": -0.2,
+ "shift_null_max": 2.5,
+ "shift_null_sd": 1.4,
+ "shift_argmax_k": 0,
+ "shift_null_n": 25,
+ "notes_behind_alert": 78,
+ "truth_payment_m22": 118,
+ "validation_false_mix": {
+  "billing_ops": 33,
+  "valuation": 25,
+  "delay": 22,
+  "other": 9,
+  "coverage": 7,
+  "catastrophe": 4,
+  "representation": 3,
+  "repair": 1
+ },
+ "validation_conf_auc": 0.794,
+ "rule_grid": [
+  {
+   "min_n": 5,
+   "k": 3.0,
+   "alerts": 6,
+   "hits": 4,
+   "false": 2,
+   "episodes_caught": [
+    "Payment wave",
+    "2022 storm",
+    "2024 storm",
+    "Representation rise after the wave"
+   ],
+   "alert_cells": [
+    {
+     "cls": "payment",
+     "month": "2022-08"
+    },
+    {
+     "cls": "payment",
+     "month": "2023-10"
+    },
+    {
+     "cls": "representation",
+     "month": "2023-11"
+    },
+    {
+     "cls": "catastrophe",
+     "month": "2022-07"
+    },
+    {
+     "cls": "catastrophe",
+     "month": "2022-09"
+    },
+    {
+     "cls": "catastrophe",
+     "month": "2024-09"
+    }
+   ]
+  },
+  {
+   "min_n": 5,
+   "k": 2.5,
+   "alerts": 9,
+   "hits": 6,
+   "false": 3,
+   "episodes_caught": [
+    "Payment wave",
+    "2022 storm",
+    "2024 storm",
+    "Representation rise after the wave"
+   ],
+   "alert_cells": [
+    {
+     "cls": "payment",
+     "month": "2022-08"
+    },
+    {
+     "cls": "payment",
+     "month": "2023-10"
+    },
+    {
+     "cls": "repair",
+     "month": "2022-11"
+    },
+    {
+     "cls": "representation",
+     "month": "2023-11"
+    },
+    {
+     "cls": "catastrophe",
+     "month": "2022-07"
+    },
+    {
+     "cls": "catastrophe",
+     "month": "2022-09"
+    },
+    {
+     "cls": "catastrophe",
+     "month": "2022-10"
+    },
+    {
+     "cls": "catastrophe",
+     "month": "2024-09"
+    },
+    {
+     "cls": "catastrophe",
+     "month": "2024-10"
+    }
+   ]
+  },
+  {
+   "min_n": 5,
+   "k": 2.0,
+   "alerts": 13,
+   "hits": 6,
+   "false": 7,
+   "episodes_caught": [
+    "Payment wave",
+    "2022 storm",
+    "2024 storm",
+    "Representation rise after the wave"
+   ],
+   "alert_cells": [
+    {
+     "cls": "payment",
+     "month": "2022-08"
+    },
+    {
+     "cls": "payment",
+     "month": "2023-08"
+    },
+    {
+     "cls": "payment",
+     "month": "2023-10"
+    },
+    {
+     "cls": "payment",
+     "month": "2023-12"
+    },
+    {
+     "cls": "repair",
+     "month": "2022-11"
+    },
+    {
+     "cls": "representation",
+     "month": "2022-08"
+    },
+    {
+     "cls": "representation",
+     "month": "2023-03"
+    },
+    {
+     "cls": "representation",
+     "month": "2023-11"
+    },
+    {
+     "cls": "catastrophe",
+     "month": "2022-07"
+    },
+    {
+     "cls": "catastrophe",
+     "month": "2022-09"
+    },
+    {
+     "cls": "catastrophe",
+     "month": "2022-10"
+    },
+    {
+     "cls": "catastrophe",
+     "month": "2024-09"
+    },
+    {
+     "cls": "catastrophe",
+     "month": "2024-10"
+    }
+   ]
+  },
+  {
+   "min_n": 5,
+   "k": 1.5,
+   "alerts": 38,
+   "hits": 12,
+   "false": 26,
+   "episodes_caught": [
+    "Payment wave",
+    "2022 storm",
+    "2024 storm",
+    "Valuation guideline change",
+    "Representation rise after the wave"
+   ],
+   "alert_cells": [
+    {
+     "cls": "delay",
+     "month": "2022-10"
+    },
+    {
+     "cls": "delay",
+     "month": "2023-02"
+    },
+    {
+     "cls": "delay",
+     "month": "2023-04"
+    },
+    {
+     "cls": "valuation",
+     "month": "2024-04"
+    },
+    {
+     "cls": "valuation",
+     "month": "2024-05"
+    },
+    {
+     "cls": "valuation",
+     "month": "2024-06"
+    },
+    {
+     "cls": "valuation",
+     "month": "2024-07"
+    },
+    {
+     "cls": "coverage",
+     "month": "2022-08"
+    },
+    {
+     "cls": "coverage",
+     "month": "2022-09"
+    },
+    {
+     "cls": "coverage",
+     "month": "2022-10"
+    },
+    {
+     "cls": "coverage",
+     "month": "2022-11"
+    },
+    {
+     "cls": "coverage",
+     "month": "2024-02"
+    },
+    {
+     "cls": "coverage",
+     "month": "2024-12"
+    },
+    {
+     "cls": "payment",
+     "month": "2022-08"
+    },
+    {
+     "cls": "payment",
+     "month": "2023-08"
+    },
+    {
+     "cls": "payment",
+     "month": "2023-10"
+    },
+    {
+     "cls": "payment",
+     "month": "2023-12"
+    },
+    {
+     "cls": "payment",
+     "month": "2024-01"
+    },
+    {
+     "cls": "payment",
+     "month": "2024-11"
+    },
+    {
+     "cls": "repair",
+     "month": "2022-11"
+    },
+    {
+     "cls": "repair",
+     "month": "2023-01"
+    },
+    {
+     "cls": "repair",
+     "month": "2023-04"
+    },
+    {
+     "cls": "repair",
+     "month": "2024-03"
+    },
+    {
+     "cls": "representation",
+     "month": "2022-08"
+    },
+    {
+     "cls": "representation",
+     "month": "2023-03"
+    },
+    {
+     "cls": "representation",
+     "month": "2023-07"
+    },
+    {
+     "cls": "representation",
+     "month": "2023-11"
+    },
+    {
+     "cls": "representation",
+     "month": "2023-12"
+    },
+    {
+     "cls": "representation",
+     "month": "2024-08"
+    },
+    {
+     "cls": "catastrophe",
+     "month": "2022-07"
+    },
+    {
+     "cls": "catastrophe",
+     "month": "2022-09"
+    },
+    {
+     "cls": "catastrophe",
+     "month": "2022-10"
+    },
+    {
+     "cls": "catastrophe",
+     "month": "2023-01"
+    },
+    {
+     "cls": "catastrophe",
+     "month": "2023-12"
+    },
+    {
+     "cls": "catastrophe",
+     "month": "2024-09"
+    },
+    {
+     "cls": "catastrophe",
+     "month": "2024-10"
+    },
+    {
+     "cls": "praise",
+     "month": "2024-09"
+    },
+    {
+     "cls": "praise",
+     "month": "2024-12"
+    }
+   ]
+  }
+ ],
+ "valuation_ratios": {
+  "2024-04": 1.9,
+  "2024-05": 1.62,
+  "2024-06": 1.93,
+  "2024-07": 2.0
+ }
+}

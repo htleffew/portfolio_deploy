@@ -41,6 +41,26 @@ const byCatThenTitle = (a, b) =>
   a.cat.localeCompare(b.cat) || a.title.localeCompare(b.title);
 const ordered = [...articles].sort(byCatThenTitle);
 
+// Homepage carousel order: these curated slugs lead, in the listed order, followed
+// by every other article in category/title order. Behavioral-measurement work
+// comes first. Slugs without a matching src/pages/<slug>.mdx are skipped.
+const FEATURED_SLUGS = [
+  'doctoral-dissertation',
+  'diagnostic-thematic-apperception-liwc',
+  'implicit-power-drives',
+  'complaint-text-monitor',
+  'ux-livestreamed-violence',
+  'ai-productivity-j-curve',
+  'claude-lcr-analysis',
+  'sleep-nudge-analysis',
+  'claude-character-tic',
+  'assessing-mass-violence-risk',
+];
+const bySlug = new Map(articles.map((a) => [a.slug, a]));
+const featured = FEATURED_SLUGS.map((s) => bySlug.get(s)).filter(Boolean);
+const featuredSet = new Set(featured);
+const carouselOrder = [...featured, ...ordered.filter((a) => !featuredSet.has(a))];
+
 // ---- projects-repository.html : sidebar taxonomy ----
 function renderSidebar() {
   const cats = {};
@@ -82,13 +102,13 @@ function renderRows() {
 
 // ---- index.html : carousel cards ----
 function renderCards() {
-  return ordered.map((a) =>
+  return carouselOrder.map((a) =>
     `        <a href="${a.url}" class="p-card">
           <div class="p-content">
             <div class="p-eyebrow">${esc(a.cat)}</div>
             <h3 class="p-title">${esc(a.title)}</h3>
             <p class="p-desc">${esc(a.summary)}</p>
-            <span class="p-link">Read Case Study -></span>
+            <span class="p-link">Read the Article -></span>
           </div>
         </a>`
   ).join('\n');

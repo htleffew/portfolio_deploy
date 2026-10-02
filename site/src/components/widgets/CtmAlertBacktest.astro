@@ -1,0 +1,232 @@
+---
+// Monthly monitor backtest on the synthetic stream. Counts are hand codes plus
+// predictions at the confidence floor; rates are per 1,000 notes in the month.
+// Alert rule: count >= minimum and rate >= multiple x the median rate of the
+// prior 12 months (at least 6 months of history). Planted event months come
+// from generate.py. Data: monthly.json.
+import { loadCtm } from './ctmData.mjs';
+
+const d = loadCtm('monthly.json');
+const s = loadCtm('summary.json');
+const short = {
+  delay: 'Delay', valuation: 'Valuation', coverage: 'Coverage', payment: 'Payment error',
+  repair: 'Repair', representation: 'Representation', catastrophe: 'Catastrophe',
+  praise: 'Praise', billing_ops: 'Billing / ops', other: 'Other',
+};
+const payload = { months: d.months, classes: d.classes, short, labels: d.labels, volume: d.volume,
+  counts: d.counts, events: d.events, episodes: d.episodes };
+---
+<figure class="ctm-ab" data-payload={JSON.stringify(payload)}>
+  <div class="ctm-ab-controls">
+    <label class="ctm-ab-ctl">
+      <span>Class shown in the chart</span>
+      <select class="ctm-ab-class">
+        {d.classes.map((c) => <option value={c} selected={c === 'payment'}>{d.labels[c]}</option>)}
+      </select>
+    </label>
+    <label class="ctm-ab-ctl">
+      <span>Minimum notes in the month <strong class="ctm-ab-minv">5</strong></span>
+      <input class="ctm-ab-min" type="range" min="1" max="15" step="1" value="5" />
+    </label>
+    <label class="ctm-ab-ctl">
+      <span>Multiple of the trailing median rate <strong class="ctm-ab-kv">3.00</strong></span>
+      <input class="ctm-ab-k" type="range" min="1.5" max="5" step="0.25" value="3" />
+    </label>
+  </div>
+  <div class="ctm-ab-stats" aria-live="polite">
+    <div><span class="v" data-s="alerts">0</span><span class="l">Alert months, all classes</span></div>
+    <div><span class="v" data-s="hits">0</span><span class="l">Planted event months caught, of <span data-s="events">0</span></span></div>
+    <div><span class="v" data-s="eps">0</span><span class="l">Planted episodes caught, of <span data-s="epsn">0</span></span></div>
+    <div><span class="v" data-s="false">0</span><span class="l">Alerts outside planted events</span></div>
+  </div>
+  <svg class="ctm-ab-line" viewBox="0 0 640 260" role="img" aria-label="Monthly rate per 1,000 notes for the selected class with the alert threshold"></svg>
+  <svg class="ctm-ab-grid" viewBox="0 0 640 196" role="img" aria-label="Alert months by class across 36 months"></svg>
+  <div class="ctm-ab-legend">
+    <span><i class="sw ev"></i>Planted event month</span>
+    <span><i class="sw hit"></i>Alert inside a planted event</span>
+    <span><i class="sw fa"></i>Alert outside planted events</span>
+    <span><i class="sw thr"></i>Threshold (multiple x trailing median)</span>
+  </div>
+  <noscript><p>The interactive backtest needs JavaScript. At the default rule (at least 5 notes and at least 3 times the trailing median rate) there are {s.alerts_default} alert months, {s.alert_hits} of them inside planted events.</p></noscript>
+  <figcaption>
+    Figure 4. Backtest of the alert rule on the synthetic monitor series (hand codes plus predictions at a confidence floor of
+    {s.floor}). One class at a time appears in the chart, and every class across all 36 months in the grid below it, January 2022 at
+    the left. With six months of history required, the first testable month is July 2022.
+  </figcaption>
+</figure>
+
+<script>
+  type Payload = {
+    months: string[]; classes: string[]; short: Record<string, string>; labels: Record<string, string>;
+    volume: number[]; counts: Record<string, number[]>;
+    events: { cls: string; month: number }[]; episodes: Record<string, { cls: string; month: number }[]>;
+  };
+  const NS = 'http://www.w3.org/2000/svg';
+  const median = (a: number[]) => {
+    const s = [...a].sort((p, q) => p - q);
+    const m = Math.floor(s.length / 2);
+    return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
+  };
+  const el = (tag: string, attrs: Record<string, string | number>, text?: string) => {
+    const n = document.createElementNS(NS, tag);
+    for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, String(v));
+    if (text !== undefined) n.textContent = text;
+    return n;
+  };
+
+  document.querySelectorAll<HTMLElement>('.ctm-ab').forEach((root) => {
+    const P: Payload = JSON.parse(root.dataset.payload || '{}');
+    const nM = P.months.length;
+    const rate: Record<string, number[]> = {};
+    for (const c of P.classes) rate[c] = P.counts[c].map((n, i) => (P.volume[i] ? (1000 * n) / P.volume[i] : 0));
+    const evKey = new Set(P.events.map((e) => `${e.cls}|${e.month}`));
+    const sel = root.querySelector<HTMLSelectElement>('.ctm-ab-class')!;
+    const minIn = root.querySelector<HTMLInputElement>('.ctm-ab-min')!;
+    const kIn = root.querySelector<HTMLInputElement>('.ctm-ab-k')!;
+    const lineSvg = root.querySelector<SVGSVGElement>('.ctm-ab-line')!;
+    const gridSvg = root.querySelector<SVGSVGElement>('.ctm-ab-grid')!;
+    const stat = (k: string, v: string | number) => root.querySelectorAll(`[data-s="${k}"]`).forEach((n) => (n.textContent = String(v)));
+
+    const thresholds = (c: string, k: number) =>
+      rate[c].map((_, i) => {
+        const prior = rate[c].slice(Math.max(0, i - 12), i);
+        return prior.length >= 6 ? k * median(prior) : null;
+      });
+
+    const run = (minN: number, k: number) => {
+      const alerts = new Set<string>();
+      for (const c of P.classes) {
+        const th = thresholds(c, k);
+        th.forEach((t, i) => {
+          if (t !== null && P.counts[c][i] >= minN && rate[c][i] >= t) alerts.add(`${c}|${i + 1}`);
+        });
+      }
+      return alerts;
+    };
+
+    const drawLine = (c: string, k: number, alerts: Set<string>) => {
+      lineSvg.replaceChildren();
+      const W = 640, H = 260, L = 52, R = 14, T = 30, B = 34;
+      const th = thresholds(c, k);
+      const top = Math.max(1, ...rate[c], ...th.filter((t): t is number => t !== null));
+      const raw = top / 4;
+      const mag = Math.pow(10, Math.floor(Math.log10(raw)));
+      const tickStep = [1, 2, 2.5, 5, 10].map((f) => f * mag).find((s) => s >= raw) || 10 * mag;
+      const ymax = Math.ceil(top / tickStep) * tickStep;
+      const x = (i: number) => L + (i + 0.5) * ((W - L - R) / nM);
+      const y = (v: number) => T + (1 - v / ymax) * (H - T - B);
+      const step = (W - L - R) / nM;
+      for (const e of P.events) if (e.cls === c) lineSvg.append(el('rect', { x: L + (e.month - 1) * step, y: T, width: step, height: H - T - B, class: 'evband' }));
+      for (let v = 0; v <= ymax + 1e-9; v += tickStep) {
+        lineSvg.append(el('line', { x1: L, x2: W - R, y1: y(v), y2: y(v), class: 'grid' }));
+        lineSvg.append(el('text', { x: L - 8, y: y(v) + 4, 'text-anchor': 'end', class: 'tick' }, Number.isInteger(v) ? String(v) : v.toFixed(1)));
+      }
+      P.months.forEach((m, i) => {
+        if (m.endsWith('-01')) lineSvg.append(el('text', { x: x(i), y: H - B + 18, 'text-anchor': 'start', class: 'tick' }, m.slice(0, 4)));
+      });
+      lineSvg.append(el('text', { x: L, y: 12, class: 'axis' }, `${P.labels[c]}, notes per 1,000`));
+      let thPath = '';
+      th.forEach((t, i) => {
+        if (t === null) return;
+        const x0 = L + i * step, x1 = x0 + step;
+        thPath += `${thPath && th[i - 1] !== null ? 'L' : 'M'}${x0.toFixed(1)},${y(t).toFixed(1)} L${x1.toFixed(1)},${y(t).toFixed(1)} `;
+      });
+      lineSvg.append(el('path', { d: thPath, class: 'thr' }));
+      lineSvg.append(el('path', { d: rate[c].map((v, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(' '), class: 'rate' }));
+      rate[c].forEach((v, i) => {
+        const key = `${c}|${i + 1}`;
+        if (alerts.has(key)) {
+          const dot = el('circle', { cx: x(i), cy: y(v), r: 6, class: evKey.has(key) ? 'hit' : 'fa' });
+          dot.append(el('title', {}, `${P.months[i]}: ${P.counts[c][i]} notes, ${v.toFixed(1)} per 1,000`));
+          lineSvg.append(dot);
+        }
+      });
+    };
+
+    const drawGrid = (alerts: Set<string>) => {
+      gridSvg.replaceChildren();
+      const L = 132, R = 6, T = 4, rowH = 18;
+      const cw = (640 - L - R) / nM;
+      P.classes.forEach((c, r) => {
+        const yy = T + r * rowH;
+        gridSvg.append(el('text', { x: L - 8, y: yy + 13, 'text-anchor': 'end', class: 'glabel' }, P.short[c]));
+        for (let i = 0; i < nM; i++) {
+          const key = `${c}|${i + 1}`;
+          const cls = alerts.has(key) ? (evKey.has(key) ? 'cell hit' : 'cell fa') : 'cell';
+          const rect = el('rect', { x: L + i * cw + 1, y: yy + 2, width: cw - 2, height: rowH - 4, class: cls });
+          gridSvg.append(rect);
+          if (evKey.has(key)) gridSvg.append(el('rect', { x: L + i * cw + 1, y: yy + 2, width: cw - 2, height: rowH - 4, class: 'evcell' }));
+        }
+      });
+      P.months.forEach((m, i) => {
+        if (m.endsWith('-01')) gridSvg.append(el('text', { x: L + i * cw, y: T + P.classes.length * rowH + 14, class: 'tick' }, m.slice(0, 4)));
+      });
+    };
+
+    const update = () => {
+      const minN = parseInt(minIn.value, 10);
+      const k = parseFloat(kIn.value);
+      root.querySelector('.ctm-ab-minv')!.textContent = String(minN);
+      root.querySelector('.ctm-ab-kv')!.textContent = k.toFixed(2);
+      const alerts = run(minN, k);
+      const hits = [...alerts].filter((a) => evKey.has(a)).length;
+      const eps = Object.values(P.episodes).filter((cells) => cells.some((e) => alerts.has(`${e.cls}|${e.month}`))).length;
+      stat('alerts', alerts.size);
+      stat('hits', hits);
+      stat('events', P.events.length);
+      stat('eps', eps);
+      stat('epsn', Object.keys(P.episodes).length);
+      stat('false', alerts.size - hits);
+      drawLine(sel.value, k, alerts);
+      drawGrid(alerts);
+    };
+    [sel, minIn, kIn].forEach((n) => n.addEventListener('input', update));
+    sel.addEventListener('change', update);
+    update();
+  });
+</script>
+
+<style>
+  .ctm-ab { margin: 2rem 0; }
+  .ctm-ab-controls { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem 1.5rem; margin-bottom: 1.2rem; }
+  .ctm-ab-ctl { display: grid; gap: .45rem; font-family: var(--font-mono); font-size: var(--fs-label); letter-spacing: .06em; text-transform: uppercase; }
+  .ctm-ab-ctl select { font: inherit; text-transform: none; letter-spacing: 0; padding: .35rem .4rem; background: transparent; color: inherit; border: 1px solid color-mix(in srgb, currentColor 35%, transparent); }
+  .ctm-ab-ctl select option { color: #030303; }
+  .ctm-ab-ctl input[type=range] { accent-color: #3866A0; width: 100%; }
+  .ctm-ab-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid color-mix(in srgb, currentColor 18%, transparent); margin-bottom: 1rem; }
+  .ctm-ab-stats > div { padding: .7rem .9rem; border-right: 1px solid color-mix(in srgb, currentColor 18%, transparent); }
+  .ctm-ab-stats > div:last-child { border-right: 0; }
+  .ctm-ab-stats .v { display: block; font-family: var(--font-mono); font-size: 1.4rem; font-weight: 700; }
+  .ctm-ab-stats .l { display: block; font-family: var(--font-mono); font-size: var(--fs-caption); letter-spacing: .05em; text-transform: uppercase; opacity: .7; margin-top: .2rem; }
+  .ctm-ab svg { width: 100%; max-width: 860px; height: auto; display: block; overflow: visible; }
+  .ctm-ab-grid { margin-top: 1rem; }
+  .ctm-ab :global(.grid) { stroke: currentColor; stroke-opacity: .12; }
+  .ctm-ab :global(.tick) { fill: currentColor; fill-opacity: .65; font-family: var(--font-mono); font-size: 12px; }
+  .ctm-ab :global(.axis) { fill: currentColor; fill-opacity: .65; font-family: var(--font-mono); font-size: 11px; letter-spacing: .05em; }
+  .ctm-ab :global(.glabel) { fill: currentColor; fill-opacity: .85; font-family: var(--font-mono); font-size: 11px; }
+  .ctm-ab :global(.evband) { fill: #DBA844; fill-opacity: .16; }
+  .ctm-ab :global(.rate) { fill: none; stroke: #3866A0; stroke-width: 2.5; }
+  .ctm-ab :global(.thr) { fill: none; stroke: currentColor; stroke-opacity: .55; stroke-width: 1.5; stroke-dasharray: 5 4; }
+  .ctm-ab :global(circle.hit) { fill: #2E7A5A; stroke: currentColor; stroke-width: 1.2; }
+  .ctm-ab :global(circle.fa) { fill: #B8384B; stroke: currentColor; stroke-width: 1.2; }
+  .ctm-ab :global(rect.cell) { fill: currentColor; fill-opacity: .07; }
+  .ctm-ab :global(rect.cell.hit) { fill: #2E7A5A; fill-opacity: 1; }
+  .ctm-ab :global(rect.cell.fa) { fill: #B8384B; fill-opacity: 1; }
+  .ctm-ab :global(rect.evcell) { fill: none; stroke: #DBA844; stroke-width: 2; }
+  .ctm-ab-legend { margin-top: .8rem; font-family: var(--font-mono); font-size: var(--fs-caption); letter-spacing: .05em; text-transform: uppercase; opacity: .8; display: flex; flex-wrap: wrap; gap: .4rem 1.2rem; align-items: center; }
+  .ctm-ab .sw { display: inline-block; width: .8rem; height: .8rem; margin-right: .4rem; vertical-align: middle; }
+  .ctm-ab .sw.ev { border: 2px solid #DBA844; background: color-mix(in srgb, #DBA844 16%, transparent); }
+  .ctm-ab .sw.hit { background: #2E7A5A; }
+  .ctm-ab .sw.fa { background: #B8384B; }
+  .ctm-ab .sw.thr { height: 0; border-top: 2px dashed currentColor; opacity: .6; }
+  .ctm-ab figcaption { margin-top: 1rem; font-size: var(--fs-body-sm); line-height: 1.6; opacity: .8; }
+  @media (max-width: 760px) {
+    .ctm-ab-controls { grid-template-columns: 1fr; }
+    .ctm-ab-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .ctm-ab-stats > div:nth-child(2) { border-right: 0; }
+    .ctm-ab-stats > div:nth-child(-n+2) { border-bottom: 1px solid color-mix(in srgb, currentColor 18%, transparent); }
+    .ctm-ab :global(.tick) { font-size: 18px; }
+    .ctm-ab :global(.glabel) { font-size: 15px; }
+    .ctm-ab :global(.axis) { font-size: 16px; }
+  }
+</style>

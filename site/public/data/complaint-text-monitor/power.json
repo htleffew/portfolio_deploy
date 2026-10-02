@@ -1,0 +1,32 @@
+[
+ {
+  "baseline": 0.1,
+  "reduction": 0.15,
+  "n_per_arm": 5856
+ },
+ {
+  "baseline": 0.1,
+  "reduction": 0.25,
+  "n_per_arm": 2005
+ },
+ {
+  "baseline": 0.2,
+  "reduction": 0.15,
+  "n_per_arm": 2629
+ },
+ {
+  "baseline": 0.2,
+  "reduction": 0.25,
+  "n_per_arm": 906
+ },
+ {
+  "baseline": 0.3,
+  "reduction": 0.15,
+  "n_per_arm": 1554
+ },
+ {
+  "baseline": 0.3,
+  "reduction": 0.25,
+  "n_per_arm": 540
+ }
+]

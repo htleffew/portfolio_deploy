@@ -1,0 +1,125 @@
+---
+// Confidence-floor explorer on the synthetic validation draw (200 random notes
+// predicted into the five small process classes, coded blind by one coder).
+// Precision (with Wilson 95% band) and the share of confirmed signals retained,
+// as functions of the classifier's confidence floor. Floors that keep fewer
+// than 10 drawn notes are left off. Data: confidence_floor.json.
+import { loadCtm } from './ctmData.mjs';
+
+const d = loadCtm('confidence_floor.json');
+const MIN_KEPT = 10;
+const rows = d.rows.filter((r) => r.kept >= MIN_KEPT);
+const tMax = rows[rows.length - 1].t;
+const W = 760, H = 340, L = 58, R = 18, T = 18, B = 62;
+const x = (t) => L + (t / tMax) * (W - L - R);
+const y = (v) => T + (1 - v) * (H - T - B);
+const line = (key) => rows.map((r, i) => `${i ? 'L' : 'M'}${x(r.t).toFixed(1)},${y(r[key]).toFixed(1)}`).join(' ');
+const band = rows.map((r) => `${x(r.t).toFixed(1)},${y(r.hi).toFixed(1)}`).join(' ') + ' ' +
+  [...rows].reverse().map((r) => `${x(r.t).toFixed(1)},${y(r.lo).toFixed(1)}`).join(' ');
+const yTicks = [0, 0.25, 0.5, 0.75, 1];
+const xTicks = rows.map((r) => r.t).filter((t) => Math.round(t * 100) % 10 === 0);
+const start = rows.find((r) => r.t === d.floor);
+---
+<figure class="ctm-cf" data-rows={JSON.stringify(rows)} data-geom={JSON.stringify({ W, H, L, R, T, B, tMax })}>
+  <div class="ctm-cf-controls">
+    <label class="ctm-cf-label" for="ctm-cf-range">Confidence floor <strong class="ctm-cf-t">{start.t.toFixed(2)}</strong></label>
+    <input id="ctm-cf-range" class="ctm-cf-range" type="range" min="0" max={tMax} step="0.05" value={d.floor} aria-describedby="ctm-cf-readout" />
+    <p id="ctm-cf-readout" class="ctm-cf-readout" aria-live="polite">
+      Kept <strong data-k="kept">{start.kept}</strong> of {d.n} drawn notes; <strong data-k="confirmed">{start.confirmed}</strong> confirmed.
+      Precision <strong data-k="precision">{Math.round(start.precision * 100)}%</strong>
+      (95% interval <span data-k="lo">{Math.round(start.lo * 100)}</span> to <span data-k="hi">{Math.round(start.hi * 100)}</span>).
+      Confirmed signals retained <strong data-k="retained">{Math.round(start.retained * 100)}%</strong>.
+    </p>
+  </div>
+  <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Precision and retained share by confidence floor">
+    {yTicks.map((v) => (
+      <g>
+        <line x1={L} x2={W - R} y1={y(v)} y2={y(v)} class="grid" />
+        <text x={L - 8} y={y(v) + 4} text-anchor="end" class="tick">{Math.round(v * 100)}%</text>
+      </g>
+    ))}
+    {xTicks.map((t) => <text x={x(t)} y={H - B + 26} text-anchor="middle" class="tick">{t.toFixed(1)}</text>)}
+    <text x={(L + W - R) / 2} y={H - 4} text-anchor="middle" class="axis">Confidence floor</text>
+    <polygon points={band} class="band" />
+    <path d={line('precision')} class="prec" />
+    <path d={line('retained')} class="ret" />
+    <line class="ctm-cf-marker" x1={x(start.t)} x2={x(start.t)} y1={T} y2={H - B} />
+    <circle class="ctm-cf-dot ret-dot" cx={x(start.t)} cy={y(start.retained)} r="7" />
+    <circle class="ctm-cf-dot prec-dot" cx={x(start.t)} cy={y(start.precision)} r="5" />
+  </svg>
+  <div class="ctm-cf-legend">
+    <span><i class="sw prec"></i>Precision among kept notes (band is the Wilson 95% interval)</span>
+    <span><i class="sw ret"></i>Share of confirmed signals retained</span>
+  </div>
+  <figcaption>
+    Figure 3. The validation draw of {d.n} synthetic notes, drawn at random from the notes predicted into the five small
+    process classes and coded by one coder who could not see the prediction. Raising the floor trades retained signals for
+    precision; notes enter the monthly monitor at a floor of {d.floor.toFixed(1)}. Floors at which fewer than {MIN_KEPT} drawn
+    notes remain are left off the chart.
+  </figcaption>
+</figure>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.ctm-cf').forEach((root) => {
+    const rows = JSON.parse(root.dataset.rows || '[]');
+    const g = JSON.parse(root.dataset.geom || '{}');
+    const x = (t: number) => g.L + (t / g.tMax) * (g.W - g.L - g.R);
+    const y = (v: number) => g.T + (1 - v) * (g.H - g.T - g.B);
+    const range = root.querySelector<HTMLInputElement>('.ctm-cf-range');
+    const marker = root.querySelector('.ctm-cf-marker');
+    const pDot = root.querySelector('.prec-dot');
+    const rDot = root.querySelector('.ret-dot');
+    const set = (k: string, v: string) => {
+      const el = root.querySelector(`[data-k="${k}"]`);
+      if (el) el.textContent = v;
+    };
+    const update = () => {
+      if (range === null) return;
+      const t = Math.round(parseFloat(range.value) * 100) / 100;
+      const r = rows.find((row: { t: number }) => Math.abs(row.t - t) < 1e-6);
+      if (r === undefined) return;
+      const tEl = root.querySelector('.ctm-cf-t');
+      if (tEl) tEl.textContent = t.toFixed(2);
+      marker?.setAttribute('x1', String(x(t)));
+      marker?.setAttribute('x2', String(x(t)));
+      pDot?.setAttribute('cx', String(x(t)));
+      pDot?.setAttribute('cy', String(y(r.precision)));
+      rDot?.setAttribute('cx', String(x(t)));
+      rDot?.setAttribute('cy', String(y(r.retained)));
+      set('kept', String(r.kept));
+      set('confirmed', String(r.confirmed));
+      set('precision', `${Math.round(r.precision * 100)}%`);
+      set('lo', String(Math.round(r.lo * 100)));
+      set('hi', String(Math.round(r.hi * 100)));
+      set('retained', `${Math.round(r.retained * 100)}%`);
+    };
+    range?.addEventListener('input', update);
+    update();
+  });
+</script>
+
+<style>
+  .ctm-cf { margin: 2rem 0; }
+  .ctm-cf-controls { display: grid; gap: .6rem; margin-bottom: 1rem; }
+  .ctm-cf-label { font-family: var(--font-mono); font-size: var(--fs-label); letter-spacing: .08em; text-transform: uppercase; }
+  .ctm-cf-range { width: 100%; max-width: 28rem; accent-color: #3866A0; }
+  .ctm-cf-readout { font-size: var(--fs-body-sm); line-height: 1.6; margin: 0; }
+  .ctm-cf svg { width: 100%; max-width: 860px; height: auto; display: block; overflow: visible; }
+  .ctm-cf .grid { stroke: currentColor; stroke-opacity: .12; }
+  .ctm-cf .tick { fill: currentColor; fill-opacity: .65; font-family: var(--font-mono); font-size: 13px; }
+  .ctm-cf .axis { fill: currentColor; fill-opacity: .75; font-family: var(--font-mono); font-size: 13px; letter-spacing: .06em; }
+  .ctm-cf .band { fill: #3866A0; fill-opacity: .16; }
+  .ctm-cf .prec { fill: none; stroke: #3866A0; stroke-width: 3; }
+  .ctm-cf .ret { fill: none; stroke: #DBA844; stroke-width: 3; }
+  .ctm-cf-marker { stroke: currentColor; stroke-opacity: .55; stroke-dasharray: 4 4; }
+  .prec-dot { fill: #3866A0; stroke: currentColor; stroke-width: 1.5; }
+  .ret-dot { fill: #DBA844; stroke: currentColor; stroke-width: 1.5; }
+  .ctm-cf-legend { margin-top: .8rem; font-family: var(--font-mono); font-size: var(--fs-caption); letter-spacing: .05em; text-transform: uppercase; opacity: .8; display: flex; flex-wrap: wrap; gap: .4rem 1.2rem; }
+  .ctm-cf .sw { display: inline-block; width: 1rem; height: .25rem; margin-right: .4rem; vertical-align: middle; }
+  .ctm-cf .sw.prec { background: #3866A0; }
+  .ctm-cf .sw.ret { background: #DBA844; }
+  .ctm-cf figcaption { margin-top: 1rem; font-size: var(--fs-body-sm); line-height: 1.6; opacity: .8; }
+  @media (max-width: 640px) {
+    .ctm-cf .tick, .ctm-cf .axis { font-size: 19px; }
+  }
+</style>

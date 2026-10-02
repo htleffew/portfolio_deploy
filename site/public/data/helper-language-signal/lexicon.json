@@ -1,0 +1,117 @@
+[
+  {
+    "key": "apology",
+    "label": "Apology",
+    "speaker": "Claim professional",
+    "liwc2015": "none (custom)",
+    "entries": [
+      "sorry",
+      "apologize",
+      "apologise",
+      "apologies",
+      "regret"
+    ]
+  },
+  {
+    "key": "limitation",
+    "label": "Limitation",
+    "speaker": "Claim professional",
+    "liwc2015": "none (custom)",
+    "entries": [
+      "unfortunately",
+      "unable",
+      "cannot",
+      "can't",
+      "not able",
+      "not authorized",
+      "outside what",
+      "no way to"
+    ]
+  },
+  {
+    "key": "hedging",
+    "label": "Hedging",
+    "speaker": "Claim professional",
+    "liwc2015": "tentat",
+    "entries": [
+      "maybe",
+      "perhaps",
+      "possibly",
+      "might",
+      "probably",
+      "i think",
+      "i believe",
+      "hopefully",
+      "should be"
+    ]
+  },
+  {
+    "key": "negation",
+    "label": "Negation",
+    "speaker": "Claimant",
+    "liwc2015": "negate",
+    "entries": [
+      "no",
+      "not",
+      "never",
+      "nothing",
+      "nobody",
+      "none",
+      "nowhere",
+      "neither",
+      "nor",
+      "cannot",
+      "*n't"
+    ]
+  },
+  {
+    "key": "correction",
+    "label": "Correction",
+    "speaker": "Claimant",
+    "liwc2015": "none (custom)",
+    "entries": [
+      "already",
+      "i said",
+      "i told",
+      "i meant",
+      "actually",
+      "twice",
+      "not what i"
+    ]
+  },
+  {
+    "key": "anger",
+    "label": "Anger",
+    "speaker": "Claimant",
+    "liwc2015": "anger",
+    "entries": [
+      "angry",
+      "furious",
+      "ridiculous",
+      "unacceptable",
+      "outrageous",
+      "insulting",
+      "fed up",
+      "sick of",
+      "mad",
+      "hate"
+    ]
+  },
+  {
+    "key": "i",
+    "label": "First-person singular",
+    "speaker": "Claimant",
+    "liwc2015": "i",
+    "entries": [
+      "i",
+      "me",
+      "my",
+      "mine",
+      "myself",
+      "i'm",
+      "i've",
+      "i'd",
+      "i'll"
+    ]
+  }
+]

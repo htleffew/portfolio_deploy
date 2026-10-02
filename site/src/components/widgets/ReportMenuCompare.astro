@@ -1,0 +1,46 @@
+---
+// Illustrative comparison of a tiered general-purpose report menu and an
+// emergency-first menu built on Jakob's Law, Hick's Law, and the von Restorff
+// effect. Both menus are synthetic; neither reproduces any platform's interface.
+const tiered = [
+  "Spam", "Nudity or sexual activity", "Hate speech or symbols", "Harassment or bullying",
+  "Violence or dangerous organizations", "Intellectual property", "Scam or fraud", "Something else",
+];
+const firstLevel = ["Someone is in danger right now", "Hurtful or abusive", "Spam or scam", "Something else"];
+---
+<figure class="rm" aria-label="Two illustrative report menus compared">
+  <div class="rm-grid">
+    <div class="rm-col">
+      <div class="rm-cap">Tiered general menu</div>
+      <div class="rm-path">Share icon or long press, then Report, then a category, then a subcategory, then Submit</div>
+      <ul class="rm-menu">
+        {tiered.map((t) => <li>{t}</li>)}
+      </ul>
+      <div class="rm-meta">8 options at the first tier; violence sits under a second tier; no option marks an emergency</div>
+    </div>
+    <div class="rm-col">
+      <div class="rm-cap">Emergency-first menu</div>
+      <div class="rm-path">Flag icon on the stream, then one tap</div>
+      <ul class="rm-menu">
+        {firstLevel.map((t, i) => <li class:list={{ urgent: i === 0 }}>{i === 0 ? <><span class="rm-mark" aria-hidden="true">!</span>{t}</> : t}</li>)}
+      </ul>
+      <div class="rm-meta">4 options; the emergency option is first, set apart by color and shape, and submits on one tap</div>
+    </div>
+  </div>
+  <figcaption>Figure 3. Two synthetic report menus. The left menu follows the common pattern of a long, tiered list of policy categories; the right menu applies a familiar flag icon (Jakob's Law), fewer first-level choices (Hick's Law), and a visually isolated emergency option (the von Restorff effect). Neither menu reproduces a real platform's wording.</figcaption>
+</figure>
+
+<style>
+  .rm { margin: 2rem 0; }
+  .rm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+  .rm-col { border: 1px solid color-mix(in srgb, currentColor 22%, transparent); border-radius: var(--radius-sm); padding: 1rem 1.1rem; }
+  .rm-cap { font-family: var(--font-mono); font-size: var(--fs-label); letter-spacing: var(--tracking-caps); text-transform: uppercase; margin-bottom: .4rem; }
+  .rm-path { font-size: var(--fs-body-sm); line-height: 1.45; opacity: .75; margin-bottom: .8rem; }
+  .rm-menu { list-style: none; margin: 0; padding: 0; }
+  .rm-menu li { font-size: var(--fs-body-sm); padding: .45rem .6rem; border-top: 1px solid color-mix(in srgb, currentColor 12%, transparent); }
+  .rm-menu li.urgent { background: #7A1626; color: #F5F5F7; border-top-color: #7A1626; font-weight: 600; border-radius: var(--radius-sm); }
+  .rm-mark { display: inline-grid; place-items: center; width: 1.2rem; height: 1.2rem; margin-right: .55rem; border: 2px solid #F5F5F7; border-radius: 50%; font-family: var(--font-mono); font-size: .75rem; line-height: 1; }
+  .rm-meta { margin-top: .8rem; font-family: var(--font-mono); font-size: var(--fs-caption); letter-spacing: .05em; text-transform: uppercase; opacity: .7; line-height: 1.5; }
+  .rm figcaption { margin-top: 1rem; font-size: var(--fs-body-sm); line-height: 1.6; opacity: .8; }
+  @media (max-width: 640px) { .rm-grid { grid-template-columns: 1fr; } }
+</style>

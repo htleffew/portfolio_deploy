@@ -1,0 +1,66 @@
+---
+// Reporting timeline for the Buffalo, New York livestream (May 14, 2022), drawn
+// only from the New York State Office of the Attorney General report
+// (October 18, 2022). Times are Eastern; positions are minutes after 2:08 p.m.
+const start = 0;
+const end = 24;
+const events = [
+  { t: 0, clock: "2:08 p.m.", label: "Stream begins; most of the next 20 minutes is the drive", side: "top", ly: 62 },
+  { t: 18.98, clock: "2:26:59", label: "First logged-in viewer joins", side: "bottom", ly: 196 },
+  { t: 21.82, clock: "2:29:49", label: "First user report", side: "top", ly: 88, key: true },
+  { t: 22.8, clock: "about 2:30", label: "Shooting begins; two more reports by 2:30", side: "bottom", ly: 234, harm: true },
+  { t: 23.48, clock: "2:31:29", label: "Platform stops the stream", side: "top", ly: 40 },
+];
+const x = (t: number) => 40 + ((t - start) / (end - start)) * 620;
+---
+<figure class="rw" aria-label="Timeline of the Buffalo livestream from start to removal, with the first user report">
+  <svg viewBox="0 0 700 250" role="img" aria-labelledby="rw-title">
+    <title id="rw-title">Buffalo livestream timeline, 2:08 p.m. to 2:31 p.m.</title>
+    <line x1="40" y1="125" x2="660" y2="125" stroke="currentColor" stroke-opacity=".45" stroke-width="1.5" />
+    <rect x={x(21.82)} y="113" width={x(23.48) - x(21.82)} height="24" fill="#3866A0" fill-opacity=".28" />
+    {[0, 5, 10, 15, 20].map((m) => (
+      <g>
+        <line x1={x(m)} y1="120" x2={x(m)} y2="130" stroke="currentColor" stroke-opacity=".45" />
+        <text x={x(m)} y="150" text-anchor="middle" class="rw-tick">{`+${m} min`}</text>
+      </g>
+    ))}
+    {events.map((e) => {
+      const cx = x(e.t);
+      const top = e.side === "top";
+      const ly = e.ly;
+      const anchor = cx > 520 ? "end" : cx < 120 ? "start" : "middle";
+      return (
+        <g>
+          <line x1={cx} y1={top ? ly + 6 : 125} x2={cx} y2={top ? 125 : ly - 14} stroke="currentColor" stroke-opacity=".35" stroke-dasharray="2 3" />
+          <circle cx={cx} cy="125" r={e.key || e.harm ? 6 : 4.5} fill={e.harm ? "#7A1626" : e.key ? "#3866A0" : "currentColor"} />
+          <text x={cx} y={ly - 12} text-anchor={anchor} class="rw-clock">{e.clock}</text>
+          <text x={cx} y={ly + 2} text-anchor={anchor} class="rw-label">{e.label}</text>
+        </g>
+      );
+    })}
+  </svg>
+  <ol class="rw-list">
+    {events.map((e) => <li class:list={{ key: e.key, harm: e.harm }}><span>{e.clock}</span>{e.label}</li>)}
+  </ol>
+  <div class="rw-note">Between 20 and 28 people viewed the stream; 7 were logged in and therefore able to report it.</div>
+  <figcaption>Figure 2. The Buffalo livestream from start to removal, as documented by the New York State Office of the Attorney General (2022). The shaded band marks the interval from the first user report to the stop, under two minutes. Viewers who were not logged in could not report at all, so the reporting population was 7 people.</figcaption>
+</figure>
+
+<style>
+  .rw { margin: 2rem 0; }
+  .rw svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .rw-tick { font-family: var(--font-mono); font-size: 11px; fill: currentColor; opacity: .6; }
+  .rw-clock { font-family: var(--font-mono); font-size: 11px; fill: currentColor; opacity: .7; letter-spacing: .04em; }
+  .rw-label { font-family: var(--font-body); font-size: 12.5px; fill: currentColor; }
+  .rw-note { font-family: var(--font-mono); font-size: var(--fs-caption); letter-spacing: .06em; text-transform: uppercase; opacity: .8; margin-top: .5rem; }
+  .rw figcaption { margin-top: 1rem; font-size: var(--fs-body-sm); line-height: 1.6; opacity: .8; }
+  .rw-list { display: none; list-style: none; margin: 0; padding: 0; }
+  .rw-list li { font-size: var(--fs-body-sm); line-height: 1.45; padding: .5rem 0 .5rem .8rem; border-left: 3px solid color-mix(in srgb, currentColor 35%, transparent); margin-bottom: .35rem; }
+  .rw-list li.key { border-left-color: #3866A0; }
+  .rw-list li.harm { border-left-color: #7A1626; }
+  .rw-list span { display: block; font-family: var(--font-mono); font-size: var(--fs-caption); letter-spacing: .05em; opacity: .7; }
+  @media (max-width: 640px) {
+    .rw svg { display: none; }
+    .rw-list { display: block; }
+  }
+</style>

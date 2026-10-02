@@ -6,7 +6,6 @@ description: "An aligned model can fail in two opposite directions, meeting real
 category: "AI Evaluation & Safety"
 subcategory: "Alignment & Safety Governance"
 format: "ESSAY"
-time: "11 min read"
 author: "Dr. Heather Leffew"
 tags: ["Alignment", "Adaptive Thresholds", "CMDP", "Uncertainty", "Safety Governance"]
 visual: ""
@@ -19,7 +18,7 @@ import ApaReferences from '../components/ApaReferences.astro';
 
 ## The pendulum a single threshold produces
 
-An aligned model can fail a person in two opposite directions on the same afternoon. It can meet someone in real distress with a cold refusal or an unsolicited diagnosis, and it can turn away an ordinary request because the words in it pattern-matched to something dangerous. These look like two separate bugs, and they are the two ends of one pendulum, because the threshold you tighten to stop the first kind of harm is the same threshold that, tightened, produces more of the second. I have written about the first failure at length in [the Claude caretaker work](../Claude_Character_Tic/claude-character-tic.html), where a model issues unsolicited psychiatric directives into a conversation that never asked for them. The pendulum is what a single static threshold produces when the safe response depends on context the threshold never reads, and tuning cannot fix it for a structural reason. One number has to serve both a crisis conversation and an adversarial probe, and the setting that is right for one is wrong for the other.
+An aligned model can fail a person in two opposite directions on the same afternoon. It can meet someone in real distress with a cold refusal or an unsolicited diagnosis, and it can turn away an ordinary request because the words in it pattern-matched to something dangerous. These look like two separate bugs, and they are the two ends of one pendulum, because the threshold you tighten to stop the first kind of harm is the same threshold that, tightened, produces more of the second. I have written about the first failure at length in [the Claude caretaker work](/claude-character-tic/), where a model issues unsolicited psychiatric directives into a conversation that never asked for them. The pendulum is what a single static threshold produces when the safe response depends on context the threshold never reads, and tuning cannot fix it for a structural reason. One number has to serve both a crisis conversation and an adversarial probe, and the setting that is right for one is wrong for the other.
 
 </Band>
 
@@ -43,7 +42,7 @@ The structural fix is to pull the safety constraint out of the preference optimi
 
 ## Read the context the way forensic linguistics reads a person
 
-A control system that adjusts a constraint needs a state variable it can actually observe, and the proposal is to use psycholinguistic typology for that role, because the same implicit linguistic signals that let forensic linguistics infer a hidden human state from text can be read off the language a model is processing and producing. Classifying the live context into types, a crisis, an adversarial probe, an ordinary task, gives the controller a measurable read of which regime it is in, and that read is what the adaptive threshold consumes to decide how hard the constraint should bind. The implicit-signal method here is the one I lean on throughout the rest of my work, the [LIWC narrative analysis](../Diagnostic_Thematic_Apperception_Narratives/diagnostic-thematic-apperception-liwc.html) being the clinical version of it, turned from a way of describing people into a feedback signal for a control loop.
+A control system that adjusts a constraint needs a state variable it can actually observe, and the proposal is to use psycholinguistic typology for that role, because the same implicit linguistic signals that let forensic linguistics infer a hidden human state from text can be read off the language a model is processing and producing. Classifying the live context into types, a crisis, an adversarial probe, an ordinary task, gives the controller a measurable read of which regime it is in, and that read is what the adaptive threshold consumes to decide how hard the constraint should bind. The implicit-signal method here is the one I lean on throughout the rest of my work, the [LIWC narrative analysis](/diagnostic-thematic-apperception-liwc/) being the clinical version of it, turned from a way of describing people into a feedback signal for a control loop.
 
 </Band>
 

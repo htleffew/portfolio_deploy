@@ -1,0 +1,183 @@
+---
+// Illustrative J-curve simulator for a frontline AI tool rollout (ported from
+// the 2025 ai-adoption.html working note). The coefficients are hand-chosen to
+// produce a J shape; nothing here is fitted to data. Net output in month t is
+//   net(t) = gain(t) - cost(t)
+//   cost(t) = D * t * exp(-t / 4.5)      (learning and workflow friction)
+//   gain(t) = G * t^1.85                 (returns as people and process adapt)
+//   D = 25 * friction + 15 * (11 - coaching) + 5 * scope
+//   G = (1.5 * scope) * (0.8 * coaching) / 10
+// Units are arbitrary index points relative to the pre-launch baseline.
+---
+<figure class="jc" data-jcurve aria-label="Interactive illustrative J-curve simulator">
+  <div class="jc-layout">
+    <div class="jc-controls">
+      <label class="jc-ctl">
+        <span class="jc-lab">Legacy workflow friction <output data-out="friction">5</output></span>
+        <input type="range" min="1" max="10" step="1" value="5" data-in="friction" aria-label="Legacy workflow friction, 1 to 10" />
+        <span class="jc-hint">Workarounds, duplicate entry, and process debt the tool has to fit around</span>
+      </label>
+      <label class="jc-ctl">
+        <span class="jc-lab">Coaching and support density <output data-out="coaching">5</output></span>
+        <input type="range" min="1" max="10" step="1" value="5" data-in="coaching" aria-label="Coaching and support density, 1 to 10" />
+        <span class="jc-hint">Floor coaches, super-users, and time set aside for practice</span>
+      </label>
+      <label class="jc-ctl">
+        <span class="jc-lab">Integration scope <output data-out="scope">5</output></span>
+        <input type="range" min="1" max="10" step="1" value="5" data-in="scope" aria-label="Integration scope, 1 to 10" />
+        <span class="jc-hint">Share of the claim professional's daily tasks the tool touches</span>
+      </label>
+      <button type="button" class="jc-reset" data-reset>Reset to 5, 5, 5</button>
+    </div>
+    <div class="jc-chart">
+      <svg viewBox="0 0 600 280" role="img" aria-labelledby="jc-title" data-svg>
+        <title id="jc-title">Net output relative to baseline over 24 months</title>
+        <defs>
+          <clipPath id="jc-above"><rect data-clip-above x="0" y="0" width="600" height="140" /></clipPath>
+          <clipPath id="jc-below"><rect data-clip-below x="0" y="140" width="600" height="140" /></clipPath>
+        </defs>
+        <g data-grid></g>
+        <path data-area clip-path="url(#jc-above)" fill="#3866A0" fill-opacity=".22" />
+        <path data-area-neg clip-path="url(#jc-below)" fill="#7A1626" fill-opacity=".28" />
+        <line data-zero x1="50" x2="580" stroke="currentColor" stroke-opacity=".6" stroke-width="1.2" />
+        <line data-be y1="20" y2="240" stroke="currentColor" stroke-opacity=".55" stroke-dasharray="3 4" />
+        <path data-line fill="none" stroke="#3866A0" stroke-width="2.5" />
+        <g data-xticks></g>
+      </svg>
+      <div class="jc-stats" aria-live="polite">
+        <div><span class="jc-v" data-stat="dip">-356</span><span class="jc-l">Deepest dip (index points)</span></div>
+        <div><span class="jc-v" data-stat="be">Month 11</span><span class="jc-l">Breakeven month</span></div>
+        <div><span class="jc-v" data-stat="m24">+1045</span><span class="jc-l">Month 24 net</span></div>
+      </div>
+    </div>
+  </div>
+  <figcaption>Figure 1. An illustrative J-curve for a frontline AI tool rollout. The coefficients are hand-chosen to give the curve its shape, and with the levers you can see how legacy friction, coaching, and integration scope move the depth and length of the dip relative to one another. Units are arbitrary index points of net output against the pre-launch baseline.</figcaption>
+</figure>
+
+<script>
+  const X0 = 50, X1 = 580, Y0 = 20, Y1 = 240, MONTHS = 24;
+
+  function simulate(friction: number, coaching: number, scope: number) {
+    const D = friction * 25 + (11 - coaching) * 15 + scope * 5;
+    const G = ((scope * 1.5) * (coaching * 0.8)) / 10;
+    const net: number[] = [];
+    for (let t = 0; t <= MONTHS; t++) {
+      net.push(-(D * t * Math.exp(-t / 4.5)) + G * Math.pow(t, 1.85));
+    }
+    let be = -1;
+    for (let t = 3; t <= MONTHS; t++) { if (net[t] > 0) { be = t; break; } }
+    return { net, be };
+  }
+
+  function signed(n: number) {
+    const r = Math.round(n);
+    return r > 0 ? `+${r}` : `${r}`;
+  }
+
+  function init(root: HTMLElement) {
+    const inputs = {
+      friction: root.querySelector<HTMLInputElement>('[data-in="friction"]')!,
+      coaching: root.querySelector<HTMLInputElement>('[data-in="coaching"]')!,
+      scope: root.querySelector<HTMLInputElement>('[data-in="scope"]')!,
+    };
+    const q = (s: string) => root.querySelector(s) as SVGElement;
+    const svgNS = 'http://www.w3.org/2000/svg';
+
+    const xticks = q('[data-xticks]');
+    for (const m of [0, 6, 12, 18, 24]) {
+      const x = X0 + (m / MONTHS) * (X1 - X0);
+      const tx = document.createElementNS(svgNS, 'text');
+      tx.setAttribute('x', String(x)); tx.setAttribute('y', '262');
+      tx.setAttribute('text-anchor', 'middle'); tx.setAttribute('class', 'jc-tick');
+      tx.textContent = `M${m}`;
+      xticks.appendChild(tx);
+    }
+
+    function render() {
+      const f = +inputs.friction.value, c = +inputs.coaching.value, s = +inputs.scope.value;
+      for (const k of Object.keys(inputs) as (keyof typeof inputs)[]) {
+        root.querySelector(`[data-out="${k}"]`)!.textContent = inputs[k].value;
+      }
+      const { net, be } = simulate(f, c, s);
+      const lo = Math.min(...net), hi = Math.max(...net);
+      const yMin = Math.min(lo, -100) * 1.1, yMax = Math.max(hi, 100) * 1.1;
+      const y = (v: number) => Y0 + ((yMax - v) / (yMax - yMin)) * (Y1 - Y0);
+      const x = (t: number) => X0 + (t / MONTHS) * (X1 - X0);
+      const zy = y(0);
+
+      const pts = net.map((v, t) => `${x(t).toFixed(1)},${y(v).toFixed(1)}`);
+      q('[data-line]').setAttribute('d', `M${pts.join(' L')}`);
+      const area = `M${x(0)},${zy} L${pts.join(' L')} L${x(MONTHS)},${zy} Z`;
+      q('[data-area]').setAttribute('d', area);
+      q('[data-area-neg]').setAttribute('d', area);
+      q('[data-clip-above]').setAttribute('height', String(zy));
+      q('[data-clip-below]').setAttribute('y', String(zy));
+      q('[data-clip-below]').setAttribute('height', String(280 - zy));
+      const zero = q('[data-zero]');
+      zero.setAttribute('y1', String(zy)); zero.setAttribute('y2', String(zy));
+
+      const grid = q('[data-grid]');
+      grid.replaceChildren();
+      const step = Math.pow(10, Math.floor(Math.log10((yMax - yMin) / 3)));
+      const nice = [1, 2, 5].map((m) => m * step).find((st) => (yMax - yMin) / st <= 6) || step * 10;
+      for (let v = Math.ceil(yMin / nice) * nice; v <= yMax; v += nice) {
+        const gy = y(v);
+        const ln = document.createElementNS(svgNS, 'line');
+        ln.setAttribute('x1', String(X0)); ln.setAttribute('x2', String(X1));
+        ln.setAttribute('y1', String(gy)); ln.setAttribute('y2', String(gy));
+        ln.setAttribute('class', 'jc-grid');
+        const tx = document.createElementNS(svgNS, 'text');
+        tx.setAttribute('x', String(X0 - 6)); tx.setAttribute('y', String(gy + 4));
+        tx.setAttribute('text-anchor', 'end'); tx.setAttribute('class', 'jc-tick');
+        tx.textContent = signed(v);
+        grid.appendChild(ln); grid.appendChild(tx);
+      }
+
+      const beLine = q('[data-be]');
+      if (be > 0) {
+        beLine.setAttribute('x1', String(x(be))); beLine.setAttribute('x2', String(x(be)));
+        beLine.style.display = '';
+      } else {
+        beLine.style.display = 'none';
+      }
+
+      root.querySelector('[data-stat="dip"]')!.textContent = signed(lo);
+      root.querySelector('[data-stat="be"]')!.textContent = be > 0 ? `Month ${be}` : 'Not within 24 months';
+      root.querySelector('[data-stat="m24"]')!.textContent = signed(net[MONTHS]);
+    }
+
+    for (const el of Object.values(inputs)) el.addEventListener('input', render);
+    root.querySelector('[data-reset]')!.addEventListener('click', () => {
+      for (const el of Object.values(inputs)) el.value = '5';
+      render();
+    });
+    render();
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-jcurve]').forEach(init);
+</script>
+
+<style>
+  .jc { margin: 2rem 0; }
+  .jc-layout { display: grid; grid-template-columns: minmax(14rem, 18rem) 1fr; gap: 1.5rem; align-items: start; }
+  .jc-controls { display: flex; flex-direction: column; gap: 1.1rem; }
+  .jc-ctl { display: flex; flex-direction: column; gap: .35rem; }
+  .jc-lab { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: var(--fs-label); letter-spacing: .05em; text-transform: uppercase; }
+  .jc-lab output { font-weight: 600; }
+  .jc-hint { font-size: var(--fs-caption); line-height: 1.45; opacity: .7; }
+  .jc-ctl input[type="range"] { width: 100%; accent-color: #3866A0; }
+  .jc-reset { align-self: flex-start; font-family: var(--font-mono); font-size: var(--fs-caption); letter-spacing: .08em; text-transform: uppercase; color: inherit; background: transparent; border: 1px solid color-mix(in srgb, currentColor 35%, transparent); border-radius: var(--radius-sm); padding: .45rem .8rem; cursor: pointer; }
+  .jc-reset:hover { border-color: currentColor; }
+  .jc-chart svg { width: 100%; height: auto; display: block; }
+  .jc-chart :global(.jc-tick) { font-family: var(--font-mono); font-size: 11px; fill: currentColor; opacity: .6; }
+  .jc-chart :global(.jc-grid) { stroke: currentColor; stroke-opacity: .1; }
+  .jc-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: .75rem; margin-top: 1rem; }
+  .jc-stats > div { border: 1px solid color-mix(in srgb, currentColor 22%, transparent); border-radius: var(--radius-sm); padding: .8rem 1rem; }
+  .jc-v { display: block; font-family: var(--font-display); font-size: 1.6rem; line-height: 1.1; }
+  .jc-l { display: block; margin-top: .35rem; font-family: var(--font-mono); font-size: var(--fs-caption); letter-spacing: .06em; text-transform: uppercase; opacity: .7; }
+  .jc figcaption { margin-top: 1rem; font-size: var(--fs-body-sm); line-height: 1.6; opacity: .8; }
+  @media (max-width: 760px) {
+    .jc-layout { grid-template-columns: 1fr; }
+    .jc-stats { grid-template-columns: 1fr; }
+  }
+</style>

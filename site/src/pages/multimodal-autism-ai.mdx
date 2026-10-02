@@ -1,16 +1,15 @@
 ---
 layout: ../layouts/CinematicLayout.astro
 title: "An ADOS-2-Aligned Multimodal Architecture for Clinical Autism Assessment"
-short_title: "An ADOS-2-Aligned Multimodal Architecture for"
-description: "The ADOS-2 scores social communication, communication, play, and repetitive behaviors as separate domains before deriving a composite, so a model that flattens those domains into one feature space is undoing the very structure the diagnostic algorithm is built around. This pipeline keeps the domains apart, trains a classifier on each, fuses their verdicts late, and runs entirely on synthetic data with a runtime check that fires at AUC 0.95 to keep the simulation honest about how hard the real problem is."
+short_title: "An ADOS-2-Aligned Multimodal Architecture"
+description: "I built a synthetic-data pipeline that keeps ADOS-2-style behavioral domains apart, trains a classifier on each, fuses their verdicts late, and writes separate research and clinical reports from one run. A runtime check flags any held-out AUC above 0.95 as likely simulation drift; the most conservative cross-validated model scored AUC 0.891."
 category: "Clinical & behavioral ML"
 subcategory: "Autism Assessment"
 format: "CASE STUDY"
-time: "10 min read"
 author: "Dr. Heather Leffew"
 tags: ["Clinical ML", "Synthetic Data", "Bayesian Uncertainty", "Late Fusion", "Decision Support"]
 visual: "pipeline-schematic.svg"
-scripts: ["interactive_0.js"]
+scripts: []
 ---
 import Band from '../components/Band.astro';
 import Figure from '../components/Figure.astro';
@@ -20,97 +19,80 @@ import ApaReferences from '../components/ApaReferences.astro';
 
 ## Abstract
 
-The ADOS-2 scores social communication, communication, play, and repetitive behaviors as separate domains before it derives a composite, so a model that flattens those features into one feature space is undoing the very thing the diagnostic algorithm is built around doing; this pipeline takes the opposite approach, letting domain-specific classifiers train independently on the social, communication, and repetitive feature subsets, and then a Logistic Regression meta-learner combines their probability outputs into the final consensus prediction. I structured the architecture this way because the clinical logic the assessment rests on seemed to ask for it, and the same commitment carries through the output layer, which generates two separate Jinja-templated reports from a single analytical run; one is a research report with AUC, calibration, and SHAP global importances for an ML team, and the other is a clinical report with per-participant feature attribution, ensemble consensus, data-quality scoring, and an explicit "requires clinical review" flag when uncertainty exceeds threshold. The synthetic data generator and the runtime AUC validity check, which fires at 0.95 because an AUC above that on engineered data is more likely simulation drift than model skill, are the engineering hygiene that lets the architecture and the reporting do their work.
+The ADOS-2 groups its observations into domains and combines them into domain totals before it applies a cutoff (Lord et al., 2012), so I built a pipeline that models each behavioral domain separately and combines the domains only at the end. Three domain-specific classifiers train on the social, communication, and repetitive-behavior feature subsets, and a logistic-regression meta-learner combines their probabilities into a consensus prediction. The output layer writes two reports from a single analytical run; a research report gives an ML team performance, cross-validation, feature importance, and dataset diagnostics, and a clinical report gives a clinician item-level behavioral scores, model consensus, uncertainty, session quality, and an explicit "requires clinical review" flag when the ensemble disagrees. The pipeline runs entirely on synthetic data that I generated to overlap the way clinical groups overlap, and a runtime check flags any held-out AUC above 0.95 as more likely simulation drift than model skill.
 
 </Band>
 
-<Band theme="dark" spine="The clinical reality m" section="The clinical reality most synthetic pipelines set aside">
+<Band theme="dark" spine="The clinical reality" section="The clinical reality a simulator has to carry">
 
-## The clinical reality most synthetic pipelines set aside
+## The clinical reality a simulator has to carry
 
-The ADOS-2 is the gold standard for autism assessment because its features are behaviorally grounded, examiner-administered, and domain-structured; it is also a 45-minute session with a child who may or may not be cooperative, assessed by a clinician whose training may or may not match the clinician who assessed the last child, captured on video with face detection that may or may not hold throughout the session. The feature distributions that come out of a process like that are not clean.
+The ADOS-2 is a standardized, examiner-administered observation, typically 40 to 60 minutes with a child who may or may not cooperate, scored by a clinician whose training may differ from the last examiner's (Lord et al., 2012). An automated pipeline would add video with face detection that may not hold throughout the session. Features that come out of a process like that are noisy, and the groups they describe overlap.
 
-<Figure src="/assets/multimodal-autism-ai/pipeline-schematic.svg" alt="Labeled schematic of the multimodal feature-extraction pipeline. Video and Audio input streams flow through computer-vision and NLP modules respectively, producing behavioral features that map to ADOS-2 scoring domains." caption="FIG. 01 Multimodal feature-extraction pipeline. Video frames feed computer-vision modules (MediaPipe gaze and face tracking, skeletal pose estimation); audio feeds NLP modules (Whisper speech-to-text, prosodic feature extraction). Both streams produce behavioral feature groups that map directly to ADOS-2 Domain A (Social Communication), Domain B (Communication), and Domains C/D (Play and Repetitive Behaviors) before entering the late-fusion classifier stack." />
+<Figure src="/assets/multimodal-autism-ai/pipeline-schematic.svg" alt="Labeled schematic of the multimodal feature-extraction pipeline. Video and audio input streams flow through computer-vision and NLP modules, producing behavioral features that map to the pipeline's ADOS-2-style domains." caption="FIG. 01 Multimodal feature-extraction design. In a deployed system, video would feed computer-vision modules (MediaPipe gaze and face tracking, skeletal pose estimation) and audio would feed NLP modules (Whisper speech-to-text, prosodic features). In this pipeline, simulator classes generate the features those modules would produce; no real video or audio is processed. The item labels are a simplified scheme I defined for the pipeline, modeled on ADOS-2 codes." />
 
-Gaze-to-face percentage in ASD populations is not normally distributed around 40 percent with a standard deviation of 5; it is distributed around 52 percent with a standard deviation of 22, with a high-functioning ASD subgroup whose mean sits at 68 percent, which overlaps heavily with the typical-development mean of 73 percent. Spontaneous vocalizations in ASD run to a mean of 28 (SD 12), and in typical development they run to a mean of 38 (SD 12), so these distributions share a substantial middle; social smiles, joint attention bids, and response latency all overlap between groups to a degree that would fail any clean classification benchmark.
+I wrote a `ClinicallyRealisticDataGenerator` to build that ambiguity in on purpose. I drew gaze-to-face percentage from N(52, 22) for classic ASD profiles, N(68, 18) for high-functioning ASD, N(58, 16) for typical development with false-positive risk factors, and N(73, 15) for typical development, so the distributions overlap heavily. I drew spontaneous vocalizations from N(32, 15) for ASD and N(38, 15) for non-ASD profiles, scaled by age. I added gaze measurement noise with a standard deviation of 17 percentage points and then 25% to 35% multiplicative noise on every feature. Session quality acts as a global confound; a low-quality session lowers face detection, audio clarity, and session completeness together. Each feature loses 8% to 15% of its values at random, and in 5% of sessions two or three features go missing together, because a problematic session tends to affect several measurements at once. In 10% of audio recordings, a simulated technical failure cuts detected vocalizations to 60% of the generated count.
 
-The `ClinicallyRealisticDataGenerator` in this pipeline parameterizes that ambiguity instead of avoiding it. Gaze percentage for a high-functioning ASD participant is drawn from N(68, 18), and for a typical participant with false-positive risk factors it is drawn from N(58, 16); these distributions overlap by design because they overlap in clinical reality. Measurement noise on gaze is plus or minus 17 percent, and session quality is a global confound that propagates through every feature, since a low-quality session degrades face detection, attenuates audio clarity, and reduces session completeness all at once. Correlated missingness appears in 5 percent of participants, because in clinical practice a problematic session affects all behavioral measurements together rather than each independently, and ten percent of audio recordings simulate a technical failure that reduces detected vocalizations to roughly 60 percent of the true count.
+I overweighted the cases that clinicians who run ADOS assessments regularly will recognize, making 35% of profiles challenging:
 
-Thirty-five percent challenging profiles
-
-The dataset deliberately overweights the cases any clinician who does ADOS assessments regularly has run into:
-
-* **High-functioning ASD** with very subtle presentation
+* **High-functioning ASD** with subtle presentation
 * **Borderline ASD** that meets some but not all diagnostic criteria
 * **Masked ASD**, where the individual compensates to hide traits
 * **Typical development with false-positive risk factors**
-* **Developmental delay** that mimics ASD on surface features
+* **Developmental delay** that resembles ASD on surface features
 * **Anxiety-driven behavior** that produces ASD-like surface features
 
-| Simulation Parameter | Target Value / Range | Clinical Rationale |
+| Simulation parameter | Value | Rationale |
 | --- | --- | --- |
-| Total Profiles | 1,200 | Ensures statistical significance for model training. |
-| ASD Prevalence | 22% | Reflects specialized clinical referral rates. |
-| Group Overlap | 60% to 80% | Simulates borderline and ambiguous behavioral presentations. |
-| Measurement Noise | 25% to 35% | Accounts for sensor errors, poor lighting, and background audio. |
-| Missing Data | 8% to 15% | Mimics occluded camera angles or dropped audio frames. |
-| Challenging Subtypes | 35% | Prevents overfitting to textbook, easily separable cases. |
+| Participants | 1,200 | Large enough to train and cross-validate eight model families |
+| ASD prevalence | 22% | Resembles a specialty referral clinic |
+| Measurement noise | 25% to 35% per feature | Sensor error, poor lighting, and background audio |
+| Missing values | 8% to 15% per feature, plus 5% of sessions with correlated gaps | Occluded camera angles and dropped audio |
+| Challenging profiles | 35% | Keeps the models from training on textbook cases alone |
+
+The condensed excerpt below shows the generator's logic for one feature, gaze-to-face percentage; every other feature follows the same pattern of profile-specific distributions followed by noise.
 
 ```
-# Python implementation of the Ultra-Realistic Data Simulation
-import numpy as np
-from sklearn.datasets import make_classification
+# Condensed from ClinicallyRealisticDataGenerator (gaze-to-face percentage).
+# Group distributions overlap by design; noise is added afterward.
+GAZE_MEAN_SD = {
+    'asd_classic':          (52, 22),
+    'asd_high_functioning': (68, 18),
+    'typical_fp_risk':      (58, 16),
+    'typical':              (73, 15),
+}
+mean, sd = GAZE_MEAN_SD[profile_key]
+features['gaze_to_face_percent'] = np.clip(np.random.normal(mean, sd), 5, 98)
 
-def generate_clinical_data(n_samples=1200, prevalence=0.22, noise_level=0.30, missing_rate=0.10):
-    # Generate base overlapping data
-    X, y = make_classification(
-        n_samples=n_samples,
-        n_features=10,
-        n_informative=6,
-        n_redundant=2,
-        weights=[1 - prevalence, prevalence],
-        flip_y=0.15, # Introduces clinical overlap/ambiguity
-        class_sep=0.4  # Low separation enforces 60-80% overlap
-    )
-    
-    # Inject Measurement Noise
-    noise = np.random.normal(0, noise_level, X.shape)
-    X_noisy = X + noise
-    
-    # Inject Missingness
-    mask = np.random.rand(*X_noisy.shape) < missing_rate
-    X_noisy[mask] = np.nan
-    
-    return X_noisy, y
-
-X_simulated, y_simulated = generate_clinical_data()
+# Every feature then receives 25-35% multiplicative measurement noise.
+noise_level = np.random.uniform(0.25, 0.35)
+features[name] = value + np.random.normal(0, abs(value) * noise_level)
 ```
+
+On the generated data, the groups overlapped the way I intended for most features; the mean gaze-to-face percentage was 52.6 for ASD and 67.7 for non-ASD profiles, and the mean vocalization count was 28.7 against 35.9. Phrase repetition separated the groups far more than any other feature (means 0.14 against 0.03), a property of how I parameterized that feature, and that separation shapes the feature-importance results below.
 
 </Band>
 
-<Band theme="paper" spine="Feature Extraction and" section="Feature Extraction and ADOS-2 Mapping">
+<Band theme="paper" spine="Feature Extraction and" section="Feature Extraction and Domain Mapping">
 
-## Feature Extraction and ADOS-2 Mapping
+## Feature Extraction and Domain Mapping
 
-The system processes simulated video and audio streams to extract 10 core behavioral features, and these features are not arbitrary; they are chosen to map directly to the standard ADOS-2 scoring domains, where a score of 0 indicates typical behavior, 1 indicates mild concern, and 2 indicates clear evidence of atypical behavior.
+The simulator produces 10 behavioral features, and I assigned each to one of three domains modeled on the ADOS-2 structure. The clinical report converts each simulated feature into an item code from 0 (typical) to 2 (markedly atypical), following the pipeline's item scheme.
 
-<Figure src="/assets/multimodal-autism-ai/fig_1.svg" alt="Hierarchical tree diagram showing video and audio input streams branching into computer-vision and NLP feature extractors, each leaf node labeled with its corresponding ADOS-2 behavioral domain item." caption="FIG. 02 Hierarchical extraction tree mapping multimodal data streams to specific ADOS-2 behavioral domains." />
+<Figure src="/assets/multimodal-autism-ai/fig_1.svg" alt="Hierarchical tree diagram showing video and audio input streams branching into computer-vision and NLP feature extractors, each leaf node labeled with the pipeline's ADOS-2-style item label." caption="FIG. 02 Hierarchical extraction tree mapping the simulated video and audio streams to the pipeline's ADOS-2-style item labels." />
 
-* **Social Communication (Domain A)** covers Eye Contact (A1) measured via MediaPipe**MediaPipe**, Google's open-source library for on-device pose, face mesh, and gaze estimation., Facial Expressions (A2), Response to Name (A4), and Joint Attention (A7).
-* **Communication (Domain B)** covers Vocalizations (B1) and Repetitive Language (B2) mapped via Whisper**Whisper**, OpenAI's open-weights speech recognition model used to extract prosodic features and phrase repetitions. models.
-* **Play and Repetitive Behaviors (Domains C and D)** covers Functional Play (C1), Hand Mannerisms (D1), and Sensory Interests (D4) mapped via skeletal and gaze tracking.
-
-| Feature Modality | ADOS-2 Domain | Specific Feature | Measurement Metric |
-| --- | --- | --- | --- |
-| Computer Vision | Domain A | Eye Contact (A1) | % time gaze directed at face |
-| Computer Vision | Domain A | Facial Expressions (A2) | Count of social smiles |
-| Audio/Vision | Domain A | Response to Name (A4) | Latency (seconds) |
-| Computer Vision | Domain A | Joint Attention (A7) | Count of successful bids |
-| Audio Processing | Domain B | Vocalizations (B1) | Count of spontaneous vocalizations |
-| NLP / Audio | Domain B | Repetitive Language (B2) | Rate of phrase repetition |
-| Computer Vision | Domain C | Functional Play (C1) | % time using toys functionally |
-| Pose Estimation | Domain D | Hand Mannerisms (D1) | Duration (seconds) |
-| Pose Estimation | Domain D | Sensory Interests (D4) | Duration (seconds) |
+| Domain group | Feature | Measurement |
+| --- | --- | --- |
+| Social | Gaze-to-face | % of session with gaze directed at a face |
+| Social | Mutual gaze | Count of mutual gaze episodes |
+| Social | Social smiles | Count |
+| Social | Joint attention | Count of successful bids |
+| Communication | Response to name | Latency in seconds |
+| Communication | Spontaneous vocalizations | Count |
+| Communication | Phrase repetition | Rate |
+| Repetitive behavior | Hand flapping | Duration in seconds |
+| Repetitive behavior | Functional play | % of session using toys functionally |
+| Repetitive behavior | Close visual inspection | Duration in seconds |
 
 </Band>
 
@@ -118,45 +100,36 @@ The system processes simulated video and audio streams to extract 10 core behavi
 
 ## The Machine Learning Architecture
 
-The ADOS-2 algorithm scores three behavioral domains independently before it combines them, namely social affect (eye contact, facial expressions, joint attention, response to name), communication (vocalizations, repetitive language), and restricted-and-repetitive behaviors (functional play, hand mannerisms, sensory interests); the clinician fills out subscores for each domain, the algorithm derives a composite, and the cutoff thresholds applied to the composite are calibrated against the domain structure rather than against an undifferentiated feature pool. The diagnostic logic is built around the domains, not on top of them.
-
-The architectural commitment of this pipeline is that the model should mirror that structure instead of flattening it; three domain-specific classifiers train independently, with a Random Forest on the social affect features, an XGBoost on the communication features, and a regularized Logistic Regression on the repetitive-behavior features, and each emits a probability of ASD class membership conditional on its own domain alone. A Logistic Regression meta-learner then takes those three probabilities as input and produces the consensus prediction; the base models do not see each other's feature subsets, and the meta-learner does not see the raw features, so the diagnostic algorithm and the ML architecture end up with the same shape.
+The ADOS-2 algorithm combines selected item codes into a Social Affect total and a Restricted and Repetitive Behavior total, and the cutoffs apply to scores built from that domain structure (Lord et al., 2012). I built the model to mirror that structure. Three domain-specific classifiers train independently, a Random Forest on the social features, an XGBoost model on the communication features, and a regularized logistic regression on the repetitive-behavior features, and each emits a probability of ASD class membership from its own domain alone. A logistic-regression meta-learner takes those three probabilities as input and produces the consensus prediction. The base models never see each other's feature subsets, and the meta-learner never sees the raw features.
 
 ```
-# Late fusion that mirrors the ADOS-2 algorithm's domain structure
-# Each base classifier sees only the features in its own ADOS-2 domain.
+# Late fusion over the pipeline's three domain groups.
+# Each base classifier sees only the features in its own domain.
+feature_groups = {
+    'social':        ['gaze_to_face_percent', 'mutual_gaze_episodes',
+                      'social_smiles_count', 'joint_attention_bids'],
+    'communication': ['response_to_name_latency', 'spontaneous_vocalizations',
+                      'phrase_repetition_rate'],
+    'repetitive':    ['hand_flapping_duration', 'functional_play_percent',
+                      'close_visual_inspection'],
+}
+domain_models = {
+    'social':        RandomForestClassifier(n_estimators=80, max_depth=6, class_weight='balanced'),
+    'communication': XGBClassifier(n_estimators=80, max_depth=4, eval_metric='logloss'),
+    'repetitive':    LogisticRegression(C=0.3, class_weight='balanced'),
+}
+for domain, model in domain_models.items():
+    model.fit(X_train[feature_groups[domain]], y_train)
 
-# Social affect domain (gaze, smiles, joint attention, response to name)
-social_model = RandomForestClassifier(
-    n_estimators=80, max_depth=6,
-    class_weight='balanced'
-)
-
-# Communication domain (vocalizations, phrase repetition)
-comm_model = XGBClassifier(
-    n_estimators=80, max_depth=4,
-    eval_metric='logloss'
-)
-
-# Restricted and repetitive behaviors domain
-# (functional play, hand mannerisms, sensory interests)
-rep_model = LogisticRegression(C=0.3, class_weight='balanced')
-
-# Generate out-of-fold domain probabilities
-p_social = cross_val_predict(social_model, X_social, y, method='predict_proba')[:, 1]
-p_comm   = cross_val_predict(comm_model,   X_comm,   y, method='predict_proba')[:, 1]
-p_rep    = cross_val_predict(rep_model,    X_rep,    y, method='predict_proba')[:, 1]
-
-# Meta-learner combines the three domain verdicts
-X_meta = np.column_stack((p_social, p_comm, p_rep))
-meta = LogisticRegression(C=0.5)
-meta.fit(X_meta, y)
-consensus = meta.predict_proba(X_meta)[:, 1]
+# The meta-learner combines the three domain probabilities.
+meta_train = np.column_stack([m.predict_proba(X_train[feature_groups[d]])[:, 1]
+                              for d, m in domain_models.items()])
+meta = LogisticRegression(C=0.5).fit(meta_train, y_train)
 ```
 
-The choice has consequences for interpretation, since when the meta-learner produces a high consensus probability, the per-domain probabilities reveal which domain drove it; a case with high social-affect probability but middling communication and repetitive-behavior probabilities is a different clinical picture than one where all three domains agree, and that decomposition surfaces directly in the clinical report. A model that had concatenated all features into one classifier would have produced the same consensus number with none of the domain-level explanation, and the resulting report could not have told the clinician where in the diagnostic structure the signal was coming from.
+The design pays off in interpretation. When the meta-learner produces a high consensus probability, the per-domain probabilities show which domain drove it; a case with a high social probability and middling communication and repetitive-behavior probabilities is a different clinical picture from one in which all three domains agree, and the clinical report shows that decomposition directly. A single classifier over all features would produce a consensus number with no domain-level explanation.
 
-The supporting modeling layers around the late fusion exist to justify the architectural choice on more conventional metrics; supervised baselines (Logistic Regression, Random Forest, XGBoost) run with deliberately conservative hyperparameters, namely depth-4 trees, learning rate 0.05, aggressive L1/L2 regularization, and elastic-net penalty at C=0.1, while semi-supervised augmentation uses self-training at confidence threshold 0.9 and Label Spreading with 10 nearest neighbors at alpha 0.5. A Bayesian ensemble of five independently-seeded Random Forests with 70 percent bootstrap subsampling supplies the uncertainty term that the late fusion's consensus probability is qualified against, and cases where ensemble standard deviation exceeds 0.2 are flagged for clinical review instead of classified; they exist so the late fusion has comparison points and so the consensus probability has uncertainty attached to it.
+Around the late fusion I ran conventional comparison models with conservative settings. The supervised baselines are logistic regression with an elastic-net penalty (C = 0.1), a Random Forest, and XGBoost with depth-4 trees, a learning rate of 0.05, and L1 and L2 regularization. The semi-supervised models are self-training with a confidence threshold of 0.9 and label spreading with 10 nearest neighbors and alpha 0.5. A Bayesian ensemble of five independently seeded Random Forests with 70% bootstrap subsampling supplies the uncertainty estimate, and the pipeline flags any case whose ensemble standard deviation exceeds 0.2 for clinical review. I trained on the 75.7% of sessions that passed the simulated quality check, as a clinic would set aside a session it could not score.
 
 </Band>
 
@@ -164,28 +137,26 @@ The supporting modeling layers around the late fusion exist to justify the archi
 
 ## What realistic performance looks like
 
-In-sample AUCs across the model suite cluster between 0.93 and 0.97, and the system's automated realism validator fires on the highest performers with the explicit warning "Performance may be too high, check for data leakage." On synthetic data designed to parallel real clinical data in its complexity, overlap, ambiguity, and noise, the validator's working assumption is that any in-sample AUC above 0.95 is more likely evidence the simulation drifted toward separability somewhere than evidence the model got that good; that assertion, encoded as a runtime check instead of a postmortem note, is a conservative engineering choice that keeps the simulation parallel to the difficulty of the actual problem.
+I evaluated every model on a held-out 25% test split. Test AUCs ranged from 0.931 to 0.974, and the realism check flagged the two models above 0.95 with the warning "Suspiciously high AUC, check for overfitting." I wrote that check because, on synthetic data built to overlap, an AUC above 0.95 more likely means the simulation drifted toward separability than that the model got that good, and I encoded the assumption as a runtime check so that every run applies it.
 
-Five-fold cross-validation pulls the picture closer to real clinical performance; the interpretable Label Spreading model cross-validates to AUC 0.891 plus or minus 0.022, and XGBoost to 0.953 plus or minus 0.017, and the 0.891 number is the one that reads against the literature. Wall et al. (2012) reported AUC between 0.78 and 0.88 across multiple model families on real ADOS data, and Duda et al. (2016) reached 0.85 to 0.92 under favorable conditions; landing inside that range on synthetic data engineered for 60 to 80 percent feature-level group overlap is the right kind of result, because the performance the pipeline produces is parallel to the performance the literature documents on real patients.
-
-<Figure src="/assets/multimodal-autism-ai/fig_2.svg" alt="ROC curve showing classifier performance arching above the AUC 0.95 validity-check threshold, with the deployed system's AUC 0.89 result annotated in the realistic range." caption="FIG. 03 ROC curve for an ablation run that triggered the validity check. The arch arrives in the warning zone above AUC 0.95, which is what the runtime assertion is designed to catch. The deployed system reports AUC 0.89, in the published clinical literature's realistic range." />
-
-| Model | AUC | F1 | Sensitivity | Specificity | Validator |
+| Model | Test AUC | F1 | Sensitivity | Specificity | Realism check |
 | --- | --- | --- | --- | --- | --- |
 | Random Forest | 0.933 | 0.696 | 0.80 | 0.859 | passes |
 | XGBoost | 0.946 | 0.625 | 0.50 | 0.972 | passes |
-| Logistic Regression | 0.974 | 0.844 | 0.95 | 0.915 | fires |
+| Logistic Regression | 0.974 | 0.844 | 0.95 | 0.915 | flagged |
 | Self-Training | 0.945 | 0.744 | 0.80 | 0.901 | passes |
-| Label Spreading | 0.970 | 0.667 | 0.50 | 1.000 | fires |
+| Label Spreading | 0.970 | 0.667 | 0.50 | 1.000 | flagged |
 | Bayesian Ensemble | 0.932 | 0.681 | 0.80 | 0.845 | passes |
 | Bayesian Calibrated | 0.931 | 0.732 | 0.75 | 0.915 | passes |
 | Late Fusion | 0.932 | 0.683 | 0.70 | 0.901 | passes |
 
-In-sample AUCs from a single run of the realistic pipeline. The validator's "fires" column flags the two models above the 0.95 threshold. Cross-validation on Label Spreading produces AUC 0.891 plus or minus 0.022, which is the number that meaningfully compares to the clinical literature.
+Five-fold cross-validation tempered the single-split picture; label spreading cross-validated to AUC 0.891 (SD 0.022) and XGBoost to 0.953 (SD 0.017). The label-spreading result shows how much a single favorable split can flatter a model, since the same model scored 0.970 on the held-out split.
 
-Aggregated feature importance across the supervised models ranks Gaze-to-Face Percentage first (0.18), followed by Phrase Repetition Rate (0.16), Joint Attention Bids (0.14), Response to Name Latency (0.13), and Functional Play Percentage (0.12); the ordering aligns with the ADOS-2 algorithm's own weighting of social communication features and with recent peer-reviewed work on prosodic and speech-rhythm features as cross-language ASD biomarkers. The features the models find most informative are the features the clinical literature already supports as informative on real data, which is the right kind of sanity check on a synthetic pipeline.
+<Figure src="/assets/multimodal-autism-ai/fig_2.svg" alt="Schematic ROC curve arching into the warning zone above AUC 0.95, annotated with the logistic regression model's held-out AUC of 0.974." caption="FIG. 03 Schematic ROC curve for the logistic regression model, whose held-out AUC of 0.974 tripped the 0.95 realism check. The curve shape is illustrative; the AUC is the measured value." />
 
-<Figure src="/assets/multimodal-autism-ai/fig_3.svg" alt="Horizontal bar chart of aggregated feature importance scores for the top five features, namely Gaze-to-Face Percentage, Phrase Repetition Rate, Joint Attention Bids, Response to Name Latency, and Functional Play Percentage." caption="FIG. 04 Top-five aggregated feature importance across the supervised models. The ranking mirrors the ADOS-2 algorithm's own weighting of social communication features and aligns with published cross-language biomarker work on prosodic and speech-rhythm features." />
+Aggregated feature importance ranked phrase repetition rate first by a wide margin (0.514), followed by hand-flapping duration (0.129), close visual inspection (0.126), response-to-name latency (0.068), and social smiles (0.042). The ranking reflects the simulator more than clinical truth; phrase repetition was the feature I parameterized with the least group overlap, and the models found it. I read the dominance of one feature, together with the two flagged AUCs, as a signal to add overlap to phrase repetition in the next version of the generator.
+
+<Figure src="/assets/multimodal-autism-ai/fig_3.svg" alt="Horizontal bar chart of aggregated feature importance for the top five features, with phrase repetition rate far ahead of hand-flapping duration, close visual inspection, response-to-name latency, and social smiles." caption="FIG. 04 Top-five aggregated feature importance across the supervised models. Phrase repetition dominates because the simulator gave it the least group overlap." />
 
 </Band>
 
@@ -193,44 +164,36 @@ Aggregated feature importance across the supervised models ranks Gaze-to-Face Pe
 
 ## One analytical run, two stakeholder-specific reports
 
-The second architectural commitment of this pipeline is that the output layer should not produce a single report that tries to serve everyone; it produces two, a research report for the ML team that owns the model and a clinical report for the clinician who ordered the assessment, and both reports derive from the same underlying analytical run, differing in what they surface, how they surface it, and what they expect the reader to do with it. A single shared report would have served neither audience well, because the questions an ML reviewer needs answered are not the questions a clinician needs answered, and conflating them produces output that is too technical to be clinically useful and too vague to be technically auditable.
+I built the output layer to write two reports from the same analytical run, a research report for the ML team that owns the model and a clinical report for the clinician who ordered the assessment. The two audiences ask different questions; an ML reviewer needs to audit the model, and a clinician needs to weigh the evidence for one child.
 
-The research report renders cross-validated AUC, F1, sensitivity, specificity, calibration curves, SHAP global feature importance, ensemble agreement statistics, and the realism validator's verdict on whether the in-sample performance crossed the 0.95 threshold; it is the report that lets an ML team decide whether the model is doing what it should and whether the simulation is still parallel to the clinical situation it is meant to represent, and it is generated from a Jinja template with a fixed section structure, which makes successive runs directly comparable instead of ad-hoc.
+The research report gives model performance across all eight models, the spread of AUC and F1, cross-validation with confidence intervals, aggregated feature importance, dataset diagnostics (participants, prevalence, quality pass rate, and missing values), group differences with effect sizes and overlap scores, and the realism check's verdict. I generate it from a fixed HTML template, so successive runs are directly comparable.
 
-The clinical report renders something entirely different, since a probability of 0.67 is not a clinical finding; what a clinician needs to know is which behavioral features drove the prediction for this specific participant, how the participant's measurements compare to ASD and non-ASD group means, which features showed clinically significant deviation from typical ranges, and how much the constituent models agreed. SHAP values supply per-participant feature attribution, and the Bayesian ensemble's consensus analysis reports whether the five independently-seeded Random Forests agreed (the prediction has reliability) or disagreed (the case is clinically ambiguous and is better not classified on the basis of this output alone); cases where ensemble standard deviation exceeds 0.2 receive an explicit "requires clinical review" flag instead of a classification.
+The clinical report answers a different question, because a probability of 0.67 is not a clinical finding. For one participant, it gives an assessment summary, each model's prediction, an uncertainty analysis, item-level codes on the 0 to 2 scale grouped by domain, the features that deviated from typical ranges, areas of strength, data limitations, and recommendations. The Bayesian ensemble reports whether its five Random Forests agreed; when their standard deviation exceeds 0.2, the report flags the case as requiring clinical review and gives no classification.
 
-The report also surfaces data quality alongside the prediction, reporting video clarity, face detection rate, audio clarity, and session completeness, since a prediction made on a session with 60 percent face detection and audio clarity 0.5 carries different evidentiary weight than one made on a session that passed all quality checks. The clinician sees both the prediction and the quality of the evidence behind it, because the evidentiary weight is what should drive the clinical judgment, not the bare probability.
-
-The model organizes the behavioral evidence so the clinician, who has the training, the context, and the legal and ethical responsibility for the diagnosis, can make an informed judgment, and the two-report architecture is the layer at which that distinction becomes structurally enforceable; the clinician receives output formatted around the questions they have to answer, the ML team receives output formatted around the questions they have to answer, and neither receives the other's report by accident.
+The report also shows data quality beside the prediction (video clarity, face detection rate, audio clarity, and session completeness), since a prediction from a session with 60% face detection deserves less weight than one from a session that passed every quality check. The clinician, who holds the training, the context, and the legal and ethical responsibility for the diagnosis, sees the prediction and the quality of the evidence behind it, and the ML team sees the diagnostics it needs; I keep the two reports separate so neither audience has to read past the other's material.
 
 </Band>
 
-<Band theme="paper" spine="What this system is an" section="What this system is and is not">
+<Band theme="paper" spine="Limitations" section="Limitations">
 
-## What this system is and is not
+## Limitations
 
-The pipeline runs on synthetic data, since real ADOS-2 data is protected, scarce, and not appropriate for a portfolio demonstration; every claim about model performance in this article is a claim about the model's behavior on data deliberately engineered to parallel the complexity, overlap, ambiguity, and noise of real clinical observations, and the validator's job is to keep that parallelism intact when the simulation tries to drift toward separability. The cross-validated 0.891 number lands in published clinical ranges, which is the right kind of evidence that the simulation reflects the difficulty of the actual problem, though it is not evidence that the system would generalize to real patients; out-of-sample validation on real ADOS-2 data is the work that would have to happen before any conclusion about clinical utility, and that work is not in scope here.
+The pipeline runs on synthetic data, because real ADOS-2 data is protected and scarce; every performance number on this page describes behavior on data I engineered to overlap and to carry noise. The simulator also generates the outputs that MediaPipe and Whisper would produce, so the pipeline has never processed real video or audio. Out-of-sample validation on real ADOS-2 data would have to come before any conclusion about clinical utility.
 
-The system also reduces each session to a vector of aggregate behavioral counts, namely total social smiles, average response latency, percent time gaze-on-face, and aggregates lose temporal sequence, which is where a lot of clinical signal tends to live; a social smile that occurs one second after a clinician initiates a joint attention bid is clinically different from a smile that occurs at random, and the ADOS-2 itself is built around the timing of behavioral contingencies, not just their frequencies. A temporally-aware version of this pipeline would extract event sequences instead of aggregate counts, and the architecture would have to change to handle that.
+I fit the meta-learner on the domain models' predictions for the same training data the domain models learned from, which can overstate how much the meta-learner trusts each domain; out-of-fold domain probabilities would be the cleaner design, and I would make that change next. Cross-validation covered XGBoost and label spreading only.
 
-<Figure src="/assets/multimodal-autism-ai/fig_4.svg" alt="Timeline diagram contrasting aggregate-count representation with event-sequence representation, showing that a social smile occurring one second after a clinician's joint-attention bid is clinically distinct from one occurring at a random time." caption="FIG. 05 The temporal contingency the current aggregate-count features cannot see. Frequencies preserve how often a behavior occurs but not whether it occurs in response to a clinician's bid, which is the relationship the ADOS-2 administration was designed to elicit." />
+The pipeline reduces each session to aggregate counts (total social smiles, average response latency, percent of time with gaze on a face), and aggregates lose temporal sequence. A social smile one second after a clinician's joint-attention bid is clinically different from a smile at a random moment, and the ADOS-2 is built around the timing of behavioral contingencies. A temporally aware version would extract event sequences, and the architecture would have to change to handle them.
 
-Other constraints come with the synthetic frame; the simulator's session-quality confound is parameterized to match clinically plausible failure modes, but it cannot capture every kind of real-world noise (examiner bias, cultural variation in expressive behavior, comorbid presentations that the literature has not yet characterized statistically), and the model treats ASD as a binary label while the clinical category is a spectrum with substructure the binary loses. The dataset is also 22% ASD by construction, which matches a specialty clinic referral rate but not population prevalence, so in a general screening context the precision and specificity tradeoffs look different.
+<Figure src="/assets/multimodal-autism-ai/fig_4.svg" alt="Timeline diagram contrasting aggregate-count representation with event-sequence representation, showing that a social smile occurring one second after a clinician's joint-attention bid is clinically distinct from one occurring at a random time." caption="FIG. 05 The temporal contingency that aggregate-count features cannot see. Frequencies preserve how often a behavior occurs; they lose whether it occurs in response to a clinician's bid, which is the relationship the ADOS-2 administration is designed to elicit." />
 
-None of these are reasons not to build the system; they are reasons to be precise about what the system is doing and what it is not. A model trained on synthetic data parallel to clinical reality, validated by an automated check that fires when the synthesis drifts toward separability, and reported with explicit uncertainty intervals next to data-quality scores is the right kind of demonstration that the achievable goal in this space is decision support, not decision automation.
-
-
-Bibliography
+The session-quality confound covers plausible failure modes but not every kind of real-world noise (examiner bias, cultural variation in expressive behavior, and comorbid presentations), and the model treats ASD as a binary label where the clinical category is a spectrum. The 22% prevalence matches a specialty referral clinic, so precision and specificity would shift in a general screening population. Within those limits, I built the pipeline as decision support for a clinician, with uncertainty and data quality reported beside every prediction.
 
 </Band>
 
 <ApaReferences>
 
-* Lord, C., Rutter, M., DiLavore, P. C., Risi, S., Gotham, K., & Bishop, S. L. (2012). *Autism Diagnostic Observation Schedule, Second Edition (ADOS-2) manual*. Western Psychological Services.
-* Wall, D. P., Kosmicki, J., Deluca, T. F., Harstad, E., & Fusaro, V. A. (2012). Use of machine learning to shorten observation-based screening and diagnosis of autism. *Translational Psychiatry*, 2(4), e100.
-* Duda, M., Ma, R., Haber, N., & Wall, D. P. (2016). Use of machine learning for behavioral distinction of autism and ADHD. *Translational Psychiatry*, 6(2), e732.
-* Lundberg, S. M., & Lee, S.-I. (2017). A unified approach to interpreting model predictions. In *Advances in Neural Information Processing Systems 30* (pp. 4765-4774). Curran Associates, Inc.
 * Chen, T., & Guestrin, C. (2016). XGBoost: A scalable tree boosting system. In *Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining* (pp. 785-794). ACM. https://doi.org/10.1145/2939672.2939785
+* Lord, C., Rutter, M., DiLavore, P. C., Risi, S., Gotham, K., & Bishop, S. L. (2012). *Autism Diagnostic Observation Schedule, Second Edition (ADOS-2) manual*. Western Psychological Services.
 * Zhou, D., Bousquet, O., Lal, T. N., Weston, J., & Schölkopf, B. (2004). Learning with local and global consistency. In *Advances in Neural Information Processing Systems 16* (pp. 321-328). MIT Press.
 
 </ApaReferences>

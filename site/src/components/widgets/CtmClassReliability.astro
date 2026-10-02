@@ -1,0 +1,63 @@
+---
+// Per-class separation on the synthetic seed set: classifier F1 from five-fold
+// cross-validation against the adjudicated codes (bar), and the two coders'
+// positive specific agreement on the same class (marker), which is the F1 one
+// coder scores against the other. Data: per_class.json (generate.py).
+import { loadCtm } from './ctmData.mjs';
+
+const rows = [...loadCtm('per_class.json')].sort((x, y) => y.f1 - x.f1);
+const f2 = (v) => v.toFixed(2).replace(/^0/, '');
+---
+<figure class="ctm-cr" aria-label="Per-class F1 for the classifier and agreement between coders">
+  <div class="ctm-cr-head">
+    <span></span>
+    <span class="ctm-cr-axis"><span>0</span><span>.5</span><span>1</span></span>
+    <span class="ctm-cr-colhead">F1 / coders / n</span>
+  </div>
+  {rows.map((r) => (
+    <div class="ctm-cr-row">
+      <div class="ctm-cr-label">{r.label}</div>
+      <div class="ctm-cr-track">
+        <span class="ctm-cr-grid" style="left:50%"></span>
+        <span class="ctm-cr-grid" style="left:70%"></span>
+        <span class="ctm-cr-bar" style={`width:${(r.f1 * 100).toFixed(1)}%`}></span>
+        <span class="ctm-cr-mark" style={`left:${(r.coder_specific_agreement * 100).toFixed(1)}%`} title="Coder against coder"></span>
+      </div>
+      <div class="ctm-cr-val">{f2(r.f1)} <small>/ {f2(r.coder_specific_agreement)} / {r.support}</small></div>
+    </div>
+  ))}
+  <div class="ctm-cr-legend">
+    <span><i class="sw bar"></i>Classifier F1, five-fold cross-validation</span>
+    <span><i class="sw mark"></i>Coder A against coder B, same class</span>
+    <span>n = adjudicated seed notes in the class</span>
+  </div>
+  <figcaption>
+    Figure 2. Per-class separation on the 800-note synthetic seed set, sorted by classifier F1. The marker is the positive
+    specific agreement between the two coders, which equals the F1 one coder would score against the other, so bar and marker
+    sit on one scale. Faint rules sit at .50 and .70.
+  </figcaption>
+</figure>
+
+<style>
+  .ctm-cr { margin: 2rem 0; }
+  .ctm-cr-head, .ctm-cr-row { display: grid; grid-template-columns: minmax(8rem, 13rem) 1fr 9.5rem; gap: .9rem; align-items: center; }
+  .ctm-cr-head { font-family: var(--font-mono); font-size: var(--fs-caption); letter-spacing: .06em; text-transform: uppercase; opacity: .65; margin-bottom: .3rem; }
+  .ctm-cr-axis { display: flex; justify-content: space-between; }
+  .ctm-cr-row { margin: .45rem 0; }
+  .ctm-cr-label { font-size: var(--fs-body-sm); line-height: 1.3; }
+  .ctm-cr-track { position: relative; height: .9rem; background: color-mix(in srgb, currentColor 8%, transparent); }
+  .ctm-cr-grid { position: absolute; top: -2px; bottom: -2px; width: 1px; background: color-mix(in srgb, currentColor 25%, transparent); }
+  .ctm-cr-bar { position: absolute; left: 0; top: 0; bottom: 0; background: #3866A0; }
+  .ctm-cr-mark { position: absolute; top: -4px; width: 4px; height: calc(100% + 8px); margin-left: -2px; background: #DBA844; box-shadow: 0 0 0 1px color-mix(in srgb, currentColor 40%, transparent); }
+  .ctm-cr-val { font-family: var(--font-mono); font-size: var(--fs-label); }
+  .ctm-cr-val small { opacity: .65; }
+  .ctm-cr-legend { margin-top: 1rem; font-family: var(--font-mono); font-size: var(--fs-caption); letter-spacing: .05em; text-transform: uppercase; opacity: .8; display: flex; flex-wrap: wrap; gap: .4rem 1.2rem; align-items: center; }
+  .sw { display: inline-block; width: .8rem; height: .8rem; margin-right: .4rem; vertical-align: middle; }
+  .sw.bar { background: #3866A0; }
+  .sw.mark { background: #DBA844; width: .3rem; height: 1rem; }
+  .ctm-cr figcaption { margin-top: 1rem; font-size: var(--fs-body-sm); line-height: 1.6; opacity: .8; }
+  @media (max-width: 640px) {
+    .ctm-cr-head { display: none; }
+    .ctm-cr-row { grid-template-columns: 1fr; gap: .25rem; margin: .8rem 0; }
+  }
+</style>

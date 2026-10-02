@@ -1,7 +1,7 @@
-# portfolio_deploy/site — MDX article engine
+# portfolio_deploy/site: MDX article engine
 
 > Authoring specs (`VISUALIZATIONS.md`, `CITATIONS.md`), design rationale (`STYLE.md`), and
-> prose voice live in the **private** `portfolio_studio` repo. This public repo holds the
+> prose voice live in the **private** `portfolio_studio` repo. The public repo holds the
 > token *implementation* (`public/design_system/`) and the published content. See
 > `../../AGENTS.md` → "Portfolio Architecture".
 
@@ -9,26 +9,31 @@ Astro + MDX rebuild of the portfolio article pages. Each article is a small
 `.mdx` file (frontmatter + prose + components). A shared layout owns the frame
 (nav, footer, reading progress, chapter spine, Related Works, next-article
 link). Editing an `.mdx` and pushing rebuilds and deploys via GitHub Actions in
-~60–90s — no manual build, no hand-editing giant HTML.
+60 to 90 seconds, with no manual build, no hand-editing giant HTML.
 
 ## How it works
 
-- `src/layouts/CinematicLayout.astro` — the shared frame. Mirrors the live
+- `src/layouts/CinematicLayout.astro`: the shared frame. Mirrors the live
   `portfolio_deploy` contract: one stylesheet (`institutional.css`) + three
   scripts (`cinematic_engine_v3.js`, `global_chrome.js`, `institutional.js`) and
   all DOM hooks the runtime needs. Reads article frontmatter for the front
   matter block and emits per-article interactive widgets from `frontmatter.scripts`.
-- `src/components/` — `Band` (a themed section), `Figure` (styled figure),
+- `src/components/`: `Band` (a themed section), `Figure` (styled figure),
   `ApaReferences` (reference list). Articles compose these.
-- `src/pages/<slug>.mdx` — one article each. Frontmatter drives title, category,
-  description, time, tags, `visual`, and `scripts`.
-- `scripts/gen-index.mjs` — runs before every build; regenerates
+- `src/pages/<slug>.mdx`: one article each. Frontmatter drives title, category,
+  description, tags, `visual`, and `scripts`. Read time is computed, never authored;
+  the remark plugin `src/plugins/remark-reading-time.mjs` and `scripts/gen-index.mjs`
+  both derive it from the article's word count (230 words per minute) through
+  `scripts/lib/reading-time.mjs`, so a frontmatter `time:` field is ignored.
+- Homepage carousel order is the `FEATURED_SLUGS` list in `scripts/gen-listings.mjs`,
+  followed by every other article in category and title order.
+- `scripts/gen-index.mjs`: runs before every build; regenerates
   `public/projects_index.json` from article frontmatter, in the exact schema
-  `global_chrome.js` consumes. This is what keeps the library index, Related
+  `global_chrome.js` consumes. That regeneration keeps the library index, Related
   Works grid, and next-article link in sync. (Replaces the missing `sync_index.js`.)
-- `public/design_system/**` — copied from `portfolio_deploy`. The CSS `@import`
+- `public/design_system/**`: copied from `portfolio_deploy`. The CSS `@import`
   chain (`institutional.css` → `tokens.css` + `global_chrome.css`) resolves here.
-- `.github/workflows/deploy.yml` — build + deploy to GitHub Pages on push.
+- `.github/workflows/deploy.yml`: build + deploy to GitHub Pages on push.
 
 ## Editing an article
 
@@ -51,12 +56,12 @@ Widgets are self-contained Astro components in `src/components/widgets/`: markup
 a scoped `<script>` + a token-styled `<style>`. To add one, build the component and
 drop `<WidgetName />` into the relevant `.mdx`. Current widgets:
 
-- `MutationBudgetSim` — autonomous-loop mutation-budget simulator (autoresearch-master).
-- `ProfileExplorer` — per-participant clinical card selector (multimodal-autism-ai).
-- `OutputVsActivation` — output-vs-NLA-activation case explorer (nla_anthropic).
+- `MutationBudgetSim`: autonomous-loop mutation-budget simulator (autoresearch-master).
+- `ProfileExplorer`: per-participant clinical card selector (multimodal-autism-ai).
+- `OutputVsActivation`: output-vs-NLA-activation case explorer (nla_anthropic).
 
 Keep widget logic inside the component. Do **not** add scripts that rebuild the
-nav, spine, reveals, or scroll progress — the design system owns the frame, and
+nav, spine, reveals, or scroll progress, because the design system owns the frame, and
 duplicating it fights `institutional.js`.
 
 ## Building locally
@@ -73,14 +78,14 @@ npm run preview    # serve the built dist for review
 > tooling has been removed now that `src/pages/*.mdx` is the source of truth.
 > History is in `internal/plans/active/mdx-migration-plan.md` and git.
 
-## Deployment — LIVE
+## Deployment (live)
 
-This project lives at `portfolio_deploy/site/` inside the **htleffew/portfolio_deploy**
+The project lives at `portfolio_deploy/site/` inside the **htleffew/portfolio_deploy**
 repo and **is the live site at https://drheatherleffew.com**. The repo's
 `.github/workflows/production-deploy.yml` builds `site/` and deploys `site/dist`
 to GitHub Pages (already configured as `build_type=workflow` with the custom
 domain; `site/public/CNAME` keeps `drheatherleffew.com` bound). No CNAME or DNS
-changes were needed — the existing domain and Pages setup are reused.
+changes were needed; the existing domain and Pages setup are reused.
 
 **To publish an edit:** change a file under `site/src/pages/*.mdx`, commit, and
 push to `master`. The workflow rebuilds and deploys in ~60-90s. After a deploy,
@@ -97,7 +102,7 @@ npm run build && npm run preview
 > interim staging spot and is now **superseded** by `portfolio_deploy/site`.
 > It can be deleted; the canonical source is here.
 
-## Status (2026-06-12) — COMPLETE + LIVE
+## Status (2026-06-12) complete and live
 
 - 23 articles migrated to MDX; homepage, library (`projects-repository.html`),
   about, and gallery ported; figures + interactive widgets + the inline-SVG card

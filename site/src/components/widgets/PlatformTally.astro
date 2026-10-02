@@ -1,0 +1,56 @@
+---
+// Livestreamed attacks catalogued in the 2023 whitepaper, tallied by the
+// platform that carried the stream, beside each platform's documented barrier
+// to starting a mobile livestream. Counts come from the eight-incident list in
+// ux-livestreamed-violence.mdx; barrier text cites the sources named there.
+const rows = [
+  { platform: "Facebook Live", n: 3, barrier: "No published follower minimum found in 2023", low: true },
+  { platform: "Twitch", n: 3, barrier: "An account; no follower minimum (Ofcom, 2022)", low: true },
+  { platform: "Instagram Live", n: 2, barrier: "No published follower minimum found in 2023", low: true },
+  { platform: "YouTube (mobile)", n: 0, barrier: "50 subscribers; viewers may be limited under 1,000", low: false },
+  { platform: "TikTok LIVE", n: 0, barrier: "1,000 followers; minimum age 16, raised to 18 in 2022", low: false },
+];
+const max = 8;
+---
+<figure class="pt" aria-label="Livestreamed attacks by platform, with each platform's barrier to starting a mobile livestream">
+  <div class="pt-head">
+    <span>Platform</span><span>Attacks streamed (of 8)</span><span>Barrier to start a mobile stream</span>
+  </div>
+  {rows.map((r) => (
+    <div class="pt-row">
+      <div class="pt-name">{r.platform}</div>
+      <div class="pt-dots" aria-label={`${r.n} of 8`}>
+        {Array.from({ length: max }, (_, i) => (
+          <span class:list={["pt-dot", { on: i < r.n, low: r.low }]}></span>
+        ))}
+        <span class="pt-n">{r.n}</span>
+      </div>
+      <div class:list={["pt-bar", { low: r.low }]}>{r.barrier}</div>
+    </div>
+  ))}
+  <div class="pt-legend"><span class="sw low"></span>No follower threshold to stream <span class="sw high"></span>Follower or subscriber threshold for mobile streaming</div>
+  <figcaption>Figure 1. All eight livestreamed attacks in the 2023 list ran on platforms with no follower threshold for starting a stream; none ran on the two platforms that set one for mobile streaming. The tally is a count of a small, purposive list, so it shows co-occurrence and carries no causal estimate.</figcaption>
+</figure>
+
+<style>
+  .pt { margin: 2rem 0; }
+  .pt-head, .pt-row { display: grid; grid-template-columns: minmax(8rem, 11rem) minmax(10rem, 14rem) 1fr; gap: .9rem; align-items: center; }
+  .pt-head { font-family: var(--font-mono); font-size: var(--fs-caption); letter-spacing: var(--tracking-caps); text-transform: uppercase; opacity: .6; padding-bottom: .5rem; border-bottom: 1px solid color-mix(in srgb, currentColor 22%, transparent); }
+  .pt-row { padding: .65rem 0; border-bottom: 1px solid color-mix(in srgb, currentColor 10%, transparent); }
+  .pt-name { font-family: var(--font-mono); font-size: var(--fs-label); letter-spacing: .04em; }
+  .pt-dots { display: flex; align-items: center; gap: .3rem; }
+  .pt-dot { width: .8rem; height: .8rem; border: 1px solid color-mix(in srgb, currentColor 35%, transparent); border-radius: 50%; }
+  .pt-dot.on.low { background: #7A1626; border-color: #7A1626; }
+  .pt-n { margin-left: .5rem; font-family: var(--font-mono); font-size: var(--fs-label); }
+  .pt-bar { font-size: var(--fs-body-sm); line-height: 1.45; padding-left: .7rem; border-left: 3px solid #3866A0; }
+  .pt-bar.low { border-left-color: #7A1626; }
+  .pt-legend { margin-top: 1rem; font-family: var(--font-mono); font-size: var(--fs-caption); letter-spacing: .06em; text-transform: uppercase; opacity: .8; display: flex; flex-wrap: wrap; gap: .4rem 1rem; align-items: center; }
+  .sw { display: inline-block; width: .8rem; height: .8rem; margin-right: .35rem; vertical-align: middle; }
+  .sw.low { background: #7A1626; }
+  .sw.high { background: #3866A0; }
+  .pt figcaption { margin-top: 1rem; font-size: var(--fs-body-sm); line-height: 1.6; opacity: .8; }
+  @media (max-width: 640px) {
+    .pt-head { display: none; }
+    .pt-row { grid-template-columns: 1fr; gap: .35rem; }
+  }
+</style>

@@ -1,0 +1,57 @@
+---
+// One synthetic chat from Population A (id A00139, represented within 90 days),
+// scored by the page's seven-category dictionary. Helper categories are counted
+// only in the claim professional's turns and claimant categories only in the
+// claimant's turns. Copied from public/data/helper-language-signal/coded_example.json,
+// produced by projects/research/helper-language-signal/simulate.py (seed 20261001).
+type Seg = [string, string | null];
+const turns: { turn: number; speaker: string; segs: Seg[] }[] = [
+  { turn: 1, speaker: "claimant", segs: [["I", "i"], [" feel like ", null], ["I'm", "i"], [" on ", null], ["my", "i"], [" own with this.", null]] },
+  { turn: 2, speaker: "helper", segs: [["Sorry", "apology"], [" about the mix-up with the rental. ", null], ["Unfortunately", "limitation"], [" the policy does not cover that item.", null]] },
+  { turn: 3, speaker: "claimant", segs: [["A tree from next door fell on the garage. The adjuster came out to look at the roof on Monday.", null]] },
+  { turn: 4, speaker: "helper", segs: [["I ", null], ["regret", "apology"], [" that the callback took this long. ", null], ["I think", "hedging"], [" the shop ", null], ["might", "hedging"], [" have it by then. My ", null], ["apologies", "apology"], [" for the delay on the payment.", null]] },
+  { turn: 5, speaker: "claimant", segs: [["I", "i"], [" ", null], ["don't", "negation"], [" know what ", null], ["I'm", "i"], [" supposed to do now. Evenings are better for a call. ", null], ["I", "i"], [" ", null], ["can't", "negation"], [" keep paying for this ", null], ["myself", "i"], [".", null]] },
+  { turn: 6, speaker: "helper", segs: [["Hopefully", "hedging"], [" we can close this out soon. I'm ", null], ["sorry", "apology"], [", that request was missed on our end.", null]] },
+  { turn: 7, speaker: "claimant", segs: [["That's ", null], ["not what I said", "correction"], [" earlier. ", null], ["I", "i"], [" uploaded the photos of the damage this morning. What do you need from ", null], ["me", "i"], [" to move this forward?", null]] },
+];
+const legend = [
+  ["apology", "Apology"], ["limitation", "Limitation"], ["hedging", "Hedging"],
+  ["negation", "Negation"], ["correction", "Correction"], ["anger", "Anger"], ["i", "First-person singular"],
+];
+---
+<figure class="hcc" aria-label="A synthetic claim chat with dictionary categories highlighted">
+  <div class="hcc-legend">
+    {legend.map(([k, l]) => (<span class:list={["hcc-key", `c-${k}`]}>{l}</span>))}
+  </div>
+  <ol class="hcc-chat">
+    {turns.map((t) => (
+      <li class:list={["hcc-turn", t.speaker, { window: t.turn <= 2 }]}>
+        <span class="hcc-who">Turn {t.turn} &middot; {t.speaker === "helper" ? "Claim professional" : "Claimant"}</span>
+        <p>{t.segs.map(([txt, c]) => (c ? <mark class:list={["hcc-hit", `c-${c}`]}>{txt}</mark> : txt))}</p>
+      </li>
+    ))}
+  </ol>
+  <figcaption>A synthetic chat from the simulated population. Every turn comes from fixed sentence banks, so the turns read as a sequence of moves more than a single story. The shaded turns are the first-contact window used for prediction in section 4. A word may belong to more than one category, as in LIWC; the highlight marks the longest match and every category is counted (the "not" in turn 7 also counts as negation).</figcaption>
+</figure>
+
+<style>
+  .hcc { margin: 2rem 0; }
+  .hcc-legend { display: flex; flex-wrap: wrap; gap: .45rem .9rem; margin-bottom: 1rem; font-family: var(--font-mono); font-size: var(--fs-caption); letter-spacing: .06em; text-transform: uppercase; }
+  .hcc-key { padding: .15rem .45rem; border-bottom: 2px solid var(--hc); background: color-mix(in srgb, var(--hc) 22%, transparent); }
+  .hcc-chat { list-style: none; margin: 0; padding: 0; }
+  .hcc-turn { margin: 0; padding: .8rem 1rem; border-left: 2px solid color-mix(in srgb, currentColor 18%, transparent); }
+  .hcc-turn.helper { margin-left: 2.5rem; }
+  .hcc-turn.window { background: color-mix(in srgb, currentColor 6%, transparent); border-left-color: #3866A0; }
+  .hcc-who { display: block; font-family: var(--font-mono); font-size: var(--fs-caption); letter-spacing: .08em; text-transform: uppercase; opacity: .65; margin-bottom: .3rem; }
+  .hcc-turn p { margin: 0; font-size: var(--fs-body); line-height: 1.7; }
+  .hcc-hit { color: inherit; padding: 0 .1rem; border-bottom: 2px solid var(--hc); background: color-mix(in srgb, var(--hc) 22%, transparent); }
+  .c-apology { --hc: #3866A0; }
+  .c-limitation { --hc: #2E7A5A; }
+  .c-hedging { --hc: #8A6FB0; }
+  .c-negation { --hc: #A67C00; }
+  .c-correction { --hc: #B33A4A; }
+  .c-anger { --hc: #D0603A; }
+  .c-i { --hc: #4E8F9E; }
+  .hcc figcaption { margin-top: 1rem; font-size: var(--fs-body-sm); line-height: 1.6; opacity: .85; }
+  @media (max-width: 640px) { .hcc-turn.helper { margin-left: 1rem; } }
+</style>

@@ -1,0 +1,105 @@
+{
+  "rows": [
+    {
+      "key": "apology",
+      "label": "Apology",
+      "speaker": "helper",
+      "any_r": 0.2886951151491004,
+      "any_lo": 0.2630806347036174,
+      "any_hi": 0.3139028868909415,
+      "rate_r": 0.1785799950996615,
+      "rate_lo": 0.15161069667201002,
+      "rate_hi": 0.20528360179918115,
+      "any_share": 0.2912,
+      "any_partial_r_given_log_turns": 0.17168642168839343
+    },
+    {
+      "key": "limitation",
+      "label": "Limitation",
+      "speaker": "helper",
+      "any_r": 0.2586257812951878,
+      "any_lo": 0.23257331023545064,
+      "any_hi": 0.2843073680257529,
+      "rate_r": 0.115691490274606,
+      "rate_lo": 0.08825471629590685,
+      "rate_hi": 0.14295285033459565,
+      "any_share": 0.2936,
+      "any_partial_r_given_log_turns": 0.13515932100187178
+    },
+    {
+      "key": "hedging",
+      "label": "Hedging",
+      "speaker": "helper",
+      "any_r": 0.15691958510496834,
+      "any_lo": 0.12976422891279546,
+      "any_hi": 0.18383972479575192,
+      "rate_r": 0.010615390317477873,
+      "rate_lo": -0.017109446266598504,
+      "rate_hi": 0.03832391527360948,
+      "any_share": 0.3778,
+      "any_partial_r_given_log_turns": 0.03870392464566289
+    },
+    {
+      "key": "negation",
+      "label": "Negation",
+      "speaker": "claimant",
+      "any_r": 0.21854229685182214,
+      "any_lo": 0.19198553344280725,
+      "any_hi": 0.24477923867638413,
+      "rate_r": 0.05694398907886855,
+      "rate_lo": 0.029270389671507663,
+      "rate_hi": 0.08453036194052928,
+      "any_share": 0.4404,
+      "any_partial_r_given_log_turns": 0.0745139771842837
+    },
+    {
+      "key": "correction",
+      "label": "Correction",
+      "speaker": "claimant",
+      "any_r": 0.10699975680326444,
+      "any_lo": 0.07951579960702317,
+      "any_hi": 0.13432116063694038,
+      "rate_r": 0.001578554492388029,
+      "rate_lo": -0.02614239144392753,
+      "rate_hi": 0.029297074551904004,
+      "any_share": 0.0864,
+      "any_partial_r_given_log_turns": 0.021481603495285783
+    },
+    {
+      "key": "anger",
+      "label": "Anger",
+      "speaker": "claimant",
+      "any_r": 0.10862588138192718,
+      "any_lo": 0.0811504304452314,
+      "any_hi": 0.13593636704641196,
+      "rate_r": 0.01830526103142024,
+      "rate_lo": -0.009419320521347939,
+      "rate_hi": 0.046001720938441536,
+      "any_share": 0.0612,
+      "any_partial_r_given_log_turns": 0.03295310871691577
+    },
+    {
+      "key": "i",
+      "label": "First-person singular",
+      "speaker": "claimant",
+      "any_r": 0.10970298038412872,
+      "any_lo": 0.08223324513328917,
+      "any_hi": 0.13700615423653517,
+      "rate_r": 0.031665424409853225,
+      "rate_lo": 0.0039490887412103924,
+      "rate_hi": 0.05933314620723513,
+      "any_share": 0.801,
+      "any_partial_r_given_log_turns": -0.05290114074149233
+    }
+  ],
+  "turns_r": {
+    "r": 0.4161515825029011,
+    "lo": 0.3929648816869557,
+    "hi": 0.43880943705614905
+  },
+  "words12_r": {
+    "r": -0.019206082852299133,
+    "lo": -0.04690091534758603,
+    "hi": 0.00851825418894164
+  }
+}

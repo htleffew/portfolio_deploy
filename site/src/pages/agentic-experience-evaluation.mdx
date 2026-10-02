@@ -6,7 +6,6 @@ description: "An agent can ace an offline benchmark and still frustrate the peop
 category: "AI Evaluation & Safety"
 subcategory: "Agentic & Experience Evaluation"
 format: "ESSAY"
-time: "9 min read"
 author: "Dr. Heather Leffew"
 tags: ["Agentic Evals", "Tool-Use Evaluation", "Grounding", "Golden Datasets", "UX Metrics"]
 visual: ""
@@ -19,7 +18,7 @@ import ApaReferences from '../components/ApaReferences.astro';
 
 ## Six measurements from the logs the agent already left
 
-Every tool call an agent makes, the order it made them in, how long each step took, and how the user reacted to the result all land in the conversation log, which means the record of the user's actual experience is already sitting there waiting to be read. The person who asked lives the whole trajectory that produced the answer, the dead ends, the waiting, and the moments where they had to rephrase because the agent misread them, and that lived trajectory is exactly what the log preserves. Six measurements, all drawn from those logs and all kept at the level of aggregate behavioral signals rather than individual transcripts, turn that record into a read on whether the agent served the person who asked, and they borrow the same offline discipline as [A Recipe for Shipping AI Guardrails](../AI_Safety_Audit_Framework/ai-safety-audit-framework.html). The evidence is already produced, so it helps to score what the agent did instead of running a live experiment to find out.
+Every tool call an agent makes, the order it made them in, how long each step took, and how the user reacted to the result all land in the conversation log, which means the record of the user's actual experience is already sitting there waiting to be read. The person who asked lives the whole trajectory that produced the answer, the dead ends, the waiting, and the moments where they had to rephrase because the agent misread them, and that lived trajectory is exactly what the log preserves. Six measurements, all drawn from those logs and all kept at the level of aggregate behavioral signals rather than individual transcripts, turn that record into a read on whether the agent served the person who asked, and they borrow the same offline discipline as [A Recipe for Shipping AI Guardrails](/ai-safety-audit-framework/). The evidence is already produced, so it helps to score what the agent did instead of running a live experiment to find out.
 
 </Band>
 
@@ -51,7 +50,7 @@ The route an agent takes to an answer is its own quality signal, because a sessi
 
 ## Dissatisfaction leaves fingerprints in the text
 
-Users tend not to file a complaint, so the sign that a session went badly lives in how they write, in the reformulations, the corrections, the sentences getting shorter and sharper, the abandonment that follows a bad turn. This measurement reads those behavioral signals of reformulation pressure and abandonment, and a second pass adds part-of-speech and sentiment analysis to catch confusion in the language itself. It is the same implicit-signal approach behavioral measurement has long used, a reading of what people do and how they phrase it rather than what they report on a survey, applied here to the transcript an agent leaves behind (the [LIWC narrative work](../Diagnostic_Thematic_Apperception_Narratives/diagnostic-thematic-apperception-liwc.html) is the same method on clinical text).
+Users tend not to file a complaint, so the sign that a session went badly lives in how they write, in the reformulations, the corrections, the sentences getting shorter and sharper, the abandonment that follows a bad turn. This measurement reads those behavioral signals of reformulation pressure and abandonment, and a second pass adds part-of-speech and sentiment analysis to catch confusion in the language itself. It is the same implicit-signal approach behavioral measurement has long used, a reading of what people do and how they phrase it rather than what they report on a survey, applied here to the transcript an agent leaves behind (the [LIWC narrative work](/diagnostic-thematic-apperception-liwc/) is the same method on clinical text).
 
 </Band>
 

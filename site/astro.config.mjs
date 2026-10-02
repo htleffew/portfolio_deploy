@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
+import { remarkReadingTime } from './src/plugins/remark-reading-time.mjs';
 
 // Custom domain (CNAME) serves at root, so base = '/'.
 // Static output; trailing slash so each article lives at /<slug>/ and the
@@ -17,5 +18,7 @@ export default defineConfig({
   base: '/',
   trailingSlash: 'always',
   output: 'static',
+  // Read time is computed from each article's word count (230 words per minute).
+  markdown: { remarkPlugins: [remarkReadingTime] },
   integrations: [mdx()],
 });

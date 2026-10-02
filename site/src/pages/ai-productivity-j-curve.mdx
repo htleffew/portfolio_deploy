@@ -1,0 +1,134 @@
+---
+layout: ../layouts/CinematicLayout.astro
+title: "The AI Productivity J-Curve on the Front Line"
+short_title: "The AI Productivity J-Curve on the Front Line"
+description: "When claim professionals adopt a new AI tool, measured output tends to fall before it rises, because the people using the tool are building new habits and workflows that no dashboard counts. An illustrative simulator with hand-chosen coefficients lets you see how legacy friction, coaching, and integration scope trade against one another in the depth and length of the dip, and a stepped-wedge rollout across offices turns the same question into a randomized test with rework and cycle time as the measures."
+category: "Methods & Systems"
+subcategory: "Adoption & Experiment Design"
+format: "ESSAY"
+author: "Dr. Heather Leffew"
+tags: ["AI Adoption", "Change Management", "Experiment Design", "Stepped-Wedge Design", "Simulation"]
+visual: ""
+scripts: []
+---
+import Band from '../components/Band.astro';
+import ApaReferences from '../components/ApaReferences.astro';
+import JCurveSim from '../components/widgets/JCurveSim.astro';
+import SteppedWedge from '../components/widgets/SteppedWedge.astro';
+
+<Band theme="paper" spine="Abstract" section="Abstract">
+
+## Abstract
+
+Brynjolfsson, Li, and Raymond (2025) studied 5,172 customer-support agents and found that agents with access to a generative AI assistant resolved 15 percent more issues per hour on average; the less experienced agents improved in both speed and quality, and the most skilled agents gained a little speed while their quality slipped slightly. Even behind an average that strong, economists who study general-purpose technologies expect a dip; measured productivity falls first, while people build the processes, skills, and habits that make the technology useful, and rises later, once that unmeasured investment pays out (Brynjolfsson et al., 2021). Here that pattern comes down to the scale of a claims floor, where adjusters and other claim professionals adopt a new AI tool one desk at a time. An illustrative simulator with hand-chosen coefficients lets you see how legacy friction, coaching, and integration scope trade against one another in the depth and length of the dip, and a stepped-wedge rollout across offices measures the real curve, with rework and cycle time as the outcomes.
+
+</Band>
+
+<Band theme="dark" spine="The dip comes first" section="1. The dip comes first.">
+
+## 1. The dip comes first.
+
+Leaders tend to expect a good tool to pay off from the first week, so a team that looks worse after launch reads as a team that bought a bad tool. The expectation has a reasonable core, since a tool that never pays off deserves to be retired; the open question is timing. Brynjolfsson, Rock, and Syverson (2021) showed that a general-purpose technology needs large complementary investments, much of them intangible (new processes, retraining, reorganized work), and that statisticians using standard productivity measures count the labor spent on those investments and miss the asset it builds; measured productivity therefore runs low early in adoption and high later, when the hidden asset starts producing output, and the path over time traces a J.
+
+McElheran and colleagues found the same shape at the firm level; U.S. manufacturing firms that adopted AI saw a short-run drop in productivity, with steeper losses in older firms, and the authors attributed nearly a third of the older firms' loss to a decline in structured management practices after adoption (McElheran et al., 2025; Burnham, 2025). The mechanism there is organizational, which is the part a claims organization controls. A dip that comes from people learning, workflows being rebuilt, and management routines slipping during the change is a cost the organization can shrink; a dip that comes from a tool that does the work badly is a cost the organization can only stop paying.
+
+</Band>
+
+<Band theme="paper" spine="At the claim desk" section="2. What the dip looks like at a claim desk.">
+
+## 2. What the dip looks like at a claim desk.
+
+A claim professional in her first month with a tool that drafts file notes, summarizes a medical record, or proposes the text of a first-contact letter reads every draft, and early on she edits most of them, because she has not yet learned where the tool tends to be right and where it tends to miss a coverage nuance or a date. She uses the tool beside a claim system her team has worked around for years, and some days she pastes a draft into the wrong field or retypes it. Experienced adjusters, who already write fast and accurate notes, may slow down while they check text they would have written correctly themselves; newer adjusters, who would have needed help anyway, may speed up. Brynjolfsson and colleagues found that split in customer support, with the largest gains among less experienced agents and a slight quality decline among the most skilled (Brynjolfsson et al., 2025), and anyone reading only the team average sees the two blended.
+
+The measurable footprint of the dip is rework, the time a person spends correcting, rewriting, or discarding what the tool produced. Niederhoffer and colleagues (2025) gave a name, "workslop," to AI-generated work that looks finished and moves the real effort downstream to whoever receives it; in the survey they reported, 40 percent of U.S. full-time employees said they had received such work in the past month, and they spent an average of 1 hour and 56 minutes dealing with each instance. A claim file is a good place for that kind of cost to stay out of view, since the professional who fixes a draft before it reaches the file leaves no trace of the fix in a closure count.
+
+</Band>
+
+<Band theme="dark" spine="An illustrative model" section="3. An illustrative model.">
+
+## 3. An illustrative model.
+
+The model below is a planning aid for one conversation, the one in which a leader asks how bad the first months will look and how much the organization can do about it. It is a toy, and its limits belong next to it. Net output in month `t`, relative to the pre-launch baseline, is a gain term minus a cost term.
+
+- **Cost of change.** `cost(t) = D * t * exp(-t / 4.5)`, a curve that rises to a peak near month 4 and then fades as people stop paying the learning cost. The weight `D = 25 * friction + 15 * (11 - coaching) + 5 * scope` grows with legacy workflow friction, shrinks with coaching and support density, and grows a little with integration scope.
+- **Return on adoption.** `gain(t) = G * t^1.85`, a curve that starts flat and accelerates as people and processes adapt. The weight `G = (1.5 * scope) * (0.8 * coaching) / 10` grows with how much of the daily work the tool touches and with how well people are coached to use it.
+
+I chose every coefficient by hand to give the curve its J shape, and the output units are arbitrary index points, so the model is for comparing settings against one another; nobody can read a real team's dip off a hand-tuned curve, and the useful thing it does is make the relative tradeoffs visible, so a planning group can argue about the shape of the levers before anyone commits to a launch date.
+
+Coaching sits in both terms on purpose. Brynjolfsson and colleagues (2025) reported evidence that the assistant helped newer agents learn, and those agents gained most, so coaching shrinks the cost of change and raises the return in the model. Whether coaching moves a real dip as much as the model assumes is an empirical question, and section 5 sets up the test that answers it.
+
+</Band>
+
+<Band theme="paper" spine="The simulator" section="4. The simulator.">
+
+## 4. The simulator.
+
+You set each lever from 1 to 10. Legacy workflow friction stands for the workarounds and duplicate entry the tool has to fit around; coaching and support density stands for floor coaches, super-users, and protected practice time; integration scope stands for the share of a claim professional's daily tasks the tool touches.
+
+<JCurveSim />
+
+At the default setting of 5 on every lever, the dip reaches about -356 index points in month 4, net output crosses back above baseline in month 11, and month 24 ends at about +1045. With scope at 10 and coaching at 1, the dip deepens to about -519 and breakeven moves to month 15; with the same scope and coaching at 9, the dip stays near -233 and breakeven arrives by month 7. With friction at 10 and both other levers at 1, the curve never crosses baseline within 24 months, and month 24 ends at about -4.
+
+The point of the exercise is the comparison between settings. In this model, a broad launch without coaching costs more and pays later than a broad launch with it, and a narrow launch into heavy legacy friction may never pay back inside a two-year planning window. Every one of those statements is a hypothesis about the real floor, and the rollout below is how you test them.
+
+</Band>
+
+<Band theme="dark" spine="Staggered rollout test" section="5. A staggered rollout as the test.">
+
+## 5. A staggered rollout as the test.
+
+Many organizations roll a frontline tool out to every office eventually, which makes a classic A/B test with a permanent control group hard to defend. A stepped-wedge design fits that constraint (Hussey & Hughes, 2007; Hemming et al., 2015). Every office starts on the current workflow; at each step, one office, chosen in an order drawn at random before launch, crosses to the new tool and stays on it, until every office has crossed. Each office contributes time before and after its own switch, and because the order is random, the analyst can separate the tool's effect from everything else that changes over the same months.
+
+<SteppedWedge />
+
+A pre-registration for the design would carry these elements.
+
+- **Unit and population.** Offices as clusters, with claim professionals who handle a defined set of claim types inside each office, so a change in claim mix does not pass for a change in productivity.
+- **Primary KPI.** Cycle time for those claim types, measured from assignment to closure.
+- **Key secondary KPI.** Rework rate, the share of tool drafts that a professional substantially edits or discards, together with the minutes spent editing, captured from the tool's own logs.
+- **Guardrails.** File quality audit scores and claim reopen rates, each with a margin set before launch, because a faster file that comes back open has saved no time.
+- **Analysis.** A mixed model with fixed effects for calendar period to absorb seasonality and any storm that hits every office at once, a random effect for office, and the treatment entered as months on the tool. An analyst who estimates a single average effect blends the dip with the recovery, and stepped-wedge analyses that ignore an effect that changes with exposure time can be badly biased (Kenny et al., 2022). A regional catastrophe that hits some offices and spares others enters as a covariate.
+- **Pre-specified moderators.** Coaching hours per professional and professional tenure, so the team can learn whether coaching shortens the dip and whether experienced and newer professionals follow different curves, as the customer-support results of Brynjolfsson and colleagues suggest they might.
+- **Decision rule.** The organization continues the rollout if the exposure-time curve for cycle time crosses below baseline by a month named in advance and the guardrails hold; if the curve stays above baseline in offices with low coaching and crosses in offices with high coaching, the next wave launches with more coaching.
+
+Power depends on the number of offices, the length of each step, and the expected correlation of outcomes within an office, so it pays to size the design by simulation from each office's historical cycle times before choosing the step length.
+
+</Band>
+
+<Band theme="paper" spine="Leading the change" section="6. Leading people through the dip.">
+
+## 6. Leading people through the dip.
+
+A team that expects the dip can read it as learning. When people have been promised a payoff from week one, some of them read the dip as failure and stop using the tool before the return arrives. It helps to tell claim professionals and their managers about the dip before launch, show them the shape of the curve, and say plainly that their numbers may look worse for a while. It also helps to keep individual cycle-time and rework figures out of performance reviews during each office's first months on the tool, so people can report a bad draft without worrying that the report counts against them, and to recruit a few respected professionals in each office as super-users who coach their peers at the desk. The rework data belong with the people who configure the tool as well, since a draft that every adjuster rewrites the same way marks a fix in the tool and a lesson for the coaching plan at once.
+
+An organization that measures rework during the dip learns where the tool helps and where it adds work, and it can act on both while the dip is still shallow.
+
+</Band>
+
+<Band theme="dark" spine="Sticky spots" section="7. Sticky spots.">
+
+## 7. Sticky spots.
+
+The simulator is a sketch of a mechanism, fitted to no data, so treat its numbers as a way to compare settings and look to the rollout for the real curve. The external evidence comes from other settings, customer support in one case and manufacturing in another, and the analogy to claims work is a hypothesis the stepped-wedge test exists to check; the workslop figures come from a self-report survey and carry the usual weight of one. A stepped-wedge design assumes that offices stay on course once they cross and that nothing tied to the rollout order, such as a regional storm season, lines up with the steps, and randomizing the order and recording regional events keeps that risk small; a design with only a few offices may still lack the power to trace the full exposure-time curve, which is worth knowing before anyone promises a month of breakeven. If you run the rollout, the exposure-time curve and the rework logs together will tell you where the dip comes from, and I hope yours turns out to be the shallow kind.
+
+</Band>
+
+<ApaReferences>
+
+Brynjolfsson, E., Li, D., & Raymond, L. (2025). Generative AI at work. *The Quarterly Journal of Economics, 140*(2), 889-942.
+
+Brynjolfsson, E., Rock, D., & Syverson, C. (2021). The productivity J-curve: How intangibles complement general purpose technologies. *American Economic Journal: Macroeconomics, 13*(1), 333-372.
+
+Burnham, K. (2025, July 9). The 'productivity paradox' of AI adoption in manufacturing firms. *MIT Sloan Ideas Made to Matter*. https://mitsloan.mit.edu/ideas-made-to-matter/productivity-paradox-ai-adoption-manufacturing-firms
+
+Hemming, K., Haines, T. P., Chilton, P. J., Girling, A. J., & Lilford, R. J. (2015). The stepped wedge cluster randomised trial: Rationale, design, analysis, and reporting. *BMJ, 350*, h391.
+
+Hussey, M. A., & Hughes, J. P. (2007). Design and analysis of stepped wedge cluster randomized trials. *Contemporary Clinical Trials, 28*(2), 182-191.
+
+Kenny, A., Voldal, E. C., Xia, F., Heagerty, P. J., & Hughes, J. P. (2022). Analysis of stepped wedge cluster randomized trials in the presence of a time-varying treatment effect. *Statistics in Medicine, 41*(22), 4311-4339.
+
+McElheran, K., Yang, M.-J., Kroff, Z., & Brynjolfsson, E. (2025). *The rise of industrial AI in America: Microfoundations of the productivity J-curve(s)* (Working Paper CES-WP-25-27). U.S. Census Bureau, Center for Economic Studies.
+
+Niederhoffer, K., Kellerman, G. R., Lee, A., Liebscher, A., Rapuano, K., & Hancock, J. T. (2025, September 22). AI-generated "workslop" is destroying productivity. *Harvard Business Review*. https://hbr.org/2025/09/ai-generated-workslop-is-destroying-productivity
+
+</ApaReferences>

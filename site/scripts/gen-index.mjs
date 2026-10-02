@@ -15,6 +15,7 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import matter from 'gray-matter';
 import { resolveCategory, summarize, normalizeTags } from './lib/article-data.mjs';
+import { readTime } from './lib/reading-time.mjs';
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const pagesDir = path.join(root, 'src', 'pages');
@@ -60,7 +61,8 @@ for (const file of files.sort()) {
     subtype: data.subcategory || data.subtype || live.subtype || data.format || 'Analysis',
     tags: await normalizeTags(fmTags.length ? fmTags : (Array.isArray(live.tags) ? live.tags : [])),
     url: `${slug}/`,
-    time: data.time || live.time || '',
+    // Computed from word count; the article header uses the same helper.
+    time: readTime(raw),
     visual: data.visual || live.visual || '',
   });
 }

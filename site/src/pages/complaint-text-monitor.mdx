@@ -1,0 +1,274 @@
+---
+layout: ../layouts/CinematicLayout.astro
+title: "Complaint Text as an Early-Warning Instrument"
+short_title: "Complaint Text as an Early-Warning Instrument"
+description: "A complaint stream is the record people leave at the moment a process goes wrong for them, and it only becomes evidence once someone has turned it into an instrument. On 9,000 synthetic claim-center notes, this is the whole method, from stratified reading and a written codebook through two coders, a classifier, a blind validation draw, a confidence floor, a monthly alert rule with a backtest, and a date-shift test that puts a planted payment-error wave in the week of a fictional system change, and then the same method pointed at attorney representation in claims."
+category: "Linguistic & Behavioral Measurement"
+subcategory: "Text Measurement & Monitoring"
+format: "TUTORIAL"
+author: "Dr. Heather Leffew"
+tags: ["NLP", "Psychometrics", "Methodology", "Synthetic Data", "Claims Experience"]
+visual: ""
+scripts: []
+---
+import Band from '../components/Band.astro';
+import ApaReferences from '../components/ApaReferences.astro';
+import CtmAgreementTable from '../components/widgets/CtmAgreementTable.astro';
+import CtmClassReliability from '../components/widgets/CtmClassReliability.astro';
+import CtmConfidenceFloor from '../components/widgets/CtmConfidenceFloor.astro';
+import CtmAlertBacktest from '../components/widgets/CtmAlertBacktest.astro';
+import CtmWeeklyWave from '../components/widgets/CtmWeeklyWave.astro';
+import CtmDateShift from '../components/widgets/CtmDateShift.astro';
+
+<Band theme="paper" spine="Abstract" section="Abstract">
+
+## Abstract
+
+A complaint stream is the record people leave at the moment a process goes wrong for them, which makes it one of the better early-warning sources a claims organization owns, and also one of the easier ones to misread, because the field agents fill in at intake was built to route a contact to a queue and says very little about what the contact reports. I first built a version of this method for a customer-care queue, and the part that surprised me was how much of the work turned out to be reading before anything got counted. The whole method is rebuilt here on 9,000 synthetic claim-center complaint notes, with every number produced by a fixed-seed script, so you can follow it from stratified reading and a written codebook through two coders, a classifier, a blind validation draw, a confidence floor, a monthly alert rule, and a date-shift test that puts a planted payment-error wave in the week of a fictional system change. The last section points the same instrument at claims, where a mention of an attorney in a complaint note is a candidate leading indicator of representation, and lays out a pre-registered callback field test for learning whether earlier contact changes it.
+
+</Band>
+
+<Band theme="dark" spine="Routing and meaning" section="1. A routing field is a different measure">
+
+## 1. A routing field is a different measure
+
+The first number worth knowing about a complaint stream is the share of it that contains the signal you care about, because every later number divides by that share; in most streams the complaints that describe a defect a team could trace and fix are a small minority, and the rest are billing questions, access problems, refunds, and general service contacts that belong to other owners. The second thing worth knowing is that the routing category already attached to each record is a different measure from the one you are about to build. Agents choose the category to send a contact to the queue that handles it, and they use it well for that purpose; a payment complaint filed under billing reaches a person who can move money. With the routing category, an agent says who should handle a contact; with a codebook, a coder says what the contact reports; the two answers differ often enough that it pays to treat them as two instruments and to measure the distance between them before reading any trend off the stream.
+
+The worked example on this page runs on a synthetic stream. I wrote a fixed-seed script that simulates 9,000 claim-center complaint notes over 36 months, January 2022 through December 2024, each a short summary line plus a description of one to three sentences in an intake agent's voice. Annual volume rises from about 1,600 notes to about 4,500, and monthly volume ranges from 106 to 444 notes, so every rate on this page is per 1,000 notes in the period. I planted ten classes at fixed base shares and five events (a payment-error wave after a fictional payment-system change in October 2023, two storm seasons, a sustained rise in valuation disputes after a fictional guideline change, and a doubling of attorney mentions in the two months after the wave), and I assigned each note a routing category from a probability table built for queues. The script and its README sit with the project files so that anyone can regenerate every number here.
+
+The clearest way to see the difference between a routing field and a measure is to cross the two on the same notes. In Figure 1, the routing category an agent chose at intake is crossed with the adjudicated code for each of the 800 synthetic notes in the coded seed set (section 2 covers how that set was drawn and coded).
+
+<CtmAgreementTable />
+
+The payment-error column is the most instructive. Of the 53 notes the coders placed in payment error, 32 sit under Billing, because a claimant who says a payment is wrong sounds, at intake, like a policyholder whose premium did not post; 13 sit under Claim payment, so 25 percent of the class sits in the category named for it. Attorney mentions are spread across Claim status (22), General (19), and Legal (17), since claimants mention a lawyer while asking where their claim stands, and the Legal row in turn contains 26 delay notes and 20 notes coded other, because agents also route there to escalate. Valuation disputes have no category of their own, and 37 of the 55 sit under Claim payment.
+
+Read as a ten-class code, with each category mapped to the class it names, the routing field agrees with the adjudicated codes at a Cohen's kappa of 0.40, and at 0.49 on the coarser question of whether a note describes a claim-handling problem at all; the text classifier in section 3 agrees at 0.72 and 0.79 on the same notes and the same two questions. Most of the off-diagonal cells are sensible routing; you get two different measures from the field and the codebook, and the gap between them is the reason to code the stream before reading its rates as evidence about claim handling.
+
+</Band>
+
+<Band theme="paper" spine="The codebook" section="2. Building the codebook">
+
+## 2. Building the codebook
+
+A codebook comes after reading, and the reading comes before counting anything. The first pass is a stratified read across routing category and year with equal allocation per category, so the small categories (Legal, Coverage, Catastrophe, Compliment) get as close a read as the large ones; in the simulation the first pass drew 600 notes. A reader who crosses categories this way finds the classes that have no name in the routing scheme, valuation disputes and attorney mentions among them, and finds the boundaries that need written rules. Methodologists in content analysis have written at length on exactly this step, the move from reading to a codebook that a second reader can apply the same way (Krippendorff, 2019), and there is a lot to be said for reading their work before writing your own.
+
+Each class gets a one-sentence definition and, where two classes compete for the same note, a precedence rule (Table 1). Most of the reliability in the example comes from the precedence rules. A claimant who has waited three weeks and says a lawyer will be in touch belongs to two classes at once; with the rule that a representation mention takes precedence over every other class, a coder turns a judgment call into a lookup, and with a parallel rule a coder separates claim payments from premium billing.
+
+<div class="table-container">
+
+| Class | Definition | Precedence | Share of all notes | Share of seed set |
+| --- | --- | --- | --- | --- |
+| Delay or no contact | The claimant reports waiting without contact or a status update | Applies only when no more specific cause is named | 16.4% | 10.6% |
+| Valuation dispute | The claimant disputes an amount offered (total-loss value, estimate, depreciation) | Money paid in error goes to payment error | 9.9% | 6.9% |
+| Coverage confusion | The claimant does not understand what the policy covers or why part of a loss is excluded | A request to change the policy goes to billing or operational | 5.0% | 9.0% |
+| Payment error | A claim payment went out wrong (amount, payee, duplicate, reversal, nonarrival) | Premium billing and autopay go to billing or operational | 2.9% | 6.6% |
+| Repair quality | Work by a shop or contractor is faulty, unfinished, or slow | A dispute over the estimate goes to valuation | 4.6% | 12.9% |
+| Representation mention | The claimant names an attorney, a law office, or a public adjuster, as retained or under consideration | Takes precedence over every other class | 3.0% | 7.4% |
+| Catastrophe logistics | Inspection, housing, tarping, or contractor access tied to a declared catastrophe | Takes precedence over delay when the note ties the problem to the event | 4.5% | 13.9% |
+| Praise | Thanks or a compliment with no complaint | Any complaint in the note takes precedence | 5.8% | 6.6% |
+| Billing or operational | Premium billing, ID cards, policy changes, app access, document upload | Claim payments go to payment error | 36.8% | 18.9% |
+| Other | Anything else, including general questions | Residual class | 11.2% | 7.3% |
+
+</div>
+
+Table 1. The ten-class codebook used in the synthetic example. Population shares come from the simulation's planted classes; seed-set shares are the adjudicated codes on the 800 coded notes.
+
+One round of active learning follows (Settles, 2009). You train a first classifier on the 600 coded notes, score the remaining pool with it, and pull the 40 highest-scoring notes for each of the five small process classes (payment error, representation mention, coverage confusion, repair quality, catastrophe logistics) into the seed set, for 800 coded notes in all. The round is aimed at the classes that would be thin in a random sample; those five classes make up 20 percent of the population and 50 percent of the finished seed set. The enrichment is deliberate, and section 4 is where it gets paid for.
+
+Both coders read only the summary line and the description. Each synthetic note also has a cause recorded later by the claim handler, when the handler recorded one, and those records stay hidden during coding so they remain an independent read of the same contact. Afterward, on the 242 seed notes with a recorded cause, the handler's cause and the adjudicated code agree on 84 percent.
+
+With a codebook a coder classifies what a note is about. With dictionary methods that count function words (Tausczik & Pennebaker, 2010), a researcher asks a different question, about the person who wrote the text, and in a claim-center note that person is usually the agent summarizing the call; the two instruments belong apart for that reason, and word-level measures belong on text the claimant wrote.
+
+</Band>
+
+<Band theme="dark" spine="Reliability first" section="3. Reliability before prediction">
+
+## 3. Reliability before prediction
+
+A classifier trained on codes can be no more reliable than the codes, so it helps to measure the coders before fitting anything. Two simulated coders coded all 800 seed notes independently, and their disagreements were adjudicated. They agreed on 79 percent of notes, a ten-class Cohen's kappa of 0.76 (Cohen, 1960); the prevalence-adjusted, bias-adjusted kappa (PABAK; Byrt, Bishop, & Carlin, 1993) was also 0.76, because in the enriched seed set the notes are spread across the ten classes evenly enough that chance agreement is close to its uniform value.
+
+At the class level, where a monitor operates, you get different answers from the two statistics. For a single class, kappa is observed agreement corrected by the agreement expected from each coder's marginal rate, and when a class is small the expected agreement on the negative side is already high, so kappa is low even when the coders seldom disagree (Feinstein & Cicchetti, 1990). Payment error and representation mention each hold about 3 percent of the population; the coders' class-level kappas were 0.73 and 0.88, and PABAK was 0.93 and 0.97 (Table 2). Kappa reads as agreement beyond the coders' base rates and PABAK as raw agreement rescaled to the same range, and a reader deciding whether to trust a small-class rate needs both.
+
+<div class="table-container">
+
+| Class | Share of all notes | Coder kappa | Coder PABAK | Classifier F1 |
+| --- | --- | --- | --- | --- |
+| Billing or operational | 36.8% | .75 | .86 | .77 |
+| Delay or no contact | 16.4% | .67 | .87 | .69 |
+| Other | 11.2% | .55 | .86 | .44 |
+| Valuation dispute | 9.9% | .64 | .89 | .68 |
+| Praise | 5.8% | .88 | .97 | .75 |
+| Coverage confusion | 5.0% | .74 | .91 | .69 |
+| Repair quality | 4.6% | .86 | .94 | .80 |
+| Catastrophe logistics | 4.5% | .88 | .95 | .87 |
+| Representation mention | 3.0% | .88 | .97 | .88 |
+| Payment error | 2.9% | .73 | .93 | .90 |
+
+</div>
+
+Table 2. Class-level agreement between the two coders (binary kappa and PABAK for each class against all others) and the classifier's five-fold F1 against the adjudicated codes, synthetic seed set.
+
+For the classifier, the simplest model worth trusting for this job is TF-IDF weights over word unigrams and bigrams (Salton & Buckley, 1988) feeding a logistic regression with class-balanced weights, fit and scored with stratified five-fold cross-validation in scikit-learn (Pedregosa et al., 2011). It agrees with the adjudicated codes at a ten-class kappa of 0.72, and at 0.79 on the binary question of whether a note reports a claim-handling problem. For a fair ceiling, each coder scored against the same adjudicated codes gives a mean kappa of 0.87; the classifier's 0.72 is below that ceiling and close to the 0.76 between the two coders. A linear model is the right choice on purpose; for a monthly monitor you want a model you can refit in seconds, rerun on the same data for the same answer, and inspect for the words that weigh most in each class when someone asks you to explain an alert, and in my experience a heavier model checked on the same folds tends to land at nearly the same agreement, which is its own small piece of evidence that the separation lives in the language of the records.
+
+In Figure 2, the classifier's per-class F1 sits beside the two coders' agreement on the same class.
+
+<CtmClassReliability />
+
+For payment error the classifier's F1 is above the coder marker (0.90 against 0.75), and the comparison is built in the classifier's favor, since it is scored against adjudicated codes that are cleaner than either coder's codes alone; claim payments also have a distinct vocabulary (checks, lienholders, direct deposits). The weakest class by a wide margin is other (F1 0.44), the residual class the codebook defines by exclusion; valuation, coverage, and delay sit together at 0.68 to 0.69, and delay is also defined partly by exclusion, since it applies only when no more specific cause is named. A residual class tends to be the weakest in any codebook, and it deserves the most caution when you read it.
+
+</Band>
+
+<Band theme="paper" spine="Two accuracies" section="4. Seed-set accuracy and population accuracy">
+
+## 4. Seed-set accuracy and population accuracy
+
+Cross-validated agreement on the seed set answers one question honestly, how well a model separates classes in a sample built to hold enough of each. A monitor needs a different question answered. You count predicted notes in the whole stream, where the five small process classes make up 20 percent of notes and the large classes are the source of a steady flow of false positives that never appeared at their true volume in the enriched seed set.
+
+Population precision comes from a random draw. From the 1,526 non-seed notes predicted into the five small process classes, 200 were drawn at random with a fixed seed, and one coder coded them without seeing the predicted class. The coder confirmed the predicted class on 96 of the 200, a precision of 48 percent (Wilson 95 percent interval 41 to 55; Wilson, 1927), where cross-validated precision for the same five classes on the seed set was 84 percent. Because the data are synthetic, the draw can be checked against the simulated truth; over all 1,526 predictions the true precision is 53 percent, inside the interval. Of the 104 drawn notes the coder did not confirm, the coder placed 33 in billing or operational, 25 in valuation dispute, and 22 in delay, the large neighbors whose vocabulary overlaps the small classes.
+
+False positives in the draw had lower classifier confidence than confirmed signals (an area under the ROC curve of 0.79 when the drawn notes are ranked by confidence), so a floor on confidence is worth testing. In Figure 3, you can move the floor yourself. At 0.5, 96 of the 200 drawn notes stay, 69 of them confirmed, a precision of 72 percent (62 to 80), and 72 percent of the confirmed signals in the draw stay with them. Above that, each step in the floor buys precision at a steep cost in recall, and the interval widens as the kept sample shrinks.
+
+<CtmConfidenceFloor />
+
+The floor of 0.5 was chosen on this draw, which makes the draw a poor judge of the choice; the next validation draw is the floor's out-of-sample test, and its codes join the training set only after that test has been scored, so the precision estimate stays independent of training.
+
+</Band>
+
+<Band theme="dark" spine="A monthly monitor" section="5. From counts to a monitor">
+
+## 5. From counts to a monitor
+
+A monitor needs a denominator. Monthly volume in the synthetic stream ranges from 106 to 444 notes, so a raw count goes up with volume whether or not anything changed; dividing each class count by the month's total notes gives a rate per 1,000. The counted notes are the hand-coded seed notes plus predictions at or above the 0.5 floor.
+
+The alert rule stays plain. For each class and month, you flag an alert when at least 5 counted notes fall in the month and the rate is at least 3 times the median rate of the previous 12 months, with at least 6 months of history required. You use the median so that one bad month cannot inflate the baseline the way it would inflate a trailing mean, require a count floor so that a class with two notes cannot alert on a third, and choose the multiple to set the size of change worth a person's reading time. Epidemiologists have used the same logic for decades, comparing a current count with a robust baseline from the same series (Farrington, Andrews, Beale, & Catchpole, 1996), and with cumulative-sum charts (Page, 1954) an analyst detects slow drifts sooner at the cost of an explanation that is harder to give a claims leader in one sentence.
+
+A backtest of the rule over the 30 months it can run (July 2022 through December 2024), against the 13 class-months with a planted event, gives 6 alerts at the default settings. Four fall inside planted events, one each for the payment wave, the two storm seasons, and the November 2023 rise in attorney mentions; two fall outside, and both get read in section 7. The sustained rise in valuation disputes goes undetected, because each month of it ran 1.6 to 2.0 times its trailing median. Lowering the multiple to 2 gives 13 alerts, 7 of them outside planted events, and the valuation rise still goes undetected; at 1.5 it is caught, with 26 alerts outside planted events. In Figure 4, you can move both settings.
+
+<CtmAlertBacktest />
+
+The valuation case teaches the most. A step change of less than twice the baseline that persists for months is the shape that is hardest to catch with a ratio rule and easiest to catch with a cumulative-sum chart, so in practice it helps to run the ratio rule monthly and add a cumulative-sum chart for the classes where a slow shift would matter most, valuation disputes among them.
+
+</Band>
+
+<Band theme="paper" spine="Dating a wave" section="6. Dating a wave against a change">
+
+## 6. Dating a wave against a change
+
+From a monthly alert you learn that something changed in October 2023, and little about what. The synthetic history holds two fictional changes near that month, a claims-portal redesign on September 18 and a payment-system change on October 9, and a month is too coarse to order causes three weeks apart, so the order has to come from weekly rates.
+
+<CtmWeeklyWave />
+
+In Figure 5, the weekly payment-error rate is near its 12-week baseline of 13 per 1,000 through the portal redesign and the two weeks after it. It reaches 320 per 1,000 in the week of October 9, the first week above three times the baseline, then 266 and 170 in the two weeks after, and 20 per 1,000 in the week the fix shipped on October 30. At the monthly grain the wave stood at 222 per 1,000 against a trailing median of 8.1, about 27 times baseline; on the planted truth, which counts every payment-error note regardless of the classifier, the ratio was 20.
+
+Timing that lines up with a change is suggestive and easy to over-read, so the next step is to test it against shifted dates, a placebo-in-time design (Abadie, Diamond, & Hainmueller, 2015). For a candidate date, the statistic is the number of payment-error notes in the 14 days after it minus the number expected from the rate of the previous 12 weeks, computed at the true change date and at every date shifted by 1 to 20 weeks in either direction (Figure 6).
+
+<CtmDateShift />
+
+At the change date the excess is 63 notes. The 25 shifted dates whose windows avoid the wave serve as the null; their excess averages −0.2 notes, with a standard deviation of 1.4 and a largest value of 2.5. At the portal redesign date, three weeks earlier, the excess is −1.9, inside the null. At shifts of one week either side of the change the excess is 40 and 25, because part of the wave lies in their windows, and at shifts of 3 to 14 weeks after the change it is below zero, because the wave lies in their baseline windows. The onset dates to the week of the payment-system change.
+
+</Band>
+
+<Band theme="dark" spine="Triage and action" section="7. Triage, then action">
+
+## 7. Triage, then action
+
+A count is a reason to read. For each alert, whoever is on duty reads every note behind it before acting on the number, and writes down three things:
+
+1. **Mechanism.** Whether the notes describe one mechanism or several, in the claimant's terms.
+2. **Owner.** The team that runs the process the mechanism belongs to.
+3. **Acceptance.** The observation, agreed with the owner in advance, that both sides would accept as evidence the fix worked.
+
+The October 2023 payment-error alert has 78 notes behind it; the simulated truth has 118 payment-error notes that month, and the difference is the recall given up at the floor plus the notes the classifier missed. In Table 3, four of the 78 appear, drawn at random from the alert month; like every note on this page, they are synthetic.
+
+<div class="table-container">
+
+| Date | Summary | Description |
+| --- | --- | --- |
+| 2023-10-12 | Callback request | Policyholder called. States received two claim payments for the same loss; payment shows issued but the bank shows nothing. Sent to the handling team. |
+| 2023-10-20 | Callback request | Customer called in. States was told someone would call within two days and nobody did; settlement check was issued without the mortgage company; claim payment was reversed after it posted. Customer wants a call back. |
+| 2023-10-24 | Customer complaint | Customer reached out by chat. States settlement check was issued without the mortgage company; estimate does not cover the full cost of repairs; claim payment is stuck in pending. Caller is frustrated. |
+| 2023-10-29 | Payment to wrong payee | Call transferred from the main line. States claim payment amount does not match the approved estimate; claim payment was reversed after it posted. Customer upset about the experience. |
+
+</div>
+
+Table 3. Four synthetic notes behind the October 2023 payment-error alert.
+
+Read together, the notes describe one mechanism, claim payments issued twice, reversed after posting, or stuck in a pending state, and one owner, the team that runs claim disbursement. An acceptance test written with that team has two parts; the weekly payment-error rate returns to within twice its baseline for four consecutive weeks, and when the affected payments are replayed, each was issued once, to the right payee, in the approved amount.
+
+The two alerts outside planted events are the reason the reading step exists. Of the 5 notes behind an August 2022 payment-error alert, 3 were premium-billing notes predicted into payment error, so the alert reads as leakage across the boundary drawn by the precedence rule, and the leaked notes belong in the next training round. Of the 8 notes behind a July 2022 catastrophe alert, 6 were real storm notes in a month with no planted event. From counts alone nobody can tell a small local cluster from the first month of a season, and the person reading the eight notes decides whether the cluster is worth a call to the field team.
+
+Each triaged alert becomes a short card listing the class, the month, the rate and its multiple, the notes read, the mechanism, the owner, and the acceptance test, kept with the monthly run so that whoever reads the next alert in the same class starts from what the last reader found. Pairing a rate with a close reading of the cases behind it is the same two-tier discipline that applies to behavioral claims about language models, where an analyst uses a corpus rate to establish how often something happens and the cases to establish what it is ([Counting a Behavior and Characterizing It](/two-tier-evidence-structure/)).
+
+</Band>
+
+<Band theme="paper" spine="Sticky spots" section="8. Sticky spots">
+
+## 8. Sticky spots
+
+The people in a complaint stream chose to complain, and an agent chose how to write it down, so the rates work best as comparisons of months and classes within the stream. A rise in payment-error notes means more claimants complained about payments, and it reads as a rise in payment failures only while claimants' propensity to complain holds steady; when a rate moves right after a change in agent training or in the note template, it helps to check those first, since the language is the claimant's words filtered through an agent's habits and the filter can change with no change in what claimants experienced.
+
+Small classes read better at the family level. Coverage confusion, valuation dispute, delay, and other each fall below 0.70 F1, and the monthly count for a class of a dozen notes moves with a few misclassifications; you can alert on those classes, and it pays to read their trends together with the rest of the claim-handling family before drawing anything from one of them.
+
+The validation draw deserves a second coder. One coder coded the 200 drawn notes, so the precision estimate includes that coder's errors with no measure of them; a second blind coder on the draw, with agreement reported, is the next step, and it is a cheap one. The floor was also chosen on the same draw, so the next draw is its first out-of-sample test, and it helps to decide before scoring it what result would send you back to a different floor.
+
+With the date-shift test you measure coincidence in time; a payment-system change and anything else that shipped in the same week share the same window, so the dated week is where the reading starts, with a question to the system's owners about what else changed.
+
+Real changes seldom arrive as clean steps with known dates the way the planted wave here does; teams ship gradually and in overlapping releases, with fainter traces in the stream, so expect to lean on the weekly view and the cumulative-sum chart sooner than the toy example suggests.
+
+</Band>
+
+<Band theme="dark" spine="Claims" section="9. Where this goes in claims">
+
+## 9. Where this goes in claims
+
+The class a claims operation would watch most closely is representation mention. A claimant who tells an agent that a lawyer will be in touch has stated an intention that may precede a letter of representation; whether it does, and by how long, is the first thing to measure, and if the lead is real, your organization has a window for contact in the complaint stream before the relationship changes. The synthetic stream carries the pattern worth testing for; attorney mentions doubled in the two months after the payment wave, and at the default settings an alert falls in the first of those months, November 2023.
+
+The first study is observational. Each coded note links to its claim file, and the estimate is representation within 90 days of the note for claimants with a representation mention, with a delay complaint, and with neither, with time to representation treated as a survival outcome so that claims still open at the cutoff count as censored. The mention earns the name leading indicator only if it comes before representation and the difference between groups remains after adjustment for line of business, injury, and claim size.
+
+The second study is a field test, because from an association between a mention and representation nobody can tell whether contact changes the outcome. Claimants whose notes are coded as representation mention or delay are randomized to a callback from an experienced adjuster within one business day or to usual handling, with the design pre-registered before the first claimant enters (Nosek, Ebersole, DeHaven, & Mellor, 2018).
+
+- **Primary KPI.** Attorney representation within 90 days of randomization, taken from the claim file.
+- **Guardrails.** Claim cycle time and the claimant satisfaction measure the organization already collects, so that a lower representation rate bought with slower claims or irritated claimants counts as a failed test (Kohavi, Tang, & Xu, 2020).
+- **Randomization and analysis.** Claimant-level assignment stratified by line of business; the estimate is the intention-to-treat difference in representation rates with a 95 percent interval.
+- **Sample size.** Fixed in advance from the representation rate measured in the observational study.
+
+The sample size depends on the representation rate among enrolled claimants. In Table 4, claimants per arm appear for a two-sided test at α = .05 with 80 percent power across three baseline rates and two effect sizes (Fleiss, Levin, & Paik, 2003). The baselines are planning values chosen to span a plausible range, to be replaced with the rate measured in the observational study.
+
+<div class="table-container">
+
+| Baseline representation rate | Relative reduction | Absolute reduction | Claimants per arm |
+| --- | --- | --- | --- |
+| 10% | 15% | 1.5 points | 5,856 |
+| 10% | 25% | 2.5 points | 2,005 |
+| 20% | 15% | 3.0 points | 2,629 |
+| 20% | 25% | 5.0 points | 906 |
+| 30% | 15% | 4.5 points | 1,554 |
+| 30% | 25% | 7.5 points | 540 |
+
+</div>
+
+Table 4. Claimants per arm for a two-sided two-proportion test, α = .05, power .80.
+
+With the monitor you learn where complaint language changed and when; with the field test you learn whether a change in how adjusters contact claimants changes what claimants do. Complaint text is the record people leave at the moment something in a process goes wrong for them, and it rewards careful reading before anyone counts it. I hope it works well for you, and that your first alert turns out to be a payment fix and a short card.
+
+</Band>
+
+<ApaReferences>
+
+* Abadie, A., Diamond, A., & Hainmueller, J. (2015). Comparative politics and the synthetic control method. *American Journal of Political Science, 59*(2), 495-510.
+* Byrt, T., Bishop, J., & Carlin, J. B. (1993). Bias, prevalence and kappa. *Journal of Clinical Epidemiology, 46*(5), 423-429.
+* Cohen, J. (1960). A coefficient of agreement for nominal scales. *Educational and Psychological Measurement, 20*(1), 37-46.
+* Farrington, C. P., Andrews, N. J., Beale, A. D., & Catchpole, M. A. (1996). A statistical algorithm for the early detection of outbreaks of infectious disease. *Journal of the Royal Statistical Society: Series A (Statistics in Society), 159*(3), 547-563.
+* Feinstein, A. R., & Cicchetti, D. V. (1990). High agreement but low kappa: I. The problems of two paradoxes. *Journal of Clinical Epidemiology, 43*(6), 543-549.
+* Fleiss, J. L., Levin, B., & Paik, M. C. (2003). *Statistical methods for rates and proportions* (3rd ed.). Wiley.
+* Kohavi, R., Tang, D., & Xu, Y. (2020). *Trustworthy online controlled experiments: A practical guide to A/B testing*. Cambridge University Press.
+* Krippendorff, K. (2019). *Content analysis: An introduction to its methodology* (4th ed.). SAGE Publications.
+* Nosek, B. A., Ebersole, C. R., DeHaven, A. C., & Mellor, D. T. (2018). The preregistration revolution. *Proceedings of the National Academy of Sciences, 115*(11), 2600-2606.
+* Page, E. S. (1954). Continuous inspection schemes. *Biometrika, 41*(1/2), 100-115.
+* Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., Grisel, O., Blondel, M., Prettenhofer, P., Weiss, R., Dubourg, V., Vanderplas, J., Passos, A., Cournapeau, D., Brucher, M., Perrot, M., & Duchesnay, E. (2011). Scikit-learn: Machine learning in Python. *Journal of Machine Learning Research, 12*, 2825-2830.
+* Salton, G., & Buckley, C. (1988). Term-weighting approaches in automatic text retrieval. *Information Processing & Management, 24*(5), 513-523.
+* Settles, B. (2009). *Active learning literature survey* (Computer Sciences Technical Report 1648). University of Wisconsin-Madison.
+* Tausczik, Y. R., & Pennebaker, J. W. (2010). The psychological meaning of words: LIWC and computerized text analysis methods. *Journal of Language and Social Psychology, 29*(1), 24-54.
+* Wilson, E. B. (1927). Probable inference, the law of succession, and statistical inference. *Journal of the American Statistical Association, 22*(158), 209-212.
+
+</ApaReferences>

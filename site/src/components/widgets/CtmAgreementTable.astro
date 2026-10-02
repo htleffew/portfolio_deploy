@@ -1,0 +1,74 @@
+---
+// Routing category against coded class on the synthetic 800-note seed set.
+// Data: public/data/complaint-text-monitor/agreement.json (generate.py).
+import { loadCtm } from './ctmData.mjs';
+
+const a = loadCtm('agreement.json');
+const short = {
+  delay: 'Delay', valuation: 'Valuation', coverage: 'Coverage', payment: 'Payment',
+  repair: 'Repair', representation: 'Represent.', catastrophe: 'Catastrophe',
+  praise: 'Praise', billing_ops: 'Billing / ops', other: 'Other',
+};
+const colTotals = a.cols.map((_, j) => a.counts.reduce((t, row) => t + row[j], 0));
+const cell = (i, j) => {
+  const v = a.counts[i][j];
+  const share = colTotals[j] ? v / colTotals[j] : 0;
+  return { v, pct: Math.round(share * 60), match: a.category_to_class[a.rows[i]] === a.cols[j] };
+};
+---
+<figure class="ctm-at" aria-label="Routing category by coded class, synthetic seed set">
+  <div class="ctm-at-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col" class="corner">Routing category / coded class</th>
+          {a.cols.map((c) => <th scope="col" title={a.labels[c]}>{short[c]}</th>)}
+        </tr>
+      </thead>
+      <tbody>
+        {a.rows.map((r, i) => (
+          <tr>
+            <th scope="row">{r}</th>
+            {a.cols.map((_, j) => {
+              const c = cell(i, j);
+              return (
+                <td class:list={[{ match: c.match }]} style={`background:color-mix(in srgb, #3866A0 ${c.pct}%, transparent)`}>
+                  {c.v > 0 ? c.v : ''}
+                </td>
+              );
+            })}
+          </tr>
+        ))}
+      </tbody>
+      <tfoot>
+        <tr>
+          <th scope="row">Share in the category named for the class</th>
+          {a.cols.map((c) => <td>{Math.round(a.matching_share[c] * 100)}%</td>)}
+        </tr>
+        <tr>
+          <th scope="row">Coded notes in the seed set</th>
+          {colTotals.map((t) => <td>{t}</td>)}
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  <figcaption>
+    Figure 1. Routing category (rows) against the adjudicated code (columns) for the 800 synthetic seed notes. Shading is the
+    share of each coded class that landed in each category, and outlined cells are the category whose name matches the class.
+    Valuation dispute has no category of its own, so its matching share is zero by construction.
+  </figcaption>
+</figure>
+
+<style>
+  .ctm-at { margin: 2rem 0; }
+  .ctm-at-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .ctm-at table { border-collapse: collapse; width: 100%; min-width: 46rem; font-family: var(--font-mono); font-size: var(--fs-label); }
+  .ctm-at th, .ctm-at td { padding: .45rem .4rem; text-align: center; border: 1px solid color-mix(in srgb, currentColor 12%, transparent); }
+  .ctm-at thead th { font-weight: 600; letter-spacing: .04em; vertical-align: bottom; line-height: 1.25; }
+  .ctm-at th[scope="row"] { text-align: left; font-weight: 500; white-space: nowrap; }
+  .ctm-at .corner { text-align: left; opacity: .7; font-weight: 400; }
+  .ctm-at td.match { outline: 2px solid #DBA844; outline-offset: -2px; font-weight: 700; }
+  .ctm-at tfoot th, .ctm-at tfoot td { font-weight: 600; border-top: 2px solid color-mix(in srgb, currentColor 35%, transparent); }
+  .ctm-at tfoot th[scope="row"] { white-space: normal; min-width: 12rem; }
+  .ctm-at figcaption { margin-top: 1rem; font-size: var(--fs-body-sm); line-height: 1.6; opacity: .8; }
+</style>

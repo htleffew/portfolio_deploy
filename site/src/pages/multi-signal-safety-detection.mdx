@@ -6,7 +6,6 @@ description: "A safety detector can be wrong in two directions, under-detecting 
 category: "AI Evaluation & Safety"
 subcategory: "Detection & Trust and Safety"
 format: "ESSAY"
-time: "9 min read"
 author: "Dr. Heather Leffew"
 tags: ["Toxicity Detection", "Trust & Safety", "Multi-Signal", "Precision/Recall", "Enforcement"]
 visual: ""
@@ -19,7 +18,7 @@ import ApaReferences from '../components/ApaReferences.astro';
 
 ## A safety detector can be wrong in two directions
 
-A safety detector can be wrong in two directions, and it helps to hold both of them in view at once; it can under-detect, letting real harm through, which is the direction audits and red teams are built to catch, and it can also over-detect, firing on something that shares surface features with a harmful class while being something else entirely, and that second mistake is the sneaky one, because it can produce the very harm the detector was meant to prevent. A model that answers a person's distress with an unsolicited diagnosis is pattern-matching to care while delivering an outcome the person did not ask for, which is the exact failure I measure in [the Claude caretaker work](../Claude_Character_Tic/claude-character-tic.html). One classifier tends to struggle to keep both directions honest, because the harmful pattern and its benign look-alike co-occur at the level of words and tone, so a single read of the surface usually cannot separate them.
+A safety detector can be wrong in two directions, and it helps to hold both of them in view at once; it can under-detect, letting real harm through, which is the direction audits and red teams are built to catch, and it can also over-detect, firing on something that shares surface features with a harmful class while being something else entirely, and that second mistake is the sneaky one, because it can produce the very harm the detector was meant to prevent. A model that answers a person's distress with an unsolicited diagnosis is pattern-matching to care while delivering an outcome the person did not ask for, which is the exact failure I measure in [the Claude caretaker work](/claude-character-tic/). One classifier tends to struggle to keep both directions honest, because the harmful pattern and its benign look-alike co-occur at the level of words and tone, so a single read of the surface usually cannot separate them.
 
 </Band>
 
@@ -51,7 +50,7 @@ A detection score does something only when it connects to an action, so the dete
 
 ## What the method is, underneath
 
-Underneath the streams and the confidence mapping, the method asks several fragile detectors to agree before it acts, and scores how much they actually do; it starts from the premise that any single signal is fragile, it leans on several of them corroborating each other, it scores that agreement rather than counting votes, and it lets the strength of the agreement set how hard the enforcement leans. The detectors are the ones already on hand, so this is less a new model than a new way of listening to the ones in place. What comes back from that is an enforcement decision with a number attached to it, instead of one signal's confident guess. The same shape shows up wherever a single read is too fragile to act on alone, which is why it sits next to the [agentic experience suite](../Agentic_Experience_Evaluation/agentic-experience-evaluation.html), where several weak signals of dissatisfaction get combined the same way. A flag that arrives with its corroboration measured is the only kind worth scaling an action to.
+Underneath the streams and the confidence mapping, the method asks several fragile detectors to agree before it acts, and scores how much they actually do; it starts from the premise that any single signal is fragile, it leans on several of them corroborating each other, it scores that agreement rather than counting votes, and it lets the strength of the agreement set how hard the enforcement leans. The detectors are the ones already on hand, so this is less a new model than a new way of listening to the ones in place. What comes back from that is an enforcement decision with a number attached to it, instead of one signal's confident guess. The same shape shows up wherever a single read is too fragile to act on alone, which is why it sits next to the [agentic experience suite](/agentic-experience-evaluation/), where several weak signals of dissatisfaction get combined the same way. A flag that arrives with its corroboration measured is the only kind worth scaling an action to.
 
 </Band>
 
