@@ -36,9 +36,23 @@ for (const a of articles) {
   a.title = a.frontmatter.title || a.slug;
 }
 
-// Stable display order: grouped by category (alphabetical), then title.
-const byCatThenTitle = (a, b) =>
-  a.cat.localeCompare(b.cat) || a.title.localeCompare(b.title);
+// Stable display order: grouped by category in CATEGORY_ORDER (behavioral and
+// linguistic measurement first), then any unlisted category alphabetically, then title.
+const CATEGORY_ORDER = [
+  'Linguistic & Behavioral Measurement',
+  'Threat & Safety at Scale',
+  'Clinical & Neurocognitive Science',
+  'Model Behavior Studies',
+  'Methods & Systems',
+  'AI Evaluation & Safety',
+  'Alignment & Interpretability',
+];
+const catRank = (c) => {
+  const i = CATEGORY_ORDER.indexOf(c);
+  return i === -1 ? CATEGORY_ORDER.length : i;
+};
+const byCat = (a, b) => catRank(a) - catRank(b) || a.localeCompare(b);
+const byCatThenTitle = (a, b) => byCat(a.cat, b.cat) || a.title.localeCompare(b.title);
 const ordered = [...articles].sort(byCatThenTitle);
 
 // Homepage carousel order: these curated slugs lead, in the listed order, followed
@@ -49,9 +63,11 @@ const FEATURED_SLUGS = [
   'diagnostic-thematic-apperception-liwc',
   'implicit-power-drives',
   'complaint-text-monitor',
+  'helper-language-signal',
   'ux-livestreamed-violence',
   'ai-productivity-j-curve',
   'claude-lcr-analysis',
+  'somatic-deficit',
   'sleep-nudge-analysis',
   'claude-character-tic',
   'assessing-mass-violence-risk',
@@ -65,7 +81,7 @@ const carouselOrder = [...featured, ...ordered.filter((a) => !featuredSet.has(a)
 function renderSidebar() {
   const cats = {};
   for (const a of ordered) (cats[a.cat] = cats[a.cat] || []).push(a);
-  const groups = Object.keys(cats).sort().map((cat) => {
+  const groups = Object.keys(cats).sort(byCat).map((cat) => {
     const links = cats[cat].map((a) =>
       `<a href="${a.url}" class="sb-link db-filter-link" data-cat="${attr(a.cat)}" data-title="${attr(a.title)}">${esc(a.title)}</a>`
     ).join('');

@@ -15,7 +15,15 @@
 :root {
   --fs-read:    clamp(0.9375rem, 0.88rem + 0.22vw, 1.0625rem);   /* body  ~15 -> 17px */
   --fs-lede-fl: clamp(1.0625rem, 1rem + 0.30vw, 1.25rem);       /* lede  ~17 -> 20px */
+  /* Paper-mode roles for the nav, spine, and status chrome over light bands */
+  --ink:       #030303;
+  --ink-blue:  #0F3A6B;
+  --paper:     #F5F5F7;
+  --paper-2:   #EBEBEF;
+  --paper-3:   #D6D6DC;
 }
+/* Keep the nav legible over light bands; the 0.82 glass let body text bleed through */
+#topnav.is-paper { background: rgba(245,245,247,0.97); }
 
 /* === institutional.css === */
 /* ============================================================
