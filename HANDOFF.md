@@ -2,7 +2,8 @@
 
 - Project: portfolio-site
 - Path: C:/Users/drhea/estate/apps/portfolio-site
-- Verified state: 89215b7 2026-07-08 chore/gitignore update, no content or site change; last substantive commit 6d29fb6 2026-06-24 "Sync working changes". Branch master, working tree clean, verified 2026-07-08.
+- Verified state: 17bd70e 2026-10-01 "feat(site): refresh portfolio for behavioral-science audience", deployed by GitHub Actions and verified live (all article URLs return 200). Branch master. Push as the htleffew GitHub account (`gh auth switch -u htleffew`); the HeatherLeffew account gets a 403.
+- Voice rules for article prose live in estate lessons LESSON-686 to LESSON-689 (people act, no contrastives, no defensive framing, generous teaching voice with I and you and never we, approach pages carry no employer metrics). Read ai-safety-audit-framework, constitutional-ai-defense, and trajectory-investigation for the house voice before writing.
 - In progress / uncommitted: none, all committed
 
 ## Tech
