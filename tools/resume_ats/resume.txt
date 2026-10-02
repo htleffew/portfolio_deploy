@@ -1,0 +1,200 @@
+                                    Heather Leffew, PhD
+      Behavioral Scientist | Psychological Text Analysis | Experimentation and Research Leadership
+          Applying the science of human behavior to language, decisions, and measurable business results.
+
+                    htmleffew@gmail.com     DrHeatherLeffew.com     linkedin.com/in/heathertleffew
+
+SUMMARY
+Behavioral science and research leader (PhD, Psychology, Quantitative Predictive Linguistics; MA, Advanced
+Psychometrics) with more than 15 years building and leading applied research functions in regulated, high-stakes
+businesses, including FCRA-governed consumer reporting, platform safety for more than 180 million US users, and
+public-safety hiring. Founded and lead Spokeo's Data Science organization, owned the behavioral measurement
+roadmap and led 25+ member cross-functional teams at TikTok, and directed three teams with P&L authority at Brower.
+Partner with CEOs and senior leaders in Product, Engineering, Legal, Compliance, and Sales to turn behavioral evidence
+into product, policy, and investment decisions measured on the business's own KPIs, with a specialty in psychological
+text analysis, reading state, intent, and likely behavior in the words people choose.
+
+METHODS
+
+Behavioral science frameworks. Pathway to Violence and warning-behavior typologies, habit formation, choice friction
+in interaction design (Hick's Law, Jakob's Law, von Restorff effect), ironic process theory, Kohlberg moral development
+Experimentation. A/B tests, power analysis and MDE, difference-in-differences, within-subjects designs,
+preregistration, offline replay experiments, FDR-controlled subgroup analysis, break-even and ROI modeling
+Psychological text analysis. LIWC, hand-coded content analysis, text classification, topic modeling (LDA, BERTopic),
+sentiment, collocation (logDice, nMPI), discourse and co-occurrence network analysis
+Qualitative and clinical methods. semi-structured interviews, user research, behavioral observation, clinical and
+forensic assessment, structured threat assessment
+Psychometrics. factor analysis, construct validity, inter-rater reliability (kappa, PABAK), adverse-impact analysis
+Tools. Python, R, SAS, SPSS, SQL, Excel
+
+EMPLOYMENT HISTORY
+
+Director of Data Science                                                                              Sep 2025 to Present
+Spokeo
+Founding leader of Spokeo's Data Science organization, working in close partnership with the CEO, the executive team,
+and senior leaders across Product, Engineering, Legal, Compliance, and Sales to make identity, search, and
+conversational AI products measurable, auditable, and trustworthy for ~20 million unique monthly users. Set the
+research roadmap and run a portfolio of concurrent programs from first question to shipped product change; chair the
+cross-functional working group where Product, Engineering, and Data leadership make evidence-based product
+decisions; regularly present research initiatives, findings, and the resulting product improvements at company all-
+hands.
+   Built the behavioral research program for SpokeoAI, the company's primary product bet, defining its measures of
+   conversational quality (distress, apology, and task success across 79,020 conversations), and used the findings to
+   reset the product roadmap, shifting engineering investment to conversation quality and making name search the top
+   product fix.
+   Instituted offline replay testing of ranking changes before live A/B tests (87% agreement with users' actual next
+   actions), and stopped the phone program's founding hypothesis before build on a measured drop in first-correct
+   results from 85.9% to 31.6%, saving a full experiment cycle.
+   Own the AI compliance evidence that Legal and Compliance rely on; designed the adjudication program and
+   confirmed zero FCRA-prohibited screening failures across 204 adjudicated conversations on a live LLM product, and
+   lead company-wide ISO/IEC 42001 AI Management System readiness through influence across every model-owning
+   team.
+   Advise the executive team on multi-million-dollar data investments; built the decision case for a $1.5M+ annual
+   Equifax renewal, set a net-new-value standard for data purchases and sized one purchase at ~49.6M people gaining a
+   deliverable email, and scoped a planned multi-million-dollar rebuild down to a targeted repair by measuring all 59
+   data sources and isolating the issue to one matching tier (35,000 of 652M entities).
+   Established independent precision measurement for identity-linking changes, tied ship decisions to break-even
+   economics at $0.20 per record, and architected a peer-reviewed deployment gating policy for catching circular-
+   evaluation and construct-validity failures before release.
+   Built a company-wide quality signal from the language of 45,983 customer care tickets, hand-coding 1,423 into a 14-
+   class scheme (kappa 0.740), and used monthly alerting to catch a deceased-record wave and a repeat-billing incident
+   within days.
+   Won same-day agreement from the CEO and engineering leadership on a move from six-week to four-week release
+   cycles by framing it as additive to their existing work, and built Sales a self-service coverage resource so they answer
+   routine coverage questions on their own.
+
+Principal Data Scientist & Applied Researcher                                                            Jul 2022 to Jul 2025
+TikTok USDS | ByteDance
+Principal research leader in Trust and Safety for a platform with more than 180 million US users and annual revenue
+above $20 billion. Owned the behavioral measurement and detection roadmap across mental health, minor safety,
+election integrity, violent extremism, and brand safety, leading 25+ member cross-functional teams; advised legal, policy,
+and executive stakeholders and served as the sole authorized researcher on analyses relied on during Congressional
+scrutiny.
+   Founded the external research program, creating the industry's first external IRB process for platform-scale
+   behavioral research and the lab's first academic partnership framework; opened collaborations with Harvard Medical
+   School (SAMHSA Recovery Month) and the Ontario Brain Institute, and represented the program at TrustCon 2024.
+   Set the research agenda on user wellbeing, initiating Project Chiron (the first internal audit of recommendation-feed
+   effects on users with depression and suicidality, later the foundation for the Ontario Brain Institute study) and
+   SearchMD (a multi-study program on medical information trust combining IRB-reviewed UX studies and qualitative
+   creator research).
+   Identified the recommendation feed as the early-intervention point for habitual violative consumption (70% of
+   violative views came through For You; users who downloaded content had 19 times the odds of habitual
+   consumption), and gave Trust and Safety a specific surface and predictor to act on.
+   Cleared ~23,000 accounts for immediate ban and identified 142,288 more as eligible in minor-safety enforcement,
+   with appeal rates unchanged; built detection across 1B+ records at 95% accuracy and reduced manual moderation
+   review by 40%.
+   Established over-enforcement as a measured harm, showing that more than 64% of posts flagged as harmful were
+   support and safety-promoting content; introduced within-subjects, FDR-controlled subgroup-harm testing for
+   product changes, and won adoption by rebuilding a 94%-precision black-box model as an interpretable one.
+   Built the threat-assessment practice for violent extremism, including a Risk/Threat Rating Matrix and new law-
+   enforcement escalation protocols (33,706 accounts surfaced for review), and served as primary consultant and
+   trainer on FATE, an award-winning linguistic analysis tool adopted across verticals.
+   Built consensus across five teams on election-integrity measurement and contributed analysis to a 60% reduction in
+   viral election misinformation compared with the 2020 cycle.
+   Built SCOPEX, a psychological text-analysis framework (factor analysis, topic models, collocation, sentiment) for
+   tracking change in an account's language and consumption over time; applied it across 136,950 observations, and the
+   legal team adopted it for a multi-account mass-casualty matter.
+   Partnered with Global Research to build wellbeing measurement for staff exposed to traumatic content, unifying
+   survey instruments into one factor structure tracked by person, region, and role.
+
+Head of Accreditation                                                                                   Nov 2020 to Jul 2022
+National Emergency Responder and Public Safety Center
+Partnered with the executive, sales, product, and content teams to lead accreditation, evaluation, and product
+operations for a public-safety training and certification organization. Managed the full accreditation lifecycle as we
+expanded nationally to serve more than 1,000 public safety agencies, leading to a multi-million dollar acquisition offer.
+   Built standards-aligned assessment and review frameworks for emergency responder training, certification, renewal,
+   and site-visit processes, scaling from regional to national accreditation coverage.
+   Authored winning RFPs translating agency requirements into practical product and evaluation scope; presented risk
+   analyses and accreditation findings to government officials and oversight bodies.
+   Authored and scaled critical-incident and threat-assessment curricula across the national certification program.
+
+Director of Evaluations and Analytics                                                                    Jun 2019 to Jul 2022
+Brower Psychological Police and Public Safety
+Directed evaluations and analytics with P&L authority, leading three cross-functional teams (15 individual contributors,
+3 supervisors) that delivered digital psychological assessment, people analytics, and wellness programs to public-safety
+agencies across three states.
+   Grew the testing division from an $81K annual loss into the organization's primary revenue driver; partnered with
+   executive leadership on the move from paper to digital evaluation and delivered a $781K profit swing in about 14
+   months (6.2x revenue, 5.8x throughput, 88% lower cost per evaluation).
+   Led the organizational change for the turnaround, redesigning the workforce model (one-month training for retired
+   detectives in place of six-month psychometrist onboarding), doubling the client base to 200+ agencies (~70%
+   regional share), raising NPS from 34 to 72, and securing $500K+ in grants.
+   Launched an analytics product adopted by 100% of agencies processing 100+ candidates a year, and delivered threat
+   assessment, critical-incident response, and training to public-safety agencies.
+
+Consulting Staff Data Scientist                                                                         Mar 2008 to Oct 2019
+QMS Infotech, Inc.
+Advised the leadership of enterprise and public-sector clients on hiring, workforce assessment, and fairness strategy,
+partnering with executives to drive organizational change in how they made and governed selection decisions. Built
+analytics and audit products for private-sector hiring, workforce assessment, fairness review, and FCRA-compliant HR
+decision support.
+   Set the psychometric and statistical standards clients adopted for talent-assessment audits (construct validity,
+   fairness measurement, defensible decision criteria), and led bias-mitigation policy changes for enterprise HR
+   partners, achieving full FCRA compliance.
+   Led a multi-agency adverse-impact audit of 1,001 pre-employment psychological evaluations for a police
+   department's consent-decree review; certified three years as bias-free and traced a 2021 deviation to a likely
+   recruiting change.
+   Turned audit findings into repeatable governance and remediation workflows that client leadership used to change
+   selection practices across their organizations.
+
+Practicum, Doctoral & Post-Doctoral Positions                                                            May 2015 to Jul 2019
+Fielding Graduate University
+Clinical and research leadership across psychiatric, crisis, and public-safety settings (Cedar Springs Psychiatric Hospital,
+Rocky Mountain Behavioral Health, Brower Psychological). Supervised and trained 12 master's-level clinicians and
+practicum students in assessment methodology, case conceptualization, and clinical reporting standards, while
+conducting psychological, neuropsychological, occupational, and forensic assessments, including semi-structured
+interviews.
+   Served as Assistant Disaster Response Coordinator for Aurora Mental Health Center's disaster-response program,
+   built after the 2012 Aurora theater shooting, coordinating on-site behavioral-health response and crisis intervention
+   in mass-casualty events, including the aftermath of the 2019 STEM School Highlands Ranch shooting.
+   Supported crisis intervention and fitness-for-duty evaluation for public-safety agencies in high-consequence
+   operational settings.
+   Led data preparation and analysis for the Hawkins TAT Project, scoring 69 participants' narratives on about 60 LIWC
+   variables at card, person, and corpus level, and used MANOVA to show distinct emotional and social themes across
+   TAT cards (largest effect ηp² = .53).
+Additional Professional Experience                                                                     Mar 2002 to Aug 2015
+   Benefits Analyst, Florida Department of Children and Families. Conducted eligibility determinations for state and
+   federal assistance through applicant interviews, policy interpretation, and fraud identification.
+   Professional Compliance, Broward Sheriff's Office. Combined emergency communications with audit, compliance,
+   and risk management; led digital transformation of audit systems.
+   Neurotherapist, Unity Recovery Services. Managed neurotherapy delivery for a substance-use recovery program
+   and built intake-to-discharge symptom tracking.
+   Consultant, Hope for Families. Strengthened certification, accreditation, audit readiness, and regulatory compliance
+   for private-adoption operations.
+
+EDUCATION
+
+Doctor of Philosophy (PhD), Psychology, Quantitative Predictive Linguistics
+Fielding Graduate University (APA Accredited)
+Master of Arts (MA), Psychology, Advanced Psychometrics
+Fielding Graduate University (WSCUC Accredited) | GPA 4.14
+Bachelor of Science (BS), Psychology, Emergency Management & Public Safety
+Liberty University (SACSCOC Accredited) | Summa Cum Laude | GPA 4.00
+
+SELECTED RESEARCH
+Instrumental and Affective Mass Murder: Establishing a Predictive Typology (dissertation). Clustered 100 pre-attack
+communications on four LIWC dimensions into affective (n=53) and instrumental (n=47) types, and found affective
+attackers 7.65 times more likely to end the attack by suicide or apprehension (p = .006) and a McFadden R² of .24 for a
+logistic model of attack behavior.
+LIWC and the TAT. Led the LIWC analysis of 677 Thematic Apperception Test narratives from 69 participants and
+showed that each card elicits its expected themes; Card 8BM stories carried 3.18 times the corpus rate of death
+language.
+Implicit Power Drives in the Manifestos Preceding Autogenic Massacres. Found LIWC power scores in 23 manifestos
+above published norms for blogs, expressive writing, and a multi-source composite (t(22) = 3.47, 3.66, and 2.43), and used
+the results to select the dissertation's variables.
+Complaint Text as an Early-Warning Instrument. Built a reproducible tutorial on turning complaint language into a
+monitored early-warning signal, with a written codebook, two-coder reliability, a classifier, a blind validation draw, and
+an alert backtest, and extended it to attorney representation in claims.
+The Helper's Language as an Early Indicator. Built a two-speaker, LIWC-style measure of service conversations that
+predicts attorney representation from the first contact, corrects for conversation length, and sizes a team-randomized
+coaching experiment.
+UX Principles and Livestreamed Violence. Analyzed eight livestreamed attacks and platform reporting design against
+Hick's Law, Jakob's Law, and the von Restorff effect, and designed an A/B test of a simpler claim-reporting menu.
+The AI Productivity J-Curve on the Front Line. Built an illustrative simulator of the productivity dip when claim teams
+adopt an AI tool, and designed a stepped-wedge office rollout that measures cycle time and rework.
+Pathologizing Without Warrant (preprint). Coded a 26,158-post public corpus against a clinical boundary-violation
+framework (Gutheil and Gabbard) in a 46-page preprint, documenting 35 cases of an AI model issuing unsolicited
+psychiatric attributions to its users and escalating in all 5 cases where users pushed back.
+The Somatic Deficit: Moral Language Without Moral Ontology. Proposed a theory applying psychopathy and moral-
+development research (Kohlberg, Lykken) to model alignment, and designed three falsifiable studies to test it.
+

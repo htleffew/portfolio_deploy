@@ -1,0 +1,24 @@
+AI Evaluation & Safety: AI Evals, LLM-as-Judge, Red-Teaming, Automated Red-Teaming Pipelines, Golden Datasets, Agentic
+Evals, Long-Horizon Reasoning Evaluation, Tool-Use Evaluation, RAG Evals, Simulation Testing, Hallucination Detection,
+Jailbreak Resistance Scoring, Prompt Injection Detection, Out-of-Character Behavior Detection, Context-Blindness
+Measurement, In-Character Consistency Evaluation, Hard-Fail Safety Gating, Evaluation Infrastructure & Frameworks, Scalable
+Oversight, Replay-Based Evaluation, Behavioral Taxonomies, Semantic Auditing, Epistemic Provenance, CUSUM Control Charts,
+Fixed Harness / Mutation Budget Architecture, Evaluation Gating, Adversarial Robustness, AI Alignment, Frontier AI Safety,
+Mechanistic Interpretability, Latent Evaluation Awareness, Activation Verbalization, Constitutional AI, 4×4 Refusal Matrix
+Measurement & Research Methods: Psychometrics, Construct Validity, Criterion Validity, Convergent & Discriminant
+Validity, Test-Retest Reliability, Inter-Rater Reliability, Uncertainty Quantification, Experimental Design, A/B Testing, Causal
+Inference, Incrementality Testing, Lift Studies, Power Analysis, Source Independence Analysis, Ablation Studies, Behavioral
+Typologies, Item Response Theory, Classical Test Theory, Bayesian Uncertainty, Late Fusion Architecture, LIWC Methodology,
+Computational Linguistics, Psycholinguistics, HDBSCAN Clustering, BERTopic, Prophet Time-Series, NetworkX Co-occurrence
+Machine Learning & Modeling: LLMs, Generative AI, Prompt Engineering, RLHF, Reward Modeling, Reinforcement Learning,
+CMDPs, Weak Supervision, Positive-Unlabeled Learning, Learning to Rank, Knowledge Graphs, Graph ML, Entity Resolution,
+Neuro-Symbolic AI, XGBoost, Logistic Regression, Survival Analysis, Semantic Clustering, NLP, Topic Modeling, Sentiment
+Analysis, Synthetic Data Generation, SHAP Explainability, Isotonic Calibration, MediaPipe, Whisper
+MLOps, Platform & Infrastructure: Model Context Protocol (MCP), End-to-End ML Pipeline Architecture, Model Lifecycle
+Management, Distributed Computing, Apache Spark, PySpark, Databricks, Delta Lake, AWS SageMaker, AWS Glue, AWS EMR,
+Airflow, Docker, Kubernetes, CI/CD, DuckDB, PyArrow
+Governance, Safety & Compliance: Responsible AI, AI Governance, ISO/IEC 42001, NIST AI RMF, EU AI Act, FCRA
+Compliance, Bias Mitigation, Algorithmic Auditing, Privacy-Preserving ML, RBAC, Trust and Safety, Content Moderation,
+Platform Integrity, Over-Enforcement Measurement
+Technical Stack: Python, PySpark, SQL, Pandas, NumPy, Scikit-learn, PyTorch, TensorFlow, Hugging Face Transformers, Scala,
+Kafka, Hive, Tableau, Power BI, Databricks MLflow, AWS ML Services, HTML, CSS, JavaScript, Astro SSG, Firebase
