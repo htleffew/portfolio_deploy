@@ -19,6 +19,10 @@ import ApaReferences from '../components/ApaReferences.astro';
 
 ## Abstract
 
+<div class="demo-cta-wrap">
+  <a class="demo-cta" href="https://github.com/htleffew/latent-projective-bleed" target="_blank" rel="noopener">See the preregistration and code on GitHub &rarr;</a>
+</div>
+
 Continuous thought architectures produce a latent planning signal that behavioral monitoring cannot see. A model in the Coconut family reasons in latent space, feeding its last hidden state back as the next input embedding rather than decoding each step to a vocabulary token, so a plan can form and be discarded inside the trajectory while the emitted text stays benign. Linear probes trained on the first latent token recover that plan with an area under the ROC curve near 0.95, while the same probes applied to the final token or to mean-pooled activations recover nothing, because the trajectory has by then converged on the aligned baseline. The article sets out a preregistered framework for reading one clinically grounded class of latent content off that trajectory, attachment-driven psychological defense. The design pairs the 97 contamination-free sentence-completion stems of the Generative Projective Testing framework with four attachment-conditioning prompts, labels baseline completions for Defense Mechanism Rating Scales level through a multi-agent clinical council, calibrates linear probes at the pre-generation boundary, and tracks the defense signal across the continuous thought trajectory. The framework predicts an attachment-specific plan-then-suppress dynamic whose decay rate separates the four personas, and it carries one consequence for oversight, since monitoring a deliberating model has to move from what the model says to what the model represents.
 
 </Band>

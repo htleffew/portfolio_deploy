@@ -19,6 +19,10 @@ import ApaReferences from '../components/ApaReferences.astro';
 
 ## Abstract
 
+<div class="demo-cta-wrap">
+  <a class="demo-cta" href="https://github.com/htleffew/llm-behavior-reddit-analysis-universal" target="_blank" rel="noopener">See the full procedure on GitHub &rarr;</a>
+</div>
+
 The public discussion of a deployed model turns out to be a usable behavioral record, but only once the model's own outputs can be separated from the reactions clustered around them; that separation is most of the work, and most of what follows is in service of it. What I want to walk you through is the pipeline I built to characterize the Long Conversation Reminder behavior in Claude Sonnet 4.5, which runs in four stages, namely scraping a community corpus, disambiguating word senses with KWIC windows and HDBSCAN, segmenting each post into speaker voices, and then coding the surviving cases by hand. The worked example here is a corpus of 26,158 Reddit observations, though nothing about the method is wedded to that corpus or that behavior; the same four stages apply wherever a deployed system produces outputs its users quote and react to. My aim is pedagogical, so I have tried to lay out each stage in enough detail that the same instrument could be pointed at a different model, or a different behavior, and rebuilt from the ground up.
 
 </Band>
