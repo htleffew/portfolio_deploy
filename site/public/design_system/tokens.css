@@ -47,6 +47,11 @@
   --font-display: 'Playfair Display', 'Times New Roman', serif;   /* editorial headlines */
   --font-body:    'Lora', Georgia, 'Times New Roman', serif;       /* reading prose */
   --font-mono:    'JetBrains Mono', 'SF Mono', Menlo, monospace;   /* eyebrows, labels, data */
+  /* Short names institutional.css and global_chrome.css use; they lost their
+     definitions in the 2026-06-13 rewrite and every page fell back to Times. */
+  --display: var(--font-display);
+  --body:    var(--font-body);
+  --mono:    var(--font-mono);
 
   /* ── TYPE SCALE ── */
   --fs-caption:   0.625rem;
